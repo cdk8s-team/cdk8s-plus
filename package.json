@@ -29,7 +29,7 @@
     "publish:golang": "npx projen publish:golang",
     "docgen": "npx projen docgen",
     "import": "npx projen import",
-    "release:k8s.21": "npx projen release:k8s.21",
+    "release:k8s-21/main": "npx projen release:k8s-21/main",
     "projen": "npx projen"
   },
   "author": {
