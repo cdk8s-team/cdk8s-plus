@@ -126,9 +126,47 @@ Many times, this may result in some code duplication or redundancy. Even though 
 
 > **Sometimes, a little duplication is better than a lot of dependencies.**
 
+## Making a pull request
+
+This repository is set up to maintain one cdk8s+ library for each of the **three
+latest versions** of kubernetes. Each library may have slightly different code.
+Because of that, contributing requires a few extra steps to make sure we can
+apply the feature or bug fix to all versions of the library.
+
+We currently track each version on a separate branch:
+
+- k8s.22
+- k8s.21
+- k8s.20
+
+For most cases, all you need to do is make a change on the branch corresponding
+to the latest version. We will take care of back-porting your change to
+cdk8s-plus-21 and cdk8s-plus-20 once it is merged to the latest version.
+
+When you clone the repository, you should run
+
+```
+git switch k8s.22
+```
+
+... to make sure you are making changes to cdk8s-plus-22. From there you can
+create your own branch, make code changes to that branch, and submit a pull
+request through GitHub. When you are creating your pull request on GitHub, make
+sure the target branch is set to k8s.22.
+
+> Note: Should you need to make a pull request to a version of cdk8s-plus that
+isn't the latest version, then **the branch name of your pull request must start
+with `k8s.XX`** where XX is the version number. For example, if you were
+submitting bug fix for an issue that is only present in cdk8s-plus-21, then you
+might name the branch `k8s.21-bug-fix`. When submitting the pull request on
+GitHub, make sure the target branch matches your branch name (in this example,
+we would want to merge it to `k8s.21`).
+
 ## API Reference
 
-We generate a full [API](./API.md) reference automatically during build time. Make sure to always run `yarn build` and committing the `API.md` file before submitting a Pull Request.
+We generate a full [API reference](./docs) automatically during build time. Make
+sure to always run `yarn build` and committing the `API.md` file before
+submitting a pull request.
 
 ## Project Metadata
 
