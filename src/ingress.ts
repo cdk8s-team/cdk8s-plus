@@ -8,14 +8,14 @@ import { Service } from './service';
 /**
  * Properties for `Ingress`.
  */
-export interface IngressV1Beta1Props extends ResourceProps {
+export interface IngressProps extends ResourceProps {
   /**
    * The default backend services requests that do not match any rule.
    *
    * Using this option or the `addDefaultBackend()` method is equivalent to
    * adding a rule with both `path` and `host` undefined.
    */
-  readonly defaultBackend?: IngressV1Beta1Backend;
+  readonly defaultBackend?: IngressBackend;
 
   /**
    * Routing rules for this ingress.
@@ -27,7 +27,7 @@ export interface IngressV1Beta1Props extends ResourceProps {
    * You can also add rules later using `addRule()`, `addHostRule()`,
    * `addDefaultBackend()` and `addHostDefaultBackend()`.
    */
-  readonly rules?: IngressV1Beta1Rule[];
+  readonly rules?: IngressRule[];
 
 
   /**
@@ -39,7 +39,29 @@ export interface IngressV1Beta1Props extends ResourceProps {
    * the same port according to the hostname specified through the SNI TLS
    * extension, if the ingress controller fulfilling the ingress supports SNI.
    */
-  readonly tls?: IngressV1Beta1Tls[];
+  readonly tls?: IngressTls[];
+}
+
+/**
+ * Specify how the path is matched against request paths.
+ *
+ * @see https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+ */
+export enum HttpIngressPathType {
+  /**
+   * Matches the URL path exactly.
+   */
+  PREFIX = 'Prefix',
+
+  /**
+   * Matches based on a URL path prefix split by '/'.
+   */
+  EXACT = 'Exact',
+
+  /**
+   * Matching is specified by the underlying IngressClass.
+   */
+  IMPLEMENTATION_SPECIFIC = 'ImplementationSpecific',
 }
 
 /**
@@ -48,24 +70,24 @@ export interface IngressV1Beta1Props extends ResourceProps {
  * externally-reachable urls, load balance traffic, terminate SSL, offer name
  * based virtual hosting etc.
  */
-export class IngressV1Beta1 extends Resource {
+export class Ingress extends Resource {
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _rulesPerHost: { [host: string]: k8s.HttpIngressPathV1Beta1[] } = {};
-  private _defaultBackend?: IngressV1Beta1Backend;
-  private readonly _tlsConfig: IngressV1Beta1Tls[] = [];
+  private readonly _rulesPerHost: { [host: string]: k8s.HttpIngressPath[] } = {};
+  private _defaultBackend?: IngressBackend;
+  private readonly _tlsConfig: IngressTls[] = [];
 
-  constructor(scope: Construct, id: string, props: IngressV1Beta1Props = {}) {
+  constructor(scope: Construct, id: string, props: IngressProps = {}) {
     super(scope, id);
 
-    this.apiObject = new k8s.KubeIngressV1Beta1(this, 'Resource', {
+    this.apiObject = new k8s.KubeIngress(this, 'Resource', {
       metadata: props.metadata,
       spec: {
-        backend: Lazy.any({ produce: () => this._defaultBackend?._toKube() }),
+        defaultBackend: Lazy.any({ produce: () => this._defaultBackend?._toKube() }),
         rules: Lazy.any({ produce: () => this.synthRules() }),
         tls: Lazy.any({ produce: () => this.tlsConfig() }),
       },
@@ -95,7 +117,7 @@ export class IngressV1Beta1 extends Resource {
    *
    * @param backend The backend to use for requests that do not match any rule.
    */
-  public addDefaultBackend(backend: IngressV1Beta1Backend) {
+  public addDefaultBackend(backend: IngressBackend) {
     this.addRules({ backend });
   }
 
@@ -106,7 +128,7 @@ export class IngressV1Beta1 extends Resource {
    * @param host The host name to match
    * @param backend The backend to route to
    */
-  public addHostDefaultBackend(host: string, backend: IngressV1Beta1Backend) {
+  public addHostDefaultBackend(host: string, backend: IngressBackend) {
     if (!host) { throw new Error('host must not be an empty string'); }
     this.addRules({ host, backend });
   }
@@ -118,10 +140,11 @@ export class IngressV1Beta1 extends Resource {
    * @param host The host name
    * @param path The HTTP path
    * @param backend The backend to route requests to
+   * @param pathType How the path is matched against request paths
    */
-  public addHostRule(host: string, path: string, backend: IngressV1Beta1Backend) {
+  public addHostRule(host: string, path: string, backend: IngressBackend, pathType?: HttpIngressPathType) {
     if (!host) { throw new Error('host must not be an empty string'); }
-    this.addRules({ host, backend, path });
+    this.addRules({ host, backend, path, pathType });
   }
 
   /**
@@ -129,16 +152,17 @@ export class IngressV1Beta1 extends Resource {
    *
    * @param path The HTTP path
    * @param backend The backend to route requests to
+   * @param pathType How the path is matched against request paths
    */
-  public addRule(path: string, backend: IngressV1Beta1Backend) {
-    this.addRules({ backend, path });
+  public addRule(path: string, backend: IngressBackend, pathType?: HttpIngressPathType) {
+    this.addRules({ backend, path, pathType });
   }
 
   /**
    * Adds rules to this ingress.
    * @param rules The rules to add
    */
-  public addRules(...rules: IngressV1Beta1Rule[]) {
+  public addRules(...rules: IngressRule[]) {
     for (const rule of rules) {
 
       // default backend is not really a rule
@@ -152,7 +176,8 @@ export class IngressV1Beta1 extends Resource {
 
       const host = rule.host ?? '';
       const backend = rule.backend;
-      const path = rule.path;
+      const path = rule.path ?? '/';
+      const pathType = rule.pathType ?? HttpIngressPathType.PREFIX;
 
       if (path && !path.startsWith('/')) {
         throw new Error(`ingress paths must begin with a "/": ${path}`);
@@ -165,12 +190,16 @@ export class IngressV1Beta1 extends Resource {
         throw new Error(`there is already an ingress rule for ${host}${path}`);
       }
 
-      routes.push({ backend: backend._toKube(), path });
+      routes.push({
+        backend: backend._toKube(),
+        path,
+        pathType,
+      });
     }
   }
 
-  private synthRules(): undefined | k8s.IngressRuleV1Beta1[] {
-    const rules = new Array<k8s.IngressRuleV1Beta1>();
+  private synthRules(): undefined | k8s.IngressRule[] {
+    const rules = new Array<k8s.IngressRule>();
 
     for (const [host, paths] of Object.entries(this._rulesPerHost)) {
       rules.push({
@@ -182,16 +211,16 @@ export class IngressV1Beta1 extends Resource {
     return rules.length > 0 ? rules : undefined;
   }
 
-  public addTls(tls: IngressV1Beta1Tls[]) {
+  public addTls(tls: IngressTls[]) {
     this._tlsConfig.push(...tls);
   }
 
-  private tlsConfig(): undefined | k8s.IngressTlsv1Beta1[] {
+  private tlsConfig(): undefined | k8s.IngressTls[] {
     if (this._tlsConfig.length == 0) {
       return undefined;
     }
 
-    const tls = new Array<k8s.IngressTlsv1Beta1>();
+    const tls = new Array<k8s.IngressTls>();
     for (const entry of this._tlsConfig) {
       tls.push({
         hosts: entry.hosts,
@@ -206,7 +235,7 @@ export class IngressV1Beta1 extends Resource {
 /**
  * Options for setting up backends for ingress rules.
  */
-export interface ServiceIngressV1BetaBackendOptions {
+export interface ServiceIngressBackendOptions {
   /**
    * The port to use to access the service.
    *
@@ -223,12 +252,12 @@ export interface ServiceIngressV1BetaBackendOptions {
 /**
  * The backend for an ingress path.
  */
-export class IngressV1Beta1Backend {
+export class IngressBackend {
   /**
    * A Kubernetes `Service` to use as the backend for this path.
    * @param service The service object.
    */
-  public static fromService(service: Service, options: ServiceIngressV1BetaBackendOptions = {}) {
+  public static fromService(service: Service, options: ServiceIngressBackendOptions = {}) {
     if (service.ports.length === 0) {
       throw new Error('service does not expose any ports');
     }
@@ -253,13 +282,15 @@ export class IngressV1Beta1Backend {
       throw new Error(`backend defines port ${options.port} but service exposes port ${servicePort}`);
     }
 
-    return new IngressV1Beta1Backend({
-      serviceName: service.name,
-      servicePort: k8s.IntOrString.fromNumber(servicePort),
+    return new IngressBackend({
+      service: {
+        name: service.name,
+        port: { number: servicePort },
+      },
     });
   }
 
-  private constructor(private readonly backend: k8s.IngressBackendV1Beta1) {
+  private constructor(private readonly backend: k8s.IngressBackend) {
 
   }
 
@@ -274,12 +305,12 @@ export class IngressV1Beta1Backend {
  * backend services. Incoming requests are first evaluated for a host match,
  * then routed to the backend associated with the matching path.
  */
-export interface IngressV1Beta1Rule {
+export interface IngressRule {
   /**
    * Backend defines the referenced service endpoint to which the traffic will
    * be forwarded to.
    */
-  readonly backend: IngressV1Beta1Backend;
+  readonly backend: IngressBackend;
 
   /**
    * Host is the fully qualified domain name of a network host, as defined by
@@ -307,13 +338,21 @@ export interface IngressV1Beta1Rule {
    * to the backend.
    */
   readonly path?: string;
+
+  /**
+   * Specify how the path is matched against request paths. By default, path
+   * types will be matched by prefix.
+   *
+   * @see https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+   */
+  readonly pathType?: HttpIngressPathType;
 }
 
 /**
  * Represents the TLS configuration mapping that is passed to the ingress
  * controller for SSL termination.
  */
-export interface IngressV1Beta1Tls {
+export interface IngressTls {
 
   /**
    * Hosts are a list of hosts included in the TLS certificate. The values in
@@ -335,7 +374,7 @@ export interface IngressV1Beta1Tls {
   readonly secret?: ISecret;
 }
 
-function sortByPath(lhs: k8s.HttpIngressPathV1Beta1, rhs: k8s.HttpIngressPathV1Beta1) {
+function sortByPath(lhs: k8s.HttpIngressPath, rhs: k8s.HttpIngressPath) {
   const p1 = lhs.path ?? '';
   const p2 = rhs.path ?? '';
   return p1.localeCompare(p2);
