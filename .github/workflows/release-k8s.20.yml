@@ -166,6 +166,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
+          GIT_BRANCH: k8s.20
           GIT_USER_NAME: cdk8s-automation
           GIT_USER_EMAIL: cdk8s-team@amazon.com
           GITHUB_TOKEN: ${{ secrets.GO_GITHUB_TOKEN }}

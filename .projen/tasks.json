@@ -281,6 +281,7 @@
       "name": "publish:golang",
       "description": "Publish this package to GitHub",
       "env": {
+        "GIT_BRANCH": "k8s.20",
         "GIT_USER_NAME": "cdk8s-automation",
         "GIT_USER_EMAIL": "cdk8s-team@amazon.com"
       },
