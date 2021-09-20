@@ -5,8 +5,6 @@ const { JsiiProject } = require('projen');
 const SPEC_VERSION = k8sVersion();
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
-const DEFAULT_BRANCH_SPEC_VERSION = '21';
-
 function k8sVersion() {
   const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
   return branch.replace('k8s.', '');
@@ -48,6 +46,7 @@ const project = new JsiiProject({
   ],
 
   majorVersion: 1,
+  releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s.${SPEC_VERSION}`,
   minNodeVersion: '12.13.0',
