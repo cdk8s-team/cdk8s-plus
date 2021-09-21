@@ -15,7 +15,7 @@ function k8sVersion() {
     // so assume that we are building for the latest version, i.e. 1.22.0
     console.log(
       'Warning: The current branch name doesn\'t start with "k8s-XX", so we ' +
-      `are defaulting to built for k8s 1.${DEFAULT_K8S_VERSION}.0. If you ` +
+      `are defaulting to build for k8s 1.${DEFAULT_K8S_VERSION}.0. If you ` +
       'did not intend for this, please rename your branch to start with "k8s-XX/", ' +
       'where XX is the intended k8s version.',
     );
@@ -61,7 +61,7 @@ const project = new JsiiProject({
   majorVersion: 1,
   releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
-  defaultReleaseBranch: `k8s.${SPEC_VERSION}`,
+  defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
   minNodeVersion: '12.13.0',
 
   // jsii configuration
