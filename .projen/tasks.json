@@ -318,9 +318,9 @@
         }
       ]
     },
-    "release:k8s.20": {
-      "name": "release:k8s.20",
-      "description": "Prepare a release from \"k8s.20\" branch",
+    "release:k8s-20/main": {
+      "name": "release:k8s-20/main",
+      "description": "Prepare a release from \"k8s-20/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "1",

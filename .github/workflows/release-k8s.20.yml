@@ -4,7 +4,7 @@ name: release-k8s.20
 on:
   push:
     branches:
-      - k8s.20
+      - k8s-20/main
   workflow_dispatch: {}
 jobs:
   release:
@@ -30,8 +30,8 @@ jobs:
           node-version: 12.13.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: release:k8s.20
-        run: npx projen release:k8s.20
+      - name: release:k8s-20/main
+        run: npx projen release:k8s-20/main
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
