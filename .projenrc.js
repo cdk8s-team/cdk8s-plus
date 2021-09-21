@@ -2,12 +2,25 @@ const child = require('child_process');
 const path = require('path');
 const { JsiiProject } = require('projen');
 
+const DEFAULT_K8S_VERSION = '22';
 const SPEC_VERSION = k8sVersion();
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 function k8sVersion() {
   const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  return branch.replace('k8s.', '');
+  if (branch.startsWith('k8s-') && branch.length >= 6) {
+    return branch.substring(4, 6);
+  } else {
+    // if the branch name doesn't start with k8s-XX, we're probably running on a fork
+    // so assume that we are building for the latest version, i.e. 1.22.0
+    console.log(
+      'Warning: The current branch name doesn\'t start with "k8s-XX", so we ' +
+      `are defaulting to built for k8s 1.${DEFAULT_K8S_VERSION}.0. If you ` +
+      'did not intend for this, please rename your branch to start with "k8s-XX/", ' +
+      'where XX is the intended k8s version.',
+    );
+    return DEFAULT_K8S_VERSION;
+  }
 }
 
 const project = new JsiiProject({
@@ -68,7 +81,8 @@ const project = new JsiiProject({
   publishToGo: {
     gitUserName: 'cdk8s-automation',
     gitUserEmail: 'cdk8s-team@amazon.com',
-    moduleName: `github.com/cdk8s-team/cdk8s-plus-${SPEC_VERSION}-go`,
+    gitBranch: `k8s.${SPEC_VERSION}`,
+    moduleName: 'github.com/cdk8s-team/cdk8s-plus-go',
   },
   autoApproveOptions: {
     allowedUsernames: ['cdk8s-automation'],

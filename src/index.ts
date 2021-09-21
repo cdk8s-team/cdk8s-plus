@@ -9,5 +9,5 @@ export * from './service-account';
 export * from './service';
 export * from './statefulset';
 export * from './volume';
-export * from './ingress-v1beta1';
+export * from './ingress';
 export * from './probe';
