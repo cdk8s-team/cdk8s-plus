@@ -13,12 +13,6 @@ function k8sVersion() {
   } else {
     // if the branch name doesn't start with k8s-XX, we're probably running on a fork
     // so assume that we are building for the latest version, i.e. 1.22.0
-    console.log(
-      'Warning: The current branch name doesn\'t start with "k8s-XX", so we ' +
-      `are defaulting to build for k8s 1.${DEFAULT_K8S_VERSION}.0. If you ` +
-      'did not intend for this, please rename your branch to start with "k8s-XX/", ' +
-      'where XX is the intended k8s version.',
-    );
     return DEFAULT_K8S_VERSION;
   }
 }
