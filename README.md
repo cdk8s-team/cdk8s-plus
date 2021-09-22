@@ -9,9 +9,9 @@
 
 | k8s version | npm (JS/TS) | PyPI (Python) | NuGet (C#) | Maven (Java) | Go |
 | --- | --- | --- | --- | --- | --- |
-| 1.20.0 | [Link](https://www.npmjs.com/package/cdk8s-plus-20) | [Link](https://pypi.org/project/cdk8s-plus-20/) | [Link](https://www.nuget.org/packages/Org.Cdk8s.Plus20) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-20) | [Link](https://pkg.go.dev/github.com/cdk8s-team/cdk8s-plus-go/cdk8splus20) |
-| 1.21.0 | [Link](https://www.npmjs.com/package/cdk8s-plus-21) | [Link](https://pypi.org/project/cdk8s-plus-21/) | [Link](https://www.nuget.org/packages/Org.Cdk8s.Plus21) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-21) | [Link](https://pkg.go.dev/github.com/cdk8s-team/cdk8s-plus-go/cdk8splus21) |
-| 1.22.0 | [Link](https://www.npmjs.com/package/cdk8s-plus-22) | [Link](https://pypi.org/project/cdk8s-plus-22/) | [Link](https://www.nuget.org/packages/Org.Cdk8s.Plus22) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-22) | [Link](https://pkg.go.dev/github.com/cdk8s-team/cdk8s-plus-go/cdk8splus22) |
+| 1.20.0 | [Link](https://www.npmjs.com/package/cdk8s-plus-20) | [Link](https://pypi.org/project/cdk8s-plus-20/) | [Link](https://www.nuget.org/packages/Org.Cdk8s.Plus20) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-20) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.20) |
+| 1.21.0 | [Link](https://www.npmjs.com/package/cdk8s-plus-21) | [Link](https://pypi.org/project/cdk8s-plus-21/) | [Link](https://www.nuget.org/packages/Org.Cdk8s.Plus21) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-21) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.21) |
+| 1.22.0 | [Link](https://www.npmjs.com/package/cdk8s-plus-22) | [Link](https://pypi.org/project/cdk8s-plus-22/) | [Link](https://www.nuget.org/packages/Org.Cdk8s.Plus22) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-22) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.22) |
 
 **cdk8s+** is a software development framework that provides high level
 abstractions for authoring Kubernetes applications. Built on top of the auto
