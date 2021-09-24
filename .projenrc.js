@@ -28,12 +28,6 @@ const project = new JsiiProject({
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   prerelease: 'beta',
 
-  // without this, the version of 'constructs' would need to be controlled
-  // from this file, since otherwise it would create a 0.0.0 dev dependency.
-  peerDependencyOptions: {
-    pinnedDevDependency: false,
-  },
-
   peerDeps: [
     'cdk8s',
     'constructs',
