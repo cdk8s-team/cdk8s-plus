@@ -2,7 +2,7 @@ const child = require('child_process');
 const path = require('path');
 const { JsiiProject } = require('projen');
 
-const DEFAULT_K8S_VERSION = '22';
+const DEFAULT_K8S_VERSION = 22;
 const SPEC_VERSION = k8sVersion();
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
@@ -13,7 +13,7 @@ function k8sVersion() {
   } else {
     // if the branch name doesn't start with k8s-XX, we're probably running on a fork
     // so assume that we are building for the latest version, i.e. 1.22.0
-    return DEFAULT_K8S_VERSION;
+    return `${DEFAULT_K8S_VERSION}`;
   }
 }
 
@@ -77,6 +77,15 @@ const project = new JsiiProject({
     secret: 'GITHUB_TOKEN',
   },
   autoApproveUpgrades: true,
+  depsUpgradeOptions: {
+    workflowOptions: {
+      branches: [
+        `k8s-${DEFAULT_K8S_VERSION}/main`,
+        `k8s-${DEFAULT_K8S_VERSION - 1}/main`,
+        `k8s-${DEFAULT_K8S_VERSION - 2}/main`,
+      ],
+    },
+  },
 });
 
 const importdir = path.join('src', 'imports');
