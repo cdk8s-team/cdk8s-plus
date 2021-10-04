@@ -165,6 +165,13 @@ target branch matches your branch name (in this example, it would be
 applies for - so in the example above, only a PR to `k8s-21/main` is required,
 and we will backport it to `k8s-20/main`.
 
+### Developer Certificate Of Origin (DCO)
+
+Every commit should be signed-off in compliance with the [Developer Certificate Of Origin](./DCO).
+You can sign your commits by using the `git commit -s` command.
+
+> To configure automatic signoff, see [git-hooks](./git-hooks/README.md).
+
 ## API Reference
 
 We generate a full [API reference](./docs) automatically during build time. Make
