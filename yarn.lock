@@ -1428,16 +1428,25 @@ cdk8s-cli@^1.0.0-beta.63:
     yargs "^15"
 
 cdk8s-plus-22@^1.0.0-beta.5:
-  version "1.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.5.tgz#2dceb229f8a21f0467c9a76dace0bde830929541"
-  integrity sha512-q63klY0wfgwNv1iGuaR7CaLvro8VQynmuOqpD1RJYiIMEIkGms45+pA96KbesUC1vjDAOmWGSVy6FxCyqxjbBw==
+  version "1.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.6.tgz#a257fdde9eda999f856f2c2d142d11dbc2d778fe"
+  integrity sha512-17CsCSLou2py9NH0ITk0Snao1ibAz+XHv+N5sJgM81OaiaAp9JBG1kO7xR16pto4l2NnQOBItYfxbMDMDhv6cg==
   dependencies:
     minimatch "^3.0.4"
 
-cdk8s@1.0.0-beta.54, cdk8s@^1.0.0-beta.53:
+cdk8s@1.0.0-beta.54:
   version "1.0.0-beta.54"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.0.0-beta.54.tgz#1206c4dc1e9f7ffda89cbbaaf2a99be3249cc20f"
   integrity sha512-m7rrz0zJPut/BUeVWnK19kBs3lcZZ+laVfBU731W9X86G8j1qqFliVxuVk95/xr0culGje0NH2CgXfUGrI90bA==
+  dependencies:
+    fast-json-patch "^2.2.1"
+    follow-redirects "^1.14.4"
+    yaml "2.0.0-7"
+
+cdk8s@^1.0.0-beta.53:
+  version "1.0.0-beta.55"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.0.0-beta.55.tgz#d07af27a69294c4f0a330086ce8d483a9ae62fe1"
+  integrity sha512-NU8wr+fBcLX4nU3YGS5U5NpmljglSLPSd9/qgzII7yrmRu4lngx2daZCKi2mOxfjCIeYgyPHpJ4VOop6ntf2lg==
   dependencies:
     fast-json-patch "^2.2.1"
     follow-redirects "^1.14.4"
@@ -5733,9 +5742,9 @@ sprintf-js@~1.0.2:
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 sscaff@^1.2.84:
-  version "1.2.84"
-  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.84.tgz#ccabc10c91b0ee4415f4530cec2f789dce405eb2"
-  integrity sha512-M2CkfbEzeatkbSX65dkqeQ0FM47h3wdefyi+LY7MP7+hREQ7vr9eDz5xyXPwga/1P5c/UPikDZuoEjo2ZVJjtQ==
+  version "1.2.85"
+  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.85.tgz#54bb748e2f2f536c68a6b274a6c2a472ca1438b2"
+  integrity sha512-SJqw5nwHNDsH6NevVODqvMIytAd0HfdEkmPOdVbvA6ij5aX/qoo5Y9PDcAvwul9E/FiQEAAavJAiKoHeTx6T+A==
 
 sshpk@^1.7.0:
   version "1.16.1"
