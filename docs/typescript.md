@@ -254,23 +254,37 @@ public addVolume(volume: Volume)
 
 ---
 
-##### `expose` <a name="cdk8s-plus-22.Deployment.expose"></a>
+##### `exposeViaIngress` <a name="cdk8s-plus-22.Deployment.exposeViaIngress"></a>
 
 ```typescript
-public expose(port: number, options?: ExposeOptions)
+public exposeViaIngress(path: string, options?: ExposeDeploymentViaIngressOptions)
 ```
 
-###### `port`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.port"></a>
+###### `path`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.path"></a>
 
-- *Type:* `number`
+- *Type:* `string`
 
-The port number the service will bind to.
+The path to expose the deployment under.
 
 ---
 
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Deployment.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.ExposeOptions`](#cdk8s-plus-22.ExposeOptions)
+- *Type:* [`cdk8s-plus-22.ExposeDeploymentViaIngressOptions`](#cdk8s-plus-22.ExposeDeploymentViaIngressOptions)
+
+Additional options.
+
+---
+
+##### `exposeViaService` <a name="cdk8s-plus-22.Deployment.exposeViaService"></a>
+
+```typescript
+public exposeViaService(options?: ExposeDeploymentViaServiceOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Deployment.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.ExposeDeploymentViaServiceOptions`](#cdk8s-plus-22.ExposeDeploymentViaServiceOptions)
 
 Options to determine details of the service and port exposed.
 
@@ -1109,6 +1123,28 @@ The label key.
 - *Type:* `string`
 
 The label value.
+
+---
+
+##### `exposeViaIngress` <a name="cdk8s-plus-22.Service.exposeViaIngress"></a>
+
+```typescript
+public exposeViaIngress(path: string, options?: ExposeServiceViaIngressOptions)
+```
+
+###### `path`<sup>Required</sup> <a name="cdk8s-plus-22.Service.parameter.path"></a>
+
+- *Type:* `string`
+
+The path to expose the service under.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Service.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.ExposeServiceViaIngressOptions`](#cdk8s-plus-22.ExposeServiceViaIngressOptions)
+
+Additional options.
 
 ---
 
@@ -2226,19 +2262,19 @@ Specify whether the Secret or its key must be defined.
 
 ---
 
-### ExposeOptions <a name="cdk8s-plus-22.ExposeOptions"></a>
+### ExposeDeploymentViaIngressOptions <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions"></a>
 
-Options for exposing a deployment via a service.
+Options for exposing a deployment via an ingress.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```typescript
-import { ExposeOptions } from 'cdk8s-plus-22'
+import { ExposeDeploymentViaIngressOptions } from 'cdk8s-plus-22'
 
-const exposeOptions: ExposeOptions = { ... }
+const exposeDeploymentViaIngressOptions: ExposeDeploymentViaIngressOptions = { ... }
 ```
 
-##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -2253,7 +2289,20 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.protocol"></a>
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* The port of the single container in the deployment. If it cannot be retrieved, an error is thrown.
+
+The port number the service will bind to.
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.protocol"></a>
 
 ```typescript
 public readonly protocol: Protocol;
@@ -2268,7 +2317,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `serviceType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.serviceType"></a>
+##### `serviceType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.serviceType"></a>
 
 ```typescript
 public readonly serviceType: ServiceType;
@@ -2281,7 +2330,7 @@ The type of the exposed service.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.targetPort"></a>
 
 ```typescript
 public readonly targetPort: number;
@@ -2291,6 +2340,151 @@ public readonly targetPort: number;
 - *Default:* The port of the first container in the deployment (ie. containers[0].port)
 
 The port number the service will redirect to.
+
+---
+
+##### `ingress`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.ingress"></a>
+
+```typescript
+public readonly ingress: Ingress;
+```
+
+- *Type:* [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress)
+- *Default:* An ingress will be automatically created.
+
+The ingress to add rules to.
+
+---
+
+##### `pathType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.pathType"></a>
+
+```typescript
+public readonly pathType: HttpIngressPathType;
+```
+
+- *Type:* [`cdk8s-plus-22.HttpIngressPathType`](#cdk8s-plus-22.HttpIngressPathType)
+- *Default:* HttpIngressPathType.PREFIX
+
+The type of the path.
+
+---
+
+### ExposeDeploymentViaServiceOptions <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions"></a>
+
+Options for exposing a deployment via a service.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ExposeDeploymentViaServiceOptions } from 'cdk8s-plus-22'
+
+const exposeDeploymentViaServiceOptions: ExposeDeploymentViaServiceOptions = { ... }
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* undefined Uses the system generated name.
+
+The name of the service to expose.
+
+This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* The port of the single container in the deployment. If it cannot be retrieved, an error is thrown.
+
+The port number the service will bind to.
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.protocol"></a>
+
+```typescript
+public readonly protocol: Protocol;
+```
+
+- *Type:* [`cdk8s-plus-22.Protocol`](#cdk8s-plus-22.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+##### `serviceType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.serviceType"></a>
+
+```typescript
+public readonly serviceType: ServiceType;
+```
+
+- *Type:* [`cdk8s-plus-22.ServiceType`](#cdk8s-plus-22.ServiceType)
+- *Default:* ClusterIP.
+
+The type of the exposed service.
+
+---
+
+##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.targetPort"></a>
+
+```typescript
+public readonly targetPort: number;
+```
+
+- *Type:* `number`
+- *Default:* The port of the first container in the deployment (ie. containers[0].port)
+
+The port number the service will redirect to.
+
+---
+
+### ExposeServiceViaIngressOptions <a name="cdk8s-plus-22.ExposeServiceViaIngressOptions"></a>
+
+Options for exposing a service using an ingress.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ExposeServiceViaIngressOptions } from 'cdk8s-plus-22'
+
+const exposeServiceViaIngressOptions: ExposeServiceViaIngressOptions = { ... }
+```
+
+##### `ingress`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeServiceViaIngressOptions.property.ingress"></a>
+
+```typescript
+public readonly ingress: Ingress;
+```
+
+- *Type:* [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress)
+- *Default:* An ingress will be automatically created.
+
+The ingress to add rules to.
+
+---
+
+##### `pathType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeServiceViaIngressOptions.property.pathType"></a>
+
+```typescript
+public readonly pathType: HttpIngressPathType;
+```
+
+- *Type:* [`cdk8s-plus-22.HttpIngressPathType`](#cdk8s-plus-22.HttpIngressPathType)
+- *Default:* HttpIngressPathType.PREFIX
+
+The type of the path.
 
 ---
 
