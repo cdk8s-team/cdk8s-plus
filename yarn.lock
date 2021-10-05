@@ -1434,16 +1434,7 @@ cdk8s-plus-22@^1.0.0-beta.8:
   dependencies:
     minimatch "^3.0.4"
 
-cdk8s@1.0.0-beta.51:
-  version "1.0.0-beta.51"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.0.0-beta.51.tgz#ad9db313ed9d765fda5f68b7b4d7de28c07d219a"
-  integrity sha512-ElN6NADKQUTbl5xS7clxFYSFqs02CmFYMc3xGhPHETnWGpL1teiWjxTfgjl2UUCInd2r3RyU60nTD2B4gYbmMQ==
-  dependencies:
-    fast-json-patch "^2.2.1"
-    follow-redirects "^1.14.4"
-    yaml "2.0.0-7"
-
-cdk8s@^1.0.0-beta.56:
+cdk8s@1.0.0-beta.57, cdk8s@^1.0.0-beta.56:
   version "1.0.0-beta.57"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.0.0-beta.57.tgz#e403d895abf2d4d804c0be6721a3a8e129db3bc8"
   integrity sha512-AP0T2s0HubyA1riQ5m6c7ccwMqREhFD6xMZSmv4PTEfhMsx6IhUOjWnRMvrYm9MBMB47Gt1xxeUmKIq3EkurNw==
@@ -1666,12 +1657,7 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-constructs@3.3.152:
-  version "3.3.152"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.152.tgz#f24a09fcab1d10db2eaa51ee20c24c5611b80056"
-  integrity sha512-66ByZlrzPUeY6BQ7Zs4hX81TutaKgqiieZxP7ln9voo4e6Py9mMrx/4PVgl+bwKQNw0m4ndtbkdZexuS16tiMw==
-
-constructs@^3.3.156:
+constructs@3.3.156, constructs@^3.3.156:
   version "3.3.156"
   resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.156.tgz#9fc0a2e9806d3f4d3be18af03cd3c2cab3db97e8"
   integrity sha512-rlgYsGqXLi3tMSVz251MvzFjXXBCrGPy/8pIfjeh2fuBjPsvIx9I6AMNHnlhEVaEt7YRPHHuYKoVs1488ifAWA==
@@ -5747,9 +5733,9 @@ sprintf-js@~1.0.2:
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 sscaff@^1.2.85:
-  version "1.2.85"
-  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.85.tgz#54bb748e2f2f536c68a6b274a6c2a472ca1438b2"
-  integrity sha512-SJqw5nwHNDsH6NevVODqvMIytAd0HfdEkmPOdVbvA6ij5aX/qoo5Y9PDcAvwul9E/FiQEAAavJAiKoHeTx6T+A==
+  version "1.2.86"
+  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.86.tgz#51cfc828f854124f2bc21fe0a619136b4d7058a3"
+  integrity sha512-0Oge9CHV07JDEeSxNIiA5BKwpKQPfn26kqr7V8B3iD+mDJ/Rx8Vv6yYsqznZtlgkG841IRSrVQvGmfM2IF9igQ==
 
 sshpk@^1.7.0:
   version "1.16.1"
