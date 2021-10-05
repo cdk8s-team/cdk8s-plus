@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "cdk8s": "1.0.0-beta.56",
-    "cdk8s-cli": "^1.0.0-beta.64",
+    "cdk8s-cli": "^1.0.0-beta.65",
     "constructs": "3.3.156",
     "eslint": "^7.32.0",
     "eslint-import-resolver-node": "^0.3.6",
@@ -58,7 +58,7 @@
     "jsii-pacmak": "^1.36.0",
     "json-schema": "^0.3.0",
     "npm-check-updates": "^11",
-    "projen": "^0.29.4",
+    "projen": "^0.29.5",
     "standard-version": "^9",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.3"
