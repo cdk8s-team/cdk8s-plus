@@ -157,12 +157,7 @@ targeting an older kubernetes version. For example, `IngressV1Beta` is not
 available in cdk8s-plus-22, so changing it would require making a change to
 cdk8s-plus-21 and cdk8s-plus-20. If you need to make a pull request to a version
 of cdk8s-plus that isn't the latest version, then **the branch name of your pull
-request must contain `k8s-XX-`** where XX is the version number. For example,
-to make a pull request to cdk8s-plus-21, you could name the branch
-`k8s-21-bug-fix`. When you submit the pull request on GitHub, make sure the
-target branch matches your branch name (in this example, it would be
-`k8s-21/main`). The pull request should target the latest branch that your fix
-applies for - so in the example above, only a PR to `k8s-21/main` is required,
+request must match the [`k8s-(\d\d)\W`](https://regex101.com/r/AfFlZg/1) regex. For example, to make a pull request to cdk8s-plus-21, you could name the branch `k8s-21/bug-fix` (`k8s-21-bug-fix` would also work). When you submit the pull request on GitHub, make sure the target branch matches your branch name (in this example, it would be `k8s-21/main`). The pull request should target the latest branch that your fix applies for - so in the example above, only a PR to `k8s-21/main` is required,
 and we will backport it to `k8s-20/main`.
 
 ### Developer Certificate Of Origin (DCO)
