@@ -2,19 +2,19 @@ const child = require('child_process');
 const path = require('path');
 const { JsiiProject } = require('projen');
 
-const DEFAULT_K8S_VERSION = 22;
+const DEFAULT_K8S_VERSION = '22';
 const SPEC_VERSION = k8sVersion();
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 function k8sVersion() {
   const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  if (branch.startsWith('k8s-') && branch.length >= 6) {
-    return branch.substring(4, 6);
-  } else {
-    // if the branch name doesn't start with k8s-XX, we're probably running on a fork
-    // so assume that we are building for the latest version, i.e. 1.22.0
-    return `${DEFAULT_K8S_VERSION}`;
+  const match = branch.match(/k8s-(\d\d)/);
+  if (!match) {
+    // if we cannot determine the spec version from the branch name, we're probably targetting
+    // the default spec version.
+    return DEFAULT_K8S_VERSION;
   }
+  return match[1];
 }
 
 const project = new JsiiProject({

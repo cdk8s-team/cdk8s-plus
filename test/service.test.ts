@@ -1,6 +1,7 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
+import * as k8s from '../src/imports/k8s';
 
 test('defaultChild', () => {
 
@@ -93,7 +94,7 @@ test('Cannot add a deployment if the deployment does not have any containers', (
   const deployment = new kplus.Deployment(chart, 'dep');
 
   // THEN
-  expect(() => service.addDeployment(deployment, 1122))
+  expect(() => service.addDeployment(deployment))
     .toThrow(/Cannot expose a deployment without containers/);
 
 });
@@ -121,15 +122,17 @@ test('Can associate a deployment with an existing service', () => {
   const deployment = new kplus.Deployment(chart, 'dep');
   deployment.addContainer({ image: 'foo', port: 7777 });
 
-  service.addDeployment(deployment, 1122);
+  service.addDeployment(deployment);
 
   const expectedSelector = { 'cdk8s.deployment': 'test-dep-c8cc9f8f' };
 
-  const deploymentSpec = Testing.synth(chart)[1].spec;
-  const serviceSpec = Testing.synth(chart)[0].spec;
+  const deploymentSpec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
+  const serviceSpec: k8s.ServiceSpec = Testing.synth(chart)[0].spec;
   expect(deploymentSpec.selector.matchLabels).toEqual(expectedSelector);
   expect(deploymentSpec.template.metadata?.labels).toEqual(expectedSelector);
   expect(serviceSpec.selector).toEqual(expectedSelector);
+  expect(serviceSpec.ports![0].port).toEqual(7777);
+  expect(serviceSpec.ports![0].targetPort).toEqual(7777);
 
 });
 
@@ -143,7 +146,7 @@ test('Cannot add a deployment if it does not have a label selector', () => {
     containers: [{ image: 'foo' }],
   });
 
-  expect(() => service.addDeployment(deployment, 1122))
+  expect(() => service.addDeployment(deployment, { port: 1122 }))
     .toThrow(/deployment does not have a label selector/);
 
 });
@@ -159,7 +162,7 @@ test('Cannot add a deployment if a selector is already defined for this service'
   service.addSelector('random', 'selector');
 
   // THEN
-  expect(() => service.addDeployment(deployment, 1010))
+  expect(() => service.addDeployment(deployment, { port: 1010 }))
     .toThrow(/a selector is already defined for this service. cannot add a deployment/);
 
 });

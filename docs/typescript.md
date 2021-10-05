@@ -254,37 +254,15 @@ public addVolume(volume: Volume)
 
 ---
 
-##### `exposeViaIngress` <a name="cdk8s-plus-22.Deployment.exposeViaIngress"></a>
+##### `expose` <a name="cdk8s-plus-22.Deployment.expose"></a>
 
 ```typescript
-public exposeViaIngress(path: string, options?: ExposeDeploymentViaIngressOptions)
-```
-
-###### `path`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.path"></a>
-
-- *Type:* `string`
-
-The path to expose the deployment under.
-
----
-
-###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Deployment.parameter.options"></a>
-
-- *Type:* [`cdk8s-plus-22.ExposeDeploymentViaIngressOptions`](#cdk8s-plus-22.ExposeDeploymentViaIngressOptions)
-
-Additional options.
-
----
-
-##### `exposeViaService` <a name="cdk8s-plus-22.Deployment.exposeViaService"></a>
-
-```typescript
-public exposeViaService(options?: ExposeDeploymentViaServiceOptions)
+public expose(options?: ExposeOptions)
 ```
 
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Deployment.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.ExposeDeploymentViaServiceOptions`](#cdk8s-plus-22.ExposeDeploymentViaServiceOptions)
+- *Type:* [`cdk8s-plus-22.ExposeOptions`](#cdk8s-plus-22.ExposeOptions)
 
 Options to determine details of the service and port exposed.
 
@@ -1077,7 +1055,7 @@ new Service(scope: Construct, id: string, props?: ServiceProps)
 ##### `addDeployment` <a name="cdk8s-plus-22.Service.addDeployment"></a>
 
 ```typescript
-public addDeployment(deployment: Deployment, port: number, options?: ServicePortOptions)
+public addDeployment(deployment: Deployment, options?: AddDeploymentOptions)
 ```
 
 ###### `deployment`<sup>Required</sup> <a name="cdk8s-plus-22.Service.parameter.deployment"></a>
@@ -1088,17 +1066,9 @@ The deployment to expose.
 
 ---
 
-###### `port`<sup>Required</sup> <a name="cdk8s-plus-22.Service.parameter.port"></a>
-
-- *Type:* `number`
-
-The external port.
-
----
-
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Service.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.ServicePortOptions`](#cdk8s-plus-22.ServicePortOptions)
+- *Type:* [`cdk8s-plus-22.AddDeploymentOptions`](#cdk8s-plus-22.AddDeploymentOptions)
 
 Optional settings for the port.
 
@@ -1536,6 +1506,96 @@ The service account used to run this pod.
 
 
 ## Structs <a name="Structs"></a>
+
+### AddDeploymentOptions <a name="cdk8s-plus-22.AddDeploymentOptions"></a>
+
+Options to add a deployment to a service.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AddDeploymentOptions } from 'cdk8s-plus-22'
+
+const addDeploymentOptions: AddDeploymentOptions = { ... }
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.AddDeploymentOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The name of this port within the service.
+
+This must be a DNS_LABEL. All
+ports within a ServiceSpec must have unique names. This maps to the 'Name'
+field in EndpointPort objects. Optional if only one ServicePort is defined
+on this service.
+
+---
+
+##### `nodePort`<sup>Optional</sup> <a name="cdk8s-plus-22.AddDeploymentOptions.property.nodePort"></a>
+
+```typescript
+public readonly nodePort: number;
+```
+
+- *Type:* `number`
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
+
+The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
+
+Usually assigned by the system. If specified, it will be
+allocated to the service if unused or else creation of the service will
+fail. Default is to auto-allocate a port if the ServiceType of this Service
+requires one.
+
+> https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.AddDeploymentOptions.property.protocol"></a>
+
+```typescript
+public readonly protocol: Protocol;
+```
+
+- *Type:* [`cdk8s-plus-22.Protocol`](#cdk8s-plus-22.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.AddDeploymentOptions.property.targetPort"></a>
+
+```typescript
+public readonly targetPort: number;
+```
+
+- *Type:* `number`
+- *Default:* The value of `port` will be used.
+
+The port number the service will redirect to.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.AddDeploymentOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* Copied from the first container of the deployment.
+
+The port number the service will bind to.
+
+---
 
 ### AddDirectoryOptions <a name="cdk8s-plus-22.AddDirectoryOptions"></a>
 
@@ -2262,126 +2322,19 @@ Specify whether the Secret or its key must be defined.
 
 ---
 
-### ExposeDeploymentViaIngressOptions <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions"></a>
-
-Options for exposing a deployment via an ingress.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```typescript
-import { ExposeDeploymentViaIngressOptions } from 'cdk8s-plus-22'
-
-const exposeDeploymentViaIngressOptions: ExposeDeploymentViaIngressOptions = { ... }
-```
-
-##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* `string`
-- *Default:* undefined Uses the system generated name.
-
-The name of the service to expose.
-
-This will be set on the Service.metadata and must be a DNS_LABEL
-
----
-
-##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.port"></a>
-
-```typescript
-public readonly port: number;
-```
-
-- *Type:* `number`
-- *Default:* The port of the single container in the deployment. If it cannot be retrieved, an error is thrown.
-
-The port number the service will bind to.
-
----
-
-##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.protocol"></a>
-
-```typescript
-public readonly protocol: Protocol;
-```
-
-- *Type:* [`cdk8s-plus-22.Protocol`](#cdk8s-plus-22.Protocol)
-- *Default:* Protocol.TCP
-
-The IP protocol for this port.
-
-Supports "TCP", "UDP", and "SCTP". Default is TCP.
-
----
-
-##### `serviceType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.serviceType"></a>
-
-```typescript
-public readonly serviceType: ServiceType;
-```
-
-- *Type:* [`cdk8s-plus-22.ServiceType`](#cdk8s-plus-22.ServiceType)
-- *Default:* ClusterIP.
-
-The type of the exposed service.
-
----
-
-##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.targetPort"></a>
-
-```typescript
-public readonly targetPort: number;
-```
-
-- *Type:* `number`
-- *Default:* The port of the first container in the deployment (ie. containers[0].port)
-
-The port number the service will redirect to.
-
----
-
-##### `ingress`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.ingress"></a>
-
-```typescript
-public readonly ingress: Ingress;
-```
-
-- *Type:* [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress)
-- *Default:* An ingress will be automatically created.
-
-The ingress to add rules to.
-
----
-
-##### `pathType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaIngressOptions.property.pathType"></a>
-
-```typescript
-public readonly pathType: HttpIngressPathType;
-```
-
-- *Type:* [`cdk8s-plus-22.HttpIngressPathType`](#cdk8s-plus-22.HttpIngressPathType)
-- *Default:* HttpIngressPathType.PREFIX
-
-The type of the path.
-
----
-
-### ExposeDeploymentViaServiceOptions <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions"></a>
+### ExposeOptions <a name="cdk8s-plus-22.ExposeOptions"></a>
 
 Options for exposing a deployment via a service.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```typescript
-import { ExposeDeploymentViaServiceOptions } from 'cdk8s-plus-22'
+import { ExposeOptions } from 'cdk8s-plus-22'
 
-const exposeDeploymentViaServiceOptions: ExposeDeploymentViaServiceOptions = { ... }
+const exposeOptions: ExposeOptions = { ... }
 ```
 
-##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -2396,20 +2349,20 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.port"></a>
 
 ```typescript
 public readonly port: number;
 ```
 
 - *Type:* `number`
-- *Default:* The port of the single container in the deployment. If it cannot be retrieved, an error is thrown.
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
 
-The port number the service will bind to.
+The port that the service should serve on.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.protocol"></a>
 
 ```typescript
 public readonly protocol: Protocol;
@@ -2424,7 +2377,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `serviceType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.serviceType"></a>
+##### `serviceType`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.serviceType"></a>
 
 ```typescript
 public readonly serviceType: ServiceType;
@@ -2437,7 +2390,7 @@ The type of the exposed service.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeDeploymentViaServiceOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="cdk8s-plus-22.ExposeOptions.property.targetPort"></a>
 
 ```typescript
 public readonly targetPort: number;
@@ -3659,8 +3612,7 @@ public readonly nodePort: number;
 ```
 
 - *Type:* `number`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
@@ -3747,8 +3699,7 @@ public readonly nodePort: number;
 ```
 
 - *Type:* `number`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 

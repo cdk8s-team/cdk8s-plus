@@ -39,9 +39,9 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
 export interface ExposeDeploymentViaServiceOptions {
 
   /**
-   * The port number the service will bind to.
+   * The port that the service should serve on.
    *
-   * @default - The port of the single container in the deployment. If it cannot be retrieved, an error is thrown.
+   * @default - Copied from the container of the deployment. If a port could not be determined, throws an error.
    */
   readonly port?: number;
 
@@ -78,9 +78,7 @@ export interface ExposeDeploymentViaServiceOptions {
 /**
  * Options for exposing a deployment via an ingress.
  */
-export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, ExposeServiceViaIngressOptions {
-
-}
+export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, ExposeServiceViaIngressOptions {}
 
 /**
 *
@@ -190,7 +188,6 @@ export class Deployment extends Resource implements IPodTemplate {
    *
    * This is equivalent to running `kubectl expose deployment <deployment-name>`.
    *
-   * @param port The port number the service will bind to.
    * @param options Options to determine details of the service and port exposed.
    */
   public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): Service {
@@ -198,40 +195,17 @@ export class Deployment extends Resource implements IPodTemplate {
       metadata: options.name ? { name: options.name } : undefined,
       type: options.serviceType ?? ServiceType.CLUSTER_IP,
     });
-
-    const containers = this.containers;
-
-    let port = options.port;
-
-    if (!port) {
-
-      if (containers.length === 0) {
-        throw new Error('A deployment with no containers cannot be exposed');
-      }
-
-      if (containers.length > 1) {
-        throw new Error('Cannot determine which port to expose since multiple containers exist. Pass the `port` option to specify which port to expose.');
-      }
-
-      if (!containers[0].port) {
-        throw new Error('Cannot expose a deployment with a single container that doesnt specify a port. Either configure a container port or pass the `port` option to specify which port to expose.');
-      }
-
-      port = containers[0].port;
-
-    }
-
-    service.addDeployment(this, port, { protocol: options.protocol, targetPort: options.targetPort });
+    service.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
     return service;
   }
 
   /**
-   * Expose a deployment via an ingress using the specified path.
+   * Expose a deployment via an ingress.
    *
-   * @param path The path to expose the deployment under.
+   * This will first expose the deployment with a service, and then expose the service via an ingress.
+   *
+   * @param path The ingress path to register under.
    * @param options Additional options.
-   *
-   * @returns The `Ingress` resource that was used.
    */
   public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): Ingress {
     const service = this.exposeViaService(options);

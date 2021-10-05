@@ -129,6 +129,18 @@ export enum ServiceType {
 }
 
 /**
+ * Options to add a deployment to a service.
+ */
+export interface AddDeploymentOptions extends ServicePortOptions {
+  /**
+   * The port number the service will bind to.
+   *
+   * @default - Copied from the first container of the deployment.
+   */
+  readonly port?: number;
+}
+
+/**
  * An abstract way to expose an application running on a set of Pods as a network service.
  * With Kubernetes you don't need to modify your application to use an unfamiliar service discovery mechanism.
  * Kubernetes gives Pods their own IP addresses and a single DNS name for a set of Pods, and can load-balance across them.
@@ -236,13 +248,22 @@ export class Service extends Resource {
    * The deployment's `labelSelector` will be used to select pods.
    *
    * @param deployment The deployment to expose
-   * @param port The external port
    * @param options Optional settings for the port.
    */
-  public addDeployment(deployment: Deployment, port: number, options: ServicePortOptions = {}) {
+  public addDeployment(deployment: Deployment, options: AddDeploymentOptions = {}) {
     const containers = deployment.containers;
     if (containers.length === 0) {
       throw new Error('Cannot expose a deployment without containers');
+    }
+
+    // just a PoC, we assume the first container is the main one.
+    // TODO: figure out what the correct thing to do here.
+    const container = containers[0];
+    const port = options.port ?? container.port;
+    const targetPort = options.targetPort ?? containers[0].port;
+
+    if (!port) {
+      throw new Error('Cannot determine port. Either pass `port` in options or configure a port on the first container of the deployment');
     }
 
     const selector = Object.entries(deployment.labelSelector);
@@ -258,13 +279,7 @@ export class Service extends Resource {
       this.addSelector(k, v);
     }
 
-    this.serve(port, {
-      ...options,
-
-      // just a PoC, we assume the first container is the main one.
-      // TODO: figure out what the correct thing to do here.
-      targetPort: options.targetPort ?? containers[0].port,
-    });
+    this.serve(port, { ...options, targetPort });
   }
 
   /**
@@ -284,7 +299,7 @@ export class Service extends Resource {
    * @param port The port definition.
    */
   public serve(port: number, options: ServicePortOptions = { }) {
-    this._ports.push({ port, ...options });
+    this._ports.push({ ...options, port });
   }
 
   /**
@@ -350,8 +365,7 @@ export interface ServicePortOptions {
    *
    * @see https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
    *
-   * @default to auto-allocate a port if the ServiceType of this Service
-   * requires one.
+   * @default - auto-allocate a port if the ServiceType of this Service requires one.
    */
   readonly nodePort?: number;
 

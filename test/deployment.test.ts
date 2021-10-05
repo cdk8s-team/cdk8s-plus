@@ -100,50 +100,7 @@ test('Can be exposed as via service', () => {
 
 });
 
-test('expose throws when port is not passed and no containers exist', () => {
-
-  const chart = Testing.chart();
-
-  const deployment = new kplus.Deployment(chart, 'Deployment');
-
-  expect(() => deployment.exposeViaService()).toThrowError('A deployment with no containers cannot be exposed');
-
-});
-
-test('expose throws when port is not passed and multiple containers exist', () => {
-
-  const chart = Testing.chart();
-
-  const deployment = new kplus.Deployment(chart, 'Deployment', {
-    containers: [
-      {
-        image: 'image',
-        port: 9300,
-      },
-      {
-        image: 'image2',
-        port: 9300,
-      },
-    ],
-  });
-
-  expect(() => deployment.exposeViaService()).toThrowError('Cannot determine which port to expose since multiple containers exist');
-
-});
-
-test('expose throws when port is not passed and container doesnt specify port', () => {
-
-  const chart = Testing.chart();
-
-  const deployment = new kplus.Deployment(chart, 'Deployment', {
-    containers: [{ image: 'image' }],
-  });
-
-  expect(() => deployment.exposeViaService()).toThrowError('Cannot expose a deployment with a single container that doesnt specify a port');
-
-});
-
-test('can be exposed via an ingress', () => {
+test('Can be exposed as via ingress', () => {
 
   const chart = Testing.chart();
 
@@ -157,8 +114,8 @@ test('can be exposed via an ingress', () => {
   });
 
   deployment.exposeViaIngress('/hello');
-  expect(Testing.synth(chart)).toMatchSnapshot();
 
+  expect(Testing.synth(chart)).toMatchSnapshot();
 });
 
 test('Expose uses the correct default values', () => {
@@ -179,6 +136,7 @@ test('Expose uses the correct default values', () => {
   const spec = Testing.synth(chart)[1].spec;
   expect(spec.type).toEqual('ClusterIP');
   expect(spec.ports![0].targetPort).toEqual(9300);
+  expect(spec.ports![0].port).toEqual(9300);
 
 });
 
@@ -222,9 +180,7 @@ test('Cannot be exposed if there are no containers in spec', () => {
 
   const deployment = new kplus.Deployment(chart, 'Deployment');
 
-  expect(() => deployment.exposeViaService({ port: 9000 })).toThrowError(
-    'Cannot expose a deployment without containers',
-  );
+  expect(() => deployment.exposeViaService()).toThrowError('Cannot expose a deployment without containers');
 });
 
 test('Synthesizes spec lazily', () => {
