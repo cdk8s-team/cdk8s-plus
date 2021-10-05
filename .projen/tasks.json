@@ -304,7 +304,7 @@
         "RELEASE": "true",
         "MAJOR": "1",
         "PRERELEASE": "beta",
-        "PREFIX": "cdk8s-plus-22/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
       },
       "steps": [
         {
