@@ -560,19 +560,30 @@ def add_volume(
 
 ---
 
-##### `expose` <a name="cdk8s_plus_22.Deployment.expose"></a>
+##### `expose_via_ingress` <a name="cdk8s_plus_22.Deployment.expose_via_ingress"></a>
 
 ```python
-def expose(
+def expose_via_ingress(
+  path: str,
   name: str = None,
   port: typing.Union[int, float] = None,
   protocol: Protocol = None,
   service_type: ServiceType = None,
-  target_port: typing.Union[int, float] = None
+  target_port: typing.Union[int, float] = None,
+  ingress: Ingress = None,
+  path_type: HttpIngressPathType = None
 )
 ```
 
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.name"></a>
+###### `path`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.path"></a>
+
+- *Type:* `str`
+
+The ingress path to register under.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.name"></a>
 
 - *Type:* `str`
 - *Default:* undefined Uses the system generated name.
@@ -583,7 +594,7 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.port"></a>
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.port"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
@@ -592,7 +603,7 @@ The port that the service should serve on.
 
 ---
 
-###### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.protocol"></a>
+###### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.protocol"></a>
 
 - *Type:* [`cdk8s_plus_22.Protocol`](#cdk8s_plus_22.Protocol)
 - *Default:* Protocol.TCP
@@ -603,7 +614,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-###### `service_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.service_type"></a>
+###### `service_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.service_type"></a>
 
 - *Type:* [`cdk8s_plus_22.ServiceType`](#cdk8s_plus_22.ServiceType)
 - *Default:* ClusterIP.
@@ -612,7 +623,86 @@ The type of the exposed service.
 
 ---
 
-###### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.target_port"></a>
+###### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.target_port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* The port of the first container in the deployment (ie. containers[0].port)
+
+The port number the service will redirect to.
+
+---
+
+###### `ingress`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.ingress"></a>
+
+- *Type:* [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress)
+- *Default:* An ingress will be automatically created.
+
+The ingress to add rules to.
+
+---
+
+###### `path_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.parameter.path_type"></a>
+
+- *Type:* [`cdk8s_plus_22.HttpIngressPathType`](#cdk8s_plus_22.HttpIngressPathType)
+- *Default:* HttpIngressPathType.PREFIX
+
+The type of the path.
+
+---
+
+##### `expose_via_service` <a name="cdk8s_plus_22.Deployment.expose_via_service"></a>
+
+```python
+def expose_via_service(
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  protocol: Protocol = None,
+  service_type: ServiceType = None,
+  target_port: typing.Union[int, float] = None
+)
+```
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* undefined Uses the system generated name.
+
+The name of the service to expose.
+
+This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
+
+The port that the service should serve on.
+
+---
+
+###### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.parameter.protocol"></a>
+
+- *Type:* [`cdk8s_plus_22.Protocol`](#cdk8s_plus_22.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+###### `service_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.parameter.service_type"></a>
+
+- *Type:* [`cdk8s_plus_22.ServiceType`](#cdk8s_plus_22.ServiceType)
+- *Default:* ClusterIP.
+
+The type of the exposed service.
+
+---
+
+###### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.parameter.target_port"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* The port of the first container in the deployment (ie. containers[0].port)
@@ -3847,25 +3937,27 @@ Specify whether the Secret or its key must be defined.
 
 ---
 
-### ExposeOptions <a name="cdk8s_plus_22.ExposeOptions"></a>
+### ExposeDeploymentViaIngressOptions <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions"></a>
 
-Options for exposing a deployment via a service.
+Options for exposing a deployment via an ingress.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```python
 import cdk8s_plus_22
 
-cdk8s_plus_22.ExposeOptions(
+cdk8s_plus_22.ExposeDeploymentViaIngressOptions(
   name: str = None,
   port: typing.Union[int, float] = None,
   protocol: Protocol = None,
   service_type: ServiceType = None,
-  target_port: typing.Union[int, float] = None
+  target_port: typing.Union[int, float] = None,
+  ingress: Ingress = None,
+  path_type: HttpIngressPathType = None
 )
 ```
 
-##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.name"></a>
 
 ```python
 name: str
@@ -3880,7 +3972,7 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.port"></a>
 
 ```python
 port: typing.Union[int, float]
@@ -3893,7 +3985,7 @@ The port that the service should serve on.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.protocol"></a>
 
 ```python
 protocol: Protocol
@@ -3908,7 +4000,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `service_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.property.service_type"></a>
+##### `service_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.service_type"></a>
 
 ```python
 service_type: ServiceType
@@ -3921,7 +4013,120 @@ The type of the exposed service.
 
 ---
 
-##### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.property.target_port"></a>
+##### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.target_port"></a>
+
+```python
+target_port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* The port of the first container in the deployment (ie. containers[0].port)
+
+The port number the service will redirect to.
+
+---
+
+##### `ingress`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.ingress"></a>
+
+```python
+ingress: Ingress
+```
+
+- *Type:* [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress)
+- *Default:* An ingress will be automatically created.
+
+The ingress to add rules to.
+
+---
+
+##### `path_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaIngressOptions.property.path_type"></a>
+
+```python
+path_type: HttpIngressPathType
+```
+
+- *Type:* [`cdk8s_plus_22.HttpIngressPathType`](#cdk8s_plus_22.HttpIngressPathType)
+- *Default:* HttpIngressPathType.PREFIX
+
+The type of the path.
+
+---
+
+### ExposeDeploymentViaServiceOptions <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions"></a>
+
+Options for exposing a deployment via a service.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ExposeDeploymentViaServiceOptions(
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  protocol: Protocol = None,
+  service_type: ServiceType = None,
+  target_port: typing.Union[int, float] = None
+)
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* undefined Uses the system generated name.
+
+The name of the service to expose.
+
+This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
+
+The port that the service should serve on.
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.property.protocol"></a>
+
+```python
+protocol: Protocol
+```
+
+- *Type:* [`cdk8s_plus_22.Protocol`](#cdk8s_plus_22.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+##### `service_type`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.property.service_type"></a>
+
+```python
+service_type: ServiceType
+```
+
+- *Type:* [`cdk8s_plus_22.ServiceType`](#cdk8s_plus_22.ServiceType)
+- *Default:* ClusterIP.
+
+The type of the exposed service.
+
+---
+
+##### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeDeploymentViaServiceOptions.property.target_port"></a>
 
 ```python
 target_port: typing.Union[int, float]
