@@ -1428,9 +1428,9 @@ cdk8s-cli@^1.0.0-beta.66:
     yargs "^15"
 
 cdk8s-plus-22@^1.0.0-beta.8:
-  version "1.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.10.tgz#70c2910a9f1bed4d2384e5ae84cfb8ef57df8a3a"
-  integrity sha512-WfUhwK9vkET5HnCl37NQxoBI8LYNkryf8PslBghsWuU860OziD2knxYI3wLrDkNrSewD+/pf6h2Ez9GZ0in1bQ==
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.11.tgz#44e6474b76cd426539e678e8073904dffac5c47d"
+  integrity sha512-cboz6hAS3Q+SZKympPmp5MDPueQiYvUeQ9AEeokRcmxX5utidU4s3jQPrclJIeHz0M6Ex9+7QxG2tGXKgxO8Uw==
   dependencies:
     minimatch "^3.0.4"
 
@@ -1657,10 +1657,10 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-constructs@3.3.156, constructs@^3.3.156:
-  version "3.3.156"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.156.tgz#9fc0a2e9806d3f4d3be18af03cd3c2cab3db97e8"
-  integrity sha512-rlgYsGqXLi3tMSVz251MvzFjXXBCrGPy/8pIfjeh2fuBjPsvIx9I6AMNHnlhEVaEt7YRPHHuYKoVs1488ifAWA==
+constructs@3.3.157, constructs@^3.3.156:
+  version "3.3.157"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.157.tgz#ea2f0abad0081bc7a3f21bf6f349f5bb333ef05f"
+  integrity sha512-5R7J0kr8M+71rODCa+AUWOiVKa7XGMU6VhoZn77wrHZmnF78Hmpme2qyZrcPLoU2pP874lKPpKiEX2AqMCcUHQ==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -5733,9 +5733,9 @@ sprintf-js@~1.0.2:
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 sscaff@^1.2.85:
-  version "1.2.85"
-  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.85.tgz#54bb748e2f2f536c68a6b274a6c2a472ca1438b2"
-  integrity sha512-SJqw5nwHNDsH6NevVODqvMIytAd0HfdEkmPOdVbvA6ij5aX/qoo5Y9PDcAvwul9E/FiQEAAavJAiKoHeTx6T+A==
+  version "1.2.86"
+  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.86.tgz#51cfc828f854124f2bc21fe0a619136b4d7058a3"
+  integrity sha512-0Oge9CHV07JDEeSxNIiA5BKwpKQPfn26kqr7V8B3iD+mDJ/Rx8Vv6yYsqznZtlgkG841IRSrVQvGmfM2IF9igQ==
 
 sshpk@^1.7.0:
   version "1.16.1"
