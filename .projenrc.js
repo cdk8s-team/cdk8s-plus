@@ -8,7 +8,7 @@ const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 function k8sVersion() {
   const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const match = branch.match(/k8s-(\d\d)-/);
+  const match = branch.match(/k8s-(\d\d)/);
   if (!match) {
     // if we cannot determine the spec version from the branch name, we're probably targetting
     // the default spec version.
