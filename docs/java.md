@@ -392,17 +392,9 @@ public addVolume(Volume volume)
 ##### `expose` <a name="org.cdk8s.plus22.Deployment.expose"></a>
 
 ```java
-public expose(java.lang.Number port)
-public expose(java.lang.Number port, ExposeOptions options)
+public expose()
+public expose(ExposeOptions options)
 ```
-
-###### `port`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.port"></a>
-
-- *Type:* `java.lang.Number`
-
-The port number the service will bind to.
-
----
 
 ###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.parameter.options"></a>
 
@@ -1538,8 +1530,8 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#publ
 ##### `addDeployment` <a name="org.cdk8s.plus22.Service.addDeployment"></a>
 
 ```java
-public addDeployment(Deployment deployment, java.lang.Number port)
-public addDeployment(Deployment deployment, java.lang.Number port, ServicePortOptions options)
+public addDeployment(Deployment deployment)
+public addDeployment(Deployment deployment, AddDeploymentOptions options)
 ```
 
 ###### `deployment`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.deployment"></a>
@@ -1550,17 +1542,9 @@ The deployment to expose.
 
 ---
 
-###### `port`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.port"></a>
-
-- *Type:* `java.lang.Number`
-
-The external port.
-
----
-
 ###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Service.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ServicePortOptions`](#org.cdk8s.plus22.ServicePortOptions)
+- *Type:* [`org.cdk8s.plus22.AddDeploymentOptions`](#org.cdk8s.plus22.AddDeploymentOptions)
 
 Optional settings for the port.
 
@@ -2107,6 +2091,102 @@ The service account used to run this pod.
 
 
 ## Structs <a name="Structs"></a>
+
+### AddDeploymentOptions <a name="org.cdk8s.plus22.AddDeploymentOptions"></a>
+
+Options to add a deployment to a service.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AddDeploymentOptions;
+
+AddDeploymentOptions.builder()
+//  .name(java.lang.String)
+//  .nodePort(java.lang.Number)
+//  .protocol(Protocol)
+//  .targetPort(java.lang.Number)
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+The name of this port within the service.
+
+This must be a DNS_LABEL. All
+ports within a ServiceSpec must have unique names. This maps to the 'Name'
+field in EndpointPort objects. Optional if only one ServicePort is defined
+on this service.
+
+---
+
+##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.nodePort"></a>
+
+```java
+public java.lang.Number getNodePort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
+
+The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
+
+Usually assigned by the system. If specified, it will be
+allocated to the service if unused or else creation of the service will
+fail. Default is to auto-allocate a port if the ServiceType of this Service
+requires one.
+
+> https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.protocol"></a>
+
+```java
+public Protocol getProtocol();
+```
+
+- *Type:* [`org.cdk8s.plus22.Protocol`](#org.cdk8s.plus22.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.targetPort"></a>
+
+```java
+public java.lang.Number getTargetPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* The value of `port` will be used.
+
+The port number the service will redirect to.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* Copied from the first container of the deployment.
+
+The port number the service will bind to.
+
+---
 
 ### AddDirectoryOptions <a name="org.cdk8s.plus22.AddDirectoryOptions"></a>
 
@@ -2893,6 +2973,7 @@ import org.cdk8s.plus22.ExposeOptions;
 
 ExposeOptions.builder()
 //  .name(java.lang.String)
+//  .port(java.lang.Number)
 //  .protocol(Protocol)
 //  .serviceType(ServiceType)
 //  .targetPort(java.lang.Number)
@@ -2911,6 +2992,19 @@ public java.lang.String getName();
 The name of the service to expose.
 
 This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
+
+The port that the service should serve on.
 
 ---
 
@@ -4207,8 +4301,7 @@ public java.lang.Number getNodePort();
 ```
 
 - *Type:* `java.lang.Number`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
@@ -4300,8 +4393,7 @@ public java.lang.Number getNodePort();
 ```
 
 - *Type:* `java.lang.Number`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
