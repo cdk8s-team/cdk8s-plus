@@ -90,7 +90,7 @@ test('Can be exposed as via service', () => {
     ],
   });
 
-  deployment.expose(9200, { serviceType: kplus.ServiceType.LOAD_BALANCER });
+  deployment.expose({ port: 9200, serviceType: kplus.ServiceType.LOAD_BALANCER });
 
   const spec = Testing.synth(chart)[1].spec;
   expect(spec.type).toEqual('LoadBalancer');
@@ -113,11 +113,12 @@ test('Expose uses the correct default values', () => {
     ],
   });
 
-  deployment.expose(9200);
+  deployment.expose();
 
   const spec = Testing.synth(chart)[1].spec;
   expect(spec.type).toEqual('ClusterIP');
   expect(spec.ports![0].targetPort).toEqual(9300);
+  expect(spec.ports![0].port).toEqual(9300);
 
 });
 
@@ -133,15 +134,13 @@ test('Expose can set service and port details', () => {
     ],
   });
 
-  deployment.expose(
-    9200,
-    {
-      name: 'test-srv',
-      serviceType: kplus.ServiceType.CLUSTER_IP,
-      protocol: kplus.Protocol.UDP,
-      targetPort: 9500,
-    },
-  );
+  deployment.expose({
+    port: 9200,
+    name: 'test-srv',
+    serviceType: kplus.ServiceType.CLUSTER_IP,
+    protocol: kplus.Protocol.UDP,
+    targetPort: 9500,
+  });
 
   const srv = Testing.synth(chart)[1];
   const spec = srv.spec;
@@ -163,9 +162,7 @@ test('Cannot be exposed if there are no containers in spec', () => {
 
   const deployment = new kplus.Deployment(chart, 'Deployment');
 
-  expect(() => deployment.expose(9000)).toThrowError(
-    'Cannot expose a deployment without containers',
-  );
+  expect(() => deployment.expose()).toThrowError('Cannot expose a deployment without containers');
 });
 
 test('Synthesizes spec lazily', () => {

@@ -564,21 +564,13 @@ def add_volume(
 
 ```python
 def expose(
-  port: typing.Union[int, float],
   name: str = None,
+  port: typing.Union[int, float] = None,
   protocol: Protocol = None,
   service_type: ServiceType = None,
   target_port: typing.Union[int, float] = None
 )
 ```
-
-###### `port`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-
-The port number the service will bind to.
-
----
 
 ###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.name"></a>
 
@@ -588,6 +580,15 @@ The port number the service will bind to.
 The name of the service to expose.
 
 This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
+
+The port that the service should serve on.
 
 ---
 
@@ -2118,11 +2119,11 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#publ
 ```python
 def add_deployment(
   deployment: Deployment,
-  port: typing.Union[int, float],
   name: str = None,
   node_port: typing.Union[int, float] = None,
   protocol: Protocol = None,
-  target_port: typing.Union[int, float] = None
+  target_port: typing.Union[int, float] = None,
+  port: typing.Union[int, float] = None
 )
 ```
 
@@ -2134,15 +2135,7 @@ The deployment to expose.
 
 ---
 
-###### `port`<sup>Required</sup> <a name="cdk8s_plus_22.Service.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-
-The external port.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ServicePortOptions.parameter.name"></a>
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.parameter.name"></a>
 
 - *Type:* `str`
 
@@ -2155,11 +2148,10 @@ on this service.
 
 ---
 
-###### `node_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ServicePortOptions.parameter.node_port"></a>
+###### `node_port`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.parameter.node_port"></a>
 
 - *Type:* `typing.Union[int, float]`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
@@ -2172,7 +2164,7 @@ requires one.
 
 ---
 
-###### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.ServicePortOptions.parameter.protocol"></a>
+###### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.parameter.protocol"></a>
 
 - *Type:* [`cdk8s_plus_22.Protocol`](#cdk8s_plus_22.Protocol)
 - *Default:* Protocol.TCP
@@ -2183,12 +2175,21 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-###### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ServicePortOptions.parameter.target_port"></a>
+###### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.parameter.target_port"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* The value of `port` will be used.
 
 The port number the service will redirect to.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Copied from the first container of the deployment.
+
+The port number the service will bind to.
 
 ---
 
@@ -2253,8 +2254,7 @@ on this service.
 ###### `node_port`<sup>Optional</sup> <a name="cdk8s_plus_22.ServicePortOptions.parameter.node_port"></a>
 
 - *Type:* `typing.Union[int, float]`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
@@ -2940,6 +2940,102 @@ The service account used to run this pod.
 
 
 ## Structs <a name="Structs"></a>
+
+### AddDeploymentOptions <a name="cdk8s_plus_22.AddDeploymentOptions"></a>
+
+Options to add a deployment to a service.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.AddDeploymentOptions(
+  name: str = None,
+  node_port: typing.Union[int, float] = None,
+  protocol: Protocol = None,
+  target_port: typing.Union[int, float] = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+The name of this port within the service.
+
+This must be a DNS_LABEL. All
+ports within a ServiceSpec must have unique names. This maps to the 'Name'
+field in EndpointPort objects. Optional if only one ServicePort is defined
+on this service.
+
+---
+
+##### `node_port`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.property.node_port"></a>
+
+```python
+node_port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
+
+The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
+
+Usually assigned by the system. If specified, it will be
+allocated to the service if unused or else creation of the service will
+fail. Default is to auto-allocate a port if the ServiceType of this Service
+requires one.
+
+> https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.property.protocol"></a>
+
+```python
+protocol: Protocol
+```
+
+- *Type:* [`cdk8s_plus_22.Protocol`](#cdk8s_plus_22.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+##### `target_port`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.property.target_port"></a>
+
+```python
+target_port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* The value of `port` will be used.
+
+The port number the service will redirect to.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.AddDeploymentOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Copied from the first container of the deployment.
+
+The port number the service will bind to.
+
+---
 
 ### AddDirectoryOptions <a name="cdk8s_plus_22.AddDirectoryOptions"></a>
 
@@ -3726,6 +3822,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.ExposeOptions(
   name: str = None,
+  port: typing.Union[int, float] = None,
   protocol: Protocol = None,
   service_type: ServiceType = None,
   target_port: typing.Union[int, float] = None
@@ -3744,6 +3841,19 @@ name: str
 The name of the service to expose.
 
 This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ExposeOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
+
+The port that the service should serve on.
 
 ---
 
@@ -5040,8 +5150,7 @@ node_port: typing.Union[int, float]
 ```
 
 - *Type:* `typing.Union[int, float]`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
@@ -5133,8 +5242,7 @@ node_port: typing.Union[int, float]
 ```
 
 - *Type:* `typing.Union[int, float]`
-- *Default:* to auto-allocate a port if the ServiceType of this Service
-requires one.
+- *Default:* auto-allocate a port if the ServiceType of this Service requires one.
 
 The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
 
