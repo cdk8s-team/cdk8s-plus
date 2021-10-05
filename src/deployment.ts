@@ -36,6 +36,14 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
  * Options for exposing a deployment via a service.
  */
 export interface ExposeOptions {
+
+  /**
+   * The port that the service should serve on.
+   *
+   * @default - Copied from the container of the deployment. If a port could not be determined, throws an error.
+   */
+  readonly port?: number;
+
   /**
    * The type of the exposed service.
    *
@@ -175,16 +183,14 @@ export class Deployment extends Resource implements IPodTemplate {
    *
    * This is equivalent to running `kubectl expose deployment <deployment-name>`.
    *
-   * @param port The port number the service will bind to.
    * @param options Options to determine details of the service and port exposed.
    */
-  public expose(port: number, options: ExposeOptions = {}): Service {
+  public expose(options: ExposeOptions = {}): Service {
     const service = new Service(this, 'Service', {
       metadata: options.name ? { name: options.name } : undefined,
       type: options.serviceType ?? ServiceType.CLUSTER_IP,
     });
-
-    service.addDeployment(this, port, { protocol: options.protocol, targetPort: options.targetPort });
+    service.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
     return service;
   }
 
