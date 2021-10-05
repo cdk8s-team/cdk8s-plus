@@ -8,13 +8,13 @@ const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 function k8sVersion() {
   const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  if (branch.startsWith('k8s-') && branch.length >= 6) {
-    return branch.substring(4, 6);
-  } else {
-    // if the branch name doesn't start with k8s-XX, we're probably running on a fork
-    // so assume that we are building for the latest version, i.e. 1.22.0
+  const match = branch.match(/k8s-(\d\d)-/);
+  if (!match) {
+    // if we cannot determine the spec version from the branch name, we're probably targetting
+    // the default spec version.
     return DEFAULT_K8S_VERSION;
   }
+  return match[1];
 }
 
 const project = new JsiiProject({
@@ -77,6 +77,15 @@ const project = new JsiiProject({
     secret: 'GITHUB_TOKEN',
   },
   autoApproveUpgrades: true,
+  depsUpgradeOptions: {
+    workflowOptions: {
+      branches: [
+        `k8s-${DEFAULT_K8S_VERSION}/main`,
+        `k8s-${DEFAULT_K8S_VERSION - 1}/main`,
+        `k8s-${DEFAULT_K8S_VERSION - 2}/main`,
+      ],
+    },
+  },
 });
 
 const importdir = path.join('src', 'imports');
