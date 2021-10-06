@@ -389,16 +389,39 @@ public addVolume(Volume volume)
 
 ---
 
-##### `expose` <a name="org.cdk8s.plus21.Deployment.expose"></a>
+##### `exposeViaIngress` <a name="org.cdk8s.plus21.Deployment.exposeViaIngress"></a>
 
 ```java
-public expose()
-public expose(ExposeOptions options)
+public exposeViaIngress(java.lang.String path)
+public exposeViaIngress(java.lang.String path, ExposeDeploymentViaIngressOptions options)
+```
+
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus21.Deployment.parameter.path"></a>
+
+- *Type:* `java.lang.String`
+
+The ingress path to register under.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.Deployment.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.ExposeDeploymentViaIngressOptions`](#org.cdk8s.plus21.ExposeDeploymentViaIngressOptions)
+
+Additional options.
+
+---
+
+##### `exposeViaService` <a name="org.cdk8s.plus21.Deployment.exposeViaService"></a>
+
+```java
+public exposeViaService()
+public exposeViaService(ExposeDeploymentViaServiceOptions options)
 ```
 
 ###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.Deployment.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus21.ExposeOptions`](#org.cdk8s.plus21.ExposeOptions)
+- *Type:* [`org.cdk8s.plus21.ExposeDeploymentViaServiceOptions`](#org.cdk8s.plus21.ExposeDeploymentViaServiceOptions)
 
 Options to determine details of the service and port exposed.
 
@@ -1551,6 +1574,29 @@ The label key.
 - *Type:* `java.lang.String`
 
 The label value.
+
+---
+
+##### `exposeViaIngress` <a name="org.cdk8s.plus21.Service.exposeViaIngress"></a>
+
+```java
+public exposeViaIngress(java.lang.String path)
+public exposeViaIngress(java.lang.String path, ExposeServiceViaIngressOptions options)
+```
+
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus21.Service.parameter.path"></a>
+
+- *Type:* `java.lang.String`
+
+The path to expose the service under.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.Service.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.ExposeServiceViaIngressOptions`](#org.cdk8s.plus21.ExposeServiceViaIngressOptions)
+
+Additional options.
 
 ---
 
@@ -2944,25 +2990,26 @@ Specify whether the Secret or its key must be defined.
 
 ---
 
-### ExposeOptions <a name="org.cdk8s.plus21.ExposeOptions"></a>
+### ExposeDeploymentViaIngressOptions <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions"></a>
 
-Options for exposing a deployment via a service.
+Options for exposing a deployment via an ingress.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus21.ExposeOptions;
+import org.cdk8s.plus21.ExposeDeploymentViaIngressOptions;
 
-ExposeOptions.builder()
+ExposeDeploymentViaIngressOptions.builder()
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .protocol(Protocol)
 //  .serviceType(ServiceType)
 //  .targetPort(java.lang.Number)
+//  .ingress(IngressV1Beta1)
     .build();
 ```
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -2977,7 +3024,7 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -2990,7 +3037,7 @@ The port that the service should serve on.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions.property.protocol"></a>
 
 ```java
 public Protocol getProtocol();
@@ -3005,7 +3052,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeOptions.property.serviceType"></a>
+##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions.property.serviceType"></a>
 
 ```java
 public ServiceType getServiceType();
@@ -3018,7 +3065,7 @@ The type of the exposed service.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions.property.targetPort"></a>
 
 ```java
 public java.lang.Number getTargetPort();
@@ -3028,6 +3075,133 @@ public java.lang.Number getTargetPort();
 - *Default:* The port of the first container in the deployment (ie. containers[0].port)
 
 The port number the service will redirect to.
+
+---
+
+##### `ingress`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaIngressOptions.property.ingress"></a>
+
+```java
+public IngressV1Beta1 getIngress();
+```
+
+- *Type:* [`org.cdk8s.plus21.IngressV1Beta1`](#org.cdk8s.plus21.IngressV1Beta1)
+- *Default:* An ingress will be automatically created.
+
+The ingress to add rules to.
+
+---
+
+### ExposeDeploymentViaServiceOptions <a name="org.cdk8s.plus21.ExposeDeploymentViaServiceOptions"></a>
+
+Options for exposing a deployment via a service.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.ExposeDeploymentViaServiceOptions;
+
+ExposeDeploymentViaServiceOptions.builder()
+//  .name(java.lang.String)
+//  .port(java.lang.Number)
+//  .protocol(Protocol)
+//  .serviceType(ServiceType)
+//  .targetPort(java.lang.Number)
+    .build();
+```
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaServiceOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* undefined Uses the system generated name.
+
+The name of the service to expose.
+
+This will be set on the Service.metadata and must be a DNS_LABEL
+
+---
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaServiceOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* Copied from the container of the deployment. If a port could not be determined, throws an error.
+
+The port that the service should serve on.
+
+---
+
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaServiceOptions.property.protocol"></a>
+
+```java
+public Protocol getProtocol();
+```
+
+- *Type:* [`org.cdk8s.plus21.Protocol`](#org.cdk8s.plus21.Protocol)
+- *Default:* Protocol.TCP
+
+The IP protocol for this port.
+
+Supports "TCP", "UDP", and "SCTP". Default is TCP.
+
+---
+
+##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaServiceOptions.property.serviceType"></a>
+
+```java
+public ServiceType getServiceType();
+```
+
+- *Type:* [`org.cdk8s.plus21.ServiceType`](#org.cdk8s.plus21.ServiceType)
+- *Default:* ClusterIP.
+
+The type of the exposed service.
+
+---
+
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeDeploymentViaServiceOptions.property.targetPort"></a>
+
+```java
+public java.lang.Number getTargetPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* The port of the first container in the deployment (ie. containers[0].port)
+
+The port number the service will redirect to.
+
+---
+
+### ExposeServiceViaIngressOptions <a name="org.cdk8s.plus21.ExposeServiceViaIngressOptions"></a>
+
+Options for exposing a service using an ingress.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.ExposeServiceViaIngressOptions;
+
+ExposeServiceViaIngressOptions.builder()
+//  .ingress(IngressV1Beta1)
+    .build();
+```
+
+##### `ingress`<sup>Optional</sup> <a name="org.cdk8s.plus21.ExposeServiceViaIngressOptions.property.ingress"></a>
+
+```java
+public IngressV1Beta1 getIngress();
+```
+
+- *Type:* [`org.cdk8s.plus21.IngressV1Beta1`](#org.cdk8s.plus21.IngressV1Beta1)
+- *Default:* An ingress will be automatically created.
+
+The ingress to add rules to.
 
 ---
 
