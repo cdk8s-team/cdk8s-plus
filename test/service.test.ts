@@ -226,3 +226,15 @@ test('Can restrict CIDR IP addresses for a LoadBalancer type', () => {
   expect(spec.loadBalancerSourceRanges).toEqual(sourceRanges);
 
 });
+
+test('can be exposed by an ingress', () => {
+
+  const chart = Testing.chart();
+
+  const service = new kplus.Service(chart, 'Service');
+  service.serve(80);
+
+  service.exposeViaIngress('/hello');
+  const ingress = Testing.synth(chart)[1];
+  expect(ingress).toMatchSnapshot();
+});

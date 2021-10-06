@@ -3,8 +3,9 @@ import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
+import { IngressV1Beta1 } from './ingress-v1beta1';
 import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps } from './pod';
-import { Protocol, Service, ServiceType } from './service';
+import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
 
@@ -35,7 +36,7 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
 /**
  * Options for exposing a deployment via a service.
  */
-export interface ExposeOptions {
+export interface ExposeDeploymentViaServiceOptions {
 
   /**
    * The port that the service should serve on.
@@ -74,6 +75,10 @@ export interface ExposeOptions {
   readonly targetPort?: number;
 }
 
+/**
+ * Options for exposing a deployment via an ingress.
+ */
+export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, ExposeServiceViaIngressOptions {}
 
 /**
 *
@@ -185,13 +190,26 @@ export class Deployment extends Resource implements IPodTemplate {
    *
    * @param options Options to determine details of the service and port exposed.
    */
-  public expose(options: ExposeOptions = {}): Service {
+  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): Service {
     const service = new Service(this, 'Service', {
       metadata: options.name ? { name: options.name } : undefined,
       type: options.serviceType ?? ServiceType.CLUSTER_IP,
     });
     service.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
     return service;
+  }
+
+  /**
+   * Expose a deployment via an ingress.
+   *
+   * This will first expose the deployment with a service, and then expose the service via an ingress.
+   *
+   * @param path The ingress path to register under.
+   * @param options Additional options.
+   */
+  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): IngressV1Beta1 {
+    const service = this.exposeViaService(options);
+    return service.exposeViaIngress(path, options);
   }
 
   public addContainer(container: ContainerProps): Container {
