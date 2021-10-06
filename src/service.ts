@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { ResourceProps, Resource } from './base';
 import { Deployment } from './deployment';
 import * as k8s from './imports/k8s';
+import { HttpIngressPathType, Ingress, IngressBackend } from './ingress';
 
 /**
  * Properties for initialization of `Service`.
@@ -66,6 +67,26 @@ export interface ServiceProps extends ResourceProps {
    */
   readonly loadBalancerSourceRanges?: string[];
 
+}
+
+/**
+ * Options for exposing a service using an ingress.
+ */
+export interface ExposeServiceViaIngressOptions {
+
+  /**
+   * The type of the path
+   *
+   * @default HttpIngressPathType.PREFIX
+   */
+  readonly pathType?: HttpIngressPathType;
+
+  /**
+   * The ingress to add rules to.
+   *
+   * @default - An ingress will be automatically created.
+   */
+  readonly ingress?: Ingress;
 }
 
 /**
@@ -187,6 +208,20 @@ export class Service extends Resource {
       this.serve(portAndOptions.port, portAndOptions);
     }
 
+  }
+
+  /**
+   * Expose a service via an ingress using the specified path.
+   *
+   * @param path The path to expose the service under.
+   * @param options Additional options.
+   *
+   * @returns The `Ingress` resource that was used.
+   */
+  public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): Ingress {
+    const ingress = options.ingress ?? new Ingress(this, 'Ingress');
+    ingress.addRule(path, IngressBackend.fromService(this), options.pathType);
+    return ingress;
   }
 
   /**
