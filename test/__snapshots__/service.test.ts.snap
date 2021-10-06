@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can be exposed by an ingress 1`] = `
+Object {
+  "apiVersion": "networking.k8s.io/v1beta1",
+  "kind": "Ingress",
+  "metadata": Object {
+    "name": "test-service-ingress-c8a1c328",
+  },
+  "spec": Object {
+    "rules": Array [
+      Object {
+        "http": Object {
+          "paths": Array [
+            Object {
+              "backend": Object {
+                "serviceName": "test-service-c85b0531",
+                "servicePort": 80,
+              },
+              "path": "/hello",
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+`;
