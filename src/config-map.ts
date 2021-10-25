@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as cdk8s from 'cdk8s';
 import { Construct } from 'constructs';
-import * as minimatch from 'minimatch';
+import { Minimatch } from 'minimatch';
 import { ResourceProps, Resource, IResource } from './base';
 import * as k8s from './imports/k8s';
 import { undefinedIfEmpty } from './utils';
@@ -150,7 +150,8 @@ export class ConfigMap extends Resource implements IConfigMap {
     const exclude = options.exclude ?? [];
     const shouldInclude = (file: string) => {
       for (const pattern of exclude) {
-        if (minimatch(file, pattern)) {
+        const mm = new Minimatch(pattern);
+        if (mm.match(file)) {
           return false;
         }
       }
