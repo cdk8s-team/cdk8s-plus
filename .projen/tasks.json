@@ -41,18 +41,6 @@
         },
         {
           "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
-        },
-        {
-          "spawn": "docgen"
-        }
-      ]
-    },
-    "test:compile": {
-      "name": "test:compile",
-      "description": "compiles the test code",
-      "steps": [
-        {
-          "exec": "tsc --noEmit --project tsconfig.jest.json"
         }
       ]
     },
@@ -62,9 +50,6 @@
       "steps": [
         {
           "exec": "rm -fr lib/"
-        },
-        {
-          "spawn": "test:compile"
         },
         {
           "exec": "jest --passWithNoTests --all --updateSnapshot"
@@ -89,6 +74,9 @@
         },
         {
           "spawn": "package"
+        },
+        {
+          "spawn": "docgen"
         }
       ]
     },
