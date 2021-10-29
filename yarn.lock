@@ -1424,9 +1424,9 @@ cdk8s-cli@^1.0.16:
     yargs "^15"
 
 cdk8s-plus-22@^1.0.0-beta.21:
-  version "1.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.22.tgz#d9511cd1b24e247330e9f4a75325b6eb7c936313"
-  integrity sha512-qNmxfoIWVBnNGhB4W0tc07D2Dpeh4wIuoY4H5S0SpYZOe3PnQL9FVE56mZ9ar5N50F05f4nWI4buX1YB3yvdKA==
+  version "1.0.0-beta.23"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.23.tgz#574570a8f130248715f34dce1eff7ff048ee12e7"
+  integrity sha512-Gfa6cAn/LGfFbpMlzQY2mIm0G+bCfvTv+5y6d3svS9mxOZX/SIfjNDn7nOPT/vYVia0KXyjxTcNjcVwJivSdkA==
   dependencies:
     minimatch "^3.0.4"
 
@@ -2124,9 +2124,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.878:
-  version "1.3.883"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.883.tgz#cc409921469b3aa6ab6efd65cc2a4375128bb703"
-  integrity sha512-goyjNx4wB9j911PBteb+AXNbErug7rJVkmDXWdw5SCVn2JlARBwsqucPkvp1h5mXWxHUbBRK3bwXTrqSxSiAIQ==
+  version "1.3.884"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.884.tgz#0cd8c3a80271fd84a81f284c60fb3c9ecb33c166"
+  integrity sha512-kOaCAa+biA98PwH5BpCkeUeTL6mCeg8p3Q3OhqzPyqhu/5QUnWAN2wr/3IK8xMQxIV76kfoQpP+Bn/wij/jXrg==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3984,10 +3984,10 @@ jsii-diff@^1.41.0:
     typescript "~3.9.10"
     yargs "^16.2.0"
 
-jsii-docgen@^3.8.12:
-  version "3.8.12"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-3.8.12.tgz#32dfaa44ab21385a125257b0e9db13cce82fdd32"
-  integrity sha512-uISdMEu4vIZ4rzCH3Bak6zH4+lgtLHgxheIDRNGI6mBjj0UfgbiQSIcMKnrrNOXh+eb5O+rA+bSzopBSfJ9F0A==
+jsii-docgen@^3.8.13:
+  version "3.8.13"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-3.8.13.tgz#a2a8a8c27fedcd5ad345e0a335d259215ef7b12b"
+  integrity sha512-wAa67IUiTqSOyRY/K63k5mAEfCEA9tTZnpi2ODR3kYh4jZBcNWaThAZir01tEQOknibnLLEqCHRozcVTLxnGRw==
   dependencies:
     "@jsii/spec" "^1.41.0"
     case "^1.6.3"
@@ -4046,9 +4046,9 @@ jsii-rosetta@^1.41.0:
     yargs "^16.2.0"
 
 jsii-srcmak@^0.1.381:
-  version "0.1.381"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.381.tgz#bda30da9e2a0c9f47a898474747973d72b720b82"
-  integrity sha512-NEq7WNMtUmBlgYlPlZRsVyp9hsbhlpKm+bQgDMvka1ObjFlYOmK/wi/kt8e+WWd52RcIi42Q4iFYoNXHb7sX7Q==
+  version "0.1.382"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.382.tgz#e6c781c3bf94338011b8097eea849d890b38994e"
+  integrity sha512-h8y34MdAzCIIdoW6wycp31F3RJIewSZ4RQD3x+SVrURVhN3nCgIWaDv+kpysPhZBohF6seQohAvRbP7Gfgi9jw==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.41.0"
@@ -5161,10 +5161,10 @@ progress@^2.0.0, progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.31.15:
-  version "0.31.15"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.31.15.tgz#5bbff1be584e0c6f2bb1d310c4591ec68f6661dd"
-  integrity sha512-Zs5pEARY69xg2Imuuh90k8oKlmsaTw34jPJ27gftHFPaymQIfIjHnOVZcoIOYWfhMbZU8kFsIe2l44BL6V9mpA==
+projen@^0.31.16:
+  version "0.31.16"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.31.16.tgz#a62878f3da454e6cc01a61ac4fa5c768fb915987"
+  integrity sha512-u2Qw/YQoZa5qRnDNueZtqKJyGp1jH0hduf5YbFjfMw7aOrfE5ivfyBisq93FBvgO245U7j+zGYs9t/z6UWvcng==
   dependencies:
     "@iarna/toml" "^2.2.5"
     chalk "^4.1.2"
@@ -5732,9 +5732,9 @@ sprintf-js@~1.0.2:
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 sscaff@^1.2.110:
-  version "1.2.110"
-  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.110.tgz#55bc73f1fc3819a319f81f9abf2df4885ff6a2d0"
-  integrity sha512-N7CfhTuwRGlZ5gvz5fXPUDPoURV33k754mFWZw6D9B0HLGBhoZTkK7UfHwUimOwk8R4q9pR/oW6LXZKWRb8bKg==
+  version "1.2.111"
+  resolved "https://registry.yarnpkg.com/sscaff/-/sscaff-1.2.111.tgz#e135fee8fcc5ee524191151eba7bacfd2f12e261"
+  integrity sha512-+9fCszwh/qN46vvfNoPyc2dN+fVIWIa9/yKVSURJKy8Xv65HboRUtTkPoTNZN9PW694QpaK8avwAhqlwwUrSWA==
 
 sshpk@^1.7.0:
   version "1.16.1"
