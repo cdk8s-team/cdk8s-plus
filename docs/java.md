@@ -224,22 +224,21 @@ existing Deployments and adopt all their resources with new Deployments.
 
 > Note: Do not manage ReplicaSets owned by a Deployment. Consider opening an issue in the main Kubernetes repository if your use case is not covered below.
 
-Use Case
----------
+## Use Case
 
 The following are typical use cases for Deployments:
 
-- Create a Deployment to rollout a ReplicaSet. The ReplicaSet creates Pods in the background.
-   Check the status of the rollout to see if it succeeds or not.
-- Declare the new state of the Pods by updating the PodTemplateSpec of the Deployment.
-   A new ReplicaSet is created and the Deployment manages moving the Pods from the old ReplicaSet to the new one at a controlled rate.
-   Each new ReplicaSet updates the revision of the Deployment.
-- Rollback to an earlier Deployment revision if the current state of the Deployment is not stable.
-   Each rollback updates the revision of the Deployment.
-- Scale up the Deployment to facilitate more load.
-- Pause the Deployment to apply multiple fixes to its PodTemplateSpec and then resume it to start a new rollout.
-- Use the status of the Deployment as an indicator that a rollout has stuck.
-- Clean up older ReplicaSets that you don't need anymore.
+* Create a Deployment to rollout a ReplicaSet. The ReplicaSet creates Pods in the background.
+  Check the status of the rollout to see if it succeeds or not.
+* Declare the new state of the Pods by updating the PodTemplateSpec of the Deployment.
+  A new ReplicaSet is created and the Deployment manages moving the Pods from the old ReplicaSet to the new one at a controlled rate.
+  Each new ReplicaSet updates the revision of the Deployment.
+* Rollback to an earlier Deployment revision if the current state of the Deployment is not stable.
+  Each rollback updates the revision of the Deployment.
+* Scale up the Deployment to facilitate more load.
+* Pause the Deployment to apply multiple fixes to its PodTemplateSpec and then resume it to start a new rollout.
+* Use the status of the Deployment as an indicator that a rollout has stuck.
+* Clean up older ReplicaSets that you don't need anymore.
 
 #### Initializers <a name="org.cdk8s.plus21.Deployment.Initializer"></a>
 
@@ -1814,14 +1813,14 @@ can use a StatefulSet as part of the solution. Although individual Pods in a Sta
 are susceptible to failure, the persistent Pod identifiers make it easier to match existing
 volumes to the new Pods that replace any that have failed.
 
-Using StatefulSets
-------------------
+## Using StatefulSets
+
 StatefulSets are valuable for applications that require one or more of the following.
 
-- Stable, unique network identifiers.
-- Stable, persistent storage.
-- Ordered, graceful deployment and scaling.
-- Ordered, automated rolling updates.
+* Stable, unique network identifiers.
+* Stable, persistent storage.
+* Ordered, graceful deployment and scaling.
+* Ordered, automated rolling updates.
 
 #### Initializers <a name="org.cdk8s.plus21.StatefulSet.Initializer"></a>
 
@@ -4390,10 +4389,10 @@ public java.lang.Number getPort();
 
 The port to use to access the service.
 
-This option will fail if the service does not expose any ports.
-- If the service exposes multiple ports, this option must be specified.
-- If the service exposes a single port, this option is optional and if
-   specified, it must be the same port exposed by the service.
+* This option will fail if the service does not expose any ports.
+* If the service exposes multiple ports, this option must be specified.
+* If the service exposes a single port, this option is optional and if
+  specified, it must be the same port exposed by the service.
 
 ---
 
