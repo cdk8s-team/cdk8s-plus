@@ -1424,9 +1424,9 @@ cdk8s-cli@^1.0.23:
     yargs "^15"
 
 cdk8s-plus-22@^1.0.0-beta.30:
-  version "1.0.0-beta.31"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.31.tgz#13c1464bc06b2034ddef01e47e3abcd8b0cee6e9"
-  integrity sha512-COn7kmRVWfN9KCHC3QKXldc6CVchOMf+EX0kOrcOnLohK9Gf0UsqdsxGZiS50xcFZAp8fyljGcvdqZf4zggovg==
+  version "1.0.0-beta.32"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-1.0.0-beta.32.tgz#1ae4918fad49feb2ded2556250b49f4fbbc9f859"
+  integrity sha512-lD44p0vA81y067XXslRk8jQKNqFT+iUCkaNXeWysI6hHEBJGhnYERLLHWlEQJmUWzea0jkNibh7azbE7LiEeow==
   dependencies:
     minimatch "^3.0.4"
 
