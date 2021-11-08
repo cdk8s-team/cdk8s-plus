@@ -435,7 +435,7 @@ export class KubeValidatingWebhookConfigurationListV1Beta1 extends ApiObject {
 }
 
 /**
- * 
+ *
  Storage version of a specific resource.
  *
  * @schema io.k8s.api.apiserverinternal.v1alpha1.StorageVersion
