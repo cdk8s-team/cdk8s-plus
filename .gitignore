@@ -38,6 +38,7 @@ junit.xml
 !/.github/workflows/build.yml
 /dist/changelog.md
 /dist/version.txt
+!/.github/workflows/release-k8s.21.yml
 !/.mergify.yml
 !/.github/pull_request_template.md
 !/test/
@@ -49,7 +50,6 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
-!/.github/workflows/release-k8s.21.yml
 !/.github/workflows/upgrade-k8s-22-main.yml
 !/.github/workflows/upgrade-k8s-21-main.yml
 !/.github/workflows/upgrade-k8s-20-main.yml
