@@ -1,6 +1,6 @@
 {
   "name": "cdk8s-plus-20",
-  "description": "High level abstractions on top of cdk8s",
+  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-20 synthesizes Kubernetes manifests for Kubernetes 1.20.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
@@ -73,6 +73,15 @@
   },
   "bundledDependencies": [
     "minimatch"
+  ],
+  "keywords": [
+    "cdk",
+    "configuration",
+    "constructs",
+    "containers",
+    "k8s",
+    "kubernetes",
+    "microservices"
   ],
   "engines": {
     "node": ">= 12.13.0"
