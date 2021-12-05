@@ -1,6 +1,6 @@
 const child = require('child_process');
 const path = require('path');
-const { JsiiProject } = require('projen');
+const { cdk } = require('projen');
 
 const DEFAULT_K8S_VERSION = '22';
 const SPEC_VERSION = k8sVersion();
@@ -17,7 +17,7 @@ function k8sVersion() {
   return match[1];
 }
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
   description: `cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-${SPEC_VERSION} synthesizes Kubernetes manifests for Kubernetes ${K8S_VERSION}`,
 
