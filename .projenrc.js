@@ -60,6 +60,7 @@ const project = new cdk.JsiiProject({
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
   minNodeVersion: '12.13.0',
+  workflowNodeVersion: '12.22.0',
 
   // jsii configuration
   publishToMaven: {
