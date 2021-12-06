@@ -14,7 +14,7 @@ export class KubeMutatingWebhookConfiguration extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1',
     kind: 'MutatingWebhookConfiguration',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1.MutatingWebhookConfiguration".
@@ -68,7 +68,7 @@ export class KubeMutatingWebhookConfigurationList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1',
     kind: 'MutatingWebhookConfigurationList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1.MutatingWebhookConfigurationList".
@@ -122,7 +122,7 @@ export class KubeValidatingWebhookConfiguration extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1',
     kind: 'ValidatingWebhookConfiguration',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1.ValidatingWebhookConfiguration".
@@ -176,7 +176,7 @@ export class KubeValidatingWebhookConfigurationList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1',
     kind: 'ValidatingWebhookConfigurationList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1.ValidatingWebhookConfigurationList".
@@ -230,7 +230,7 @@ export class KubeMutatingWebhookConfigurationV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1beta1',
     kind: 'MutatingWebhookConfiguration',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1beta1.MutatingWebhookConfiguration".
@@ -284,7 +284,7 @@ export class KubeMutatingWebhookConfigurationListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1beta1',
     kind: 'MutatingWebhookConfigurationList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1beta1.MutatingWebhookConfigurationList".
@@ -338,7 +338,7 @@ export class KubeValidatingWebhookConfigurationV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1beta1',
     kind: 'ValidatingWebhookConfiguration',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1beta1.ValidatingWebhookConfiguration".
@@ -392,7 +392,7 @@ export class KubeValidatingWebhookConfigurationListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'admissionregistration.k8s.io/v1beta1',
     kind: 'ValidatingWebhookConfigurationList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.admissionregistration.v1beta1.ValidatingWebhookConfigurationList".
@@ -447,7 +447,7 @@ export class KubeStorageVersionV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'internal.apiserver.k8s.io/v1alpha1',
     kind: 'StorageVersion',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apiserverinternal.v1alpha1.StorageVersion".
@@ -501,7 +501,7 @@ export class KubeStorageVersionListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'internal.apiserver.k8s.io/v1alpha1',
     kind: 'StorageVersionList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apiserverinternal.v1alpha1.StorageVersionList".
@@ -555,7 +555,7 @@ export class KubeControllerRevision extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'ControllerRevision',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.ControllerRevision".
@@ -609,7 +609,7 @@ export class KubeControllerRevisionList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'ControllerRevisionList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.ControllerRevisionList".
@@ -663,7 +663,7 @@ export class KubeDaemonSet extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'DaemonSet',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.DaemonSet".
@@ -717,7 +717,7 @@ export class KubeDaemonSetList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'DaemonSetList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.DaemonSetList".
@@ -771,7 +771,7 @@ export class KubeDeployment extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'Deployment',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.Deployment".
@@ -825,7 +825,7 @@ export class KubeDeploymentList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'DeploymentList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.DeploymentList".
@@ -879,7 +879,7 @@ export class KubeReplicaSet extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'ReplicaSet',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.ReplicaSet".
@@ -933,7 +933,7 @@ export class KubeReplicaSetList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'ReplicaSetList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.ReplicaSetList".
@@ -990,7 +990,7 @@ export class KubeStatefulSet extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'StatefulSet',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.StatefulSet".
@@ -1044,7 +1044,7 @@ export class KubeStatefulSetList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apps/v1',
     kind: 'StatefulSetList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.apps.v1.StatefulSetList".
@@ -1098,7 +1098,7 @@ export class KubeTokenRequest extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authentication.k8s.io/v1',
     kind: 'TokenRequest',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authentication.v1.TokenRequest".
@@ -1152,7 +1152,7 @@ export class KubeTokenReview extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authentication.k8s.io/v1',
     kind: 'TokenReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authentication.v1.TokenReview".
@@ -1206,7 +1206,7 @@ export class KubeTokenReviewV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authentication.k8s.io/v1beta1',
     kind: 'TokenReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authentication.v1beta1.TokenReview".
@@ -1260,7 +1260,7 @@ export class KubeLocalSubjectAccessReview extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1',
     kind: 'LocalSubjectAccessReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1.LocalSubjectAccessReview".
@@ -1314,7 +1314,7 @@ export class KubeSelfSubjectAccessReview extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1',
     kind: 'SelfSubjectAccessReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1.SelfSubjectAccessReview".
@@ -1368,7 +1368,7 @@ export class KubeSelfSubjectRulesReview extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1',
     kind: 'SelfSubjectRulesReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1.SelfSubjectRulesReview".
@@ -1422,7 +1422,7 @@ export class KubeSubjectAccessReview extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1',
     kind: 'SubjectAccessReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1.SubjectAccessReview".
@@ -1476,7 +1476,7 @@ export class KubeLocalSubjectAccessReviewV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1beta1',
     kind: 'LocalSubjectAccessReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1beta1.LocalSubjectAccessReview".
@@ -1530,7 +1530,7 @@ export class KubeSelfSubjectAccessReviewV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1beta1',
     kind: 'SelfSubjectAccessReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1beta1.SelfSubjectAccessReview".
@@ -1584,7 +1584,7 @@ export class KubeSelfSubjectRulesReviewV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1beta1',
     kind: 'SelfSubjectRulesReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1beta1.SelfSubjectRulesReview".
@@ -1638,7 +1638,7 @@ export class KubeSubjectAccessReviewV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'authorization.k8s.io/v1beta1',
     kind: 'SubjectAccessReview',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.authorization.v1beta1.SubjectAccessReview".
@@ -1692,7 +1692,7 @@ export class KubeHorizontalPodAutoscaler extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v1',
     kind: 'HorizontalPodAutoscaler',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v1.HorizontalPodAutoscaler".
@@ -1746,7 +1746,7 @@ export class KubeHorizontalPodAutoscalerList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v1',
     kind: 'HorizontalPodAutoscalerList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v1.HorizontalPodAutoscalerList".
@@ -1800,7 +1800,7 @@ export class KubeScale extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v1',
     kind: 'Scale',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v1.Scale".
@@ -1854,7 +1854,7 @@ export class KubeHorizontalPodAutoscalerV2Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v2beta1',
     kind: 'HorizontalPodAutoscaler',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v2beta1.HorizontalPodAutoscaler".
@@ -1908,7 +1908,7 @@ export class KubeHorizontalPodAutoscalerListV2Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v2beta1',
     kind: 'HorizontalPodAutoscalerList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v2beta1.HorizontalPodAutoscalerList".
@@ -1962,7 +1962,7 @@ export class KubeHorizontalPodAutoscalerV2Beta2 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v2beta2',
     kind: 'HorizontalPodAutoscaler',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v2beta2.HorizontalPodAutoscaler".
@@ -2016,7 +2016,7 @@ export class KubeHorizontalPodAutoscalerListV2Beta2 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'autoscaling/v2beta2',
     kind: 'HorizontalPodAutoscalerList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.autoscaling.v2beta2.HorizontalPodAutoscalerList".
@@ -2070,7 +2070,7 @@ export class KubeCronJob extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'batch/v1',
     kind: 'CronJob',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.batch.v1.CronJob".
@@ -2124,7 +2124,7 @@ export class KubeCronJobList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'batch/v1',
     kind: 'CronJobList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.batch.v1.CronJobList".
@@ -2178,7 +2178,7 @@ export class KubeJob extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'batch/v1',
     kind: 'Job',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.batch.v1.Job".
@@ -2232,7 +2232,7 @@ export class KubeJobList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'batch/v1',
     kind: 'JobList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.batch.v1.JobList".
@@ -2286,7 +2286,7 @@ export class KubeCronJobV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'batch/v1beta1',
     kind: 'CronJob',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.batch.v1beta1.CronJob".
@@ -2340,7 +2340,7 @@ export class KubeCronJobListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'batch/v1beta1',
     kind: 'CronJobList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.batch.v1beta1.CronJobList".
@@ -2400,7 +2400,7 @@ export class KubeCertificateSigningRequest extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'certificates.k8s.io/v1',
     kind: 'CertificateSigningRequest',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.certificates.v1.CertificateSigningRequest".
@@ -2454,7 +2454,7 @@ export class KubeCertificateSigningRequestList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'certificates.k8s.io/v1',
     kind: 'CertificateSigningRequestList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.certificates.v1.CertificateSigningRequestList".
@@ -2508,7 +2508,7 @@ export class KubeCertificateSigningRequestV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'certificates.k8s.io/v1beta1',
     kind: 'CertificateSigningRequest',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.certificates.v1beta1.CertificateSigningRequest".
@@ -2562,7 +2562,7 @@ export class KubeCertificateSigningRequestListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'certificates.k8s.io/v1beta1',
     kind: 'CertificateSigningRequestList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.certificates.v1beta1.CertificateSigningRequestList".
@@ -2616,7 +2616,7 @@ export class KubeLease extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'coordination.k8s.io/v1',
     kind: 'Lease',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.coordination.v1.Lease".
@@ -2670,7 +2670,7 @@ export class KubeLeaseList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'coordination.k8s.io/v1',
     kind: 'LeaseList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.coordination.v1.LeaseList".
@@ -2724,7 +2724,7 @@ export class KubeLeaseV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'coordination.k8s.io/v1beta1',
     kind: 'Lease',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.coordination.v1beta1.Lease".
@@ -2778,7 +2778,7 @@ export class KubeLeaseListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'coordination.k8s.io/v1beta1',
     kind: 'LeaseList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.coordination.v1beta1.LeaseList".
@@ -2832,7 +2832,7 @@ export class KubeBinding extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Binding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Binding".
@@ -2886,7 +2886,7 @@ export class KubeComponentStatus extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ComponentStatus',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ComponentStatus".
@@ -2940,7 +2940,7 @@ export class KubeComponentStatusList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ComponentStatusList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ComponentStatusList".
@@ -2994,7 +2994,7 @@ export class KubeConfigMap extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ConfigMap',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ConfigMap".
@@ -3048,7 +3048,7 @@ export class KubeConfigMapList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ConfigMapList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ConfigMapList".
@@ -3113,7 +3113,7 @@ export class KubeEndpoints extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Endpoints',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Endpoints".
@@ -3167,7 +3167,7 @@ export class KubeEndpointsList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'EndpointsList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.EndpointsList".
@@ -3221,7 +3221,7 @@ export class KubeEphemeralContainers extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'EphemeralContainers',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.EphemeralContainers".
@@ -3275,7 +3275,7 @@ export class KubeEvent extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'events.k8s.io/v1',
     kind: 'Event',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.events.v1.Event".
@@ -3329,7 +3329,7 @@ export class KubeEventList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'events.k8s.io/v1',
     kind: 'EventList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.events.v1.EventList".
@@ -3383,7 +3383,7 @@ export class KubeLimitRange extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'LimitRange',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.LimitRange".
@@ -3437,7 +3437,7 @@ export class KubeLimitRangeList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'LimitRangeList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.LimitRangeList".
@@ -3491,7 +3491,7 @@ export class KubeNamespace extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Namespace',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Namespace".
@@ -3545,7 +3545,7 @@ export class KubeNamespaceList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'NamespaceList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.NamespaceList".
@@ -3599,7 +3599,7 @@ export class KubeNode extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Node',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Node".
@@ -3653,7 +3653,7 @@ export class KubeNodeList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'NodeList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.NodeList".
@@ -3707,7 +3707,7 @@ export class KubePersistentVolume extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PersistentVolume',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PersistentVolume".
@@ -3761,7 +3761,7 @@ export class KubePersistentVolumeClaim extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PersistentVolumeClaim',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PersistentVolumeClaim".
@@ -3815,7 +3815,7 @@ export class KubePersistentVolumeClaimList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PersistentVolumeClaimList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PersistentVolumeClaimList".
@@ -3869,7 +3869,7 @@ export class KubePersistentVolumeList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PersistentVolumeList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PersistentVolumeList".
@@ -3923,7 +3923,7 @@ export class KubePod extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Pod',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Pod".
@@ -3977,7 +3977,7 @@ export class KubePodList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PodList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PodList".
@@ -4031,7 +4031,7 @@ export class KubePodTemplate extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PodTemplate',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PodTemplate".
@@ -4085,7 +4085,7 @@ export class KubePodTemplateList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'PodTemplateList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.PodTemplateList".
@@ -4139,7 +4139,7 @@ export class KubeReplicationController extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ReplicationController',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ReplicationController".
@@ -4193,7 +4193,7 @@ export class KubeReplicationControllerList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ReplicationControllerList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ReplicationControllerList".
@@ -4247,7 +4247,7 @@ export class KubeResourceQuota extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ResourceQuota',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ResourceQuota".
@@ -4301,7 +4301,7 @@ export class KubeResourceQuotaList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ResourceQuotaList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ResourceQuotaList".
@@ -4355,7 +4355,7 @@ export class KubeSecret extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Secret',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Secret".
@@ -4409,7 +4409,7 @@ export class KubeSecretList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'SecretList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.SecretList".
@@ -4463,7 +4463,7 @@ export class KubeService extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Service',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.Service".
@@ -4517,7 +4517,7 @@ export class KubeServiceAccount extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ServiceAccount',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ServiceAccount".
@@ -4571,7 +4571,7 @@ export class KubeServiceAccountList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ServiceAccountList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ServiceAccountList".
@@ -4625,7 +4625,7 @@ export class KubeServiceList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'ServiceList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.core.v1.ServiceList".
@@ -4679,7 +4679,7 @@ export class KubeEndpointSlice extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'discovery.k8s.io/v1',
     kind: 'EndpointSlice',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.discovery.v1.EndpointSlice".
@@ -4733,7 +4733,7 @@ export class KubeEndpointSliceList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'discovery.k8s.io/v1',
     kind: 'EndpointSliceList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.discovery.v1.EndpointSliceList".
@@ -4787,7 +4787,7 @@ export class KubeEndpointSliceV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'discovery.k8s.io/v1beta1',
     kind: 'EndpointSlice',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.discovery.v1beta1.EndpointSlice".
@@ -4841,7 +4841,7 @@ export class KubeEndpointSliceListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'discovery.k8s.io/v1beta1',
     kind: 'EndpointSliceList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.discovery.v1beta1.EndpointSliceList".
@@ -4895,7 +4895,7 @@ export class KubeEventV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'events.k8s.io/v1beta1',
     kind: 'Event',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.events.v1beta1.Event".
@@ -4949,7 +4949,7 @@ export class KubeEventListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'events.k8s.io/v1beta1',
     kind: 'EventList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.events.v1beta1.EventList".
@@ -5003,7 +5003,7 @@ export class KubeIngressV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1beta1',
     kind: 'Ingress',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1beta1.Ingress".
@@ -5057,7 +5057,7 @@ export class KubeIngressListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1beta1',
     kind: 'IngressList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1beta1.IngressList".
@@ -5111,7 +5111,7 @@ export class KubeFlowSchemaV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'flowcontrol.apiserver.k8s.io/v1beta1',
     kind: 'FlowSchema',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.flowcontrol.v1beta1.FlowSchema".
@@ -5165,7 +5165,7 @@ export class KubeFlowSchemaListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'flowcontrol.apiserver.k8s.io/v1beta1',
     kind: 'FlowSchemaList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.flowcontrol.v1beta1.FlowSchemaList".
@@ -5219,7 +5219,7 @@ export class KubePriorityLevelConfigurationV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'flowcontrol.apiserver.k8s.io/v1beta1',
     kind: 'PriorityLevelConfiguration',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.flowcontrol.v1beta1.PriorityLevelConfiguration".
@@ -5273,7 +5273,7 @@ export class KubePriorityLevelConfigurationListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'flowcontrol.apiserver.k8s.io/v1beta1',
     kind: 'PriorityLevelConfigurationList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.flowcontrol.v1beta1.PriorityLevelConfigurationList".
@@ -5327,7 +5327,7 @@ export class KubeIngress extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'Ingress',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.Ingress".
@@ -5381,7 +5381,7 @@ export class KubeIngressClass extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'IngressClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.IngressClass".
@@ -5435,7 +5435,7 @@ export class KubeIngressClassList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'IngressClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.IngressClassList".
@@ -5489,7 +5489,7 @@ export class KubeIngressList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'IngressList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.IngressList".
@@ -5543,7 +5543,7 @@ export class KubeNetworkPolicy extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'NetworkPolicy',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.NetworkPolicy".
@@ -5597,7 +5597,7 @@ export class KubeNetworkPolicyList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1',
     kind: 'NetworkPolicyList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.NetworkPolicyList".
@@ -5651,7 +5651,7 @@ export class KubeIngressClassV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1beta1',
     kind: 'IngressClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1beta1.IngressClass".
@@ -5705,7 +5705,7 @@ export class KubeIngressClassListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'networking.k8s.io/v1beta1',
     kind: 'IngressClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.networking.v1beta1.IngressClassList".
@@ -5759,7 +5759,7 @@ export class KubeRuntimeClass extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'node.k8s.io/v1',
     kind: 'RuntimeClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.node.v1.RuntimeClass".
@@ -5813,7 +5813,7 @@ export class KubeRuntimeClassList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'node.k8s.io/v1',
     kind: 'RuntimeClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.node.v1.RuntimeClassList".
@@ -5867,7 +5867,7 @@ export class KubeRuntimeClassV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'node.k8s.io/v1alpha1',
     kind: 'RuntimeClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.node.v1alpha1.RuntimeClass".
@@ -5921,7 +5921,7 @@ export class KubeRuntimeClassListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'node.k8s.io/v1alpha1',
     kind: 'RuntimeClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.node.v1alpha1.RuntimeClassList".
@@ -5975,7 +5975,7 @@ export class KubeRuntimeClassV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'node.k8s.io/v1beta1',
     kind: 'RuntimeClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.node.v1beta1.RuntimeClass".
@@ -6029,7 +6029,7 @@ export class KubeRuntimeClassListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'node.k8s.io/v1beta1',
     kind: 'RuntimeClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.node.v1beta1.RuntimeClassList".
@@ -6083,7 +6083,7 @@ export class KubePodDisruptionBudget extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1',
     kind: 'PodDisruptionBudget',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1.PodDisruptionBudget".
@@ -6137,7 +6137,7 @@ export class KubePodDisruptionBudgetList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1',
     kind: 'PodDisruptionBudgetList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1.PodDisruptionBudgetList".
@@ -6191,7 +6191,7 @@ export class KubeEvictionV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1beta1',
     kind: 'Eviction',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1beta1.Eviction".
@@ -6245,7 +6245,7 @@ export class KubePodDisruptionBudgetV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1beta1',
     kind: 'PodDisruptionBudget',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1beta1.PodDisruptionBudget".
@@ -6299,7 +6299,7 @@ export class KubePodDisruptionBudgetListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1beta1',
     kind: 'PodDisruptionBudgetList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1beta1.PodDisruptionBudgetList".
@@ -6353,7 +6353,7 @@ export class KubePodSecurityPolicyV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1beta1',
     kind: 'PodSecurityPolicy',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1beta1.PodSecurityPolicy".
@@ -6407,7 +6407,7 @@ export class KubePodSecurityPolicyListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'policy/v1beta1',
     kind: 'PodSecurityPolicyList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.policy.v1beta1.PodSecurityPolicyList".
@@ -6461,7 +6461,7 @@ export class KubeClusterRole extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRole',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.ClusterRole".
@@ -6515,7 +6515,7 @@ export class KubeClusterRoleBinding extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRoleBinding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.ClusterRoleBinding".
@@ -6569,7 +6569,7 @@ export class KubeClusterRoleBindingList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRoleBindingList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.ClusterRoleBindingList".
@@ -6623,7 +6623,7 @@ export class KubeClusterRoleList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRoleList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.ClusterRoleList".
@@ -6677,7 +6677,7 @@ export class KubeRole extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'Role',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.Role".
@@ -6731,7 +6731,7 @@ export class KubeRoleBinding extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'RoleBinding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.RoleBinding".
@@ -6785,7 +6785,7 @@ export class KubeRoleBindingList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'RoleBindingList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.RoleBindingList".
@@ -6839,7 +6839,7 @@ export class KubeRoleList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'RoleList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1.RoleList".
@@ -6893,7 +6893,7 @@ export class KubeClusterRoleV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'ClusterRole',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.ClusterRole".
@@ -6947,7 +6947,7 @@ export class KubeClusterRoleBindingV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'ClusterRoleBinding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.ClusterRoleBinding".
@@ -7001,7 +7001,7 @@ export class KubeClusterRoleBindingListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'ClusterRoleBindingList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.ClusterRoleBindingList".
@@ -7055,7 +7055,7 @@ export class KubeClusterRoleListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'ClusterRoleList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.ClusterRoleList".
@@ -7109,7 +7109,7 @@ export class KubeRoleV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'Role',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.Role".
@@ -7163,7 +7163,7 @@ export class KubeRoleBindingV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'RoleBinding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.RoleBinding".
@@ -7217,7 +7217,7 @@ export class KubeRoleBindingListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'RoleBindingList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.RoleBindingList".
@@ -7271,7 +7271,7 @@ export class KubeRoleListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1alpha1',
     kind: 'RoleList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1alpha1.RoleList".
@@ -7325,7 +7325,7 @@ export class KubeClusterRoleV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'ClusterRole',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.ClusterRole".
@@ -7379,7 +7379,7 @@ export class KubeClusterRoleBindingV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'ClusterRoleBinding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.ClusterRoleBinding".
@@ -7433,7 +7433,7 @@ export class KubeClusterRoleBindingListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'ClusterRoleBindingList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.ClusterRoleBindingList".
@@ -7487,7 +7487,7 @@ export class KubeClusterRoleListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'ClusterRoleList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.ClusterRoleList".
@@ -7541,7 +7541,7 @@ export class KubeRoleV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'Role',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.Role".
@@ -7595,7 +7595,7 @@ export class KubeRoleBindingV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'RoleBinding',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.RoleBinding".
@@ -7649,7 +7649,7 @@ export class KubeRoleBindingListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'RoleBindingList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.RoleBindingList".
@@ -7703,7 +7703,7 @@ export class KubeRoleListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'rbac.authorization.k8s.io/v1beta1',
     kind: 'RoleList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.rbac.v1beta1.RoleList".
@@ -7757,7 +7757,7 @@ export class KubePriorityClass extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'scheduling.k8s.io/v1',
     kind: 'PriorityClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.scheduling.v1.PriorityClass".
@@ -7811,7 +7811,7 @@ export class KubePriorityClassList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'scheduling.k8s.io/v1',
     kind: 'PriorityClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.scheduling.v1.PriorityClassList".
@@ -7865,7 +7865,7 @@ export class KubePriorityClassV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'scheduling.k8s.io/v1alpha1',
     kind: 'PriorityClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.scheduling.v1alpha1.PriorityClass".
@@ -7919,7 +7919,7 @@ export class KubePriorityClassListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'scheduling.k8s.io/v1alpha1',
     kind: 'PriorityClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.scheduling.v1alpha1.PriorityClassList".
@@ -7973,7 +7973,7 @@ export class KubePriorityClassV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'scheduling.k8s.io/v1beta1',
     kind: 'PriorityClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.scheduling.v1beta1.PriorityClass".
@@ -8027,7 +8027,7 @@ export class KubePriorityClassListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'scheduling.k8s.io/v1beta1',
     kind: 'PriorityClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.scheduling.v1beta1.PriorityClassList".
@@ -8081,7 +8081,7 @@ export class KubeCsiDriver extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'CSIDriver',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.CSIDriver".
@@ -8135,7 +8135,7 @@ export class KubeCsiDriverList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'CSIDriverList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.CSIDriverList".
@@ -8189,7 +8189,7 @@ export class KubeCsiNode extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'CSINode',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.CSINode".
@@ -8243,7 +8243,7 @@ export class KubeCsiNodeList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'CSINodeList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.CSINodeList".
@@ -8299,7 +8299,7 @@ export class KubeStorageClass extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'StorageClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.StorageClass".
@@ -8353,7 +8353,7 @@ export class KubeStorageClassList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'StorageClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.StorageClassList".
@@ -8409,7 +8409,7 @@ export class KubeVolumeAttachment extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'VolumeAttachment',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.VolumeAttachment".
@@ -8463,7 +8463,7 @@ export class KubeVolumeAttachmentList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1',
     kind: 'VolumeAttachmentList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1.VolumeAttachmentList".
@@ -8525,7 +8525,7 @@ export class KubeCsiStorageCapacityV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1alpha1',
     kind: 'CSIStorageCapacity',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1alpha1.CSIStorageCapacity".
@@ -8579,7 +8579,7 @@ export class KubeCsiStorageCapacityListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1alpha1',
     kind: 'CSIStorageCapacityList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1alpha1.CSIStorageCapacityList".
@@ -8635,7 +8635,7 @@ export class KubeVolumeAttachmentV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1alpha1',
     kind: 'VolumeAttachment',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1alpha1.VolumeAttachment".
@@ -8689,7 +8689,7 @@ export class KubeVolumeAttachmentListV1Alpha1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1alpha1',
     kind: 'VolumeAttachmentList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1alpha1.VolumeAttachmentList".
@@ -8743,7 +8743,7 @@ export class KubeCsiDriverV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'CSIDriver',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.CSIDriver".
@@ -8797,7 +8797,7 @@ export class KubeCsiDriverListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'CSIDriverList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.CSIDriverList".
@@ -8851,7 +8851,7 @@ export class KubeCsiNodeV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'CSINode',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.CSINode".
@@ -8905,7 +8905,7 @@ export class KubeCsiNodeListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'CSINodeList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.CSINodeList".
@@ -8967,7 +8967,7 @@ export class KubeCsiStorageCapacityV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'CSIStorageCapacity',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.CSIStorageCapacity".
@@ -9021,7 +9021,7 @@ export class KubeCsiStorageCapacityListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'CSIStorageCapacityList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.CSIStorageCapacityList".
@@ -9077,7 +9077,7 @@ export class KubeStorageClassV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'StorageClass',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.StorageClass".
@@ -9131,7 +9131,7 @@ export class KubeStorageClassListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'StorageClassList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.StorageClassList".
@@ -9187,7 +9187,7 @@ export class KubeVolumeAttachmentV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'VolumeAttachment',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.VolumeAttachment".
@@ -9241,7 +9241,7 @@ export class KubeVolumeAttachmentListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'storage.k8s.io/v1beta1',
     kind: 'VolumeAttachmentList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.api.storage.v1beta1.VolumeAttachmentList".
@@ -9295,7 +9295,7 @@ export class KubeCustomResourceDefinition extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiextensions.k8s.io/v1',
     kind: 'CustomResourceDefinition',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinition".
@@ -9349,7 +9349,7 @@ export class KubeCustomResourceDefinitionList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiextensions.k8s.io/v1',
     kind: 'CustomResourceDefinitionList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinitionList".
@@ -9403,7 +9403,7 @@ export class KubeCustomResourceDefinitionV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiextensions.k8s.io/v1beta1',
     kind: 'CustomResourceDefinition',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition".
@@ -9457,7 +9457,7 @@ export class KubeCustomResourceDefinitionListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiextensions.k8s.io/v1beta1',
     kind: 'CustomResourceDefinitionList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionList".
@@ -9511,7 +9511,7 @@ export class KubeStatus extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'v1',
     kind: 'Status',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.apimachinery.pkg.apis.meta.v1.Status".
@@ -9565,7 +9565,7 @@ export class KubeApiService extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiregistration.k8s.io/v1',
     kind: 'APIService',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService".
@@ -9619,7 +9619,7 @@ export class KubeApiServiceList extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiregistration.k8s.io/v1',
     kind: 'APIServiceList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIServiceList".
@@ -9673,7 +9673,7 @@ export class KubeApiServiceV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiregistration.k8s.io/v1beta1',
     kind: 'APIService',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService".
@@ -9727,7 +9727,7 @@ export class KubeApiServiceListV1Beta1 extends ApiObject {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'apiregistration.k8s.io/v1beta1',
     kind: 'APIServiceList',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceList".
