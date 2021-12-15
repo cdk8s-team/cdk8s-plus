@@ -1,6 +1,7 @@
 import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
 import * as k8s from './imports/k8s';
+import { ISecret } from './secret';
 
 /**
  * Volume represents a named volume in a pod that may be accessed by any
@@ -57,22 +58,9 @@ export class Volume {
         name: configMap.name,
         defaultMode: options.defaultMode,
         optional: options.optional,
-        items: renderItems(options.items),
+        items: Volume.renderItems(options.items),
       },
     });
-
-    function renderItems(items?: { [key: string]: PathMapping }) {
-      if (!items) { return undefined; }
-      const result = new Array<k8s.KeyToPath>();
-      for (const key of Object.keys(items).sort()) {
-        result.push({
-          key,
-          path: items[key].path,
-          mode: items[key].mode,
-        });
-      }
-      return result;
-    }
   }
 
   /**
@@ -97,6 +85,34 @@ export class Volume {
       },
     });
   }
+
+  public static fromSecret(secret: ISecret, options: SecretVolumeOptions = { }): Volume {
+    return new Volume(options.name ?? `secret-${secret.name}`, {
+      secret: {
+        secretName: secret.name,
+        defaultMode: options.defaultMode,
+        optional: options.optional,
+        items: Volume.renderItems(options.items),
+      },
+    });
+  }
+
+  /**
+    * @internal
+   */
+  private static renderItems = (items?: { [key: string]: PathMapping }): undefined | Array<k8s.KeyToPath> => {
+    if (!items) { return undefined; }
+    const result = new Array<k8s.KeyToPath>();
+    for (const key of Object.keys(items).sort()) {
+      result.push({
+        key,
+        path: items[key].path,
+        mode: items[key].mode,
+      });
+    }
+    return result;
+  };
+
 
   protected constructor(public readonly name: string, private readonly config: any) {
 
@@ -219,4 +235,48 @@ export enum EmptyDirMedium {
    * files you write will count against your Container's memory limit.
    */
   MEMORY = 'Memory'
+}
+
+/**
+ * Options for the Secret-based volume.
+ */
+export interface SecretVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * Mode bits to use on created files by default. Must be a value between 0 and
+   * 0777. Defaults to 0644. Directories within the path are not affected by
+   * this setting. This might be in conflict with other options that affect the
+   * file mode, like fsGroup, and the result can be other mode bits set.
+   *
+   * @default 0644. Directories within the path are not affected by this
+   * setting. This might be in conflict with other options that affect the file
+   * mode, like fsGroup, and the result can be other mode bits set.
+   */
+  readonly defaultMode?: number;
+
+  /**
+   * Specify whether the secret or its keys must be defined.
+   * @default - undocumented
+   */
+  readonly optional?: boolean;
+
+  /**
+   * If unspecified, each key-value pair in the Data field of the referenced
+   * secret will be projected into the volume as a file whose name is the key
+   * and content is the value. If specified, the listed keys will be projected
+   * into the specified paths, and unlisted keys will not be present. If a key
+   * is specified which is not present in the secret, the volume setup will
+   * error unless it is marked optional. Paths must be relative and may not
+   * contain the '..' path or start with '..'.
+   *
+   * @default - no mapping
+   */
+  readonly items?: { [key: string]: PathMapping };
+
 }
