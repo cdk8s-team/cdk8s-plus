@@ -7425,6 +7425,8 @@ cdk8s_plus_22.Volume.from_secret(
 
 - *Type:* [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret)
 
+The secret to use to populate the volume.
+
 ---
 
 ###### `default_mode`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretVolumeOptions.parameter.default_mode"></a>

@@ -6065,11 +6065,15 @@ Volume.fromSecret(ISecret secret, SecretVolumeOptions options)
 
 - *Type:* [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
 
+The secret to use to populate the volume.
+
 ---
 
 ###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
 
 - *Type:* [`org.cdk8s.plus22.SecretVolumeOptions`](#org.cdk8s.plus22.SecretVolumeOptions)
+
+Options.
 
 ---
 

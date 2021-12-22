@@ -86,6 +86,21 @@ export class Volume {
     });
   }
 
+  /**
+   * Populate the volume from a Secret.
+   *
+   * A secret volume is used to pass sensitive information, such as passwords, to Pods.
+   * You can store secrets in the Kubernetes API and mount them as files for use by pods
+   * without coupling to Kubernetes directly.
+   *
+   * secret volumes are backed by tmpfs (a RAM-backed filesystem)
+   * so they are never written to non-volatile storage.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes/#secret
+   *
+   * @param secret The secret to use to populate the volume.
+   * @param options Options
+   */
   public static fromSecret(secret: ISecret, options: SecretVolumeOptions = { }): Volume {
     return new Volume(options.name ?? `secret-${secret.name}`, {
       secret: {
