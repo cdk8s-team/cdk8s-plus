@@ -77,6 +77,72 @@ describe('EnvValue', () => {
 
   });
 
+  test('Can be created from fieldRef', () => {
+    const actual = kplus.EnvValue.fromFieldRef(kplus.EnvFieldPaths.POD_NAME);
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      fieldRef: {
+        fieldPath: 'metadata.name',
+      },
+    });
+  });
+
+  test('Can be created from fieldRef with key', () => {
+    const actual = kplus.EnvValue.fromFieldRef(kplus.EnvFieldPaths.POD_LABEL, { key: 'someLabel' });
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      fieldRef: {
+        fieldPath: 'metadata.labels[\'someLabel\']',
+      },
+    });
+  });
+
+  test('Can not be created from fieldRef without key', () => {
+    expect(() => kplus.EnvValue.fromFieldRef(kplus.EnvFieldPaths.POD_LABEL)).toThrowError(`${kplus.EnvFieldPaths.POD_LABEL} requires a key`);
+  });
+
+  test('Can be created from resourceFieldRef', () => {
+    const actual = kplus.EnvValue.fromResource(kplus.ResourceFieldPaths.CPU_LIMIT);
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      resourceFieldRef: {
+        resource: 'limits.cpu',
+      },
+    });
+  });
+
+  test('Can be created from resourceFieldRef with divisor', () => {
+    const actual = kplus.EnvValue.fromResource(kplus.ResourceFieldPaths.MEMORY_LIMIT, { divisor: '1Mi' });
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      resourceFieldRef: {
+        resource: 'limits.memory',
+        divisor: k8s.IntOrString.fromString('1Mi'),
+      },
+    });
+  });
+
+  test('Can be created from resourceFieldRef with container', () => {
+    const container = new kplus.Container({
+      image: 'image',
+      name: 'name',
+      imagePullPolicy: kplus.ImagePullPolicy.NEVER,
+    });
+
+    const actual = kplus.EnvValue.fromResource(kplus.ResourceFieldPaths.CPU_LIMIT, { container });
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      resourceFieldRef: {
+        resource: 'limits.cpu',
+        containerName: container.name,
+      },
+    });
+  });
 });
 
 describe('Container', () => {
