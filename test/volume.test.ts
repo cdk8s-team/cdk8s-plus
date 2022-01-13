@@ -1,5 +1,126 @@
 import { Testing, Size } from 'cdk8s';
-import { Volume, ConfigMap, EmptyDirMedium } from '../src';
+import { Volume, ConfigMap, EmptyDirMedium, Secret } from '../src';
+
+describe('fromSecret', () => {
+  test('minimal definition', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret');
+
+    // WHEN
+    const vol = Volume.fromSecret(secret);
+
+    // THEN
+    expect(vol._toKube()).toMatchInlineSnapshot(`
+      Object {
+        "name": "secret-test-my-secret-c8a71744",
+        "secret": Object {
+          "defaultMode": undefined,
+          "items": undefined,
+          "optional": undefined,
+          "secretName": "test-my-secret-c8a71744",
+        },
+      }
+    `);
+  });
+
+  test('custom volume name', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret');
+
+    // WHEN
+    const vol = Volume.fromSecret(secret, {
+      name: 'filesystem',
+    });
+
+    // THEN
+    expect(vol._toKube().name).toBe('filesystem');
+    expect(vol._toKube().secret?.secretName).toBe('test-my-secret-c8a71744');
+  });
+
+  test('default mode', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret');
+
+    // WHEN
+    const vol = Volume.fromSecret(secret, {
+      defaultMode: 0o777,
+    });
+
+    // THEN
+    expect(vol._toKube().secret?.defaultMode).toBe(0o777);
+  });
+
+  test('optional', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret');
+
+    // WHEN
+    const vol0 = Volume.fromSecret(secret);
+    const vol1 = Volume.fromSecret(secret, { optional: true });
+    const vol2 = Volume.fromSecret(secret, { optional: false });
+
+    // THEN
+    expect(vol0._toKube().secret?.optional).toBe(undefined);
+    expect(vol1._toKube().secret?.optional).toBe(true);
+    expect(vol2._toKube().secret?.optional).toBe(false);
+  });
+
+  test('items', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret');
+
+    // WHEN
+    const vol = Volume.fromSecret(secret, {
+      items: {
+        key1: { path: 'path/to/key1' },
+        key2: { path: 'path/key2', mode: 0o100 },
+      },
+    });
+
+    // THEN
+    expect(vol._toKube().secret?.items?.[0]).toStrictEqual({
+      key: 'key1',
+      mode: undefined,
+      path: 'path/to/key1',
+    });
+    expect(vol._toKube().secret?.items?.[1]).toStrictEqual({
+      key: 'key2',
+      mode: 0o100,
+      path: 'path/key2',
+    });
+  });
+
+  test('items are sorted by key for deterministic synthesis', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret');
+
+    // WHEN
+    const vol = Volume.fromSecret(secret, {
+      items: {
+        key2: { path: 'path2' },
+        key1: { path: 'path1' },
+      },
+    });
+
+    // THEN
+    expect(vol._toKube().secret?.items?.[0]).toStrictEqual({
+      key: 'key1',
+      mode: undefined,
+      path: 'path1',
+    });
+    expect(vol._toKube().secret?.items?.[1]).toStrictEqual({
+      key: 'key2',
+      mode: undefined,
+      path: 'path2',
+    });
+  });
+});
 
 describe('fromConfigMap', () => {
   test('minimal definition', () => {
