@@ -3635,6 +3635,83 @@ The secret.
 
 ---
 
+### SecretVolumeOptions <a name="cdk8s-plus-22.SecretVolumeOptions"></a>
+
+Options for the Secret-based volume.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { SecretVolumeOptions } from 'cdk8s-plus-22'
+
+const secretVolumeOptions: SecretVolumeOptions = { ... }
+```
+
+##### `defaultMode`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretVolumeOptions.property.defaultMode"></a>
+
+```typescript
+public readonly defaultMode: number;
+```
+
+- *Type:* `number`
+- *Default:* 0644. Directories within the path are not affected by this
+setting. This might be in conflict with other options that affect the file
+mode, like fsGroup, and the result can be other mode bits set.
+
+Mode bits to use on created files by default.
+
+Must be a value between 0 and
+0777. Defaults to 0644. Directories within the path are not affected by
+this setting. This might be in conflict with other options that affect the
+file mode, like fsGroup, and the result can be other mode bits set.
+
+---
+
+##### `items`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretVolumeOptions.property.items"></a>
+
+```typescript
+public readonly items: {[ key: string ]: PathMapping};
+```
+
+- *Type:* {[ key: string ]: [`cdk8s-plus-22.PathMapping`](#cdk8s-plus-22.PathMapping)}
+- *Default:* no mapping
+
+If unspecified, each key-value pair in the Data field of the referenced secret will be projected into the volume as a file whose name is the key and content is the value.
+
+If specified, the listed keys will be projected
+into the specified paths, and unlisted keys will not be present. If a key
+is specified which is not present in the secret, the volume setup will
+error unless it is marked optional. Paths must be relative and may not
+contain the '..' path or start with '..'.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `optional`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretVolumeOptions.property.optional"></a>
+
+```typescript
+public readonly optional: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* undocumented
+
+Specify whether the secret or its keys must be defined.
+
+---
+
 ### ServiceAccountProps <a name="cdk8s-plus-22.ServiceAccountProps"></a>
 
 Properties for initialization of `ServiceAccount`.
@@ -4905,6 +4982,30 @@ Volume.fromEmptyDir(name: string, options?: EmptyDirVolumeOptions)
 - *Type:* [`cdk8s-plus-22.EmptyDirVolumeOptions`](#cdk8s-plus-22.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromSecret` <a name="cdk8s-plus-22.Volume.fromSecret"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromSecret(secret: ISecret, options?: SecretVolumeOptions)
+```
+
+###### `secret`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.secret"></a>
+
+- *Type:* [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret)
+
+The secret to use to populate the volume.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.SecretVolumeOptions`](#cdk8s-plus-22.SecretVolumeOptions)
+
+Options.
 
 ---
 
