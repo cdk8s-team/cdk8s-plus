@@ -4321,6 +4321,88 @@ The secret.
 
 ---
 
+### SecretVolumeOptions <a name="org.cdk8s.plus21.SecretVolumeOptions"></a>
+
+Options for the Secret-based volume.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.SecretVolumeOptions;
+
+SecretVolumeOptions.builder()
+//  .defaultMode(java.lang.Number)
+//  .items(java.util.Map<java.lang.String, PathMapping>)
+//  .name(java.lang.String)
+//  .optional(java.lang.Boolean)
+    .build();
+```
+
+##### `defaultMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretVolumeOptions.property.defaultMode"></a>
+
+```java
+public java.lang.Number getDefaultMode();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* 0644. Directories within the path are not affected by this
+setting. This might be in conflict with other options that affect the file
+mode, like fsGroup, and the result can be other mode bits set.
+
+Mode bits to use on created files by default.
+
+Must be a value between 0 and
+0777. Defaults to 0644. Directories within the path are not affected by
+this setting. This might be in conflict with other options that affect the
+file mode, like fsGroup, and the result can be other mode bits set.
+
+---
+
+##### `items`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretVolumeOptions.property.items"></a>
+
+```java
+public java.util.Map<java.lang.String, PathMapping> getItems();
+```
+
+- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus21.PathMapping`](#org.cdk8s.plus21.PathMapping)>
+- *Default:* no mapping
+
+If unspecified, each key-value pair in the Data field of the referenced secret will be projected into the volume as a file whose name is the key and content is the value.
+
+If specified, the listed keys will be projected
+into the specified paths, and unlisted keys will not be present. If a key
+is specified which is not present in the secret, the volume setup will
+error unless it is marked optional. Paths must be relative and may not
+contain the '..' path or start with '..'.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretVolumeOptions.property.optional"></a>
+
+```java
+public java.lang.Boolean getOptional();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* undocumented
+
+Specify whether the secret or its keys must be defined.
+
+---
+
 ### ServiceAccountProps <a name="org.cdk8s.plus21.ServiceAccountProps"></a>
 
 Properties for initialization of `ServiceAccount`.
@@ -5903,6 +5985,31 @@ Volume.fromEmptyDir(java.lang.String name, EmptyDirVolumeOptions options)
 - *Type:* [`org.cdk8s.plus21.EmptyDirVolumeOptions`](#org.cdk8s.plus21.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromSecret` <a name="org.cdk8s.plus21.Volume.fromSecret"></a>
+
+```java
+import org.cdk8s.plus21.Volume;
+
+Volume.fromSecret(ISecret secret)
+Volume.fromSecret(ISecret secret, SecretVolumeOptions options)
+```
+
+###### `secret`<sup>Required</sup> <a name="org.cdk8s.plus21.Volume.parameter.secret"></a>
+
+- *Type:* [`org.cdk8s.plus21.ISecret`](#org.cdk8s.plus21.ISecret)
+
+The secret to use to populate the volume.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.SecretVolumeOptions`](#org.cdk8s.plus21.SecretVolumeOptions)
+
+Options.
 
 ---
 

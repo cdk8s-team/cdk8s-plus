@@ -5216,6 +5216,88 @@ The secret.
 
 ---
 
+### SecretVolumeOptions <a name="cdk8s_plus_21.SecretVolumeOptions"></a>
+
+Options for the Secret-based volume.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.SecretVolumeOptions(
+  default_mode: typing.Union[int, float] = None,
+  items: typing.Mapping[PathMapping] = None,
+  name: str = None,
+  optional: bool = None
+)
+```
+
+##### `default_mode`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.property.default_mode"></a>
+
+```python
+default_mode: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0644. Directories within the path are not affected by this
+setting. This might be in conflict with other options that affect the file
+mode, like fsGroup, and the result can be other mode bits set.
+
+Mode bits to use on created files by default.
+
+Must be a value between 0 and
+0777. Defaults to 0644. Directories within the path are not affected by
+this setting. This might be in conflict with other options that affect the
+file mode, like fsGroup, and the result can be other mode bits set.
+
+---
+
+##### `items`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.property.items"></a>
+
+```python
+items: typing.Mapping[PathMapping]
+```
+
+- *Type:* typing.Mapping[[`cdk8s_plus_21.PathMapping`](#cdk8s_plus_21.PathMapping)]
+- *Default:* no mapping
+
+If unspecified, each key-value pair in the Data field of the referenced secret will be projected into the volume as a file whose name is the key and content is the value.
+
+If specified, the listed keys will be projected
+into the specified paths, and unlisted keys will not be present. If a key
+is specified which is not present in the secret, the volume setup will
+error unless it is marked optional. Paths must be relative and may not
+contain the '..' path or start with '..'.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `optional`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.property.optional"></a>
+
+```python
+optional: bool
+```
+
+- *Type:* `bool`
+- *Default:* undocumented
+
+Specify whether the secret or its keys must be defined.
+
+---
+
 ### ServiceAccountProps <a name="cdk8s_plus_21.ServiceAccountProps"></a>
 
 Properties for initialization of `ServiceAccount`.
@@ -7224,6 +7306,77 @@ The size
 limit is also applicable for memory medium. The maximum usage on memory
 medium EmptyDir would be the minimum value between the SizeLimit specified
 here and the sum of memory limits of all containers in a pod.
+
+---
+
+##### `from_secret` <a name="cdk8s_plus_21.Volume.from_secret"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.Volume.from_secret(
+  secret: ISecret,
+  default_mode: typing.Union[int, float] = None,
+  items: typing.Mapping[PathMapping] = None,
+  name: str = None,
+  optional: bool = None
+)
+```
+
+###### `secret`<sup>Required</sup> <a name="cdk8s_plus_21.Volume.parameter.secret"></a>
+
+- *Type:* [`cdk8s_plus_21.ISecret`](#cdk8s_plus_21.ISecret)
+
+The secret to use to populate the volume.
+
+---
+
+###### `default_mode`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.parameter.default_mode"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0644. Directories within the path are not affected by this
+setting. This might be in conflict with other options that affect the file
+mode, like fsGroup, and the result can be other mode bits set.
+
+Mode bits to use on created files by default.
+
+Must be a value between 0 and
+0777. Defaults to 0644. Directories within the path are not affected by
+this setting. This might be in conflict with other options that affect the
+file mode, like fsGroup, and the result can be other mode bits set.
+
+---
+
+###### `items`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.parameter.items"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_21.PathMapping`](#cdk8s_plus_21.PathMapping)]
+- *Default:* no mapping
+
+If unspecified, each key-value pair in the Data field of the referenced secret will be projected into the volume as a file whose name is the key and content is the value.
+
+If specified, the listed keys will be projected
+into the specified paths, and unlisted keys will not be present. If a key
+is specified which is not present in the secret, the volume setup will
+error unless it is marked optional. Paths must be relative and may not
+contain the '..' path or start with '..'.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `optional`<sup>Optional</sup> <a name="cdk8s_plus_21.SecretVolumeOptions.parameter.optional"></a>
+
+- *Type:* `bool`
+- *Default:* undocumented
+
+Specify whether the secret or its keys must be defined.
 
 ---
 
