@@ -1,21 +1,12 @@
-const child = require('child_process');
 const path = require('path');
 const { cdk } = require('projen');
 
-const DEFAULT_K8S_VERSION = '22';
-const SPEC_VERSION = k8sVersion();
-const K8S_VERSION = `1.${SPEC_VERSION}.0`;
+// the latest version of k8s we support
+const LATEST_SUPPORTED_K8S_VERSION = '22';
 
-function k8sVersion() {
-  const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const match = branch.match(/k8s-(\d\d)/);
-  if (!match) {
-    // if we cannot determine the spec version from the branch name, we're probably targetting
-    // the default spec version.
-    return DEFAULT_K8S_VERSION;
-  }
-  return match[1];
-}
+// the version of k8s this branch supports
+const SPEC_VERSION = '21';
+const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 const project = new cdk.JsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
@@ -90,9 +81,9 @@ const project = new cdk.JsiiProject({
   depsUpgradeOptions: {
     workflowOptions: {
       branches: [
-        `k8s-${DEFAULT_K8S_VERSION}/main`,
-        `k8s-${DEFAULT_K8S_VERSION - 1}/main`,
-        `k8s-${DEFAULT_K8S_VERSION - 2}/main`,
+        `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`,
+        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
+        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
       ],
     },
   },
