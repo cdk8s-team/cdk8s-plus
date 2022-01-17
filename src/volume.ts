@@ -1,6 +1,7 @@
 import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
 import * as k8s from './imports/k8s';
+import { PersistentVolumeClaim } from './persistent-volume';
 import { ISecret } from './secret';
 
 /**
@@ -108,6 +109,14 @@ export class Volume {
         defaultMode: options.defaultMode,
         optional: options.optional,
         items: Volume.renderItems(options.items),
+      },
+    });
+  }
+
+  public static fromPvc(pvc: PersistentVolumeClaim, options: PersistentVolumeClaimOptions = {}): Volume {
+    return new Volume(options.name ?? `pvc-${pvc.name}`, {
+      persistentVolumeClaim: {
+        claimName: pvc.name,
       },
     });
   }
@@ -294,4 +303,13 @@ export interface SecretVolumeOptions {
    */
   readonly items?: { [key: string]: PathMapping };
 
+}
+
+export interface PersistentVolumeClaimOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
 }

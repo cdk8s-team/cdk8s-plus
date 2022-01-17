@@ -1040,6 +1040,89 @@ TTL before the job is deleted after it is finished.
 ---
 
 
+### PersistentVolumeClaim <a name="org.cdk8s.plus22.PersistentVolumeClaim"></a>
+
+A persistent volume claim.
+
+#### Initializers <a name="org.cdk8s.plus22.PersistentVolumeClaim.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PersistentVolumeClaim;
+
+PersistentVolumeClaim.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .accessModes(java.util.List<PersistentVolumeAccessMode>)
+    .size(Size)
+//  .location(PersistentVolumeLocation)
+//  .storageClass(IStorageClass)
+//  .volumeMode(PersistentVolumeMode)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaim.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaim.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.parameter.accessModes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.PersistentVolumeAccessMode`](#org.cdk8s.plus22.PersistentVolumeAccessMode)>
+
+Access modes for the persistent volume claim.
+
+---
+
+##### `size`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.parameter.size"></a>
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+
+Size of persistent volume to request.
+
+---
+
+##### `location`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.parameter.location"></a>
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeLocation`](#org.cdk8s.plus22.PersistentVolumeLocation)
+
+How to find a persistent volume claim.
+
+---
+
+##### `storageClass`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.parameter.storageClass"></a>
+
+- *Type:* [`org.cdk8s.plus22.IStorageClass`](#org.cdk8s.plus22.IStorageClass)
+
+Storage class of the persistent volume.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.parameter.volumeMode"></a>
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeMode`](#org.cdk8s.plus22.PersistentVolumeMode)
+
+Mode of the persistent volume.
+
+---
+
+
+
+
+
 ### Pod <a name="org.cdk8s.plus22.Pod"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
@@ -3871,6 +3954,146 @@ the result can be other mode bits set.
 
 ---
 
+### PersistentVolumeClaimOptions <a name="org.cdk8s.plus22.PersistentVolumeClaimOptions"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PersistentVolumeClaimOptions;
+
+PersistentVolumeClaimOptions.builder()
+//  .name(java.lang.String)
+    .build();
+```
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+### PersistentVolumeClaimProps <a name="org.cdk8s.plus22.PersistentVolumeClaimProps"></a>
+
+Props for `PersistentVolumeClaim`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PersistentVolumeClaimProps;
+
+PersistentVolumeClaimProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .accessModes(java.util.List<PersistentVolumeAccessMode>)
+    .size(Size)
+//  .location(PersistentVolumeLocation)
+//  .storageClass(IStorageClass)
+//  .volumeMode(PersistentVolumeMode)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.PersistentVolumeAccessMode`](#org.cdk8s.plus22.PersistentVolumeAccessMode)>
+
+Access modes for the persistent volume claim.
+
+---
+
+##### `size`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.property.size"></a>
+
+```java
+public Size getSize();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+
+Size of persistent volume to request.
+
+---
+
+##### `location`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.property.location"></a>
+
+```java
+public PersistentVolumeLocation getLocation();
+```
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeLocation`](#org.cdk8s.plus22.PersistentVolumeLocation)
+
+How to find a persistent volume claim.
+
+---
+
+##### `storageClass`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.property.storageClass"></a>
+
+```java
+public IStorageClass getStorageClass();
+```
+
+- *Type:* [`org.cdk8s.plus22.IStorageClass`](#org.cdk8s.plus22.IStorageClass)
+
+Storage class of the persistent volume.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaimProps.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeMode`](#org.cdk8s.plus22.PersistentVolumeMode)
+
+Mode of the persistent volume.
+
+---
+
+### PersistentVolumeLocationConfig <a name="org.cdk8s.plus22.PersistentVolumeLocationConfig"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PersistentVolumeLocationConfig;
+
+PersistentVolumeLocationConfig.builder()
+//  .volumeName(java.lang.String)
+    .build();
+```
+
+##### `volumeName`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolumeLocationConfig.property.volumeName"></a>
+
+```java
+public java.lang.String getVolumeName();
+```
+
+- *Type:* `java.lang.String`
+
+Name of a persistent volume.
+
+---
+
 ### PodProps <a name="org.cdk8s.plus22.PodProps"></a>
 
 Properties for initialization of `Pod`.
@@ -5623,6 +5846,52 @@ The service object.
 
 
 
+### PersistentVolumeLocation <a name="org.cdk8s.plus22.PersistentVolumeLocation"></a>
+
+- *Implements:* [`org.cdk8s.plus22.IPersistentVolumeLocation`](#org.cdk8s.plus22.IPersistentVolumeLocation)
+
+Locates a persistent volume.
+
+#### Initializers <a name="org.cdk8s.plus22.PersistentVolumeLocation.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PersistentVolumeLocation;
+
+new PersistentVolumeLocation();
+```
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="org.cdk8s.plus22.PersistentVolumeLocation.bind"></a>
+
+```java
+public bind(PersistentVolumeClaim persistentVolumeClaim)
+```
+
+###### `persistentVolumeClaim`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeLocation.parameter.persistentVolumeClaim"></a>
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim)
+
+---
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromVolumeName` <a name="org.cdk8s.plus22.PersistentVolumeLocation.fromVolumeName"></a>
+
+```java
+import org.cdk8s.plus22.PersistentVolumeLocation;
+
+PersistentVolumeLocation.fromVolumeName(java.lang.String volumeName)
+```
+
+###### `volumeName`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeLocation.parameter.volumeName"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+
+
 ### PodSpec <a name="org.cdk8s.plus22.PodSpec"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
@@ -6052,6 +6321,27 @@ Additional options.
 
 ---
 
+##### `fromPvc` <a name="org.cdk8s.plus22.Volume.fromPvc"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromPvc(PersistentVolumeClaim pvc)
+Volume.fromPvc(PersistentVolumeClaim pvc, PersistentVolumeClaimOptions options)
+```
+
+###### `pvc`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.pvc"></a>
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim)
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeClaimOptions`](#org.cdk8s.plus22.PersistentVolumeClaimOptions)
+
+---
+
 ##### `fromSecret` <a name="org.cdk8s.plus22.Volume.fromSecret"></a>
 
 ```java
@@ -6114,6 +6404,27 @@ public java.lang.String getName();
 The Kubernetes name of this resource.
 
 ---
+
+### IPersistentVolumeLocation <a name="org.cdk8s.plus22.IPersistentVolumeLocation"></a>
+
+- *Implemented By:* [`org.cdk8s.plus22.PersistentVolumeLocation`](#org.cdk8s.plus22.PersistentVolumeLocation), [`org.cdk8s.plus22.IPersistentVolumeLocation`](#org.cdk8s.plus22.IPersistentVolumeLocation)
+
+Interface for locating a persistent volume.
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="org.cdk8s.plus22.IPersistentVolumeLocation.bind"></a>
+
+```java
+public bind(PersistentVolumeClaim persistentVolumeClaim)
+```
+
+###### `persistentVolumeClaim`<sup>Required</sup> <a name="org.cdk8s.plus22.IPersistentVolumeLocation.parameter.persistentVolumeClaim"></a>
+
+- *Type:* [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim)
+
+---
+
 
 ### IPodSpec <a name="org.cdk8s.plus22.IPodSpec"></a>
 
@@ -6286,7 +6597,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="org.cdk8s.plus22.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount), [`org.cdk8s.plus22.IStorageClass`](#org.cdk8s.plus22.IStorageClass)
 
 Represents a resource.
 
@@ -6336,6 +6647,29 @@ The Kubernetes name of this resource.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.IServiceAccount.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+The Kubernetes name of this resource.
+
+---
+
+### IStorageClass <a name="org.cdk8s.plus22.IStorageClass"></a>
+
+- *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+
+- *Implemented By:* [`org.cdk8s.plus22.IStorageClass`](#org.cdk8s.plus22.IStorageClass)
+
+Interface of a storage class.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.IStorageClass.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -6486,6 +6820,58 @@ the host operating system and therefore it is allowed only in privileged
 Containers. Familiarity with Linux kernel behavior is strongly recommended.
 In addition, any volume mounts created by Containers in Pods must be
 destroyed (unmounted) by the Containers on termination.
+
+---
+
+
+### PersistentVolumeAccessMode <a name="PersistentVolumeAccessMode"></a>
+
+Access modes for persistent volumes.
+
+#### `READ_WRITE_ONCE` <a name="org.cdk8s.plus22.PersistentVolumeAccessMode.READ_WRITE_ONCE"></a>
+
+The volume can be mounted as read/write on one node.
+
+---
+
+
+#### `READ_ONLY_MANY` <a name="org.cdk8s.plus22.PersistentVolumeAccessMode.READ_ONLY_MANY"></a>
+
+The volume can be mounted read-only on many nodes.
+
+---
+
+
+#### `READ_WRITE_MANY` <a name="org.cdk8s.plus22.PersistentVolumeAccessMode.READ_WRITE_MANY"></a>
+
+The volume can be mounted read/write on many nodes.
+
+---
+
+
+#### `READ_WRITE_ONCE_POD` <a name="org.cdk8s.plus22.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD"></a>
+
+The volume can be mounted read/write on only one pod.
+
+This only works for CSI volumes.
+
+---
+
+
+### PersistentVolumeMode <a name="PersistentVolumeMode"></a>
+
+Persistent volume modes.
+
+#### `FILESYSTEM` <a name="org.cdk8s.plus22.PersistentVolumeMode.FILESYSTEM"></a>
+
+The volume should be mounted into the pod.
+
+---
+
+
+#### `BLOCK` <a name="org.cdk8s.plus22.PersistentVolumeMode.BLOCK"></a>
+
+The volume is presented to the pod as a block device.
 
 ---
 

@@ -745,6 +745,40 @@ TTL before the job is deleted after it is finished.
 ---
 
 
+### PersistentVolumeClaim <a name="cdk8s-plus-22.PersistentVolumeClaim"></a>
+
+A persistent volume claim.
+
+#### Initializers <a name="cdk8s-plus-22.PersistentVolumeClaim.Initializer"></a>
+
+```typescript
+import { PersistentVolumeClaim } from 'cdk8s-plus-22'
+
+new PersistentVolumeClaim(scope: Construct, id: string, props: PersistentVolumeClaimProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaimProps`](#cdk8s-plus-22.PersistentVolumeClaimProps)
+
+---
+
+
+
+
+
 ### Pod <a name="cdk8s-plus-22.Pod"></a>
 
 - *Implements:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
@@ -3153,6 +3187,135 @@ the result can be other mode bits set.
 
 ---
 
+### PersistentVolumeClaimOptions <a name="cdk8s-plus-22.PersistentVolumeClaimOptions"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PersistentVolumeClaimOptions } from 'cdk8s-plus-22'
+
+const persistentVolumeClaimOptions: PersistentVolumeClaimOptions = { ... }
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+### PersistentVolumeClaimProps <a name="cdk8s-plus-22.PersistentVolumeClaimProps"></a>
+
+Props for `PersistentVolumeClaim`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PersistentVolumeClaimProps } from 'cdk8s-plus-22'
+
+const persistentVolumeClaimProps: PersistentVolumeClaimProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+
+Access modes for the persistent volume claim.
+
+---
+
+##### `size`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.size"></a>
+
+```typescript
+public readonly size: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+Size of persistent volume to request.
+
+---
+
+##### `location`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.location"></a>
+
+```typescript
+public readonly location: PersistentVolumeLocation;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeLocation`](#cdk8s-plus-22.PersistentVolumeLocation)
+
+How to find a persistent volume claim.
+
+---
+
+##### `storageClass`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.storageClass"></a>
+
+```typescript
+public readonly storageClass: IStorageClass;
+```
+
+- *Type:* [`cdk8s-plus-22.IStorageClass`](#cdk8s-plus-22.IStorageClass)
+
+Storage class of the persistent volume.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+
+Mode of the persistent volume.
+
+---
+
+### PersistentVolumeLocationConfig <a name="cdk8s-plus-22.PersistentVolumeLocationConfig"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PersistentVolumeLocationConfig } from 'cdk8s-plus-22'
+
+const persistentVolumeLocationConfig: PersistentVolumeLocationConfig = { ... }
+```
+
+##### `volumeName`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeLocationConfig.property.volumeName"></a>
+
+```typescript
+public readonly volumeName: string;
+```
+
+- *Type:* `string`
+
+Name of a persistent volume.
+
+---
+
 ### PodProps <a name="cdk8s-plus-22.PodProps"></a>
 
 Properties for initialization of `Pod`.
@@ -4679,6 +4842,52 @@ The service object.
 
 
 
+### PersistentVolumeLocation <a name="cdk8s-plus-22.PersistentVolumeLocation"></a>
+
+- *Implements:* [`cdk8s-plus-22.IPersistentVolumeLocation`](#cdk8s-plus-22.IPersistentVolumeLocation)
+
+Locates a persistent volume.
+
+#### Initializers <a name="cdk8s-plus-22.PersistentVolumeLocation.Initializer"></a>
+
+```typescript
+import { PersistentVolumeLocation } from 'cdk8s-plus-22'
+
+new PersistentVolumeLocation()
+```
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s-plus-22.PersistentVolumeLocation.bind"></a>
+
+```typescript
+public bind(persistentVolumeClaim: PersistentVolumeClaim)
+```
+
+###### `persistentVolumeClaim`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeLocation.parameter.persistentVolumeClaim"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim)
+
+---
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromVolumeName` <a name="cdk8s-plus-22.PersistentVolumeLocation.fromVolumeName"></a>
+
+```typescript
+import { PersistentVolumeLocation } from 'cdk8s-plus-22'
+
+PersistentVolumeLocation.fromVolumeName(volumeName: string)
+```
+
+###### `volumeName`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeLocation.parameter.volumeName"></a>
+
+- *Type:* `string`
+
+---
+
+
+
 ### PodSpec <a name="cdk8s-plus-22.PodSpec"></a>
 
 - *Implements:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
@@ -4985,6 +5194,26 @@ Additional options.
 
 ---
 
+##### `fromPvc` <a name="cdk8s-plus-22.Volume.fromPvc"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromPvc(pvc: PersistentVolumeClaim, options?: PersistentVolumeClaimOptions)
+```
+
+###### `pvc`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.pvc"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim)
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaimOptions`](#cdk8s-plus-22.PersistentVolumeClaimOptions)
+
+---
+
 ##### `fromSecret` <a name="cdk8s-plus-22.Volume.fromSecret"></a>
 
 ```typescript
@@ -5046,6 +5275,27 @@ public readonly name: string;
 The Kubernetes name of this resource.
 
 ---
+
+### IPersistentVolumeLocation <a name="cdk8s-plus-22.IPersistentVolumeLocation"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.PersistentVolumeLocation`](#cdk8s-plus-22.PersistentVolumeLocation), [`cdk8s-plus-22.IPersistentVolumeLocation`](#cdk8s-plus-22.IPersistentVolumeLocation)
+
+Interface for locating a persistent volume.
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s-plus-22.IPersistentVolumeLocation.bind"></a>
+
+```typescript
+public bind(persistentVolumeClaim: PersistentVolumeClaim)
+```
+
+###### `persistentVolumeClaim`<sup>Required</sup> <a name="cdk8s-plus-22.IPersistentVolumeLocation.parameter.persistentVolumeClaim"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim)
+
+---
+
 
 ### IPodSpec <a name="cdk8s-plus-22.IPodSpec"></a>
 
@@ -5218,7 +5468,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount), [`cdk8s-plus-22.IStorageClass`](#cdk8s-plus-22.IStorageClass)
 
 Represents a resource.
 
@@ -5268,6 +5518,29 @@ The Kubernetes name of this resource.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IServiceAccount.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The Kubernetes name of this resource.
+
+---
+
+### IStorageClass <a name="cdk8s-plus-22.IStorageClass"></a>
+
+- *Extends:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+- *Implemented By:* [`cdk8s-plus-22.IStorageClass`](#cdk8s-plus-22.IStorageClass)
+
+Interface of a storage class.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IStorageClass.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -5418,6 +5691,58 @@ the host operating system and therefore it is allowed only in privileged
 Containers. Familiarity with Linux kernel behavior is strongly recommended.
 In addition, any volume mounts created by Containers in Pods must be
 destroyed (unmounted) by the Containers on termination.
+
+---
+
+
+### PersistentVolumeAccessMode <a name="PersistentVolumeAccessMode"></a>
+
+Access modes for persistent volumes.
+
+#### `READ_WRITE_ONCE` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_WRITE_ONCE"></a>
+
+The volume can be mounted as read/write on one node.
+
+---
+
+
+#### `READ_ONLY_MANY` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_ONLY_MANY"></a>
+
+The volume can be mounted read-only on many nodes.
+
+---
+
+
+#### `READ_WRITE_MANY` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_WRITE_MANY"></a>
+
+The volume can be mounted read/write on many nodes.
+
+---
+
+
+#### `READ_WRITE_ONCE_POD` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD"></a>
+
+The volume can be mounted read/write on only one pod.
+
+This only works for CSI volumes.
+
+---
+
+
+### PersistentVolumeMode <a name="PersistentVolumeMode"></a>
+
+Persistent volume modes.
+
+#### `FILESYSTEM` <a name="cdk8s-plus-22.PersistentVolumeMode.FILESYSTEM"></a>
+
+The volume should be mounted into the pod.
+
+---
+
+
+#### `BLOCK` <a name="cdk8s-plus-22.PersistentVolumeMode.BLOCK"></a>
+
+The volume is presented to the pod as a block device.
 
 ---
 

@@ -1535,6 +1535,91 @@ TTL before the job is deleted after it is finished.
 ---
 
 
+### PersistentVolumeClaim <a name="cdk8s_plus_22.PersistentVolumeClaim"></a>
+
+A persistent volume claim.
+
+#### Initializers <a name="cdk8s_plus_22.PersistentVolumeClaim.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PersistentVolumeClaim(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  access_modes: typing.List[PersistentVolumeAccessMode],
+  size: Size,
+  location: PersistentVolumeLocation = None,
+  storage_class: IStorageClass = None,
+  volume_mode: PersistentVolumeMode = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaim.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaim.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `access_modes`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.parameter.access_modes"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.PersistentVolumeAccessMode`](#cdk8s_plus_22.PersistentVolumeAccessMode)]
+
+Access modes for the persistent volume claim.
+
+---
+
+##### `size`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.parameter.size"></a>
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+Size of persistent volume to request.
+
+---
+
+##### `location`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.parameter.location"></a>
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeLocation`](#cdk8s_plus_22.PersistentVolumeLocation)
+
+How to find a persistent volume claim.
+
+---
+
+##### `storage_class`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.parameter.storage_class"></a>
+
+- *Type:* [`cdk8s_plus_22.IStorageClass`](#cdk8s_plus_22.IStorageClass)
+
+Storage class of the persistent volume.
+
+---
+
+##### `volume_mode`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.parameter.volume_mode"></a>
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeMode`](#cdk8s_plus_22.PersistentVolumeMode)
+
+Mode of the persistent volume.
+
+---
+
+
+
+
+
 ### Pod <a name="cdk8s_plus_22.Pod"></a>
 
 - *Implements:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
@@ -4800,6 +4885,146 @@ the result can be other mode bits set.
 
 ---
 
+### PersistentVolumeClaimOptions <a name="cdk8s_plus_22.PersistentVolumeClaimOptions"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PersistentVolumeClaimOptions(
+  name: str = None
+)
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+### PersistentVolumeClaimProps <a name="cdk8s_plus_22.PersistentVolumeClaimProps"></a>
+
+Props for `PersistentVolumeClaim`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PersistentVolumeClaimProps(
+  metadata: ApiObjectMetadata = None,
+  access_modes: typing.List[PersistentVolumeAccessMode],
+  size: Size,
+  location: PersistentVolumeLocation = None,
+  storage_class: IStorageClass = None,
+  volume_mode: PersistentVolumeMode = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `access_modes`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.property.access_modes"></a>
+
+```python
+access_modes: typing.List[PersistentVolumeAccessMode]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.PersistentVolumeAccessMode`](#cdk8s_plus_22.PersistentVolumeAccessMode)]
+
+Access modes for the persistent volume claim.
+
+---
+
+##### `size`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.property.size"></a>
+
+```python
+size: Size
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+Size of persistent volume to request.
+
+---
+
+##### `location`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.property.location"></a>
+
+```python
+location: PersistentVolumeLocation
+```
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeLocation`](#cdk8s_plus_22.PersistentVolumeLocation)
+
+How to find a persistent volume claim.
+
+---
+
+##### `storage_class`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.property.storage_class"></a>
+
+```python
+storage_class: IStorageClass
+```
+
+- *Type:* [`cdk8s_plus_22.IStorageClass`](#cdk8s_plus_22.IStorageClass)
+
+Storage class of the persistent volume.
+
+---
+
+##### `volume_mode`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimProps.property.volume_mode"></a>
+
+```python
+volume_mode: PersistentVolumeMode
+```
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeMode`](#cdk8s_plus_22.PersistentVolumeMode)
+
+Mode of the persistent volume.
+
+---
+
+### PersistentVolumeLocationConfig <a name="cdk8s_plus_22.PersistentVolumeLocationConfig"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PersistentVolumeLocationConfig(
+  volume_name: str = None
+)
+```
+
+##### `volume_name`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeLocationConfig.property.volume_name"></a>
+
+```python
+volume_name: str
+```
+
+- *Type:* `str`
+
+Name of a persistent volume.
+
+---
+
 ### PodProps <a name="cdk8s_plus_22.PodProps"></a>
 
 Properties for initialization of `Pod`.
@@ -6641,6 +6866,56 @@ The port to use to access the service.
 
 
 
+### PersistentVolumeLocation <a name="cdk8s_plus_22.PersistentVolumeLocation"></a>
+
+- *Implements:* [`cdk8s_plus_22.IPersistentVolumeLocation`](#cdk8s_plus_22.IPersistentVolumeLocation)
+
+Locates a persistent volume.
+
+#### Initializers <a name="cdk8s_plus_22.PersistentVolumeLocation.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PersistentVolumeLocation()
+```
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s_plus_22.PersistentVolumeLocation.bind"></a>
+
+```python
+def bind(
+  persistent_volume_claim: PersistentVolumeClaim
+)
+```
+
+###### `persistent_volume_claim`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeLocation.parameter.persistent_volume_claim"></a>
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim)
+
+---
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `from_volume_name` <a name="cdk8s_plus_22.PersistentVolumeLocation.from_volume_name"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PersistentVolumeLocation.from_volume_name(
+  volume_name: str
+)
+```
+
+###### `volume_name`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeLocation.parameter.volume_name"></a>
+
+- *Type:* `str`
+
+---
+
+
+
 ### PodSpec <a name="cdk8s_plus_22.PodSpec"></a>
 
 - *Implements:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
@@ -7407,6 +7682,32 @@ here and the sum of memory limits of all containers in a pod.
 
 ---
 
+##### `from_pvc` <a name="cdk8s_plus_22.Volume.from_pvc"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Volume.from_pvc(
+  pvc: PersistentVolumeClaim,
+  name: str = None
+)
+```
+
+###### `pvc`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.pvc"></a>
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim)
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
 ##### `from_secret` <a name="cdk8s_plus_22.Volume.from_secret"></a>
 
 ```python
@@ -7515,6 +7816,29 @@ name: str
 The Kubernetes name of this resource.
 
 ---
+
+### IPersistentVolumeLocation <a name="cdk8s_plus_22.IPersistentVolumeLocation"></a>
+
+- *Implemented By:* [`cdk8s_plus_22.PersistentVolumeLocation`](#cdk8s_plus_22.PersistentVolumeLocation), [`cdk8s_plus_22.IPersistentVolumeLocation`](#cdk8s_plus_22.IPersistentVolumeLocation)
+
+Interface for locating a persistent volume.
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s_plus_22.IPersistentVolumeLocation.bind"></a>
+
+```python
+def bind(
+  persistent_volume_claim: PersistentVolumeClaim
+)
+```
+
+###### `persistent_volume_claim`<sup>Required</sup> <a name="cdk8s_plus_22.IPersistentVolumeLocation.parameter.persistent_volume_claim"></a>
+
+- *Type:* [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim)
+
+---
+
 
 ### IPodSpec <a name="cdk8s_plus_22.IPodSpec"></a>
 
@@ -7829,7 +8153,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount), [`cdk8s_plus_22.IStorageClass`](#cdk8s_plus_22.IStorageClass)
 
 Represents a resource.
 
@@ -7879,6 +8203,29 @@ The Kubernetes name of this resource.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.IServiceAccount.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+The Kubernetes name of this resource.
+
+---
+
+### IStorageClass <a name="cdk8s_plus_22.IStorageClass"></a>
+
+- *Extends:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
+
+- *Implemented By:* [`cdk8s_plus_22.IStorageClass`](#cdk8s_plus_22.IStorageClass)
+
+Interface of a storage class.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.IStorageClass.property.name"></a>
 
 ```python
 name: str
@@ -8029,6 +8376,58 @@ the host operating system and therefore it is allowed only in privileged
 Containers. Familiarity with Linux kernel behavior is strongly recommended.
 In addition, any volume mounts created by Containers in Pods must be
 destroyed (unmounted) by the Containers on termination.
+
+---
+
+
+### PersistentVolumeAccessMode <a name="PersistentVolumeAccessMode"></a>
+
+Access modes for persistent volumes.
+
+#### `READ_WRITE_ONCE` <a name="cdk8s_plus_22.PersistentVolumeAccessMode.READ_WRITE_ONCE"></a>
+
+The volume can be mounted as read/write on one node.
+
+---
+
+
+#### `READ_ONLY_MANY` <a name="cdk8s_plus_22.PersistentVolumeAccessMode.READ_ONLY_MANY"></a>
+
+The volume can be mounted read-only on many nodes.
+
+---
+
+
+#### `READ_WRITE_MANY` <a name="cdk8s_plus_22.PersistentVolumeAccessMode.READ_WRITE_MANY"></a>
+
+The volume can be mounted read/write on many nodes.
+
+---
+
+
+#### `READ_WRITE_ONCE_POD` <a name="cdk8s_plus_22.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD"></a>
+
+The volume can be mounted read/write on only one pod.
+
+This only works for CSI volumes.
+
+---
+
+
+### PersistentVolumeMode <a name="PersistentVolumeMode"></a>
+
+Persistent volume modes.
+
+#### `FILESYSTEM` <a name="cdk8s_plus_22.PersistentVolumeMode.FILESYSTEM"></a>
+
+The volume should be mounted into the pod.
+
+---
+
+
+#### `BLOCK` <a name="cdk8s_plus_22.PersistentVolumeMode.BLOCK"></a>
+
+The volume is presented to the pod as a block device.
 
 ---
 

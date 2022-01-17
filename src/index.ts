@@ -11,3 +11,4 @@ export * from './statefulset';
 export * from './volume';
 export * from './ingress';
 export * from './probe';
+export * from './persistent-volume';

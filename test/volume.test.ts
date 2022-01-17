@@ -1,5 +1,5 @@
 import { Testing, Size } from 'cdk8s';
-import { Volume, ConfigMap, EmptyDirMedium, Secret } from '../src';
+import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim, PersistentVolumeAccessMode } from '../src';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -239,6 +239,51 @@ describe('fromConfigMap', () => {
       key: 'key2',
       mode: undefined,
       path: 'path2',
+    });
+  });
+
+
+});
+
+describe('fromPersistentVolumeClaim', () => {
+  test('minimal definition', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const pvc = new PersistentVolumeClaim(chart, 'Pvc', {
+      accessModes: [PersistentVolumeAccessMode.READ_WRITE_ONCE],
+      size: Size.mebibytes(512),
+    });
+
+    // WHEN
+    const vol = Volume.fromPvc(pvc);
+
+    // THEN
+    expect(vol._toKube()).toEqual({
+      name: 'pvc-test-pvc-c8f04af4',
+      persistentVolumeClaim: {
+        claimName: 'test-pvc-c8f04af4',
+      },
+    });
+  });
+
+  test('name', () => {
+    const chart = Testing.chart();
+    const pvc = new PersistentVolumeClaim(chart, 'Pvc', {
+      accessModes: [PersistentVolumeAccessMode.READ_WRITE_ONCE],
+      size: Size.mebibytes(512),
+    });
+
+    // WHEN
+    const vol = Volume.fromPvc(pvc, {
+      name: 'pvc',
+    });
+
+    // THEN
+    expect(vol._toKube()).toEqual({
+      name: 'pvc',
+      persistentVolumeClaim: {
+        claimName: 'test-pvc-c8f04af4',
+      },
     });
   });
 });
