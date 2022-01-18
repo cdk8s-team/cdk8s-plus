@@ -3880,6 +3880,45 @@ Specify whether the ConfigMap or its key must be defined.
 
 ---
 
+### EnvValueFromFieldRefOptions <a name="cdk8s_plus_22.EnvValueFromFieldRefOptions"></a>
+
+Options to specify an environment variable value from a field reference.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.EnvValueFromFieldRefOptions(
+  api_version: str = None,
+  key: str = None
+)
+```
+
+##### `api_version`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromFieldRefOptions.property.api_version"></a>
+
+```python
+api_version: str
+```
+
+- *Type:* `str`
+
+Version of the schema the FieldPath is written in terms of.
+
+---
+
+##### `key`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromFieldRefOptions.property.key"></a>
+
+```python
+key: str
+```
+
+- *Type:* `str`
+
+The key to select the pod label or annotation.
+
+---
+
 ### EnvValueFromProcessOptions <a name="cdk8s_plus_22.EnvValueFromProcessOptions"></a>
 
 Options to specify an environment variable value from the process environment.
@@ -3906,6 +3945,45 @@ required: bool
 Specify whether the key must exist in the environment.
 
 If this is set to true, and the key does not exist, an error will thrown.
+
+---
+
+### EnvValueFromResourceOptions <a name="cdk8s_plus_22.EnvValueFromResourceOptions"></a>
+
+Options to specify an environment variable value from a resource.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.EnvValueFromResourceOptions(
+  container: Container = None,
+  divisor: str = None
+)
+```
+
+##### `container`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromResourceOptions.property.container"></a>
+
+```python
+container: Container
+```
+
+- *Type:* [`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)
+
+The container to select the value from.
+
+---
+
+##### `divisor`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromResourceOptions.property.divisor"></a>
+
+```python
+divisor: str
+```
+
+- *Type:* `str`
+
+The output format of the exposed resource.
 
 ---
 
@@ -6491,6 +6569,42 @@ Specify whether the ConfigMap or its key must be defined.
 
 ---
 
+##### `from_field_ref` <a name="cdk8s_plus_22.EnvValue.from_field_ref"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.EnvValue.from_field_ref(
+  field_path: EnvFieldPaths,
+  api_version: str = None,
+  key: str = None
+)
+```
+
+###### `field_path`<sup>Required</sup> <a name="cdk8s_plus_22.EnvValue.parameter.field_path"></a>
+
+- *Type:* [`cdk8s_plus_22.EnvFieldPaths`](#cdk8s_plus_22.EnvFieldPaths)
+
+: The field reference.
+
+---
+
+###### `api_version`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromFieldRefOptions.parameter.api_version"></a>
+
+- *Type:* `str`
+
+Version of the schema the FieldPath is written in terms of.
+
+---
+
+###### `key`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromFieldRefOptions.parameter.key"></a>
+
+- *Type:* `str`
+
+The key to select the pod label or annotation.
+
+---
+
 ##### `from_process` <a name="cdk8s_plus_22.EnvValue.from_process"></a>
 
 ```python
@@ -6518,6 +6632,42 @@ The key to read.
 Specify whether the key must exist in the environment.
 
 If this is set to true, and the key does not exist, an error will thrown.
+
+---
+
+##### `from_resource` <a name="cdk8s_plus_22.EnvValue.from_resource"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.EnvValue.from_resource(
+  resource: ResourceFieldPaths,
+  container: Container = None,
+  divisor: str = None
+)
+```
+
+###### `resource`<sup>Required</sup> <a name="cdk8s_plus_22.EnvValue.parameter.resource"></a>
+
+- *Type:* [`cdk8s_plus_22.ResourceFieldPaths`](#cdk8s_plus_22.ResourceFieldPaths)
+
+: Resource to select the value from.
+
+---
+
+###### `container`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromResourceOptions.parameter.container"></a>
+
+- *Type:* [`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)
+
+The container to select the value from.
+
+---
+
+###### `divisor`<sup>Optional</sup> <a name="cdk8s_plus_22.EnvValueFromResourceOptions.parameter.divisor"></a>
+
+- *Type:* `str`
+
+The output format of the exposed resource.
 
 ---
 
@@ -7914,6 +8064,78 @@ files you write will count against your Container's memory limit.
 ---
 
 
+### EnvFieldPaths <a name="EnvFieldPaths"></a>
+
+#### `POD_NAME` <a name="cdk8s_plus_22.EnvFieldPaths.POD_NAME"></a>
+
+The name of the pod.
+
+---
+
+
+#### `POD_NAMESPACE` <a name="cdk8s_plus_22.EnvFieldPaths.POD_NAMESPACE"></a>
+
+The namespace of the pod.
+
+---
+
+
+#### `POD_UID` <a name="cdk8s_plus_22.EnvFieldPaths.POD_UID"></a>
+
+The uid of the pod.
+
+---
+
+
+#### `POD_LABEL` <a name="cdk8s_plus_22.EnvFieldPaths.POD_LABEL"></a>
+
+The labels of the pod.
+
+---
+
+
+#### `POD_ANNOTATION` <a name="cdk8s_plus_22.EnvFieldPaths.POD_ANNOTATION"></a>
+
+The annotations of the pod.
+
+---
+
+
+#### `POD_IP` <a name="cdk8s_plus_22.EnvFieldPaths.POD_IP"></a>
+
+The ipAddress of the pod.
+
+---
+
+
+#### `SERVICE_ACCOUNT_NAME` <a name="cdk8s_plus_22.EnvFieldPaths.SERVICE_ACCOUNT_NAME"></a>
+
+The service account name of the pod.
+
+---
+
+
+#### `NODE_NAME` <a name="cdk8s_plus_22.EnvFieldPaths.NODE_NAME"></a>
+
+The name of the node.
+
+---
+
+
+#### `NODE_IP` <a name="cdk8s_plus_22.EnvFieldPaths.NODE_IP"></a>
+
+The ipAddress of the node.
+
+---
+
+
+#### `POD_IPS` <a name="cdk8s_plus_22.EnvFieldPaths.POD_IPS"></a>
+
+The ipAddresess of the pod.
+
+---
+
+
 ### HttpIngressPathType <a name="HttpIngressPathType"></a>
 
 Specify how the path is matched against request paths.
@@ -8067,6 +8289,50 @@ desired scale without waiting, and on scale down will delete all pods at once.
 
 
 #### `SCTP` <a name="cdk8s_plus_22.Protocol.SCTP"></a>
+
+---
+
+
+### ResourceFieldPaths <a name="ResourceFieldPaths"></a>
+
+#### `CPU_LIMIT` <a name="cdk8s_plus_22.ResourceFieldPaths.CPU_LIMIT"></a>
+
+CPU limit of the container.
+
+---
+
+
+#### `MEMORY_LIMIT` <a name="cdk8s_plus_22.ResourceFieldPaths.MEMORY_LIMIT"></a>
+
+Memory limit of the container.
+
+---
+
+
+#### `CPU_REQUEST` <a name="cdk8s_plus_22.ResourceFieldPaths.CPU_REQUEST"></a>
+
+CPU request of the container.
+
+---
+
+
+#### `MEMORY_REQUEST` <a name="cdk8s_plus_22.ResourceFieldPaths.MEMORY_REQUEST"></a>
+
+Memory request of the container.
+
+---
+
+
+#### `STORAGE_LIMIT` <a name="cdk8s_plus_22.ResourceFieldPaths.STORAGE_LIMIT"></a>
+
+Ephemeral storage limit of the container.
+
+---
+
+
+#### `STORAGE_REQUEST` <a name="cdk8s_plus_22.ResourceFieldPaths.STORAGE_REQUEST"></a>
+
+Ephemeral storage request of the container.
 
 ---
 
