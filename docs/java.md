@@ -2933,6 +2933,45 @@ Specify whether the ConfigMap or its key must be defined.
 
 ---
 
+### EnvValueFromFieldRefOptions <a name="org.cdk8s.plus21.EnvValueFromFieldRefOptions"></a>
+
+Options to specify an environment variable value from a field reference.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.EnvValueFromFieldRefOptions;
+
+EnvValueFromFieldRefOptions.builder()
+//  .apiVersion(java.lang.String)
+//  .key(java.lang.String)
+    .build();
+```
+
+##### `apiVersion`<sup>Optional</sup> <a name="org.cdk8s.plus21.EnvValueFromFieldRefOptions.property.apiVersion"></a>
+
+```java
+public java.lang.String getApiVersion();
+```
+
+- *Type:* `java.lang.String`
+
+Version of the schema the FieldPath is written in terms of.
+
+---
+
+##### `key`<sup>Optional</sup> <a name="org.cdk8s.plus21.EnvValueFromFieldRefOptions.property.key"></a>
+
+```java
+public java.lang.String getKey();
+```
+
+- *Type:* `java.lang.String`
+
+The key to select the pod label or annotation.
+
+---
+
 ### EnvValueFromProcessOptions <a name="org.cdk8s.plus21.EnvValueFromProcessOptions"></a>
 
 Options to specify an environment variable value from the process environment.
@@ -2959,6 +2998,45 @@ public java.lang.Boolean getRequired();
 Specify whether the key must exist in the environment.
 
 If this is set to true, and the key does not exist, an error will thrown.
+
+---
+
+### EnvValueFromResourceOptions <a name="org.cdk8s.plus21.EnvValueFromResourceOptions"></a>
+
+Options to specify an environment variable value from a resource.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.EnvValueFromResourceOptions;
+
+EnvValueFromResourceOptions.builder()
+//  .container(Container)
+//  .divisor(java.lang.String)
+    .build();
+```
+
+##### `container`<sup>Optional</sup> <a name="org.cdk8s.plus21.EnvValueFromResourceOptions.property.container"></a>
+
+```java
+public Container getContainer();
+```
+
+- *Type:* [`org.cdk8s.plus21.Container`](#org.cdk8s.plus21.Container)
+
+The container to select the value from.
+
+---
+
+##### `divisor`<sup>Optional</sup> <a name="org.cdk8s.plus21.EnvValueFromResourceOptions.property.divisor"></a>
+
+```java
+public java.lang.String getDivisor();
+```
+
+- *Type:* `java.lang.String`
+
+The output format of the exposed resource.
 
 ---
 
@@ -5438,6 +5516,31 @@ Additional options.
 
 ---
 
+##### `fromFieldRef` <a name="org.cdk8s.plus21.EnvValue.fromFieldRef"></a>
+
+```java
+import org.cdk8s.plus21.EnvValue;
+
+EnvValue.fromFieldRef(EnvFieldPaths fieldPath)
+EnvValue.fromFieldRef(EnvFieldPaths fieldPath, EnvValueFromFieldRefOptions options)
+```
+
+###### `fieldPath`<sup>Required</sup> <a name="org.cdk8s.plus21.EnvValue.parameter.fieldPath"></a>
+
+- *Type:* [`org.cdk8s.plus21.EnvFieldPaths`](#org.cdk8s.plus21.EnvFieldPaths)
+
+: The field reference.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.EnvValue.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.EnvValueFromFieldRefOptions`](#org.cdk8s.plus21.EnvValueFromFieldRefOptions)
+
+: Additional options.
+
+---
+
 ##### `fromProcess` <a name="org.cdk8s.plus21.EnvValue.fromProcess"></a>
 
 ```java
@@ -5460,6 +5563,31 @@ The key to read.
 - *Type:* [`org.cdk8s.plus21.EnvValueFromProcessOptions`](#org.cdk8s.plus21.EnvValueFromProcessOptions)
 
 Additional options.
+
+---
+
+##### `fromResource` <a name="org.cdk8s.plus21.EnvValue.fromResource"></a>
+
+```java
+import org.cdk8s.plus21.EnvValue;
+
+EnvValue.fromResource(ResourceFieldPaths resource)
+EnvValue.fromResource(ResourceFieldPaths resource, EnvValueFromResourceOptions options)
+```
+
+###### `resource`<sup>Required</sup> <a name="org.cdk8s.plus21.EnvValue.parameter.resource"></a>
+
+- *Type:* [`org.cdk8s.plus21.ResourceFieldPaths`](#org.cdk8s.plus21.ResourceFieldPaths)
+
+: Resource to select the value from.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.EnvValue.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.EnvValueFromResourceOptions`](#org.cdk8s.plus21.EnvValueFromResourceOptions)
+
+: Additional options.
 
 ---
 
@@ -6307,6 +6435,78 @@ files you write will count against your Container's memory limit.
 ---
 
 
+### EnvFieldPaths <a name="EnvFieldPaths"></a>
+
+#### `POD_NAME` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_NAME"></a>
+
+The name of the pod.
+
+---
+
+
+#### `POD_NAMESPACE` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_NAMESPACE"></a>
+
+The namespace of the pod.
+
+---
+
+
+#### `POD_UID` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_UID"></a>
+
+The uid of the pod.
+
+---
+
+
+#### `POD_LABEL` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_LABEL"></a>
+
+The labels of the pod.
+
+---
+
+
+#### `POD_ANNOTATION` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_ANNOTATION"></a>
+
+The annotations of the pod.
+
+---
+
+
+#### `POD_IP` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_IP"></a>
+
+The ipAddress of the pod.
+
+---
+
+
+#### `SERVICE_ACCOUNT_NAME` <a name="org.cdk8s.plus21.EnvFieldPaths.SERVICE_ACCOUNT_NAME"></a>
+
+The service account name of the pod.
+
+---
+
+
+#### `NODE_NAME` <a name="org.cdk8s.plus21.EnvFieldPaths.NODE_NAME"></a>
+
+The name of the node.
+
+---
+
+
+#### `NODE_IP` <a name="org.cdk8s.plus21.EnvFieldPaths.NODE_IP"></a>
+
+The ipAddress of the node.
+
+---
+
+
+#### `POD_IPS` <a name="org.cdk8s.plus21.EnvFieldPaths.POD_IPS"></a>
+
+The ipAddresess of the pod.
+
+---
+
+
 ### ImagePullPolicy <a name="ImagePullPolicy"></a>
 
 #### `ALWAYS` <a name="org.cdk8s.plus21.ImagePullPolicy.ALWAYS"></a>
@@ -6433,6 +6633,50 @@ desired scale without waiting, and on scale down will delete all pods at once.
 
 
 #### `SCTP` <a name="org.cdk8s.plus21.Protocol.SCTP"></a>
+
+---
+
+
+### ResourceFieldPaths <a name="ResourceFieldPaths"></a>
+
+#### `CPU_LIMIT` <a name="org.cdk8s.plus21.ResourceFieldPaths.CPU_LIMIT"></a>
+
+CPU limit of the container.
+
+---
+
+
+#### `MEMORY_LIMIT` <a name="org.cdk8s.plus21.ResourceFieldPaths.MEMORY_LIMIT"></a>
+
+Memory limit of the container.
+
+---
+
+
+#### `CPU_REQUEST` <a name="org.cdk8s.plus21.ResourceFieldPaths.CPU_REQUEST"></a>
+
+CPU request of the container.
+
+---
+
+
+#### `MEMORY_REQUEST` <a name="org.cdk8s.plus21.ResourceFieldPaths.MEMORY_REQUEST"></a>
+
+Memory request of the container.
+
+---
+
+
+#### `STORAGE_LIMIT` <a name="org.cdk8s.plus21.ResourceFieldPaths.STORAGE_LIMIT"></a>
+
+Ephemeral storage limit of the container.
+
+---
+
+
+#### `STORAGE_REQUEST` <a name="org.cdk8s.plus21.ResourceFieldPaths.STORAGE_REQUEST"></a>
+
+Ephemeral storage request of the container.
 
 ---
 

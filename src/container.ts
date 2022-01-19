@@ -4,6 +4,90 @@ import { Probe } from './probe';
 import { SecretValue } from './secret';
 import { Volume } from './volume';
 
+export enum EnvFieldPaths {
+  /**
+   * The name of the pod.
+   */
+  POD_NAME = 'metadata.name',
+
+  /**
+   * The namespace of the pod.
+   */
+  POD_NAMESPACE = 'metadata.namespace',
+
+  /**
+   * The uid of the pod.
+   */
+  POD_UID = 'metadata.uid',
+
+  /**
+   * The labels of the pod.
+   */
+  POD_LABEL = 'metadata.labels',
+
+  /**
+   * The annotations of the pod.
+   */
+  POD_ANNOTATION = 'metadata.annotations',
+
+  /**
+   * The ipAddress of the pod.
+   */
+  POD_IP = 'status.podIP',
+
+  /**
+   * The service account name of the pod.
+   */
+  SERVICE_ACCOUNT_NAME = 'spec.serviceAccountName',
+
+  /**
+   * The name of the node.
+   */
+  NODE_NAME = 'spec.nodeName',
+
+  /**
+   * The ipAddress of the node.
+   */
+  NODE_IP = 'status.hostIP',
+
+  /**
+   * The ipAddresess of the pod.
+   */
+  POD_IPS = 'status.podIPs',
+}
+
+export enum ResourceFieldPaths {
+  /**
+   * CPU limit of the container.
+   */
+  CPU_LIMIT = 'limits.cpu',
+
+  /**
+   * Memory limit of the container.
+   */
+  MEMORY_LIMIT = 'limits.memory',
+
+  /**
+   * CPU request of the container.
+   */
+  CPU_REQUEST = 'requests.cpu',
+
+  /**
+   * Memory request of the container.
+   */
+  MEMORY_REQUEST = 'requests.memory',
+
+  /**
+   * Ephemeral storage limit of the container.
+   */
+  STORAGE_LIMIT = 'limits.ephemeral-storage',
+
+  /**
+   * Ephemeral storage request of the container.
+   */
+  STORAGE_REQUEST = 'requests.ephemeral-storage',
+}
+
 /**
  * Options to specify an envionment variable value from a ConfigMap key.
  */
@@ -45,6 +129,35 @@ export interface EnvValueFromProcessOptions {
   readonly required?: boolean;
 }
 
+/**
+ * Options to specify an environment variable value from a field reference.
+ */
+export interface EnvValueFromFieldRefOptions {
+  /**
+   * Version of the schema the FieldPath is written in terms of.
+   */
+  readonly apiVersion?: string;
+
+  /**
+   * The key to select the pod label or annotation.
+   */
+  readonly key?: string;
+}
+
+/**
+ * Options to specify an environment variable value from a resource.
+ */
+export interface EnvValueFromResourceOptions {
+  /**
+   * The container to select the value from.
+   */
+  readonly container?: Container;
+
+  /**
+   * The output format of the exposed resource.
+   */
+  readonly divisor?: string;
+}
 
 /**
  * Utility class for creating reading env values from various sources.
@@ -98,6 +211,52 @@ export class EnvValue {
   }
 
   /**
+   *
+   * Create a value from a field reference.
+   *
+   * @param fieldPath: The field reference.
+   * @param options: Additional options.
+   */
+  public static fromFieldRef(fieldPath: EnvFieldPaths, options: EnvValueFromFieldRefOptions = {}): EnvValue {
+    let needsKey: boolean = false;
+
+    if (fieldPath === EnvFieldPaths.POD_LABEL || fieldPath === EnvFieldPaths.POD_ANNOTATION) {
+      needsKey = true;
+    }
+
+    if (needsKey && options.key === undefined) {
+      throw new Error(`${fieldPath} requires a key`);
+    }
+
+    const source: k8s.EnvVarSource = {
+      fieldRef: {
+        fieldPath: (`${fieldPath}` + (needsKey ? `['${options.key}']` : '')),
+        ...(options.apiVersion ? { apiVersion: options.apiVersion } : {}),
+      },
+    };
+
+    return new EnvValue(undefined, source);
+  }
+
+  /**
+   * Create a value from a resource.
+   *
+   * @param resource: Resource to select the value from.
+   * @param options: Additional options.
+   */
+  public static fromResource(resource: ResourceFieldPaths, options: EnvValueFromResourceOptions = {}): EnvValue {
+    const source: k8s.EnvVarSource = {
+      resourceFieldRef: {
+        resource: `${resource}`,
+        ... (options.divisor ? { divisor: k8s.IntOrString.fromString(options.divisor) } : {}),
+        ... (options.container ? { containerName: options.container.name } : {}),
+      },
+    };
+
+    return new EnvValue(undefined, source);
+  }
+
+  /**
    * Create a value from a key in the current process environment.
    *
    * @param key - The key to read.
@@ -142,7 +301,6 @@ export enum ImagePullPolicy {
    */
   NEVER = 'Never',
 }
-
 /**
  * Properties for creating a container.
  */
