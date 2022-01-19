@@ -2276,6 +2276,42 @@ Specify whether the ConfigMap or its key must be defined.
 
 ---
 
+### EnvValueFromFieldRefOptions <a name="cdk8s-plus-20.EnvValueFromFieldRefOptions"></a>
+
+Options to specify an environment variable value from a field reference.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { EnvValueFromFieldRefOptions } from 'cdk8s-plus-20'
+
+const envValueFromFieldRefOptions: EnvValueFromFieldRefOptions = { ... }
+```
+
+##### `apiVersion`<sup>Optional</sup> <a name="cdk8s-plus-20.EnvValueFromFieldRefOptions.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+Version of the schema the FieldPath is written in terms of.
+
+---
+
+##### `key`<sup>Optional</sup> <a name="cdk8s-plus-20.EnvValueFromFieldRefOptions.property.key"></a>
+
+```typescript
+public readonly key: string;
+```
+
+- *Type:* `string`
+
+The key to select the pod label or annotation.
+
+---
+
 ### EnvValueFromProcessOptions <a name="cdk8s-plus-20.EnvValueFromProcessOptions"></a>
 
 Options to specify an environment variable value from the process environment.
@@ -2300,6 +2336,42 @@ public readonly required: boolean;
 Specify whether the key must exist in the environment.
 
 If this is set to true, and the key does not exist, an error will thrown.
+
+---
+
+### EnvValueFromResourceOptions <a name="cdk8s-plus-20.EnvValueFromResourceOptions"></a>
+
+Options to specify an environment variable value from a resource.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { EnvValueFromResourceOptions } from 'cdk8s-plus-20'
+
+const envValueFromResourceOptions: EnvValueFromResourceOptions = { ... }
+```
+
+##### `container`<sup>Optional</sup> <a name="cdk8s-plus-20.EnvValueFromResourceOptions.property.container"></a>
+
+```typescript
+public readonly container: Container;
+```
+
+- *Type:* [`cdk8s-plus-20.Container`](#cdk8s-plus-20.Container)
+
+The container to select the value from.
+
+---
+
+##### `divisor`<sup>Optional</sup> <a name="cdk8s-plus-20.EnvValueFromResourceOptions.property.divisor"></a>
+
+```typescript
+public readonly divisor: string;
+```
+
+- *Type:* `string`
+
+The output format of the exposed resource.
 
 ---
 
@@ -4502,6 +4574,30 @@ Additional options.
 
 ---
 
+##### `fromFieldRef` <a name="cdk8s-plus-20.EnvValue.fromFieldRef"></a>
+
+```typescript
+import { EnvValue } from 'cdk8s-plus-20'
+
+EnvValue.fromFieldRef(fieldPath: EnvFieldPaths, options?: EnvValueFromFieldRefOptions)
+```
+
+###### `fieldPath`<sup>Required</sup> <a name="cdk8s-plus-20.EnvValue.parameter.fieldPath"></a>
+
+- *Type:* [`cdk8s-plus-20.EnvFieldPaths`](#cdk8s-plus-20.EnvFieldPaths)
+
+: The field reference.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-20.EnvValue.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-20.EnvValueFromFieldRefOptions`](#cdk8s-plus-20.EnvValueFromFieldRefOptions)
+
+: Additional options.
+
+---
+
 ##### `fromProcess` <a name="cdk8s-plus-20.EnvValue.fromProcess"></a>
 
 ```typescript
@@ -4523,6 +4619,30 @@ The key to read.
 - *Type:* [`cdk8s-plus-20.EnvValueFromProcessOptions`](#cdk8s-plus-20.EnvValueFromProcessOptions)
 
 Additional options.
+
+---
+
+##### `fromResource` <a name="cdk8s-plus-20.EnvValue.fromResource"></a>
+
+```typescript
+import { EnvValue } from 'cdk8s-plus-20'
+
+EnvValue.fromResource(resource: ResourceFieldPaths, options?: EnvValueFromResourceOptions)
+```
+
+###### `resource`<sup>Required</sup> <a name="cdk8s-plus-20.EnvValue.parameter.resource"></a>
+
+- *Type:* [`cdk8s-plus-20.ResourceFieldPaths`](#cdk8s-plus-20.ResourceFieldPaths)
+
+: Resource to select the value from.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-20.EnvValue.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-20.EnvValueFromResourceOptions`](#cdk8s-plus-20.EnvValueFromResourceOptions)
+
+: Additional options.
 
 ---
 
@@ -5244,6 +5364,78 @@ files you write will count against your Container's memory limit.
 ---
 
 
+### EnvFieldPaths <a name="EnvFieldPaths"></a>
+
+#### `POD_NAME` <a name="cdk8s-plus-20.EnvFieldPaths.POD_NAME"></a>
+
+The name of the pod.
+
+---
+
+
+#### `POD_NAMESPACE` <a name="cdk8s-plus-20.EnvFieldPaths.POD_NAMESPACE"></a>
+
+The namespace of the pod.
+
+---
+
+
+#### `POD_UID` <a name="cdk8s-plus-20.EnvFieldPaths.POD_UID"></a>
+
+The uid of the pod.
+
+---
+
+
+#### `POD_LABEL` <a name="cdk8s-plus-20.EnvFieldPaths.POD_LABEL"></a>
+
+The labels of the pod.
+
+---
+
+
+#### `POD_ANNOTATION` <a name="cdk8s-plus-20.EnvFieldPaths.POD_ANNOTATION"></a>
+
+The annotations of the pod.
+
+---
+
+
+#### `POD_IP` <a name="cdk8s-plus-20.EnvFieldPaths.POD_IP"></a>
+
+The ipAddress of the pod.
+
+---
+
+
+#### `SERVICE_ACCOUNT_NAME` <a name="cdk8s-plus-20.EnvFieldPaths.SERVICE_ACCOUNT_NAME"></a>
+
+The service account name of the pod.
+
+---
+
+
+#### `NODE_NAME` <a name="cdk8s-plus-20.EnvFieldPaths.NODE_NAME"></a>
+
+The name of the node.
+
+---
+
+
+#### `NODE_IP` <a name="cdk8s-plus-20.EnvFieldPaths.NODE_IP"></a>
+
+The ipAddress of the node.
+
+---
+
+
+#### `POD_IPS` <a name="cdk8s-plus-20.EnvFieldPaths.POD_IPS"></a>
+
+The ipAddresess of the pod.
+
+---
+
+
 ### ImagePullPolicy <a name="ImagePullPolicy"></a>
 
 #### `ALWAYS` <a name="cdk8s-plus-20.ImagePullPolicy.ALWAYS"></a>
@@ -5370,6 +5562,50 @@ desired scale without waiting, and on scale down will delete all pods at once.
 
 
 #### `SCTP` <a name="cdk8s-plus-20.Protocol.SCTP"></a>
+
+---
+
+
+### ResourceFieldPaths <a name="ResourceFieldPaths"></a>
+
+#### `CPU_LIMIT` <a name="cdk8s-plus-20.ResourceFieldPaths.CPU_LIMIT"></a>
+
+CPU limit of the container.
+
+---
+
+
+#### `MEMORY_LIMIT` <a name="cdk8s-plus-20.ResourceFieldPaths.MEMORY_LIMIT"></a>
+
+Memory limit of the container.
+
+---
+
+
+#### `CPU_REQUEST` <a name="cdk8s-plus-20.ResourceFieldPaths.CPU_REQUEST"></a>
+
+CPU request of the container.
+
+---
+
+
+#### `MEMORY_REQUEST` <a name="cdk8s-plus-20.ResourceFieldPaths.MEMORY_REQUEST"></a>
+
+Memory request of the container.
+
+---
+
+
+#### `STORAGE_LIMIT` <a name="cdk8s-plus-20.ResourceFieldPaths.STORAGE_LIMIT"></a>
+
+Ephemeral storage limit of the container.
+
+---
+
+
+#### `STORAGE_REQUEST` <a name="cdk8s-plus-20.ResourceFieldPaths.STORAGE_REQUEST"></a>
+
+Ephemeral storage request of the container.
 
 ---
 
