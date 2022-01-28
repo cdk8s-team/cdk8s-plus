@@ -102,13 +102,15 @@ export class Ingress extends Resource {
     if (props.tls) {
       this.addTls(props.tls);
     }
-  }
 
-  protected onValidate() {
-    if (!this._defaultBackend && Object.keys(this._rulesPerHost).length === 0) {
-      return ['ingress with no rules or default backend'];
-    }
-    return [];
+    this.node.addValidation({
+      validate: (): string[] => {
+        if (!this._defaultBackend && Object.keys(this._rulesPerHost).length === 0) {
+          return ['ingress with no rules or default backend'];
+        }
+        return [];
+      },
+    });
   }
 
   /**

@@ -143,7 +143,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.22.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.23.0"
         }
       ]
     },
@@ -257,14 +257,14 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
-    "release:k8s-22/main": {
-      "name": "release:k8s-22/main",
-      "description": "Prepare a release from \"k8s-22/main\" branch",
+    "release:k8s-23/main": {
+      "name": "release:k8s-23/main",
+      "description": "Prepare a release from \"k8s-23/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "1",
         "PRERELEASE": "beta",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-23/"
       },
       "steps": [
         {

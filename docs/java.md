@@ -2,16 +2,16 @@
 
 ## Constructs <a name="Constructs"></a>
 
-### ConfigMap <a name="org.cdk8s.plus22.ConfigMap"></a>
+### ConfigMap <a name="org.cdk8s.plus23.ConfigMap"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap)
+- *Implements:* [`org.cdk8s.plus23.IConfigMap`](#org.cdk8s.plus23.IConfigMap)
 
 ConfigMap holds configuration data for pods to consume.
 
-#### Initializers <a name="org.cdk8s.plus22.ConfigMap.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.ConfigMap.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ConfigMap;
+import org.cdk8s.plus23.ConfigMap;
 
 ConfigMap.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -20,19 +20,19 @@ ConfigMap.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -40,7 +40,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `binaryData`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.binaryData"></a>
+##### `binaryData`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapProps.parameter.binaryData"></a>
 
 - *Type:* java.util.Map<java.lang.String, `java.lang.String`>
 
@@ -56,7 +56,7 @@ You can also add binary data using `configMap.addBinaryData()`.
 
 ---
 
-##### `data`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.data"></a>
+##### `data`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapProps.parameter.data"></a>
 
 - *Type:* java.util.Map<java.lang.String, `java.lang.String`>
 
@@ -73,13 +73,13 @@ You can also add data using `configMap.addData()`.
 
 #### Methods <a name="Methods"></a>
 
-##### `addBinaryData` <a name="org.cdk8s.plus22.ConfigMap.addBinaryData"></a>
+##### `addBinaryData` <a name="org.cdk8s.plus23.ConfigMap.addBinaryData"></a>
 
 ```java
 public addBinaryData(java.lang.String key, java.lang.String value)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -87,7 +87,7 @@ The key.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -95,13 +95,13 @@ The value.
 
 ---
 
-##### `addData` <a name="org.cdk8s.plus22.ConfigMap.addData"></a>
+##### `addData` <a name="org.cdk8s.plus23.ConfigMap.addData"></a>
 
 ```java
 public addData(java.lang.String key, java.lang.String value)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -109,7 +109,7 @@ The key.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -117,14 +117,14 @@ The value.
 
 ---
 
-##### `addDirectory` <a name="org.cdk8s.plus22.ConfigMap.addDirectory"></a>
+##### `addDirectory` <a name="org.cdk8s.plus23.ConfigMap.addDirectory"></a>
 
 ```java
 public addDirectory(java.lang.String localDir)
 public addDirectory(java.lang.String localDir, AddDirectoryOptions options)
 ```
 
-###### `localDir`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.localDir"></a>
+###### `localDir`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.localDir"></a>
 
 - *Type:* `java.lang.String`
 
@@ -132,22 +132,22 @@ A path to a local directory.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.AddDirectoryOptions`](#org.cdk8s.plus22.AddDirectoryOptions)
+- *Type:* [`org.cdk8s.plus23.AddDirectoryOptions`](#org.cdk8s.plus23.AddDirectoryOptions)
 
 Options.
 
 ---
 
-##### `addFile` <a name="org.cdk8s.plus22.ConfigMap.addFile"></a>
+##### `addFile` <a name="org.cdk8s.plus23.ConfigMap.addFile"></a>
 
 ```java
 public addFile(java.lang.String localFile)
 public addFile(java.lang.String localFile, java.lang.String key)
 ```
 
-###### `localFile`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.localFile"></a>
+###### `localFile`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.localFile"></a>
 
 - *Type:* `java.lang.String`
 
@@ -155,7 +155,7 @@ The path to the local file.
 
 ---
 
-###### `key`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.key"></a>
+###### `key`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -165,15 +165,15 @@ The ConfigMap key (default to the file name).
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromConfigMapName` <a name="org.cdk8s.plus22.ConfigMap.fromConfigMapName"></a>
+##### `fromConfigMapName` <a name="org.cdk8s.plus23.ConfigMap.fromConfigMapName"></a>
 
 ```java
-import org.cdk8s.plus22.ConfigMap;
+import org.cdk8s.plus23.ConfigMap;
 
 ConfigMap.fromConfigMapName(java.lang.String name)
 ```
 
-###### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.parameter.name"></a>
+###### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
@@ -183,7 +183,7 @@ The name of the config map to import.
 
 #### Properties <a name="Properties"></a>
 
-##### `binaryData`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.binaryData"></a>
+##### `binaryData`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.property.binaryData"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getBinaryData();
@@ -197,7 +197,7 @@ Returns a copy. To add data records, use `addBinaryData()` or `addData()`.
 
 ---
 
-##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.data"></a>
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus23.ConfigMap.property.data"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getData();
@@ -212,9 +212,9 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 ---
 
 
-### Deployment <a name="org.cdk8s.plus22.Deployment"></a>
+### Deployment <a name="org.cdk8s.plus23.Deployment"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
+- *Implements:* [`org.cdk8s.plus23.IPodTemplate`](#org.cdk8s.plus23.IPodTemplate)
 
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
@@ -240,10 +240,10 @@ The following are typical use cases for Deployments:
 * Use the status of the Deployment as an indicator that a rollout has stuck.
 * Clean up older ReplicaSets that you don't need anymore.
 
-#### Initializers <a name="org.cdk8s.plus22.Deployment.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Deployment.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Deployment;
+import org.cdk8s.plus23.Deployment;
 
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -257,19 +257,19 @@ Deployment.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -277,9 +277,9 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.containers"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -291,9 +291,9 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.restartPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -302,9 +302,9 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.serviceAccount"></a>
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -320,9 +320,9 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.volumes"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -333,7 +333,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.podMetadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -341,7 +341,7 @@ The pod metadata.
 
 ---
 
-##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.defaultSelector"></a>
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.defaultSelector"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* true
@@ -353,7 +353,7 @@ If this is set to `false` you must define your selector through
 
 ---
 
-##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.replicas"></a>
+##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.parameter.replicas"></a>
 
 - *Type:* `java.lang.Number`
 - *Default:* 1
@@ -364,38 +364,38 @@ Number of desired pods.
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="org.cdk8s.plus22.Deployment.addContainer"></a>
+##### `addContainer` <a name="org.cdk8s.plus23.Deployment.addContainer"></a>
 
 ```java
 public addContainer(ContainerProps container)
 ```
 
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.container"></a>
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.container"></a>
 
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+- *Type:* [`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)
 
 ---
 
-##### `addVolume` <a name="org.cdk8s.plus22.Deployment.addVolume"></a>
+##### `addVolume` <a name="org.cdk8s.plus23.Deployment.addVolume"></a>
 
 ```java
 public addVolume(Volume volume)
 ```
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 ---
 
-##### `exposeViaIngress` <a name="org.cdk8s.plus22.Deployment.exposeViaIngress"></a>
+##### `exposeViaIngress` <a name="org.cdk8s.plus23.Deployment.exposeViaIngress"></a>
 
 ```java
 public exposeViaIngress(java.lang.String path)
 public exposeViaIngress(java.lang.String path, ExposeDeploymentViaIngressOptions options)
 ```
 
-###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.path"></a>
 
 - *Type:* `java.lang.String`
 
@@ -403,36 +403,36 @@ The ingress path to register under.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Deployment.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ExposeDeploymentViaIngressOptions`](#org.cdk8s.plus22.ExposeDeploymentViaIngressOptions)
+- *Type:* [`org.cdk8s.plus23.ExposeDeploymentViaIngressOptions`](#org.cdk8s.plus23.ExposeDeploymentViaIngressOptions)
 
 Additional options.
 
 ---
 
-##### `exposeViaService` <a name="org.cdk8s.plus22.Deployment.exposeViaService"></a>
+##### `exposeViaService` <a name="org.cdk8s.plus23.Deployment.exposeViaService"></a>
 
 ```java
 public exposeViaService()
 public exposeViaService(ExposeDeploymentViaServiceOptions options)
 ```
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Deployment.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ExposeDeploymentViaServiceOptions`](#org.cdk8s.plus22.ExposeDeploymentViaServiceOptions)
+- *Type:* [`org.cdk8s.plus23.ExposeDeploymentViaServiceOptions`](#org.cdk8s.plus23.ExposeDeploymentViaServiceOptions)
 
 Options to determine details of the service and port exposed.
 
 ---
 
-##### `selectByLabel` <a name="org.cdk8s.plus22.Deployment.selectByLabel"></a>
+##### `selectByLabel` <a name="org.cdk8s.plus23.Deployment.selectByLabel"></a>
 
 ```java
 public selectByLabel(java.lang.String key, java.lang.String value)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -440,7 +440,7 @@ The label key.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -451,13 +451,13 @@ The label value.
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -465,7 +465,7 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.labelSelector"></a>
+##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.property.labelSelector"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getLabelSelector();
@@ -479,7 +479,7 @@ Returns a a copy. Use `selectByLabel()` to add labels.
 
 ---
 
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.podMetadata"></a>
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadataDefinition getPodMetadata();
@@ -491,7 +491,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
-##### `replicas`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.replicas"></a>
+##### `replicas`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.property.replicas"></a>
 
 ```java
 public java.lang.Number getReplicas();
@@ -503,13 +503,13 @@ Number of desired pods.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.Deployment.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -517,32 +517,32 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.Deployment.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.Deployment.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
 ---
 
 
-### Ingress <a name="org.cdk8s.plus22.Ingress"></a>
+### Ingress <a name="org.cdk8s.plus23.Ingress"></a>
 
 Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend.
 
@@ -550,10 +550,10 @@ An Ingress can be configured to give services
 externally-reachable urls, load balance traffic, terminate SSL, offer name
 based virtual hosting etc.
 
-#### Initializers <a name="org.cdk8s.plus22.Ingress.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Ingress.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Ingress;
+import org.cdk8s.plus23.Ingress;
 
 Ingress.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -563,19 +563,19 @@ Ingress.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -583,9 +583,9 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `defaultBackend`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.parameter.defaultBackend"></a>
+##### `defaultBackend`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.parameter.defaultBackend"></a>
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 The default backend services requests that do not match any rule.
 
@@ -594,9 +594,9 @@ adding a rule with both `path` and `host` undefined.
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.parameter.rules"></a>
+##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.parameter.rules"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.IngressRule`](#org.cdk8s.plus22.IngressRule)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.IngressRule`](#org.cdk8s.plus23.IngressRule)>
 
 Routing rules for this ingress.
 
@@ -609,9 +609,9 @@ You can also add rules later using `addRule()`, `addHostRule()`,
 
 ---
 
-##### `tls`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.parameter.tls"></a>
+##### `tls`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.parameter.tls"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.IngressTls`](#org.cdk8s.plus22.IngressTls)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.IngressTls`](#org.cdk8s.plus23.IngressTls)>
 
 TLS settings for this ingress.
 
@@ -625,27 +625,27 @@ extension, if the ingress controller fulfilling the ingress supports SNI.
 
 #### Methods <a name="Methods"></a>
 
-##### `addDefaultBackend` <a name="org.cdk8s.plus22.Ingress.addDefaultBackend"></a>
+##### `addDefaultBackend` <a name="org.cdk8s.plus23.Ingress.addDefaultBackend"></a>
 
 ```java
 public addDefaultBackend(IngressBackend backend)
 ```
 
-###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.backend"></a>
+###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.backend"></a>
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 The backend to use for requests that do not match any rule.
 
 ---
 
-##### `addHostDefaultBackend` <a name="org.cdk8s.plus22.Ingress.addHostDefaultBackend"></a>
+##### `addHostDefaultBackend` <a name="org.cdk8s.plus23.Ingress.addHostDefaultBackend"></a>
 
 ```java
 public addHostDefaultBackend(java.lang.String host, IngressBackend backend)
 ```
 
-###### `host`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.host"></a>
+###### `host`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.host"></a>
 
 - *Type:* `java.lang.String`
 
@@ -653,22 +653,22 @@ The host name to match.
 
 ---
 
-###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.backend"></a>
+###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.backend"></a>
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 The backend to route to.
 
 ---
 
-##### `addHostRule` <a name="org.cdk8s.plus22.Ingress.addHostRule"></a>
+##### `addHostRule` <a name="org.cdk8s.plus23.Ingress.addHostRule"></a>
 
 ```java
 public addHostRule(java.lang.String host, java.lang.String path, IngressBackend backend)
 public addHostRule(java.lang.String host, java.lang.String path, IngressBackend backend, HttpIngressPathType pathType)
 ```
 
-###### `host`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.host"></a>
+###### `host`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.host"></a>
 
 - *Type:* `java.lang.String`
 
@@ -676,7 +676,7 @@ The host name.
 
 ---
 
-###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.path"></a>
 
 - *Type:* `java.lang.String`
 
@@ -684,30 +684,30 @@ The HTTP path.
 
 ---
 
-###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.backend"></a>
+###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.backend"></a>
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 The backend to route requests to.
 
 ---
 
-###### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus22.Ingress.parameter.pathType"></a>
+###### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus23.Ingress.parameter.pathType"></a>
 
-- *Type:* [`org.cdk8s.plus22.HttpIngressPathType`](#org.cdk8s.plus22.HttpIngressPathType)
+- *Type:* [`org.cdk8s.plus23.HttpIngressPathType`](#org.cdk8s.plus23.HttpIngressPathType)
 
 How the path is matched against request paths.
 
 ---
 
-##### `addRule` <a name="org.cdk8s.plus22.Ingress.addRule"></a>
+##### `addRule` <a name="org.cdk8s.plus23.Ingress.addRule"></a>
 
 ```java
 public addRule(java.lang.String path, IngressBackend backend)
 public addRule(java.lang.String path, IngressBackend backend, HttpIngressPathType pathType)
 ```
 
-###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.path"></a>
 
 - *Type:* `java.lang.String`
 
@@ -715,54 +715,54 @@ The HTTP path.
 
 ---
 
-###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.backend"></a>
+###### `backend`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.backend"></a>
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 The backend to route requests to.
 
 ---
 
-###### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus22.Ingress.parameter.pathType"></a>
+###### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus23.Ingress.parameter.pathType"></a>
 
-- *Type:* [`org.cdk8s.plus22.HttpIngressPathType`](#org.cdk8s.plus22.HttpIngressPathType)
+- *Type:* [`org.cdk8s.plus23.HttpIngressPathType`](#org.cdk8s.plus23.HttpIngressPathType)
 
 How the path is matched against request paths.
 
 ---
 
-##### `addRules` <a name="org.cdk8s.plus22.Ingress.addRules"></a>
+##### `addRules` <a name="org.cdk8s.plus23.Ingress.addRules"></a>
 
 ```java
 public addRules(IngressRule rules)
 ```
 
-###### `rules`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.rules"></a>
+###### `rules`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.rules"></a>
 
-- *Type:* [`org.cdk8s.plus22.IngressRule`](#org.cdk8s.plus22.IngressRule)
+- *Type:* [`org.cdk8s.plus23.IngressRule`](#org.cdk8s.plus23.IngressRule)
 
 The rules to add.
 
 ---
 
-##### `addTls` <a name="org.cdk8s.plus22.Ingress.addTls"></a>
+##### `addTls` <a name="org.cdk8s.plus23.Ingress.addTls"></a>
 
 ```java
 public addTls(java.util.List<IngressTls> tls)
 ```
 
-###### `tls`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.parameter.tls"></a>
+###### `tls`<sup>Required</sup> <a name="org.cdk8s.plus23.Ingress.parameter.tls"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.IngressTls`](#org.cdk8s.plus22.IngressTls)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.IngressTls`](#org.cdk8s.plus23.IngressTls)>
 
 ---
 
 
 
 
-### Job <a name="org.cdk8s.plus22.Job"></a>
+### Job <a name="org.cdk8s.plus23.Job"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
+- *Implements:* [`org.cdk8s.plus23.IPodTemplate`](#org.cdk8s.plus23.IPodTemplate)
 
 A Job creates one or more Pods and ensures that a specified number of them successfully terminate.
 
@@ -772,10 +772,10 @@ Deleting a Job will clean up the Pods it created. A simple case is to create one
 The Job object will start a new Pod if the first Pod fails or is deleted (for example due to a node hardware failure or a node reboot).
 You can also use a Job to run multiple Pods in parallel.
 
-#### Initializers <a name="org.cdk8s.plus22.Job.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Job.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Job;
+import org.cdk8s.plus23.Job;
 
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -790,19 +790,19 @@ Job.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -810,9 +810,9 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.containers"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -824,9 +824,9 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.restartPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -835,9 +835,9 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.serviceAccount"></a>
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -853,9 +853,9 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.volumes"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -866,7 +866,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.podMetadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -874,7 +874,7 @@ The pod metadata.
 
 ---
 
-##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.activeDeadline"></a>
+##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.activeDeadline"></a>
 
 - *Type:* [`org.cdk8s.Duration`](#org.cdk8s.Duration)
 - *Default:* If unset, then there is no deadline.
@@ -883,7 +883,7 @@ Specifies the duration the job may be active before the system tries to terminat
 
 ---
 
-##### `backoffLimit`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.backoffLimit"></a>
+##### `backoffLimit`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.backoffLimit"></a>
 
 - *Type:* `java.lang.Number`
 - *Default:* If not set, system defaults to 6.
@@ -892,7 +892,7 @@ Specifies the number of retries before marking this job failed.
 
 ---
 
-##### `ttlAfterFinished`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.ttlAfterFinished"></a>
+##### `ttlAfterFinished`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.parameter.ttlAfterFinished"></a>
 
 - *Type:* [`org.cdk8s.Duration`](#org.cdk8s.Duration)
 - *Default:* If this field is unset, the Job won't be automatically deleted.
@@ -910,40 +910,40 @@ field is alpha-level and is only honored by servers that enable the
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="org.cdk8s.plus22.Job.addContainer"></a>
+##### `addContainer` <a name="org.cdk8s.plus23.Job.addContainer"></a>
 
 ```java
 public addContainer(ContainerProps container)
 ```
 
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.container"></a>
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.parameter.container"></a>
 
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+- *Type:* [`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)
 
 ---
 
-##### `addVolume` <a name="org.cdk8s.plus22.Job.addVolume"></a>
+##### `addVolume` <a name="org.cdk8s.plus23.Job.addVolume"></a>
 
 ```java
 public addVolume(Volume volume)
 ```
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 ---
 
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -951,7 +951,7 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.podMetadata"></a>
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadataDefinition getPodMetadata();
@@ -963,13 +963,13 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.Job.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -977,7 +977,7 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.activeDeadline"></a>
+##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus23.Job.property.activeDeadline"></a>
 
 ```java
 public Duration getActiveDeadline();
@@ -991,7 +991,7 @@ If undefined, there is no deadline.
 
 ---
 
-##### `backoffLimit`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.backoffLimit"></a>
+##### `backoffLimit`<sup>Optional</sup> <a name="org.cdk8s.plus23.Job.property.backoffLimit"></a>
 
 ```java
 public java.lang.Number getBackoffLimit();
@@ -1003,31 +1003,31 @@ Number of retries before marking failed.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.Job.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.Job.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
 ---
 
-##### `ttlAfterFinished`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.ttlAfterFinished"></a>
+##### `ttlAfterFinished`<sup>Optional</sup> <a name="org.cdk8s.plus23.Job.property.ttlAfterFinished"></a>
 
 ```java
 public Duration getTtlAfterFinished();
@@ -1040,19 +1040,19 @@ TTL before the job is deleted after it is finished.
 ---
 
 
-### Pod <a name="org.cdk8s.plus22.Pod"></a>
+### Pod <a name="org.cdk8s.plus23.Pod"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
+- *Implements:* [`org.cdk8s.plus23.IPodSpec`](#org.cdk8s.plus23.IPodSpec)
 
 Pod is a collection of containers that can run on a host.
 
 This resource is
 created by clients and scheduled onto hosts.
 
-#### Initializers <a name="org.cdk8s.plus22.Pod.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Pod.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Pod;
+import org.cdk8s.plus23.Pod;
 
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -1063,19 +1063,19 @@ Pod.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Pod.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Pod.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -1083,9 +1083,9 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.parameter.containers"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -1097,9 +1097,9 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.parameter.restartPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -1108,9 +1108,9 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.parameter.serviceAccount"></a>
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -1126,9 +1126,9 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.parameter.volumes"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -1141,40 +1141,40 @@ You can also add volumes later using `podSpec.addVolume()`
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="org.cdk8s.plus22.Pod.addContainer"></a>
+##### `addContainer` <a name="org.cdk8s.plus23.Pod.addContainer"></a>
 
 ```java
 public addContainer(ContainerProps container)
 ```
 
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.container"></a>
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus23.Pod.parameter.container"></a>
 
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+- *Type:* [`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)
 
 ---
 
-##### `addVolume` <a name="org.cdk8s.plus22.Pod.addVolume"></a>
+##### `addVolume` <a name="org.cdk8s.plus23.Pod.addVolume"></a>
 
 ```java
 public addVolume(Volume volume)
 ```
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.Pod.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 ---
 
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.Pod.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -1182,13 +1182,13 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.Pod.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -1196,51 +1196,49 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.Pod.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.Pod.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.Pod.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.Pod.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
 ---
 
 
-### Resource <a name="org.cdk8s.plus22.Resource"></a>
+### Resource <a name="org.cdk8s.plus23.Resource"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+- *Implements:* [`org.cdk8s.plus23.IResource`](#org.cdk8s.plus23.IResource)
 
 Base class for all Kubernetes objects in stdk8s.
 
 Represents a single
 resource.
 
-#### Initializers <a name="org.cdk8s.plus22.Resource.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Resource.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Resource;
+import org.cdk8s.plus23.Resource;
 
-Resource.Builder.create(Construct scope, java.lang.String id)
-//  .nodeFactory(INodeFactory)
-    .build();
+new Resource(Construct scope, java.lang.String id);
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Resource.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Resource.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
@@ -1248,7 +1246,7 @@ The scope in which to define this construct.
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Resource.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Resource.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1260,20 +1258,11 @@ dash `--`.
 
 ---
 
-##### `nodeFactory`<sup>Optional</sup> <a name="software.constructs.ConstructOptions.parameter.nodeFactory"></a>
-
-- *Type:* [`software.constructs.INodeFactory`](#software.constructs.INodeFactory)
-- *Default:* the default `Node` is associated
-
-A factory for attaching `Node`s to the construct.
-
----
-
 
 
 #### Properties <a name="Properties"></a>
 
-##### `metadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Resource.property.metadata"></a>
+##### `metadata`<sup>Required</sup> <a name="org.cdk8s.plus23.Resource.property.metadata"></a>
 
 ```java
 public ApiObjectMetadataDefinition getMetadata();
@@ -1283,7 +1272,7 @@ public ApiObjectMetadataDefinition getMetadata();
 
 ---
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Resource.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Resource.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -1296,9 +1285,9 @@ The name of this API object.
 ---
 
 
-### Secret <a name="org.cdk8s.plus22.Secret"></a>
+### Secret <a name="org.cdk8s.plus23.Secret"></a>
 
-- *Implements:* [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Implements:* [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)
 
 Kubernetes Secrets let you store and manage sensitive information, such as passwords, OAuth tokens, and ssh keys.
 
@@ -1308,10 +1297,10 @@ definition or in a container image.
 
 > https://kubernetes.io/docs/concepts/configuration/secret
 
-#### Initializers <a name="org.cdk8s.plus22.Secret.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Secret.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Secret;
+import org.cdk8s.plus23.Secret;
 
 Secret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -1320,19 +1309,19 @@ Secret.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Secret.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Secret.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -1340,7 +1329,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.stringData"></a>
+##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretProps.parameter.stringData"></a>
 
 - *Type:* java.util.Map<java.lang.String, `java.lang.String`>
 
@@ -1353,7 +1342,7 @@ output when reading from the API.
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.type"></a>
+##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretProps.parameter.type"></a>
 
 - *Type:* `java.lang.String`
 - *Default:* undefined - Don't set a type.
@@ -1367,13 +1356,13 @@ handling of secret data by various controllers.
 
 #### Methods <a name="Methods"></a>
 
-##### `addStringData` <a name="org.cdk8s.plus22.Secret.addStringData"></a>
+##### `addStringData` <a name="org.cdk8s.plus23.Secret.addStringData"></a>
 
 ```java
 public addStringData(java.lang.String key, java.lang.String value)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.Secret.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1381,7 +1370,7 @@ Key.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.Secret.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1389,13 +1378,13 @@ Value.
 
 ---
 
-##### `getStringData` <a name="org.cdk8s.plus22.Secret.getStringData"></a>
+##### `getStringData` <a name="org.cdk8s.plus23.Secret.getStringData"></a>
 
 ```java
 public getStringData(java.lang.String key)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.Secret.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1405,15 +1394,15 @@ Key.
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromSecretName` <a name="org.cdk8s.plus22.Secret.fromSecretName"></a>
+##### `fromSecretName` <a name="org.cdk8s.plus23.Secret.fromSecretName"></a>
 
 ```java
-import org.cdk8s.plus22.Secret;
+import org.cdk8s.plus23.Secret;
 
 Secret.fromSecretName(java.lang.String name)
 ```
 
-###### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.parameter.name"></a>
+###### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Secret.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1423,7 +1412,7 @@ The name of the secret to reference.
 
 
 
-### Service <a name="org.cdk8s.plus22.Service"></a>
+### Service <a name="org.cdk8s.plus23.Service"></a>
 
 An abstract way to expose an application running on a set of Pods as a network service.
 
@@ -1439,10 +1428,10 @@ If you're able to use Kubernetes APIs for service discovery in your application,
 that get updated whenever the set of Pods in a Service changes. For non-native applications, Kubernetes offers ways to place a network port
 or load balancer in between your application and the backend Pods.
 
-#### Initializers <a name="org.cdk8s.plus22.Service.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Service.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Service;
+import org.cdk8s.plus23.Service;
 
 Service.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -1455,19 +1444,19 @@ Service.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -1475,7 +1464,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `clusterIP`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.clusterIP"></a>
+##### `clusterIP`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.clusterIP"></a>
 
 - *Type:* `java.lang.String`
 - *Default:* Automatically assigned.
@@ -1493,7 +1482,7 @@ ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName.
 
 ---
 
-##### `externalIPs`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.externalIPs"></a>
+##### `externalIPs`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.externalIPs"></a>
 
 - *Type:* java.util.List<`java.lang.String`>
 - *Default:* No external IPs.
@@ -1507,7 +1496,7 @@ Kubernetes system.
 
 ---
 
-##### `externalName`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.externalName"></a>
+##### `externalName`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.externalName"></a>
 
 - *Type:* `java.lang.String`
 - *Default:* No external name.
@@ -1516,7 +1505,7 @@ The externalName to be used when ServiceType.EXTERNAL_NAME is set.
 
 ---
 
-##### `loadBalancerSourceRanges`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.loadBalancerSourceRanges"></a>
+##### `loadBalancerSourceRanges`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.loadBalancerSourceRanges"></a>
 
 - *Type:* java.util.List<`java.lang.String`>
 
@@ -1526,9 +1515,9 @@ More info: https://kubernetes.io/docs/tasks/access-application-cluster/configure
 
 ---
 
-##### `ports`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.ports"></a>
+##### `ports`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.ports"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ServicePort`](#org.cdk8s.plus22.ServicePort)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ServicePort`](#org.cdk8s.plus23.ServicePort)>
 
 The port exposed by this service.
 
@@ -1536,9 +1525,9 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#virt
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.parameter.type"></a>
+##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.parameter.type"></a>
 
-- *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
+- *Type:* [`org.cdk8s.plus23.ServiceType`](#org.cdk8s.plus23.ServiceType)
 - *Default:* ServiceType.ClusterIP
 
 Determines how the Service is exposed.
@@ -1549,36 +1538,36 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#publ
 
 #### Methods <a name="Methods"></a>
 
-##### `addDeployment` <a name="org.cdk8s.plus22.Service.addDeployment"></a>
+##### `addDeployment` <a name="org.cdk8s.plus23.Service.addDeployment"></a>
 
 ```java
 public addDeployment(Deployment deployment)
 public addDeployment(Deployment deployment, AddDeploymentOptions options)
 ```
 
-###### `deployment`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.deployment"></a>
+###### `deployment`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.deployment"></a>
 
-- *Type:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment)
+- *Type:* [`org.cdk8s.plus23.Deployment`](#org.cdk8s.plus23.Deployment)
 
 The deployment to expose.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Service.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Service.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.AddDeploymentOptions`](#org.cdk8s.plus22.AddDeploymentOptions)
+- *Type:* [`org.cdk8s.plus23.AddDeploymentOptions`](#org.cdk8s.plus23.AddDeploymentOptions)
 
 Optional settings for the port.
 
 ---
 
-##### `addSelector` <a name="org.cdk8s.plus22.Service.addSelector"></a>
+##### `addSelector` <a name="org.cdk8s.plus23.Service.addSelector"></a>
 
 ```java
 public addSelector(java.lang.String label, java.lang.String value)
 ```
 
-###### `label`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.label"></a>
+###### `label`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.label"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1586,7 +1575,7 @@ The label key.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1594,14 +1583,14 @@ The label value.
 
 ---
 
-##### `exposeViaIngress` <a name="org.cdk8s.plus22.Service.exposeViaIngress"></a>
+##### `exposeViaIngress` <a name="org.cdk8s.plus23.Service.exposeViaIngress"></a>
 
 ```java
 public exposeViaIngress(java.lang.String path)
 public exposeViaIngress(java.lang.String path, ExposeServiceViaIngressOptions options)
 ```
 
-###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.path"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1609,22 +1598,22 @@ The path to expose the service under.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Service.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Service.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ExposeServiceViaIngressOptions`](#org.cdk8s.plus22.ExposeServiceViaIngressOptions)
+- *Type:* [`org.cdk8s.plus23.ExposeServiceViaIngressOptions`](#org.cdk8s.plus23.ExposeServiceViaIngressOptions)
 
 Additional options.
 
 ---
 
-##### `serve` <a name="org.cdk8s.plus22.Service.serve"></a>
+##### `serve` <a name="org.cdk8s.plus23.Service.serve"></a>
 
 ```java
 public serve(java.lang.Number port)
 public serve(java.lang.Number port, ServicePortOptions options)
 ```
 
-###### `port`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.parameter.port"></a>
+###### `port`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.parameter.port"></a>
 
 - *Type:* `java.lang.Number`
 
@@ -1632,22 +1621,22 @@ The port definition.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Service.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Service.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ServicePortOptions`](#org.cdk8s.plus22.ServicePortOptions)
+- *Type:* [`org.cdk8s.plus23.ServicePortOptions`](#org.cdk8s.plus23.ServicePortOptions)
 
 ---
 
 
 #### Properties <a name="Properties"></a>
 
-##### `ports`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.ports"></a>
+##### `ports`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.property.ports"></a>
 
 ```java
 public java.util.List<ServicePort> getPorts();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ServicePort`](#org.cdk8s.plus22.ServicePort)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ServicePort`](#org.cdk8s.plus23.ServicePort)>
 
 Ports for this service.
 
@@ -1655,7 +1644,7 @@ Use `serve()` to expose additional service ports.
 
 ---
 
-##### `selector`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.selector"></a>
+##### `selector`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.property.selector"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getSelector();
@@ -1667,19 +1656,19 @@ Returns the labels which are used to select pods for this service.
 
 ---
 
-##### `type`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.type"></a>
+##### `type`<sup>Required</sup> <a name="org.cdk8s.plus23.Service.property.type"></a>
 
 ```java
 public ServiceType getType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
+- *Type:* [`org.cdk8s.plus23.ServiceType`](#org.cdk8s.plus23.ServiceType)
 
 Determines how the Service is exposed.
 
 ---
 
-##### `clusterIP`<sup>Optional</sup> <a name="org.cdk8s.plus22.Service.property.clusterIP"></a>
+##### `clusterIP`<sup>Optional</sup> <a name="org.cdk8s.plus23.Service.property.clusterIP"></a>
 
 ```java
 public java.lang.String getClusterIP();
@@ -1691,7 +1680,7 @@ The IP address of the service and is usually assigned randomly by the master.
 
 ---
 
-##### `externalName`<sup>Optional</sup> <a name="org.cdk8s.plus22.Service.property.externalName"></a>
+##### `externalName`<sup>Optional</sup> <a name="org.cdk8s.plus23.Service.property.externalName"></a>
 
 ```java
 public java.lang.String getExternalName();
@@ -1704,9 +1693,9 @@ The externalName to be used for EXTERNAL_NAME types.
 ---
 
 
-### ServiceAccount <a name="org.cdk8s.plus22.ServiceAccount"></a>
+### ServiceAccount <a name="org.cdk8s.plus23.ServiceAccount"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implements:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 A service account provides an identity for processes that run in a Pod.
 
@@ -1719,10 +1708,10 @@ example, default).
 
 > https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account
 
-#### Initializers <a name="org.cdk8s.plus22.ServiceAccount.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.ServiceAccount.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ServiceAccount;
+import org.cdk8s.plus23.ServiceAccount;
 
 ServiceAccount.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -1730,19 +1719,19 @@ ServiceAccount.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.ServiceAccount.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.ServiceAccount.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceAccountProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -1750,9 +1739,9 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `secrets`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountProps.parameter.secrets"></a>
+##### `secrets`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceAccountProps.parameter.secrets"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)>
 
 List of secrets allowed to be used by pods running using this ServiceAccount.
 
@@ -1762,15 +1751,15 @@ List of secrets allowed to be used by pods running using this ServiceAccount.
 
 #### Methods <a name="Methods"></a>
 
-##### `addSecret` <a name="org.cdk8s.plus22.ServiceAccount.addSecret"></a>
+##### `addSecret` <a name="org.cdk8s.plus23.ServiceAccount.addSecret"></a>
 
 ```java
 public addSecret(ISecret secret)
 ```
 
-###### `secret`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.parameter.secret"></a>
+###### `secret`<sup>Required</sup> <a name="org.cdk8s.plus23.ServiceAccount.parameter.secret"></a>
 
-- *Type:* [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Type:* [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)
 
 The secret.
 
@@ -1778,15 +1767,15 @@ The secret.
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromServiceAccountName` <a name="org.cdk8s.plus22.ServiceAccount.fromServiceAccountName"></a>
+##### `fromServiceAccountName` <a name="org.cdk8s.plus23.ServiceAccount.fromServiceAccountName"></a>
 
 ```java
-import org.cdk8s.plus22.ServiceAccount;
+import org.cdk8s.plus23.ServiceAccount;
 
 ServiceAccount.fromServiceAccountName(java.lang.String name)
 ```
 
-###### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.parameter.name"></a>
+###### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.ServiceAccount.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1796,13 +1785,13 @@ The name of the service account resource.
 
 #### Properties <a name="Properties"></a>
 
-##### `secrets`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.property.secrets"></a>
+##### `secrets`<sup>Required</sup> <a name="org.cdk8s.plus23.ServiceAccount.property.secrets"></a>
 
 ```java
 public java.util.List<ISecret> getSecrets();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)>
 
 List of secrets allowed to be used by pods running using this service account.
 
@@ -1811,9 +1800,9 @@ Returns a copy. To add a secret, use `addSecret()`.
 ---
 
 
-### StatefulSet <a name="org.cdk8s.plus22.StatefulSet"></a>
+### StatefulSet <a name="org.cdk8s.plus23.StatefulSet"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
+- *Implements:* [`org.cdk8s.plus23.IPodTemplate`](#org.cdk8s.plus23.IPodTemplate)
 
 StatefulSet is the workload API object used to manage stateful applications.
 
@@ -1840,10 +1829,10 @@ StatefulSets are valuable for applications that require one or more of the follo
 * Ordered, graceful deployment and scaling.
 * Ordered, automated rolling updates.
 
-#### Initializers <a name="org.cdk8s.plus22.StatefulSet.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.StatefulSet.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.StatefulSet;
+import org.cdk8s.plus23.StatefulSet;
 
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
@@ -1859,19 +1848,19 @@ StatefulSet.Builder.create(Construct scope, java.lang.String id)
     .build();
 ```
 
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.parameter.scope"></a>
 
 - *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
 
 ---
 
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.parameter.id"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.metadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -1879,9 +1868,9 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.containers"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -1893,9 +1882,9 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.restartPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -1904,9 +1893,9 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.serviceAccount"></a>
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -1922,9 +1911,9 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.volumes"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -1935,7 +1924,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.podMetadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -1943,15 +1932,15 @@ The pod metadata.
 
 ---
 
-##### `service`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.service"></a>
+##### `service`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.service"></a>
 
-- *Type:* [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service)
+- *Type:* [`org.cdk8s.plus23.Service`](#org.cdk8s.plus23.Service)
 
 Service to associate with the statefulset.
 
 ---
 
-##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.defaultSelector"></a>
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.defaultSelector"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* true
@@ -1963,16 +1952,16 @@ If this is set to `false` you must define your selector through
 
 ---
 
-##### `podManagementPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.podManagementPolicy"></a>
+##### `podManagementPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.podManagementPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.PodManagementPolicy`](#org.cdk8s.plus22.PodManagementPolicy)
+- *Type:* [`org.cdk8s.plus23.PodManagementPolicy`](#org.cdk8s.plus23.PodManagementPolicy)
 - *Default:* PodManagementPolicy.ORDERED_READY
 
 Pod management policy to use for this statefulset.
 
 ---
 
-##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.replicas"></a>
+##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.parameter.replicas"></a>
 
 - *Type:* `java.lang.Number`
 - *Default:* 1
@@ -1983,37 +1972,37 @@ Number of desired pods.
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="org.cdk8s.plus22.StatefulSet.addContainer"></a>
+##### `addContainer` <a name="org.cdk8s.plus23.StatefulSet.addContainer"></a>
 
 ```java
 public addContainer(ContainerProps container)
 ```
 
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.container"></a>
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.parameter.container"></a>
 
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+- *Type:* [`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)
 
 ---
 
-##### `addVolume` <a name="org.cdk8s.plus22.StatefulSet.addVolume"></a>
+##### `addVolume` <a name="org.cdk8s.plus23.StatefulSet.addVolume"></a>
 
 ```java
 public addVolume(Volume volume)
 ```
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 ---
 
-##### `selectByLabel` <a name="org.cdk8s.plus22.StatefulSet.selectByLabel"></a>
+##### `selectByLabel` <a name="org.cdk8s.plus23.StatefulSet.selectByLabel"></a>
 
 ```java
 public selectByLabel(java.lang.String key, java.lang.String value)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -2021,7 +2010,7 @@ The label key.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -2032,13 +2021,13 @@ The label value.
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -2046,7 +2035,7 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.labelSelector"></a>
+##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.property.labelSelector"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getLabelSelector();
@@ -2060,19 +2049,19 @@ Returns a a copy. Use `selectByLabel()` to add labels.
 
 ---
 
-##### `podManagementPolicy`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.podManagementPolicy"></a>
+##### `podManagementPolicy`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.property.podManagementPolicy"></a>
 
 ```java
 public PodManagementPolicy getPodManagementPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.PodManagementPolicy`](#org.cdk8s.plus22.PodManagementPolicy)
+- *Type:* [`org.cdk8s.plus23.PodManagementPolicy`](#org.cdk8s.plus23.PodManagementPolicy)
 
 Management policy to use for the set.
 
 ---
 
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.podMetadata"></a>
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadataDefinition getPodMetadata();
@@ -2084,7 +2073,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
-##### `replicas`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.replicas"></a>
+##### `replicas`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.property.replicas"></a>
 
 ```java
 public java.lang.Number getReplicas();
@@ -2096,13 +2085,13 @@ Number of desired pods.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSet.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -2110,25 +2099,25 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSet.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSet.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSet.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSet.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
@@ -2137,14 +2126,14 @@ The service account used to run this pod.
 
 ## Structs <a name="Structs"></a>
 
-### AddDeploymentOptions <a name="org.cdk8s.plus22.AddDeploymentOptions"></a>
+### AddDeploymentOptions <a name="org.cdk8s.plus23.AddDeploymentOptions"></a>
 
 Options to add a deployment to a service.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.AddDeploymentOptions;
+import org.cdk8s.plus23.AddDeploymentOptions;
 
 AddDeploymentOptions.builder()
 //  .name(java.lang.String)
@@ -2155,7 +2144,7 @@ AddDeploymentOptions.builder()
     .build();
 ```
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDeploymentOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -2172,7 +2161,7 @@ on this service.
 
 ---
 
-##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.nodePort"></a>
+##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDeploymentOptions.property.nodePort"></a>
 
 ```java
 public java.lang.Number getNodePort();
@@ -2192,13 +2181,13 @@ requires one.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDeploymentOptions.property.protocol"></a>
 
 ```java
 public Protocol getProtocol();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Protocol`](#org.cdk8s.plus22.Protocol)
+- *Type:* [`org.cdk8s.plus23.Protocol`](#org.cdk8s.plus23.Protocol)
 - *Default:* Protocol.TCP
 
 The IP protocol for this port.
@@ -2207,7 +2196,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDeploymentOptions.property.targetPort"></a>
 
 ```java
 public java.lang.Number getTargetPort();
@@ -2220,7 +2209,7 @@ The port number the service will redirect to.
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDeploymentOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDeploymentOptions.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -2233,14 +2222,14 @@ The port number the service will bind to.
 
 ---
 
-### AddDirectoryOptions <a name="org.cdk8s.plus22.AddDirectoryOptions"></a>
+### AddDirectoryOptions <a name="org.cdk8s.plus23.AddDirectoryOptions"></a>
 
 Options for `configmap.addDirectory()`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.AddDirectoryOptions;
+import org.cdk8s.plus23.AddDirectoryOptions;
 
 AddDirectoryOptions.builder()
 //  .exclude(java.util.List<java.lang.String>)
@@ -2248,7 +2237,7 @@ AddDirectoryOptions.builder()
     .build();
 ```
 
-##### `exclude`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDirectoryOptions.property.exclude"></a>
+##### `exclude`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDirectoryOptions.property.exclude"></a>
 
 ```java
 public java.util.List<java.lang.String> getExclude();
@@ -2261,7 +2250,7 @@ Glob patterns to exclude when adding files.
 
 ---
 
-##### `keyPrefix`<sup>Optional</sup> <a name="org.cdk8s.plus22.AddDirectoryOptions.property.keyPrefix"></a>
+##### `keyPrefix`<sup>Optional</sup> <a name="org.cdk8s.plus23.AddDirectoryOptions.property.keyPrefix"></a>
 
 ```java
 public java.lang.String getKeyPrefix();
@@ -2274,14 +2263,14 @@ A prefix to add to all keys in the config map.
 
 ---
 
-### CommandProbeOptions <a name="org.cdk8s.plus22.CommandProbeOptions"></a>
+### CommandProbeOptions <a name="org.cdk8s.plus23.CommandProbeOptions"></a>
 
 Options for `Probe.fromCommand()`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.CommandProbeOptions;
+import org.cdk8s.plus23.CommandProbeOptions;
 
 CommandProbeOptions.builder()
 //  .failureThreshold(java.lang.Number)
@@ -2292,7 +2281,7 @@ CommandProbeOptions.builder()
     .build();
 ```
 
-##### `failureThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommandProbeOptions.property.failureThreshold"></a>
+##### `failureThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus23.CommandProbeOptions.property.failureThreshold"></a>
 
 ```java
 public java.lang.Number getFailureThreshold();
@@ -2307,7 +2296,7 @@ Defaults to 3. Minimum value is 1.
 
 ---
 
-##### `initialDelaySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommandProbeOptions.property.initialDelaySeconds"></a>
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.CommandProbeOptions.property.initialDelaySeconds"></a>
 
 ```java
 public Duration getInitialDelaySeconds();
@@ -2322,7 +2311,7 @@ Number of seconds after the container has started before liveness probes are ini
 
 ---
 
-##### `periodSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommandProbeOptions.property.periodSeconds"></a>
+##### `periodSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.CommandProbeOptions.property.periodSeconds"></a>
 
 ```java
 public Duration getPeriodSeconds();
@@ -2337,7 +2326,7 @@ Default to 10 seconds. Minimum value is 1.
 
 ---
 
-##### `successThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommandProbeOptions.property.successThreshold"></a>
+##### `successThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus23.CommandProbeOptions.property.successThreshold"></a>
 
 ```java
 public java.lang.Number getSuccessThreshold();
@@ -2352,7 +2341,7 @@ Must be 1 for liveness and startup. Minimum value is 1.
 
 ---
 
-##### `timeoutSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommandProbeOptions.property.timeoutSeconds"></a>
+##### `timeoutSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.CommandProbeOptions.property.timeoutSeconds"></a>
 
 ```java
 public Duration getTimeoutSeconds();
@@ -2369,14 +2358,14 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-### ConfigMapProps <a name="org.cdk8s.plus22.ConfigMapProps"></a>
+### ConfigMapProps <a name="org.cdk8s.plus23.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ConfigMapProps;
+import org.cdk8s.plus23.ConfigMapProps;
 
 ConfigMapProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -2385,7 +2374,7 @@ ConfigMapProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -2397,7 +2386,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `binaryData`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.binaryData"></a>
+##### `binaryData`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapProps.property.binaryData"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getBinaryData();
@@ -2417,7 +2406,7 @@ You can also add binary data using `configMap.addBinaryData()`.
 
 ---
 
-##### `data`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.data"></a>
+##### `data`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapProps.property.data"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getData();
@@ -2436,14 +2425,14 @@ You can also add data using `configMap.addData()`.
 
 ---
 
-### ConfigMapVolumeOptions <a name="org.cdk8s.plus22.ConfigMapVolumeOptions"></a>
+### ConfigMapVolumeOptions <a name="org.cdk8s.plus23.ConfigMapVolumeOptions"></a>
 
 Options for the ConfigMap-based volume.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ConfigMapVolumeOptions;
+import org.cdk8s.plus23.ConfigMapVolumeOptions;
 
 ConfigMapVolumeOptions.builder()
 //  .defaultMode(java.lang.Number)
@@ -2453,7 +2442,7 @@ ConfigMapVolumeOptions.builder()
     .build();
 ```
 
-##### `defaultMode`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapVolumeOptions.property.defaultMode"></a>
+##### `defaultMode`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapVolumeOptions.property.defaultMode"></a>
 
 ```java
 public java.lang.Number getDefaultMode();
@@ -2473,13 +2462,13 @@ file mode, like fsGroup, and the result can be other mode bits set.
 
 ---
 
-##### `items`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapVolumeOptions.property.items"></a>
+##### `items`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapVolumeOptions.property.items"></a>
 
 ```java
 public java.util.Map<java.lang.String, PathMapping> getItems();
 ```
 
-- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus22.PathMapping`](#org.cdk8s.plus22.PathMapping)>
+- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus23.PathMapping`](#org.cdk8s.plus23.PathMapping)>
 - *Default:* no mapping
 
 If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value.
@@ -2492,7 +2481,7 @@ contain the '..' path or start with '..'.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapVolumeOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapVolumeOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -2505,7 +2494,7 @@ The volume name.
 
 ---
 
-##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapVolumeOptions.property.optional"></a>
+##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus23.ConfigMapVolumeOptions.property.optional"></a>
 
 ```java
 public java.lang.Boolean getOptional();
@@ -2518,14 +2507,14 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
-### ContainerProps <a name="org.cdk8s.plus22.ContainerProps"></a>
+### ContainerProps <a name="org.cdk8s.plus23.ContainerProps"></a>
 
 Properties for creating a container.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ContainerProps;
+import org.cdk8s.plus23.ContainerProps;
 
 ContainerProps.builder()
     .image(java.lang.String)
@@ -2543,7 +2532,7 @@ ContainerProps.builder()
     .build();
 ```
 
-##### `image`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerProps.property.image"></a>
+##### `image`<sup>Required</sup> <a name="org.cdk8s.plus23.ContainerProps.property.image"></a>
 
 ```java
 public java.lang.String getImage();
@@ -2555,7 +2544,7 @@ Docker image name.
 
 ---
 
-##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.args"></a>
+##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.args"></a>
 
 ```java
 public java.util.List<java.lang.String> getArgs();
@@ -2578,7 +2567,7 @@ Cannot be updated.
 
 ---
 
-##### `command`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.command"></a>
+##### `command`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.command"></a>
 
 ```java
 public java.util.List<java.lang.String> getCommand();
@@ -2596,13 +2585,13 @@ More info: https://kubernetes.io/docs/tasks/inject-data-application/define-comma
 
 ---
 
-##### `env`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.env"></a>
+##### `env`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.env"></a>
 
 ```java
 public java.util.Map<java.lang.String, EnvValue> getEnv();
 ```
 
-- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus22.EnvValue`](#org.cdk8s.plus22.EnvValue)>
+- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus23.EnvValue`](#org.cdk8s.plus23.EnvValue)>
 - *Default:* No environment variables.
 
 List of environment variables to set in the container.
@@ -2611,26 +2600,26 @@ Cannot be updated.
 
 ---
 
-##### `imagePullPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.imagePullPolicy"></a>
+##### `imagePullPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.imagePullPolicy"></a>
 
 ```java
 public ImagePullPolicy getImagePullPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ImagePullPolicy`](#org.cdk8s.plus22.ImagePullPolicy)
+- *Type:* [`org.cdk8s.plus23.ImagePullPolicy`](#org.cdk8s.plus23.ImagePullPolicy)
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
 
 ---
 
-##### `liveness`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.liveness"></a>
+##### `liveness`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.liveness"></a>
 
 ```java
 public Probe getLiveness();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
+- *Type:* [`org.cdk8s.plus23.Probe`](#org.cdk8s.plus23.Probe)
 - *Default:* no liveness probe is defined
 
 Periodic probe of container liveness.
@@ -2639,7 +2628,7 @@ Container will be restarted if the probe fails.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -2654,7 +2643,7 @@ Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -2669,26 +2658,26 @@ This must be a valid port number, 0 < x < 65536.
 
 ---
 
-##### `readiness`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.readiness"></a>
+##### `readiness`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.readiness"></a>
 
 ```java
 public Probe getReadiness();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
+- *Type:* [`org.cdk8s.plus23.Probe`](#org.cdk8s.plus23.Probe)
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
 
 ---
 
-##### `startup`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.startup"></a>
+##### `startup`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.startup"></a>
 
 ```java
 public Probe getStartup();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
+- *Type:* [`org.cdk8s.plus23.Probe`](#org.cdk8s.plus23.Probe)
 - *Default:* no startup probe is defined.
 
 StartupProbe indicates that the Pod has successfully initialized.
@@ -2697,13 +2686,13 @@ If specified, no other probes are executed until this completes successfully
 
 ---
 
-##### `volumeMounts`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.volumeMounts"></a>
+##### `volumeMounts`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.volumeMounts"></a>
 
 ```java
 public java.util.List<VolumeMount> getVolumeMounts();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.VolumeMount`](#org.cdk8s.plus22.VolumeMount)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.VolumeMount`](#org.cdk8s.plus23.VolumeMount)>
 
 Pod volumes to mount into the container's filesystem.
 
@@ -2711,7 +2700,7 @@ Cannot be updated.
 
 ---
 
-##### `workingDir`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.workingDir"></a>
+##### `workingDir`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.property.workingDir"></a>
 
 ```java
 public java.lang.String getWorkingDir();
@@ -2726,14 +2715,14 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
-### DeploymentProps <a name="org.cdk8s.plus22.DeploymentProps"></a>
+### DeploymentProps <a name="org.cdk8s.plus23.DeploymentProps"></a>
 
 Properties for initialization of `Deployment`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.DeploymentProps;
+import org.cdk8s.plus23.DeploymentProps;
 
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -2747,7 +2736,7 @@ DeploymentProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -2759,13 +2748,13 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.containers"></a>
 
 ```java
 public java.util.List<ContainerProps> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -2777,13 +2766,13 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -2792,13 +2781,13 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -2814,13 +2803,13 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -2831,7 +2820,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadata getPodMetadata();
@@ -2843,7 +2832,7 @@ The pod metadata.
 
 ---
 
-##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.defaultSelector"></a>
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.defaultSelector"></a>
 
 ```java
 public java.lang.Boolean getDefaultSelector();
@@ -2859,7 +2848,7 @@ If this is set to `false` you must define your selector through
 
 ---
 
-##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.replicas"></a>
+##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus23.DeploymentProps.property.replicas"></a>
 
 ```java
 public java.lang.Number getReplicas();
@@ -2872,14 +2861,14 @@ Number of desired pods.
 
 ---
 
-### EmptyDirVolumeOptions <a name="org.cdk8s.plus22.EmptyDirVolumeOptions"></a>
+### EmptyDirVolumeOptions <a name="org.cdk8s.plus23.EmptyDirVolumeOptions"></a>
 
 Options for volumes populated with an empty directory.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.EmptyDirVolumeOptions;
+import org.cdk8s.plus23.EmptyDirVolumeOptions;
 
 EmptyDirVolumeOptions.builder()
 //  .medium(EmptyDirMedium)
@@ -2887,13 +2876,13 @@ EmptyDirVolumeOptions.builder()
     .build();
 ```
 
-##### `medium`<sup>Optional</sup> <a name="org.cdk8s.plus22.EmptyDirVolumeOptions.property.medium"></a>
+##### `medium`<sup>Optional</sup> <a name="org.cdk8s.plus23.EmptyDirVolumeOptions.property.medium"></a>
 
 ```java
 public EmptyDirMedium getMedium();
 ```
 
-- *Type:* [`org.cdk8s.plus22.EmptyDirMedium`](#org.cdk8s.plus22.EmptyDirMedium)
+- *Type:* [`org.cdk8s.plus23.EmptyDirMedium`](#org.cdk8s.plus23.EmptyDirMedium)
 - *Default:* EmptyDirMedium.DEFAULT
 
 By default, emptyDir volumes are stored on whatever medium is backing the node - that might be disk or SSD or network storage, depending on your environment.
@@ -2906,7 +2895,7 @@ against your Container's memory limit.
 
 ---
 
-##### `sizeLimit`<sup>Optional</sup> <a name="org.cdk8s.plus22.EmptyDirVolumeOptions.property.sizeLimit"></a>
+##### `sizeLimit`<sup>Optional</sup> <a name="org.cdk8s.plus23.EmptyDirVolumeOptions.property.sizeLimit"></a>
 
 ```java
 public Size getSizeLimit();
@@ -2924,21 +2913,21 @@ here and the sum of memory limits of all containers in a pod.
 
 ---
 
-### EnvValueFromConfigMapOptions <a name="org.cdk8s.plus22.EnvValueFromConfigMapOptions"></a>
+### EnvValueFromConfigMapOptions <a name="org.cdk8s.plus23.EnvValueFromConfigMapOptions"></a>
 
 Options to specify an envionment variable value from a ConfigMap key.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValueFromConfigMapOptions;
+import org.cdk8s.plus23.EnvValueFromConfigMapOptions;
 
 EnvValueFromConfigMapOptions.builder()
 //  .optional(java.lang.Boolean)
     .build();
 ```
 
-##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromConfigMapOptions.property.optional"></a>
+##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromConfigMapOptions.property.optional"></a>
 
 ```java
 public java.lang.Boolean getOptional();
@@ -2951,14 +2940,14 @@ Specify whether the ConfigMap or its key must be defined.
 
 ---
 
-### EnvValueFromFieldRefOptions <a name="org.cdk8s.plus22.EnvValueFromFieldRefOptions"></a>
+### EnvValueFromFieldRefOptions <a name="org.cdk8s.plus23.EnvValueFromFieldRefOptions"></a>
 
 Options to specify an environment variable value from a field reference.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValueFromFieldRefOptions;
+import org.cdk8s.plus23.EnvValueFromFieldRefOptions;
 
 EnvValueFromFieldRefOptions.builder()
 //  .apiVersion(java.lang.String)
@@ -2966,7 +2955,7 @@ EnvValueFromFieldRefOptions.builder()
     .build();
 ```
 
-##### `apiVersion`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromFieldRefOptions.property.apiVersion"></a>
+##### `apiVersion`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromFieldRefOptions.property.apiVersion"></a>
 
 ```java
 public java.lang.String getApiVersion();
@@ -2978,7 +2967,7 @@ Version of the schema the FieldPath is written in terms of.
 
 ---
 
-##### `key`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromFieldRefOptions.property.key"></a>
+##### `key`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromFieldRefOptions.property.key"></a>
 
 ```java
 public java.lang.String getKey();
@@ -2990,21 +2979,21 @@ The key to select the pod label or annotation.
 
 ---
 
-### EnvValueFromProcessOptions <a name="org.cdk8s.plus22.EnvValueFromProcessOptions"></a>
+### EnvValueFromProcessOptions <a name="org.cdk8s.plus23.EnvValueFromProcessOptions"></a>
 
 Options to specify an environment variable value from the process environment.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValueFromProcessOptions;
+import org.cdk8s.plus23.EnvValueFromProcessOptions;
 
 EnvValueFromProcessOptions.builder()
 //  .required(java.lang.Boolean)
     .build();
 ```
 
-##### `required`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromProcessOptions.property.required"></a>
+##### `required`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromProcessOptions.property.required"></a>
 
 ```java
 public java.lang.Boolean getRequired();
@@ -3019,14 +3008,14 @@ If this is set to true, and the key does not exist, an error will thrown.
 
 ---
 
-### EnvValueFromResourceOptions <a name="org.cdk8s.plus22.EnvValueFromResourceOptions"></a>
+### EnvValueFromResourceOptions <a name="org.cdk8s.plus23.EnvValueFromResourceOptions"></a>
 
 Options to specify an environment variable value from a resource.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValueFromResourceOptions;
+import org.cdk8s.plus23.EnvValueFromResourceOptions;
 
 EnvValueFromResourceOptions.builder()
 //  .container(Container)
@@ -3034,19 +3023,19 @@ EnvValueFromResourceOptions.builder()
     .build();
 ```
 
-##### `container`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromResourceOptions.property.container"></a>
+##### `container`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromResourceOptions.property.container"></a>
 
 ```java
 public Container getContainer();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)
+- *Type:* [`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)
 
 The container to select the value from.
 
 ---
 
-##### `divisor`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromResourceOptions.property.divisor"></a>
+##### `divisor`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromResourceOptions.property.divisor"></a>
 
 ```java
 public java.lang.String getDivisor();
@@ -3058,21 +3047,21 @@ The output format of the exposed resource.
 
 ---
 
-### EnvValueFromSecretOptions <a name="org.cdk8s.plus22.EnvValueFromSecretOptions"></a>
+### EnvValueFromSecretOptions <a name="org.cdk8s.plus23.EnvValueFromSecretOptions"></a>
 
 Options to specify an environment variable value from a Secret.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValueFromSecretOptions;
+import org.cdk8s.plus23.EnvValueFromSecretOptions;
 
 EnvValueFromSecretOptions.builder()
 //  .optional(java.lang.Boolean)
     .build();
 ```
 
-##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValueFromSecretOptions.property.optional"></a>
+##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValueFromSecretOptions.property.optional"></a>
 
 ```java
 public java.lang.Boolean getOptional();
@@ -3085,14 +3074,14 @@ Specify whether the Secret or its key must be defined.
 
 ---
 
-### ExposeDeploymentViaIngressOptions <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions"></a>
+### ExposeDeploymentViaIngressOptions <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions"></a>
 
 Options for exposing a deployment via an ingress.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ExposeDeploymentViaIngressOptions;
+import org.cdk8s.plus23.ExposeDeploymentViaIngressOptions;
 
 ExposeDeploymentViaIngressOptions.builder()
 //  .name(java.lang.String)
@@ -3105,7 +3094,7 @@ ExposeDeploymentViaIngressOptions.builder()
     .build();
 ```
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -3120,7 +3109,7 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -3133,13 +3122,13 @@ The port that the service should serve on.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.protocol"></a>
 
 ```java
 public Protocol getProtocol();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Protocol`](#org.cdk8s.plus22.Protocol)
+- *Type:* [`org.cdk8s.plus23.Protocol`](#org.cdk8s.plus23.Protocol)
 - *Default:* Protocol.TCP
 
 The IP protocol for this port.
@@ -3148,20 +3137,20 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.serviceType"></a>
+##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.serviceType"></a>
 
 ```java
 public ServiceType getServiceType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
+- *Type:* [`org.cdk8s.plus23.ServiceType`](#org.cdk8s.plus23.ServiceType)
 - *Default:* ClusterIP.
 
 The type of the exposed service.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.targetPort"></a>
 
 ```java
 public java.lang.Number getTargetPort();
@@ -3174,40 +3163,40 @@ The port number the service will redirect to.
 
 ---
 
-##### `ingress`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.ingress"></a>
+##### `ingress`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.ingress"></a>
 
 ```java
 public Ingress getIngress();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress)
+- *Type:* [`org.cdk8s.plus23.Ingress`](#org.cdk8s.plus23.Ingress)
 - *Default:* An ingress will be automatically created.
 
 The ingress to add rules to.
 
 ---
 
-##### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaIngressOptions.property.pathType"></a>
+##### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaIngressOptions.property.pathType"></a>
 
 ```java
 public HttpIngressPathType getPathType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.HttpIngressPathType`](#org.cdk8s.plus22.HttpIngressPathType)
+- *Type:* [`org.cdk8s.plus23.HttpIngressPathType`](#org.cdk8s.plus23.HttpIngressPathType)
 - *Default:* HttpIngressPathType.PREFIX
 
 The type of the path.
 
 ---
 
-### ExposeDeploymentViaServiceOptions <a name="org.cdk8s.plus22.ExposeDeploymentViaServiceOptions"></a>
+### ExposeDeploymentViaServiceOptions <a name="org.cdk8s.plus23.ExposeDeploymentViaServiceOptions"></a>
 
 Options for exposing a deployment via a service.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ExposeDeploymentViaServiceOptions;
+import org.cdk8s.plus23.ExposeDeploymentViaServiceOptions;
 
 ExposeDeploymentViaServiceOptions.builder()
 //  .name(java.lang.String)
@@ -3218,7 +3207,7 @@ ExposeDeploymentViaServiceOptions.builder()
     .build();
 ```
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaServiceOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaServiceOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -3233,7 +3222,7 @@ This will be set on the Service.metadata and must be a DNS_LABEL
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaServiceOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaServiceOptions.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -3246,13 +3235,13 @@ The port that the service should serve on.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaServiceOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaServiceOptions.property.protocol"></a>
 
 ```java
 public Protocol getProtocol();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Protocol`](#org.cdk8s.plus22.Protocol)
+- *Type:* [`org.cdk8s.plus23.Protocol`](#org.cdk8s.plus23.Protocol)
 - *Default:* Protocol.TCP
 
 The IP protocol for this port.
@@ -3261,20 +3250,20 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaServiceOptions.property.serviceType"></a>
+##### `serviceType`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaServiceOptions.property.serviceType"></a>
 
 ```java
 public ServiceType getServiceType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
+- *Type:* [`org.cdk8s.plus23.ServiceType`](#org.cdk8s.plus23.ServiceType)
 - *Default:* ClusterIP.
 
 The type of the exposed service.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeDeploymentViaServiceOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeDeploymentViaServiceOptions.property.targetPort"></a>
 
 ```java
 public java.lang.Number getTargetPort();
@@ -3287,14 +3276,14 @@ The port number the service will redirect to.
 
 ---
 
-### ExposeServiceViaIngressOptions <a name="org.cdk8s.plus22.ExposeServiceViaIngressOptions"></a>
+### ExposeServiceViaIngressOptions <a name="org.cdk8s.plus23.ExposeServiceViaIngressOptions"></a>
 
 Options for exposing a service using an ingress.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ExposeServiceViaIngressOptions;
+import org.cdk8s.plus23.ExposeServiceViaIngressOptions;
 
 ExposeServiceViaIngressOptions.builder()
 //  .ingress(Ingress)
@@ -3302,40 +3291,40 @@ ExposeServiceViaIngressOptions.builder()
     .build();
 ```
 
-##### `ingress`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeServiceViaIngressOptions.property.ingress"></a>
+##### `ingress`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeServiceViaIngressOptions.property.ingress"></a>
 
 ```java
 public Ingress getIngress();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress)
+- *Type:* [`org.cdk8s.plus23.Ingress`](#org.cdk8s.plus23.Ingress)
 - *Default:* An ingress will be automatically created.
 
 The ingress to add rules to.
 
 ---
 
-##### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus22.ExposeServiceViaIngressOptions.property.pathType"></a>
+##### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus23.ExposeServiceViaIngressOptions.property.pathType"></a>
 
 ```java
 public HttpIngressPathType getPathType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.HttpIngressPathType`](#org.cdk8s.plus22.HttpIngressPathType)
+- *Type:* [`org.cdk8s.plus23.HttpIngressPathType`](#org.cdk8s.plus23.HttpIngressPathType)
 - *Default:* HttpIngressPathType.PREFIX
 
 The type of the path.
 
 ---
 
-### HttpGetProbeOptions <a name="org.cdk8s.plus22.HttpGetProbeOptions"></a>
+### HttpGetProbeOptions <a name="org.cdk8s.plus23.HttpGetProbeOptions"></a>
 
 Options for `Probe.fromHttpGet()`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.HttpGetProbeOptions;
+import org.cdk8s.plus23.HttpGetProbeOptions;
 
 HttpGetProbeOptions.builder()
 //  .failureThreshold(java.lang.Number)
@@ -3347,7 +3336,7 @@ HttpGetProbeOptions.builder()
     .build();
 ```
 
-##### `failureThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus22.HttpGetProbeOptions.property.failureThreshold"></a>
+##### `failureThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus23.HttpGetProbeOptions.property.failureThreshold"></a>
 
 ```java
 public java.lang.Number getFailureThreshold();
@@ -3362,7 +3351,7 @@ Defaults to 3. Minimum value is 1.
 
 ---
 
-##### `initialDelaySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.HttpGetProbeOptions.property.initialDelaySeconds"></a>
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.HttpGetProbeOptions.property.initialDelaySeconds"></a>
 
 ```java
 public Duration getInitialDelaySeconds();
@@ -3377,7 +3366,7 @@ Number of seconds after the container has started before liveness probes are ini
 
 ---
 
-##### `periodSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.HttpGetProbeOptions.property.periodSeconds"></a>
+##### `periodSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.HttpGetProbeOptions.property.periodSeconds"></a>
 
 ```java
 public Duration getPeriodSeconds();
@@ -3392,7 +3381,7 @@ Default to 10 seconds. Minimum value is 1.
 
 ---
 
-##### `successThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus22.HttpGetProbeOptions.property.successThreshold"></a>
+##### `successThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus23.HttpGetProbeOptions.property.successThreshold"></a>
 
 ```java
 public java.lang.Number getSuccessThreshold();
@@ -3407,7 +3396,7 @@ Must be 1 for liveness and startup. Minimum value is 1.
 
 ---
 
-##### `timeoutSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.HttpGetProbeOptions.property.timeoutSeconds"></a>
+##### `timeoutSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.HttpGetProbeOptions.property.timeoutSeconds"></a>
 
 ```java
 public Duration getTimeoutSeconds();
@@ -3424,7 +3413,7 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HttpGetProbeOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.HttpGetProbeOptions.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -3437,14 +3426,14 @@ The TCP port to use when sending the GET request.
 
 ---
 
-### IngressProps <a name="org.cdk8s.plus22.IngressProps"></a>
+### IngressProps <a name="org.cdk8s.plus23.IngressProps"></a>
 
 Properties for `Ingress`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.IngressProps;
+import org.cdk8s.plus23.IngressProps;
 
 IngressProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -3454,7 +3443,7 @@ IngressProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -3466,13 +3455,13 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `defaultBackend`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.property.defaultBackend"></a>
+##### `defaultBackend`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.property.defaultBackend"></a>
 
 ```java
 public IngressBackend getDefaultBackend();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 The default backend services requests that do not match any rule.
 
@@ -3481,13 +3470,13 @@ adding a rule with both `path` and `host` undefined.
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.property.rules"></a>
+##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.property.rules"></a>
 
 ```java
 public java.util.List<IngressRule> getRules();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.IngressRule`](#org.cdk8s.plus22.IngressRule)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.IngressRule`](#org.cdk8s.plus23.IngressRule)>
 
 Routing rules for this ingress.
 
@@ -3500,13 +3489,13 @@ You can also add rules later using `addRule()`, `addHostRule()`,
 
 ---
 
-##### `tls`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressProps.property.tls"></a>
+##### `tls`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressProps.property.tls"></a>
 
 ```java
 public java.util.List<IngressTls> getTls();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.IngressTls`](#org.cdk8s.plus22.IngressTls)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.IngressTls`](#org.cdk8s.plus23.IngressTls)>
 
 TLS settings for this ingress.
 
@@ -3518,7 +3507,7 @@ extension, if the ingress controller fulfilling the ingress supports SNI.
 
 ---
 
-### IngressRule <a name="org.cdk8s.plus22.IngressRule"></a>
+### IngressRule <a name="org.cdk8s.plus23.IngressRule"></a>
 
 Represents the rules mapping the paths under a specified host to the related backend services.
 
@@ -3528,7 +3517,7 @@ then routed to the backend associated with the matching path.
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.IngressRule;
+import org.cdk8s.plus23.IngressRule;
 
 IngressRule.builder()
     .backend(IngressBackend)
@@ -3538,19 +3527,19 @@ IngressRule.builder()
     .build();
 ```
 
-##### `backend`<sup>Required</sup> <a name="org.cdk8s.plus22.IngressRule.property.backend"></a>
+##### `backend`<sup>Required</sup> <a name="org.cdk8s.plus23.IngressRule.property.backend"></a>
 
 ```java
 public IngressBackend getBackend();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IngressBackend`](#org.cdk8s.plus22.IngressBackend)
+- *Type:* [`org.cdk8s.plus23.IngressBackend`](#org.cdk8s.plus23.IngressBackend)
 
 Backend defines the referenced service endpoint to which the traffic will be forwarded to.
 
 ---
 
-##### `host`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressRule.property.host"></a>
+##### `host`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressRule.property.host"></a>
 
 ```java
 public java.lang.String getHost();
@@ -3572,7 +3561,7 @@ host before the IngressRuleValue.
 
 ---
 
-##### `path`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressRule.property.path"></a>
+##### `path`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressRule.property.path"></a>
 
 ```java
 public java.lang.String getPath();
@@ -3586,13 +3575,13 @@ Path is an extended POSIX regex as defined by IEEE Std 1003.1, (i.e this follows
 
 ---
 
-##### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressRule.property.pathType"></a>
+##### `pathType`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressRule.property.pathType"></a>
 
 ```java
 public HttpIngressPathType getPathType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.HttpIngressPathType`](#org.cdk8s.plus22.HttpIngressPathType)
+- *Type:* [`org.cdk8s.plus23.HttpIngressPathType`](#org.cdk8s.plus23.HttpIngressPathType)
 
 Specify how the path is matched against request paths.
 
@@ -3603,14 +3592,14 @@ types will be matched by prefix.
 
 ---
 
-### IngressTls <a name="org.cdk8s.plus22.IngressTls"></a>
+### IngressTls <a name="org.cdk8s.plus23.IngressTls"></a>
 
 Represents the TLS configuration mapping that is passed to the ingress controller for SSL termination.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.IngressTls;
+import org.cdk8s.plus23.IngressTls;
 
 IngressTls.builder()
 //  .hosts(java.util.List<java.lang.String>)
@@ -3618,7 +3607,7 @@ IngressTls.builder()
     .build();
 ```
 
-##### `hosts`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressTls.property.hosts"></a>
+##### `hosts`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressTls.property.hosts"></a>
 
 ```java
 public java.util.List<java.lang.String> getHosts();
@@ -3635,13 +3624,13 @@ this list must match the name/s used in the TLS Secret.
 
 ---
 
-##### `secret`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressTls.property.secret"></a>
+##### `secret`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressTls.property.secret"></a>
 
 ```java
 public ISecret getSecret();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Type:* [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)
 - *Default:* If unspecified, it allows SSL routing based on SNI hostname.
 
 Secret is the secret that contains the certificate and key used to terminate SSL traffic on 443.
@@ -3652,14 +3641,14 @@ termination and value of the Host header is used for routing.
 
 ---
 
-### JobProps <a name="org.cdk8s.plus22.JobProps"></a>
+### JobProps <a name="org.cdk8s.plus23.JobProps"></a>
 
 Properties for initialization of `Job`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.JobProps;
+import org.cdk8s.plus23.JobProps;
 
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -3674,7 +3663,7 @@ JobProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -3686,13 +3675,13 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.containers"></a>
 
 ```java
 public java.util.List<ContainerProps> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -3704,13 +3693,13 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -3719,13 +3708,13 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -3741,13 +3730,13 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -3758,7 +3747,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadata getPodMetadata();
@@ -3770,7 +3759,7 @@ The pod metadata.
 
 ---
 
-##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.activeDeadline"></a>
+##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.activeDeadline"></a>
 
 ```java
 public Duration getActiveDeadline();
@@ -3783,7 +3772,7 @@ Specifies the duration the job may be active before the system tries to terminat
 
 ---
 
-##### `backoffLimit`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.backoffLimit"></a>
+##### `backoffLimit`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.backoffLimit"></a>
 
 ```java
 public java.lang.Number getBackoffLimit();
@@ -3796,7 +3785,7 @@ Specifies the number of retries before marking this job failed.
 
 ---
 
-##### `ttlAfterFinished`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.ttlAfterFinished"></a>
+##### `ttlAfterFinished`<sup>Optional</sup> <a name="org.cdk8s.plus23.JobProps.property.ttlAfterFinished"></a>
 
 ```java
 public Duration getTtlAfterFinished();
@@ -3816,14 +3805,14 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
-### MountOptions <a name="org.cdk8s.plus22.MountOptions"></a>
+### MountOptions <a name="org.cdk8s.plus23.MountOptions"></a>
 
 Options for mounts.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.MountOptions;
+import org.cdk8s.plus23.MountOptions;
 
 MountOptions.builder()
 //  .propagation(MountPropagation)
@@ -3833,13 +3822,13 @@ MountOptions.builder()
     .build();
 ```
 
-##### `propagation`<sup>Optional</sup> <a name="org.cdk8s.plus22.MountOptions.property.propagation"></a>
+##### `propagation`<sup>Optional</sup> <a name="org.cdk8s.plus23.MountOptions.property.propagation"></a>
 
 ```java
 public MountPropagation getPropagation();
 ```
 
-- *Type:* [`org.cdk8s.plus22.MountPropagation`](#org.cdk8s.plus22.MountPropagation)
+- *Type:* [`org.cdk8s.plus23.MountPropagation`](#org.cdk8s.plus23.MountPropagation)
 - *Default:* MountPropagation.NONE
 
 Determines how mounts are propagated from the host to container and the other way around.
@@ -3853,7 +3842,7 @@ This field is beta in 1.10.
 
 ---
 
-##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.MountOptions.property.readOnly"></a>
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus23.MountOptions.property.readOnly"></a>
 
 ```java
 public java.lang.Boolean getReadOnly();
@@ -3868,7 +3857,7 @@ Defaults to false.
 
 ---
 
-##### `subPath`<sup>Optional</sup> <a name="org.cdk8s.plus22.MountOptions.property.subPath"></a>
+##### `subPath`<sup>Optional</sup> <a name="org.cdk8s.plus23.MountOptions.property.subPath"></a>
 
 ```java
 public java.lang.String getSubPath();
@@ -3881,7 +3870,7 @@ Path within the volume from which the container's volume should be mounted.).
 
 ---
 
-##### `subPathExpr`<sup>Optional</sup> <a name="org.cdk8s.plus22.MountOptions.property.subPathExpr"></a>
+##### `subPathExpr`<sup>Optional</sup> <a name="org.cdk8s.plus23.MountOptions.property.subPathExpr"></a>
 
 ```java
 public java.lang.String getSubPathExpr();
@@ -3902,14 +3891,14 @@ is beta in 1.15.
 
 ---
 
-### PathMapping <a name="org.cdk8s.plus22.PathMapping"></a>
+### PathMapping <a name="org.cdk8s.plus23.PathMapping"></a>
 
 Maps a string key to a path within a volume.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.PathMapping;
+import org.cdk8s.plus23.PathMapping;
 
 PathMapping.builder()
     .path(java.lang.String)
@@ -3917,7 +3906,7 @@ PathMapping.builder()
     .build();
 ```
 
-##### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.PathMapping.property.path"></a>
+##### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.PathMapping.property.path"></a>
 
 ```java
 public java.lang.String getPath();
@@ -3933,7 +3922,7 @@ path. May not contain the path element '..'. May not start with the string
 
 ---
 
-##### `mode`<sup>Optional</sup> <a name="org.cdk8s.plus22.PathMapping.property.mode"></a>
+##### `mode`<sup>Optional</sup> <a name="org.cdk8s.plus23.PathMapping.property.mode"></a>
 
 ```java
 public java.lang.Number getMode();
@@ -3949,14 +3938,14 @@ the result can be other mode bits set.
 
 ---
 
-### PodProps <a name="org.cdk8s.plus22.PodProps"></a>
+### PodProps <a name="org.cdk8s.plus23.PodProps"></a>
 
 Properties for initialization of `Pod`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.PodProps;
+import org.cdk8s.plus23.PodProps;
 
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -3967,7 +3956,7 @@ PodProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -3979,13 +3968,13 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.property.containers"></a>
 
 ```java
 public java.util.List<ContainerProps> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -3997,13 +3986,13 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -4012,13 +4001,13 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -4034,13 +4023,13 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodProps.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -4051,14 +4040,14 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-### PodSpecProps <a name="org.cdk8s.plus22.PodSpecProps"></a>
+### PodSpecProps <a name="org.cdk8s.plus23.PodSpecProps"></a>
 
 Properties of a `PodSpec`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.PodSpecProps;
+import org.cdk8s.plus23.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
@@ -4068,13 +4057,13 @@ PodSpecProps.builder()
     .build();
 ```
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.property.containers"></a>
 
 ```java
 public java.util.List<ContainerProps> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -4086,13 +4075,13 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -4101,13 +4090,13 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -4123,13 +4112,13 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -4140,7 +4129,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-### PodTemplateProps <a name="org.cdk8s.plus22.PodTemplateProps"></a>
+### PodTemplateProps <a name="org.cdk8s.plus23.PodTemplateProps"></a>
 
 Properties of a `PodTemplate`.
 
@@ -4149,7 +4138,7 @@ Adds metadata information on top of the spec.
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.PodTemplateProps;
+import org.cdk8s.plus23.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
@@ -4160,13 +4149,13 @@ PodTemplateProps.builder()
     .build();
 ```
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.property.containers"></a>
 
 ```java
 public java.util.List<ContainerProps> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -4178,13 +4167,13 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -4193,13 +4182,13 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -4215,13 +4204,13 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -4232,7 +4221,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadata getPodMetadata();
@@ -4244,14 +4233,14 @@ The pod metadata.
 
 ---
 
-### ProbeOptions <a name="org.cdk8s.plus22.ProbeOptions"></a>
+### ProbeOptions <a name="org.cdk8s.plus23.ProbeOptions"></a>
 
 Probe options.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ProbeOptions;
+import org.cdk8s.plus23.ProbeOptions;
 
 ProbeOptions.builder()
 //  .failureThreshold(java.lang.Number)
@@ -4262,7 +4251,7 @@ ProbeOptions.builder()
     .build();
 ```
 
-##### `failureThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus22.ProbeOptions.property.failureThreshold"></a>
+##### `failureThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus23.ProbeOptions.property.failureThreshold"></a>
 
 ```java
 public java.lang.Number getFailureThreshold();
@@ -4277,7 +4266,7 @@ Defaults to 3. Minimum value is 1.
 
 ---
 
-##### `initialDelaySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.ProbeOptions.property.initialDelaySeconds"></a>
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.ProbeOptions.property.initialDelaySeconds"></a>
 
 ```java
 public Duration getInitialDelaySeconds();
@@ -4292,7 +4281,7 @@ Number of seconds after the container has started before liveness probes are ini
 
 ---
 
-##### `periodSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.ProbeOptions.property.periodSeconds"></a>
+##### `periodSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.ProbeOptions.property.periodSeconds"></a>
 
 ```java
 public Duration getPeriodSeconds();
@@ -4307,7 +4296,7 @@ Default to 10 seconds. Minimum value is 1.
 
 ---
 
-##### `successThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus22.ProbeOptions.property.successThreshold"></a>
+##### `successThreshold`<sup>Optional</sup> <a name="org.cdk8s.plus23.ProbeOptions.property.successThreshold"></a>
 
 ```java
 public java.lang.Number getSuccessThreshold();
@@ -4322,7 +4311,7 @@ Must be 1 for liveness and startup. Minimum value is 1.
 
 ---
 
-##### `timeoutSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus22.ProbeOptions.property.timeoutSeconds"></a>
+##### `timeoutSeconds`<sup>Optional</sup> <a name="org.cdk8s.plus23.ProbeOptions.property.timeoutSeconds"></a>
 
 ```java
 public Duration getTimeoutSeconds();
@@ -4339,21 +4328,21 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-### ResourceProps <a name="org.cdk8s.plus22.ResourceProps"></a>
+### ResourceProps <a name="org.cdk8s.plus23.ResourceProps"></a>
 
 Initialization properties for resources.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ResourceProps;
+import org.cdk8s.plus23.ResourceProps;
 
 ResourceProps.builder()
 //  .metadata(ApiObjectMetadata)
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ResourceProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ResourceProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -4365,12 +4354,12 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-### SecretProps <a name="org.cdk8s.plus22.SecretProps"></a>
+### SecretProps <a name="org.cdk8s.plus23.SecretProps"></a>
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.SecretProps;
+import org.cdk8s.plus23.SecretProps;
 
 SecretProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -4379,7 +4368,7 @@ SecretProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -4391,7 +4380,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.stringData"></a>
+##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretProps.property.stringData"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getStringData();
@@ -4408,7 +4397,7 @@ output when reading from the API.
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.type"></a>
+##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretProps.property.type"></a>
 
 ```java
 public java.lang.String getType();
@@ -4424,14 +4413,14 @@ handling of secret data by various controllers.
 
 ---
 
-### SecretValue <a name="org.cdk8s.plus22.SecretValue"></a>
+### SecretValue <a name="org.cdk8s.plus23.SecretValue"></a>
 
 Represents a specific value in JSON secret.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.SecretValue;
+import org.cdk8s.plus23.SecretValue;
 
 SecretValue.builder()
     .key(java.lang.String)
@@ -4439,7 +4428,7 @@ SecretValue.builder()
     .build();
 ```
 
-##### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.SecretValue.property.key"></a>
+##### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.SecretValue.property.key"></a>
 
 ```java
 public java.lang.String getKey();
@@ -4451,26 +4440,26 @@ The JSON key.
 
 ---
 
-##### `secret`<sup>Required</sup> <a name="org.cdk8s.plus22.SecretValue.property.secret"></a>
+##### `secret`<sup>Required</sup> <a name="org.cdk8s.plus23.SecretValue.property.secret"></a>
 
 ```java
 public ISecret getSecret();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Type:* [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)
 
 The secret.
 
 ---
 
-### SecretVolumeOptions <a name="org.cdk8s.plus22.SecretVolumeOptions"></a>
+### SecretVolumeOptions <a name="org.cdk8s.plus23.SecretVolumeOptions"></a>
 
 Options for the Secret-based volume.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.SecretVolumeOptions;
+import org.cdk8s.plus23.SecretVolumeOptions;
 
 SecretVolumeOptions.builder()
 //  .defaultMode(java.lang.Number)
@@ -4480,7 +4469,7 @@ SecretVolumeOptions.builder()
     .build();
 ```
 
-##### `defaultMode`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretVolumeOptions.property.defaultMode"></a>
+##### `defaultMode`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretVolumeOptions.property.defaultMode"></a>
 
 ```java
 public java.lang.Number getDefaultMode();
@@ -4500,13 +4489,13 @@ file mode, like fsGroup, and the result can be other mode bits set.
 
 ---
 
-##### `items`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretVolumeOptions.property.items"></a>
+##### `items`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretVolumeOptions.property.items"></a>
 
 ```java
 public java.util.Map<java.lang.String, PathMapping> getItems();
 ```
 
-- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus22.PathMapping`](#org.cdk8s.plus22.PathMapping)>
+- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus23.PathMapping`](#org.cdk8s.plus23.PathMapping)>
 - *Default:* no mapping
 
 If unspecified, each key-value pair in the Data field of the referenced secret will be projected into the volume as a file whose name is the key and content is the value.
@@ -4519,7 +4508,7 @@ contain the '..' path or start with '..'.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretVolumeOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretVolumeOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -4532,7 +4521,7 @@ The volume name.
 
 ---
 
-##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretVolumeOptions.property.optional"></a>
+##### `optional`<sup>Optional</sup> <a name="org.cdk8s.plus23.SecretVolumeOptions.property.optional"></a>
 
 ```java
 public java.lang.Boolean getOptional();
@@ -4545,7 +4534,7 @@ Specify whether the secret or its keys must be defined.
 
 ---
 
-### ServiceAccountProps <a name="org.cdk8s.plus22.ServiceAccountProps"></a>
+### ServiceAccountProps <a name="org.cdk8s.plus23.ServiceAccountProps"></a>
 
 Properties for initialization of `ServiceAccount`.
 
@@ -4554,7 +4543,7 @@ Properties for initialization of `ServiceAccount`.
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ServiceAccountProps;
+import org.cdk8s.plus23.ServiceAccountProps;
 
 ServiceAccountProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -4562,7 +4551,7 @@ ServiceAccountProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceAccountProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -4574,13 +4563,13 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `secrets`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountProps.property.secrets"></a>
+##### `secrets`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceAccountProps.property.secrets"></a>
 
 ```java
 public java.util.List<ISecret> getSecrets();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)>
 
 List of secrets allowed to be used by pods running using this ServiceAccount.
 
@@ -4588,21 +4577,21 @@ List of secrets allowed to be used by pods running using this ServiceAccount.
 
 ---
 
-### ServiceIngressBackendOptions <a name="org.cdk8s.plus22.ServiceIngressBackendOptions"></a>
+### ServiceIngressBackendOptions <a name="org.cdk8s.plus23.ServiceIngressBackendOptions"></a>
 
 Options for setting up backends for ingress rules.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ServiceIngressBackendOptions;
+import org.cdk8s.plus23.ServiceIngressBackendOptions;
 
 ServiceIngressBackendOptions.builder()
 //  .port(java.lang.Number)
     .build();
 ```
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceIngressBackendOptions.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceIngressBackendOptions.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -4620,14 +4609,14 @@ The port to use to access the service.
 
 ---
 
-### ServicePort <a name="org.cdk8s.plus22.ServicePort"></a>
+### ServicePort <a name="org.cdk8s.plus23.ServicePort"></a>
 
 Definition of a service port.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ServicePort;
+import org.cdk8s.plus23.ServicePort;
 
 ServicePort.builder()
 //  .name(java.lang.String)
@@ -4638,7 +4627,7 @@ ServicePort.builder()
     .build();
 ```
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePort.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePort.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -4655,7 +4644,7 @@ on this service.
 
 ---
 
-##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePort.property.nodePort"></a>
+##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePort.property.nodePort"></a>
 
 ```java
 public java.lang.Number getNodePort();
@@ -4675,13 +4664,13 @@ requires one.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePort.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePort.property.protocol"></a>
 
 ```java
 public Protocol getProtocol();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Protocol`](#org.cdk8s.plus22.Protocol)
+- *Type:* [`org.cdk8s.plus23.Protocol`](#org.cdk8s.plus23.Protocol)
 - *Default:* Protocol.TCP
 
 The IP protocol for this port.
@@ -4690,7 +4679,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePort.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePort.property.targetPort"></a>
 
 ```java
 public java.lang.Number getTargetPort();
@@ -4703,7 +4692,7 @@ The port number the service will redirect to.
 
 ---
 
-##### `port`<sup>Required</sup> <a name="org.cdk8s.plus22.ServicePort.property.port"></a>
+##### `port`<sup>Required</sup> <a name="org.cdk8s.plus23.ServicePort.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -4715,12 +4704,12 @@ The port number the service will bind to.
 
 ---
 
-### ServicePortOptions <a name="org.cdk8s.plus22.ServicePortOptions"></a>
+### ServicePortOptions <a name="org.cdk8s.plus23.ServicePortOptions"></a>
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ServicePortOptions;
+import org.cdk8s.plus23.ServicePortOptions;
 
 ServicePortOptions.builder()
 //  .name(java.lang.String)
@@ -4730,7 +4719,7 @@ ServicePortOptions.builder()
     .build();
 ```
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePortOptions.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePortOptions.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -4747,7 +4736,7 @@ on this service.
 
 ---
 
-##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePortOptions.property.nodePort"></a>
+##### `nodePort`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePortOptions.property.nodePort"></a>
 
 ```java
 public java.lang.Number getNodePort();
@@ -4767,13 +4756,13 @@ requires one.
 
 ---
 
-##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePortOptions.property.protocol"></a>
+##### `protocol`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePortOptions.property.protocol"></a>
 
 ```java
 public Protocol getProtocol();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Protocol`](#org.cdk8s.plus22.Protocol)
+- *Type:* [`org.cdk8s.plus23.Protocol`](#org.cdk8s.plus23.Protocol)
 - *Default:* Protocol.TCP
 
 The IP protocol for this port.
@@ -4782,7 +4771,7 @@ Supports "TCP", "UDP", and "SCTP". Default is TCP.
 
 ---
 
-##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServicePortOptions.property.targetPort"></a>
+##### `targetPort`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServicePortOptions.property.targetPort"></a>
 
 ```java
 public java.lang.Number getTargetPort();
@@ -4795,14 +4784,14 @@ The port number the service will redirect to.
 
 ---
 
-### ServiceProps <a name="org.cdk8s.plus22.ServiceProps"></a>
+### ServiceProps <a name="org.cdk8s.plus23.ServiceProps"></a>
 
 Properties for initialization of `Service`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.ServiceProps;
+import org.cdk8s.plus23.ServiceProps;
 
 ServiceProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -4815,7 +4804,7 @@ ServiceProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -4827,7 +4816,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `clusterIP`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.clusterIP"></a>
+##### `clusterIP`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.clusterIP"></a>
 
 ```java
 public java.lang.String getClusterIP();
@@ -4849,7 +4838,7 @@ ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName.
 
 ---
 
-##### `externalIPs`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.externalIPs"></a>
+##### `externalIPs`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.externalIPs"></a>
 
 ```java
 public java.util.List<java.lang.String> getExternalIPs();
@@ -4867,7 +4856,7 @@ Kubernetes system.
 
 ---
 
-##### `externalName`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.externalName"></a>
+##### `externalName`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.externalName"></a>
 
 ```java
 public java.lang.String getExternalName();
@@ -4880,7 +4869,7 @@ The externalName to be used when ServiceType.EXTERNAL_NAME is set.
 
 ---
 
-##### `loadBalancerSourceRanges`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.loadBalancerSourceRanges"></a>
+##### `loadBalancerSourceRanges`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.loadBalancerSourceRanges"></a>
 
 ```java
 public java.util.List<java.lang.String> getLoadBalancerSourceRanges();
@@ -4894,13 +4883,13 @@ More info: https://kubernetes.io/docs/tasks/access-application-cluster/configure
 
 ---
 
-##### `ports`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.ports"></a>
+##### `ports`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.ports"></a>
 
 ```java
 public java.util.List<ServicePort> getPorts();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ServicePort`](#org.cdk8s.plus22.ServicePort)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ServicePort`](#org.cdk8s.plus23.ServicePort)>
 
 The port exposed by this service.
 
@@ -4908,13 +4897,13 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#virt
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceProps.property.type"></a>
+##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus23.ServiceProps.property.type"></a>
 
 ```java
 public ServiceType getType();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
+- *Type:* [`org.cdk8s.plus23.ServiceType`](#org.cdk8s.plus23.ServiceType)
 - *Default:* ServiceType.ClusterIP
 
 Determines how the Service is exposed.
@@ -4923,14 +4912,14 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#publ
 
 ---
 
-### StatefulSetProps <a name="org.cdk8s.plus22.StatefulSetProps"></a>
+### StatefulSetProps <a name="org.cdk8s.plus23.StatefulSetProps"></a>
 
 Properties for initialization of `StatefulSet`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.StatefulSetProps;
+import org.cdk8s.plus23.StatefulSetProps;
 
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -4946,7 +4935,7 @@ StatefulSetProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -4958,13 +4947,13 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.containers"></a>
 
 ```java
 public java.util.List<ContainerProps> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -4976,13 +4965,13 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -4991,13 +4980,13 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -5013,13 +5002,13 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -5030,7 +5019,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadata getPodMetadata();
@@ -5042,19 +5031,19 @@ The pod metadata.
 
 ---
 
-##### `service`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.service"></a>
+##### `service`<sup>Required</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.service"></a>
 
 ```java
 public Service getService();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service)
+- *Type:* [`org.cdk8s.plus23.Service`](#org.cdk8s.plus23.Service)
 
 Service to associate with the statefulset.
 
 ---
 
-##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.defaultSelector"></a>
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.defaultSelector"></a>
 
 ```java
 public java.lang.Boolean getDefaultSelector();
@@ -5070,20 +5059,20 @@ If this is set to `false` you must define your selector through
 
 ---
 
-##### `podManagementPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.podManagementPolicy"></a>
+##### `podManagementPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.podManagementPolicy"></a>
 
 ```java
 public PodManagementPolicy getPodManagementPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.PodManagementPolicy`](#org.cdk8s.plus22.PodManagementPolicy)
+- *Type:* [`org.cdk8s.plus23.PodManagementPolicy`](#org.cdk8s.plus23.PodManagementPolicy)
 - *Default:* PodManagementPolicy.ORDERED_READY
 
 Pod management policy to use for this statefulset.
 
 ---
 
-##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.replicas"></a>
+##### `replicas`<sup>Optional</sup> <a name="org.cdk8s.plus23.StatefulSetProps.property.replicas"></a>
 
 ```java
 public java.lang.Number getReplicas();
@@ -5096,14 +5085,14 @@ Number of desired pods.
 
 ---
 
-### VolumeMount <a name="org.cdk8s.plus22.VolumeMount"></a>
+### VolumeMount <a name="org.cdk8s.plus23.VolumeMount"></a>
 
 Mount a volume from the pod to the container.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.VolumeMount;
+import org.cdk8s.plus23.VolumeMount;
 
 VolumeMount.builder()
 //  .propagation(MountPropagation)
@@ -5115,13 +5104,13 @@ VolumeMount.builder()
     .build();
 ```
 
-##### `propagation`<sup>Optional</sup> <a name="org.cdk8s.plus22.VolumeMount.property.propagation"></a>
+##### `propagation`<sup>Optional</sup> <a name="org.cdk8s.plus23.VolumeMount.property.propagation"></a>
 
 ```java
 public MountPropagation getPropagation();
 ```
 
-- *Type:* [`org.cdk8s.plus22.MountPropagation`](#org.cdk8s.plus22.MountPropagation)
+- *Type:* [`org.cdk8s.plus23.MountPropagation`](#org.cdk8s.plus23.MountPropagation)
 - *Default:* MountPropagation.NONE
 
 Determines how mounts are propagated from the host to container and the other way around.
@@ -5135,7 +5124,7 @@ This field is beta in 1.10.
 
 ---
 
-##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.VolumeMount.property.readOnly"></a>
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus23.VolumeMount.property.readOnly"></a>
 
 ```java
 public java.lang.Boolean getReadOnly();
@@ -5150,7 +5139,7 @@ Defaults to false.
 
 ---
 
-##### `subPath`<sup>Optional</sup> <a name="org.cdk8s.plus22.VolumeMount.property.subPath"></a>
+##### `subPath`<sup>Optional</sup> <a name="org.cdk8s.plus23.VolumeMount.property.subPath"></a>
 
 ```java
 public java.lang.String getSubPath();
@@ -5163,7 +5152,7 @@ Path within the volume from which the container's volume should be mounted.).
 
 ---
 
-##### `subPathExpr`<sup>Optional</sup> <a name="org.cdk8s.plus22.VolumeMount.property.subPathExpr"></a>
+##### `subPathExpr`<sup>Optional</sup> <a name="org.cdk8s.plus23.VolumeMount.property.subPathExpr"></a>
 
 ```java
 public java.lang.String getSubPathExpr();
@@ -5184,7 +5173,7 @@ is beta in 1.15.
 
 ---
 
-##### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.VolumeMount.property.path"></a>
+##### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.VolumeMount.property.path"></a>
 
 ```java
 public java.lang.String getPath();
@@ -5199,13 +5188,13 @@ contain ':'.
 
 ---
 
-##### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.VolumeMount.property.volume"></a>
+##### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.VolumeMount.property.volume"></a>
 
 ```java
 public Volume getVolume();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 The volume to mount.
 
@@ -5213,14 +5202,14 @@ The volume to mount.
 
 ## Classes <a name="Classes"></a>
 
-### Container <a name="org.cdk8s.plus22.Container"></a>
+### Container <a name="org.cdk8s.plus23.Container"></a>
 
 A single application container that you want to run within a pod.
 
-#### Initializers <a name="org.cdk8s.plus22.Container.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Container.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Container;
+import org.cdk8s.plus23.Container;
 
 Container.Builder.create()
     .image(java.lang.String)
@@ -5238,7 +5227,7 @@ Container.Builder.create()
     .build();
 ```
 
-##### `image`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.image"></a>
+##### `image`<sup>Required</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.image"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5246,7 +5235,7 @@ Docker image name.
 
 ---
 
-##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.args"></a>
+##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.args"></a>
 
 - *Type:* java.util.List<`java.lang.String`>
 - *Default:* []
@@ -5265,7 +5254,7 @@ Cannot be updated.
 
 ---
 
-##### `command`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.command"></a>
+##### `command`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.command"></a>
 
 - *Type:* java.util.List<`java.lang.String`>
 - *Default:* The docker image's ENTRYPOINT.
@@ -5279,9 +5268,9 @@ More info: https://kubernetes.io/docs/tasks/inject-data-application/define-comma
 
 ---
 
-##### `env`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.env"></a>
+##### `env`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.env"></a>
 
-- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus22.EnvValue`](#org.cdk8s.plus22.EnvValue)>
+- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus23.EnvValue`](#org.cdk8s.plus23.EnvValue)>
 - *Default:* No environment variables.
 
 List of environment variables to set in the container.
@@ -5290,18 +5279,18 @@ Cannot be updated.
 
 ---
 
-##### `imagePullPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.imagePullPolicy"></a>
+##### `imagePullPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.imagePullPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.ImagePullPolicy`](#org.cdk8s.plus22.ImagePullPolicy)
+- *Type:* [`org.cdk8s.plus23.ImagePullPolicy`](#org.cdk8s.plus23.ImagePullPolicy)
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
 
 ---
 
-##### `liveness`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.liveness"></a>
+##### `liveness`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.liveness"></a>
 
-- *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
+- *Type:* [`org.cdk8s.plus23.Probe`](#org.cdk8s.plus23.Probe)
 - *Default:* no liveness probe is defined
 
 Periodic probe of container liveness.
@@ -5310,7 +5299,7 @@ Container will be restarted if the probe fails.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.name"></a>
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 - *Default:* 'main'
@@ -5321,7 +5310,7 @@ Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.port"></a>
 
 - *Type:* `java.lang.Number`
 - *Default:* No port is exposed.
@@ -5332,18 +5321,18 @@ This must be a valid port number, 0 < x < 65536.
 
 ---
 
-##### `readiness`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.readiness"></a>
+##### `readiness`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.readiness"></a>
 
-- *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
+- *Type:* [`org.cdk8s.plus23.Probe`](#org.cdk8s.plus23.Probe)
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
 
 ---
 
-##### `startup`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.startup"></a>
+##### `startup`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.startup"></a>
 
-- *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
+- *Type:* [`org.cdk8s.plus23.Probe`](#org.cdk8s.plus23.Probe)
 - *Default:* no startup probe is defined.
 
 StartupProbe indicates that the Pod has successfully initialized.
@@ -5352,9 +5341,9 @@ If specified, no other probes are executed until this completes successfully
 
 ---
 
-##### `volumeMounts`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.volumeMounts"></a>
+##### `volumeMounts`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.volumeMounts"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.VolumeMount`](#org.cdk8s.plus22.VolumeMount)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.VolumeMount`](#org.cdk8s.plus23.VolumeMount)>
 
 Pod volumes to mount into the container's filesystem.
 
@@ -5362,7 +5351,7 @@ Cannot be updated.
 
 ---
 
-##### `workingDir`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.workingDir"></a>
+##### `workingDir`<sup>Optional</sup> <a name="org.cdk8s.plus23.ContainerProps.parameter.workingDir"></a>
 
 - *Type:* `java.lang.String`
 - *Default:* The container runtime's default.
@@ -5375,13 +5364,13 @@ If not specified, the container runtime's default will be used, which might be c
 
 #### Methods <a name="Methods"></a>
 
-##### `addEnv` <a name="org.cdk8s.plus22.Container.addEnv"></a>
+##### `addEnv` <a name="org.cdk8s.plus23.Container.addEnv"></a>
 
 ```java
 public addEnv(java.lang.String name, EnvValue value)
 ```
 
-###### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.parameter.name"></a>
+###### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5389,22 +5378,22 @@ The variable name.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.parameter.value"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvValue`](#org.cdk8s.plus22.EnvValue)
+- *Type:* [`org.cdk8s.plus23.EnvValue`](#org.cdk8s.plus23.EnvValue)
 
 The variable value.
 
 ---
 
-##### `mount` <a name="org.cdk8s.plus22.Container.mount"></a>
+##### `mount` <a name="org.cdk8s.plus23.Container.mount"></a>
 
 ```java
 public mount(java.lang.String path, Volume volume)
 public mount(java.lang.String path, Volume volume, MountOptions options)
 ```
 
-###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.parameter.path"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5412,30 +5401,30 @@ The desired path in the container.
 
 ---
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 The volume to mount.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Container.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.MountOptions`](#org.cdk8s.plus22.MountOptions)
+- *Type:* [`org.cdk8s.plus23.MountOptions`](#org.cdk8s.plus23.MountOptions)
 
 ---
 
 
 #### Properties <a name="Properties"></a>
 
-##### `env`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.property.env"></a>
+##### `env`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.property.env"></a>
 
 ```java
 public java.util.Map<java.lang.String, EnvValue> getEnv();
 ```
 
-- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus22.EnvValue`](#org.cdk8s.plus22.EnvValue)>
+- *Type:* java.util.Map<java.lang.String, [`org.cdk8s.plus23.EnvValue`](#org.cdk8s.plus23.EnvValue)>
 
 The environment variables for this container.
 
@@ -5443,7 +5432,7 @@ Returns a copy. To add environment variables use `addEnv()`.
 
 ---
 
-##### `image`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.property.image"></a>
+##### `image`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.property.image"></a>
 
 ```java
 public java.lang.String getImage();
@@ -5455,31 +5444,31 @@ The container image.
 
 ---
 
-##### `imagePullPolicy`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.property.imagePullPolicy"></a>
+##### `imagePullPolicy`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.property.imagePullPolicy"></a>
 
 ```java
 public ImagePullPolicy getImagePullPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.ImagePullPolicy`](#org.cdk8s.plus22.ImagePullPolicy)
+- *Type:* [`org.cdk8s.plus23.ImagePullPolicy`](#org.cdk8s.plus23.ImagePullPolicy)
 
 Image pull policy for this container.
 
 ---
 
-##### `mounts`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.property.mounts"></a>
+##### `mounts`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.property.mounts"></a>
 
 ```java
 public java.util.List<VolumeMount> getMounts();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.VolumeMount`](#org.cdk8s.plus22.VolumeMount)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.VolumeMount`](#org.cdk8s.plus23.VolumeMount)>
 
 Volume mounts configured for this container.
 
 ---
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Container.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -5491,7 +5480,7 @@ The name of the container.
 
 ---
 
-##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.args"></a>
+##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus23.Container.property.args"></a>
 
 ```java
 public java.util.List<java.lang.String> getArgs();
@@ -5503,7 +5492,7 @@ Arguments to the entrypoint.
 
 ---
 
-##### `command`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.command"></a>
+##### `command`<sup>Optional</sup> <a name="org.cdk8s.plus23.Container.property.command"></a>
 
 ```java
 public java.util.List<java.lang.String> getCommand();
@@ -5515,7 +5504,7 @@ Entrypoint array (the command to execute when the container starts).
 
 ---
 
-##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.port"></a>
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus23.Container.property.port"></a>
 
 ```java
 public java.lang.Number getPort();
@@ -5527,7 +5516,7 @@ The port this container exposes.
 
 ---
 
-##### `workingDir`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.workingDir"></a>
+##### `workingDir`<sup>Optional</sup> <a name="org.cdk8s.plus23.Container.property.workingDir"></a>
 
 ```java
 public java.lang.String getWorkingDir();
@@ -5540,31 +5529,31 @@ The working directory inside the container.
 ---
 
 
-### EnvValue <a name="org.cdk8s.plus22.EnvValue"></a>
+### EnvValue <a name="org.cdk8s.plus23.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromConfigMap` <a name="org.cdk8s.plus22.EnvValue.fromConfigMap"></a>
+##### `fromConfigMap` <a name="org.cdk8s.plus23.EnvValue.fromConfigMap"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValue;
+import org.cdk8s.plus23.EnvValue;
 
 EnvValue.fromConfigMap(IConfigMap configMap, java.lang.String key)
 EnvValue.fromConfigMap(IConfigMap configMap, java.lang.String key, EnvValueFromConfigMapOptions options)
 ```
 
-###### `configMap`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.configMap"></a>
+###### `configMap`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.configMap"></a>
 
-- *Type:* [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap)
+- *Type:* [`org.cdk8s.plus23.IConfigMap`](#org.cdk8s.plus23.IConfigMap)
 
 The config map.
 
 ---
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5572,49 +5561,49 @@ The key to extract the value from.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvValueFromConfigMapOptions`](#org.cdk8s.plus22.EnvValueFromConfigMapOptions)
+- *Type:* [`org.cdk8s.plus23.EnvValueFromConfigMapOptions`](#org.cdk8s.plus23.EnvValueFromConfigMapOptions)
 
 Additional options.
 
 ---
 
-##### `fromFieldRef` <a name="org.cdk8s.plus22.EnvValue.fromFieldRef"></a>
+##### `fromFieldRef` <a name="org.cdk8s.plus23.EnvValue.fromFieldRef"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValue;
+import org.cdk8s.plus23.EnvValue;
 
 EnvValue.fromFieldRef(EnvFieldPaths fieldPath)
 EnvValue.fromFieldRef(EnvFieldPaths fieldPath, EnvValueFromFieldRefOptions options)
 ```
 
-###### `fieldPath`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.fieldPath"></a>
+###### `fieldPath`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.fieldPath"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvFieldPaths`](#org.cdk8s.plus22.EnvFieldPaths)
+- *Type:* [`org.cdk8s.plus23.EnvFieldPaths`](#org.cdk8s.plus23.EnvFieldPaths)
 
 : The field reference.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvValueFromFieldRefOptions`](#org.cdk8s.plus22.EnvValueFromFieldRefOptions)
+- *Type:* [`org.cdk8s.plus23.EnvValueFromFieldRefOptions`](#org.cdk8s.plus23.EnvValueFromFieldRefOptions)
 
 : Additional options.
 
 ---
 
-##### `fromProcess` <a name="org.cdk8s.plus22.EnvValue.fromProcess"></a>
+##### `fromProcess` <a name="org.cdk8s.plus23.EnvValue.fromProcess"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValue;
+import org.cdk8s.plus23.EnvValue;
 
 EnvValue.fromProcess(java.lang.String key)
 EnvValue.fromProcess(java.lang.String key, EnvValueFromProcessOptions options)
 ```
 
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.key"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.key"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5622,73 +5611,73 @@ The key to read.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvValueFromProcessOptions`](#org.cdk8s.plus22.EnvValueFromProcessOptions)
+- *Type:* [`org.cdk8s.plus23.EnvValueFromProcessOptions`](#org.cdk8s.plus23.EnvValueFromProcessOptions)
 
 Additional options.
 
 ---
 
-##### `fromResource` <a name="org.cdk8s.plus22.EnvValue.fromResource"></a>
+##### `fromResource` <a name="org.cdk8s.plus23.EnvValue.fromResource"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValue;
+import org.cdk8s.plus23.EnvValue;
 
 EnvValue.fromResource(ResourceFieldPaths resource)
 EnvValue.fromResource(ResourceFieldPaths resource, EnvValueFromResourceOptions options)
 ```
 
-###### `resource`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.resource"></a>
+###### `resource`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.resource"></a>
 
-- *Type:* [`org.cdk8s.plus22.ResourceFieldPaths`](#org.cdk8s.plus22.ResourceFieldPaths)
+- *Type:* [`org.cdk8s.plus23.ResourceFieldPaths`](#org.cdk8s.plus23.ResourceFieldPaths)
 
 : Resource to select the value from.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvValueFromResourceOptions`](#org.cdk8s.plus22.EnvValueFromResourceOptions)
+- *Type:* [`org.cdk8s.plus23.EnvValueFromResourceOptions`](#org.cdk8s.plus23.EnvValueFromResourceOptions)
 
 : Additional options.
 
 ---
 
-##### `fromSecretValue` <a name="org.cdk8s.plus22.EnvValue.fromSecretValue"></a>
+##### `fromSecretValue` <a name="org.cdk8s.plus23.EnvValue.fromSecretValue"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValue;
+import org.cdk8s.plus23.EnvValue;
 
 EnvValue.fromSecretValue(SecretValue secretValue)
 EnvValue.fromSecretValue(SecretValue secretValue, EnvValueFromSecretOptions options)
 ```
 
-###### `secretValue`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.secretValue"></a>
+###### `secretValue`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.secretValue"></a>
 
-- *Type:* [`org.cdk8s.plus22.SecretValue`](#org.cdk8s.plus22.SecretValue)
+- *Type:* [`org.cdk8s.plus23.SecretValue`](#org.cdk8s.plus23.SecretValue)
 
 The secret value (secrent + key).
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.EnvValueFromSecretOptions`](#org.cdk8s.plus22.EnvValueFromSecretOptions)
+- *Type:* [`org.cdk8s.plus23.EnvValueFromSecretOptions`](#org.cdk8s.plus23.EnvValueFromSecretOptions)
 
 Additional options.
 
 ---
 
-##### `fromValue` <a name="org.cdk8s.plus22.EnvValue.fromValue"></a>
+##### `fromValue` <a name="org.cdk8s.plus23.EnvValue.fromValue"></a>
 
 ```java
-import org.cdk8s.plus22.EnvValue;
+import org.cdk8s.plus23.EnvValue;
 
 EnvValue.fromValue(java.lang.String value)
 ```
 
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.EnvValue.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus23.EnvValue.parameter.value"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5698,7 +5687,7 @@ The value.
 
 #### Properties <a name="Properties"></a>
 
-##### `value`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.property.value"></a>
+##### `value`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.property.value"></a>
 
 ```java
 public java.lang.Object getValue();
@@ -5708,7 +5697,7 @@ public java.lang.Object getValue();
 
 ---
 
-##### `valueFrom`<sup>Optional</sup> <a name="org.cdk8s.plus22.EnvValue.property.valueFrom"></a>
+##### `valueFrom`<sup>Optional</sup> <a name="org.cdk8s.plus23.EnvValue.property.valueFrom"></a>
 
 ```java
 public java.lang.Object getValueFrom();
@@ -5719,48 +5708,48 @@ public java.lang.Object getValueFrom();
 ---
 
 
-### IngressBackend <a name="org.cdk8s.plus22.IngressBackend"></a>
+### IngressBackend <a name="org.cdk8s.plus23.IngressBackend"></a>
 
 The backend for an ingress path.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromService` <a name="org.cdk8s.plus22.IngressBackend.fromService"></a>
+##### `fromService` <a name="org.cdk8s.plus23.IngressBackend.fromService"></a>
 
 ```java
-import org.cdk8s.plus22.IngressBackend;
+import org.cdk8s.plus23.IngressBackend;
 
 IngressBackend.fromService(Service service)
 IngressBackend.fromService(Service service, ServiceIngressBackendOptions options)
 ```
 
-###### `service`<sup>Required</sup> <a name="org.cdk8s.plus22.IngressBackend.parameter.service"></a>
+###### `service`<sup>Required</sup> <a name="org.cdk8s.plus23.IngressBackend.parameter.service"></a>
 
-- *Type:* [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service)
+- *Type:* [`org.cdk8s.plus23.Service`](#org.cdk8s.plus23.Service)
 
 The service object.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.IngressBackend.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.IngressBackend.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ServiceIngressBackendOptions`](#org.cdk8s.plus22.ServiceIngressBackendOptions)
+- *Type:* [`org.cdk8s.plus23.ServiceIngressBackendOptions`](#org.cdk8s.plus23.ServiceIngressBackendOptions)
 
 ---
 
 
 
-### PodSpec <a name="org.cdk8s.plus22.PodSpec"></a>
+### PodSpec <a name="org.cdk8s.plus23.PodSpec"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
+- *Implements:* [`org.cdk8s.plus23.IPodSpec`](#org.cdk8s.plus23.IPodSpec)
 
 Provides read/write capabilities ontop of a `PodSpecProps`.
 
-#### Initializers <a name="org.cdk8s.plus22.PodSpec.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.PodSpec.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.PodSpec;
+import org.cdk8s.plus23.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
@@ -5770,9 +5759,9 @@ PodSpec.Builder.create()
     .build();
 ```
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.parameter.containers"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -5784,9 +5773,9 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.parameter.restartPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -5795,9 +5784,9 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.parameter.serviceAccount"></a>
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -5813,9 +5802,9 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpecProps.parameter.volumes"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -5828,40 +5817,40 @@ You can also add volumes later using `podSpec.addVolume()`
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="org.cdk8s.plus22.PodSpec.addContainer"></a>
+##### `addContainer` <a name="org.cdk8s.plus23.PodSpec.addContainer"></a>
 
 ```java
 public addContainer(ContainerProps container)
 ```
 
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.container"></a>
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus23.PodSpec.parameter.container"></a>
 
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+- *Type:* [`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)
 
 ---
 
-##### `addVolume` <a name="org.cdk8s.plus22.PodSpec.addVolume"></a>
+##### `addVolume` <a name="org.cdk8s.plus23.PodSpec.addVolume"></a>
 
 ```java
 public addVolume(Volume volume)
 ```
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.PodSpec.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 ---
 
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.PodSpec.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -5869,13 +5858,13 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.PodSpec.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -5883,41 +5872,41 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpec.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodSpec.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
 ---
 
 
-### PodTemplate <a name="org.cdk8s.plus22.PodTemplate"></a>
+### PodTemplate <a name="org.cdk8s.plus23.PodTemplate"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
+- *Implements:* [`org.cdk8s.plus23.IPodTemplate`](#org.cdk8s.plus23.IPodTemplate)
 
 Provides read/write capabilities ontop of a `PodTemplateProps`.
 
-#### Initializers <a name="org.cdk8s.plus22.PodTemplate.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.PodTemplate.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.PodTemplate;
+import org.cdk8s.plus23.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
@@ -5928,9 +5917,9 @@ PodTemplate.Builder.create()
     .build();
 ```
 
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.containers"></a>
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.parameter.containers"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)>
 - *Default:* No containers. Note that a pod spec must include at least one container.
 
 List of containers belonging to the pod.
@@ -5942,9 +5931,9 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.parameter.restartPolicy"></a>
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 - *Default:* RestartPolicy.ALWAYS
 
 Restart policy for all containers within the pod.
@@ -5953,9 +5942,9 @@ Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.parameter.serviceAccount"></a>
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 - *Default:* No service account.
 
 A service account provides an identity for processes that run in a Pod.
@@ -5971,9 +5960,9 @@ Account (for example, default).
 
 ---
 
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.volumes"></a>
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.parameter.volumes"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 - *Default:* No volumes.
 
 List of volumes that can be mounted by containers belonging to the pod.
@@ -5984,7 +5973,7 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.podMetadata"></a>
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus23.PodTemplateProps.parameter.podMetadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
@@ -5996,7 +5985,7 @@ The pod metadata.
 
 #### Properties <a name="Properties"></a>
 
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.PodTemplate.property.podMetadata"></a>
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus23.PodTemplate.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadataDefinition getPodMetadata();
@@ -6009,14 +5998,14 @@ Provides read/write access to the underlying pod metadata of the resource.
 ---
 
 
-### Probe <a name="org.cdk8s.plus22.Probe"></a>
+### Probe <a name="org.cdk8s.plus23.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
 
-#### Initializers <a name="org.cdk8s.plus22.Probe.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Probe.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Probe;
+import org.cdk8s.plus23.Probe;
 
 new Probe();
 ```
@@ -6024,16 +6013,16 @@ new Probe();
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromCommand` <a name="org.cdk8s.plus22.Probe.fromCommand"></a>
+##### `fromCommand` <a name="org.cdk8s.plus23.Probe.fromCommand"></a>
 
 ```java
-import org.cdk8s.plus22.Probe;
+import org.cdk8s.plus23.Probe;
 
 Probe.fromCommand(java.util.List<java.lang.String> command)
 Probe.fromCommand(java.util.List<java.lang.String> command, CommandProbeOptions options)
 ```
 
-###### `command`<sup>Required</sup> <a name="org.cdk8s.plus22.Probe.parameter.command"></a>
+###### `command`<sup>Required</sup> <a name="org.cdk8s.plus23.Probe.parameter.command"></a>
 
 - *Type:* java.util.List<`java.lang.String`>
 
@@ -6041,24 +6030,24 @@ The command to execute.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Probe.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Probe.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.CommandProbeOptions`](#org.cdk8s.plus22.CommandProbeOptions)
+- *Type:* [`org.cdk8s.plus23.CommandProbeOptions`](#org.cdk8s.plus23.CommandProbeOptions)
 
 Options.
 
 ---
 
-##### `fromHttpGet` <a name="org.cdk8s.plus22.Probe.fromHttpGet"></a>
+##### `fromHttpGet` <a name="org.cdk8s.plus23.Probe.fromHttpGet"></a>
 
 ```java
-import org.cdk8s.plus22.Probe;
+import org.cdk8s.plus23.Probe;
 
 Probe.fromHttpGet(java.lang.String path)
 Probe.fromHttpGet(java.lang.String path, HttpGetProbeOptions options)
 ```
 
-###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Probe.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus23.Probe.parameter.path"></a>
 
 - *Type:* `java.lang.String`
 
@@ -6066,9 +6055,9 @@ The URL path to hit.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Probe.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Probe.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.HttpGetProbeOptions`](#org.cdk8s.plus22.HttpGetProbeOptions)
+- *Type:* [`org.cdk8s.plus23.HttpGetProbeOptions`](#org.cdk8s.plus23.HttpGetProbeOptions)
 
 Options.
 
@@ -6076,7 +6065,7 @@ Options.
 
 
 
-### Volume <a name="org.cdk8s.plus22.Volume"></a>
+### Volume <a name="org.cdk8s.plus23.Volume"></a>
 
 Volume represents a named volume in a pod that may be accessed by any container in the pod.
 
@@ -6109,21 +6098,21 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
-#### Initializers <a name="org.cdk8s.plus22.Volume.Initializer"></a>
+#### Initializers <a name="org.cdk8s.plus23.Volume.Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.Volume;
+import org.cdk8s.plus23.Volume;
 
 new Volume(java.lang.String name, java.lang.Object config);
 ```
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Volume.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-##### `config`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.config"></a>
+##### `config`<sup>Required</sup> <a name="org.cdk8s.plus23.Volume.parameter.config"></a>
 
 - *Type:* `java.lang.Object`
 
@@ -6132,74 +6121,74 @@ new Volume(java.lang.String name, java.lang.Object config);
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `fromConfigMap` <a name="org.cdk8s.plus22.Volume.fromConfigMap"></a>
+##### `fromConfigMap` <a name="org.cdk8s.plus23.Volume.fromConfigMap"></a>
 
 ```java
-import org.cdk8s.plus22.Volume;
+import org.cdk8s.plus23.Volume;
 
 Volume.fromConfigMap(IConfigMap configMap)
 Volume.fromConfigMap(IConfigMap configMap, ConfigMapVolumeOptions options)
 ```
 
-###### `configMap`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.configMap"></a>
+###### `configMap`<sup>Required</sup> <a name="org.cdk8s.plus23.Volume.parameter.configMap"></a>
 
-- *Type:* [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap)
+- *Type:* [`org.cdk8s.plus23.IConfigMap`](#org.cdk8s.plus23.IConfigMap)
 
 The config map to use to populate the volume.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Volume.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.ConfigMapVolumeOptions`](#org.cdk8s.plus22.ConfigMapVolumeOptions)
+- *Type:* [`org.cdk8s.plus23.ConfigMapVolumeOptions`](#org.cdk8s.plus23.ConfigMapVolumeOptions)
 
 Options.
 
 ---
 
-##### `fromEmptyDir` <a name="org.cdk8s.plus22.Volume.fromEmptyDir"></a>
+##### `fromEmptyDir` <a name="org.cdk8s.plus23.Volume.fromEmptyDir"></a>
 
 ```java
-import org.cdk8s.plus22.Volume;
+import org.cdk8s.plus23.Volume;
 
 Volume.fromEmptyDir(java.lang.String name)
 Volume.fromEmptyDir(java.lang.String name, EmptyDirVolumeOptions options)
 ```
 
-###### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.name"></a>
+###### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Volume.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Volume.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.EmptyDirVolumeOptions`](#org.cdk8s.plus22.EmptyDirVolumeOptions)
+- *Type:* [`org.cdk8s.plus23.EmptyDirVolumeOptions`](#org.cdk8s.plus23.EmptyDirVolumeOptions)
 
 Additional options.
 
 ---
 
-##### `fromSecret` <a name="org.cdk8s.plus22.Volume.fromSecret"></a>
+##### `fromSecret` <a name="org.cdk8s.plus23.Volume.fromSecret"></a>
 
 ```java
-import org.cdk8s.plus22.Volume;
+import org.cdk8s.plus23.Volume;
 
 Volume.fromSecret(ISecret secret)
 Volume.fromSecret(ISecret secret, SecretVolumeOptions options)
 ```
 
-###### `secret`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.secret"></a>
+###### `secret`<sup>Required</sup> <a name="org.cdk8s.plus23.Volume.parameter.secret"></a>
 
-- *Type:* [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Type:* [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)
 
 The secret to use to populate the volume.
 
 ---
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus23.Volume.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.SecretVolumeOptions`](#org.cdk8s.plus22.SecretVolumeOptions)
+- *Type:* [`org.cdk8s.plus23.SecretVolumeOptions`](#org.cdk8s.plus23.SecretVolumeOptions)
 
 Options.
 
@@ -6207,7 +6196,7 @@ Options.
 
 #### Properties <a name="Properties"></a>
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.Volume.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -6220,18 +6209,18 @@ public java.lang.String getName();
 
 ## Protocols <a name="Protocols"></a>
 
-### IConfigMap <a name="org.cdk8s.plus22.IConfigMap"></a>
+### IConfigMap <a name="org.cdk8s.plus23.IConfigMap"></a>
 
-- *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+- *Extends:* [`org.cdk8s.plus23.IResource`](#org.cdk8s.plus23.IResource)
 
-- *Implemented By:* [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap)
+- *Implemented By:* [`org.cdk8s.plus23.ConfigMap`](#org.cdk8s.plus23.ConfigMap), [`org.cdk8s.plus23.IConfigMap`](#org.cdk8s.plus23.IConfigMap)
 
 Represents a config map.
 
 
 #### Properties <a name="Properties"></a>
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.IConfigMap.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.IConfigMap.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -6243,9 +6232,9 @@ The Kubernetes name of this resource.
 
 ---
 
-### IPodSpec <a name="org.cdk8s.plus22.IPodSpec"></a>
+### IPodSpec <a name="org.cdk8s.plus23.IPodSpec"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.PodSpec`](#org.cdk8s.plus22.PodSpec), [`org.cdk8s.plus22.PodTemplate`](#org.cdk8s.plus22.PodTemplate), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec), [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
+- *Implemented By:* [`org.cdk8s.plus23.Deployment`](#org.cdk8s.plus23.Deployment), [`org.cdk8s.plus23.Job`](#org.cdk8s.plus23.Job), [`org.cdk8s.plus23.Pod`](#org.cdk8s.plus23.Pod), [`org.cdk8s.plus23.PodSpec`](#org.cdk8s.plus23.PodSpec), [`org.cdk8s.plus23.PodTemplate`](#org.cdk8s.plus23.PodTemplate), [`org.cdk8s.plus23.StatefulSet`](#org.cdk8s.plus23.StatefulSet), [`org.cdk8s.plus23.IPodSpec`](#org.cdk8s.plus23.IPodSpec), [`org.cdk8s.plus23.IPodTemplate`](#org.cdk8s.plus23.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
 
@@ -6253,29 +6242,29 @@ Use the `PodSpec` class as an implementation helper.
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="org.cdk8s.plus22.IPodSpec.addContainer"></a>
+##### `addContainer` <a name="org.cdk8s.plus23.IPodSpec.addContainer"></a>
 
 ```java
 public addContainer(ContainerProps container)
 ```
 
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.parameter.container"></a>
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodSpec.parameter.container"></a>
 
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+- *Type:* [`org.cdk8s.plus23.ContainerProps`](#org.cdk8s.plus23.ContainerProps)
 
 The container.
 
 ---
 
-##### `addVolume` <a name="org.cdk8s.plus22.IPodSpec.addVolume"></a>
+##### `addVolume` <a name="org.cdk8s.plus23.IPodSpec.addVolume"></a>
 
 ```java
 public addVolume(Volume volume)
 ```
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.parameter.volume"></a>
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodSpec.parameter.volume"></a>
 
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+- *Type:* [`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)
 
 The volume.
 
@@ -6283,13 +6272,13 @@ The volume.
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodSpec.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -6297,13 +6286,13 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodSpec.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -6311,35 +6300,35 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodSpec.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.IPodSpec.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodSpec.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.IPodSpec.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
 ---
 
-### IPodTemplate <a name="org.cdk8s.plus22.IPodTemplate"></a>
+### IPodTemplate <a name="org.cdk8s.plus23.IPodTemplate"></a>
 
-- *Extends:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
+- *Extends:* [`org.cdk8s.plus23.IPodSpec`](#org.cdk8s.plus23.IPodSpec)
 
-- *Implemented By:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PodTemplate`](#org.cdk8s.plus22.PodTemplate), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
+- *Implemented By:* [`org.cdk8s.plus23.Deployment`](#org.cdk8s.plus23.Deployment), [`org.cdk8s.plus23.Job`](#org.cdk8s.plus23.Job), [`org.cdk8s.plus23.PodTemplate`](#org.cdk8s.plus23.PodTemplate), [`org.cdk8s.plus23.StatefulSet`](#org.cdk8s.plus23.StatefulSet), [`org.cdk8s.plus23.IPodTemplate`](#org.cdk8s.plus23.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
 
@@ -6348,13 +6337,13 @@ Use the `PodTemplate` class as an implementation helper.
 
 #### Properties <a name="Properties"></a>
 
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.containers"></a>
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodTemplate.property.containers"></a>
 
 ```java
 public java.util.List<Container> getContainers();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Container`](#org.cdk8s.plus23.Container)>
 
 The containers belonging to the pod.
 
@@ -6362,13 +6351,13 @@ Use `addContainer` to add containers.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodTemplate.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
 ```
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Type:* java.util.List<[`org.cdk8s.plus23.Volume`](#org.cdk8s.plus23.Volume)>
 
 The volumes associated with this pod.
 
@@ -6376,31 +6365,31 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus23.IPodTemplate.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Type:* [`org.cdk8s.plus23.RestartPolicy`](#org.cdk8s.plus23.RestartPolicy)
 
 Restart policy for all containers within the pod.
 
 ---
 
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus23.IPodTemplate.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Type:* [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 The service account used to run this pod.
 
 ---
 
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.podMetadata"></a>
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus23.IPodTemplate.property.podMetadata"></a>
 
 ```java
 public ApiObjectMetadataDefinition getPodMetadata();
@@ -6412,16 +6401,16 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
-### IResource <a name="org.cdk8s.plus22.IResource"></a>
+### IResource <a name="org.cdk8s.plus23.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus23.ConfigMap`](#org.cdk8s.plus23.ConfigMap), [`org.cdk8s.plus23.Deployment`](#org.cdk8s.plus23.Deployment), [`org.cdk8s.plus23.Ingress`](#org.cdk8s.plus23.Ingress), [`org.cdk8s.plus23.Job`](#org.cdk8s.plus23.Job), [`org.cdk8s.plus23.Pod`](#org.cdk8s.plus23.Pod), [`org.cdk8s.plus23.Resource`](#org.cdk8s.plus23.Resource), [`org.cdk8s.plus23.Secret`](#org.cdk8s.plus23.Secret), [`org.cdk8s.plus23.Service`](#org.cdk8s.plus23.Service), [`org.cdk8s.plus23.ServiceAccount`](#org.cdk8s.plus23.ServiceAccount), [`org.cdk8s.plus23.StatefulSet`](#org.cdk8s.plus23.StatefulSet), [`org.cdk8s.plus23.IConfigMap`](#org.cdk8s.plus23.IConfigMap), [`org.cdk8s.plus23.IResource`](#org.cdk8s.plus23.IResource), [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret), [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 Represents a resource.
 
 
 #### Properties <a name="Properties"></a>
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.IResource.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.IResource.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -6433,16 +6422,16 @@ The Kubernetes name of this resource.
 
 ---
 
-### ISecret <a name="org.cdk8s.plus22.ISecret"></a>
+### ISecret <a name="org.cdk8s.plus23.ISecret"></a>
 
-- *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+- *Extends:* [`org.cdk8s.plus23.IResource`](#org.cdk8s.plus23.IResource)
 
-- *Implemented By:* [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Implemented By:* [`org.cdk8s.plus23.Secret`](#org.cdk8s.plus23.Secret), [`org.cdk8s.plus23.ISecret`](#org.cdk8s.plus23.ISecret)
 
 
 #### Properties <a name="Properties"></a>
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.ISecret.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.ISecret.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -6454,16 +6443,16 @@ The Kubernetes name of this resource.
 
 ---
 
-### IServiceAccount <a name="org.cdk8s.plus22.IServiceAccount"></a>
+### IServiceAccount <a name="org.cdk8s.plus23.IServiceAccount"></a>
 
-- *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+- *Extends:* [`org.cdk8s.plus23.IResource`](#org.cdk8s.plus23.IResource)
 
-- *Implemented By:* [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus23.ServiceAccount`](#org.cdk8s.plus23.ServiceAccount), [`org.cdk8s.plus23.IServiceAccount`](#org.cdk8s.plus23.IServiceAccount)
 
 
 #### Properties <a name="Properties"></a>
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.IServiceAccount.property.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus23.IServiceAccount.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -6481,14 +6470,14 @@ The Kubernetes name of this resource.
 
 The medium on which to store the volume.
 
-#### `DEFAULT` <a name="org.cdk8s.plus22.EmptyDirMedium.DEFAULT"></a>
+#### `DEFAULT` <a name="org.cdk8s.plus23.EmptyDirMedium.DEFAULT"></a>
 
 The default volume of the backing node.
 
 ---
 
 
-#### `MEMORY` <a name="org.cdk8s.plus22.EmptyDirMedium.MEMORY"></a>
+#### `MEMORY` <a name="org.cdk8s.plus23.EmptyDirMedium.MEMORY"></a>
 
 Mount a tmpfs (RAM-backed filesystem) for you instead.
 
@@ -6501,70 +6490,70 @@ files you write will count against your Container's memory limit.
 
 ### EnvFieldPaths <a name="EnvFieldPaths"></a>
 
-#### `POD_NAME` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_NAME"></a>
+#### `POD_NAME` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_NAME"></a>
 
 The name of the pod.
 
 ---
 
 
-#### `POD_NAMESPACE` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_NAMESPACE"></a>
+#### `POD_NAMESPACE` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_NAMESPACE"></a>
 
 The namespace of the pod.
 
 ---
 
 
-#### `POD_UID` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_UID"></a>
+#### `POD_UID` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_UID"></a>
 
 The uid of the pod.
 
 ---
 
 
-#### `POD_LABEL` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_LABEL"></a>
+#### `POD_LABEL` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_LABEL"></a>
 
 The labels of the pod.
 
 ---
 
 
-#### `POD_ANNOTATION` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_ANNOTATION"></a>
+#### `POD_ANNOTATION` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_ANNOTATION"></a>
 
 The annotations of the pod.
 
 ---
 
 
-#### `POD_IP` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_IP"></a>
+#### `POD_IP` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_IP"></a>
 
 The ipAddress of the pod.
 
 ---
 
 
-#### `SERVICE_ACCOUNT_NAME` <a name="org.cdk8s.plus22.EnvFieldPaths.SERVICE_ACCOUNT_NAME"></a>
+#### `SERVICE_ACCOUNT_NAME` <a name="org.cdk8s.plus23.EnvFieldPaths.SERVICE_ACCOUNT_NAME"></a>
 
 The service account name of the pod.
 
 ---
 
 
-#### `NODE_NAME` <a name="org.cdk8s.plus22.EnvFieldPaths.NODE_NAME"></a>
+#### `NODE_NAME` <a name="org.cdk8s.plus23.EnvFieldPaths.NODE_NAME"></a>
 
 The name of the node.
 
 ---
 
 
-#### `NODE_IP` <a name="org.cdk8s.plus22.EnvFieldPaths.NODE_IP"></a>
+#### `NODE_IP` <a name="org.cdk8s.plus23.EnvFieldPaths.NODE_IP"></a>
 
 The ipAddress of the node.
 
 ---
 
 
-#### `POD_IPS` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_IPS"></a>
+#### `POD_IPS` <a name="org.cdk8s.plus23.EnvFieldPaths.POD_IPS"></a>
 
 The ipAddresess of the pod.
 
@@ -6577,21 +6566,21 @@ Specify how the path is matched against request paths.
 
 > https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
 
-#### `PREFIX` <a name="org.cdk8s.plus22.HttpIngressPathType.PREFIX"></a>
+#### `PREFIX` <a name="org.cdk8s.plus23.HttpIngressPathType.PREFIX"></a>
 
 Matches the URL path exactly.
 
 ---
 
 
-#### `EXACT` <a name="org.cdk8s.plus22.HttpIngressPathType.EXACT"></a>
+#### `EXACT` <a name="org.cdk8s.plus23.HttpIngressPathType.EXACT"></a>
 
 Matches based on a URL path prefix split by '/'.
 
 ---
 
 
-#### `IMPLEMENTATION_SPECIFIC` <a name="org.cdk8s.plus22.HttpIngressPathType.IMPLEMENTATION_SPECIFIC"></a>
+#### `IMPLEMENTATION_SPECIFIC` <a name="org.cdk8s.plus23.HttpIngressPathType.IMPLEMENTATION_SPECIFIC"></a>
 
 Matching is specified by the underlying IngressClass.
 
@@ -6600,7 +6589,7 @@ Matching is specified by the underlying IngressClass.
 
 ### ImagePullPolicy <a name="ImagePullPolicy"></a>
 
-#### `ALWAYS` <a name="org.cdk8s.plus22.ImagePullPolicy.ALWAYS"></a>
+#### `ALWAYS` <a name="org.cdk8s.plus23.ImagePullPolicy.ALWAYS"></a>
 
 Every time the kubelet launches a container, the kubelet queries the container image registry to resolve the name to an image digest.
 
@@ -6614,7 +6603,7 @@ the image tag is omitted.
 ---
 
 
-#### `IF_NOT_PRESENT` <a name="org.cdk8s.plus22.ImagePullPolicy.IF_NOT_PRESENT"></a>
+#### `IF_NOT_PRESENT` <a name="org.cdk8s.plus23.ImagePullPolicy.IF_NOT_PRESENT"></a>
 
 The image is pulled only if it is not already present locally.
 
@@ -6624,7 +6613,7 @@ not :latest
 ---
 
 
-#### `NEVER` <a name="org.cdk8s.plus22.ImagePullPolicy.NEVER"></a>
+#### `NEVER` <a name="org.cdk8s.plus23.ImagePullPolicy.NEVER"></a>
 
 The image is assumed to exist locally.
 
@@ -6635,7 +6624,7 @@ No attempt is made to pull the image.
 
 ### MountPropagation <a name="MountPropagation"></a>
 
-#### `NONE` <a name="org.cdk8s.plus22.MountPropagation.NONE"></a>
+#### `NONE` <a name="org.cdk8s.plus23.MountPropagation.NONE"></a>
 
 This volume mount will not receive any subsequent mounts that are mounted to this volume or any of its subdirectories by the host.
 
@@ -6650,7 +6639,7 @@ kernel documentation
 ---
 
 
-#### `HOST_TO_CONTAINER` <a name="org.cdk8s.plus22.MountPropagation.HOST_TO_CONTAINER"></a>
+#### `HOST_TO_CONTAINER` <a name="org.cdk8s.plus23.MountPropagation.HOST_TO_CONTAINER"></a>
 
 This volume mount will receive all subsequent mounts that are mounted to this volume or any of its subdirectories.
 
@@ -6667,7 +6656,7 @@ kernel documentation
 ---
 
 
-#### `BIDIRECTIONAL` <a name="org.cdk8s.plus22.MountPropagation.BIDIRECTIONAL"></a>
+#### `BIDIRECTIONAL` <a name="org.cdk8s.plus23.MountPropagation.BIDIRECTIONAL"></a>
 
 This volume mount behaves the same the HostToContainer mount.
 
@@ -6701,71 +6690,71 @@ continuing. When scaling down, the pods are removed in the opposite order.
 The alternative policy is `Parallel` which will create pods in parallel to match the
 desired scale without waiting, and on scale down will delete all pods at once.
 
-#### `ORDERED_READY` <a name="org.cdk8s.plus22.PodManagementPolicy.ORDERED_READY"></a>
+#### `ORDERED_READY` <a name="org.cdk8s.plus23.PodManagementPolicy.ORDERED_READY"></a>
 
 ---
 
 
-#### `PARALLEL` <a name="org.cdk8s.plus22.PodManagementPolicy.PARALLEL"></a>
+#### `PARALLEL` <a name="org.cdk8s.plus23.PodManagementPolicy.PARALLEL"></a>
 
 ---
 
 
 ### Protocol <a name="Protocol"></a>
 
-#### `TCP` <a name="org.cdk8s.plus22.Protocol.TCP"></a>
+#### `TCP` <a name="org.cdk8s.plus23.Protocol.TCP"></a>
 
 ---
 
 
-#### `UDP` <a name="org.cdk8s.plus22.Protocol.UDP"></a>
+#### `UDP` <a name="org.cdk8s.plus23.Protocol.UDP"></a>
 
 ---
 
 
-#### `SCTP` <a name="org.cdk8s.plus22.Protocol.SCTP"></a>
+#### `SCTP` <a name="org.cdk8s.plus23.Protocol.SCTP"></a>
 
 ---
 
 
 ### ResourceFieldPaths <a name="ResourceFieldPaths"></a>
 
-#### `CPU_LIMIT` <a name="org.cdk8s.plus22.ResourceFieldPaths.CPU_LIMIT"></a>
+#### `CPU_LIMIT` <a name="org.cdk8s.plus23.ResourceFieldPaths.CPU_LIMIT"></a>
 
 CPU limit of the container.
 
 ---
 
 
-#### `MEMORY_LIMIT` <a name="org.cdk8s.plus22.ResourceFieldPaths.MEMORY_LIMIT"></a>
+#### `MEMORY_LIMIT` <a name="org.cdk8s.plus23.ResourceFieldPaths.MEMORY_LIMIT"></a>
 
 Memory limit of the container.
 
 ---
 
 
-#### `CPU_REQUEST` <a name="org.cdk8s.plus22.ResourceFieldPaths.CPU_REQUEST"></a>
+#### `CPU_REQUEST` <a name="org.cdk8s.plus23.ResourceFieldPaths.CPU_REQUEST"></a>
 
 CPU request of the container.
 
 ---
 
 
-#### `MEMORY_REQUEST` <a name="org.cdk8s.plus22.ResourceFieldPaths.MEMORY_REQUEST"></a>
+#### `MEMORY_REQUEST` <a name="org.cdk8s.plus23.ResourceFieldPaths.MEMORY_REQUEST"></a>
 
 Memory request of the container.
 
 ---
 
 
-#### `STORAGE_LIMIT` <a name="org.cdk8s.plus22.ResourceFieldPaths.STORAGE_LIMIT"></a>
+#### `STORAGE_LIMIT` <a name="org.cdk8s.plus23.ResourceFieldPaths.STORAGE_LIMIT"></a>
 
 Ephemeral storage limit of the container.
 
 ---
 
 
-#### `STORAGE_REQUEST` <a name="org.cdk8s.plus22.ResourceFieldPaths.STORAGE_REQUEST"></a>
+#### `STORAGE_REQUEST` <a name="org.cdk8s.plus23.ResourceFieldPaths.STORAGE_REQUEST"></a>
 
 Ephemeral storage request of the container.
 
@@ -6776,21 +6765,21 @@ Ephemeral storage request of the container.
 
 Restart policy for all containers within the pod.
 
-#### `ALWAYS` <a name="org.cdk8s.plus22.RestartPolicy.ALWAYS"></a>
+#### `ALWAYS` <a name="org.cdk8s.plus23.RestartPolicy.ALWAYS"></a>
 
 Always restart the pod after it exits.
 
 ---
 
 
-#### `ON_FAILURE` <a name="org.cdk8s.plus22.RestartPolicy.ON_FAILURE"></a>
+#### `ON_FAILURE` <a name="org.cdk8s.plus23.RestartPolicy.ON_FAILURE"></a>
 
 Only restart if the pod exits with a non-zero exit code.
 
 ---
 
 
-#### `NEVER` <a name="org.cdk8s.plus22.RestartPolicy.NEVER"></a>
+#### `NEVER` <a name="org.cdk8s.plus23.RestartPolicy.NEVER"></a>
 
 Never restart the pod.
 
@@ -6804,7 +6793,7 @@ For some parts of your application (for example, frontends) you may want to expo
 Kubernetes ServiceTypes allow you to specify what kind of Service you want.
 The default is ClusterIP.
 
-#### `CLUSTER_IP` <a name="org.cdk8s.plus22.ServiceType.CLUSTER_IP"></a>
+#### `CLUSTER_IP` <a name="org.cdk8s.plus23.ServiceType.CLUSTER_IP"></a>
 
 Exposes the Service on a cluster-internal IP.
 
@@ -6814,7 +6803,7 @@ This is the default ServiceType
 ---
 
 
-#### `NODE_PORT` <a name="org.cdk8s.plus22.ServiceType.NODE_PORT"></a>
+#### `NODE_PORT` <a name="org.cdk8s.plus23.ServiceType.NODE_PORT"></a>
 
 Exposes the Service on each Node's IP at a static port (the NodePort).
 
@@ -6825,7 +6814,7 @@ by requesting <NodeIP>:<NodePort>.
 ---
 
 
-#### `LOAD_BALANCER` <a name="org.cdk8s.plus22.ServiceType.LOAD_BALANCER"></a>
+#### `LOAD_BALANCER` <a name="org.cdk8s.plus23.ServiceType.LOAD_BALANCER"></a>
 
 Exposes the Service externally using a cloud provider's load balancer.
 
@@ -6835,7 +6824,7 @@ are automatically created.
 ---
 
 
-#### `EXTERNAL_NAME` <a name="org.cdk8s.plus22.ServiceType.EXTERNAL_NAME"></a>
+#### `EXTERNAL_NAME` <a name="org.cdk8s.plus23.ServiceType.EXTERNAL_NAME"></a>
 
 Maps the Service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record with its value. No proxying of any kind is set up.
 

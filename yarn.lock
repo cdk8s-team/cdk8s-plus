@@ -1368,10 +1368,19 @@ cdk8s-plus-22@^1.0.0-beta.98:
   dependencies:
     minimatch "^3.0.4"
 
-cdk8s@1.4.14, cdk8s@^1.4.13:
-  version "1.4.14"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.4.14.tgz#f9bbfa9e1ab06c8d8eaa08b5e07598115eb4fc5c"
-  integrity sha512-bL3P2EcThy1ZlxLZBS29aWUTJFkFz9OvVYczNpSFhNbV33CS0OtGxS+fXw7Xj53O8ScIwZ4W058NbxIqKyk0+w==
+cdk8s@2.1.23:
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.1.23.tgz#9e39a0bab2683d91def02b5355f1e2bc154fc035"
+  integrity sha512-33eSNm1WO2r9HKWhGxSQo7Gzv7yWt6kiyArR1YJq14epeG9k8+w97aORAL9ooJV+oT4VKqAmwMdyznpFT6erOg==
+  dependencies:
+    fast-json-patch "^2.2.1"
+    follow-redirects "^1.14.7"
+    yaml "2.0.0-7"
+
+cdk8s@^1.4.13:
+  version "1.4.13"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.4.13.tgz#30e08173f5dd1986ba7a6667aa5504abceeb7e1a"
+  integrity sha512-JijJ7DwaiCm2kDLZTVQ9dilx8rEwuZk7ZmqO+8nF81UIdBvz14L+wljW9pUj/HuvXO40rLWa1+R94IgIv4JnPA==
   dependencies:
     fast-json-patch "^2.2.1"
     follow-redirects "^1.14.7"
@@ -1591,10 +1600,15 @@ console-control-strings@^1.0.0, console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-constructs@3.3.201, constructs@^3.3.199:
-  version "3.3.201"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.201.tgz#d9a8cff75a84eae43c8252b042fe49b85f4241fa"
-  integrity sha512-UVPRT1AWIWeIpS925f0M2eFXcEX6Eqld1RYPNIb4Lx0EQ4TgllefIGtwyWz686EVLJfmH9qfTm5sqWBY/pMgrg==
+constructs@10.0.5:
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.5.tgz#48c0402f1b98bbf5664efff74a8015e6e8a9f41e"
+  integrity sha512-IwOwekzrASFC3qt4ozCtV09rteAIAesuCGsW0p+uBfqHd2XcvA5CXqJjgf4eUqm6g8e/noXlVCMDWwC8GaLtrg==
+
+constructs@^3.3.199:
+  version "3.3.200"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.200.tgz#5d126a7ab99b2017f2109f250ecfcbba4636b917"
+  integrity sha512-LpHHMB9Dvst9AKDnkR7To7ikFbaWsvZf8FPi40ZBRt7EzAgrJyOf20GQlb7tkF9Ln0Z2nUPlJgrj93sXT/UI/Q==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"

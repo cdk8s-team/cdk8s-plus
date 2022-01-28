@@ -1,6 +1,6 @@
 {
-  "name": "cdk8s-plus-22",
-  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-22 synthesizes Kubernetes manifests for Kubernetes 1.22.0",
+  "name": "cdk8s-plus-23",
+  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-23 synthesizes Kubernetes manifests for Kubernetes 1.23.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
@@ -26,7 +26,7 @@
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
-    "release:k8s-22/main": "npx projen release:k8s-22/main",
+    "release:k8s-23/main": "npx projen release:k8s-23/main",
     "test": "npx projen test",
     "test:update": "npx projen test:update",
     "test:watch": "npx projen test:watch",
@@ -46,9 +46,9 @@
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdk8s": "1.4.14",
+    "cdk8s": "2.1.23",
     "cdk8s-cli": "^1.0.85",
-    "constructs": "3.3.201",
+    "constructs": "10.0.5",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.5.0",
@@ -66,8 +66,8 @@
     "typescript": "^4.5.5"
   },
   "peerDependencies": {
-    "cdk8s": "^1.4.14",
-    "constructs": "^3.3.201"
+    "cdk8s": "^2.1.23",
+    "constructs": "^10.0.5"
   },
   "dependencies": {
     "minimatch": "^3.0.4"
@@ -136,19 +136,19 @@
     "outdir": "dist",
     "targets": {
       "java": {
-        "package": "org.cdk8s.plus22",
+        "package": "org.cdk8s.plus23",
         "maven": {
           "groupId": "org.cdk8s",
-          "artifactId": "cdk8s-plus-22"
+          "artifactId": "cdk8s-plus-23"
         }
       },
       "python": {
-        "distName": "cdk8s-plus-22",
-        "module": "cdk8s_plus_22"
+        "distName": "cdk8s-plus-23",
+        "module": "cdk8s_plus_23"
       },
       "dotnet": {
-        "namespace": "Org.Cdk8s.Plus22",
-        "packageId": "Org.Cdk8s.Plus22"
+        "namespace": "Org.Cdk8s.Plus23",
+        "packageId": "Org.Cdk8s.Plus23"
       },
       "go": {
         "moduleName": "github.com/cdk8s-team/cdk8s-plus-go"

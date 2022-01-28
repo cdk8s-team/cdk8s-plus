@@ -316,26 +316,39 @@ export class Service extends Resource {
 
     const ports: k8s.ServicePort[] = [];
 
+    const protocolMap = {
+      [Protocol.TCP]: k8s.IoK8SApiCoreV1ServicePortProtocol.TCP,
+      [Protocol.UDP]: k8s.IoK8SApiCoreV1ServicePortProtocol.UDP,
+      [Protocol.SCTP]: k8s.IoK8SApiCoreV1ServicePortProtocol.SCTP,
+    };
+
     for (const port of this._ports) {
       ports.push({
         name: port.name,
         port: port.port,
         targetPort: port.targetPort ? k8s.IntOrString.fromNumber(port.targetPort) : undefined,
         nodePort: port.nodePort,
-        protocol: port.protocol,
+        protocol: port.protocol ? protocolMap[port.protocol] : undefined,
       });
     }
+
+    const serviceTypeMap = {
+      [ServiceType.CLUSTER_IP]: k8s.IoK8SApiCoreV1ServiceSpecType.CLUSTER_IP,
+      [ServiceType.NODE_PORT]: k8s.IoK8SApiCoreV1ServiceSpecType.NODE_PORT,
+      [ServiceType.LOAD_BALANCER]: k8s.IoK8SApiCoreV1ServiceSpecType.LOAD_BALANCER,
+      [ServiceType.EXTERNAL_NAME]: k8s.IoK8SApiCoreV1ServiceSpecType.EXTERNAL_NAME,
+    };
 
     return this.type !== ServiceType.EXTERNAL_NAME ? {
       clusterIp: this.clusterIP,
       externalIPs: this._externalIPs,
       externalName: this.externalName,
-      type: this.type,
+      type: serviceTypeMap[this.type],
       selector: this._selector,
       ports: ports,
       loadBalancerSourceRanges: this._loadBalancerSourceRanges,
     } : {
-      type: this.type,
+      type: serviceTypeMap[this.type],
       externalName: this.externalName,
     };
   }

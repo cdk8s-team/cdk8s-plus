@@ -536,10 +536,16 @@ export class Container {
       });
     }
 
+    const imagePullPolicyMap = {
+      [ImagePullPolicy.ALWAYS]: k8s.IoK8SApiCoreV1ContainerImagePullPolicy.ALWAYS,
+      [ImagePullPolicy.IF_NOT_PRESENT]: k8s.IoK8SApiCoreV1ContainerImagePullPolicy.IF_NOT_PRESENT,
+      [ImagePullPolicy.NEVER]: k8s.IoK8SApiCoreV1ContainerImagePullPolicy.NEVER,
+    };
+
     return {
       name: this.name,
       image: this.image,
-      imagePullPolicy: this.imagePullPolicy,
+      imagePullPolicy: imagePullPolicyMap[this.imagePullPolicy],
       ports,
       volumeMounts,
       command: this.command,

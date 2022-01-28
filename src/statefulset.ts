@@ -187,6 +187,11 @@ export class StatefulSet extends Resource implements IPodTemplate {
     * @internal
     */
   public _toKube(): k8s.StatefulSetSpec {
+    const podManagementPolicyMap = {
+      [PodManagementPolicy.ORDERED_READY]: k8s.IoK8SApiAppsV1StatefulSetSpecPodManagementPolicy.ORDERED_READY,
+      [PodManagementPolicy.PARALLEL]: k8s.IoK8SApiAppsV1StatefulSetSpecPodManagementPolicy.PARALLEL,
+    };
+
     return {
       serviceName: this._service.name,
       replicas: this.replicas,
@@ -194,7 +199,7 @@ export class StatefulSet extends Resource implements IPodTemplate {
       selector: {
         matchLabels: this._labelSelector,
       },
-      podManagementPolicy: this.podManagementPolicy,
+      podManagementPolicy: podManagementPolicyMap[this.podManagementPolicy],
     };
   }
 }

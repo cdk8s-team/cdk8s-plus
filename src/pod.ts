@@ -148,8 +148,14 @@ export class PodSpec implements IPodSpec {
       volumes.set(volume.name, volume);
     }
 
+    const restartPolicyMap = {
+      [RestartPolicy.ALWAYS]: k8s.IoK8SApiCoreV1PodSpecRestartPolicy.ALWAYS,
+      [RestartPolicy.ON_FAILURE]: k8s.IoK8SApiCoreV1PodSpecRestartPolicy.ON_FAILURE,
+      [RestartPolicy.NEVER]: k8s.IoK8SApiCoreV1PodSpecRestartPolicy.NEVER,
+    };
+
     return {
-      restartPolicy: this.restartPolicy,
+      restartPolicy: this.restartPolicy ? restartPolicyMap[this.restartPolicy] : undefined,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
