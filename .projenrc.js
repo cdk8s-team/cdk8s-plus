@@ -1,5 +1,5 @@
 const path = require('path');
-const { cdk } = require('projen');
+const { cdk, javascript } = require('projen');
 
 // the latest version of k8s we support
 const LATEST_SUPPORTED_K8S_VERSION = '22';
@@ -85,6 +85,11 @@ const project = new cdk.JsiiProject({
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
       ],
+
+      // run upgrade-dependencies workflow at a different hour than other cdk8s
+      // repos to decrease flakiness of integration tests caused by new versions
+      // of cdk8s being published to different languages at the same time
+      schedule: javascript.UpgradeDependenciesSchedule.expressions(['0 2 * * *']),
     },
   },
 });
