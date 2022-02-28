@@ -2037,6 +2037,20 @@ Determines when the container is ready to serve traffic.
 
 ---
 
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerProps.property.resources"></a>
+
+```typescript
+public readonly resources: IResources;
+```
+
+- *Type:* [`cdk8s-plus-22.IResources`](#cdk8s-plus-22.IResources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
 ##### `startup`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerProps.property.startup"></a>
 
 ```typescript
@@ -4581,6 +4595,20 @@ The port this container exposes.
 
 ---
 
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.Container.property.resources"></a>
+
+```typescript
+public readonly resources: IResources;
+```
+
+- *Type:* [`cdk8s-plus-22.IResources`](#cdk8s-plus-22.IResources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
 ##### `workingDir`<sup>Optional</sup> <a name="cdk8s-plus-22.Container.property.workingDir"></a>
 
 ```typescript
@@ -4590,6 +4618,56 @@ public readonly workingDir: string;
 - *Type:* `string`
 
 The working directory inside the container.
+
+---
+
+
+### Cpu <a name="cdk8s-plus-22.Cpu"></a>
+
+Represents the amount of CPU.
+
+The amount can be passed as millis or units.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `millis` <a name="cdk8s-plus-22.Cpu.millis"></a>
+
+```typescript
+import { Cpu } from 'cdk8s-plus-22'
+
+Cpu.millis(amount: number)
+```
+
+###### `amount`<sup>Required</sup> <a name="cdk8s-plus-22.Cpu.parameter.amount"></a>
+
+- *Type:* `number`
+
+---
+
+##### `units` <a name="cdk8s-plus-22.Cpu.units"></a>
+
+```typescript
+import { Cpu } from 'cdk8s-plus-22'
+
+Cpu.units(amount: number)
+```
+
+###### `amount`<sup>Required</sup> <a name="cdk8s-plus-22.Cpu.parameter.amount"></a>
+
+- *Type:* `number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `amount`<sup>Required</sup> <a name="cdk8s-plus-22.Cpu.property.amount"></a>
+
+```typescript
+public readonly amount: string;
+```
+
+- *Type:* `string`
 
 ---
 
@@ -5167,6 +5245,64 @@ The Kubernetes name of this resource.
 
 ---
 
+### ICpuResources <a name="cdk8s-plus-22.ICpuResources"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.ICpuResources`](#cdk8s-plus-22.ICpuResources)
+
+CPU request and limit.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `limit`<sup>Required</sup> <a name="cdk8s-plus-22.ICpuResources.property.limit"></a>
+
+```typescript
+public readonly limit: Cpu;
+```
+
+- *Type:* [`cdk8s-plus-22.Cpu`](#cdk8s-plus-22.Cpu)
+
+---
+
+##### `request`<sup>Required</sup> <a name="cdk8s-plus-22.ICpuResources.property.request"></a>
+
+```typescript
+public readonly request: Cpu;
+```
+
+- *Type:* [`cdk8s-plus-22.Cpu`](#cdk8s-plus-22.Cpu)
+
+---
+
+### IMemoryResources <a name="cdk8s-plus-22.IMemoryResources"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.IMemoryResources`](#cdk8s-plus-22.IMemoryResources)
+
+Memory request and limit.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `limit`<sup>Required</sup> <a name="cdk8s-plus-22.IMemoryResources.property.limit"></a>
+
+```typescript
+public readonly limit: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+---
+
+##### `request`<sup>Required</sup> <a name="cdk8s-plus-22.IMemoryResources.property.request"></a>
+
+```typescript
+public readonly request: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+---
+
 ### IPodSpec <a name="cdk8s-plus-22.IPodSpec"></a>
 
 - *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.PodSpec`](#cdk8s-plus-22.PodSpec), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
@@ -5354,6 +5490,35 @@ public readonly name: string;
 - *Type:* `string`
 
 The Kubernetes name of this resource.
+
+---
+
+### IResources <a name="cdk8s-plus-22.IResources"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.IResources`](#cdk8s-plus-22.IResources)
+
+CPU and memory compute resources.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `cpu`<sup>Required</sup> <a name="cdk8s-plus-22.IResources.property.cpu"></a>
+
+```typescript
+public readonly cpu: ICpuResources;
+```
+
+- *Type:* [`cdk8s-plus-22.ICpuResources`](#cdk8s-plus-22.ICpuResources)
+
+---
+
+##### `memory`<sup>Required</sup> <a name="cdk8s-plus-22.IResources.property.memory"></a>
+
+```typescript
+public readonly memory: IMemoryResources;
+```
+
+- *Type:* [`cdk8s-plus-22.IMemoryResources`](#cdk8s-plus-22.IMemoryResources)
 
 ---
 

@@ -1,5 +1,7 @@
+import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
 import * as k8s from './imports/k8s';
+import type { ResourceRequirements } from './imports/k8s';
 import { Probe } from './probe';
 import { SecretValue } from './secret';
 import { Volume } from './volume';
@@ -398,6 +400,12 @@ export interface ContainerProps {
    * @default - no startup probe is defined.
    */
   readonly startup?: Probe;
+
+  /**
+   * Compute resources (CPU and memory requests and limits) required by the container
+   * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+   */
+  readonly resources?: IResources;
 }
 
 /**
@@ -435,6 +443,12 @@ export class Container {
    */
   public readonly workingDir?: string;
 
+  /**
+   * Compute resources (CPU and memory requests and limits) required by the container
+   * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+   */
+  public readonly resources?: IResources;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _env: { [name: string]: EnvValue };
@@ -456,6 +470,7 @@ export class Container {
     this._readiness = props.readiness;
     this._liveness = props.liveness;
     this._startup = props.startup;
+    this.resources = props.resources;
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
@@ -536,6 +551,38 @@ export class Container {
       });
     }
 
+    // Resource requests and limits
+    let limits: { [key: string]: k8s.Quantity } | undefined = undefined;
+    if (this.resources?.cpu?.limit?.amount !== undefined) {
+      limits = {};
+      limits.cpu = k8s.Quantity.fromString(this.resources?.cpu?.limit?.amount);
+    }
+    if (this.resources?.memory?.limit !== undefined) {
+      if (limits == undefined) {
+        limits = {};
+      }
+      limits.memory = k8s.Quantity.fromString(this.resources?.memory?.limit.toMebibytes().toString() + 'Mi');
+    }
+    let requests: { [key: string]: k8s.Quantity } | undefined = undefined;
+    if (this.resources?.cpu?.request?.amount !== undefined) {
+      requests = {};
+      requests.cpu = k8s.Quantity.fromString(this.resources?.cpu?.request?.amount);
+    }
+    if (this.resources?.memory?.request !== undefined) {
+      if (requests == undefined) {
+        requests = {};
+      }
+      requests.memory = k8s.Quantity.fromString(this.resources?.memory?.request.toMebibytes().toString() + 'Mi');
+    }
+
+    let resourceRequirements: ResourceRequirements | undefined = undefined;
+    if (limits !== undefined || requests !== undefined) {
+      resourceRequirements = {
+        limits: limits,
+        requests: requests,
+      };
+    }
+
     return {
       name: this.name,
       image: this.image,
@@ -549,6 +596,7 @@ export class Container {
       readinessProbe: this._readiness?._toKube(this),
       livenessProbe: this._liveness?._toKube(this),
       startupProbe: this._startup?._toKube(this),
+      resources: resourceRequirements,
     };
   }
 }
@@ -664,6 +712,47 @@ export enum MountPropagation {
    *
    */
   BIDIRECTIONAL = 'Bidirectional',
+}
+
+/**
+ * CPU and memory compute resources
+ */
+export interface IResources {
+  cpu: ICpuResources;
+  memory: IMemoryResources;
+}
+
+/**
+ * CPU request and limit
+ */
+export interface ICpuResources {
+  request: Cpu;
+  limit: Cpu;
+}
+
+/**
+ * Represents the amount of CPU.
+ * The amount can be passed as millis or units.
+ */
+export class Cpu {
+  static millis(amount: number): Cpu {
+    return new Cpu(amount + 'm');
+  }
+  static units(amount: number): Cpu {
+    return new Cpu(amount.toString());
+  }
+  amount: string;
+  private constructor(amount: string) {
+    this.amount = amount;
+  }
+}
+
+/**
+ * Memory request and limit
+ */
+export interface IMemoryResources {
+  request: Size;
+  limit: Size;
 }
 
 function renderEnv(env: { [name: string]: EnvValue }): k8s.EnvVar[] {
