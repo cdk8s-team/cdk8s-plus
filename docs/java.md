@@ -49,8 +49,7 @@ BinaryData contains the binary data.
 Each key must consist of alphanumeric characters, '-', '_' or '.'.
 BinaryData can contain byte sequences that are not in the UTF-8 range. The
 keys stored in BinaryData must not overlap with the ones in the Data field,
-this is enforced during validation process. Using this field will require
-1.10+ apiserver and kubelet.
+this is enforced during validation process.
 
 You can also add binary data using `configMap.addBinaryData()`.
 
@@ -2410,8 +2409,7 @@ BinaryData contains the binary data.
 Each key must consist of alphanumeric characters, '-', '_' or '.'.
 BinaryData can contain byte sequences that are not in the UTF-8 range. The
 keys stored in BinaryData must not overlap with the ones in the Data field,
-this is enforced during validation process. Using this field will require
-1.10+ apiserver and kubelet.
+this is enforced during validation process.
 
 You can also add binary data using `configMap.addBinaryData()`.
 
@@ -3849,8 +3847,6 @@ When not set, MountPropagationNone is used.
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
 
-This field is beta in 1.10.
-
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.MountOptions.property.readOnly"></a>
@@ -3894,11 +3890,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
@@ -5254,8 +5248,6 @@ When not set, MountPropagationNone is used.
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
 
-This field is beta in 1.10.
-
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.VolumeMount.property.readOnly"></a>
@@ -5299,11 +5291,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
