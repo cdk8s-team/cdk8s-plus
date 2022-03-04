@@ -1783,8 +1783,7 @@ BinaryData contains the binary data.
 Each key must consist of alphanumeric characters, '-', '_' or '.'.
 BinaryData can contain byte sequences that are not in the UTF-8 range. The
 keys stored in BinaryData must not overlap with the ones in the Data field,
-this is enforced during validation process. Using this field will require
-1.10+ apiserver and kubelet.
+this is enforced during validation process.
 
 You can also add binary data using `configMap.addBinaryData()`.
 
@@ -3142,8 +3141,6 @@ When not set, MountPropagationNone is used.
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
 
-This field is beta in 1.10.
-
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.MountOptions.property.readOnly"></a>
@@ -3187,11 +3184,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
@@ -4314,6 +4309,121 @@ Number of desired pods.
 
 ---
 
+### TcpSocketProbeOptions <a name="cdk8s-plus-22.TcpSocketProbeOptions"></a>
+
+Options for `Probe.fromTcpSocket()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { TcpSocketProbeOptions } from 'cdk8s-plus-22'
+
+const tcpSocketProbeOptions: TcpSocketProbeOptions = { ... }
+```
+
+##### `failureThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.failureThreshold"></a>
+
+```typescript
+public readonly failureThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.initialDelaySeconds"></a>
+
+```typescript
+public readonly initialDelaySeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `periodSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.periodSeconds"></a>
+
+```typescript
+public readonly periodSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `successThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.successThreshold"></a>
+
+```typescript
+public readonly successThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeoutSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.timeoutSeconds"></a>
+
+```typescript
+public readonly timeoutSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `host`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.host"></a>
+
+```typescript
+public readonly host: string;
+```
+
+- *Type:* `string`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
 ### VolumeMount <a name="cdk8s-plus-22.VolumeMount"></a>
 
 Mount a volume from the pod to the container.
@@ -4341,8 +4451,6 @@ When not set, MountPropagationNone is used.
 
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
-
-This field is beta in 1.10.
 
 ---
 
@@ -4387,11 +4495,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
@@ -5074,6 +5180,22 @@ The URL path to hit.
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Probe.parameter.options"></a>
 
 - *Type:* [`cdk8s-plus-22.HttpGetProbeOptions`](#cdk8s-plus-22.HttpGetProbeOptions)
+
+Options.
+
+---
+
+##### `fromTcpSocket` <a name="cdk8s-plus-22.Probe.fromTcpSocket"></a>
+
+```typescript
+import { Probe } from 'cdk8s-plus-22'
+
+Probe.fromTcpSocket(options?: TcpSocketProbeOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Probe.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.TcpSocketProbeOptions`](#cdk8s-plus-22.TcpSocketProbeOptions)
 
 Options.
 

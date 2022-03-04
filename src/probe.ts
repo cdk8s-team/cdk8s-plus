@@ -75,6 +75,25 @@ export interface CommandProbeOptions extends ProbeOptions {
 }
 
 /**
+ * Options for `Probe.fromTcpSocket()`.
+ */
+export interface TcpSocketProbeOptions extends ProbeOptions {
+  /**
+   * The TCP port to connect to on the container.
+   *
+   * @default - defaults to `container.port`.
+   */
+  readonly port?: number;
+
+  /**
+   * The host name to connect to on the container.
+   *
+   * @default - defaults to the pod IP
+   */
+  readonly host?: string;
+}
+
+/**
  * Probe describes a health check to be performed against a container to
  * determine whether it is alive or ready to receive traffic.
  */
@@ -112,6 +131,25 @@ export abstract class Probe {
         ...parseProbeOptions(options),
         exec: { command },
       }),
+    };
+  }
+
+  /**
+   * Defines a probe based opening a connection to a TCP socket on the container.
+   *
+   * @param options Options
+   */
+  public static fromTcpSocket(options: TcpSocketProbeOptions = { }): Probe {
+    return {
+      _toKube(container) {
+        return {
+          ...parseProbeOptions(options),
+          tcpSocket: {
+            port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
+            host: options.host,
+          },
+        };
+      },
     };
   }
 

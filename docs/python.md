@@ -51,8 +51,7 @@ BinaryData contains the binary data.
 Each key must consist of alphanumeric characters, '-', '_' or '.'.
 BinaryData can contain byte sequences that are not in the UTF-8 range. The
 keys stored in BinaryData must not overlap with the ones in the Data field,
-this is enforced during validation process. Using this field will require
-1.10+ apiserver and kubelet.
+this is enforced during validation process.
 
 You can also add binary data using `configMap.addBinaryData()`.
 
@@ -3383,8 +3382,7 @@ BinaryData contains the binary data.
 Each key must consist of alphanumeric characters, '-', '_' or '.'.
 BinaryData can contain byte sequences that are not in the UTF-8 range. The
 keys stored in BinaryData must not overlap with the ones in the Data field,
-this is enforced during validation process. Using this field will require
-1.10+ apiserver and kubelet.
+this is enforced during validation process.
 
 You can also add binary data using `configMap.addBinaryData()`.
 
@@ -4837,8 +4835,6 @@ When not set, MountPropagationNone is used.
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
 
-This field is beta in 1.10.
-
 ---
 
 ##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.MountOptions.property.read_only"></a>
@@ -4882,11 +4878,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
@@ -6084,6 +6078,129 @@ Number of desired pods.
 
 ---
 
+### TcpSocketProbeOptions <a name="cdk8s_plus_22.TcpSocketProbeOptions"></a>
+
+Options for `Probe.fromTcpSocket()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.TcpSocketProbeOptions(
+  failure_threshold: typing.Union[int, float] = None,
+  initial_delay_seconds: Duration = None,
+  period_seconds: Duration = None,
+  success_threshold: typing.Union[int, float] = None,
+  timeout_seconds: Duration = None,
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.failure_threshold"></a>
+
+```python
+failure_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.initial_delay_seconds"></a>
+
+```python
+initial_delay_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.period_seconds"></a>
+
+```python
+period_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.success_threshold"></a>
+
+```python
+success_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.timeout_seconds"></a>
+
+```python
+timeout_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.host"></a>
+
+```python
+host: str
+```
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
 ### VolumeMount <a name="cdk8s_plus_22.VolumeMount"></a>
 
 Mount a volume from the pod to the container.
@@ -6118,8 +6235,6 @@ When not set, MountPropagationNone is used.
 
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
-
-This field is beta in 1.10.
 
 ---
 
@@ -6164,11 +6279,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
@@ -6440,8 +6553,6 @@ When not set, MountPropagationNone is used.
 Mount propagation allows for sharing volumes mounted by a Container to
 other Containers in the same Pod, or even to other Pods on the same node.
 
-This field is beta in 1.10.
-
 ---
 
 ###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.MountOptions.parameter.read_only"></a>
@@ -6473,11 +6584,9 @@ Expanded path within the volume from which the container's volume should be moun
 
 Behaves similarly to SubPath but environment variable references
 $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-(volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-is beta in 1.15.
+(volume's root).
 
-`subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-1.15.
+`subPathExpr` and `subPath` are mutually exclusive.
 
 ---
 
@@ -7524,6 +7633,97 @@ Defaults to 1 second. Minimum value is 1.
 - *Default:* defaults to `container.port`.
 
 The TCP port to use when sending the GET request.
+
+---
+
+##### `from_tcp_socket` <a name="cdk8s_plus_22.Probe.from_tcp_socket"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Probe.from_tcp_socket(
+  failure_threshold: typing.Union[int, float] = None,
+  initial_delay_seconds: Duration = None,
+  period_seconds: Duration = None,
+  success_threshold: typing.Union[int, float] = None,
+  timeout_seconds: Duration = None,
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.failure_threshold"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.initial_delay_seconds"></a>
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.period_seconds"></a>
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.success_threshold"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.timeout_seconds"></a>
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+###### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.host"></a>
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
