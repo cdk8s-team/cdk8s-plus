@@ -2535,7 +2535,7 @@ ContainerProps.builder()
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .readiness(Probe)
-//  .resources(IResources)
+//  .resources(Resources)
 //  .startup(Probe)
 //  .volumeMounts(java.util.List<VolumeMount>)
 //  .workingDir(java.lang.String)
@@ -2684,10 +2684,10 @@ Determines when the container is ready to serve traffic.
 ##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.resources"></a>
 
 ```java
-public IResources getResources();
+public Resources getResources();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IResources`](#org.cdk8s.plus22.IResources)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 Compute resources (CPU and memory requests and limits) required by the container.
 
@@ -2736,6 +2736,41 @@ public java.lang.String getWorkingDir();
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### CpuResources <a name="org.cdk8s.plus22.CpuResources"></a>
+
+CPU request and limit.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.CpuResources;
+
+CpuResources.builder()
+    .limit(Cpu)
+    .request(Cpu)
+    .build();
+```
+
+##### `limit`<sup>Required</sup> <a name="org.cdk8s.plus22.CpuResources.property.limit"></a>
+
+```java
+public Cpu getLimit();
+```
+
+- *Type:* [`org.cdk8s.plus22.Cpu`](#org.cdk8s.plus22.Cpu)
+
+---
+
+##### `request`<sup>Required</sup> <a name="org.cdk8s.plus22.CpuResources.property.request"></a>
+
+```java
+public Cpu getRequest();
+```
+
+- *Type:* [`org.cdk8s.plus22.Cpu`](#org.cdk8s.plus22.Cpu)
 
 ---
 
@@ -3829,6 +3864,41 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
+### MemoryResources <a name="org.cdk8s.plus22.MemoryResources"></a>
+
+Memory request and limit.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.MemoryResources;
+
+MemoryResources.builder()
+    .limit(Size)
+    .request(Size)
+    .build();
+```
+
+##### `limit`<sup>Required</sup> <a name="org.cdk8s.plus22.MemoryResources.property.limit"></a>
+
+```java
+public Size getLimit();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+
+---
+
+##### `request`<sup>Required</sup> <a name="org.cdk8s.plus22.MemoryResources.property.request"></a>
+
+```java
+public Size getRequest();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+
+---
+
 ### MountOptions <a name="org.cdk8s.plus22.MountOptions"></a>
 
 Options for mounts.
@@ -4371,6 +4441,41 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+### Resources <a name="org.cdk8s.plus22.Resources"></a>
+
+CPU and memory compute resources.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.Resources;
+
+Resources.builder()
+    .cpu(CpuResources)
+    .memory(MemoryResources)
+    .build();
+```
+
+##### `cpu`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.property.cpu"></a>
+
+```java
+public CpuResources getCpu();
+```
+
+- *Type:* [`org.cdk8s.plus22.CpuResources`](#org.cdk8s.plus22.CpuResources)
+
+---
+
+##### `memory`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.property.memory"></a>
+
+```java
+public MemoryResources getMemory();
+```
+
+- *Type:* [`org.cdk8s.plus22.MemoryResources`](#org.cdk8s.plus22.MemoryResources)
 
 ---
 
@@ -5360,7 +5465,7 @@ Container.Builder.create()
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .readiness(Probe)
-//  .resources(IResources)
+//  .resources(Resources)
 //  .startup(Probe)
 //  .volumeMounts(java.util.List<VolumeMount>)
 //  .workingDir(java.lang.String)
@@ -5472,7 +5577,7 @@ Determines when the container is ready to serve traffic.
 
 ##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IResources`](#org.cdk8s.plus22.IResources)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 Compute resources (CPU and memory requests and limits) required by the container.
 
@@ -5669,10 +5774,10 @@ The port this container exposes.
 ##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.resources"></a>
 
 ```java
-public IResources getResources();
+public Resources getResources();
 ```
 
-- *Type:* [`org.cdk8s.plus22.IResources`](#org.cdk8s.plus22.IResources)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 Compute resources (CPU and memory requests and limits) required by the container.
 
@@ -6463,64 +6568,6 @@ The Kubernetes name of this resource.
 
 ---
 
-### ICpuResources <a name="org.cdk8s.plus22.ICpuResources"></a>
-
-- *Implemented By:* [`org.cdk8s.plus22.ICpuResources`](#org.cdk8s.plus22.ICpuResources)
-
-CPU request and limit.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `limit`<sup>Required</sup> <a name="org.cdk8s.plus22.ICpuResources.property.limit"></a>
-
-```java
-public Cpu getLimit();
-```
-
-- *Type:* [`org.cdk8s.plus22.Cpu`](#org.cdk8s.plus22.Cpu)
-
----
-
-##### `request`<sup>Required</sup> <a name="org.cdk8s.plus22.ICpuResources.property.request"></a>
-
-```java
-public Cpu getRequest();
-```
-
-- *Type:* [`org.cdk8s.plus22.Cpu`](#org.cdk8s.plus22.Cpu)
-
----
-
-### IMemoryResources <a name="org.cdk8s.plus22.IMemoryResources"></a>
-
-- *Implemented By:* [`org.cdk8s.plus22.IMemoryResources`](#org.cdk8s.plus22.IMemoryResources)
-
-Memory request and limit.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `limit`<sup>Required</sup> <a name="org.cdk8s.plus22.IMemoryResources.property.limit"></a>
-
-```java
-public Size getLimit();
-```
-
-- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
-
----
-
-##### `request`<sup>Required</sup> <a name="org.cdk8s.plus22.IMemoryResources.property.request"></a>
-
-```java
-public Size getRequest();
-```
-
-- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
-
----
-
 ### IPodSpec <a name="org.cdk8s.plus22.IPodSpec"></a>
 
 - *Implemented By:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.PodSpec`](#org.cdk8s.plus22.PodSpec), [`org.cdk8s.plus22.PodTemplate`](#org.cdk8s.plus22.PodTemplate), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec), [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
@@ -6708,35 +6755,6 @@ public java.lang.String getName();
 - *Type:* `java.lang.String`
 
 The Kubernetes name of this resource.
-
----
-
-### IResources <a name="org.cdk8s.plus22.IResources"></a>
-
-- *Implemented By:* [`org.cdk8s.plus22.IResources`](#org.cdk8s.plus22.IResources)
-
-CPU and memory compute resources.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `cpu`<sup>Required</sup> <a name="org.cdk8s.plus22.IResources.property.cpu"></a>
-
-```java
-public ICpuResources getCpu();
-```
-
-- *Type:* [`org.cdk8s.plus22.ICpuResources`](#org.cdk8s.plus22.ICpuResources)
-
----
-
-##### `memory`<sup>Required</sup> <a name="org.cdk8s.plus22.IResources.property.memory"></a>
-
-```java
-public IMemoryResources getMemory();
-```
-
-- *Type:* [`org.cdk8s.plus22.IMemoryResources`](#org.cdk8s.plus22.IMemoryResources)
 
 ---
 
