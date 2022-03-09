@@ -2020,6 +2020,20 @@ Determines when the container is ready to serve traffic.
 
 ---
 
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-21.ContainerProps.property.resources"></a>
+
+```typescript
+public readonly resources: Resources;
+```
+
+- *Type:* [`cdk8s-plus-21.Resources`](#cdk8s-plus-21.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
 ##### `startup`<sup>Optional</sup> <a name="cdk8s-plus-21.ContainerProps.property.startup"></a>
 
 ```typescript
@@ -2061,6 +2075,38 @@ public readonly workingDir: string;
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### CpuResources <a name="cdk8s-plus-21.CpuResources"></a>
+
+CPU request and limit.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CpuResources } from 'cdk8s-plus-21'
+
+const cpuResources: CpuResources = { ... }
+```
+
+##### `limit`<sup>Required</sup> <a name="cdk8s-plus-21.CpuResources.property.limit"></a>
+
+```typescript
+public readonly limit: Cpu;
+```
+
+- *Type:* [`cdk8s-plus-21.Cpu`](#cdk8s-plus-21.Cpu)
+
+---
+
+##### `request`<sup>Required</sup> <a name="cdk8s-plus-21.CpuResources.property.request"></a>
+
+```typescript
+public readonly request: Cpu;
+```
+
+- *Type:* [`cdk8s-plus-21.Cpu`](#cdk8s-plus-21.Cpu)
 
 ---
 
@@ -3040,6 +3086,38 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
+### MemoryResources <a name="cdk8s-plus-21.MemoryResources"></a>
+
+Memory request and limit.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { MemoryResources } from 'cdk8s-plus-21'
+
+const memoryResources: MemoryResources = { ... }
+```
+
+##### `limit`<sup>Required</sup> <a name="cdk8s-plus-21.MemoryResources.property.limit"></a>
+
+```typescript
+public readonly limit: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+---
+
+##### `request`<sup>Required</sup> <a name="cdk8s-plus-21.MemoryResources.property.request"></a>
+
+```typescript
+public readonly request: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+---
+
 ### MountOptions <a name="cdk8s-plus-21.MountOptions"></a>
 
 Options for mounts.
@@ -3549,6 +3627,38 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+### Resources <a name="cdk8s-plus-21.Resources"></a>
+
+CPU and memory compute resources.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { Resources } from 'cdk8s-plus-21'
+
+const resources: Resources = { ... }
+```
+
+##### `cpu`<sup>Required</sup> <a name="cdk8s-plus-21.Resources.property.cpu"></a>
+
+```typescript
+public readonly cpu: CpuResources;
+```
+
+- *Type:* [`cdk8s-plus-21.CpuResources`](#cdk8s-plus-21.CpuResources)
+
+---
+
+##### `memory`<sup>Required</sup> <a name="cdk8s-plus-21.Resources.property.memory"></a>
+
+```typescript
+public readonly memory: MemoryResources;
+```
+
+- *Type:* [`cdk8s-plus-21.MemoryResources`](#cdk8s-plus-21.MemoryResources)
 
 ---
 
@@ -4628,6 +4738,20 @@ The port this container exposes.
 
 ---
 
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-21.Container.property.resources"></a>
+
+```typescript
+public readonly resources: Resources;
+```
+
+- *Type:* [`cdk8s-plus-21.Resources`](#cdk8s-plus-21.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
 ##### `workingDir`<sup>Optional</sup> <a name="cdk8s-plus-21.Container.property.workingDir"></a>
 
 ```typescript
@@ -4637,6 +4761,56 @@ public readonly workingDir: string;
 - *Type:* `string`
 
 The working directory inside the container.
+
+---
+
+
+### Cpu <a name="cdk8s-plus-21.Cpu"></a>
+
+Represents the amount of CPU.
+
+The amount can be passed as millis or units.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `millis` <a name="cdk8s-plus-21.Cpu.millis"></a>
+
+```typescript
+import { Cpu } from 'cdk8s-plus-21'
+
+Cpu.millis(amount: number)
+```
+
+###### `amount`<sup>Required</sup> <a name="cdk8s-plus-21.Cpu.parameter.amount"></a>
+
+- *Type:* `number`
+
+---
+
+##### `units` <a name="cdk8s-plus-21.Cpu.units"></a>
+
+```typescript
+import { Cpu } from 'cdk8s-plus-21'
+
+Cpu.units(amount: number)
+```
+
+###### `amount`<sup>Required</sup> <a name="cdk8s-plus-21.Cpu.parameter.amount"></a>
+
+- *Type:* `number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `amount`<sup>Required</sup> <a name="cdk8s-plus-21.Cpu.property.amount"></a>
+
+```typescript
+public readonly amount: string;
+```
+
+- *Type:* `string`
 
 ---
 
