@@ -564,8 +564,6 @@ export interface MountOptions {
    * Mount propagation allows for sharing volumes mounted by a Container to
    * other Containers in the same Pod, or even to other Pods on the same node.
    *
-   * This field is beta in 1.10.
-   *
    * @default MountPropagation.NONE
    */
   readonly propagation?: MountPropagation;
@@ -589,11 +587,9 @@ export interface MountOptions {
    * Expanded path within the volume from which the container's volume should be
    * mounted. Behaves similarly to SubPath but environment variable references
    * $(VAR_NAME) are expanded using the container's environment. Defaults to ""
-   * (volume's root). SubPathExpr and SubPath are mutually exclusive. This field
-   * is beta in 1.15.
+   * (volume's root).
    *
-   * `subPathExpr` and `subPath` are mutually exclusive. This field is beta in
-   * 1.15.
+   * `subPathExpr` and `subPath` are mutually exclusive.
    *
    * @default "" volume's root.
    */
