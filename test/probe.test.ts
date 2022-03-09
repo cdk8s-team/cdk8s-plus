@@ -119,3 +119,79 @@ describe('fromCommand()', () => {
   });
 
 });
+
+describe('fromTcpSocket()', () => {
+
+  test('minimal usage', () => {
+    // GIVEN
+    const container = new Container({ image: 'foobar', port: 5555 });
+
+    // WHEN
+    const min = Probe.fromTcpSocket();
+
+    // THEN
+    expect(min._toKube(container)).toEqual({
+      tcpSocket: {
+        port: IntOrString.fromNumber(5555),
+        host: undefined,
+      },
+      failureThreshold: 3,
+      initialDelaySeconds: undefined,
+      periodSeconds: undefined,
+      successThreshold: undefined,
+      timeoutSeconds: undefined,
+    });
+  });
+
+  test('specific port and hostname', () => {
+    // GIVEN
+    const container = new Container({ image: 'foobar', port: 5555 });
+
+    // WHEN
+    const min = Probe.fromTcpSocket({
+      port: 8080,
+      host: 'hostname',
+    });
+
+    // THEN
+    expect(min._toKube(container)).toEqual({
+      tcpSocket: {
+        port: IntOrString.fromNumber(8080),
+        host: 'hostname',
+      },
+      failureThreshold: 3,
+      initialDelaySeconds: undefined,
+      periodSeconds: undefined,
+      successThreshold: undefined,
+      timeoutSeconds: undefined,
+    });
+  });
+
+  test('options', () => {
+    // GIVEN
+    const container = new Container({ image: 'foobar', port: 5555 });
+
+    // WHEN
+    const min = Probe.fromTcpSocket({
+      failureThreshold: 11,
+      initialDelaySeconds: Duration.minutes(1),
+      periodSeconds: Duration.seconds(5),
+      successThreshold: 3,
+      timeoutSeconds: Duration.minutes(2),
+    });
+
+    // THEN
+    expect(min._toKube(container)).toEqual({
+      tcpSocket: {
+        port: IntOrString.fromNumber(5555),
+        host: undefined,
+      },
+      failureThreshold: 11,
+      initialDelaySeconds: 60,
+      periodSeconds: 5,
+      successThreshold: 3,
+      timeoutSeconds: 120,
+    });
+  });
+
+});
