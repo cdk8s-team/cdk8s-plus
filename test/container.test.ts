@@ -1,5 +1,7 @@
 import * as cdk8s from 'cdk8s';
+import { Size } from 'cdk8s';
 import * as kplus from '../src';
+import { Cpu } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 describe('EnvValue', () => {
@@ -315,6 +317,34 @@ describe('Container', () => {
       successThreshold: undefined,
       timeoutSeconds: 240,
     });
+  });
+
+  test('Can add resource limits and requests', () => {
+    const container = new kplus.Container({
+      resources: {
+        cpu: {
+          request: Cpu.millis(300),
+          limit: Cpu.units(0.5),
+        },
+        memory: {
+          request: Size.mebibytes(256),
+          limit: Size.mebibytes(384),
+        },
+      },
+      image: 'image',
+    });
+
+    expect(container._toKube().resources).toEqual({
+      limits: {
+        cpu: k8s.Quantity.fromString('0.5'),
+        memory: k8s.Quantity.fromString('384Mi'),
+      },
+      requests: {
+        cpu: k8s.Quantity.fromString('300m'),
+        memory: k8s.Quantity.fromString('256Mi'),
+      },
+    });
+
   });
 
 });
