@@ -403,6 +403,7 @@ def add_container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -509,6 +510,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
@@ -1231,6 +1242,7 @@ def add_container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -1337,6 +1349,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
@@ -1608,6 +1630,7 @@ def add_container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -1714,6 +1737,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
@@ -2725,6 +2758,7 @@ def add_container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -2831,6 +2865,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
@@ -3412,6 +3456,7 @@ cdk8s_plus_20.ContainerProps(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -3557,6 +3602,20 @@ Determines when the container is ready to serve traffic.
 
 ---
 
+##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.property.resources"></a>
+
+```python
+resources: Resources
+```
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
 ##### `startup`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.property.startup"></a>
 
 ```python
@@ -3598,6 +3657,41 @@ working_dir: str
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### CpuResources <a name="cdk8s_plus_20.CpuResources"></a>
+
+CPU request and limit.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.CpuResources(
+  limit: Cpu,
+  request: Cpu
+)
+```
+
+##### `limit`<sup>Required</sup> <a name="cdk8s_plus_20.CpuResources.property.limit"></a>
+
+```python
+limit: Cpu
+```
+
+- *Type:* [`cdk8s_plus_20.Cpu`](#cdk8s_plus_20.Cpu)
+
+---
+
+##### `request`<sup>Required</sup> <a name="cdk8s_plus_20.CpuResources.property.request"></a>
+
+```python
+request: Cpu
+```
+
+- *Type:* [`cdk8s_plus_20.Cpu`](#cdk8s_plus_20.Cpu)
 
 ---
 
@@ -4645,6 +4739,41 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
+### MemoryResources <a name="cdk8s_plus_20.MemoryResources"></a>
+
+Memory request and limit.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.MemoryResources(
+  limit: Size,
+  request: Size
+)
+```
+
+##### `limit`<sup>Required</sup> <a name="cdk8s_plus_20.MemoryResources.property.limit"></a>
+
+```python
+limit: Size
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+---
+
+##### `request`<sup>Required</sup> <a name="cdk8s_plus_20.MemoryResources.property.request"></a>
+
+```python
+request: Size
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+---
+
 ### MountOptions <a name="cdk8s_plus_20.MountOptions"></a>
 
 Options for mounts.
@@ -5187,6 +5316,41 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+### Resources <a name="cdk8s_plus_20.Resources"></a>
+
+CPU and memory compute resources.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Resources(
+  cpu: CpuResources,
+  memory: MemoryResources
+)
+```
+
+##### `cpu`<sup>Required</sup> <a name="cdk8s_plus_20.Resources.property.cpu"></a>
+
+```python
+cpu: CpuResources
+```
+
+- *Type:* [`cdk8s_plus_20.CpuResources`](#cdk8s_plus_20.CpuResources)
+
+---
+
+##### `memory`<sup>Required</sup> <a name="cdk8s_plus_20.Resources.property.memory"></a>
+
+```python
+memory: MemoryResources
+```
+
+- *Type:* [`cdk8s_plus_20.MemoryResources`](#cdk8s_plus_20.MemoryResources)
 
 ---
 
@@ -6176,6 +6340,7 @@ cdk8s_plus_20.Container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -6282,6 +6447,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
@@ -6523,6 +6698,20 @@ The port this container exposes.
 
 ---
 
+##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.Container.property.resources"></a>
+
+```python
+resources: Resources
+```
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
 ##### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_20.Container.property.working_dir"></a>
 
 ```python
@@ -6532,6 +6721,60 @@ working_dir: str
 - *Type:* `str`
 
 The working directory inside the container.
+
+---
+
+
+### Cpu <a name="cdk8s_plus_20.Cpu"></a>
+
+Represents the amount of CPU.
+
+The amount can be passed as millis or units.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `millis` <a name="cdk8s_plus_20.Cpu.millis"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Cpu.millis(
+  amount: typing.Union[int, float]
+)
+```
+
+###### `amount`<sup>Required</sup> <a name="cdk8s_plus_20.Cpu.parameter.amount"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `units` <a name="cdk8s_plus_20.Cpu.units"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Cpu.units(
+  amount: typing.Union[int, float]
+)
+```
+
+###### `amount`<sup>Required</sup> <a name="cdk8s_plus_20.Cpu.parameter.amount"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `amount`<sup>Required</sup> <a name="cdk8s_plus_20.Cpu.property.amount"></a>
+
+```python
+amount: str
+```
+
+- *Type:* `str`
 
 ---
 
@@ -6892,6 +7135,7 @@ def add_container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -6998,6 +7242,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
@@ -7791,6 +8045,7 @@ def add_container(
   name: str = None,
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
+  resources: Resources = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -7897,6 +8152,16 @@ This must be a valid port number, 0 < x < 65536.
 - *Default:* no readiness probe is defined
 
 Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_20.Resources`](#cdk8s_plus_20.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ---
 
