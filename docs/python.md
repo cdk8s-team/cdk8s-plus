@@ -2,6 +2,79 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### ClusterRole <a name="cdk8s_plus_22.ClusterRole"></a>
+
+- *Implements:* [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole)
+
+ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
+
+#### Initializers <a name="cdk8s_plus_22.ClusterRole.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ClusterRole(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  rules: typing.List[PolicyRuleProps] = None,
+  aggregation_labels: typing.Mapping[str] = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.parameter.rules"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
+
+---
+
+##### `aggregation_labels`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.parameter.aggregation_labels"></a>
+
+- *Type:* typing.Mapping[`str`]
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `aggregate_from` <a name="cdk8s_plus_22.ClusterRole.aggregate_from"></a>
+
+```python
+def aggregate_from(
+  partial_role: ClusterRole
+)
+```
+
+###### `partial_role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.partial_role"></a>
+
+- *Type:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole)
+
+---
+
+
+
+
 ### ConfigMap <a name="cdk8s_plus_22.ConfigMap"></a>
 
 - *Implements:* [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap)
@@ -1971,6 +2044,172 @@ The name of this API object.
 ---
 
 
+### Role <a name="cdk8s_plus_22.Role"></a>
+
+- *Implements:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+
+Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
+
+#### Initializers <a name="cdk8s_plus_22.Role.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Role(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  rules: typing.List[PolicyRuleProps] = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.parameter.rules"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
+
+---
+
+
+
+
+
+### RoleBase <a name="cdk8s_plus_22.RoleBase"></a>
+
+- *Implements:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
+
+#### Initializers <a name="cdk8s_plus_22.RoleBase.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.RoleBase(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  rules: typing.List[PolicyRuleProps] = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.parameter.rules"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `add_rule` <a name="cdk8s_plus_22.RoleBase.add_rule"></a>
+
+```python
+def add_rule(
+  verbs: typing.List[str],
+  api_groups: typing.List[str] = None,
+  non_resource_ur_ls: typing.List[str] = None,
+  resource_names: typing.List[str] = None,
+  resources: typing.List[str] = None
+)
+```
+
+###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+###### `api_groups`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.api_groups"></a>
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+###### `non_resource_ur_ls`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.non_resource_ur_ls"></a>
+
+- *Type:* typing.List[`str`]
+
+NonResourceURLs is a set of partial urls that a user should have access to.
+
+*s are allowed, but only as the full, final step in the path Since
+non-resource URLs are not namespaced, this field is only applicable for
+ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
+to API resources (such as "pods" or "secrets") or non-resource URL paths
+(such as "/api"),  but not both.
+
+---
+
+###### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resource_names"></a>
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resources"></a>
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+
+
+
 ### Secret <a name="cdk8s_plus_22.Secret"></a>
 
 - *Implements:* [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret)
@@ -3243,6 +3482,56 @@ key_prefix: str
 - *Default:* ""
 
 A prefix to add to all keys in the config map.
+
+---
+
+### ClusterRoleProps <a name="cdk8s_plus_22.ClusterRoleProps"></a>
+
+Options for `ClusterRole`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ClusterRoleProps(
+  metadata: ApiObjectMetadata = None,
+  rules: typing.List[PolicyRuleProps] = None,
+  aggregation_labels: typing.Mapping[str] = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.property.rules"></a>
+
+```python
+rules: typing.List[PolicyRuleProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
+
+---
+
+##### `aggregation_labels`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.property.aggregation_labels"></a>
+
+```python
+aggregation_labels: typing.Mapping[str]
+```
+
+- *Type:* typing.Mapping[`str`]
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
 
 ---
 
@@ -5296,6 +5585,101 @@ The pod metadata.
 
 ---
 
+### PolicyRuleProps <a name="cdk8s_plus_22.PolicyRuleProps"></a>
+
+Options for `Rule`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PolicyRuleProps(
+  verbs: typing.List[str],
+  api_groups: typing.List[str] = None,
+  non_resource_ur_ls: typing.List[str] = None,
+  resource_names: typing.List[str] = None,
+  resources: typing.List[str] = None
+)
+```
+
+##### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRuleProps.property.verbs"></a>
+
+```python
+verbs: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `api_groups`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.property.api_groups"></a>
+
+```python
+api_groups: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `non_resource_ur_ls`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.property.non_resource_ur_ls"></a>
+
+```python
+non_resource_ur_ls: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+NonResourceURLs is a set of partial urls that a user should have access to.
+
+*s are allowed, but only as the full, final step in the path Since
+non-resource URLs are not namespaced, this field is only applicable for
+ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
+to API resources (such as "pods" or "secrets") or non-resource URL paths
+(such as "/api"),  but not both.
+
+---
+
+##### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.property.resource_names"></a>
+
+```python
+resource_names: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.property.resources"></a>
+
+```python
+resources: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
 ### ProbeOptions <a name="cdk8s_plus_22.ProbeOptions"></a>
 
 Probe options.
@@ -5449,6 +5833,78 @@ memory: MemoryResources
 ```
 
 - *Type:* [`cdk8s_plus_22.MemoryResources`](#cdk8s_plus_22.MemoryResources)
+
+---
+
+### RoleCommonProps <a name="cdk8s_plus_22.RoleCommonProps"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.RoleCommonProps(
+  metadata: ApiObjectMetadata = None,
+  rules: typing.List[PolicyRuleProps] = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.property.rules"></a>
+
+```python
+rules: typing.List[PolicyRuleProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
+
+---
+
+### RoleProps <a name="cdk8s_plus_22.RoleProps"></a>
+
+Options for `Role`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.RoleProps(
+  metadata: ApiObjectMetadata = None,
+  rules: typing.List[PolicyRuleProps] = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.property.rules"></a>
+
+```python
+rules: typing.List[PolicyRuleProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
 
 ---
 
@@ -5633,8 +6089,6 @@ Specify whether the secret or its keys must be defined.
 ---
 
 ### ServiceAccountProps <a name="cdk8s_plus_22.ServiceAccountProps"></a>
-
-Properties for initialization of `ServiceAccount`.
 
 Properties for initialization of `ServiceAccount`.
 
@@ -7556,6 +8010,96 @@ Provides read/write access to the underlying pod metadata of the resource.
 ---
 
 
+### PolicyRule <a name="cdk8s_plus_22.PolicyRule"></a>
+
+Information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.
+
+#### Initializers <a name="cdk8s_plus_22.PolicyRule.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PolicyRule(
+  verbs: typing.List[str],
+  api_groups: typing.List[str] = None,
+  non_resource_ur_ls: typing.List[str] = None,
+  resource_names: typing.List[str] = None,
+  resources: typing.List[str] = None
+)
+```
+
+##### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `api_groups`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.api_groups"></a>
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `non_resource_ur_ls`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.non_resource_ur_ls"></a>
+
+- *Type:* typing.List[`str`]
+
+NonResourceURLs is a set of partial urls that a user should have access to.
+
+*s are allowed, but only as the full, final step in the path Since
+non-resource URLs are not namespaced, this field is only applicable for
+ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
+to API resources (such as "pods" or "secrets") or non-resource URL paths
+(such as "/api"),  but not both.
+
+---
+
+##### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resource_names"></a>
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resources"></a>
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `props`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRule.property.props"></a>
+
+```python
+props: PolicyRuleProps
+```
+
+- *Type:* [`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)
+
+---
+
+
 ### Probe <a name="cdk8s_plus_22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -8097,6 +8641,27 @@ name: str
 
 ## Protocols <a name="Protocols"></a>
 
+### IClusterRole <a name="cdk8s_plus_22.IClusterRole"></a>
+
+- *Extends:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
+
+- *Implemented By:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.IClusterRole.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+The Kubernetes name of this resource.
+
+---
+
 ### IConfigMap <a name="cdk8s_plus_22.IConfigMap"></a>
 
 - *Extends:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
@@ -8444,7 +9009,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
 
 Represents a resource.
 
@@ -8452,6 +9017,27 @@ Represents a resource.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.IResource.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+The Kubernetes name of this resource.
+
+---
+
+### IRole <a name="cdk8s_plus_22.IRole"></a>
+
+- *Extends:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
+
+- *Implemented By:* [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.IRole.property.name"></a>
 
 ```python
 name: str

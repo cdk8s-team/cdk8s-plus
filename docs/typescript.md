@@ -2,6 +2,55 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### ClusterRole <a name="cdk8s-plus-22.ClusterRole"></a>
+
+- *Implements:* [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole)
+
+ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
+
+#### Initializers <a name="cdk8s-plus-22.ClusterRole.Initializer"></a>
+
+```typescript
+import { ClusterRole } from 'cdk8s-plus-22'
+
+new ClusterRole(scope: Construct, id: string, props?: ClusterRoleProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.ClusterRoleProps`](#cdk8s-plus-22.ClusterRoleProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `aggregateFrom` <a name="cdk8s-plus-22.ClusterRole.aggregateFrom"></a>
+
+```typescript
+public aggregateFrom(partialRole: ClusterRole)
+```
+
+###### `partialRole`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.partialRole"></a>
+
+- *Type:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole)
+
+---
+
+
+
+
 ### ConfigMap <a name="cdk8s-plus-22.ConfigMap"></a>
 
 - *Implements:* [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap)
@@ -934,6 +983,91 @@ The name of this API object.
 ---
 
 
+### Role <a name="cdk8s-plus-22.Role"></a>
+
+- *Implements:* [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
+
+Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
+
+#### Initializers <a name="cdk8s-plus-22.Role.Initializer"></a>
+
+```typescript
+import { Role } from 'cdk8s-plus-22'
+
+new Role(scope: Construct, id: string, props?: RoleProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.Role.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.RoleProps`](#cdk8s-plus-22.RoleProps)
+
+---
+
+
+
+
+
+### RoleBase <a name="cdk8s-plus-22.RoleBase"></a>
+
+- *Implements:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+#### Initializers <a name="cdk8s-plus-22.RoleBase.Initializer"></a>
+
+```typescript
+import { RoleBase } from 'cdk8s-plus-22'
+
+new RoleBase(scope: Construct, id: string, props?: RoleCommonProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.RoleBase.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.RoleCommonProps`](#cdk8s-plus-22.RoleCommonProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addRule` <a name="cdk8s-plus-22.RoleBase.addRule"></a>
+
+```typescript
+public addRule(rule: PolicyRuleProps)
+```
+
+###### `rule`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.rule"></a>
+
+- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)
+
+The rule to add.
+
+---
+
+
+
+
 ### Secret <a name="cdk8s-plus-22.Secret"></a>
 
 - *Implements:* [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret)
@@ -1654,6 +1788,52 @@ public readonly keyPrefix: string;
 - *Default:* ""
 
 A prefix to add to all keys in the config map.
+
+---
+
+### ClusterRoleProps <a name="cdk8s-plus-22.ClusterRoleProps"></a>
+
+Options for `ClusterRole`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ClusterRoleProps } from 'cdk8s-plus-22'
+
+const clusterRoleProps: ClusterRoleProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.ClusterRoleProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s-plus-22.ClusterRoleProps.property.rules"></a>
+
+```typescript
+public readonly rules: PolicyRuleProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)[]
+
+---
+
+##### `aggregationLabels`<sup>Optional</sup> <a name="cdk8s-plus-22.ClusterRoleProps.property.aggregationLabels"></a>
+
+```typescript
+public readonly aggregationLabels: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: `string`}
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
 
 ---
 
@@ -3576,6 +3756,95 @@ The pod metadata.
 
 ---
 
+### PolicyRuleProps <a name="cdk8s-plus-22.PolicyRuleProps"></a>
+
+Options for `Rule`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PolicyRuleProps } from 'cdk8s-plus-22'
+
+const policyRuleProps: PolicyRuleProps = { ... }
+```
+
+##### `verbs`<sup>Required</sup> <a name="cdk8s-plus-22.PolicyRuleProps.property.verbs"></a>
+
+```typescript
+public readonly verbs: string[];
+```
+
+- *Type:* `string`[]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `apiGroups`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRuleProps.property.apiGroups"></a>
+
+```typescript
+public readonly apiGroups: string[];
+```
+
+- *Type:* `string`[]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `nonResourceUrLs`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRuleProps.property.nonResourceUrLs"></a>
+
+```typescript
+public readonly nonResourceUrLs: string[];
+```
+
+- *Type:* `string`[]
+
+NonResourceURLs is a set of partial urls that a user should have access to.
+
+*s are allowed, but only as the full, final step in the path Since
+non-resource URLs are not namespaced, this field is only applicable for
+ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
+to API resources (such as "pods" or "secrets") or non-resource URL paths
+(such as "/api"),  but not both.
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRuleProps.property.resourceNames"></a>
+
+```typescript
+public readonly resourceNames: string[];
+```
+
+- *Type:* `string`[]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRuleProps.property.resources"></a>
+
+```typescript
+public readonly resources: string[];
+```
+
+- *Type:* `string`[]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
 ### ProbeOptions <a name="cdk8s-plus-22.ProbeOptions"></a>
 
 Probe options.
@@ -3718,6 +3987,72 @@ public readonly memory: MemoryResources;
 ```
 
 - *Type:* [`cdk8s-plus-22.MemoryResources`](#cdk8s-plus-22.MemoryResources)
+
+---
+
+### RoleCommonProps <a name="cdk8s-plus-22.RoleCommonProps"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { RoleCommonProps } from 'cdk8s-plus-22'
+
+const roleCommonProps: RoleCommonProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.RoleCommonProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s-plus-22.RoleCommonProps.property.rules"></a>
+
+```typescript
+public readonly rules: PolicyRuleProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)[]
+
+---
+
+### RoleProps <a name="cdk8s-plus-22.RoleProps"></a>
+
+Options for `Role`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { RoleProps } from 'cdk8s-plus-22'
+
+const roleProps: RoleProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.RoleProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s-plus-22.RoleProps.property.rules"></a>
+
+```typescript
+public readonly rules: PolicyRuleProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)[]
 
 ---
 
@@ -3890,8 +4225,6 @@ Specify whether the secret or its keys must be defined.
 ---
 
 ### ServiceAccountProps <a name="cdk8s-plus-22.ServiceAccountProps"></a>
-
-Properties for initialization of `ServiceAccount`.
 
 Properties for initialization of `ServiceAccount`.
 
@@ -5218,6 +5551,39 @@ Provides read/write access to the underlying pod metadata of the resource.
 ---
 
 
+### PolicyRule <a name="cdk8s-plus-22.PolicyRule"></a>
+
+Information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.
+
+#### Initializers <a name="cdk8s-plus-22.PolicyRule.Initializer"></a>
+
+```typescript
+import { PolicyRule } from 'cdk8s-plus-22'
+
+new PolicyRule(props: PolicyRuleProps)
+```
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.PolicyRule.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.PolicyRule.property.props"></a>
+
+```typescript
+public readonly props: PolicyRuleProps;
+```
+
+- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)
+
+---
+
+
 ### Probe <a name="cdk8s-plus-22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -5440,6 +5806,27 @@ public readonly name: string;
 
 ## Protocols <a name="Protocols"></a>
 
+### IClusterRole <a name="cdk8s-plus-22.IClusterRole"></a>
+
+- *Extends:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+- *Implemented By:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IClusterRole.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The Kubernetes name of this resource.
+
+---
+
 ### IConfigMap <a name="cdk8s-plus-22.IConfigMap"></a>
 
 - *Extends:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
@@ -5634,7 +6021,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
 
 Represents a resource.
 
@@ -5642,6 +6029,27 @@ Represents a resource.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IResource.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The Kubernetes name of this resource.
+
+---
+
+### IRole <a name="cdk8s-plus-22.IRole"></a>
+
+- *Extends:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+- *Implemented By:* [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IRole.property.name"></a>
 
 ```typescript
 public readonly name: string;

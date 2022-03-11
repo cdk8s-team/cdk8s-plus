@@ -6,13 +6,6 @@ import { ISecret } from './secret';
 import { undefinedIfEmpty } from './utils';
 
 
-/**
- * Properties for initialization of `ServiceAccount`.
- */
-export interface ServiceAccountProps extends ResourceProps {
-
-}
-
 export interface IServiceAccount extends IResource {
 
 }
@@ -20,7 +13,7 @@ export interface IServiceAccount extends IResource {
 /**
  * Properties for initialization of `ServiceAccount`.
  */
-export interface ServiceAccountProps {
+export interface ServiceAccountProps extends ResourceProps {
   /**
    * List of secrets allowed to be used by pods running using this
    * ServiceAccount.
