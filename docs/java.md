@@ -1469,6 +1469,21 @@ The rule to add.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `rules`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.property.rules"></a>
+
+```java
+public java.util.List<PolicyRule> getRules();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRule`](#org.cdk8s.plus22.PolicyRule)>
+
+List of rules included in this rule.
+
+Returns a copy. To add a rule, use `addRule()`.
+
+---
 
 
 ### Secret <a name="org.cdk8s.plus22.Secret"></a>

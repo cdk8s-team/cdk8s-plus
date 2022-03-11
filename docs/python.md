@@ -2208,6 +2208,21 @@ resources.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `rules`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.property.rules"></a>
+
+```python
+rules: typing.List[PolicyRule]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRule`](#cdk8s_plus_22.PolicyRule)]
+
+List of rules included in this rule.
+
+Returns a copy. To add a rule, use `addRule()`.
+
+---
 
 
 ### Secret <a name="cdk8s_plus_22.Secret"></a>
