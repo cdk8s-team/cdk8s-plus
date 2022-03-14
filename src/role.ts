@@ -44,6 +44,9 @@ export abstract class RoleBase extends Resource implements IResource {
   }
 }
 
+/**
+ * Represents a namespaced role.
+ */
 export interface IRole extends IResource {
 
 }
@@ -79,6 +82,9 @@ export class Role extends RoleBase implements IRole {
   }
 }
 
+/**
+ * Represents a cluster-level role.
+ */
 export interface IClusterRole extends IResource {
 
 }
