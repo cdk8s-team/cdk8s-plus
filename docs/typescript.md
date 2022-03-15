@@ -242,6 +242,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addInitContainer` <a name="cdk8s-plus-22.Deployment.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="cdk8s-plus-22.Deployment.addVolume"></a>
 
 ```typescript
@@ -326,6 +338,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -627,6 +653,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addInitContainer` <a name="cdk8s-plus-22.Job.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Job.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="cdk8s-plus-22.Job.addVolume"></a>
 
 ```typescript
@@ -653,6 +691,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -794,6 +846,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addInitContainer` <a name="cdk8s-plus-22.Pod.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="cdk8s-plus-22.Pod.addVolume"></a>
 
 ```typescript
@@ -820,6 +884,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -1387,6 +1465,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addInitContainer` <a name="cdk8s-plus-22.StatefulSet.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="cdk8s-plus-22.StatefulSet.addVolume"></a>
 
 ```typescript
@@ -1435,6 +1525,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -2165,6 +2269,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -3033,6 +3162,31 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.restartPolicy"></a>
 
 ```typescript
@@ -3340,6 +3494,31 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.restartPolicy"></a>
 
 ```typescript
@@ -3421,6 +3600,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -3507,6 +3711,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -4282,6 +4511,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -5113,6 +5367,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addInitContainer` <a name="cdk8s-plus-22.PodSpec.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="cdk8s-plus-22.PodSpec.addVolume"></a>
 
 ```typescript
@@ -5139,6 +5405,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -5487,6 +5767,20 @@ The container.
 
 ---
 
+##### `addInitContainer` <a name="cdk8s-plus-22.IPodSpec.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+The container.
+
+---
+
 ##### `addVolume` <a name="cdk8s-plus-22.IPodSpec.addVolume"></a>
 
 ```typescript
@@ -5514,6 +5808,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -5579,6 +5887,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 

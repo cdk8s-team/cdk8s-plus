@@ -36,6 +36,7 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "initContainers": Array [],
           "volumes": Array [],
         },
       },

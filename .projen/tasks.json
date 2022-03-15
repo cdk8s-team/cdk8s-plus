@@ -31,7 +31,8 @@
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
+        "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
       },
       "steps": [
         {
@@ -182,7 +183,10 @@
       "description": "Create dotnet language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target dotnet"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+        },
+        {
+          "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet"
         }
       ]
     },
@@ -191,7 +195,10 @@
       "description": "Create go language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target go"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+        },
+        {
+          "exec": "npx jsii-pacmak@$jsii_version -v --target go"
         }
       ]
     },
@@ -200,7 +207,10 @@
       "description": "Create java language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target java"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+        },
+        {
+          "exec": "npx jsii-pacmak@$jsii_version -v --target java"
         }
       ]
     },
@@ -209,7 +219,10 @@
       "description": "Create js language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target js"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+        },
+        {
+          "exec": "npx jsii-pacmak@$jsii_version -v --target js"
         }
       ]
     },
@@ -218,7 +231,10 @@
       "description": "Create python language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target python"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+        },
+        {
+          "exec": "npx jsii-pacmak@$jsii_version -v --target python"
         }
       ]
     },
@@ -303,7 +319,8 @@
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
+        "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
       },
       "steps": [
         {
