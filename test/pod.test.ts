@@ -223,7 +223,7 @@ test('init containers cannot have startup probe', () => {
 
 });
 
-test('can specfity init containers at instatiation', () => {
+test('can specify init containers at instantiation', () => {
 
   const chart = Testing.chart();
 
