@@ -73,6 +73,7 @@ export class PodSpec implements IPodSpec {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: IServiceAccount;
+  public readonly securityContext: PodSecurityContext;
 
   private readonly _containers: Container[] = [];
   private readonly _volumes: Map<string, Volume> = new Map();
@@ -80,6 +81,7 @@ export class PodSpec implements IPodSpec {
   constructor(props: PodSpecProps = {}) {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
+    this.securityContext = new PodSecurityContext(props.securityContext);
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -152,6 +154,7 @@ export class PodSpec implements IPodSpec {
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
+      securityContext: this.securityContext ? this.securityContext._toKube() : undefined,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
     };
 
@@ -194,6 +197,74 @@ export class PodTemplate extends PodSpec implements IPodTemplate {
       spec: this._toPodSpec(),
     };
   }
+}
+
+/**
+ * Sysctl defines a kernel parameter to be set
+ */
+export interface Sysctl {
+  /**
+   * Name of a property to set
+   */
+  readonly name: string;
+
+  /**
+   * Value of a property to set
+   */
+  readonly value: string;
+}
+
+/**
+ * Properties for `PodSecurityContext`
+ */
+export interface PodSecurityContextProps {
+
+  /**
+   * Modify the ownership and permissions of pod volumes to this GID.
+   *
+   * @default - Volume ownership is not changed.
+   */
+  readonly fsGroup?: number;
+
+  /**
+    * Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+    * This field will only apply to volume types which support fsGroup based ownership(and permissions).
+    * It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+    *
+    * @default FsGroupChangePolicy.ALWAYS
+    */
+  readonly fsGroupChangePolicy?: FsGroupChangePolicy;
+
+  /**
+    * The UID to run the entrypoint of the container process.
+    *
+    * @default - User specified in image metadata
+    */
+  readonly user?: number;
+
+  /**
+    * The GID to run the entrypoint of the container process.
+    *
+    * @default - Group configured by container runtime
+    */
+  readonly group?: number;
+
+  /**
+    * Indicates that the container must run as a non-root user.
+    * If true, the Kubelet will validate the image at runtime to ensure that it does
+    * not run as UID 0 (root) and fail to start the container if it does.
+    *
+    * @default false
+    */
+  readonly ensureNonRoot?: boolean;
+
+  /**
+    * Sysctls hold a list of namespaced sysctls used for the pod.
+    * Pods with unsupported sysctls (by the container runtime) might fail to launch.
+    *
+    * @default - No sysctls
+    */
+  readonly sysctls?: Sysctl[];
 }
 
 /**
@@ -252,6 +323,13 @@ export interface PodSpecProps {
    */
   readonly serviceAccount?: IServiceAccount;
 
+  /**
+   * SecurityContext holds pod-level security attributes and common container settings.
+   *
+   * @default - No security context.
+   */
+  readonly securityContext?: PodSecurityContextProps;
+
 }
 
 /**
@@ -305,6 +383,46 @@ export class Pod extends Resource implements IPodSpec {
 }
 
 /**
+ * Holds pod-level security attributes and common container settings.
+ */
+export class PodSecurityContext {
+
+  public readonly ensureNonRoot: boolean;
+  public readonly user?: number;
+  public readonly group?: number;
+  public readonly fsGroup?: number;
+  public readonly fsGroupChangePolicy: FsGroupChangePolicy;
+
+  private readonly _sysctls: Sysctl[] = [];
+
+  constructor(props: PodSecurityContextProps = {}) {
+    this.ensureNonRoot = props.ensureNonRoot ?? false;
+    this.fsGroupChangePolicy = props.fsGroupChangePolicy ?? FsGroupChangePolicy.ALWAYS;
+    this.user = props.user;
+    this.group = props.group;
+    this.fsGroup = props.fsGroup;
+
+    (props.sysctls ?? []).forEach(s => this._sysctls.push(s));
+  }
+
+  public get sysctls(): Sysctl[] {
+    return [...this.sysctls];
+  }
+
+  public _toKube(): k8s.PodSecurityContext {
+    return {
+      runAsGroup: this.group,
+      runAsUser: this.user,
+      fsGroup: this.fsGroup,
+      runAsNonRoot: this.ensureNonRoot,
+      fsGroupChangePolicy: this.fsGroupChangePolicy,
+      sysctls: this._sysctls,
+    };
+  }
+
+}
+
+/**
  * Restart policy for all containers within the pod.
  */
 export enum RestartPolicy {
@@ -322,5 +440,20 @@ export enum RestartPolicy {
    * Never restart the pod.
    */
   NEVER = 'Never'
+}
+
+export enum FsGroupChangePolicy {
+
+  /**
+   * Only change permissions and ownership if permission and ownership of root directory does
+   * not match with expected permissions of the volume.
+   * This could help shorten the time it takes to change ownership and permission of a volume
+   */
+  ON_ROOT_MISMATCH = 'OnRootMismatch',
+
+  /**
+   * Always change permission and ownership of the volume when volume is mounted.
+   */
+  ALWAYS = 'Always'
 }
 
