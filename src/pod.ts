@@ -401,7 +401,7 @@ export interface PodSpecProps {
   /**
    * SecurityContext holds pod-level security attributes and common container settings.
    *
-   * @default - No security context.
+   * @default - Default security context.
    */
   readonly securityContext?: PodSecurityContextProps;
 
@@ -451,6 +451,10 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.serviceAccount;
   }
 
+  public get securityContext(): PodSecurityContext {
+    return this._spec.securityContext;
+  }
+
   public addContainer(container: ContainerProps): Container {
     return this._spec.addContainer(container);
   }
@@ -489,7 +493,7 @@ export class PodSecurityContext {
   }
 
   public get sysctls(): Sysctl[] {
-    return [...this.sysctls];
+    return [...this._sysctls];
   }
 
   public _toKube(): k8s.PodSecurityContext {
