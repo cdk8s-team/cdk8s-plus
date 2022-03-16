@@ -51,7 +51,7 @@ export interface ContainerSecurityContextProps {
 }
 
 /**
- * Holds pod-level security attributes and common container settings.
+ * Container security attributes and settings.
  */
 export class ContainerSecurityContext {
 
