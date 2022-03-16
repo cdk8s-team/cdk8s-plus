@@ -1,5 +1,6 @@
 import { Testing, Size } from 'cdk8s';
 import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim } from '../src';
+import { PersistentVolume } from '../src/pv';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -304,6 +305,44 @@ describe('fromPersistentVolumeClaim', () => {
       name: volume.name,
       persistentVolumeClaim: {
         claimName: pvc.name,
+        readOnly: true,
+      },
+    });
+  });
+
+});
+
+describe('fromPersistentVolume', () => {
+
+  test('defaults', () => {
+
+    const chart = Testing.chart();
+
+    const pv = new PersistentVolume(chart, 'pv');
+    const volume = Volume.fromPersistentVolume(pv);
+
+    expect(volume.name).toEqual(pv.name);
+    expect(volume._toKube()).toEqual({
+      name: volume.name,
+      persistentVolumeClaim: {
+        claimName: `pvc-${pv.name}`,
+        readOnly: false,
+      },
+    });
+  });
+
+  test('custom', () => {
+
+    const chart = Testing.chart();
+
+    const pv = new PersistentVolume(chart, 'pv');
+    const volume = Volume.fromPersistentVolume(pv, { name: 'custom', readOnly: true });
+
+    expect(volume.name).toEqual('custom');
+    expect(volume._toKube()).toEqual({
+      name: volume.name,
+      persistentVolumeClaim: {
+        claimName: `pvc-${pv.name}`,
         readOnly: true,
       },
     });

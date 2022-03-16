@@ -1,6 +1,7 @@
 import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
 import * as k8s from './imports/k8s';
+import { PersistentVolume } from './pv';
 import { IPersistentVolumeClaim } from './pvc';
 import { ISecret } from './secret';
 
@@ -114,14 +115,11 @@ export class Volume {
   }
 
   /**
-   * A persistentVolumeClaim volume is used to mount a PersistentVolume into a Pod.
+   * Used to mount a PersistentVolume into a Pod.
    * PersistentVolumeClaims are a way for users to "claim" durable storage (such as a GCE PersistentDisk or an iSCSI volume)
    * without knowing the details of the particular cloud environment.
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-   * @param pvc
-   * @param options
-   * @returns
    */
   public static fromPersistentVolumeClaim(pvc: IPersistentVolumeClaim, options: PersistentVolumeClaimVolumeOptions = {}): Volume {
     return new Volume(options.name ?? `pvc-${pvc.name}`, {
@@ -130,6 +128,16 @@ export class Volume {
         readOnly: options.readOnly ?? false,
       },
     });
+  }
+
+  /**
+   * Create a volume from a specific PersistentVolume. This will implicitly create
+   * the appropriate PersistentVolumeClaim and use it as the volume reference.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
+   */
+  public static fromPersistentVolume(pv: PersistentVolume, options: PersistentVolumeClaimVolumeOptions = {}) {
+    return Volume.fromPersistentVolumeClaim(pv.reserve(), { name: pv.name, ...options });
   }
 
   /**
