@@ -211,7 +211,7 @@ export class PodSpec implements IPodSpec {
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
-      securityContext: this.securityContext ? this.securityContext._toKube() : undefined,
+      securityContext: this.securityContext._toKube(),
       initContainers: initContainers,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
     };
