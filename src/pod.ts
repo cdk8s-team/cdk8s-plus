@@ -21,6 +21,13 @@ export interface IPodSpec {
   readonly containers: Container[];
 
   /**
+   * The init containers belonging to the pod.
+   *
+   * Use `addInitContainer` to add init containers.
+   */
+  readonly initContainers: Container[];
+
+  /**
    * The volumes associated with this pod.
    *
    * Use `addVolume` to add volumes.
@@ -43,6 +50,13 @@ export interface IPodSpec {
    * @param container The container.
    */
   addContainer(container: ContainerProps): Container;
+
+  /**
+   * Add an init container to the pod.
+   *
+   * @param container The container.
+   */
+  addInitContainer(container: ContainerProps): Container;
 
   /**
    * Add a volume to the pod.
@@ -76,6 +90,7 @@ export class PodSpec implements IPodSpec {
   public readonly securityContext: PodSecurityContext;
 
   private readonly _containers: Container[] = [];
+  private readonly _initContainers: Container[] = [];
   private readonly _volumes: Map<string, Volume> = new Map();
 
   constructor(props: PodSpecProps = {}) {
@@ -91,10 +106,18 @@ export class PodSpec implements IPodSpec {
       props.volumes.forEach(v => this.addVolume(v));
     }
 
+    if (props.initContainers) {
+      props.initContainers.forEach(c => this.addInitContainer(c));
+    }
+
   }
 
   public get containers(): Container[] {
     return [...this._containers];
+  }
+
+  public get initContainers(): Container[] {
+    return [...this._initContainers];
   }
 
   public get volumes(): Volume[] {
@@ -104,6 +127,30 @@ export class PodSpec implements IPodSpec {
   public addContainer(container: ContainerProps): Container {
     const impl = new Container(container);
     this._containers.push(impl);
+    return impl;
+  }
+
+  public addInitContainer(container: ContainerProps): Container {
+
+    // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
+    if (container.readiness) {
+      throw new Error('Init containers must not have a readiness probe');
+    }
+
+    if (container.liveness) {
+      throw new Error('Init containers must not have a liveness probe');
+    }
+
+    if (container.startup) {
+      throw new Error('Init containers must not have a startup probe');
+    }
+
+    const impl = new Container({
+      ...container,
+      name: container.name ?? `init-${this._initContainers.length}`,
+    });
+
+    this._initContainers.push(impl);
     return impl;
   }
 
@@ -126,6 +173,7 @@ export class PodSpec implements IPodSpec {
 
     const volumes: Map<string, Volume> = new Map();
     const containers: k8s.Container[] = [];
+    const initContainers: k8s.Container[] = [];
 
     for (const container of this.containers) {
       // automatically add volume from the container mount
@@ -134,6 +182,15 @@ export class PodSpec implements IPodSpec {
         addVolume(mount.volume);
       }
       containers.push(container._toKube());
+    }
+
+    for (const container of this.initContainers) {
+      // automatically add volume from the container mount
+      // to this pod so thats its available to the container.
+      for (const mount of container.mounts) {
+        addVolume(mount.volume);
+      }
+      initContainers.push(container._toKube());
     }
 
     for (const volume of this.volumes) {
@@ -155,6 +212,7 @@ export class PodSpec implements IPodSpec {
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
       securityContext: this.securityContext ? this.securityContext._toKube() : undefined,
+      initContainers: initContainers,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
     };
 
@@ -288,6 +346,23 @@ export interface PodSpecProps {
   readonly containers?: ContainerProps[];
 
   /**
+   * List of initialization containers belonging to the pod.
+   * Init containers are executed in order prior to containers being started.
+   * If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+   * The name for an init container or normal container must be unique among all containers.
+   * Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+   * The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+   * for each resource type, and then using the max of of that value or the sum of the normal containers.
+   * Limits are applied to init containers in a similar fashion.
+   *
+   * Init containers cannot currently be added ,removed or updated.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+   * @default - No init containers.
+   */
+  readonly initContainers?: ContainerProps[];
+
+  /**
    * List of volumes that can be mounted by containers belonging to the pod.
    *
    * You can also add volumes later using `podSpec.addVolume()`
@@ -360,6 +435,10 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.containers;
   }
 
+  public get initContainers(): Container[] {
+    return this._spec.initContainers;
+  }
+
   public get volumes(): Volume[] {
     return this._spec.volumes;
   }
@@ -374,6 +453,10 @@ export class Pod extends Resource implements IPodSpec {
 
   public addContainer(container: ContainerProps): Container {
     return this._spec.addContainer(container);
+  }
+
+  public addInitContainer(container: ContainerProps): Container {
+    return this._spec.addInitContainer(container);
   }
 
   public addVolume(volume: Volume): void {

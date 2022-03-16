@@ -274,6 +274,7 @@ cdk8s_plus_22.Deployment(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -314,6 +315,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -394,6 +416,171 @@ Number of desired pods.
 
 ```python
 def add_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+##### `add_init_container` <a name="cdk8s_plus_22.Deployment.add_init_container"></a>
+
+```python
+def add_init_container(
   image: str,
   args: typing.List[str] = None,
   command: typing.List[str] = None,
@@ -759,6 +946,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -1141,6 +1342,7 @@ cdk8s_plus_22.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -1182,6 +1384,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -1436,6 +1659,171 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_init_container` <a name="cdk8s_plus_22.Job.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
 ##### `add_volume` <a name="cdk8s_plus_22.Job.add_volume"></a>
 
 ```python
@@ -1464,6 +1852,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -1575,6 +1977,7 @@ cdk8s_plus_22.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
@@ -1612,6 +2015,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -1824,6 +2248,171 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_init_container` <a name="cdk8s_plus_22.Pod.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
 ##### `add_volume` <a name="cdk8s_plus_22.Pod.add_volume"></a>
 
 ```python
@@ -1852,6 +2441,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -2662,6 +3265,7 @@ cdk8s_plus_22.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -2704,6 +3308,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -2962,6 +3587,171 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_init_container` <a name="cdk8s_plus_22.StatefulSet.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
 ##### `add_volume` <a name="cdk8s_plus_22.StatefulSet.add_volume"></a>
 
 ```python
@@ -3015,6 +3805,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -3759,6 +4563,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -3795,6 +4600,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -4685,6 +5515,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -4722,6 +5553,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -5013,6 +5869,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
@@ -5046,6 +5903,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -5114,6 +5996,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
@@ -5135,6 +6018,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -5205,6 +6113,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -5227,6 +6136,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -6022,6 +6956,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -6060,6 +6995,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -7156,6 +8116,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
@@ -7173,6 +8134,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -7385,6 +8367,171 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_init_container` <a name="cdk8s_plus_22.PodSpec.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
 ##### `add_volume` <a name="cdk8s_plus_22.PodSpec.add_volume"></a>
 
 ```python
@@ -7413,6 +8560,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -7468,6 +8629,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
@@ -7486,6 +8648,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -8295,6 +9478,171 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_init_container` <a name="cdk8s_plus_22.IPodSpec.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
 ##### `add_volume` <a name="cdk8s_plus_22.IPodSpec.add_volume"></a>
 
 ```python
@@ -8324,6 +9672,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -8389,6 +9751,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
