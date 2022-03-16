@@ -484,7 +484,7 @@ export interface ContainerProps {
 
   /**
    * SecurityContext defines the security options the container should be run with.
-   * If set, the fields equivalent fields of pod's security context.
+   * If set, the fields override equivalent fields of the pod's security context.
    *
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
    * @default - Default security context.
