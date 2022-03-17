@@ -489,13 +489,19 @@ export class PodSecurityContext {
     this.group = props.group;
     this.fsGroup = props.fsGroup;
 
-    (props.sysctls ?? []).forEach(s => this._sysctls.push(s));
+    for (const sysctl of props.sysctls ?? []) {
+      this._sysctls.push(sysctl);
+    }
+
   }
 
   public get sysctls(): Sysctl[] {
     return [...this._sysctls];
   }
 
+  /**
+   * @internal
+   */
   public _toKube(): k8s.PodSecurityContext {
     return {
       runAsGroup: this.group,

@@ -69,6 +69,9 @@ export class ContainerSecurityContext {
     this.group = props.group;
   }
 
+  /**
+   * @internal
+   */
   public _toKube(): k8s.SecurityContext {
     return {
       runAsGroup: this.group,
