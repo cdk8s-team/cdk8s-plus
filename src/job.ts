@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplateProps, IPodTemplate, PodTemplate } from './pod';
+import { RestartPolicy, PodTemplateProps, IPodTemplate, PodTemplate, PodSecurityContext } from './pod';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
 
@@ -114,6 +114,10 @@ export class Job extends Resource implements IPodTemplate {
 
   public get serviceAccount(): IServiceAccount | undefined {
     return this._podTemplate.serviceAccount;
+  }
+
+  public get securityContext(): PodSecurityContext {
+    return this._podTemplate.securityContext;
   }
 
   public addContainer(container: ContainerProps): Container {
