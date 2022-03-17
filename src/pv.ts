@@ -37,20 +37,32 @@ export class PersistentVolume extends Resource {
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
    */
   public reserve(): PersistentVolumeClaim {
-
-    if (this._claim) {
-      throw new Error(`Cannot reserve volume '${this.name}' since it is already claimed by '${this._claim.name}'`);
-    }
-
-    this._claim = new PersistentVolumeClaim(this, `${this.name}PVC`, {
-      volumeName: this.name,
+    const claim = new PersistentVolumeClaim(this, `${this.name}PVC`, {
       metadata: {
         name: `pvc-${this.name}`,
       },
     });
 
-    return this._claim;
+    this.bind(claim);
+    claim.bind(this);
 
+    return claim;
+
+  }
+
+  /**
+   * Bind a volume to a specific claim.
+   * Note that you must also bind the claim to the volume.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding
+   *
+   * @param pvc The PVC to bind to.
+   */
+  public bind(pvc: PersistentVolumeClaim) {
+    if (this._claim) {
+      throw new Error(`Cannot bind volume '${this.name}' to claim '${pvc.name}' since it is already bound to claim '${this._claim.name}'`);
+    }
+    this._claim = pvc;
   }
 
 }

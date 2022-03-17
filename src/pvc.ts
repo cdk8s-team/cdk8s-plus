@@ -3,6 +3,7 @@ import { Size } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
+import { PersistentVolume } from './pv';
 
 /**
  * Contract for a `PersistentVolumeClaim`.
@@ -44,12 +45,6 @@ export interface PersistentVolumeClaimProps extends ResourceProps {
     */
   readonly volumeMode?: VolumeMode;
 
-  /**
-    * The binding reference to the PersistentVolume backing this claim.
-    */
-  readonly volumeName?: string;
-
-
 }
 
 export class PersistentVolumeClaim extends Resource implements IPersistentVolumeClaim {
@@ -67,6 +62,8 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
+  private _volumeName?: string;
+
   public constructor(scope: Construct, id: string, props: PersistentVolumeClaimProps = { }) {
     super(scope, id);
 
@@ -79,9 +76,23 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
         resources: storage ? { requests: { storage } } : undefined,
         volumeMode: props.volumeMode ?? VolumeMode.FILE_SYSTEM,
         storageClassName: props.storageClassName,
-        volumeName: props.volumeName,
       },
     });
+  }
+
+  /**
+   * Bind a claim to a specific volume.
+   * Note that you must also bind the volume to the claim.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding
+   *
+   * @param pv The PV to bind to.
+   */
+  public bind(pv: PersistentVolume) {
+    if (this._volumeName) {
+      throw new Error(`Cannot bind claim '${this.name}' to volume '${pv.name}' since it is already bound to volume '${this._volumeName}'`);
+    }
+    this._volumeName = pv.name;
   }
 
 }
