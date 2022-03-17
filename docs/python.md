@@ -276,6 +276,7 @@ cdk8s_plus_22.Deployment(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
@@ -347,6 +348,15 @@ Init containers cannot currently be added ,removed or updated.
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -426,6 +436,7 @@ def add_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -542,6 +553,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -591,6 +615,7 @@ def add_init_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -707,6 +732,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -998,6 +1036,16 @@ replicas: typing.Union[int, float]
 - *Type:* `typing.Union[int, float]`
 
 Number of desired pods.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
 
 ---
 
@@ -1344,6 +1392,7 @@ cdk8s_plus_22.Job(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
@@ -1416,6 +1465,15 @@ Init containers cannot currently be added ,removed or updated.
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -1508,6 +1566,7 @@ def add_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -1624,6 +1683,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -1673,6 +1745,7 @@ def add_init_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -1789,6 +1862,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -1878,6 +1964,16 @@ pod_metadata: ApiObjectMetadataDefinition
 - *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
 
 Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
 
 ---
 
@@ -1979,6 +2075,7 @@ cdk8s_plus_22.Pod(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
 )
@@ -2050,6 +2147,15 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.service_account"></a>
 
 - *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
@@ -2097,6 +2203,7 @@ def add_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -2213,6 +2320,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -2262,6 +2382,7 @@ def add_init_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -2378,6 +2499,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -2455,6 +2589,16 @@ init_containers: typing.List[Container]
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
 
 ---
 
@@ -3267,6 +3411,7 @@ cdk8s_plus_22.StatefulSet(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
@@ -3340,6 +3485,15 @@ Init containers cannot currently be added ,removed or updated.
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -3436,6 +3590,7 @@ def add_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -3552,6 +3707,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -3601,6 +3769,7 @@ def add_init_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -3717,6 +3886,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -3869,6 +4051,16 @@ replicas: typing.Union[int, float]
 - *Type:* `typing.Union[int, float]`
 
 Number of desired pods.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
 
 ---
 
@@ -4313,6 +4505,7 @@ cdk8s_plus_22.ContainerProps(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -4472,6 +4665,23 @@ Compute resources (CPU and memory requests and limits) required by the container
 
 ---
 
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.property.security_context"></a>
+
+```python
+security_context: ContainerSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
 ##### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.property.startup"></a>
 
 ```python
@@ -4513,6 +4723,94 @@ working_dir: str
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### ContainerSecurityContextProps <a name="cdk8s_plus_22.ContainerSecurityContextProps"></a>
+
+Properties for `ContainerSecurityContext`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ContainerSecurityContextProps(
+  ensure_non_root: bool = None,
+  group: typing.Union[int, float] = None,
+  privileged: bool = None,
+  read_only_root_filesystem: bool = None,
+  user: typing.Union[int, float] = None
+)
+```
+
+##### `ensure_non_root`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.property.ensure_non_root"></a>
+
+```python
+ensure_non_root: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.property.group"></a>
+
+```python
+group: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.property.privileged"></a>
+
+```python
+privileged: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Run container in privileged mode.
+
+Processes in privileged containers are essentially equivalent to root on the host.
+
+---
+
+##### `read_only_root_filesystem`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.property.read_only_root_filesystem"></a>
+
+```python
+read_only_root_filesystem: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Whether this container has a read-only root filesystem.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.property.user"></a>
+
+```python
+user: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
 
 ---
 
@@ -4565,6 +4863,7 @@ cdk8s_plus_22.DeploymentProps(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
@@ -4640,6 +4939,19 @@ restart_policy: RestartPolicy
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -5517,6 +5829,7 @@ cdk8s_plus_22.JobProps(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
@@ -5593,6 +5906,19 @@ restart_policy: RestartPolicy
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -5871,6 +6197,7 @@ cdk8s_plus_22.PodProps(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
 )
@@ -5946,6 +6273,19 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.service_account"></a>
 
 ```python
@@ -5985,6 +6325,111 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+### PodSecurityContextProps <a name="cdk8s_plus_22.PodSecurityContextProps"></a>
+
+Properties for `PodSecurityContext`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PodSecurityContextProps(
+  ensure_non_root: bool = None,
+  fs_group: typing.Union[int, float] = None,
+  fs_group_change_policy: FsGroupChangePolicy = None,
+  group: typing.Union[int, float] = None,
+  sysctls: typing.List[Sysctl] = None,
+  user: typing.Union[int, float] = None
+)
+```
+
+##### `ensure_non_root`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.property.ensure_non_root"></a>
+
+```python
+ensure_non_root: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `fs_group`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.property.fs_group"></a>
+
+```python
+fs_group: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Volume ownership is not changed.
+
+Modify the ownership and permissions of pod volumes to this GID.
+
+---
+
+##### `fs_group_change_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.property.fs_group_change_policy"></a>
+
+```python
+fs_group_change_policy: FsGroupChangePolicy
+```
+
+- *Type:* [`cdk8s_plus_22.FsGroupChangePolicy`](#cdk8s_plus_22.FsGroupChangePolicy)
+- *Default:* FsGroupChangePolicy.ALWAYS
+
+Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+
+This field will only apply to volume types which support fsGroup based ownership(and permissions).
+It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.property.group"></a>
+
+```python
+group: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `sysctls`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.property.sysctls"></a>
+
+```python
+sysctls: typing.List[Sysctl]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Sysctl`](#cdk8s_plus_22.Sysctl)]
+- *Default:* No sysctls
+
+Sysctls hold a list of namespaced sysctls used for the pod.
+
+Pods with unsupported sysctls (by the container runtime) might fail to launch.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.property.user"></a>
+
+```python
+user: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
+
+---
+
 ### PodSpecProps <a name="cdk8s_plus_22.PodSpecProps"></a>
 
 Properties of a `PodSpec`.
@@ -5998,6 +6443,7 @@ cdk8s_plus_22.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
 )
@@ -6061,6 +6507,19 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.service_account"></a>
 
 ```python
@@ -6115,6 +6574,7 @@ cdk8s_plus_22.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None
@@ -6176,6 +6636,19 @@ restart_policy: RestartPolicy
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -6958,6 +7431,7 @@ cdk8s_plus_22.StatefulSetProps(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
@@ -7035,6 +7509,19 @@ restart_policy: RestartPolicy
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -7140,6 +7627,45 @@ replicas: typing.Union[int, float]
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### Sysctl <a name="cdk8s_plus_22.Sysctl"></a>
+
+Sysctl defines a kernel parameter to be set.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Sysctl(
+  name: str,
+  value: str
+)
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.Sysctl.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+Name of a property to set.
+
+---
+
+##### `value`<sup>Required</sup> <a name="cdk8s_plus_22.Sysctl.property.value"></a>
+
+```python
+value: str
+```
+
+- *Type:* `str`
+
+Value of a property to set.
 
 ---
 
@@ -7399,6 +7925,7 @@ cdk8s_plus_22.Container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -7515,6 +8042,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -7720,6 +8260,18 @@ The name of the container.
 
 ---
 
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Container.property.security_context"></a>
+
+```python
+security_context: ContainerSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContext`](#cdk8s_plus_22.ContainerSecurityContext)
+
+The security context of the container.
+
+---
+
 ##### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.Container.property.args"></a>
 
 ```python
@@ -7779,6 +8331,129 @@ working_dir: str
 - *Type:* `str`
 
 The working directory inside the container.
+
+---
+
+
+### ContainerSecurityContext <a name="cdk8s_plus_22.ContainerSecurityContext"></a>
+
+Container security attributes and settings.
+
+#### Initializers <a name="cdk8s_plus_22.ContainerSecurityContext.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ContainerSecurityContext(
+  ensure_non_root: bool = None,
+  group: typing.Union[int, float] = None,
+  privileged: bool = None,
+  read_only_root_filesystem: bool = None,
+  user: typing.Union[int, float] = None
+)
+```
+
+##### `ensure_non_root`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.parameter.ensure_non_root"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.parameter.group"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.parameter.privileged"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Run container in privileged mode.
+
+Processes in privileged containers are essentially equivalent to root on the host.
+
+---
+
+##### `read_only_root_filesystem`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.parameter.read_only_root_filesystem"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Whether this container has a read-only root filesystem.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContextProps.parameter.user"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `ensure_non_root`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerSecurityContext.property.ensure_non_root"></a>
+
+```python
+ensure_non_root: bool
+```
+
+- *Type:* `bool`
+
+---
+
+##### `privileged`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerSecurityContext.property.privileged"></a>
+
+```python
+privileged: bool
+```
+
+- *Type:* `bool`
+
+---
+
+##### `read_only_root_filesystem`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerSecurityContext.property.read_only_root_filesystem"></a>
+
+```python
+read_only_root_filesystem: bool
+```
+
+- *Type:* `bool`
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContext.property.group"></a>
+
+```python
+group: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerSecurityContext.property.user"></a>
+
+```python
+user: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
 
 ---
 
@@ -8103,6 +8778,152 @@ The port to use to access the service.
 
 
 
+### PodSecurityContext <a name="cdk8s_plus_22.PodSecurityContext"></a>
+
+Holds pod-level security attributes and common container settings.
+
+#### Initializers <a name="cdk8s_plus_22.PodSecurityContext.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PodSecurityContext(
+  ensure_non_root: bool = None,
+  fs_group: typing.Union[int, float] = None,
+  fs_group_change_policy: FsGroupChangePolicy = None,
+  group: typing.Union[int, float] = None,
+  sysctls: typing.List[Sysctl] = None,
+  user: typing.Union[int, float] = None
+)
+```
+
+##### `ensure_non_root`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.parameter.ensure_non_root"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `fs_group`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.parameter.fs_group"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Volume ownership is not changed.
+
+Modify the ownership and permissions of pod volumes to this GID.
+
+---
+
+##### `fs_group_change_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.parameter.fs_group_change_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.FsGroupChangePolicy`](#cdk8s_plus_22.FsGroupChangePolicy)
+- *Default:* FsGroupChangePolicy.ALWAYS
+
+Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+
+This field will only apply to volume types which support fsGroup based ownership(and permissions).
+It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.parameter.group"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `sysctls`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.parameter.sysctls"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.Sysctl`](#cdk8s_plus_22.Sysctl)]
+- *Default:* No sysctls
+
+Sysctls hold a list of namespaced sysctls used for the pod.
+
+Pods with unsupported sysctls (by the container runtime) might fail to launch.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContextProps.parameter.user"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `ensure_non_root`<sup>Required</sup> <a name="cdk8s_plus_22.PodSecurityContext.property.ensure_non_root"></a>
+
+```python
+ensure_non_root: bool
+```
+
+- *Type:* `bool`
+
+---
+
+##### `fs_group_change_policy`<sup>Required</sup> <a name="cdk8s_plus_22.PodSecurityContext.property.fs_group_change_policy"></a>
+
+```python
+fs_group_change_policy: FsGroupChangePolicy
+```
+
+- *Type:* [`cdk8s_plus_22.FsGroupChangePolicy`](#cdk8s_plus_22.FsGroupChangePolicy)
+
+---
+
+##### `sysctls`<sup>Required</sup> <a name="cdk8s_plus_22.PodSecurityContext.property.sysctls"></a>
+
+```python
+sysctls: typing.List[Sysctl]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Sysctl`](#cdk8s_plus_22.Sysctl)]
+
+---
+
+##### `fs_group`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContext.property.fs_group"></a>
+
+```python
+fs_group: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContext.property.group"></a>
+
+```python
+group: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSecurityContext.property.user"></a>
+
+```python
+user: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+
 ### PodSpec <a name="cdk8s_plus_22.PodSpec"></a>
 
 - *Implements:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
@@ -8118,6 +8939,7 @@ cdk8s_plus_22.PodSpec(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None
 )
@@ -8169,6 +8991,15 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.service_account"></a>
 
 - *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
@@ -8216,6 +9047,7 @@ def add_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -8332,6 +9164,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -8381,6 +9226,7 @@ def add_init_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -8497,6 +9343,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -8577,6 +9436,16 @@ Use `addInitContainer` to add init containers.
 
 ---
 
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.volumes"></a>
 
 ```python
@@ -8631,6 +9500,7 @@ cdk8s_plus_22.PodTemplate(
   containers: typing.List[ContainerProps] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None
@@ -8680,6 +9550,15 @@ Init containers cannot currently be added ,removed or updated.
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -9327,6 +10206,7 @@ def add_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -9443,6 +10323,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -9492,6 +10385,7 @@ def add_init_container(
   port: typing.Union[int, float] = None,
   readiness: Probe = None,
   resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
   startup: Probe = None,
   volume_mounts: typing.List[VolumeMount] = None,
   working_dir: str = None
@@ -9608,6 +10502,19 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* Default security context.
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -9973,6 +10880,24 @@ The ipAddress of the node.
 #### `POD_IPS` <a name="cdk8s_plus_22.EnvFieldPaths.POD_IPS"></a>
 
 The ipAddresess of the pod.
+
+---
+
+
+### FsGroupChangePolicy <a name="FsGroupChangePolicy"></a>
+
+#### `ON_ROOT_MISMATCH` <a name="cdk8s_plus_22.FsGroupChangePolicy.ON_ROOT_MISMATCH"></a>
+
+Only change permissions and ownership if permission and ownership of root directory does not match with expected permissions of the volume.
+
+This could help shorten the time it takes to change ownership and permission of a volume
+
+---
+
+
+#### `ALWAYS` <a name="cdk8s_plus_22.FsGroupChangePolicy.ALWAYS"></a>
+
+Always change permission and ownership of the volume when volume is mounted.
 
 ---
 
