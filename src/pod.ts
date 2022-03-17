@@ -285,43 +285,43 @@ export interface PodSecurityContextProps {
   readonly fsGroup?: number;
 
   /**
-    * Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
-    * This field will only apply to volume types which support fsGroup based ownership(and permissions).
-    * It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
-    *
-    * @default FsGroupChangePolicy.ALWAYS
-    */
+   * Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+   * This field will only apply to volume types which support fsGroup based ownership(and permissions).
+   * It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+   *
+   * @default FsGroupChangePolicy.ALWAYS
+   */
   readonly fsGroupChangePolicy?: FsGroupChangePolicy;
 
   /**
-    * The UID to run the entrypoint of the container process.
-    *
-    * @default - User specified in image metadata
-    */
+   * The UID to run the entrypoint of the container process.
+   *
+   * @default - User specified in image metadata
+   */
   readonly user?: number;
 
   /**
-    * The GID to run the entrypoint of the container process.
-    *
-    * @default - Group configured by container runtime
-    */
+   * The GID to run the entrypoint of the container process.
+   *
+   * @default - Group configured by container runtime
+   */
   readonly group?: number;
 
   /**
-    * Indicates that the container must run as a non-root user.
-    * If true, the Kubelet will validate the image at runtime to ensure that it does
-    * not run as UID 0 (root) and fail to start the container if it does.
-    *
-    * @default false
-    */
+   * Indicates that the container must run as a non-root user.
+   * If true, the Kubelet will validate the image at runtime to ensure that it does
+   * not run as UID 0 (root) and fail to start the container if it does.
+   *
+   * @default false
+   */
   readonly ensureNonRoot?: boolean;
 
   /**
-    * Sysctls hold a list of namespaced sysctls used for the pod.
-    * Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    *
-    * @default - No sysctls
-    */
+   * Sysctls hold a list of namespaced sysctls used for the pod.
+   * Pods with unsupported sysctls (by the container runtime) might fail to launch.
+   *
+   * @default - No sysctls
+   */
   readonly sysctls?: Sysctl[];
 }
 
