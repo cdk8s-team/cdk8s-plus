@@ -1,5 +1,6 @@
-const path = require('path');
-const { cdk, javascript } = require('projen');
+import * as path from 'path';
+import { cdk, javascript } from 'projen';
+import { generateKinds } from './projenrc/gen-kinds';
 
 // the latest version of k8s we support
 const LATEST_SUPPORTED_K8S_VERSION = '22';
@@ -11,10 +12,11 @@ const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 const project = new cdk.JsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
   description: `cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-${SPEC_VERSION} synthesizes Kubernetes manifests for Kubernetes ${K8S_VERSION}`,
+  projenrcTs: true,
 
   repositoryUrl: 'https://github.com/cdk8s-team/cdk8s-plus.git',
-  authorName: 'Amazon Web Services',
-  authorUrl: 'https://aws.amazon.com',
+  author: 'Amazon Web Services',
+  authorAddress: 'https://aws.amazon.com',
   keywords: [
     'cdk',
     'kubernetes',
@@ -44,6 +46,7 @@ const project = new cdk.JsiiProject({
     'cdk8s',
     'cdk8s-cli',
     'constructs',
+    'snake-case',
   ],
 
   majorVersion: 1,
@@ -82,8 +85,8 @@ const project = new cdk.JsiiProject({
     workflowOptions: {
       branches: [
         `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`,
-        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
-        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
+        `k8s-${Number(LATEST_SUPPORTED_K8S_VERSION) - 1}/main`,
+        `k8s-${Number(LATEST_SUPPORTED_K8S_VERSION) - 2}/main`,
       ],
 
       // run upgrade-dependencies workflow at a different hour than other cdk8s
@@ -102,10 +105,12 @@ const importTask = project.addTask('import', {
 });
 project.compileTask.prependSpawn(importTask);
 
-const docgenTask = project.tasks.tryFind('docgen');
+const docgenTask = project.tasks.tryFind('docgen')!;
 docgenTask.reset();
 docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
 docgenTask.exec('jsii-docgen -l python -o docs/python.md');
 docgenTask.exec('jsii-docgen -l java -o docs/java.md');
+
+generateKinds(project, 'api-resources.txt', 'src/kinds.ts');
 
 project.synth();

@@ -42,7 +42,12 @@ export class ServiceAccount extends Resource implements IServiceAccount {
    * @param name The name of the service account resource.
    */
   public static fromServiceAccountName(name: string): IServiceAccount {
-    return { name: name };
+    return {
+      apiVersion: 'v1',
+      apiGroup: '',
+      kind: 'ServiceAccount',
+      name,
+    };
   }
 
   /**

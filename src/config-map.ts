@@ -52,7 +52,12 @@ export class ConfigMap extends Resource implements IConfigMap {
    * @param name The name of the config map to import
    */
   public static fromConfigMapName(name: string): IConfigMap {
-    return { name };
+    return {
+      apiVersion: 'v1',
+      apiGroup: '',
+      kind: 'ConfigMap',
+      name,
+    };
   }
 
   /**

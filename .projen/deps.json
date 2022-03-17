@@ -87,12 +87,21 @@
       "type": "build"
     },
     {
+      "name": "snake-case",
+      "type": "build"
+    },
+    {
       "name": "standard-version",
       "version": "^9",
       "type": "build"
     },
     {
       "name": "ts-jest",
+      "type": "build"
+    },
+    {
+      "name": "ts-node",
+      "version": "^9",
       "type": "build"
     },
     {

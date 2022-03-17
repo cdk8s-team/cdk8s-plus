@@ -1,6 +1,7 @@
 import { ApiObject, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
+import { IGrantee } from './grants';
 import * as k8s from './imports/k8s';
 import { filterUndefined, undefinedIfEmpty } from './utils';
 
@@ -25,13 +26,112 @@ export abstract class RoleBase extends Resource implements IResource {
   }
 
   /**
-   * Adds a policy rule to the role.
+   * Directly add a custom policy rule to the role.
    * @param rule The rule to add
    */
   public addRule(rule: PolicyRuleProps): PolicyRule {
     const impl = new PolicyRule(rule);
     this._rules.push(impl);
     return impl;
+  }
+
+  /**
+   * Grant "create" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantCreate(...grantees: IGrantee[]): void {
+    this.grant(['create'], grantees);
+  }
+
+  /**
+   * Grant "get" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantGet(...grantees: IGrantee[]): void {
+    this.grant(['get'], grantees);
+  }
+
+  /**
+   * Grant "list" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantList(...grantees: IGrantee[]): void {
+    this.grant(['list'], grantees);
+  }
+
+  /**
+   * Grant "watch" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantWatch(...grantees: IGrantee[]): void {
+    this.grant(['watch'], grantees);
+  }
+
+  /**
+   * Grant "update" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantUpdate(...grantees: IGrantee[]): void {
+    this.grant(['update'], grantees);
+  }
+
+  /**
+   * Grant "patch" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantPatch(...grantees: IGrantee[]): void {
+    this.grant(['patch'], grantees);
+  }
+
+  /**
+   * Grant "delete" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantDelete(...grantees: IGrantee[]): void {
+    this.grant(['delete'], grantees);
+  }
+
+  /**
+   * Grant "deletecollection" permission for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantDeleteCollection(...grantees: IGrantee[]): void {
+    this.grant(['deletecollection'], grantees);
+  }
+
+  /**
+   * Grant "get", "list", and "watch" permissions for the grantee.
+   * @param grantees The resource(s) to apply to
+   */
+  public grantRead(...grantees: IGrantee[]): void {
+    this.grant(['get', 'list', 'watch'], grantees);
+  }
+
+  /**
+   * Grant "get", "list", "watch", "create", "update", "patch", "delete", and
+   * "deletecollection" permissions for the grantee.
+   *
+   * @param grantees The resource(s) to apply to
+   */
+  public grantReadWrite(...grantees: IGrantee[]): void {
+    this.grant(['get', 'list', 'watch', 'create', 'update', 'patch', 'delete', 'deletecollection'], grantees);
+  }
+
+  /**
+   * Grant permission to perform a list of HTTP verbs on the grantee.
+   *
+   * @param grantees The resource(s) to apply to
+   * @see https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
+   */
+  public grant(verbs: string[], grantees: IGrantee[]): void {
+    for (const grantee of grantees) {
+      this.addRule({
+        apiGroups: grantee.apiGroups,
+        resources: grantee.resources,
+        resourceNames: grantee.resourceNames,
+        verbs,
+      });
+    }
   }
 
   /**
@@ -55,7 +155,7 @@ export interface IRole extends IResource {
  * Options for `Role`.
  */
 export interface RoleProps extends RoleCommonProps {
-
+  readonly namespace: string;
 }
 
 /**
@@ -68,7 +168,7 @@ export class Role extends RoleBase implements IRole {
    */
   protected readonly apiObject: ApiObject;
 
-  constructor(scope: Construct, id: string, props: RoleProps = {}) {
+  constructor(scope: Construct, id: string, props: RoleProps) {
     super(scope, id);
 
     this.apiObject = new k8s.KubeRole(this, 'Resource', {
@@ -126,12 +226,12 @@ export class ClusterRole extends RoleBase implements IClusterRole {
 
   /**
    * Add the rules of the argument ClusterRole into this ClusterRole.
-   * @param partialRole
+   * @param role
    */
-  public aggregateFrom(partialRole: ClusterRole): void {
+  public aggregateFrom(role: ClusterRole): void {
     const name = Names.toLabelValue(this);
     const selector = `cdk8s.cluster-role/aggregate-to-${name}`;
-    partialRole.metadata.addLabel(selector, 'true');
+    role.metadata.addLabel(selector, 'true');
     this._labelSelector[selector] = 'true';
   }
 
@@ -161,7 +261,7 @@ export interface PolicyRuleProps {
 
   /**
    * NonResourceURLs is a set of partial urls that a user should have access to.
-   * *s are allowed, but only as the full, final step in the path Since
+   * *s are allowed, but only as the full, final step in the path. Since
    * non-resource URLs are not namespaced, this field is only applicable for
    * ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
    * to API resources (such as "pods" or "secrets") or non-resource URL paths

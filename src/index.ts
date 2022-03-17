@@ -12,3 +12,5 @@ export * from './volume';
 export * from './ingress';
 export * from './probe';
 export * from './role';
+export * from './grants';
+export * from './kinds';

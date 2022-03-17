@@ -20,6 +20,21 @@ export interface IResource {
    * The Kubernetes name of this resource.
    */
   readonly name: string;
+
+  /**
+   * The object's API version (e.g. `authorization.k8s.io/v1`)
+   */
+  readonly apiVersion: string;
+
+  /**
+   * The group portion of the API version (e.g. `authorization.k8s.io`)
+   */
+  readonly apiGroup: string;
+
+  /**
+   * The object kind.
+   */
+  readonly kind: string;
 }
 
 /**
@@ -42,5 +57,26 @@ export abstract class Resource extends Construct implements IResource {
    */
   public get name(): string {
     return this.apiObject.name;
+  }
+
+  /**
+   * The group portion of the API version (e.g. `authorization.k8s.io`).
+   */
+  public get apiVersion(): string {
+    return this.apiObject.apiVersion;
+  }
+
+  /**
+   * The group portion of the API version (e.g. `authorization.k8s.io`).
+   */
+  public get apiGroup(): string {
+    return this.apiObject.apiGroup;
+  }
+
+  /**
+   * The group portion of the API version (e.g. `authorization.k8s.io`).
+   */
+  public get kind(): string {
+    return this.apiObject.kind;
   }
 }

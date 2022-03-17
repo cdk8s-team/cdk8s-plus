@@ -4,24 +4,31 @@ import * as kplus from '../src';
 
 describe('Role', () => {
   test('defaultChild', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
     // WHEN
     const defaultChild = Node.of(
-      new kplus.Role(chart, 'my-role'),
+      new kplus.Role(chart, 'my-role', {
+        namespace: 'default',
+      }),
     ).defaultChild as ApiObject;
 
     // THEN
     expect(defaultChild.kind).toEqual('Role');
+
   });
 
   test('minimal definition', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
     // WHEN
-    new kplus.Role(chart, 'my-role');
+    new kplus.Role(chart, 'my-role', {
+      namespace: 'default',
+    });
 
     // THEN
     expect(Testing.synth(chart)).toMatchInlineSnapshot(`
@@ -37,42 +44,104 @@ Array [
 `);
   });
 
-  test('with a basic rule', () => {
+  test('with a custom rule', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
     // WHEN
-    const role = new kplus.Role(chart, 'pod-reader');
+    const role = new kplus.Role(chart, 'pod-reader', {
+      namespace: 'default',
+    });
     role.addRule({
       apiGroups: [''],
       resources: ['pods'],
       verbs: ['get', 'watch', 'list'],
     });
 
+    // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[0]?.rules).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "apiGroups": Array [
-      "",
-    ],
-    "resources": Array [
-      "pods",
-    ],
-    "verbs": Array [
-      "get",
-      "watch",
-      "list",
-    ],
-  },
-]
-`);
+    expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        verbs: ['get', 'watch', 'list'],
+      },
+    ]));
+
   });
+
+  test('can be granted read access to a pod and secret', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'my-pod', {
+      containers: [
+        {
+          image: 'nginx',
+        },
+      ],
+    });
+    const secret = new kplus.Secret(chart, 'Secret', {
+      stringData: {
+        key: 'value',
+      },
+      type: 'kubernetes.io/tls',
+    });
+
+    // WHEN
+    const role = new kplus.Role(chart, 'pod-reader', {
+      namespace: 'default',
+    });
+    role.grantRead(kplus.Grantee.fromObjects(pod, secret));
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[2].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resourceNames: [pod.name, secret.name],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
+  });
+
+  test('can be granted read access to all pods and secrets in a namespace', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const role = new kplus.Role(chart, 'pod-reader', {
+      namespace: 'default',
+    });
+    role.grantRead(kplus.Kind.SECRET, kplus.Kind.POD);
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[0].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
+  });
+
 });
 
 describe('ClusterRole', () => {
-  // GIVEN
+
   test('defaultChild', () => {
+
+    // GIVEN
     const chart = Testing.chart();
 
     // WHEN
@@ -82,9 +151,11 @@ describe('ClusterRole', () => {
 
     // THEN
     expect(defaultChild.kind).toEqual('ClusterRole');
+
   });
 
   test('minimal definition', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
@@ -103,9 +174,11 @@ Array [
   },
 ]
 `);
+
   });
 
-  test('with a basic rule', () => {
+  test('with a custom rule', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
@@ -117,27 +190,78 @@ Array [
       verbs: ['get', 'watch', 'list'],
     });
 
+    // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[0]?.rules).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "apiGroups": Array [
-      "",
-    ],
-    "resources": Array [
-      "pods",
-    ],
-    "verbs": Array [
-      "get",
-      "watch",
-      "list",
-    ],
-  },
-]
-`);
+    expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        verbs: ['get', 'watch', 'list'],
+      },
+    ]));
+
+  });
+
+  test('can be granted read access to a pod and secret', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'my-pod', {
+      containers: [
+        {
+          image: 'nginx',
+        },
+      ],
+    });
+    const secret = new kplus.Secret(chart, 'Secret', {
+      stringData: {
+        key: 'value',
+      },
+      type: 'kubernetes.io/tls',
+    });
+
+    // WHEN
+    const role = new kplus.ClusterRole(chart, 'my-cluster-role');
+    role.grantRead(kplus.Grantee.fromObjects(pod, secret));
+
+    const manifest = Testing.synth(chart);
+    expect(manifest[2].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resourceNames: [pod.name, secret.name],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
+  });
+
+  test('can be granted read access to all pods and secrets in the cluster', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const role = new kplus.ClusterRole(chart, 'my-cluster-role');
+    role.grantRead(kplus.Kind.SECRET, kplus.Kind.POD);
+
+    const manifest = Testing.synth(chart);
+    expect(manifest[0].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
   });
 
   test('can be aggregated', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
@@ -183,9 +307,11 @@ Object {
   ],
 }
 `);
+
   });
 
   test('custom aggregation labels can be added', () => {
+
     // GIVEN
     const chart = Testing.chart();
 
@@ -204,40 +330,18 @@ Object {
 
     // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "aggregationRule": Object {
-      "clusterRoleSelectors": Array [
-        Object {
-          "matchLabels": Object {
-            "rbac.authorization.k8s.io/aggregate-to-view": "true",
-          },
-        },
-      ],
-    },
-    "apiVersion": "rbac.authorization.k8s.io/v1",
-    "kind": "ClusterRole",
-    "metadata": Object {
-      "name": "test-secrets-reader-c8685656",
-    },
-    "rules": Array [
-      Object {
-        "apiGroups": Array [
-          "",
-        ],
-        "resources": Array [
-          "secrets",
-        ],
-        "verbs": Array [
-          "get",
-          "watch",
-          "list",
-        ],
+    expect(manifest[0].aggregationRule).toMatchInlineSnapshot(`
+Object {
+  "clusterRoleSelectors": Array [
+    Object {
+      "matchLabels": Object {
+        "rbac.authorization.k8s.io/aggregate-to-view": "true",
       },
-    ],
-  },
-]
+    },
+  ],
+}
 `);
+
   });
+
 });

@@ -55,7 +55,12 @@ export class Secret extends Resource implements ISecret {
    * @param name The name of the secret to reference.
    */
   public static fromSecretName(name: string): ISecret {
-    return { name };
+    return {
+      apiVersion: 'v1',
+      apiGroup: '',
+      kind: 'Secret',
+      name,
+    };
   }
 
   /**

@@ -39,10 +39,10 @@ new ClusterRole(scope: Construct, id: string, props?: ClusterRoleProps)
 ##### `aggregateFrom` <a name="cdk8s-plus-22.ClusterRole.aggregateFrom"></a>
 
 ```typescript
-public aggregateFrom(partialRole: ClusterRole)
+public aggregateFrom(role: ClusterRole)
 ```
 
-###### `partialRole`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.partialRole"></a>
+###### `role`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.role"></a>
 
 - *Type:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole)
 
@@ -960,6 +960,42 @@ Options.
 
 #### Properties <a name="Properties"></a>
 
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.Resource.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.Resource.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.Resource.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
 ##### `metadata`<sup>Required</sup> <a name="cdk8s-plus-22.Resource.property.metadata"></a>
 
 ```typescript
@@ -994,7 +1030,7 @@ Role is a namespaced, logical grouping of PolicyRules that can be referenced as 
 ```typescript
 import { Role } from 'cdk8s-plus-22'
 
-new Role(scope: Construct, id: string, props?: RoleProps)
+new Role(scope: Construct, id: string, props: RoleProps)
 ```
 
 ##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.scope"></a>
@@ -1009,7 +1045,7 @@ new Role(scope: Construct, id: string, props?: RoleProps)
 
 ---
 
-##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.Role.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.props"></a>
 
 - *Type:* [`cdk8s-plus-22.RoleProps`](#cdk8s-plus-22.RoleProps)
 
@@ -1062,6 +1098,166 @@ public addRule(rule: PolicyRuleProps)
 - *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)
 
 The rule to add.
+
+---
+
+##### `grant` <a name="cdk8s-plus-22.RoleBase.grant"></a>
+
+```typescript
+public grant(verbs: string[], grantees: IGrantee[])
+```
+
+###### `verbs`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.verbs"></a>
+
+- *Type:* `string`[]
+
+---
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)[]
+
+The resource(s) to apply to.
+
+---
+
+##### `grantCreate` <a name="cdk8s-plus-22.RoleBase.grantCreate"></a>
+
+```typescript
+public grantCreate(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantDelete` <a name="cdk8s-plus-22.RoleBase.grantDelete"></a>
+
+```typescript
+public grantDelete(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantDeleteCollection` <a name="cdk8s-plus-22.RoleBase.grantDeleteCollection"></a>
+
+```typescript
+public grantDeleteCollection(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantGet` <a name="cdk8s-plus-22.RoleBase.grantGet"></a>
+
+```typescript
+public grantGet(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantList` <a name="cdk8s-plus-22.RoleBase.grantList"></a>
+
+```typescript
+public grantList(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantPatch` <a name="cdk8s-plus-22.RoleBase.grantPatch"></a>
+
+```typescript
+public grantPatch(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantRead` <a name="cdk8s-plus-22.RoleBase.grantRead"></a>
+
+```typescript
+public grantRead(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantReadWrite` <a name="cdk8s-plus-22.RoleBase.grantReadWrite"></a>
+
+```typescript
+public grantReadWrite(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantUpdate` <a name="cdk8s-plus-22.RoleBase.grantUpdate"></a>
+
+```typescript
+public grantUpdate(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
+
+---
+
+##### `grantWatch` <a name="cdk8s-plus-22.RoleBase.grantWatch"></a>
+
+```typescript
+public grantWatch(grantees: IGrantee)
+```
+
+###### `grantees`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.grantees"></a>
+
+- *Type:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+The resource(s) to apply to.
 
 ---
 
@@ -3340,6 +3536,36 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
+### KindOptions <a name="cdk8s-plus-22.KindOptions"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { KindOptions } from 'cdk8s-plus-22'
+
+const kindOptions: KindOptions = { ... }
+```
+
+##### `apiGroups`<sup>Required</sup> <a name="cdk8s-plus-22.KindOptions.property.apiGroups"></a>
+
+```typescript
+public readonly apiGroups: string[];
+```
+
+- *Type:* `string`[]
+
+---
+
+##### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.KindOptions.property.resources"></a>
+
+```typescript
+public readonly resources: string[];
+```
+
+- *Type:* `string`[]
+
+---
+
 ### MemoryResources <a name="cdk8s-plus-22.MemoryResources"></a>
 
 Memory request and limit.
@@ -3823,7 +4049,7 @@ public readonly nonResourceUrLs: string[];
 
 NonResourceURLs is a set of partial urls that a user should have access to.
 
-*s are allowed, but only as the full, final step in the path Since
+*s are allowed, but only as the full, final step in the path. Since
 non-resource URLs are not namespaced, this field is only applicable for
 ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
 to API resources (such as "pods" or "secrets") or non-resource URL paths
@@ -4068,6 +4294,16 @@ public readonly rules: PolicyRuleProps[];
 ```
 
 - *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)[]
+
+---
+
+##### `namespace`<sup>Required</sup> <a name="cdk8s-plus-22.RoleProps.property.namespace"></a>
+
+```typescript
+public readonly namespace: string;
+```
+
+- *Type:* `string`
 
 ---
 
@@ -5396,6 +5632,51 @@ public readonly valueFrom: any;
 ---
 
 
+### Grantee <a name="cdk8s-plus-22.Grantee"></a>
+
+A class with utility methods for creating grantees.
+
+#### Initializers <a name="cdk8s-plus-22.Grantee.Initializer"></a>
+
+```typescript
+import { Grantee } from 'cdk8s-plus-22'
+
+new Grantee()
+```
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromKinds` <a name="cdk8s-plus-22.Grantee.fromKinds"></a>
+
+```typescript
+import { Grantee } from 'cdk8s-plus-22'
+
+Grantee.fromKinds(kinds: Kind)
+```
+
+###### `kinds`<sup>Required</sup> <a name="cdk8s-plus-22.Grantee.parameter.kinds"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+---
+
+##### `fromObjects` <a name="cdk8s-plus-22.Grantee.fromObjects"></a>
+
+```typescript
+import { Grantee } from 'cdk8s-plus-22'
+
+Grantee.fromObjects(objects: IResource)
+```
+
+###### `objects`<sup>Required</sup> <a name="cdk8s-plus-22.Grantee.parameter.objects"></a>
+
+- *Type:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+---
+
+
+
 ### IngressBackend <a name="cdk8s-plus-22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -5426,6 +5707,493 @@ The service object.
 ---
 
 
+
+### Kind <a name="cdk8s-plus-22.Kind"></a>
+
+- *Implements:* [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+Represents information about an API resource type.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `custom` <a name="cdk8s-plus-22.Kind.custom"></a>
+
+```typescript
+import { Kind } from 'cdk8s-plus-22'
+
+Kind.custom(options: KindOptions)
+```
+
+###### `options`<sup>Required</sup> <a name="cdk8s-plus-22.Kind.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.KindOptions`](#cdk8s-plus-22.KindOptions)
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `apiGroups`<sup>Required</sup> <a name="cdk8s-plus-22.Kind.property.apiGroups"></a>
+
+```typescript
+public readonly apiGroups: string[];
+```
+
+- *Type:* `string`[]
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.Kind.property.resources"></a>
+
+```typescript
+public readonly resources: string[];
+```
+
+- *Type:* `string`[]
+
+---
+
+#### Constants <a name="Constants"></a>
+
+##### `API_SERVICE` <a name="cdk8s-plus-22.Kind.property.API_SERVICE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for APIService.
+
+---
+
+##### `BINDING` <a name="cdk8s-plus-22.Kind.property.BINDING"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Binding.
+
+---
+
+##### `CERTIFICATE_SIGNING_REQUEST` <a name="cdk8s-plus-22.Kind.property.CERTIFICATE_SIGNING_REQUEST"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for CertificateSigningRequest.
+
+---
+
+##### `CLUSTER_ROLE` <a name="cdk8s-plus-22.Kind.property.CLUSTER_ROLE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ClusterRole.
+
+---
+
+##### `CLUSTER_ROLE_BINDING` <a name="cdk8s-plus-22.Kind.property.CLUSTER_ROLE_BINDING"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ClusterRoleBinding.
+
+---
+
+##### `COMPONENT_STATUS` <a name="cdk8s-plus-22.Kind.property.COMPONENT_STATUS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ComponentStatus.
+
+---
+
+##### `CONFIG_MAP` <a name="cdk8s-plus-22.Kind.property.CONFIG_MAP"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ConfigMap.
+
+---
+
+##### `CONTROLLER_REVISION` <a name="cdk8s-plus-22.Kind.property.CONTROLLER_REVISION"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ControllerRevision.
+
+---
+
+##### `CRON_JOB` <a name="cdk8s-plus-22.Kind.property.CRON_JOB"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for CronJob.
+
+---
+
+##### `CSI_DRIVER` <a name="cdk8s-plus-22.Kind.property.CSI_DRIVER"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for CSIDriver.
+
+---
+
+##### `CSI_NODE` <a name="cdk8s-plus-22.Kind.property.CSI_NODE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for CSINode.
+
+---
+
+##### `CSI_STORAGE_CAPACITY` <a name="cdk8s-plus-22.Kind.property.CSI_STORAGE_CAPACITY"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for CSIStorageCapacity.
+
+---
+
+##### `CUSTOM_RESOURCE_DEFINITION` <a name="cdk8s-plus-22.Kind.property.CUSTOM_RESOURCE_DEFINITION"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for CustomResourceDefinition.
+
+---
+
+##### `DAEMON_SET` <a name="cdk8s-plus-22.Kind.property.DAEMON_SET"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for DaemonSet.
+
+---
+
+##### `DEPLOYMENT` <a name="cdk8s-plus-22.Kind.property.DEPLOYMENT"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Deployment.
+
+---
+
+##### `ENDPOINT_SLICE` <a name="cdk8s-plus-22.Kind.property.ENDPOINT_SLICE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for EndpointSlice.
+
+---
+
+##### `ENDPOINTS` <a name="cdk8s-plus-22.Kind.property.ENDPOINTS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Endpoints.
+
+---
+
+##### `EVENT` <a name="cdk8s-plus-22.Kind.property.EVENT"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Event.
+
+---
+
+##### `FLOW_SCHEMA` <a name="cdk8s-plus-22.Kind.property.FLOW_SCHEMA"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for FlowSchema.
+
+---
+
+##### `HORIZONTAL_POD_AUTOSCALER` <a name="cdk8s-plus-22.Kind.property.HORIZONTAL_POD_AUTOSCALER"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for HorizontalPodAutoscaler.
+
+---
+
+##### `INGRESS` <a name="cdk8s-plus-22.Kind.property.INGRESS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Ingress.
+
+---
+
+##### `INGRESS_CLASS` <a name="cdk8s-plus-22.Kind.property.INGRESS_CLASS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for IngressClass.
+
+---
+
+##### `JOB` <a name="cdk8s-plus-22.Kind.property.JOB"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Job.
+
+---
+
+##### `LEASE` <a name="cdk8s-plus-22.Kind.property.LEASE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Lease.
+
+---
+
+##### `LIMIT_RANGE` <a name="cdk8s-plus-22.Kind.property.LIMIT_RANGE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for LimitRange.
+
+---
+
+##### `LOCAL_SUBJECT_ACCESS_REVIEW` <a name="cdk8s-plus-22.Kind.property.LOCAL_SUBJECT_ACCESS_REVIEW"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for LocalSubjectAccessReview.
+
+---
+
+##### `MUTATING_WEBHOOK_CONFIGURATION` <a name="cdk8s-plus-22.Kind.property.MUTATING_WEBHOOK_CONFIGURATION"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for MutatingWebhookConfiguration.
+
+---
+
+##### `NAMESPACE` <a name="cdk8s-plus-22.Kind.property.NAMESPACE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Namespace.
+
+---
+
+##### `NETWORK_POLICY` <a name="cdk8s-plus-22.Kind.property.NETWORK_POLICY"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for NetworkPolicy.
+
+---
+
+##### `NODE` <a name="cdk8s-plus-22.Kind.property.NODE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Node.
+
+---
+
+##### `PERSISTENT_VOLUME` <a name="cdk8s-plus-22.Kind.property.PERSISTENT_VOLUME"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PersistentVolume.
+
+---
+
+##### `PERSISTENT_VOLUME_CLAIM` <a name="cdk8s-plus-22.Kind.property.PERSISTENT_VOLUME_CLAIM"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PersistentVolumeClaim.
+
+---
+
+##### `POD` <a name="cdk8s-plus-22.Kind.property.POD"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Pod.
+
+---
+
+##### `POD_DISRUPTION_BUDGET` <a name="cdk8s-plus-22.Kind.property.POD_DISRUPTION_BUDGET"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PodDisruptionBudget.
+
+---
+
+##### `POD_SECURITY_POLICY` <a name="cdk8s-plus-22.Kind.property.POD_SECURITY_POLICY"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PodSecurityPolicy.
+
+---
+
+##### `POD_TEMPLATE` <a name="cdk8s-plus-22.Kind.property.POD_TEMPLATE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PodTemplate.
+
+---
+
+##### `PRIORITY_CLASS` <a name="cdk8s-plus-22.Kind.property.PRIORITY_CLASS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PriorityClass.
+
+---
+
+##### `PRIORITY_LEVEL_CONFIGURATION` <a name="cdk8s-plus-22.Kind.property.PRIORITY_LEVEL_CONFIGURATION"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for PriorityLevelConfiguration.
+
+---
+
+##### `REPLICA_SET` <a name="cdk8s-plus-22.Kind.property.REPLICA_SET"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ReplicaSet.
+
+---
+
+##### `REPLICATION_CONTROLLER` <a name="cdk8s-plus-22.Kind.property.REPLICATION_CONTROLLER"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ReplicationController.
+
+---
+
+##### `RESOURCE_QUOTA` <a name="cdk8s-plus-22.Kind.property.RESOURCE_QUOTA"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ResourceQuota.
+
+---
+
+##### `ROLE` <a name="cdk8s-plus-22.Kind.property.ROLE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Role.
+
+---
+
+##### `ROLE_BINDING` <a name="cdk8s-plus-22.Kind.property.ROLE_BINDING"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for RoleBinding.
+
+---
+
+##### `RUNTIME_CLASS` <a name="cdk8s-plus-22.Kind.property.RUNTIME_CLASS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for RuntimeClass.
+
+---
+
+##### `SECRET` <a name="cdk8s-plus-22.Kind.property.SECRET"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Secret.
+
+---
+
+##### `SELF_SUBJECT_ACCESS_REVIEW` <a name="cdk8s-plus-22.Kind.property.SELF_SUBJECT_ACCESS_REVIEW"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for SelfSubjectAccessReview.
+
+---
+
+##### `SELF_SUBJECT_RULES_REVIEW` <a name="cdk8s-plus-22.Kind.property.SELF_SUBJECT_RULES_REVIEW"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for SelfSubjectRulesReview.
+
+---
+
+##### `SERVICE` <a name="cdk8s-plus-22.Kind.property.SERVICE"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for Service.
+
+---
+
+##### `SERVICE_ACCOUNT` <a name="cdk8s-plus-22.Kind.property.SERVICE_ACCOUNT"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ServiceAccount.
+
+---
+
+##### `STATEFUL_SET` <a name="cdk8s-plus-22.Kind.property.STATEFUL_SET"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for StatefulSet.
+
+---
+
+##### `STORAGE_CLASS` <a name="cdk8s-plus-22.Kind.property.STORAGE_CLASS"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for StorageClass.
+
+---
+
+##### `SUBJECT_ACCESS_REVIEW` <a name="cdk8s-plus-22.Kind.property.SUBJECT_ACCESS_REVIEW"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for SubjectAccessReview.
+
+---
+
+##### `TOKEN_REVIEW` <a name="cdk8s-plus-22.Kind.property.TOKEN_REVIEW"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for TokenReview.
+
+---
+
+##### `VALIDATING_WEBHOOK_CONFIGURATION` <a name="cdk8s-plus-22.Kind.property.VALIDATING_WEBHOOK_CONFIGURATION"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for ValidatingWebhookConfiguration.
+
+---
+
+##### `VOLUME_ATTACHMENT` <a name="cdk8s-plus-22.Kind.property.VOLUME_ATTACHMENT"></a>
+
+- *Type:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind)
+
+API resource information for VolumeAttachment.
+
+---
 
 ### PodSpec <a name="cdk8s-plus-22.PodSpec"></a>
 
@@ -5827,8 +6595,46 @@ public readonly name: string;
 
 - *Implemented By:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole)
 
+Represents a cluster-level role.
+
 
 #### Properties <a name="Properties"></a>
+
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.IClusterRole.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.IClusterRole.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The object's API version (e.g. `authorization.k8s.io/v1`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.IClusterRole.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The object kind.
+
+---
 
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IClusterRole.property.name"></a>
 
@@ -5853,6 +6659,42 @@ Represents a config map.
 
 #### Properties <a name="Properties"></a>
 
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.IConfigMap.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.IConfigMap.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The object's API version (e.g. `authorization.k8s.io/v1`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.IConfigMap.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The object kind.
+
+---
+
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IConfigMap.property.name"></a>
 
 ```typescript
@@ -5862,6 +6704,45 @@ public readonly name: string;
 - *Type:* `string`
 
 The Kubernetes name of this resource.
+
+---
+
+### IGrantee <a name="cdk8s-plus-22.IGrantee"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.Kind`](#cdk8s-plus-22.Kind), [`cdk8s-plus-22.IGrantee`](#cdk8s-plus-22.IGrantee)
+
+Represents a resource or collection of resources that can be the target of a rule in a Role or ClusterRole.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `apiGroups`<sup>Required</sup> <a name="cdk8s-plus-22.IGrantee.property.apiGroups"></a>
+
+```typescript
+public readonly apiGroups: string[];
+```
+
+- *Type:* `string`[]
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="cdk8s-plus-22.IGrantee.property.resourceNames"></a>
+
+```typescript
+public readonly resourceNames: string[];
+```
+
+- *Type:* `string`[]
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.IGrantee.property.resources"></a>
+
+```typescript
+public readonly resources: string[];
+```
+
+- *Type:* `string`[]
 
 ---
 
@@ -6043,6 +6924,42 @@ Represents a resource.
 
 #### Properties <a name="Properties"></a>
 
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.IResource.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.IResource.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The object's API version (e.g. `authorization.k8s.io/v1`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.IResource.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The object kind.
+
+---
+
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IResource.property.name"></a>
 
 ```typescript
@@ -6061,8 +6978,46 @@ The Kubernetes name of this resource.
 
 - *Implemented By:* [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
 
+Represents a namespaced role.
+
 
 #### Properties <a name="Properties"></a>
+
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.IRole.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.IRole.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The object's API version (e.g. `authorization.k8s.io/v1`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.IRole.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The object kind.
+
+---
 
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IRole.property.name"></a>
 
@@ -6085,6 +7040,42 @@ The Kubernetes name of this resource.
 
 #### Properties <a name="Properties"></a>
 
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.ISecret.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.ISecret.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The object's API version (e.g. `authorization.k8s.io/v1`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.ISecret.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The object kind.
+
+---
+
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.ISecret.property.name"></a>
 
 ```typescript
@@ -6105,6 +7096,42 @@ The Kubernetes name of this resource.
 
 
 #### Properties <a name="Properties"></a>
+
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.IServiceAccount.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
+---
+
+##### `apiVersion`<sup>Required</sup> <a name="cdk8s-plus-22.IServiceAccount.property.apiVersion"></a>
+
+```typescript
+public readonly apiVersion: string;
+```
+
+- *Type:* `string`
+
+The object's API version (e.g. `authorization.k8s.io/v1`).
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.IServiceAccount.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+The object kind.
+
+---
 
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IServiceAccount.property.name"></a>
 
