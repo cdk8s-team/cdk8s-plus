@@ -401,7 +401,10 @@ export interface PodSpecProps {
   /**
    * SecurityContext holds pod-level security attributes and common container settings.
    *
-   * @default - Default security context.
+   * @default
+   *
+   *   fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+   *   ensureNonRoot: false
    */
   readonly securityContext?: PodSecurityContextProps;
 

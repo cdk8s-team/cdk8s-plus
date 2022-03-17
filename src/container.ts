@@ -490,7 +490,11 @@ export interface ContainerProps {
    * If set, the fields override equivalent fields of the pod's security context.
    *
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-   * @default - Default security context.
+   * @default
+   *
+   *   ensureNonRoot: false
+   *   privileged: false
+   *   readOnlyRootFilesystem: false
    */
   readonly securityContext?: ContainerSecurityContextProps;
 }
