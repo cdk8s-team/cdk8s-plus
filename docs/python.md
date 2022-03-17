@@ -354,7 +354,8 @@ Restart policy for all containers within the pod.
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -559,7 +560,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -738,7 +741,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -1471,7 +1476,8 @@ Restart policy for all containers within the pod.
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -1689,7 +1695,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -1868,7 +1876,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -2150,7 +2160,8 @@ Restart policy for all containers within the pod.
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -2326,7 +2337,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -2505,7 +2518,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -3491,7 +3506,8 @@ Restart policy for all containers within the pod.
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -3713,7 +3729,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -3892,7 +3910,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -4672,7 +4692,9 @@ security_context: ContainerSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -4949,7 +4971,8 @@ security_context: PodSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -5916,7 +5939,8 @@ security_context: PodSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -6280,7 +6304,8 @@ security_context: PodSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -6514,7 +6539,8 @@ security_context: PodSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -6646,7 +6672,8 @@ security_context: PodSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -7519,7 +7546,8 @@ security_context: PodSecurityContextProps
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -8048,7 +8076,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -8994,7 +9024,8 @@ Restart policy for all containers within the pod.
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -9170,7 +9201,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -9349,7 +9382,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -9556,7 +9591,8 @@ Restart policy for all containers within the pod.
 ##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -10329,7 +10365,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -10508,7 +10546,9 @@ Compute resources (CPU and memory requests and limits) required by the container
 ###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
 
 - *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 

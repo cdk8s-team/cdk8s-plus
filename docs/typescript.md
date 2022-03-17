@@ -2201,7 +2201,9 @@ public readonly securityContext: ContainerSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.ContainerSecurityContextProps`](#cdk8s-plus-22.ContainerSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
 
 SecurityContext defines the security options the container should be run with.
 
@@ -2458,7 +2460,8 @@ public readonly securityContext: PodSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -3361,7 +3364,8 @@ public readonly securityContext: PodSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -3706,7 +3710,8 @@ public readonly securityContext: PodSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -3926,7 +3931,8 @@ public readonly securityContext: PodSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -4050,7 +4056,8 @@ public readonly securityContext: PodSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 
@@ -4863,7 +4870,8 @@ public readonly securityContext: PodSecurityContextProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* Default security context.
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
 
 SecurityContext holds pod-level security attributes and common container settings.
 

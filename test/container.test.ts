@@ -180,6 +180,11 @@ describe('Container', () => {
         valueFrom: undefined,
       }],
       volumeMounts: [],
+      securityContext: {
+        privileged: false,
+        readOnlyRootFilesystem: false,
+        runAsNonRoot: false,
+      },
     };
 
     expect(actual).toEqual(expected);
