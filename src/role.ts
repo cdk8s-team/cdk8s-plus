@@ -1,4 +1,4 @@
-import { ApiObject, Lazy, Names } from 'cdk8s';
+import { ApiObject, ApiObjectMetadata, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
 import { IGrantee } from './grants';
@@ -155,6 +155,10 @@ export interface IRole extends IResource {
  * Options for `Role`.
  */
 export interface RoleProps extends RoleCommonProps {
+  /**
+   * The namespace of the resources this role's permissions should apply to
+   * (required).
+   */
   readonly namespace: string;
 }
 
@@ -171,8 +175,17 @@ export class Role extends RoleBase implements IRole {
   constructor(scope: Construct, id: string, props: RoleProps) {
     super(scope, id);
 
+    if (props.metadata?.namespace && props.metadata.namespace !== props.namespace) {
+      throw new Error('If `metadata.namespace` is passed as an option, its value must match the value of `namespace`.');
+    }
+
+    const metadata: ApiObjectMetadata = {
+      ...props.metadata,
+      namespace: props.namespace,
+    };
+
     this.apiObject = new k8s.KubeRole(this, 'Resource', {
-      metadata: props.metadata,
+      metadata,
       rules: Lazy.any({ produce: () => this.synthesizeRules() }),
     });
   }

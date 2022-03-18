@@ -38,6 +38,7 @@ Array [
     "kind": "Role",
     "metadata": Object {
       "name": "test-my-role-c8fa903b",
+      "namespace": "default",
     },
   },
 ]
@@ -68,6 +69,22 @@ Array [
         verbs: ['get', 'watch', 'list'],
       },
     ]));
+
+  });
+
+  test('with a custom namespace', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    new kplus.Role(chart, 'pod-reader', {
+      namespace: 'my-namespace',
+    });
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[0].metadata.namespace).toEqual('my-namespace');
 
   });
 
