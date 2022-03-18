@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps } from './pod';
+import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext } from './pod';
 import { Service } from './service';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
@@ -152,6 +152,10 @@ export class StatefulSet extends Resource implements IPodTemplate {
     return this._podTemplate.containers;
   }
 
+  public get initContainers(): Container[] {
+    return this._podTemplate.initContainers;
+  }
+
   public get volumes(): Volume[] {
     return this._podTemplate.volumes;
   }
@@ -179,8 +183,16 @@ export class StatefulSet extends Resource implements IPodTemplate {
     return this._podTemplate.addContainer(container);
   }
 
+  public addInitContainer(container: ContainerProps): Container {
+    return this._podTemplate.addInitContainer(container);
+  }
+
   public addVolume(volume: Volume): void {
     return this._podTemplate.addVolume(volume);
+  }
+
+  public get securityContext(): PodSecurityContext {
+    return this._podTemplate.securityContext;
   }
 
   /**

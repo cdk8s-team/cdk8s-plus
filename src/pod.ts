@@ -21,6 +21,13 @@ export interface IPodSpec {
   readonly containers: Container[];
 
   /**
+   * The init containers belonging to the pod.
+   *
+   * Use `addInitContainer` to add init containers.
+   */
+  readonly initContainers: Container[];
+
+  /**
    * The volumes associated with this pod.
    *
    * Use `addVolume` to add volumes.
@@ -43,6 +50,13 @@ export interface IPodSpec {
    * @param container The container.
    */
   addContainer(container: ContainerProps): Container;
+
+  /**
+   * Add an init container to the pod.
+   *
+   * @param container The container.
+   */
+  addInitContainer(container: ContainerProps): Container;
 
   /**
    * Add a volume to the pod.
@@ -73,13 +87,16 @@ export class PodSpec implements IPodSpec {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: IServiceAccount;
+  public readonly securityContext: PodSecurityContext;
 
   private readonly _containers: Container[] = [];
+  private readonly _initContainers: Container[] = [];
   private readonly _volumes: Map<string, Volume> = new Map();
 
   constructor(props: PodSpecProps = {}) {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
+    this.securityContext = new PodSecurityContext(props.securityContext);
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -89,10 +106,18 @@ export class PodSpec implements IPodSpec {
       props.volumes.forEach(v => this.addVolume(v));
     }
 
+    if (props.initContainers) {
+      props.initContainers.forEach(c => this.addInitContainer(c));
+    }
+
   }
 
   public get containers(): Container[] {
     return [...this._containers];
+  }
+
+  public get initContainers(): Container[] {
+    return [...this._initContainers];
   }
 
   public get volumes(): Volume[] {
@@ -102,6 +127,30 @@ export class PodSpec implements IPodSpec {
   public addContainer(container: ContainerProps): Container {
     const impl = new Container(container);
     this._containers.push(impl);
+    return impl;
+  }
+
+  public addInitContainer(container: ContainerProps): Container {
+
+    // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
+    if (container.readiness) {
+      throw new Error('Init containers must not have a readiness probe');
+    }
+
+    if (container.liveness) {
+      throw new Error('Init containers must not have a liveness probe');
+    }
+
+    if (container.startup) {
+      throw new Error('Init containers must not have a startup probe');
+    }
+
+    const impl = new Container({
+      ...container,
+      name: container.name ?? `init-${this._initContainers.length}`,
+    });
+
+    this._initContainers.push(impl);
     return impl;
   }
 
@@ -124,6 +173,7 @@ export class PodSpec implements IPodSpec {
 
     const volumes: Map<string, Volume> = new Map();
     const containers: k8s.Container[] = [];
+    const initContainers: k8s.Container[] = [];
 
     for (const container of this.containers) {
       // automatically add volume from the container mount
@@ -132,6 +182,15 @@ export class PodSpec implements IPodSpec {
         addVolume(mount.volume);
       }
       containers.push(container._toKube());
+    }
+
+    for (const container of this.initContainers) {
+      // automatically add volume from the container mount
+      // to this pod so thats its available to the container.
+      for (const mount of container.mounts) {
+        addVolume(mount.volume);
+      }
+      initContainers.push(container._toKube());
     }
 
     for (const volume of this.volumes) {
@@ -152,6 +211,8 @@ export class PodSpec implements IPodSpec {
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
+      securityContext: this.securityContext._toKube(),
+      initContainers: initContainers,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
     };
 
@@ -197,6 +258,74 @@ export class PodTemplate extends PodSpec implements IPodTemplate {
 }
 
 /**
+ * Sysctl defines a kernel parameter to be set
+ */
+export interface Sysctl {
+  /**
+   * Name of a property to set
+   */
+  readonly name: string;
+
+  /**
+   * Value of a property to set
+   */
+  readonly value: string;
+}
+
+/**
+ * Properties for `PodSecurityContext`
+ */
+export interface PodSecurityContextProps {
+
+  /**
+   * Modify the ownership and permissions of pod volumes to this GID.
+   *
+   * @default - Volume ownership is not changed.
+   */
+  readonly fsGroup?: number;
+
+  /**
+   * Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+   * This field will only apply to volume types which support fsGroup based ownership(and permissions).
+   * It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+   *
+   * @default FsGroupChangePolicy.ALWAYS
+   */
+  readonly fsGroupChangePolicy?: FsGroupChangePolicy;
+
+  /**
+   * The UID to run the entrypoint of the container process.
+   *
+   * @default - User specified in image metadata
+   */
+  readonly user?: number;
+
+  /**
+   * The GID to run the entrypoint of the container process.
+   *
+   * @default - Group configured by container runtime
+   */
+  readonly group?: number;
+
+  /**
+   * Indicates that the container must run as a non-root user.
+   * If true, the Kubelet will validate the image at runtime to ensure that it does
+   * not run as UID 0 (root) and fail to start the container if it does.
+   *
+   * @default false
+   */
+  readonly ensureNonRoot?: boolean;
+
+  /**
+   * Sysctls hold a list of namespaced sysctls used for the pod.
+   * Pods with unsupported sysctls (by the container runtime) might fail to launch.
+   *
+   * @default - No sysctls
+   */
+  readonly sysctls?: Sysctl[];
+}
+
+/**
  * Properties for initialization of `Pod`.
  */
 export interface PodProps extends ResourceProps, PodSpecProps {}
@@ -215,6 +344,23 @@ export interface PodSpecProps {
    * @default - No containers. Note that a pod spec must include at least one container.
    */
   readonly containers?: ContainerProps[];
+
+  /**
+   * List of initialization containers belonging to the pod.
+   * Init containers are executed in order prior to containers being started.
+   * If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+   * The name for an init container or normal container must be unique among all containers.
+   * Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+   * The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+   * for each resource type, and then using the max of of that value or the sum of the normal containers.
+   * Limits are applied to init containers in a similar fashion.
+   *
+   * Init containers cannot currently be added ,removed or updated.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+   * @default - No init containers.
+   */
+  readonly initContainers?: ContainerProps[];
 
   /**
    * List of volumes that can be mounted by containers belonging to the pod.
@@ -252,6 +398,16 @@ export interface PodSpecProps {
    */
   readonly serviceAccount?: IServiceAccount;
 
+  /**
+   * SecurityContext holds pod-level security attributes and common container settings.
+   *
+   * @default
+   *
+   *   fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+   *   ensureNonRoot: false
+   */
+  readonly securityContext?: PodSecurityContextProps;
+
 }
 
 /**
@@ -282,6 +438,10 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.containers;
   }
 
+  public get initContainers(): Container[] {
+    return this._spec.initContainers;
+  }
+
   public get volumes(): Volume[] {
     return this._spec.volumes;
   }
@@ -294,12 +454,66 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.serviceAccount;
   }
 
+  public get securityContext(): PodSecurityContext {
+    return this._spec.securityContext;
+  }
+
   public addContainer(container: ContainerProps): Container {
     return this._spec.addContainer(container);
   }
 
+  public addInitContainer(container: ContainerProps): Container {
+    return this._spec.addInitContainer(container);
+  }
+
   public addVolume(volume: Volume): void {
     return this._spec.addVolume(volume);
+  }
+
+}
+
+/**
+ * Holds pod-level security attributes and common container settings.
+ */
+export class PodSecurityContext {
+
+  public readonly ensureNonRoot: boolean;
+  public readonly user?: number;
+  public readonly group?: number;
+  public readonly fsGroup?: number;
+  public readonly fsGroupChangePolicy: FsGroupChangePolicy;
+
+  private readonly _sysctls: Sysctl[] = [];
+
+  constructor(props: PodSecurityContextProps = {}) {
+    this.ensureNonRoot = props.ensureNonRoot ?? false;
+    this.fsGroupChangePolicy = props.fsGroupChangePolicy ?? FsGroupChangePolicy.ALWAYS;
+    this.user = props.user;
+    this.group = props.group;
+    this.fsGroup = props.fsGroup;
+
+    for (const sysctl of props.sysctls ?? []) {
+      this._sysctls.push(sysctl);
+    }
+
+  }
+
+  public get sysctls(): Sysctl[] {
+    return [...this._sysctls];
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.PodSecurityContext {
+    return {
+      runAsGroup: this.group,
+      runAsUser: this.user,
+      fsGroup: this.fsGroup,
+      runAsNonRoot: this.ensureNonRoot,
+      fsGroupChangePolicy: this.fsGroupChangePolicy,
+      sysctls: this._sysctls,
+    };
   }
 
 }
@@ -322,5 +536,20 @@ export enum RestartPolicy {
    * Never restart the pod.
    */
   NEVER = 'Never'
+}
+
+export enum FsGroupChangePolicy {
+
+  /**
+   * Only change permissions and ownership if permission and ownership of root directory does
+   * not match with expected permissions of the volume.
+   * This could help shorten the time it takes to change ownership and permission of a volume
+   */
+  ON_ROOT_MISMATCH = 'OnRootMismatch',
+
+  /**
+   * Always change permission and ownership of the volume when volume is mounted.
+   */
+  ALWAYS = 'Always'
 }
 
