@@ -51,7 +51,7 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
-!/src/kinds.ts
+!/src/resource-type.ts
 !/.github/workflows/upgrade-k8s-22-main.yml
 !/.github/workflows/upgrade-k8s-21-main.yml
 !/.github/workflows/upgrade-k8s-20-main.yml

@@ -116,7 +116,7 @@ Array [
     const role = new kplus.Role(chart, 'pod-reader', {
       namespace: 'default',
     });
-    role.grantRead(kplus.Kind.SECRET, kplus.Kind.POD);
+    role.grantRead(kplus.ResourceType.SECRET, kplus.ResourceType.POD);
 
     // THEN
     const manifest = Testing.synth(chart);
@@ -242,7 +242,7 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'my-cluster-role');
-    role.grantRead(kplus.Kind.SECRET, kplus.Kind.POD);
+    role.grantRead(kplus.ResourceType.SECRET, kplus.ResourceType.POD);
 
     const manifest = Testing.synth(chart);
     expect(manifest[0].rules).toEqual(expect.arrayContaining([
