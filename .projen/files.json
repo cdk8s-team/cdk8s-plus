@@ -7,7 +7,6 @@
     ".github/workflows/build.yml",
     ".github/workflows/pull-request-lint.yml",
     ".github/workflows/release-k8s.22.yml",
-    ".github/workflows/stale.yml",
     ".github/workflows/upgrade-k8s-20-main.yml",
     ".github/workflows/upgrade-k8s-21-main.yml",
     ".github/workflows/upgrade-k8s-22-main.yml",
