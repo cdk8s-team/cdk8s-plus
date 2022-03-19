@@ -14,3 +14,4 @@ export * from './probe';
 export * from './role';
 export * from './grants';
 export * from './resource-type';
+export * from './role-binding';

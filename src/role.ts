@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
 import { IGrantee } from './grants';
 import * as k8s from './imports/k8s';
+import { ClusterRoleBinding, ISubject, RoleBinding } from './role-binding';
 import { filterUndefined, undefinedIfEmpty } from './utils';
 
 export interface RoleCommonProps extends ResourceProps {
@@ -145,7 +146,7 @@ export abstract class RoleBase extends Resource implements IResource {
 }
 
 /**
- * Represents a namespaced role.
+ * A reference to any Role or ClusterRole.
  */
 export interface IRole extends IResource {
 
@@ -192,6 +193,20 @@ export class Role extends RoleBase implements IRole {
 
   private synthesizeRules(): any {
     return undefinedIfEmpty(this._rules.map(rule => rule._toKube()));
+  }
+
+  /**
+   * Create a RoleBinding that binds the permissions in this Role
+   * to a list of subjects, that will only apply this role's namespace.
+   * @param subjects a list of subjects to bind to
+   */
+  public bind(...subjects: ISubject[]): RoleBinding {
+    const binding = new RoleBinding(this, 'RoleBinding', {
+      namespace: this.metadata.namespace!,
+      role: this,
+    });
+    binding.addSubjects(...subjects);
+    return binding;
   }
 }
 
@@ -258,6 +273,34 @@ export class ClusterRole extends RoleBase implements IClusterRole {
     }
 
     return { clusterRoleSelectors: [{ matchLabels: this._labelSelector }] };
+  }
+
+  /**
+   * Create a RoleBinding that binds the permissions in this ClusterRole
+   * to a list of subjects, that will only apply to the given namespace.
+   * @param namespace the namespace to limit permissions to.
+   * @param subjects a list of subjects to bind to
+   */
+  public bindInNamespace(namespace: string, ...subjects: ISubject[]): RoleBinding {
+    const binding = new RoleBinding(this, 'RoleBinding', {
+      namespace,
+      role: this,
+    });
+    binding.addSubjects(...subjects);
+    return binding;
+  }
+
+  /**
+   * Create a ClusterRoleBinding that binds the permissions in this
+   * ClusterRole to a list of subjects, without namespace restrictions.
+   * @param subjects a list of subjects to bind to
+   */
+  public bindInCluster(...subjects: ISubject[]): ClusterRoleBinding {
+    const binding = new ClusterRoleBinding(this, 'ClusterRoleBinding', {
+      role: this,
+    });
+    binding.addSubjects(...subjects);
+    return binding;
   }
 }
 
