@@ -48,7 +48,113 @@ public aggregateFrom(role: ClusterRole)
 
 ---
 
+##### `bindInCluster` <a name="cdk8s-plus-22.ClusterRole.bindInCluster"></a>
 
+```typescript
+public bindInCluster(subjects: ISubject)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.subjects"></a>
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+a list of subjects to bind to.
+
+---
+
+##### `bindInNamespace` <a name="cdk8s-plus-22.ClusterRole.bindInNamespace"></a>
+
+```typescript
+public bindInNamespace(namespace: string, subjects: ISubject)
+```
+
+###### `namespace`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.namespace"></a>
+
+- *Type:* `string`
+
+the namespace to limit permissions to.
+
+---
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.subjects"></a>
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+a list of subjects to bind to.
+
+---
+
+
+
+
+### ClusterRoleBinding <a name="cdk8s-plus-22.ClusterRoleBinding"></a>
+
+A ClusterRoleBinding grants permissions cluster-wide to a user or set of users.
+
+#### Initializers <a name="cdk8s-plus-22.ClusterRoleBinding.Initializer"></a>
+
+```typescript
+import { ClusterRoleBinding } from 'cdk8s-plus-22'
+
+new ClusterRoleBinding(scope: Construct, id: string, props: ClusterRoleBindingProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.ClusterRoleBindingProps`](#cdk8s-plus-22.ClusterRoleBindingProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addSubjects` <a name="cdk8s-plus-22.ClusterRoleBinding.addSubjects"></a>
+
+```typescript
+public addSubjects(subjects: ISubject)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.parameter.subjects"></a>
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+The subjects to add.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `role`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.property.role"></a>
+
+```typescript
+public readonly role: IRole;
+```
+
+- *Type:* [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
+
+---
+
+##### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.property.subjects"></a>
+
+```typescript
+public readonly subjects: ISubject[];
+```
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)[]
+
+---
 
 
 ### ConfigMap <a name="cdk8s-plus-22.ConfigMap"></a>
@@ -1159,6 +1265,21 @@ new Role(scope: Construct, id: string, props: RoleProps)
 
 ---
 
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s-plus-22.Role.bind"></a>
+
+```typescript
+public bind(subjects: ISubject)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.subjects"></a>
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+a list of subjects to bind to.
+
+---
 
 
 
@@ -1383,6 +1504,76 @@ public readonly rules: PolicyRule[];
 List of rules included in this rule.
 
 Returns a copy. To add a rule, use `addRule()`.
+
+---
+
+
+### RoleBinding <a name="cdk8s-plus-22.RoleBinding"></a>
+
+A RoleBinding grants permissions within a specific namespace to a user or set of users.
+
+#### Initializers <a name="cdk8s-plus-22.RoleBinding.Initializer"></a>
+
+```typescript
+import { RoleBinding } from 'cdk8s-plus-22'
+
+new RoleBinding(scope: Construct, id: string, props: RoleBindingProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.RoleBindingProps`](#cdk8s-plus-22.RoleBindingProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addSubjects` <a name="cdk8s-plus-22.RoleBinding.addSubjects"></a>
+
+```typescript
+public addSubjects(subjects: ISubject)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.parameter.subjects"></a>
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+The subjects to add.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `role`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.property.role"></a>
+
+```typescript
+public readonly role: IRole;
+```
+
+- *Type:* [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
+
+---
+
+##### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.property.subjects"></a>
+
+```typescript
+public readonly subjects: ISubject[];
+```
+
+- *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)[]
 
 ---
 
@@ -2143,6 +2334,42 @@ public readonly keyPrefix: string;
 - *Default:* ""
 
 A prefix to add to all keys in the config map.
+
+---
+
+### ClusterRoleBindingProps <a name="cdk8s-plus-22.ClusterRoleBindingProps"></a>
+
+Options for `ClusterRoleBinding`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ClusterRoleBindingProps } from 'cdk8s-plus-22'
+
+const clusterRoleBindingProps: ClusterRoleBindingProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.ClusterRoleBindingProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `role`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBindingProps.property.role"></a>
+
+```typescript
+public readonly role: IClusterRole;
+```
+
+- *Type:* [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole)
+
+The role to bind to.
 
 ---
 
@@ -3359,6 +3586,46 @@ public readonly pathType: HttpIngressPathType;
 - *Default:* HttpIngressPathType.PREFIX
 
 The type of the path.
+
+---
+
+### GroupProps <a name="cdk8s-plus-22.GroupProps"></a>
+
+Options for `User`.
+
+Options for `Group`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { GroupProps } from 'cdk8s-plus-22'
+
+const groupProps: GroupProps = { ... }
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.GroupProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The name of the user.
+
+The name of the user.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s-plus-22.GroupProps.property.namespace"></a>
+
+```typescript
+public readonly namespace: string;
+```
+
+- *Type:* `string`
+
+The namespace that the group applies to.
 
 ---
 
@@ -4769,6 +5036,56 @@ public readonly resources: string[];
 
 ---
 
+### RoleBindingProps <a name="cdk8s-plus-22.RoleBindingProps"></a>
+
+Options for `RoleBinding`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { RoleBindingProps } from 'cdk8s-plus-22'
+
+const roleBindingProps: RoleBindingProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.RoleBindingProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `namespace`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBindingProps.property.namespace"></a>
+
+```typescript
+public readonly namespace: string;
+```
+
+- *Type:* `string`
+
+Namespace of the resources the RoleBinding should apply to.
+
+---
+
+##### `role`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBindingProps.property.role"></a>
+
+```typescript
+public readonly role: IRole;
+```
+
+- *Type:* [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
+
+The role to bind to.
+
+A RoleBinding can reference a Role or a ClusterRole.
+
+---
+
 ### RoleCommonProps <a name="cdk8s-plus-22.RoleCommonProps"></a>
 
 #### Initializer <a name="[object Object].Initializer"></a>
@@ -4842,6 +5159,8 @@ public readonly namespace: string;
 ```
 
 - *Type:* `string`
+
+The namespace of the resources this role's permissions should apply to (required).
 
 ---
 
@@ -6375,6 +6694,91 @@ Grantee.fromObjects(objects: IResource)
 
 
 
+### Group <a name="cdk8s-plus-22.Group"></a>
+
+- *Implements:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+Represents a group.
+
+#### Initializers <a name="cdk8s-plus-22.Group.Initializer"></a>
+
+```typescript
+import { Group } from 'cdk8s-plus-22'
+
+new Group(props: GroupProps)
+```
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.Group.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.GroupProps`](#cdk8s-plus-22.GroupProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.Group.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+Kind of object being referenced.
+
+Values defined by this API group are
+"User", "Group", and "ServiceAccount". If the Authorizer does not
+recognized the kind value, the Authorizer should report an error.
+
+---
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.Group.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+Name of the object being referenced.
+
+---
+
+##### `apiGroup`<sup>Optional</sup> <a name="cdk8s-plus-22.Group.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+APIGroup holds the API group of the referenced subject.
+
+Defaults to "" for
+ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
+and Group subjects.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s-plus-22.Group.property.namespace"></a>
+
+```typescript
+public readonly namespace: string;
+```
+
+- *Type:* `string`
+
+Namespace of the referenced object.
+
+If the object kind is non-namespace,
+such as "User" or "Group", and this value is not empty the Authorizer
+should report an error.
+
+---
+
+
 ### IngressBackend <a name="cdk8s-plus-22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -7265,6 +7669,75 @@ API resource information for VolumeAttachment.
 
 ---
 
+### User <a name="cdk8s-plus-22.User"></a>
+
+- *Implements:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+Represents a user.
+
+#### Initializers <a name="cdk8s-plus-22.User.Initializer"></a>
+
+```typescript
+import { User } from 'cdk8s-plus-22'
+
+new User(props: GroupProps)
+```
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.User.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.GroupProps`](#cdk8s-plus-22.GroupProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.User.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+Kind of object being referenced.
+
+Values defined by this API group are
+"User", "Group", and "ServiceAccount". If the Authorizer does not
+recognized the kind value, the Authorizer should report an error.
+
+---
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.User.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+Name of the object being referenced.
+
+---
+
+##### `apiGroup`<sup>Optional</sup> <a name="cdk8s-plus-22.User.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+APIGroup holds the API group of the referenced subject.
+
+Defaults to "" for
+ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
+and Group subjects.
+
+---
+
+
 ### Volume <a name="cdk8s-plus-22.Volume"></a>
 
 Volume represents a named volume in a pod that may be accessed by any container in the pod.
@@ -7776,7 +8249,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
 
 Represents a resource.
 
@@ -7837,7 +8310,7 @@ The Kubernetes name of this resource.
 
 - *Implemented By:* [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole)
 
-Represents a namespaced role.
+A reference to any Role or ClusterRole.
 
 
 #### Properties <a name="Properties"></a>
@@ -8001,6 +8474,78 @@ public readonly name: string;
 - *Type:* `string`
 
 The Kubernetes name of this resource.
+
+---
+
+### ISubject <a name="cdk8s-plus-22.ISubject"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.Group`](#cdk8s-plus-22.Group), [`cdk8s-plus-22.User`](#cdk8s-plus-22.User), [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+
+Subject contains a reference to the object or user identities a role binding applies to.
+
+This can either hold a direct API object reference, or a value
+for non-objects such as user and group names.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.ISubject.property.kind"></a>
+
+```typescript
+public readonly kind: string;
+```
+
+- *Type:* `string`
+
+Kind of object being referenced.
+
+Values defined by this API group are
+"User", "Group", and "ServiceAccount". If the Authorizer does not
+recognized the kind value, the Authorizer should report an error.
+
+---
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.ISubject.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+Name of the object being referenced.
+
+---
+
+##### `apiGroup`<sup>Optional</sup> <a name="cdk8s-plus-22.ISubject.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+APIGroup holds the API group of the referenced subject.
+
+Defaults to "" for
+ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
+and Group subjects.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s-plus-22.ISubject.property.namespace"></a>
+
+```typescript
+public readonly namespace: string;
+```
+
+- *Type:* `string`
+
+Namespace of the referenced object.
+
+If the object kind is non-namespace,
+such as "User" or "Group", and this value is not empty the Authorizer
+should report an error.
 
 ---
 

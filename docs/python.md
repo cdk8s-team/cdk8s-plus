@@ -72,7 +72,135 @@ def aggregate_from(
 
 ---
 
+##### `bind_in_cluster` <a name="cdk8s_plus_22.ClusterRole.bind_in_cluster"></a>
 
+```python
+def bind_in_cluster(
+  subjects: ISubject
+)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.subjects"></a>
+
+- *Type:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+a list of subjects to bind to.
+
+---
+
+##### `bind_in_namespace` <a name="cdk8s_plus_22.ClusterRole.bind_in_namespace"></a>
+
+```python
+def bind_in_namespace(
+  namespace: str,
+  subjects: ISubject
+)
+```
+
+###### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.namespace"></a>
+
+- *Type:* `str`
+
+the namespace to limit permissions to.
+
+---
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.subjects"></a>
+
+- *Type:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+a list of subjects to bind to.
+
+---
+
+
+
+
+### ClusterRoleBinding <a name="cdk8s_plus_22.ClusterRoleBinding"></a>
+
+A ClusterRoleBinding grants permissions cluster-wide to a user or set of users.
+
+#### Initializers <a name="cdk8s_plus_22.ClusterRoleBinding.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ClusterRoleBinding(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  role: IClusterRole
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleBindingProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBindingProps.parameter.role"></a>
+
+- *Type:* [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole)
+
+The role to bind to.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `add_subjects` <a name="cdk8s_plus_22.ClusterRoleBinding.add_subjects"></a>
+
+```python
+def add_subjects(
+  subjects: ISubject
+)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.parameter.subjects"></a>
+
+- *Type:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+The subjects to add.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.property.role"></a>
+
+```python
+role: IRole
+```
+
+- *Type:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+
+---
+
+##### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.property.subjects"></a>
+
+```python
+subjects: typing.List[ISubject]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)]
+
+---
 
 
 ### ConfigMap <a name="cdk8s_plus_22.ConfigMap"></a>
@@ -2892,8 +3020,27 @@ Metadata that all persisted resources must have, which includes all objects user
 
 - *Type:* `str`
 
+The namespace of the resources this role's permissions should apply to (required).
+
 ---
 
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s_plus_22.Role.bind"></a>
+
+```python
+def bind(
+  subjects: ISubject
+)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.subjects"></a>
+
+- *Type:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+a list of subjects to bind to.
+
+---
 
 
 
@@ -3209,6 +3356,104 @@ rules: typing.List[PolicyRule]
 List of rules included in this rule.
 
 Returns a copy. To add a rule, use `addRule()`.
+
+---
+
+
+### RoleBinding <a name="cdk8s_plus_22.RoleBinding"></a>
+
+A RoleBinding grants permissions within a specific namespace to a user or set of users.
+
+#### Initializers <a name="cdk8s_plus_22.RoleBinding.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.RoleBinding(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  namespace: str,
+  role: IRole
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleBindingProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBindingProps.parameter.namespace"></a>
+
+- *Type:* `str`
+
+Namespace of the resources the RoleBinding should apply to.
+
+---
+
+##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBindingProps.parameter.role"></a>
+
+- *Type:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+
+The role to bind to.
+
+A RoleBinding can reference a Role or a ClusterRole.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `add_subjects` <a name="cdk8s_plus_22.RoleBinding.add_subjects"></a>
+
+```python
+def add_subjects(
+  subjects: ISubject
+)
+```
+
+###### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.parameter.subjects"></a>
+
+- *Type:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+The subjects to add.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.property.role"></a>
+
+```python
+role: IRole
+```
+
+- *Type:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+
+---
+
+##### `subjects`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.property.subjects"></a>
+
+```python
+subjects: typing.List[ISubject]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)]
 
 ---
 
@@ -4742,6 +4987,45 @@ A prefix to add to all keys in the config map.
 
 ---
 
+### ClusterRoleBindingProps <a name="cdk8s_plus_22.ClusterRoleBindingProps"></a>
+
+Options for `ClusterRoleBinding`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ClusterRoleBindingProps(
+  metadata: ApiObjectMetadata = None,
+  role: IClusterRole
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleBindingProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBindingProps.property.role"></a>
+
+```python
+role: IClusterRole
+```
+
+- *Type:* [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole)
+
+The role to bind to.
+
+---
+
 ### ClusterRoleProps <a name="cdk8s_plus_22.ClusterRoleProps"></a>
 
 Options for `ClusterRole`.
@@ -6041,6 +6325,49 @@ path_type: HttpIngressPathType
 - *Default:* HttpIngressPathType.PREFIX
 
 The type of the path.
+
+---
+
+### GroupProps <a name="cdk8s_plus_22.GroupProps"></a>
+
+Options for `User`.
+
+Options for `Group`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.GroupProps(
+  name: str,
+  namespace: str = None
+)
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.GroupProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+The name of the user.
+
+The name of the user.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.GroupProps.property.namespace"></a>
+
+```python
+namespace: str
+```
+
+- *Type:* `str`
+
+The namespace that the group applies to.
 
 ---
 
@@ -7544,6 +7871,60 @@ resources: typing.List[str]
 
 ---
 
+### RoleBindingProps <a name="cdk8s_plus_22.RoleBindingProps"></a>
+
+Options for `RoleBinding`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.RoleBindingProps(
+  metadata: ApiObjectMetadata = None,
+  namespace: str,
+  role: IRole
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleBindingProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBindingProps.property.namespace"></a>
+
+```python
+namespace: str
+```
+
+- *Type:* `str`
+
+Namespace of the resources the RoleBinding should apply to.
+
+---
+
+##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBindingProps.property.role"></a>
+
+```python
+role: IRole
+```
+
+- *Type:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+
+The role to bind to.
+
+A RoleBinding can reference a Role or a ClusterRole.
+
+---
+
 ### RoleCommonProps <a name="cdk8s_plus_22.RoleCommonProps"></a>
 
 #### Initializer <a name="[object Object].Initializer"></a>
@@ -7624,6 +8005,8 @@ namespace: str
 ```
 
 - *Type:* `str`
+
+The namespace of the resources this role's permissions should apply to (required).
 
 ---
 
@@ -9554,6 +9937,106 @@ cdk8s_plus_22.Grantee.from_objects(
 
 
 
+### Group <a name="cdk8s_plus_22.Group"></a>
+
+- *Implements:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+Represents a group.
+
+#### Initializers <a name="cdk8s_plus_22.Group.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Group(
+  name: str,
+  namespace: str = None
+)
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.GroupProps.parameter.name"></a>
+
+- *Type:* `str`
+
+The name of the user.
+
+The name of the user.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.GroupProps.parameter.namespace"></a>
+
+- *Type:* `str`
+
+The namespace that the group applies to.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `kind`<sup>Required</sup> <a name="cdk8s_plus_22.Group.property.kind"></a>
+
+```python
+kind: str
+```
+
+- *Type:* `str`
+
+Kind of object being referenced.
+
+Values defined by this API group are
+"User", "Group", and "ServiceAccount". If the Authorizer does not
+recognized the kind value, the Authorizer should report an error.
+
+---
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.Group.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+Name of the object being referenced.
+
+---
+
+##### `api_group`<sup>Optional</sup> <a name="cdk8s_plus_22.Group.property.api_group"></a>
+
+```python
+api_group: str
+```
+
+- *Type:* `str`
+
+APIGroup holds the API group of the referenced subject.
+
+Defaults to "" for
+ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
+and Group subjects.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.Group.property.namespace"></a>
+
+```python
+namespace: str
+```
+
+- *Type:* `str`
+
+Namespace of the referenced object.
+
+If the object kind is non-namespace,
+such as "User" or "Group", and this value is not empty the Authorizer
+should report an error.
+
+---
+
+
 ### IngressBackend <a name="cdk8s_plus_22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -11306,6 +11789,90 @@ API resource information for VolumeAttachment.
 
 ---
 
+### User <a name="cdk8s_plus_22.User"></a>
+
+- *Implements:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+Represents a user.
+
+#### Initializers <a name="cdk8s_plus_22.User.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.User(
+  name: str,
+  namespace: str = None
+)
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.GroupProps.parameter.name"></a>
+
+- *Type:* `str`
+
+The name of the user.
+
+The name of the user.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.GroupProps.parameter.namespace"></a>
+
+- *Type:* `str`
+
+The namespace that the group applies to.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `kind`<sup>Required</sup> <a name="cdk8s_plus_22.User.property.kind"></a>
+
+```python
+kind: str
+```
+
+- *Type:* `str`
+
+Kind of object being referenced.
+
+Values defined by this API group are
+"User", "Group", and "ServiceAccount". If the Authorizer does not
+recognized the kind value, the Authorizer should report an error.
+
+---
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.User.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+Name of the object being referenced.
+
+---
+
+##### `api_group`<sup>Optional</sup> <a name="cdk8s_plus_22.User.property.api_group"></a>
+
+```python
+api_group: str
+```
+
+- *Type:* `str`
+
+APIGroup holds the API group of the referenced subject.
+
+Defaults to "" for
+ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
+and Group subjects.
+
+---
+
+
 ### Volume <a name="cdk8s_plus_22.Volume"></a>
 
 Volume represents a named volume in a pod that may be accessed by any container in the pod.
@@ -12275,7 +12842,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
 
 Represents a resource.
 
@@ -12336,7 +12903,7 @@ The Kubernetes name of this resource.
 
 - *Implemented By:* [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
 
-Represents a namespaced role.
+A reference to any Role or ClusterRole.
 
 
 #### Properties <a name="Properties"></a>
@@ -12500,6 +13067,78 @@ name: str
 - *Type:* `str`
 
 The Kubernetes name of this resource.
+
+---
+
+### ISubject <a name="cdk8s_plus_22.ISubject"></a>
+
+- *Implemented By:* [`cdk8s_plus_22.Group`](#cdk8s_plus_22.Group), [`cdk8s_plus_22.User`](#cdk8s_plus_22.User), [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+
+Subject contains a reference to the object or user identities a role binding applies to.
+
+This can either hold a direct API object reference, or a value
+for non-objects such as user and group names.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `kind`<sup>Required</sup> <a name="cdk8s_plus_22.ISubject.property.kind"></a>
+
+```python
+kind: str
+```
+
+- *Type:* `str`
+
+Kind of object being referenced.
+
+Values defined by this API group are
+"User", "Group", and "ServiceAccount". If the Authorizer does not
+recognized the kind value, the Authorizer should report an error.
+
+---
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.ISubject.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+Name of the object being referenced.
+
+---
+
+##### `api_group`<sup>Optional</sup> <a name="cdk8s_plus_22.ISubject.property.api_group"></a>
+
+```python
+api_group: str
+```
+
+- *Type:* `str`
+
+APIGroup holds the API group of the referenced subject.
+
+Defaults to "" for
+ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
+and Group subjects.
+
+---
+
+##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.ISubject.property.namespace"></a>
+
+```python
+namespace: str
+```
+
+- *Type:* `str`
+
+Namespace of the referenced object.
+
+If the object kind is non-namespace,
+such as "User" or "Group", and this value is not empty the Authorizer
+should report an error.
 
 ---
 
