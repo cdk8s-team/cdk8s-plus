@@ -6,6 +6,84 @@ import { Probe } from './probe';
 import { SecretValue } from './secret';
 import { Volume } from './volume';
 
+/**
+ * Properties for `ContainerSecurityContext`
+ */
+export interface ContainerSecurityContextProps {
+
+  /**
+    * The UID to run the entrypoint of the container process.
+    *
+    * @default - User specified in image metadata
+    */
+  readonly user?: number;
+
+  /**
+    * The GID to run the entrypoint of the container process.
+    *
+    * @default - Group configured by container runtime
+    */
+  readonly group?: number;
+
+  /**
+    * Indicates that the container must run as a non-root user.
+    * If true, the Kubelet will validate the image at runtime to ensure that it does
+    * not run as UID 0 (root) and fail to start the container if it does.
+    *
+    * @default false
+    */
+  readonly ensureNonRoot?: boolean;
+
+  /**
+   * Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host.
+   *
+   * @default false
+   */
+  readonly privileged?: boolean;
+
+  /**
+   * Whether this container has a read-only root filesystem.
+   *
+   * @default false
+   */
+  readonly readOnlyRootFilesystem?: boolean;
+
+}
+
+/**
+ * Container security attributes and settings.
+ */
+export class ContainerSecurityContext {
+
+  public readonly ensureNonRoot: boolean;
+  public readonly privileged: boolean;
+  public readonly readOnlyRootFilesystem: boolean;
+  public readonly user?: number;
+  public readonly group?: number;
+
+  constructor(props: ContainerSecurityContextProps = {}) {
+    this.ensureNonRoot = props.ensureNonRoot ?? false;
+    this.privileged = props.privileged ?? false;
+    this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? false;
+    this.user = props.user;
+    this.group = props.group;
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.SecurityContext {
+    return {
+      runAsGroup: this.group,
+      runAsUser: this.user,
+      runAsNonRoot: this.ensureNonRoot,
+      privileged: this.privileged,
+      readOnlyRootFilesystem: this.readOnlyRootFilesystem,
+    };
+  }
+
+}
+
 export enum EnvFieldPaths {
   /**
    * The name of the pod.
@@ -406,6 +484,19 @@ export interface ContainerProps {
    * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
    */
   readonly resources?: Resources;
+
+  /**
+   * SecurityContext defines the security options the container should be run with.
+   * If set, the fields override equivalent fields of the pod's security context.
+   *
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+   * @default
+   *
+   *   ensureNonRoot: false
+   *   privileged: false
+   *   readOnlyRootFilesystem: false
+   */
+  readonly securityContext?: ContainerSecurityContextProps;
 }
 
 /**
@@ -449,6 +540,11 @@ export class Container {
    */
   public readonly resources?: Resources;
 
+  /**
+   * The security context of the container.
+   */
+  public readonly securityContext: ContainerSecurityContext;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _env: { [name: string]: EnvValue };
@@ -474,6 +570,7 @@ export class Container {
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
+    this.securityContext = new ContainerSecurityContext(props.securityContext);
   }
 
   /**
@@ -595,6 +692,7 @@ export class Container {
       livenessProbe: this._liveness?._toKube(this),
       startupProbe: this._startup?._toKube(this),
       resources: resourceRequirements,
+      securityContext: this.securityContext._toKube(),
     };
   }
 }
