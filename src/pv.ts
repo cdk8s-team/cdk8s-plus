@@ -29,14 +29,14 @@ export class PersistentVolume extends Resource {
   }
 
   /**
-   * Reserve a `PersistentVolume` by creating a `PersistentVolumeClaim`
+   * Claim a `PersistentVolume` by creating a `PersistentVolumeClaim`
    * that is wired to claim this volume.
    *
    * Note that this method will throw in case the volume is already claimed.
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
    */
-  public reserve(): PersistentVolumeClaim {
+  public claim(): PersistentVolumeClaim {
     const claim = new PersistentVolumeClaim(this, `${this.name}PVC`, {
       metadata: {
         name: `pvc-${this.name}`,
