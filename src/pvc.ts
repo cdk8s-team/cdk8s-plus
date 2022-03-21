@@ -150,8 +150,8 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    * @param pv The PV to bind to.
    */
   public bind(pv: IPersistentVolume) {
-    if (this._volume) {
-      throw new Error(`Cannot bind claim '${this.name}' to volume '${pv.name}' since it is already bound to volume '${this._volume}'`);
+    if (this._volume && this._volume.name !== pv.name) {
+      throw new Error(`Cannot bind claim '${this.name}' to volume '${pv.name}' since it is already bound to volume '${this._volume.name}'`);
     }
     this._volume = pv;
   }

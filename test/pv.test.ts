@@ -1,6 +1,6 @@
 import { Size, Testing } from 'cdk8s';
 import { PersistentVolumeAccessMode, PersistentVolumeClaim, PersistentVolumeMode } from '../src';
-import { AwsElasticBlockStorePersistentVolume, AzureDiskPersistentVolume, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind, PersistentVolumeReclaimPolicy, GCEPersistentDiskPersistentVolume } from '../src/pv';
+import { AwsElasticBlockStorePersistentVolume, AzureDiskPersistentVolume, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind, PersistentVolumeReclaimPolicy, GCEPersistentDiskPersistentVolume, PersistentVolume } from '../src/pv';
 
 describe('PersistentVolume', () => {
 
@@ -49,7 +49,14 @@ describe('PersistentVolume', () => {
 
   });
 
-  test('can be reserved', () => {
+  test('can be imported', () => {
+
+    const pv = PersistentVolume.fromPersistentVolumeName('vol');
+    expect(pv.name).toEqual('vol');
+
+  });
+
+  test('can be reserved with default storage class', () => {
 
     const chart = Testing.chart();
     const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
@@ -58,10 +65,32 @@ describe('PersistentVolume', () => {
 
     const claim = vol.reserve();
 
-    expect(claim.accessModes).toEqual(vol.accessModes);
-    expect(claim.storage).toEqual(vol.storage);
+    expect(claim.accessModes).toBeUndefined();
+    expect(claim.storage).toBeUndefined();
     expect(claim.storageClassName).toEqual(vol.storageClassName);
-    expect(claim.volumeMode).toEqual(vol.mode);
+
+    // validate bi-directional binding
+    expect(claim.volume!.name).toEqual(vol.name);
+    expect(vol.claim!.name).toEqual(claim.name);
+
+    const resources = Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
+
+  });
+
+  test('can be reserved with a custom storage class', () => {
+
+    const chart = Testing.chart();
+    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+      volumeId: 'vol1',
+      storageClassName: 'storage-class',
+    });
+
+    const claim = vol.reserve();
+
+    expect(claim.accessModes).toBeUndefined();
+    expect(claim.storage).toBeUndefined();
+    expect(claim.storageClassName).toEqual(vol.storageClassName);
 
     // validate bi-directional binding
     expect(claim.volume!.name).toEqual(vol.name);
@@ -85,7 +114,7 @@ describe('PersistentVolume', () => {
 
   });
 
-  test('can bind to a claim at instantiation', () => {
+  test('can be bound to a claim at instantiation', () => {
 
     const chart = Testing.chart();
     const pvc = PersistentVolumeClaim.fromClaimName('claim');
@@ -101,7 +130,7 @@ describe('PersistentVolume', () => {
 
   });
 
-  test('can bind to a claim post instantiation', () => {
+  test('can be bound to a claim post instantiation', () => {
 
     const chart = Testing.chart();
     const pvc = PersistentVolumeClaim.fromClaimName('claim');
@@ -118,7 +147,7 @@ describe('PersistentVolume', () => {
 
   });
 
-  test('nops if bound twice to the same claim', () => {
+  test('no-ops if bounded twice to the same claim', () => {
 
     const chart = Testing.chart();
     const pvc = PersistentVolumeClaim.fromClaimName('claim');
@@ -133,7 +162,7 @@ describe('PersistentVolume', () => {
 
   });
 
-  test('throws if bound twice to different claims', () => {
+  test('throws if bounded twice to different claims', () => {
 
     const chart = Testing.chart();
     const pvc1 = PersistentVolumeClaim.fromClaimName('claim1');

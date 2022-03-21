@@ -80,7 +80,74 @@ Object {
 }
 `;
 
-exports[`PersistentVolume can be reserved 1`] = `
+exports[`PersistentVolume can be bound to a claim at instantiation 1`] = `
+Object {
+  "awsElasticBlockStore": Object {
+    "fsType": "ext4",
+    "readOnly": false,
+    "volumeID": "vol1",
+  },
+  "claimRef": Object {
+    "name": "claim",
+  },
+  "persistentVolumeReclaimPolicy": "Retain",
+  "volumeMode": "Filesystem",
+}
+`;
+
+exports[`PersistentVolume can be bound to a claim post instantiation 1`] = `
+Object {
+  "awsElasticBlockStore": Object {
+    "fsType": "ext4",
+    "readOnly": false,
+    "volumeID": "vol1",
+  },
+  "claimRef": Object {
+    "name": "claim",
+  },
+  "persistentVolumeReclaimPolicy": "Retain",
+  "volumeMode": "Filesystem",
+}
+`;
+
+exports[`PersistentVolume can be reserved with a custom storage class 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol1",
+      },
+      "claimRef": Object {
+        "name": "pvc-test-volume-c8db061e",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "storageClassName": "storage-class",
+      "volumeMode": "Filesystem",
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "pvc-test-volume-c8db061e",
+    },
+    "spec": Object {
+      "storageClassName": "storage-class",
+      "volumeMode": "Filesystem",
+      "volumeName": "test-volume-c8db061e",
+    },
+  },
+]
+`;
+
+exports[`PersistentVolume can be reserved with default storage class 1`] = `
 Array [
   Object {
     "apiVersion": "v1",
@@ -113,36 +180,6 @@ Array [
     },
   },
 ]
-`;
-
-exports[`PersistentVolume can bind to a claim at instantiation 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
-  },
-  "claimRef": Object {
-    "name": "claim",
-  },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
-`;
-
-exports[`PersistentVolume can bind to a claim post instantiation 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
-  },
-  "claimRef": Object {
-    "name": "claim",
-  },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
 `;
 
 exports[`PersistentVolume custom 1`] = `

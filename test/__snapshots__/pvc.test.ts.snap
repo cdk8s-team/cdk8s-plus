@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can be bounded to a volume at instantiation 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "test-persistentvolumeclaim-c8af0974",
+    },
+    "spec": Object {
+      "volumeMode": "Filesystem",
+      "volumeName": "vol",
+    },
+  },
+]
+`;
+
+exports[`can be bounded to a volume post instantiation 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "test-persistentvolumeclaim-c8af0974",
+    },
+    "spec": Object {
+      "volumeMode": "Filesystem",
+      "volumeName": "vol",
+    },
+  },
+]
+`;
+
+exports[`custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "test-persistentvolumeclaim-c8af0974",
+    },
+    "spec": Object {
+      "accessModes": Array [
+        "ReadWriteMany",
+      ],
+      "resources": Object {
+        "requests": Object {
+          "storage": "50Gi",
+        },
+      },
+      "storageClassName": "storage-class",
+      "volumeMode": "Block",
+    },
+  },
+]
+`;
+
+exports[`defaults 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "test-persistentvolumeclaim-c8af0974",
+    },
+    "spec": Object {
+      "volumeMode": "Filesystem",
+    },
+  },
+]
+`;
