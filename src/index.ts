@@ -12,3 +12,4 @@ export * from './volume';
 export * from './ingress';
 export * from './probe';
 export * from './pvc';
+export * from './pv';

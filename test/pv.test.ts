@@ -1,65 +1,64 @@
-import { Size, Testing } from 'cdk8s';
-import { PersistentVolumeAccessMode, PersistentVolumeClaim, PersistentVolumeMode } from '../src';
-import { AwsElasticBlockStorePersistentVolume, AzureDiskPersistentVolume, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind, PersistentVolumeReclaimPolicy, GCEPersistentDiskPersistentVolume, PersistentVolume } from '../src/pv';
+import * as cdk8s from 'cdk8s';
+import * as kplus from '../src';
 
 describe('PersistentVolume', () => {
 
   test('defaults', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
     expect(vol.accessModes).toBeUndefined();
-    expect(vol.reclaimPolicy).toEqual(PersistentVolumeReclaimPolicy.RETAIN);
+    expect(vol.reclaimPolicy).toEqual(kplus.PersistentVolumeReclaimPolicy.RETAIN);
     expect(vol.storage).toBeUndefined();
     expect(vol.storageClassName).toBeUndefined();
-    expect(vol.mode).toEqual(PersistentVolumeMode.FILE_SYSTEM);
+    expect(vol.mode).toEqual(kplus.PersistentVolumeMode.FILE_SYSTEM);
     expect(vol.mountOptions).toBeUndefined();
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('custom', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
-      accessModes: [PersistentVolumeAccessMode.READ_ONLY_MANY, PersistentVolumeAccessMode.READ_WRITE_MANY],
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+      accessModes: [kplus.PersistentVolumeAccessMode.READ_ONLY_MANY, kplus.PersistentVolumeAccessMode.READ_WRITE_MANY],
       mountOptions: ['opt1'],
-      reclaimPolicy: PersistentVolumeReclaimPolicy.DELETE,
-      volumeMode: PersistentVolumeMode.BLOCK,
+      reclaimPolicy: kplus.PersistentVolumeReclaimPolicy.DELETE,
+      volumeMode: kplus.PersistentVolumeMode.BLOCK,
       storageClassName: 'storage-class',
-      storage: Size.gibibytes(50),
+      storage: cdk8s.Size.gibibytes(50),
       volumeId: 'vol1',
     });
 
     // base props
-    expect(vol.accessModes).toEqual([PersistentVolumeAccessMode.READ_ONLY_MANY, PersistentVolumeAccessMode.READ_WRITE_MANY]);
-    expect(vol.reclaimPolicy).toEqual(PersistentVolumeReclaimPolicy.DELETE);
-    expect(vol.storage).toEqual(Size.gibibytes(50));
+    expect(vol.accessModes).toEqual([kplus.PersistentVolumeAccessMode.READ_ONLY_MANY, kplus.PersistentVolumeAccessMode.READ_WRITE_MANY]);
+    expect(vol.reclaimPolicy).toEqual(kplus.PersistentVolumeReclaimPolicy.DELETE);
+    expect(vol.storage).toEqual(cdk8s.Size.gibibytes(50));
     expect(vol.storageClassName).toEqual('storage-class');
-    expect(vol.mode).toEqual(PersistentVolumeMode.BLOCK);
+    expect(vol.mode).toEqual(kplus.PersistentVolumeMode.BLOCK);
     expect(vol.mountOptions).toEqual(['opt1']);
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('can be imported', () => {
 
-    const pv = PersistentVolume.fromPersistentVolumeName('vol');
+    const pv = kplus.PersistentVolume.fromPersistentVolumeName('vol');
     expect(pv.name).toEqual('vol');
 
   });
 
   test('can be reserved with default storage class', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
@@ -73,15 +72,15 @@ describe('PersistentVolume', () => {
     expect(claim.volume!.name).toEqual(vol.name);
     expect(vol.claim!.name).toEqual(claim.name);
 
-    const resources = Testing.synth(chart);
+    const resources = cdk8s.Testing.synth(chart);
     expect(resources).toMatchSnapshot();
 
   });
 
   test('can be reserved with a custom storage class', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
       storageClassName: 'storage-class',
     });
@@ -96,15 +95,15 @@ describe('PersistentVolume', () => {
     expect(claim.volume!.name).toEqual(vol.name);
     expect(vol.claim!.name).toEqual(claim.name);
 
-    const resources = Testing.synth(chart);
+    const resources = cdk8s.Testing.synth(chart);
     expect(resources).toMatchSnapshot();
 
   });
 
   test('throws if reserved twice', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
@@ -116,25 +115,25 @@ describe('PersistentVolume', () => {
 
   test('can be bound to a claim at instantiation', () => {
 
-    const chart = Testing.chart();
-    const pvc = PersistentVolumeClaim.fromClaimName('claim');
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const pvc = kplus.PersistentVolumeClaim.fromClaimName('claim');
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
       claim: pvc,
     });
 
     expect(vol.claim!.name).toEqual(pvc.name);
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('can be bound to a claim post instantiation', () => {
 
-    const chart = Testing.chart();
-    const pvc = PersistentVolumeClaim.fromClaimName('claim');
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const pvc = kplus.PersistentVolumeClaim.fromClaimName('claim');
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
@@ -142,16 +141,16 @@ describe('PersistentVolume', () => {
 
     expect(vol.claim!.name).toEqual(pvc.name);
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('no-ops if bounded twice to the same claim', () => {
 
-    const chart = Testing.chart();
-    const pvc = PersistentVolumeClaim.fromClaimName('claim');
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const pvc = kplus.PersistentVolumeClaim.fromClaimName('claim');
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
@@ -164,10 +163,10 @@ describe('PersistentVolume', () => {
 
   test('throws if bounded twice to different claims', () => {
 
-    const chart = Testing.chart();
-    const pvc1 = PersistentVolumeClaim.fromClaimName('claim1');
-    const pvc2 = PersistentVolumeClaim.fromClaimName('claim2');
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const pvc1 = kplus.PersistentVolumeClaim.fromClaimName('claim1');
+    const pvc2 = kplus.PersistentVolumeClaim.fromClaimName('claim2');
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
@@ -183,8 +182,8 @@ describe('AwsElasticBlockStorePersistentVolume', () => {
 
   test('defaults', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
 
@@ -193,15 +192,15 @@ describe('AwsElasticBlockStorePersistentVolume', () => {
     expect(vol.partition).toBeUndefined();
     expect(vol.readOnly).toBeFalsy();
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('custom', () => {
 
-    const chart = Testing.chart();
-    const vol = new AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
       partition: 1,
       readOnly: true,
@@ -213,8 +212,8 @@ describe('AwsElasticBlockStorePersistentVolume', () => {
     expect(vol.partition).toEqual(1);
     expect(vol.readOnly).toBeTruthy();
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
@@ -224,45 +223,45 @@ describe('AzureDiskPersistentVolume', () => {
 
   test('defaults', () => {
 
-    const chart = Testing.chart();
-    const vol = new AzureDiskPersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AzureDiskPersistentVolume(chart, 'Volume', {
       diskName: 'name',
       diskUri: 'uri',
     });
 
     expect(vol.diskName).toEqual('name');
     expect(vol.diskUri).toEqual('uri');
-    expect(vol.cachingMode).toEqual(AzureDiskPersistentVolumeCachingMode.NONE);
+    expect(vol.cachingMode).toEqual(kplus.AzureDiskPersistentVolumeCachingMode.NONE);
     expect(vol.readOnly).toBeFalsy();
     expect(vol.fsType).toEqual('ext4');
-    expect(vol.kind).toEqual(AzureDiskPersistentVolumeKind.SHARED);
+    expect(vol.kind).toEqual(kplus.AzureDiskPersistentVolumeKind.SHARED);
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('custom', () => {
 
-    const chart = Testing.chart();
-    const vol = new AzureDiskPersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AzureDiskPersistentVolume(chart, 'Volume', {
       diskName: 'name',
       diskUri: 'uri',
-      cachingMode: AzureDiskPersistentVolumeCachingMode.READ_ONLY,
+      cachingMode: kplus.AzureDiskPersistentVolumeCachingMode.READ_ONLY,
       readOnly: true,
       fsType: 'ntfs',
-      kind: AzureDiskPersistentVolumeKind.DEDICATED,
+      kind: kplus.AzureDiskPersistentVolumeKind.DEDICATED,
     });
 
     expect(vol.diskName).toEqual('name');
     expect(vol.diskUri).toEqual('uri');
-    expect(vol.cachingMode).toEqual(AzureDiskPersistentVolumeCachingMode.READ_ONLY);
+    expect(vol.cachingMode).toEqual(kplus.AzureDiskPersistentVolumeCachingMode.READ_ONLY);
     expect(vol.readOnly).toBeTruthy();
     expect(vol.fsType).toEqual('ntfs');
-    expect(vol.kind).toEqual(AzureDiskPersistentVolumeKind.DEDICATED);
+    expect(vol.kind).toEqual(kplus.AzureDiskPersistentVolumeKind.DEDICATED);
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
@@ -272,8 +271,8 @@ describe('GCEPersistentDiskPersistentVolume', () => {
 
   test('defaults', () => {
 
-    const chart = Testing.chart();
-    const vol = new GCEPersistentDiskPersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.GCEPersistentDiskPersistentVolume(chart, 'Volume', {
       pdName: 'name',
     });
 
@@ -282,15 +281,15 @@ describe('GCEPersistentDiskPersistentVolume', () => {
     expect(vol.readOnly).toBeFalsy();
     expect(vol.fsType).toEqual('ext4');
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 
   test('custom', () => {
 
-    const chart = Testing.chart();
-    const vol = new GCEPersistentDiskPersistentVolume(chart, 'Volume', {
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.GCEPersistentDiskPersistentVolume(chart, 'Volume', {
       pdName: 'name',
       partition: 1,
       readOnly: true,
@@ -302,8 +301,8 @@ describe('GCEPersistentDiskPersistentVolume', () => {
     expect(vol.readOnly).toBeTruthy();
     expect(vol.fsType).toEqual('ntfs');
 
-    const spec = Testing.synth(chart)[0].spec;
-    expect(spec).toMatchSnapshot();
+    const resources = cdk8s.Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
 
   });
 

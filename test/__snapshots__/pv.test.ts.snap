@@ -1,113 +1,185 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AwsElasticBlockStorePersistentVolume custom 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ntfs",
-    "partition": 1,
-    "readOnly": true,
-    "volumeID": "vol1",
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ntfs",
+        "partition": 1,
+        "readOnly": true,
+        "volumeID": "vol1",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`AwsElasticBlockStorePersistentVolume defaults 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol1",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`AzureDiskPersistentVolume custom 1`] = `
-Object {
-  "azureDisk": Object {
-    "cachingMode": "ReadOnly",
-    "diskName": "name",
-    "diskURI": "uri",
-    "fsType": "ntfs",
-    "kind": "Dedicated",
-    "readOnly": true,
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "azureDisk": Object {
+        "cachingMode": "ReadOnly",
+        "diskName": "name",
+        "diskURI": "uri",
+        "fsType": "ntfs",
+        "kind": "Dedicated",
+        "readOnly": true,
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`AzureDiskPersistentVolume defaults 1`] = `
-Object {
-  "azureDisk": Object {
-    "cachingMode": "None",
-    "diskName": "name",
-    "diskURI": "uri",
-    "fsType": "ext4",
-    "kind": "Shared",
-    "readOnly": false,
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "azureDisk": Object {
+        "cachingMode": "None",
+        "diskName": "name",
+        "diskURI": "uri",
+        "fsType": "ext4",
+        "kind": "Shared",
+        "readOnly": false,
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`GCEPersistentDiskPersistentVolume custom 1`] = `
-Object {
-  "gcePersistentDisk": Object {
-    "fsType": "ntfs",
-    "partition": 1,
-    "pdName": "name",
-    "readOnly": true,
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "gcePersistentDisk": Object {
+        "fsType": "ntfs",
+        "partition": 1,
+        "pdName": "name",
+        "readOnly": true,
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`GCEPersistentDiskPersistentVolume defaults 1`] = `
-Object {
-  "gcePersistentDisk": Object {
-    "fsType": "ext4",
-    "pdName": "name",
-    "readOnly": false,
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "gcePersistentDisk": Object {
+        "fsType": "ext4",
+        "pdName": "name",
+        "readOnly": false,
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`PersistentVolume can be bound to a claim at instantiation 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol1",
+      },
+      "claimRef": Object {
+        "name": "claim",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "claimRef": Object {
-    "name": "claim",
-  },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`PersistentVolume can be bound to a claim post instantiation 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol1",
+      },
+      "claimRef": Object {
+        "name": "claim",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "claimRef": Object {
-    "name": "claim",
-  },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
 
 exports[`PersistentVolume can be reserved with a custom storage class 1`] = `
@@ -183,36 +255,54 @@ Array [
 `;
 
 exports[`PersistentVolume custom 1`] = `
-Object {
-  "accessModes": Array [
-    "ReadOnlyMany",
-    "ReadWriteMany",
-  ],
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "accessModes": Array [
+        "ReadOnlyMany",
+        "ReadWriteMany",
+      ],
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol1",
+      },
+      "capacity": Object {
+        "storage": "50Gi",
+      },
+      "mountOptions": Array [
+        "opt1",
+      ],
+      "persistentVolumeReclaimPolicy": "Delete",
+      "storageClassName": "storage-class",
+      "volumeMode": "Block",
+    },
   },
-  "capacity": Object {
-    "storage": "50Gi",
-  },
-  "mountOptions": Array [
-    "opt1",
-  ],
-  "persistentVolumeReclaimPolicy": "Delete",
-  "storageClassName": "storage-class",
-  "volumeMode": "Block",
-}
+]
 `;
 
 exports[`PersistentVolume defaults 1`] = `
-Object {
-  "awsElasticBlockStore": Object {
-    "fsType": "ext4",
-    "readOnly": false,
-    "volumeID": "vol1",
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-volume-c8db061e",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol1",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
   },
-  "persistentVolumeReclaimPolicy": "Retain",
-  "volumeMode": "Filesystem",
-}
+]
 `;
