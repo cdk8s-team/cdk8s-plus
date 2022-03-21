@@ -137,7 +137,7 @@ export class Volume {
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
    */
   public static fromPersistentVolume(pv: PersistentVolume, options: PersistentVolumeClaimVolumeOptions = {}) {
-    return Volume.fromPersistentVolumeClaim(pv.claim(), { name: pv.name, ...options });
+    return Volume.fromPersistentVolumeClaim(pv.reserve(), { name: pv.name, ...options });
   }
 
   /**

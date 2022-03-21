@@ -1,6 +1,6 @@
 import { Testing, Size } from 'cdk8s';
 import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim } from '../src';
-import { PersistentVolume } from '../src/pv';
+import { AzureDiskPersistentVolume } from '../src/pv';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -271,7 +271,7 @@ describe('fromEmptyDir', () => {
 
   test('size limit', () => {
     const vol = Volume.fromEmptyDir('main', { sizeLimit: Size.gibibytes(20) });
-    expect(vol._toKube().emptyDir?.sizeLimit).toEqual('20480Mi');
+    expect(vol._toKube().emptyDir!.sizeLimit!.value).toEqual('20480Mi');
   });
 });
 
@@ -318,7 +318,7 @@ describe('fromPersistentVolume', () => {
 
     const chart = Testing.chart();
 
-    const pv = new PersistentVolume(chart, 'pv');
+    const pv = new AzureDiskPersistentVolume(chart, 'pv', { diskName: 'name', diskUri: 'uri' });
     const volume = Volume.fromPersistentVolume(pv);
 
     expect(volume.name).toEqual(pv.name);
@@ -335,7 +335,7 @@ describe('fromPersistentVolume', () => {
 
     const chart = Testing.chart();
 
-    const pv = new PersistentVolume(chart, 'pv');
+    const pv = new AzureDiskPersistentVolume(chart, 'pv', { diskName: 'name', diskUri: 'uri' });
     const volume = Volume.fromPersistentVolume(pv, { name: 'custom', readOnly: true });
 
     expect(volume.name).toEqual('custom');

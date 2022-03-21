@@ -3,10 +3,10 @@ import { Size } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
-import { PersistentVolume } from './pv';
+import type { IPersistentVolume } from './pv';
 
 /**
- * Contract for a `PersistentVolumeClaim`.
+ * Contract of a `PersistentVolumeClaim`.
  */
 export interface IPersistentVolumeClaim extends IResource {
 
@@ -18,23 +18,30 @@ export interface IPersistentVolumeClaim extends IResource {
 export interface PersistentVolumeClaimProps extends ResourceProps {
 
   /**
-   * Contains the desired access modes the volume should have.
+   * Contains the access modes the volume should support.
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+   * @default - No access modes requirement.
    */
-  readonly accessModes?: AccessMode[];
+  readonly accessModes?: PersistentVolumeAccessMode[];
 
   /**
-    * Minimum resources the volume should have.
+    * Minimum storage size the volume should have.
     *
     * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+    * @default - No storage requirement.
     */
   readonly storage?: Size;
 
   /**
     * Name of the StorageClass required by the claim.
+    * When this property is not set, the behavior is as follows:
+    *
+    * - If the admission plugin is turned on, the storage class marked as default will be used.
+    * - If the admission plugin is turned off, the pvc can only be bound to volumes without a storage class.
     *
     * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+    * @default - Not set.
     */
   readonly storageClassName?: string;
 
@@ -43,10 +50,34 @@ export interface PersistentVolumeClaimProps extends ResourceProps {
     *
     * @default VolumeMode.FILE_SYSTEM
     */
-  readonly volumeMode?: VolumeMode;
+  readonly volumeMode?: PersistentVolumeMode;
+
+  /**
+   * The PersistentVolume backing this claim.
+   *
+   * The control plane still checks that storage class, access modes,
+   * and requested storage size on the volume are valid.
+   *
+   * Note that in order to guarantee a proper binding, the volume should
+   * also define a `claimRef` referring to this claim. Otherwise, the volume may be
+   * claimed be other pvc's before it gets a chance to bind to this one.
+   *
+   * If the volume is managed (i.e not imported), you can use `pv.claim()` to easily
+   * create a bi-directional bounded claim.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding.
+   * @default - No specific volume binding.
+   */
+  readonly volume?: IPersistentVolume;
 
 }
 
+/**
+ * A PersistentVolumeClaim (PVC) is a request for storage by a user.
+ * It is similar to a Pod. Pods consume node resources and PVCs consume PV resources.
+ * Pods can request specific levels of resources (CPU and Memory).
+ * Claims can request specific size and access modes
+ */
 export class PersistentVolumeClaim extends Resource implements IPersistentVolumeClaim {
 
   /**
@@ -62,22 +93,52 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
-  private _volumeName?: string;
+  /**
+   * Storage requirement of this claim.
+   */
+  public readonly storage?: Size;
+
+  /**
+   * Volume mode requirement of this claim.
+   */
+  public readonly volumeMode: PersistentVolumeMode;
+
+  /**
+   * Storage class requirment of this claim.
+   */
+  public readonly storageClassName?: string;
+
+  /**
+   * Access modes requirement of this claim.
+   */
+  public readonly accessModes?: readonly PersistentVolumeAccessMode[];
+
+  private _volume?: IPersistentVolume;
 
   public constructor(scope: Construct, id: string, props: PersistentVolumeClaimProps = { }) {
     super(scope, id);
 
-    const storage = props.storage ? k8s.Quantity.fromString(props.storage.toGibibytes() + 'Gi') : undefined;
+    this.storage = props.storage;
+    this.volumeMode = props.volumeMode ?? PersistentVolumeMode.FILE_SYSTEM;
+    this.storageClassName = props.storageClassName;
+    this.accessModes = props.accessModes;
+
+    if (props.volume) {
+      this.bind(props.volume);
+    }
 
     this.apiObject = new k8s.KubePersistentVolumeClaim(this, 'Resource', {
       metadata: props.metadata,
-      spec: {
-        accessModes: props.accessModes,
-        resources: storage ? { requests: { storage } } : undefined,
-        volumeMode: props.volumeMode ?? VolumeMode.FILE_SYSTEM,
-        storageClassName: props.storageClassName,
-      },
+      spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
     });
+  }
+
+  /**
+   * PV this claim is bound to. Undefined means the claim is not bound
+   * to any specific volume.
+   */
+  public get volume(): IPersistentVolume | undefined {
+    return this._volume;
   }
 
   /**
@@ -88,11 +149,25 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    *
    * @param pv The PV to bind to.
    */
-  public bind(pv: PersistentVolume) {
-    if (this._volumeName) {
-      throw new Error(`Cannot bind claim '${this.name}' to volume '${pv.name}' since it is already bound to volume '${this._volumeName}'`);
+  public bind(pv: IPersistentVolume) {
+    if (this._volume) {
+      throw new Error(`Cannot bind claim '${this.name}' to volume '${pv.name}' since it is already bound to volume '${this._volume}'`);
     }
-    this._volumeName = pv.name;
+    this._volume = pv;
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.PersistentVolumeClaimSpec {
+    const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes() + 'Gi') : undefined;
+    return {
+      volumeName: this.volume ? this.volume.name : undefined,
+      accessModes: this.accessModes?.map(a => a.toString()),
+      resources: storage ? { requests: { storage } } : undefined,
+      volumeMode: this.volumeMode,
+      storageClassName: this.storageClassName,
+    };
   }
 
 }
@@ -100,7 +175,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
 /**
  * Access Modes.
  */
-export enum AccessMode {
+export enum PersistentVolumeAccessMode {
 
   /**
    * The volume can be mounted as read-write by a single node.
@@ -132,7 +207,7 @@ export enum AccessMode {
 /**
  * Volume Modes.
  */
-export enum VolumeMode {
+export enum PersistentVolumeMode {
 
   /**
    * Volume is ounted into Pods into a directory.
