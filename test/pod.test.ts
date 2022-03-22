@@ -342,3 +342,22 @@ test('custom security context', () => {
   expect(pod.securityContext.group).toEqual(2000);
 
 });
+
+test('custom host aliases', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    hostAliases: [{ ip: '127.0.0.1', hostnames: ['foo.local', 'bar.local'] }],
+  });
+  pod.addHostAlias({ ip: '10.1.2.3', hostnames: ['foo.remote', 'bar.remote'] });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.hostAliases).toEqual([
+    { ip: '127.0.0.1', hostnames: ['foo.local', 'bar.local'] },
+    { ip: '10.1.2.3', hostnames: ['foo.remote', 'bar.remote'] },
+  ]);
+
+});

@@ -4,7 +4,7 @@ import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
 import { Ingress } from './ingress';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext } from './pod';
+import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
 import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
@@ -164,6 +164,10 @@ export class Deployment extends Resource implements IPodTemplate {
     return this._podTemplate.initContainers;
   }
 
+  public get hostAliases(): HostAlias[] {
+    return this._podTemplate.hostAliases;
+  }
+
   public get volumes(): Volume[] {
     return this._podTemplate.volumes;
   }
@@ -226,6 +230,10 @@ export class Deployment extends Resource implements IPodTemplate {
 
   public addInitContainer(container: ContainerProps): Container {
     return this._podTemplate.addInitContainer(container);
+  }
+
+  public addHostAlias(hostAlias: HostAlias): void {
+    return this._podTemplate.addHostAlias(hostAlias);
   }
 
   public addVolume(volume: Volume): void {
