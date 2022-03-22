@@ -17,9 +17,8 @@ export function generateResourceType(project: Project, sourcePath: string, outpu
   if (ts.marker) {
     ts.line(`// ${ts.marker}`);
   }
-  ts.line('import type { IGrantee } from \'./grants\';');
   ts.line();
-  ts.open('export interface ResourceTypeOptions {');
+  ts.open('export interface ApiResourceOptions {');
   ts.line('readonly apiGroups: Array<string>;');
   ts.line('readonly resources: Array<string>;');
   ts.close('}');
@@ -27,7 +26,7 @@ export function generateResourceType(project: Project, sourcePath: string, outpu
   ts.line('/**');
   ts.line(' * Represents information about an API resource type.');
   ts.line(' */');
-  ts.open('export class ResourceType implements IGrantee {');
+  ts.open('export class ApiResource {');
 
   for (const resource of resourceTypes) {
     const typeName = normalizeTypeName(resource.kind);
@@ -37,21 +36,21 @@ export function generateResourceType(project: Project, sourcePath: string, outpu
     ts.line('/**');
     ts.line(` * API resource information for ${resource.kind}.`);
     ts.line(' */');
-    ts.open(`public static readonly ${memberName} = new ResourceType({`);
+    ts.open(`public static readonly ${memberName} = new ApiResource({`);
     ts.line(`apiGroups: [${apiGroups.map(group => `'${group}'`).join(', ')}],`);
     ts.line(`resources: ['${resource.name}'],`);
     ts.close('});');
     ts.line();
   }
 
-  ts.open('public static custom(options: ResourceTypeOptions): ResourceType {');
-  ts.line('return new ResourceType(options);');
+  ts.open('public static custom(options: ApiResourceOptions): ApiResource {');
+  ts.line('return new ApiResource(options);');
   ts.close('};');
   ts.line();
   ts.line('private readonly _apiGroups: Array<string>;');
   ts.line('private readonly _resources: Array<string>;');
   ts.line();
-  ts.open('private constructor(options: ResourceTypeOptions) {');
+  ts.open('private constructor(options: ApiResourceOptions) {');
   ts.line('this._apiGroups = options.apiGroups;');
   ts.line('this._resources = options.resources;');
   ts.close('}');

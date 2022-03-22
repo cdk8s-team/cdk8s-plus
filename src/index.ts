@@ -12,6 +12,6 @@ export * from './volume';
 export * from './ingress';
 export * from './probe';
 export * from './role';
-export * from './grants';
+export * from './resources';
 export * from './resource-type';
 export * from './role-binding';

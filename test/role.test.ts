@@ -110,7 +110,7 @@ Array [
     const role = new kplus.Role(chart, 'pod-reader', {
       namespace: 'default',
     });
-    role.grantRead(kplus.Grantee.fromObjects(pod, secret));
+    role.allowRead(kplus.Resources.fromObjects(pod, secret));
 
     // THEN
     const manifest = Testing.synth(chart);
@@ -133,19 +133,14 @@ Array [
     const role = new kplus.Role(chart, 'pod-reader', {
       namespace: 'default',
     });
-    role.grantRead(kplus.ResourceType.SECRET, kplus.ResourceType.POD);
+    role.allowRead(kplus.Resources.fromTypes(kplus.ApiResource.SECRET, kplus.ApiResource.POD));
 
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[0].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: ['secrets'],
-        verbs: ['get', 'list', 'watch'],
-      },
-      {
-        apiGroups: [''],
-        resources: ['pods'],
+        resources: ['pods', 'secrets'],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
@@ -239,7 +234,7 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'my-cluster-role');
-    role.grantRead(kplus.Grantee.fromObjects(pod, secret));
+    role.allowRead(kplus.Resources.fromObjects(pod, secret));
 
     const manifest = Testing.synth(chart);
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
@@ -259,18 +254,13 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'my-cluster-role');
-    role.grantRead(kplus.ResourceType.SECRET, kplus.ResourceType.POD);
+    role.allowRead(kplus.Resources.fromTypes(kplus.ApiResource.SECRET, kplus.ApiResource.POD));
 
     const manifest = Testing.synth(chart);
     expect(manifest[0].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: ['secrets'],
-        verbs: ['get', 'list', 'watch'],
-      },
-      {
-        apiGroups: [''],
-        resources: ['pods'],
+        resources: ['pods', 'secrets'],
         verbs: ['get', 'list', 'watch'],
       },
     ]));

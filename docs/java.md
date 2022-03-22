@@ -1854,10 +1854,10 @@ The rule to add.
 
 ---
 
-##### `grant` <a name="org.cdk8s.plus22.RoleBase.grant"></a>
+##### `allow` <a name="org.cdk8s.plus22.RoleBase.allow"></a>
 
 ```java
-public grant(java.util.List<java.lang.String> verbs, java.util.List<IGrantee> grantees)
+public allow(java.util.List<java.lang.String> verbs, Resources resources)
 ```
 
 ###### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.verbs"></a>
@@ -1866,149 +1866,149 @@ public grant(java.util.List<java.lang.String> verbs, java.util.List<IGrantee> gr
 
 ---
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* java.util.List<[`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)>
-
-The resource(s) to apply to.
-
----
-
-##### `grantCreate` <a name="org.cdk8s.plus22.RoleBase.grantCreate"></a>
-
-```java
-public grantCreate(IGrantee grantees)
-```
-
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
-
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantDelete` <a name="org.cdk8s.plus22.RoleBase.grantDelete"></a>
+##### `allowCreate` <a name="org.cdk8s.plus22.RoleBase.allowCreate"></a>
 
 ```java
-public grantDelete(IGrantee grantees)
+public allowCreate(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantDeleteCollection` <a name="org.cdk8s.plus22.RoleBase.grantDeleteCollection"></a>
+##### `allowDelete` <a name="org.cdk8s.plus22.RoleBase.allowDelete"></a>
 
 ```java
-public grantDeleteCollection(IGrantee grantees)
+public allowDelete(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantGet` <a name="org.cdk8s.plus22.RoleBase.grantGet"></a>
+##### `allowDeleteCollection` <a name="org.cdk8s.plus22.RoleBase.allowDeleteCollection"></a>
 
 ```java
-public grantGet(IGrantee grantees)
+public allowDeleteCollection(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantList` <a name="org.cdk8s.plus22.RoleBase.grantList"></a>
+##### `allowGet` <a name="org.cdk8s.plus22.RoleBase.allowGet"></a>
 
 ```java
-public grantList(IGrantee grantees)
+public allowGet(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantPatch` <a name="org.cdk8s.plus22.RoleBase.grantPatch"></a>
+##### `allowList` <a name="org.cdk8s.plus22.RoleBase.allowList"></a>
 
 ```java
-public grantPatch(IGrantee grantees)
+public allowList(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantRead` <a name="org.cdk8s.plus22.RoleBase.grantRead"></a>
+##### `allowPatch` <a name="org.cdk8s.plus22.RoleBase.allowPatch"></a>
 
 ```java
-public grantRead(IGrantee grantees)
+public allowPatch(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantReadWrite` <a name="org.cdk8s.plus22.RoleBase.grantReadWrite"></a>
+##### `allowRead` <a name="org.cdk8s.plus22.RoleBase.allowRead"></a>
 
 ```java
-public grantReadWrite(IGrantee grantees)
+public allowRead(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantUpdate` <a name="org.cdk8s.plus22.RoleBase.grantUpdate"></a>
+##### `allowReadWrite` <a name="org.cdk8s.plus22.RoleBase.allowReadWrite"></a>
 
 ```java
-public grantUpdate(IGrantee grantees)
+public allowReadWrite(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
 ---
 
-##### `grantWatch` <a name="org.cdk8s.plus22.RoleBase.grantWatch"></a>
+##### `allowUpdate` <a name="org.cdk8s.plus22.RoleBase.allowUpdate"></a>
 
 ```java
-public grantWatch(IGrantee grantees)
+public allowUpdate(Resources resources)
 ```
 
-###### `grantees`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.grantees"></a>
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowWatch` <a name="org.cdk8s.plus22.RoleBase.allowWatch"></a>
+
+```java
+public allowWatch(Resources resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
 
 The resource(s) to apply to.
 
@@ -3173,6 +3173,39 @@ A prefix to add to all keys in the config map.
 
 ---
 
+### ApiResourceOptions <a name="org.cdk8s.plus22.ApiResourceOptions"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ApiResourceOptions;
+
+ApiResourceOptions.builder()
+    .apiGroups(java.util.List<java.lang.String>)
+    .resources(java.util.List<java.lang.String>)
+    .build();
+```
+
+##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.apiGroups"></a>
+
+```java
+public java.util.List<java.lang.String> getApiGroups();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+##### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.resources"></a>
+
+```java
+public java.util.List<java.lang.String> getResources();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
 ### ClusterRoleBindingProps <a name="org.cdk8s.plus22.ClusterRoleBindingProps"></a>
 
 Options for `ClusterRoleBinding`.
@@ -3524,7 +3557,7 @@ ContainerProps.builder()
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .readiness(Probe)
-//  .resources(Resources)
+//  .resources(ContainerResources)
 //  .securityContext(ContainerSecurityContextProps)
 //  .startup(Probe)
 //  .volumeMounts(java.util.List<VolumeMount>)
@@ -3674,10 +3707,10 @@ Determines when the container is ready to serve traffic.
 ##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.resources"></a>
 
 ```java
-public Resources getResources();
+public ContainerResources getResources();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.ContainerResources`](#org.cdk8s.plus22.ContainerResources)
 
 Compute resources (CPU and memory requests and limits) required by the container.
 
@@ -3745,6 +3778,41 @@ public java.lang.String getWorkingDir();
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### ContainerResources <a name="org.cdk8s.plus22.ContainerResources"></a>
+
+CPU and memory compute resources.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ContainerResources;
+
+ContainerResources.builder()
+    .cpu(CpuResources)
+    .memory(MemoryResources)
+    .build();
+```
+
+##### `cpu`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerResources.property.cpu"></a>
+
+```java
+public CpuResources getCpu();
+```
+
+- *Type:* [`org.cdk8s.plus22.CpuResources`](#org.cdk8s.plus22.CpuResources)
+
+---
+
+##### `memory`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerResources.property.memory"></a>
+
+```java
+public MemoryResources getMemory();
+```
+
+- *Type:* [`org.cdk8s.plus22.MemoryResources`](#org.cdk8s.plus22.MemoryResources)
 
 ---
 
@@ -5989,74 +6057,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-### Resources <a name="org.cdk8s.plus22.Resources"></a>
-
-CPU and memory compute resources.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```java
-import org.cdk8s.plus22.Resources;
-
-Resources.builder()
-    .cpu(CpuResources)
-    .memory(MemoryResources)
-    .build();
-```
-
-##### `cpu`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.property.cpu"></a>
-
-```java
-public CpuResources getCpu();
-```
-
-- *Type:* [`org.cdk8s.plus22.CpuResources`](#org.cdk8s.plus22.CpuResources)
-
----
-
-##### `memory`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.property.memory"></a>
-
-```java
-public MemoryResources getMemory();
-```
-
-- *Type:* [`org.cdk8s.plus22.MemoryResources`](#org.cdk8s.plus22.MemoryResources)
-
----
-
-### ResourceTypeOptions <a name="org.cdk8s.plus22.ResourceTypeOptions"></a>
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```java
-import org.cdk8s.plus22.ResourceTypeOptions;
-
-ResourceTypeOptions.builder()
-    .apiGroups(java.util.List<java.lang.String>)
-    .resources(java.util.List<java.lang.String>)
-    .build();
-```
-
-##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourceTypeOptions.property.apiGroups"></a>
-
-```java
-public java.util.List<java.lang.String> getApiGroups();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-##### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourceTypeOptions.property.resources"></a>
-
-```java
-public java.util.List<java.lang.String> getResources();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
 ### RoleBindingProps <a name="org.cdk8s.plus22.RoleBindingProps"></a>
 
 Options for `RoleBinding`.
@@ -7241,6 +7241,491 @@ The volume to mount.
 
 ## Classes <a name="Classes"></a>
 
+### ApiResource <a name="org.cdk8s.plus22.ApiResource"></a>
+
+Represents information about an API resource type.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `custom` <a name="org.cdk8s.plus22.ApiResource.custom"></a>
+
+```java
+import org.cdk8s.plus22.ApiResource;
+
+ApiResource.custom(ApiResourceOptions options)
+```
+
+###### `options`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResource.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResourceOptions`](#org.cdk8s.plus22.ApiResourceOptions)
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResource.property.apiGroups"></a>
+
+```java
+public java.util.List<java.lang.String> getApiGroups();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ApiResource.property.resources"></a>
+
+```java
+public java.util.List<java.lang.String> getResources();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+#### Constants <a name="Constants"></a>
+
+##### `API_SERVICE` <a name="org.cdk8s.plus22.ApiResource.property.API_SERVICE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for APIService.
+
+---
+
+##### `BINDING` <a name="org.cdk8s.plus22.ApiResource.property.BINDING"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Binding.
+
+---
+
+##### `CERTIFICATE_SIGNING_REQUEST` <a name="org.cdk8s.plus22.ApiResource.property.CERTIFICATE_SIGNING_REQUEST"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for CertificateSigningRequest.
+
+---
+
+##### `CLUSTER_ROLE` <a name="org.cdk8s.plus22.ApiResource.property.CLUSTER_ROLE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ClusterRole.
+
+---
+
+##### `CLUSTER_ROLE_BINDING` <a name="org.cdk8s.plus22.ApiResource.property.CLUSTER_ROLE_BINDING"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ClusterRoleBinding.
+
+---
+
+##### `COMPONENT_STATUS` <a name="org.cdk8s.plus22.ApiResource.property.COMPONENT_STATUS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ComponentStatus.
+
+---
+
+##### `CONFIG_MAP` <a name="org.cdk8s.plus22.ApiResource.property.CONFIG_MAP"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ConfigMap.
+
+---
+
+##### `CONTROLLER_REVISION` <a name="org.cdk8s.plus22.ApiResource.property.CONTROLLER_REVISION"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ControllerRevision.
+
+---
+
+##### `CRON_JOB` <a name="org.cdk8s.plus22.ApiResource.property.CRON_JOB"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for CronJob.
+
+---
+
+##### `CSI_DRIVER` <a name="org.cdk8s.plus22.ApiResource.property.CSI_DRIVER"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for CSIDriver.
+
+---
+
+##### `CSI_NODE` <a name="org.cdk8s.plus22.ApiResource.property.CSI_NODE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for CSINode.
+
+---
+
+##### `CSI_STORAGE_CAPACITY` <a name="org.cdk8s.plus22.ApiResource.property.CSI_STORAGE_CAPACITY"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for CSIStorageCapacity.
+
+---
+
+##### `CUSTOM_RESOURCE_DEFINITION` <a name="org.cdk8s.plus22.ApiResource.property.CUSTOM_RESOURCE_DEFINITION"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for CustomResourceDefinition.
+
+---
+
+##### `DAEMON_SET` <a name="org.cdk8s.plus22.ApiResource.property.DAEMON_SET"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for DaemonSet.
+
+---
+
+##### `DEPLOYMENT` <a name="org.cdk8s.plus22.ApiResource.property.DEPLOYMENT"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Deployment.
+
+---
+
+##### `ENDPOINT_SLICE` <a name="org.cdk8s.plus22.ApiResource.property.ENDPOINT_SLICE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for EndpointSlice.
+
+---
+
+##### `ENDPOINTS` <a name="org.cdk8s.plus22.ApiResource.property.ENDPOINTS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Endpoints.
+
+---
+
+##### `EVENT` <a name="org.cdk8s.plus22.ApiResource.property.EVENT"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Event.
+
+---
+
+##### `FLOW_SCHEMA` <a name="org.cdk8s.plus22.ApiResource.property.FLOW_SCHEMA"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for FlowSchema.
+
+---
+
+##### `HORIZONTAL_POD_AUTOSCALER` <a name="org.cdk8s.plus22.ApiResource.property.HORIZONTAL_POD_AUTOSCALER"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for HorizontalPodAutoscaler.
+
+---
+
+##### `INGRESS` <a name="org.cdk8s.plus22.ApiResource.property.INGRESS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Ingress.
+
+---
+
+##### `INGRESS_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.INGRESS_CLASS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for IngressClass.
+
+---
+
+##### `JOB` <a name="org.cdk8s.plus22.ApiResource.property.JOB"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Job.
+
+---
+
+##### `LEASE` <a name="org.cdk8s.plus22.ApiResource.property.LEASE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Lease.
+
+---
+
+##### `LIMIT_RANGE` <a name="org.cdk8s.plus22.ApiResource.property.LIMIT_RANGE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for LimitRange.
+
+---
+
+##### `LOCAL_SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.LOCAL_SUBJECT_ACCESS_REVIEW"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for LocalSubjectAccessReview.
+
+---
+
+##### `MUTATING_WEBHOOK_CONFIGURATION` <a name="org.cdk8s.plus22.ApiResource.property.MUTATING_WEBHOOK_CONFIGURATION"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for MutatingWebhookConfiguration.
+
+---
+
+##### `NAMESPACE` <a name="org.cdk8s.plus22.ApiResource.property.NAMESPACE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Namespace.
+
+---
+
+##### `NETWORK_POLICY` <a name="org.cdk8s.plus22.ApiResource.property.NETWORK_POLICY"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for NetworkPolicy.
+
+---
+
+##### `NODE` <a name="org.cdk8s.plus22.ApiResource.property.NODE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Node.
+
+---
+
+##### `PERSISTENT_VOLUME` <a name="org.cdk8s.plus22.ApiResource.property.PERSISTENT_VOLUME"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PersistentVolume.
+
+---
+
+##### `PERSISTENT_VOLUME_CLAIM` <a name="org.cdk8s.plus22.ApiResource.property.PERSISTENT_VOLUME_CLAIM"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PersistentVolumeClaim.
+
+---
+
+##### `POD` <a name="org.cdk8s.plus22.ApiResource.property.POD"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Pod.
+
+---
+
+##### `POD_DISRUPTION_BUDGET` <a name="org.cdk8s.plus22.ApiResource.property.POD_DISRUPTION_BUDGET"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PodDisruptionBudget.
+
+---
+
+##### `POD_SECURITY_POLICY` <a name="org.cdk8s.plus22.ApiResource.property.POD_SECURITY_POLICY"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PodSecurityPolicy.
+
+---
+
+##### `POD_TEMPLATE` <a name="org.cdk8s.plus22.ApiResource.property.POD_TEMPLATE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PodTemplate.
+
+---
+
+##### `PRIORITY_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.PRIORITY_CLASS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PriorityClass.
+
+---
+
+##### `PRIORITY_LEVEL_CONFIGURATION` <a name="org.cdk8s.plus22.ApiResource.property.PRIORITY_LEVEL_CONFIGURATION"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for PriorityLevelConfiguration.
+
+---
+
+##### `REPLICA_SET` <a name="org.cdk8s.plus22.ApiResource.property.REPLICA_SET"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ReplicaSet.
+
+---
+
+##### `REPLICATION_CONTROLLER` <a name="org.cdk8s.plus22.ApiResource.property.REPLICATION_CONTROLLER"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ReplicationController.
+
+---
+
+##### `RESOURCE_QUOTA` <a name="org.cdk8s.plus22.ApiResource.property.RESOURCE_QUOTA"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ResourceQuota.
+
+---
+
+##### `ROLE` <a name="org.cdk8s.plus22.ApiResource.property.ROLE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Role.
+
+---
+
+##### `ROLE_BINDING` <a name="org.cdk8s.plus22.ApiResource.property.ROLE_BINDING"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for RoleBinding.
+
+---
+
+##### `RUNTIME_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.RUNTIME_CLASS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for RuntimeClass.
+
+---
+
+##### `SECRET` <a name="org.cdk8s.plus22.ApiResource.property.SECRET"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Secret.
+
+---
+
+##### `SELF_SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.SELF_SUBJECT_ACCESS_REVIEW"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for SelfSubjectAccessReview.
+
+---
+
+##### `SELF_SUBJECT_RULES_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.SELF_SUBJECT_RULES_REVIEW"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for SelfSubjectRulesReview.
+
+---
+
+##### `SERVICE` <a name="org.cdk8s.plus22.ApiResource.property.SERVICE"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Service.
+
+---
+
+##### `SERVICE_ACCOUNT` <a name="org.cdk8s.plus22.ApiResource.property.SERVICE_ACCOUNT"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ServiceAccount.
+
+---
+
+##### `STATEFUL_SET` <a name="org.cdk8s.plus22.ApiResource.property.STATEFUL_SET"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for StatefulSet.
+
+---
+
+##### `STORAGE_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.STORAGE_CLASS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for StorageClass.
+
+---
+
+##### `SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.SUBJECT_ACCESS_REVIEW"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for SubjectAccessReview.
+
+---
+
+##### `TOKEN_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.TOKEN_REVIEW"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for TokenReview.
+
+---
+
+##### `VALIDATING_WEBHOOK_CONFIGURATION` <a name="org.cdk8s.plus22.ApiResource.property.VALIDATING_WEBHOOK_CONFIGURATION"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ValidatingWebhookConfiguration.
+
+---
+
+##### `VOLUME_ATTACHMENT` <a name="org.cdk8s.plus22.ApiResource.property.VOLUME_ATTACHMENT"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for VolumeAttachment.
+
+---
+
 ### Container <a name="org.cdk8s.plus22.Container"></a>
 
 A single application container that you want to run within a pod.
@@ -7260,7 +7745,7 @@ Container.Builder.create()
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .readiness(Probe)
-//  .resources(Resources)
+//  .resources(ContainerResources)
 //  .securityContext(ContainerSecurityContextProps)
 //  .startup(Probe)
 //  .volumeMounts(java.util.List<VolumeMount>)
@@ -7373,7 +7858,7 @@ Determines when the container is ready to serve traffic.
 
 ##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.ContainerResources`](#org.cdk8s.plus22.ContainerResources)
 
 Compute resources (CPU and memory requests and limits) required by the container.
 
@@ -7597,10 +8082,10 @@ The port this container exposes.
 ##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.resources"></a>
 
 ```java
-public Resources getResources();
+public ContainerResources getResources();
 ```
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.ContainerResources`](#org.cdk8s.plus22.ContainerResources)
 
 Compute resources (CPU and memory requests and limits) required by the container.
 
@@ -7971,51 +8456,6 @@ public java.lang.Object getValueFrom();
 - *Type:* `java.lang.Object`
 
 ---
-
-
-### Grantee <a name="org.cdk8s.plus22.Grantee"></a>
-
-A class with utility methods for creating grantees.
-
-#### Initializers <a name="org.cdk8s.plus22.Grantee.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.Grantee;
-
-new Grantee();
-```
-
-
-#### Static Functions <a name="Static Functions"></a>
-
-##### `fromKinds` <a name="org.cdk8s.plus22.Grantee.fromKinds"></a>
-
-```java
-import org.cdk8s.plus22.Grantee;
-
-Grantee.fromKinds(ResourceType types)
-```
-
-###### `types`<sup>Required</sup> <a name="org.cdk8s.plus22.Grantee.parameter.types"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
----
-
-##### `fromObjects` <a name="org.cdk8s.plus22.Grantee.fromObjects"></a>
-
-```java
-import org.cdk8s.plus22.Grantee;
-
-Grantee.fromObjects(IResource objects)
-```
-
-###### `objects`<sup>Required</sup> <a name="org.cdk8s.plus22.Grantee.parameter.objects"></a>
-
-- *Type:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
-
----
-
 
 
 ### Group <a name="org.cdk8s.plus22.Group"></a>
@@ -8830,492 +9270,53 @@ Options.
 
 
 
-### ResourceType <a name="org.cdk8s.plus22.ResourceType"></a>
+### Resources <a name="org.cdk8s.plus22.Resources"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
-
-Represents information about an API resource type.
+Represents a collection of resources.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `custom` <a name="org.cdk8s.plus22.ResourceType.custom"></a>
+##### `fromObjects` <a name="org.cdk8s.plus22.Resources.fromObjects"></a>
 
 ```java
-import org.cdk8s.plus22.ResourceType;
+import org.cdk8s.plus22.Resources;
 
-ResourceType.custom(ResourceTypeOptions options)
+Resources.fromObjects(IResource objects)
 ```
 
-###### `options`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourceType.parameter.options"></a>
+###### `objects`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.parameter.objects"></a>
 
-- *Type:* [`org.cdk8s.plus22.ResourceTypeOptions`](#org.cdk8s.plus22.ResourceTypeOptions)
+- *Type:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+
+---
+
+##### `fromTypes` <a name="org.cdk8s.plus22.Resources.fromTypes"></a>
+
+```java
+import org.cdk8s.plus22.Resources;
+
+Resources.fromTypes(ApiResource types)
+```
+
+###### `types`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.parameter.types"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
 ---
 
 #### Properties <a name="Properties"></a>
 
-##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourceType.property.apiGroups"></a>
+##### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.property.value"></a>
 
 ```java
-public java.util.List<java.lang.String> getApiGroups();
+public IRuleResources getValue();
 ```
 
-- *Type:* java.util.List<`java.lang.String`>
+- *Type:* [`org.cdk8s.plus22.IRuleResources`](#org.cdk8s.plus22.IRuleResources)
 
 ---
 
-##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ResourceType.property.resources"></a>
-
-```java
-public java.util.List<java.lang.String> getResources();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-#### Constants <a name="Constants"></a>
-
-##### `API_SERVICE` <a name="org.cdk8s.plus22.ResourceType.property.API_SERVICE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for APIService.
-
----
-
-##### `BINDING` <a name="org.cdk8s.plus22.ResourceType.property.BINDING"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Binding.
-
----
-
-##### `CERTIFICATE_SIGNING_REQUEST` <a name="org.cdk8s.plus22.ResourceType.property.CERTIFICATE_SIGNING_REQUEST"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for CertificateSigningRequest.
-
----
-
-##### `CLUSTER_ROLE` <a name="org.cdk8s.plus22.ResourceType.property.CLUSTER_ROLE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ClusterRole.
-
----
-
-##### `CLUSTER_ROLE_BINDING` <a name="org.cdk8s.plus22.ResourceType.property.CLUSTER_ROLE_BINDING"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ClusterRoleBinding.
-
----
-
-##### `COMPONENT_STATUS` <a name="org.cdk8s.plus22.ResourceType.property.COMPONENT_STATUS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ComponentStatus.
-
----
-
-##### `CONFIG_MAP` <a name="org.cdk8s.plus22.ResourceType.property.CONFIG_MAP"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ConfigMap.
-
----
-
-##### `CONTROLLER_REVISION` <a name="org.cdk8s.plus22.ResourceType.property.CONTROLLER_REVISION"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ControllerRevision.
-
----
-
-##### `CRON_JOB` <a name="org.cdk8s.plus22.ResourceType.property.CRON_JOB"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for CronJob.
-
----
-
-##### `CSI_DRIVER` <a name="org.cdk8s.plus22.ResourceType.property.CSI_DRIVER"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for CSIDriver.
-
----
-
-##### `CSI_NODE` <a name="org.cdk8s.plus22.ResourceType.property.CSI_NODE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for CSINode.
-
----
-
-##### `CSI_STORAGE_CAPACITY` <a name="org.cdk8s.plus22.ResourceType.property.CSI_STORAGE_CAPACITY"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for CSIStorageCapacity.
-
----
-
-##### `CUSTOM_RESOURCE_DEFINITION` <a name="org.cdk8s.plus22.ResourceType.property.CUSTOM_RESOURCE_DEFINITION"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for CustomResourceDefinition.
-
----
-
-##### `DAEMON_SET` <a name="org.cdk8s.plus22.ResourceType.property.DAEMON_SET"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for DaemonSet.
-
----
-
-##### `DEPLOYMENT` <a name="org.cdk8s.plus22.ResourceType.property.DEPLOYMENT"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Deployment.
-
----
-
-##### `ENDPOINT_SLICE` <a name="org.cdk8s.plus22.ResourceType.property.ENDPOINT_SLICE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for EndpointSlice.
-
----
-
-##### `ENDPOINTS` <a name="org.cdk8s.plus22.ResourceType.property.ENDPOINTS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Endpoints.
-
----
-
-##### `EVENT` <a name="org.cdk8s.plus22.ResourceType.property.EVENT"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Event.
-
----
-
-##### `FLOW_SCHEMA` <a name="org.cdk8s.plus22.ResourceType.property.FLOW_SCHEMA"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for FlowSchema.
-
----
-
-##### `HORIZONTAL_POD_AUTOSCALER` <a name="org.cdk8s.plus22.ResourceType.property.HORIZONTAL_POD_AUTOSCALER"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for HorizontalPodAutoscaler.
-
----
-
-##### `INGRESS` <a name="org.cdk8s.plus22.ResourceType.property.INGRESS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Ingress.
-
----
-
-##### `INGRESS_CLASS` <a name="org.cdk8s.plus22.ResourceType.property.INGRESS_CLASS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for IngressClass.
-
----
-
-##### `JOB` <a name="org.cdk8s.plus22.ResourceType.property.JOB"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Job.
-
----
-
-##### `LEASE` <a name="org.cdk8s.plus22.ResourceType.property.LEASE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Lease.
-
----
-
-##### `LIMIT_RANGE` <a name="org.cdk8s.plus22.ResourceType.property.LIMIT_RANGE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for LimitRange.
-
----
-
-##### `LOCAL_SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ResourceType.property.LOCAL_SUBJECT_ACCESS_REVIEW"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for LocalSubjectAccessReview.
-
----
-
-##### `MUTATING_WEBHOOK_CONFIGURATION` <a name="org.cdk8s.plus22.ResourceType.property.MUTATING_WEBHOOK_CONFIGURATION"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for MutatingWebhookConfiguration.
-
----
-
-##### `NAMESPACE` <a name="org.cdk8s.plus22.ResourceType.property.NAMESPACE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Namespace.
-
----
-
-##### `NETWORK_POLICY` <a name="org.cdk8s.plus22.ResourceType.property.NETWORK_POLICY"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for NetworkPolicy.
-
----
-
-##### `NODE` <a name="org.cdk8s.plus22.ResourceType.property.NODE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Node.
-
----
-
-##### `PERSISTENT_VOLUME` <a name="org.cdk8s.plus22.ResourceType.property.PERSISTENT_VOLUME"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PersistentVolume.
-
----
-
-##### `PERSISTENT_VOLUME_CLAIM` <a name="org.cdk8s.plus22.ResourceType.property.PERSISTENT_VOLUME_CLAIM"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PersistentVolumeClaim.
-
----
-
-##### `POD` <a name="org.cdk8s.plus22.ResourceType.property.POD"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Pod.
-
----
-
-##### `POD_DISRUPTION_BUDGET` <a name="org.cdk8s.plus22.ResourceType.property.POD_DISRUPTION_BUDGET"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PodDisruptionBudget.
-
----
-
-##### `POD_SECURITY_POLICY` <a name="org.cdk8s.plus22.ResourceType.property.POD_SECURITY_POLICY"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PodSecurityPolicy.
-
----
-
-##### `POD_TEMPLATE` <a name="org.cdk8s.plus22.ResourceType.property.POD_TEMPLATE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PodTemplate.
-
----
-
-##### `PRIORITY_CLASS` <a name="org.cdk8s.plus22.ResourceType.property.PRIORITY_CLASS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PriorityClass.
-
----
-
-##### `PRIORITY_LEVEL_CONFIGURATION` <a name="org.cdk8s.plus22.ResourceType.property.PRIORITY_LEVEL_CONFIGURATION"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for PriorityLevelConfiguration.
-
----
-
-##### `REPLICA_SET` <a name="org.cdk8s.plus22.ResourceType.property.REPLICA_SET"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ReplicaSet.
-
----
-
-##### `REPLICATION_CONTROLLER` <a name="org.cdk8s.plus22.ResourceType.property.REPLICATION_CONTROLLER"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ReplicationController.
-
----
-
-##### `RESOURCE_QUOTA` <a name="org.cdk8s.plus22.ResourceType.property.RESOURCE_QUOTA"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ResourceQuota.
-
----
-
-##### `ROLE` <a name="org.cdk8s.plus22.ResourceType.property.ROLE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Role.
-
----
-
-##### `ROLE_BINDING` <a name="org.cdk8s.plus22.ResourceType.property.ROLE_BINDING"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for RoleBinding.
-
----
-
-##### `RUNTIME_CLASS` <a name="org.cdk8s.plus22.ResourceType.property.RUNTIME_CLASS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for RuntimeClass.
-
----
-
-##### `SECRET` <a name="org.cdk8s.plus22.ResourceType.property.SECRET"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Secret.
-
----
-
-##### `SELF_SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ResourceType.property.SELF_SUBJECT_ACCESS_REVIEW"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for SelfSubjectAccessReview.
-
----
-
-##### `SELF_SUBJECT_RULES_REVIEW` <a name="org.cdk8s.plus22.ResourceType.property.SELF_SUBJECT_RULES_REVIEW"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for SelfSubjectRulesReview.
-
----
-
-##### `SERVICE` <a name="org.cdk8s.plus22.ResourceType.property.SERVICE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for Service.
-
----
-
-##### `SERVICE_ACCOUNT` <a name="org.cdk8s.plus22.ResourceType.property.SERVICE_ACCOUNT"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ServiceAccount.
-
----
-
-##### `STATEFUL_SET` <a name="org.cdk8s.plus22.ResourceType.property.STATEFUL_SET"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for StatefulSet.
-
----
-
-##### `STORAGE_CLASS` <a name="org.cdk8s.plus22.ResourceType.property.STORAGE_CLASS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for StorageClass.
-
----
-
-##### `SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ResourceType.property.SUBJECT_ACCESS_REVIEW"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for SubjectAccessReview.
-
----
-
-##### `TOKEN_REVIEW` <a name="org.cdk8s.plus22.ResourceType.property.TOKEN_REVIEW"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for TokenReview.
-
----
-
-##### `VALIDATING_WEBHOOK_CONFIGURATION` <a name="org.cdk8s.plus22.ResourceType.property.VALIDATING_WEBHOOK_CONFIGURATION"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for ValidatingWebhookConfiguration.
-
----
-
-##### `VOLUME_ATTACHMENT` <a name="org.cdk8s.plus22.ResourceType.property.VOLUME_ATTACHMENT"></a>
-
-- *Type:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType)
-
-API resource information for VolumeAttachment.
-
----
 
 ### User <a name="org.cdk8s.plus22.User"></a>
 
@@ -9663,45 +9664,6 @@ The Kubernetes name of this resource.
 
 ---
 
-### IGrantee <a name="org.cdk8s.plus22.IGrantee"></a>
-
-- *Implemented By:* [`org.cdk8s.plus22.ResourceType`](#org.cdk8s.plus22.ResourceType), [`org.cdk8s.plus22.IGrantee`](#org.cdk8s.plus22.IGrantee)
-
-Represents a resource or collection of resources that can be the target of a rule in a Role or ClusterRole.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.IGrantee.property.apiGroups"></a>
-
-```java
-public java.util.List<java.lang.String> getApiGroups();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-##### `resourceNames`<sup>Optional</sup> <a name="org.cdk8s.plus22.IGrantee.property.resourceNames"></a>
-
-```java
-public java.util.List<java.lang.String> getResourceNames();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.IGrantee.property.resources"></a>
-
-```java
-public java.util.List<java.lang.String> getResources();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
 ### IPodSpec <a name="org.cdk8s.plus22.IPodSpec"></a>
 
 - *Implemented By:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.PodSpec`](#org.cdk8s.plus22.PodSpec), [`org.cdk8s.plus22.PodTemplate`](#org.cdk8s.plus22.PodTemplate), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec), [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
@@ -10026,6 +9988,45 @@ public java.lang.String getName();
 - *Type:* `java.lang.String`
 
 The Kubernetes name of this resource.
+
+---
+
+### IRuleResources <a name="org.cdk8s.plus22.IRuleResources"></a>
+
+- *Implemented By:* [`org.cdk8s.plus22.IRuleResources`](#org.cdk8s.plus22.IRuleResources)
+
+The part of a rule that corresponds to a set of resources.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.IRuleResources.property.apiGroups"></a>
+
+```java
+public java.util.List<java.lang.String> getApiGroups();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="org.cdk8s.plus22.IRuleResources.property.resourceNames"></a>
+
+```java
+public java.util.List<java.lang.String> getResourceNames();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+##### `resourceTypes`<sup>Optional</sup> <a name="org.cdk8s.plus22.IRuleResources.property.resourceTypes"></a>
+
+```java
+public java.util.List<java.lang.String> getResourceTypes();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
 
 ---
 

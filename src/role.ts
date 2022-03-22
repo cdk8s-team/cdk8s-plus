@@ -1,8 +1,8 @@
 import { ApiObject, ApiObjectMetadata, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
-import { IGrantee } from './grants';
 import * as k8s from './imports/k8s';
+import { Resources } from './resources';
 import { ClusterRoleBinding, ISubject, RoleBinding } from './role-binding';
 import { filterUndefined, undefinedIfEmpty } from './utils';
 
@@ -37,102 +37,101 @@ export abstract class RoleBase extends Resource implements IResource {
   }
 
   /**
-   * Grant "create" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "create" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantCreate(...grantees: IGrantee[]): void {
-    this.grant(['create'], grantees);
+  public allowCreate(resources: Resources): void {
+    this.allow(['create'], resources);
   }
 
   /**
-   * Grant "get" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "get" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantGet(...grantees: IGrantee[]): void {
-    this.grant(['get'], grantees);
+  public allowGet(resources: Resources): void {
+    this.allow(['get'], resources);
   }
 
   /**
-   * Grant "list" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "list" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantList(...grantees: IGrantee[]): void {
-    this.grant(['list'], grantees);
+  public allowList(resources: Resources): void {
+    this.allow(['list'], resources);
   }
 
   /**
-   * Grant "watch" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "watch" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantWatch(...grantees: IGrantee[]): void {
-    this.grant(['watch'], grantees);
+  public allowWatch(resources: Resources): void {
+    this.allow(['watch'], resources);
   }
 
   /**
-   * Grant "update" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "update" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantUpdate(...grantees: IGrantee[]): void {
-    this.grant(['update'], grantees);
+  public allowUpdate(resources: Resources): void {
+    this.allow(['update'], resources);
   }
 
   /**
-   * Grant "patch" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "patch" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantPatch(...grantees: IGrantee[]): void {
-    this.grant(['patch'], grantees);
+  public allowPatch(resources: Resources): void {
+    this.allow(['patch'], resources);
   }
 
   /**
-   * Grant "delete" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "delete" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantDelete(...grantees: IGrantee[]): void {
-    this.grant(['delete'], grantees);
+  public allowDelete(resources: Resources): void {
+    this.allow(['delete'], resources);
   }
 
   /**
-   * Grant "deletecollection" permission for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "deletecollection" permission for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantDeleteCollection(...grantees: IGrantee[]): void {
-    this.grant(['deletecollection'], grantees);
+  public allowDeleteCollection(resources: Resources): void {
+    this.allow(['deletecollection'], resources);
   }
 
   /**
-   * Grant "get", "list", and "watch" permissions for the grantee.
-   * @param grantees The resource(s) to apply to
+   * Add "get", "list", and "watch" permissions for the resources.
+   * @param resources The resource(s) to apply to
    */
-  public grantRead(...grantees: IGrantee[]): void {
-    this.grant(['get', 'list', 'watch'], grantees);
+  public allowRead(resources: Resources): void {
+    this.allow(['get', 'list', 'watch'], resources);
   }
 
   /**
-   * Grant "get", "list", "watch", "create", "update", "patch", "delete", and
-   * "deletecollection" permissions for the grantee.
+   * Add "get", "list", "watch", "create", "update", "patch", "delete", and
+   * "deletecollection" permissions for the resources.
    *
-   * @param grantees The resource(s) to apply to
+   * @param resources The resource(s) to apply to
    */
-  public grantReadWrite(...grantees: IGrantee[]): void {
-    this.grant(['get', 'list', 'watch', 'create', 'update', 'patch', 'delete', 'deletecollection'], grantees);
+  public allowReadWrite(resources: Resources): void {
+    this.allow(['get', 'list', 'watch', 'create', 'update', 'patch', 'delete', 'deletecollection'], resources);
   }
 
   /**
-   * Grant permission to perform a list of HTTP verbs on the grantee.
+   * Add permission to perform a list of HTTP verbs on a collection of
+   * resources.
    *
-   * @param grantees The resource(s) to apply to
+   * @param resources The resource(s) to apply to
    * @see https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
    */
-  public grant(verbs: string[], grantees: IGrantee[]): void {
-    for (const grantee of grantees) {
-      this.addRule({
-        apiGroups: grantee.apiGroups,
-        resources: grantee.resources,
-        resourceNames: grantee.resourceNames,
-        verbs,
-      });
-    }
+  public allow(verbs: string[], resources: Resources): void {
+    this.addRule({
+      apiGroups: resources.value.apiGroups,
+      resources: resources.value.resourceTypes,
+      resourceNames: resources.value.resourceNames,
+      verbs,
+    });
   }
 
   /**
