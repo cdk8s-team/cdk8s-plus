@@ -274,6 +274,7 @@ cdk8s_plus_20.Deployment(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -316,6 +317,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.DeploymentProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -601,6 +610,31 @@ Cannot be updated.
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+##### `add_host_alias` <a name="cdk8s_plus_20.Deployment.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
 
 ---
 
@@ -982,6 +1016,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.Deployment.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_20.Deployment.property.init_containers"></a>
 
 ```python
@@ -1353,6 +1401,7 @@ cdk8s_plus_20.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -1396,6 +1445,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.JobProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -1697,6 +1754,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_20.Job.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_20.Job.add_init_container"></a>
 
 ```python
@@ -1909,6 +1991,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.Job.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_20.Job.property.init_containers"></a>
 
 ```python
@@ -2041,6 +2137,7 @@ cdk8s_plus_20.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -2080,6 +2177,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.PodProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -2339,6 +2444,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_20.Pod.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_20.Pod.add_init_container"></a>
 
 ```python
@@ -2548,6 +2678,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.Pod.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -3372,6 +3516,7 @@ cdk8s_plus_20.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -3416,6 +3561,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -3721,6 +3874,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_20.StatefulSet.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_20.StatefulSet.add_init_container"></a>
 
 ```python
@@ -3955,6 +4133,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.StatefulSet.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -4831,6 +5023,7 @@ import cdk8s_plus_20
 cdk8s_plus_20.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -4869,6 +5062,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.DeploymentProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -5434,6 +5639,45 @@ The ingress to add rules to.
 
 ---
 
+### HostAlias <a name="cdk8s_plus_20.HostAlias"></a>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's /etc/hosts file.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.HostAlias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+##### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.property.hostnames"></a>
+
+```python
+hostnames: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+##### `ip`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.property.ip"></a>
+
+```python
+ip: str
+```
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ### HttpGetProbeOptions <a name="cdk8s_plus_20.HttpGetProbeOptions"></a>
 
 Options for `Probe.fromHttpGet()`.
@@ -5752,6 +5996,7 @@ import cdk8s_plus_20
 cdk8s_plus_20.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -5791,6 +6036,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.JobProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6121,6 +6378,7 @@ import cdk8s_plus_20
 cdk8s_plus_20.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6156,6 +6414,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.PodProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6368,6 +6638,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6391,6 +6662,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.PodSpecProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6500,6 +6783,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6524,6 +6808,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.PodTemplateProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -7358,6 +7654,7 @@ import cdk8s_plus_20
 cdk8s_plus_20.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -7398,6 +7695,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -8869,6 +9178,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -8888,6 +9198,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.PodSpecProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -9147,6 +9465,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_20.PodSpec.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_20.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_20.PodSpec.add_init_container"></a>
 
 ```python
@@ -9359,6 +9702,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.PodSpec.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_20.PodSpec.property.init_containers"></a>
 
 ```python
@@ -9435,6 +9792,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -9455,6 +9813,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_20.PodTemplateProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -10524,6 +10890,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.IPodSpec.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_20.IPodSpec.property.init_containers"></a>
 
 ```python
@@ -10600,6 +10980,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_20.IPodTemplate.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_20.HostAlias`](#cdk8s_plus_20.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 

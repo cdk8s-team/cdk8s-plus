@@ -41,6 +41,7 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "hostAliases": Array [],
           "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",

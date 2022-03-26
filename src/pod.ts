@@ -45,6 +45,12 @@ export interface IPodSpec {
   readonly serviceAccount?: IServiceAccount;
 
   /**
+   * An optional list of hosts and IPs that will be injected into the pod's
+   * hosts file if specified. This is only valid for non-hostNetwork pods.
+   */
+  readonly hostAliases: HostAlias[];
+
+  /**
    * Add a container to the pod.
    *
    * @param container The container.
@@ -91,6 +97,7 @@ export class PodSpec implements IPodSpec {
 
   private readonly _containers: Container[] = [];
   private readonly _initContainers: Container[] = [];
+  private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, Volume> = new Map();
 
   constructor(props: PodSpecProps = {}) {
@@ -110,6 +117,10 @@ export class PodSpec implements IPodSpec {
       props.initContainers.forEach(c => this.addInitContainer(c));
     }
 
+    if (props.hostAliases) {
+      props.hostAliases.forEach(c => this.addHostAlias(c));
+    }
+
   }
 
   public get containers(): Container[] {
@@ -122,6 +133,10 @@ export class PodSpec implements IPodSpec {
 
   public get volumes(): Volume[] {
     return Array.from(this._volumes.values());
+  }
+
+  public get hostAliases(): HostAlias[] {
+    return [...this._hostAliases];
   }
 
   public addContainer(container: ContainerProps): Container {
@@ -152,6 +167,10 @@ export class PodSpec implements IPodSpec {
 
     this._initContainers.push(impl);
     return impl;
+  }
+
+  public addHostAlias(hostAlias: HostAlias): void {
+    this._hostAliases.push(hostAlias);
   }
 
   public addVolume(volume: Volume): void {
@@ -213,6 +232,7 @@ export class PodSpec implements IPodSpec {
       containers: containers,
       securityContext: this.securityContext._toKube(),
       initContainers: initContainers,
+      hostAliases: this.hostAliases,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
     };
 
@@ -408,6 +428,13 @@ export interface PodSpecProps {
    */
   readonly securityContext?: PodSecurityContextProps;
 
+  /**
+   * HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+   *
+   * @schema io.k8s.api.core.v1.HostAlias
+   */
+  readonly hostAliases?: HostAlias[];
+
 }
 
 /**
@@ -458,6 +485,10 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.securityContext;
   }
 
+  public get hostAliases(): HostAlias[] {
+    return this._spec.hostAliases;
+  }
+
   public addContainer(container: ContainerProps): Container {
     return this._spec.addContainer(container);
   }
@@ -468,6 +499,10 @@ export class Pod extends Resource implements IPodSpec {
 
   public addVolume(volume: Volume): void {
     return this._spec.addVolume(volume);
+  }
+
+  public addHostAlias(hostAlias: HostAlias): void {
+    return this._spec.addHostAlias(hostAlias);
   }
 
 }
@@ -553,3 +588,18 @@ export enum FsGroupChangePolicy {
   ALWAYS = 'Always'
 }
 
+/**
+ * HostAlias holds the mapping between IP and hostnames that will be injected as
+ * an entry in the pod's /etc/hosts file.
+ */
+export interface HostAlias {
+  /**
+   * Hostnames for the chosen IP address.
+   */
+  readonly hostnames: string[];
+
+  /**
+   * IP address of the host file entry.
+   */
+  readonly ip: string;
+}
