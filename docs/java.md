@@ -247,6 +247,7 @@ import org.cdk8s.plus22.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -289,6 +290,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -408,6 +417,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.Deployment.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="org.cdk8s.plus22.Deployment.addInitContainer"></a>
 
 ```java
@@ -506,6 +527,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -848,6 +883,7 @@ import org.cdk8s.plus22.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -891,6 +927,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -1023,6 +1067,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.Job.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="org.cdk8s.plus22.Job.addInitContainer"></a>
 
 ```java
@@ -1061,6 +1117,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -1194,6 +1264,7 @@ import org.cdk8s.plus22.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -1233,6 +1304,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -1323,6 +1402,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.Pod.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="org.cdk8s.plus22.Pod.addInitContainer"></a>
 
 ```java
@@ -1361,6 +1452,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -2054,6 +2159,7 @@ import org.cdk8s.plus22.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -2098,6 +2204,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -2234,6 +2348,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.StatefulSet.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="org.cdk8s.plus22.StatefulSet.addInitContainer"></a>
 
 ```java
@@ -2294,6 +2420,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -3170,6 +3310,7 @@ import org.cdk8s.plus22.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -3208,6 +3349,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -3801,6 +3954,45 @@ The type of the path.
 
 ---
 
+### HostAlias <a name="org.cdk8s.plus22.HostAlias"></a>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's /etc/hosts file.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HostAlias;
+
+HostAlias.builder()
+    .hostnames(java.util.List<java.lang.String>)
+    .ip(java.lang.String)
+    .build();
+```
+
+##### `hostnames`<sup>Required</sup> <a name="org.cdk8s.plus22.HostAlias.property.hostnames"></a>
+
+```java
+public java.util.List<java.lang.String> getHostnames();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Hostnames for the chosen IP address.
+
+---
+
+##### `ip`<sup>Required</sup> <a name="org.cdk8s.plus22.HostAlias.property.ip"></a>
+
+```java
+public java.lang.String getIp();
+```
+
+- *Type:* `java.lang.String`
+
+IP address of the host file entry.
+
+---
+
 ### HttpGetProbeOptions <a name="org.cdk8s.plus22.HttpGetProbeOptions"></a>
 
 Options for `Probe.fromHttpGet()`.
@@ -4137,6 +4329,7 @@ import org.cdk8s.plus22.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -4176,6 +4369,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -4506,6 +4711,7 @@ import org.cdk8s.plus22.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -4541,6 +4747,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -4753,6 +4971,7 @@ import org.cdk8s.plus22.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -4776,6 +4995,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -4885,6 +5116,7 @@ import org.cdk8s.plus22.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -4909,6 +5141,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -5743,6 +5987,7 @@ import org.cdk8s.plus22.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -5783,6 +6028,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -7143,6 +7400,7 @@ import org.cdk8s.plus22.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -7162,6 +7420,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -7252,6 +7518,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.PodSpec.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="org.cdk8s.plus22.PodSpec.addInitContainer"></a>
 
 ```java
@@ -7290,6 +7568,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -7369,6 +7661,7 @@ import org.cdk8s.plus22.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .securityContext(PodSecurityContextProps)
@@ -7389,6 +7682,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -7809,6 +8110,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.initContainers"></a>
 
 ```java
@@ -7885,6 +8200,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
