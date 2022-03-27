@@ -92,7 +92,6 @@ export interface TcpSocketProbeOptions extends ProbeOptions {
    * @default - defaults to the pod IP
    */
   readonly host?: string;
-
 }
 
 /**
