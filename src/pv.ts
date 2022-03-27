@@ -119,12 +119,12 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
   /**
     * Access modes requirement of this claim.
     */
-  public readonly accessModes?: readonly PersistentVolumeAccessMode[];
+  public readonly accessModes?: PersistentVolumeAccessMode[];
 
   /**
    * Mount options of this volume.
    */
-  public readonly mountOptions?: readonly string[];
+  public readonly mountOptions?: string[];
 
   /**
    * Reclaim policy of this volume.

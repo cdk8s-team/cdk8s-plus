@@ -111,7 +111,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
   /**
    * Access modes requirement of this claim.
    */
-  public readonly accessModes?: readonly PersistentVolumeAccessMode[];
+  public readonly accessModes?: PersistentVolumeAccessMode[];
 
   private _volume?: IPersistentVolume;
 

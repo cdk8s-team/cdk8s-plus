@@ -157,7 +157,7 @@ export class Volume {
   };
 
 
-  protected constructor(public readonly name: string, private readonly config: Omit<k8s.Volume, 'name'>) {
+  private constructor(public readonly name: string, private readonly config: Omit<k8s.Volume, 'name'>) {
 
   }
 
