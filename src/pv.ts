@@ -169,7 +169,7 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
    */
   public reserve(): PersistentVolumeClaim {
     const claim = new PersistentVolumeClaim(this, `${this.name}PVC`, {
-      metadata: { name: `pvc-${this.name}` },
+      metadata: { name: `pvc-${this.name}`, namespace: this.metadata.namespace },
 
       // the storage classes must match, otherwise the claim
       // will use the default class (or no class at all), which may be different than the class

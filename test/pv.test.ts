@@ -100,6 +100,19 @@ describe('PersistentVolume', () => {
 
   });
 
+  test('reserved claim is created in the same namespace as the volume', () => {
+
+    const chart = cdk8s.Testing.chart();
+    const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
+      metadata: { namespace: 'non-default' },
+      volumeId: 'vol1',
+    });
+
+    const claim = vol.reserve();
+    expect(claim.metadata.namespace).toEqual(vol.metadata.namespace);
+
+  });
+
   test('throws if reserved twice', () => {
 
     const chart = cdk8s.Testing.chart();
