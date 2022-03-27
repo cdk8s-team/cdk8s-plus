@@ -1905,6 +1905,95 @@ A prefix to add to all keys in the config map.
 
 ---
 
+### CommandProbeOptions <a name="cdk8s-plus-22.CommandProbeOptions"></a>
+
+Options for `Probe.fromCommand()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CommandProbeOptions } from 'cdk8s-plus-22'
+
+const commandProbeOptions: CommandProbeOptions = { ... }
+```
+
+##### `failureThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.CommandProbeOptions.property.failureThreshold"></a>
+
+```typescript
+public readonly failureThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.CommandProbeOptions.property.initialDelaySeconds"></a>
+
+```typescript
+public readonly initialDelaySeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `periodSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.CommandProbeOptions.property.periodSeconds"></a>
+
+```typescript
+public readonly periodSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `successThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.CommandProbeOptions.property.successThreshold"></a>
+
+```typescript
+public readonly successThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeoutSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.CommandProbeOptions.property.timeoutSeconds"></a>
+
+```typescript
+public readonly timeoutSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
 ### ConfigMapProps <a name="cdk8s-plus-22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -3158,6 +3247,108 @@ IP address of the host file entry.
 
 ---
 
+### HttpGetProbeOptions <a name="cdk8s-plus-22.HttpGetProbeOptions"></a>
+
+Options for `Probe.fromHttpGet()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { HttpGetProbeOptions } from 'cdk8s-plus-22'
+
+const httpGetProbeOptions: HttpGetProbeOptions = { ... }
+```
+
+##### `failureThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.HttpGetProbeOptions.property.failureThreshold"></a>
+
+```typescript
+public readonly failureThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.HttpGetProbeOptions.property.initialDelaySeconds"></a>
+
+```typescript
+public readonly initialDelaySeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `periodSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.HttpGetProbeOptions.property.periodSeconds"></a>
+
+```typescript
+public readonly periodSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `successThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.HttpGetProbeOptions.property.successThreshold"></a>
+
+```typescript
+public readonly successThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeoutSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.HttpGetProbeOptions.property.timeoutSeconds"></a>
+
+```typescript
+public readonly timeoutSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.HttpGetProbeOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
 ### IngressProps <a name="cdk8s-plus-22.IngressProps"></a>
 
 Properties for `Ingress`.
@@ -4247,223 +4438,6 @@ The pod metadata.
 
 ---
 
-### ProbeFromHttpGetOptions <a name="cdk8s-plus-22.ProbeFromHttpGetOptions"></a>
-
-Options for `Probe.fromHttpGet`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```typescript
-import { ProbeFromHttpGetOptions } from 'cdk8s-plus-22'
-
-const probeFromHttpGetOptions: ProbeFromHttpGetOptions = { ... }
-```
-
-##### `failureThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromHttpGetOptions.property.failureThreshold"></a>
-
-```typescript
-public readonly failureThreshold: number;
-```
-
-- *Type:* `number`
-- *Default:* 3
-
-Minimum consecutive failures for the probe to be considered failed after having succeeded.
-
-Defaults to 3. Minimum value is 1.
-
----
-
-##### `initialDelaySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromHttpGetOptions.property.initialDelaySeconds"></a>
-
-```typescript
-public readonly initialDelaySeconds: Duration;
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* immediate
-
-Number of seconds after the container has started before liveness probes are initiated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `periodSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromHttpGetOptions.property.periodSeconds"></a>
-
-```typescript
-public readonly periodSeconds: Duration;
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(10) Minimum value is 1.
-
-How often (in seconds) to perform the probe.
-
-Default to 10 seconds. Minimum value is 1.
-
----
-
-##### `successThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromHttpGetOptions.property.successThreshold"></a>
-
-```typescript
-public readonly successThreshold: number;
-```
-
-- *Type:* `number`
-- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
-
-Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
-
-Must be 1 for liveness and startup. Minimum value is 1.
-
----
-
-##### `timeoutSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromHttpGetOptions.property.timeoutSeconds"></a>
-
-```typescript
-public readonly timeoutSeconds: Duration;
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(1)
-
-Number of seconds after which the probe times out.
-
-Defaults to 1 second. Minimum value is 1.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromHttpGetOptions.property.port"></a>
-
-```typescript
-public readonly port: number;
-```
-
-- *Type:* `number`
-- *Default:* defaults to `container.port`.
-
-The TCP port to use when sending the GET request.
-
----
-
-### ProbeFromTcpSocketOptions <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions"></a>
-
-Options for `Probe.fromTcpSocket`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```typescript
-import { ProbeFromTcpSocketOptions } from 'cdk8s-plus-22'
-
-const probeFromTcpSocketOptions: ProbeFromTcpSocketOptions = { ... }
-```
-
-##### `failureThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.failureThreshold"></a>
-
-```typescript
-public readonly failureThreshold: number;
-```
-
-- *Type:* `number`
-- *Default:* 3
-
-Minimum consecutive failures for the probe to be considered failed after having succeeded.
-
-Defaults to 3. Minimum value is 1.
-
----
-
-##### `initialDelaySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.initialDelaySeconds"></a>
-
-```typescript
-public readonly initialDelaySeconds: Duration;
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* immediate
-
-Number of seconds after the container has started before liveness probes are initiated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `periodSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.periodSeconds"></a>
-
-```typescript
-public readonly periodSeconds: Duration;
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(10) Minimum value is 1.
-
-How often (in seconds) to perform the probe.
-
-Default to 10 seconds. Minimum value is 1.
-
----
-
-##### `successThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.successThreshold"></a>
-
-```typescript
-public readonly successThreshold: number;
-```
-
-- *Type:* `number`
-- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
-
-Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
-
-Must be 1 for liveness and startup. Minimum value is 1.
-
----
-
-##### `timeoutSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.timeoutSeconds"></a>
-
-```typescript
-public readonly timeoutSeconds: Duration;
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(1)
-
-Number of seconds after which the probe times out.
-
-Defaults to 1 second. Minimum value is 1.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `host`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.host"></a>
-
-```typescript
-public readonly host: string;
-```
-
-- *Type:* `string`
-- *Default:* defaults to the pod IP
-
-The host name to connect to on the container.
-
----
-
-##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.ProbeFromTcpSocketOptions.property.port"></a>
-
-```typescript
-public readonly port: number;
-```
-
-- *Type:* `number`
-- *Default:* defaults to `container.port`.
-
-The TCP port to connect to on the container.
-
----
-
 ### ProbeOptions <a name="cdk8s-plus-22.ProbeOptions"></a>
 
 Probe options.
@@ -5377,6 +5351,121 @@ public readonly value: string;
 - *Type:* `string`
 
 Value of a property to set.
+
+---
+
+### TcpSocketProbeOptions <a name="cdk8s-plus-22.TcpSocketProbeOptions"></a>
+
+Options for `Probe.fromTcpSocket()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { TcpSocketProbeOptions } from 'cdk8s-plus-22'
+
+const tcpSocketProbeOptions: TcpSocketProbeOptions = { ... }
+```
+
+##### `failureThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.failureThreshold"></a>
+
+```typescript
+public readonly failureThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initialDelaySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.initialDelaySeconds"></a>
+
+```typescript
+public readonly initialDelaySeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `periodSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.periodSeconds"></a>
+
+```typescript
+public readonly periodSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `successThreshold`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.successThreshold"></a>
+
+```typescript
+public readonly successThreshold: number;
+```
+
+- *Type:* `number`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeoutSeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.timeoutSeconds"></a>
+
+```typescript
+public readonly timeoutSeconds: Duration;
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `host`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.host"></a>
+
+```typescript
+public readonly host: string;
+```
+
+- *Type:* `string`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.TcpSocketProbeOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -6385,7 +6474,7 @@ Probe describes a health check to be performed against a container to determine 
 ```typescript
 import { Probe } from 'cdk8s-plus-22'
 
-Probe.fromCommand(command: string[], options?: ProbeOptions)
+Probe.fromCommand(command: string[], options?: CommandProbeOptions)
 ```
 
 ###### `command`<sup>Required</sup> <a name="cdk8s-plus-22.Probe.parameter.command"></a>
@@ -6398,7 +6487,7 @@ The command to execute.
 
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Probe.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.ProbeOptions`](#cdk8s-plus-22.ProbeOptions)
+- *Type:* [`cdk8s-plus-22.CommandProbeOptions`](#cdk8s-plus-22.CommandProbeOptions)
 
 Options.
 
@@ -6409,7 +6498,7 @@ Options.
 ```typescript
 import { Probe } from 'cdk8s-plus-22'
 
-Probe.fromHttpGet(path: string, options?: ProbeFromHttpGetOptions)
+Probe.fromHttpGet(path: string, options?: HttpGetProbeOptions)
 ```
 
 ###### `path`<sup>Required</sup> <a name="cdk8s-plus-22.Probe.parameter.path"></a>
@@ -6422,7 +6511,7 @@ The URL path to hit.
 
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Probe.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.ProbeFromHttpGetOptions`](#cdk8s-plus-22.ProbeFromHttpGetOptions)
+- *Type:* [`cdk8s-plus-22.HttpGetProbeOptions`](#cdk8s-plus-22.HttpGetProbeOptions)
 
 Options.
 
@@ -6433,12 +6522,12 @@ Options.
 ```typescript
 import { Probe } from 'cdk8s-plus-22'
 
-Probe.fromTcpSocket(options?: ProbeFromTcpSocketOptions)
+Probe.fromTcpSocket(options?: TcpSocketProbeOptions)
 ```
 
 ###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Probe.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.ProbeFromTcpSocketOptions`](#cdk8s-plus-22.ProbeFromTcpSocketOptions)
+- *Type:* [`cdk8s-plus-22.TcpSocketProbeOptions`](#cdk8s-plus-22.TcpSocketProbeOptions)
 
 Options.
 

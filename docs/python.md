@@ -4526,6 +4526,101 @@ A prefix to add to all keys in the config map.
 
 ---
 
+### CommandProbeOptions <a name="cdk8s_plus_22.CommandProbeOptions"></a>
+
+Options for `Probe.fromCommand()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.CommandProbeOptions(
+  failure_threshold: typing.Union[int, float] = None,
+  initial_delay_seconds: Duration = None,
+  period_seconds: Duration = None,
+  success_threshold: typing.Union[int, float] = None,
+  timeout_seconds: Duration = None
+)
+```
+
+##### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.property.failure_threshold"></a>
+
+```python
+failure_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.property.initial_delay_seconds"></a>
+
+```python
+initial_delay_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.property.period_seconds"></a>
+
+```python
+period_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.property.success_threshold"></a>
+
+```python
+success_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.property.timeout_seconds"></a>
+
+```python
+timeout_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
 ### ConfigMapProps <a name="cdk8s_plus_22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -5868,6 +5963,115 @@ IP address of the host file entry.
 
 ---
 
+### HttpGetProbeOptions <a name="cdk8s_plus_22.HttpGetProbeOptions"></a>
+
+Options for `Probe.fromHttpGet()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.HttpGetProbeOptions(
+  failure_threshold: typing.Union[int, float] = None,
+  initial_delay_seconds: Duration = None,
+  period_seconds: Duration = None,
+  success_threshold: typing.Union[int, float] = None,
+  timeout_seconds: Duration = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.property.failure_threshold"></a>
+
+```python
+failure_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.property.initial_delay_seconds"></a>
+
+```python
+initial_delay_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.property.period_seconds"></a>
+
+```python
+period_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.property.success_threshold"></a>
+
+```python
+success_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.property.timeout_seconds"></a>
+
+```python
+timeout_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
 ### IngressProps <a name="cdk8s_plus_22.IngressProps"></a>
 
 Properties for `Ingress`.
@@ -7027,238 +7231,6 @@ The pod metadata.
 
 ---
 
-### ProbeFromHttpGetOptions <a name="cdk8s_plus_22.ProbeFromHttpGetOptions"></a>
-
-Options for `Probe.fromHttpGet`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.ProbeFromHttpGetOptions(
-  failure_threshold: typing.Union[int, float] = None,
-  initial_delay_seconds: Duration = None,
-  period_seconds: Duration = None,
-  success_threshold: typing.Union[int, float] = None,
-  timeout_seconds: Duration = None,
-  port: typing.Union[int, float] = None
-)
-```
-
-##### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.property.failure_threshold"></a>
-
-```python
-failure_threshold: typing.Union[int, float]
-```
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* 3
-
-Minimum consecutive failures for the probe to be considered failed after having succeeded.
-
-Defaults to 3. Minimum value is 1.
-
----
-
-##### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.property.initial_delay_seconds"></a>
-
-```python
-initial_delay_seconds: Duration
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* immediate
-
-Number of seconds after the container has started before liveness probes are initiated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.property.period_seconds"></a>
-
-```python
-period_seconds: Duration
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(10) Minimum value is 1.
-
-How often (in seconds) to perform the probe.
-
-Default to 10 seconds. Minimum value is 1.
-
----
-
-##### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.property.success_threshold"></a>
-
-```python
-success_threshold: typing.Union[int, float]
-```
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
-
-Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
-
-Must be 1 for liveness and startup. Minimum value is 1.
-
----
-
-##### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.property.timeout_seconds"></a>
-
-```python
-timeout_seconds: Duration
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(1)
-
-Number of seconds after which the probe times out.
-
-Defaults to 1 second. Minimum value is 1.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.property.port"></a>
-
-```python
-port: typing.Union[int, float]
-```
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* defaults to `container.port`.
-
-The TCP port to use when sending the GET request.
-
----
-
-### ProbeFromTcpSocketOptions <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions"></a>
-
-Options for `Probe.fromTcpSocket`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.ProbeFromTcpSocketOptions(
-  failure_threshold: typing.Union[int, float] = None,
-  initial_delay_seconds: Duration = None,
-  period_seconds: Duration = None,
-  success_threshold: typing.Union[int, float] = None,
-  timeout_seconds: Duration = None,
-  host: str = None,
-  port: typing.Union[int, float] = None
-)
-```
-
-##### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.failure_threshold"></a>
-
-```python
-failure_threshold: typing.Union[int, float]
-```
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* 3
-
-Minimum consecutive failures for the probe to be considered failed after having succeeded.
-
-Defaults to 3. Minimum value is 1.
-
----
-
-##### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.initial_delay_seconds"></a>
-
-```python
-initial_delay_seconds: Duration
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* immediate
-
-Number of seconds after the container has started before liveness probes are initiated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.period_seconds"></a>
-
-```python
-period_seconds: Duration
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(10) Minimum value is 1.
-
-How often (in seconds) to perform the probe.
-
-Default to 10 seconds. Minimum value is 1.
-
----
-
-##### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.success_threshold"></a>
-
-```python
-success_threshold: typing.Union[int, float]
-```
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
-
-Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
-
-Must be 1 for liveness and startup. Minimum value is 1.
-
----
-
-##### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.timeout_seconds"></a>
-
-```python
-timeout_seconds: Duration
-```
-
-- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
-- *Default:* Duration.seconds(1)
-
-Number of seconds after which the probe times out.
-
-Defaults to 1 second. Minimum value is 1.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-
----
-
-##### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.host"></a>
-
-```python
-host: str
-```
-
-- *Type:* `str`
-- *Default:* defaults to the pod IP
-
-The host name to connect to on the container.
-
----
-
-##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.property.port"></a>
-
-```python
-port: typing.Union[int, float]
-```
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* defaults to `container.port`.
-
-The TCP port to connect to on the container.
-
----
-
 ### ProbeOptions <a name="cdk8s_plus_22.ProbeOptions"></a>
 
 Probe options.
@@ -8236,6 +8208,129 @@ value: str
 - *Type:* `str`
 
 Value of a property to set.
+
+---
+
+### TcpSocketProbeOptions <a name="cdk8s_plus_22.TcpSocketProbeOptions"></a>
+
+Options for `Probe.fromTcpSocket()`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.TcpSocketProbeOptions(
+  failure_threshold: typing.Union[int, float] = None,
+  initial_delay_seconds: Duration = None,
+  period_seconds: Duration = None,
+  success_threshold: typing.Union[int, float] = None,
+  timeout_seconds: Duration = None,
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.failure_threshold"></a>
+
+```python
+failure_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 3
+
+Minimum consecutive failures for the probe to be considered failed after having succeeded.
+
+Defaults to 3. Minimum value is 1.
+
+---
+
+##### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.initial_delay_seconds"></a>
+
+```python
+initial_delay_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* immediate
+
+Number of seconds after the container has started before liveness probes are initiated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.period_seconds"></a>
+
+```python
+period_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(10) Minimum value is 1.
+
+How often (in seconds) to perform the probe.
+
+Default to 10 seconds. Minimum value is 1.
+
+---
+
+##### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.success_threshold"></a>
+
+```python
+success_threshold: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
+
+Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.
+
+Must be 1 for liveness and startup. Minimum value is 1.
+
+---
+
+##### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.timeout_seconds"></a>
+
+```python
+timeout_seconds: Duration
+```
+
+- *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
+- *Default:* Duration.seconds(1)
+
+Number of seconds after which the probe times out.
+
+Defaults to 1 second. Minimum value is 1.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+---
+
+##### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.host"></a>
+
+```python
+host: str
+```
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -10271,7 +10366,7 @@ The command to execute.
 
 ---
 
-###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeOptions.parameter.failure_threshold"></a>
+###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.parameter.failure_threshold"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 3
@@ -10282,7 +10377,7 @@ Defaults to 3. Minimum value is 1.
 
 ---
 
-###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeOptions.parameter.initial_delay_seconds"></a>
+###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.parameter.initial_delay_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* immediate
@@ -10293,7 +10388,7 @@ Number of seconds after the container has started before liveness probes are ini
 
 ---
 
-###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeOptions.parameter.period_seconds"></a>
+###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.parameter.period_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* Duration.seconds(10) Minimum value is 1.
@@ -10304,7 +10399,7 @@ Default to 10 seconds. Minimum value is 1.
 
 ---
 
-###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeOptions.parameter.success_threshold"></a>
+###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.parameter.success_threshold"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
@@ -10315,7 +10410,7 @@ Must be 1 for liveness and startup. Minimum value is 1.
 
 ---
 
-###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeOptions.parameter.timeout_seconds"></a>
+###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.CommandProbeOptions.parameter.timeout_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* Duration.seconds(1)
@@ -10352,7 +10447,7 @@ The URL path to hit.
 
 ---
 
-###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.parameter.failure_threshold"></a>
+###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.parameter.failure_threshold"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 3
@@ -10363,7 +10458,7 @@ Defaults to 3. Minimum value is 1.
 
 ---
 
-###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.parameter.initial_delay_seconds"></a>
+###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.parameter.initial_delay_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* immediate
@@ -10374,7 +10469,7 @@ Number of seconds after the container has started before liveness probes are ini
 
 ---
 
-###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.parameter.period_seconds"></a>
+###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.parameter.period_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* Duration.seconds(10) Minimum value is 1.
@@ -10385,7 +10480,7 @@ Default to 10 seconds. Minimum value is 1.
 
 ---
 
-###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.parameter.success_threshold"></a>
+###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.parameter.success_threshold"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
@@ -10396,7 +10491,7 @@ Must be 1 for liveness and startup. Minimum value is 1.
 
 ---
 
-###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.parameter.timeout_seconds"></a>
+###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.parameter.timeout_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* Duration.seconds(1)
@@ -10409,7 +10504,7 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromHttpGetOptions.parameter.port"></a>
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HttpGetProbeOptions.parameter.port"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* defaults to `container.port`.
@@ -10434,7 +10529,7 @@ cdk8s_plus_22.Probe.from_tcp_socket(
 )
 ```
 
-###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.failure_threshold"></a>
+###### `failure_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.failure_threshold"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 3
@@ -10445,7 +10540,7 @@ Defaults to 3. Minimum value is 1.
 
 ---
 
-###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.initial_delay_seconds"></a>
+###### `initial_delay_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.initial_delay_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* immediate
@@ -10456,7 +10551,7 @@ Number of seconds after the container has started before liveness probes are ini
 
 ---
 
-###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.period_seconds"></a>
+###### `period_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.period_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* Duration.seconds(10) Minimum value is 1.
@@ -10467,7 +10562,7 @@ Default to 10 seconds. Minimum value is 1.
 
 ---
 
-###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.success_threshold"></a>
+###### `success_threshold`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.success_threshold"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 1 Must be 1 for liveness and startup. Minimum value is 1.
@@ -10478,7 +10573,7 @@ Must be 1 for liveness and startup. Minimum value is 1.
 
 ---
 
-###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.timeout_seconds"></a>
+###### `timeout_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.timeout_seconds"></a>
 
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 - *Default:* Duration.seconds(1)
@@ -10491,7 +10586,7 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-###### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.host"></a>
+###### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.host"></a>
 
 - *Type:* `str`
 - *Default:* defaults to the pod IP
@@ -10500,7 +10595,7 @@ The host name to connect to on the container.
 
 ---
 
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ProbeFromTcpSocketOptions.parameter.port"></a>
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.TcpSocketProbeOptions.parameter.port"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* defaults to `container.port`.
