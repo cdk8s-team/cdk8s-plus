@@ -1,4 +1,5 @@
 import { Duration } from 'cdk8s';
+import { Action } from './_action';
 import { Container } from './container';
 import * as k8s from './imports/k8s';
 
@@ -56,28 +57,9 @@ export interface ProbeOptions {
 }
 
 /**
- * Options for `Probe.fromHttpGet()`.
+ * Options for `Probe.fromTcpSocket`.
  */
-export interface HttpGetProbeOptions extends ProbeOptions {
-  /**
-   * The TCP port to use when sending the GET request.
-   *
-   * @default - defaults to `container.port`.
-   */
-  readonly port?: number;
-}
-
-/**
- * Options for `Probe.fromCommand()`.
- */
-export interface CommandProbeOptions extends ProbeOptions {
-
-}
-
-/**
- * Options for `Probe.fromTcpSocket()`.
- */
-export interface TcpSocketProbeOptions extends ProbeOptions {
+export interface ProbeFromTcpSocketOptions extends ProbeOptions {
   /**
    * The TCP port to connect to on the container.
    *
@@ -91,13 +73,28 @@ export interface TcpSocketProbeOptions extends ProbeOptions {
    * @default - defaults to the pod IP
    */
   readonly host?: string;
+
+}
+
+/**
+ * Options for `Probe.fromHttpGet`.
+ */
+export interface ProbeFromHttpGetOptions extends ProbeOptions {
+
+  /**
+   * The TCP port to use when sending the GET request.
+   *
+   * @default - defaults to `container.port`.
+   */
+  readonly port?: number;
+
 }
 
 /**
  * Probe describes a health check to be performed against a container to
  * determine whether it is alive or ready to receive traffic.
  */
-export abstract class Probe {
+export class Probe {
 
   /**
    * Defines a probe based on an HTTP GET request to the IP address of the container.
@@ -105,18 +102,8 @@ export abstract class Probe {
    * @param path The URL path to hit
    * @param options Options
    */
-  public static fromHttpGet(path: string, options: HttpGetProbeOptions = { }): Probe {
-    return {
-      _toKube(container) {
-        return {
-          ...parseProbeOptions(options),
-          httpGet: {
-            path,
-            port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
-          },
-        };
-      },
-    };
+  public static fromHttpGet(path: string, options: ProbeFromHttpGetOptions = {}): Probe {
+    return new Probe(options, undefined, undefined, { path, ...options });
   }
 
   /**
@@ -125,13 +112,8 @@ export abstract class Probe {
    * @param command The command to execute
    * @param options Options
    */
-  public static fromCommand(command: string[], options: CommandProbeOptions = { }): Probe {
-    return {
-      _toKube: _ => ({
-        ...parseProbeOptions(options),
-        exec: { command },
-      }),
-    };
+  public static fromCommand(command: string[], options: ProbeOptions = {}): Probe {
+    return new Probe(options, undefined, { command, ...options }, undefined);
   }
 
   /**
@@ -139,32 +121,34 @@ export abstract class Probe {
    *
    * @param options Options
    */
-  public static fromTcpSocket(options: TcpSocketProbeOptions = { }): Probe {
-    return {
-      _toKube(container) {
-        return {
-          ...parseProbeOptions(options),
-          tcpSocket: {
-            port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
-            host: options.host,
-          },
-        };
-      },
-    };
+  public static fromTcpSocket(options: ProbeFromTcpSocketOptions = {}): Probe {
+    return new Probe(options, options, undefined, undefined);
   }
+
+  private constructor(
+    private readonly probeOptions: ProbeOptions,
+    private readonly tcpSocketOptions?: ProbeFromTcpSocketOptions,
+    private readonly commandOptions?: { command: string[] } & ProbeOptions,
+    private readonly httpGetOptions?: { path: string } & ProbeFromHttpGetOptions) {}
 
   /**
    * @internal
    */
-  public abstract _toKube(container: Container): k8s.Probe;
-}
+  public _toKube(container: Container): k8s.Probe {
 
-function parseProbeOptions(options: ProbeOptions = {}): k8s.Probe {
-  return {
-    failureThreshold: options.failureThreshold ?? 3,
-    initialDelaySeconds: options.initialDelaySeconds ? options.initialDelaySeconds.toSeconds() : undefined,
-    periodSeconds: options.periodSeconds ? options.periodSeconds.toSeconds() : undefined,
-    successThreshold: options.successThreshold,
-    timeoutSeconds: options.timeoutSeconds ? options.timeoutSeconds.toSeconds() : undefined,
-  };
+    const exec = this.commandOptions ? Action.fromCommand(this.commandOptions.command) : undefined;
+    const httpGet = this.httpGetOptions ? Action.fromHttpGet(container, this.httpGetOptions.path, this.httpGetOptions) : undefined;
+    const tcpSocket = this.tcpSocketOptions ? Action.fromTcpSocket(container, this.tcpSocketOptions) : undefined;
+
+    return {
+      failureThreshold: this.probeOptions.failureThreshold ?? 3,
+      initialDelaySeconds: this.probeOptions.initialDelaySeconds ? this.probeOptions.initialDelaySeconds.toSeconds() : undefined,
+      periodSeconds: this.probeOptions.periodSeconds ? this.probeOptions.periodSeconds.toSeconds() : undefined,
+      successThreshold: this.probeOptions.successThreshold,
+      timeoutSeconds: this.probeOptions.timeoutSeconds ? this.probeOptions.timeoutSeconds.toSeconds() : undefined,
+      exec: exec,
+      httpGet,
+      tcpSocket,
+    };
+  }
 }
