@@ -57,6 +57,20 @@ export interface ProbeOptions {
 }
 
 /**
+ * Options for `Probe.fromHttpGet`.
+ */
+export interface ProbeFromHttpGetOptions extends ProbeOptions {
+
+  /**
+   * The TCP port to use when sending the GET request.
+   *
+   * @default - defaults to `container.port`.
+   */
+  readonly port?: number;
+
+}
+
+/**
  * Options for `Probe.fromTcpSocket`.
  */
 export interface ProbeFromTcpSocketOptions extends ProbeOptions {
@@ -73,20 +87,6 @@ export interface ProbeFromTcpSocketOptions extends ProbeOptions {
    * @default - defaults to the pod IP
    */
   readonly host?: string;
-
-}
-
-/**
- * Options for `Probe.fromHttpGet`.
- */
-export interface ProbeFromHttpGetOptions extends ProbeOptions {
-
-  /**
-   * The TCP port to use when sending the GET request.
-   *
-   * @default - defaults to `container.port`.
-   */
-  readonly port?: number;
 
 }
 
