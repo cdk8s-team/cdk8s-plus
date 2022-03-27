@@ -57,9 +57,9 @@ export interface ProbeOptions {
 }
 
 /**
- * Options for `Probe.fromHttpGet`.
+ * Options for `Probe.fromHttpGet()`.
  */
-export interface ProbeFromHttpGetOptions extends ProbeOptions {
+export interface HttpGetProbeOptions extends ProbeOptions {
 
   /**
    * The TCP port to use when sending the GET request.
@@ -71,9 +71,16 @@ export interface ProbeFromHttpGetOptions extends ProbeOptions {
 }
 
 /**
- * Options for `Probe.fromTcpSocket`.
+ * Options for `Probe.fromCommand()`.
  */
-export interface ProbeFromTcpSocketOptions extends ProbeOptions {
+export interface CommandProbeOptions extends ProbeOptions {
+
+}
+
+/**
+ * Options for `Probe.fromTcpSocket()`.
+ */
+export interface TcpSocketProbeOptions extends ProbeOptions {
   /**
    * The TCP port to connect to on the container.
    *
@@ -102,7 +109,7 @@ export class Probe {
    * @param path The URL path to hit
    * @param options Options
    */
-  public static fromHttpGet(path: string, options: ProbeFromHttpGetOptions = {}): Probe {
+  public static fromHttpGet(path: string, options: HttpGetProbeOptions = {}): Probe {
     return new Probe(options, undefined, undefined, { path, ...options });
   }
 
@@ -112,7 +119,7 @@ export class Probe {
    * @param command The command to execute
    * @param options Options
    */
-  public static fromCommand(command: string[], options: ProbeOptions = {}): Probe {
+  public static fromCommand(command: string[], options: CommandProbeOptions = {}): Probe {
     return new Probe(options, undefined, { command, ...options }, undefined);
   }
 
@@ -121,15 +128,15 @@ export class Probe {
    *
    * @param options Options
    */
-  public static fromTcpSocket(options: ProbeFromTcpSocketOptions = {}): Probe {
+  public static fromTcpSocket(options: TcpSocketProbeOptions = {}): Probe {
     return new Probe(options, options, undefined, undefined);
   }
 
   private constructor(
     private readonly probeOptions: ProbeOptions,
-    private readonly tcpSocketOptions?: ProbeFromTcpSocketOptions,
+    private readonly tcpSocketOptions?: TcpSocketProbeOptions,
     private readonly commandOptions?: { command: string[] } & ProbeOptions,
-    private readonly httpGetOptions?: { path: string } & ProbeFromHttpGetOptions) {}
+    private readonly httpGetOptions?: { path: string } & HttpGetProbeOptions) {}
 
   /**
    * @internal
