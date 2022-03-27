@@ -60,14 +60,12 @@ export interface ProbeOptions {
  * Options for `Probe.fromHttpGet()`.
  */
 export interface HttpGetProbeOptions extends ProbeOptions {
-
   /**
    * The TCP port to use when sending the GET request.
    *
    * @default - defaults to `container.port`.
    */
   readonly port?: number;
-
 }
 
 /**
