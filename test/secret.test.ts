@@ -66,6 +66,56 @@ Array [
 `);
 });
 
+test('Can create a basic auth secret', () => {
+  const chart = Testing.chart();
+
+  new kplus.BasicAuthSecret(chart, 'BasicAuthSecret', {
+    username: 'admin',
+    password: 't0p-Secret',
+  });
+
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Secret",
+    "metadata": Object {
+      "name": "test-basicauthsecret-c82606a8",
+    },
+    "stringData": Object {
+      "password": "t0p-Secret",
+      "username": "admin",
+    },
+    "type": "kubernetes.io/basic-auth",
+  },
+]
+`);
+});
+
+test('Can create an ssh auth secret', () => {
+  const chart = Testing.chart();
+
+  new kplus.SshAuthSecret(chart, 'SshAuthSecret', {
+    sshPrivateKey: 'fake-private-key',
+  });
+
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Secret",
+    "metadata": Object {
+      "name": "test-sshauthsecret-c8356ec6",
+    },
+    "stringData": Object {
+      "ssh-privatekey": "fake-private-key",
+    },
+    "type": "kubernetes.io/ssh-auth",
+  },
+]
+`);
+});
+
 test('Can create a service account token secret', () => {
   const chart = Testing.chart();
 
@@ -133,7 +183,7 @@ Array [
 test('Can create a Docker config secret', () => {
   const chart = Testing.chart();
 
-  new kplus.DockerConfigSecret(chart, 'TlsSecret', {
+  new kplus.DockerConfigSecret(chart, 'DockerConfigSecret', {
     data: {
       auths: {
         'hub.xxx.com': {
@@ -152,7 +202,7 @@ Array [
     "apiVersion": "v1",
     "kind": "Secret",
     "metadata": Object {
-      "name": "test-tlssecret-c8c8af35",
+      "name": "test-dockerconfigsecret-c8b65039",
     },
     "stringData": Object {
       ".dockerconfigjson": "{\\"auths\\":{\\"hub.xxx.com\\":{\\"username\\":\\"xxx\\",\\"password\\":\\"xxx\\",\\"email\\":\\"xxx\\",\\"auth\\":\\"xxx\\"}}}",
