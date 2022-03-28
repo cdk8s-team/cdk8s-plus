@@ -2133,6 +2133,55 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="cdk8s-plus-22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ContainerLifecycle } from 'cdk8s-plus-22'
+
+const containerLifecycle: ContainerLifecycle = { ... }
+```
+
+##### `postStart`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerLifecycle.property.postStart"></a>
+
+```typescript
+public readonly postStart: Handler;
+```
+
+- *Type:* [`cdk8s-plus-22.Handler`](#cdk8s-plus-22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `preStop`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerLifecycle.property.preStop"></a>
+
+```typescript
+public readonly preStop: Handler;
+```
+
+- *Type:* [`cdk8s-plus-22.Handler`](#cdk8s-plus-22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="cdk8s-plus-22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -2223,6 +2272,18 @@ public readonly imagePullPolicy: ImagePullPolicy;
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerProps.property.lifecycle"></a>
+
+```typescript
+public readonly lifecycle: ContainerLifecycle;
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerLifecycle`](#cdk8s-plus-22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -3084,6 +3145,69 @@ public readonly pathType: HttpIngressPathType;
 - *Default:* HttpIngressPathType.PREFIX
 
 The type of the path.
+
+---
+
+### HandlerFromHttpGetOptions <a name="cdk8s-plus-22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { HandlerFromHttpGetOptions } from 'cdk8s-plus-22'
+
+const handlerFromHttpGetOptions: HandlerFromHttpGetOptions = { ... }
+```
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.HandlerFromHttpGetOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="cdk8s-plus-22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { HandlerFromTcpSocketOptions } from 'cdk8s-plus-22'
+
+const handlerFromTcpSocketOptions: HandlerFromTcpSocketOptions = { ... }
+```
+
+##### `host`<sup>Optional</sup> <a name="cdk8s-plus-22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```typescript
+public readonly host: string;
+```
+
+- *Type:* `string`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -5958,6 +6082,71 @@ public readonly valueFrom: any;
 ---
 
 
+### Handler <a name="cdk8s-plus-22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromCommand` <a name="cdk8s-plus-22.Handler.fromCommand"></a>
+
+```typescript
+import { Handler } from 'cdk8s-plus-22'
+
+Handler.fromCommand(command: string[])
+```
+
+###### `command`<sup>Required</sup> <a name="cdk8s-plus-22.Handler.parameter.command"></a>
+
+- *Type:* `string`[]
+
+The command to execute.
+
+---
+
+##### `fromHttpGet` <a name="cdk8s-plus-22.Handler.fromHttpGet"></a>
+
+```typescript
+import { Handler } from 'cdk8s-plus-22'
+
+Handler.fromHttpGet(path: string, options?: HandlerFromHttpGetOptions)
+```
+
+###### `path`<sup>Required</sup> <a name="cdk8s-plus-22.Handler.parameter.path"></a>
+
+- *Type:* `string`
+
+The URL path to hit.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Handler.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.HandlerFromHttpGetOptions`](#cdk8s-plus-22.HandlerFromHttpGetOptions)
+
+Options.
+
+---
+
+##### `fromTcpSocket` <a name="cdk8s-plus-22.Handler.fromTcpSocket"></a>
+
+```typescript
+import { Handler } from 'cdk8s-plus-22'
+
+Handler.fromTcpSocket(options?: HandlerFromTcpSocketOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Handler.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.HandlerFromTcpSocketOptions`](#cdk8s-plus-22.HandlerFromTcpSocketOptions)
+
+Options.
+
+---
+
+
+
 ### IngressBackend <a name="cdk8s-plus-22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -6276,14 +6465,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="cdk8s-plus-22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="cdk8s-plus-22.Probe.Initializer"></a>
-
-```typescript
-import { Probe } from 'cdk8s-plus-22'
-
-new Probe()
-```
 
 
 #### Static Functions <a name="Static Functions"></a>

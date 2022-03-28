@@ -2932,6 +2932,58 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="org.cdk8s.plus22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ContainerLifecycle;
+
+ContainerLifecycle.builder()
+//  .postStart(Handler)
+//  .preStop(Handler)
+    .build();
+```
+
+##### `postStart`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerLifecycle.property.postStart"></a>
+
+```java
+public Handler getPostStart();
+```
+
+- *Type:* [`org.cdk8s.plus22.Handler`](#org.cdk8s.plus22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `preStop`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerLifecycle.property.preStop"></a>
+
+```java
+public Handler getPreStop();
+```
+
+- *Type:* [`org.cdk8s.plus22.Handler`](#org.cdk8s.plus22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="org.cdk8s.plus22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -2947,6 +2999,7 @@ ContainerProps.builder()
 //  .command(java.util.List<java.lang.String>)
 //  .env(java.util.Map<java.lang.String, EnvValue>)
 //  .imagePullPolicy(ImagePullPolicy)
+//  .lifecycle(ContainerLifecycle)
 //  .liveness(Probe)
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
@@ -3037,6 +3090,18 @@ public ImagePullPolicy getImagePullPolicy();
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.lifecycle"></a>
+
+```java
+public ContainerLifecycle getLifecycle();
+```
+
+- *Type:* [`org.cdk8s.plus22.ContainerLifecycle`](#org.cdk8s.plus22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -3951,6 +4016,74 @@ public HttpIngressPathType getPathType();
 - *Default:* HttpIngressPathType.PREFIX
 
 The type of the path.
+
+---
+
+### HandlerFromHttpGetOptions <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HandlerFromHttpGetOptions;
+
+HandlerFromHttpGetOptions.builder()
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HandlerFromTcpSocketOptions;
+
+HandlerFromTcpSocketOptions.builder()
+//  .host(java.lang.String)
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `host`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```java
+public java.lang.String getHost();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -6492,6 +6625,7 @@ Container.Builder.create()
 //  .command(java.util.List<java.lang.String>)
 //  .env(java.util.Map<java.lang.String, EnvValue>)
 //  .imagePullPolicy(ImagePullPolicy)
+//  .lifecycle(ContainerLifecycle)
 //  .liveness(Probe)
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
@@ -6562,6 +6696,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerLifecycle`](#org.cdk8s.plus22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -7209,6 +7351,73 @@ public java.lang.Object getValueFrom();
 ---
 
 
+### Handler <a name="org.cdk8s.plus22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromCommand` <a name="org.cdk8s.plus22.Handler.fromCommand"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromCommand(java.util.List<java.lang.String> command)
+```
+
+###### `command`<sup>Required</sup> <a name="org.cdk8s.plus22.Handler.parameter.command"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+The command to execute.
+
+---
+
+##### `fromHttpGet` <a name="org.cdk8s.plus22.Handler.fromHttpGet"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromHttpGet(java.lang.String path)
+Handler.fromHttpGet(java.lang.String path, HandlerFromHttpGetOptions options)
+```
+
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Handler.parameter.path"></a>
+
+- *Type:* `java.lang.String`
+
+The URL path to hit.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Handler.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.HandlerFromHttpGetOptions`](#org.cdk8s.plus22.HandlerFromHttpGetOptions)
+
+Options.
+
+---
+
+##### `fromTcpSocket` <a name="org.cdk8s.plus22.Handler.fromTcpSocket"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromTcpSocket()
+Handler.fromTcpSocket(HandlerFromTcpSocketOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Handler.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.HandlerFromTcpSocketOptions`](#org.cdk8s.plus22.HandlerFromTcpSocketOptions)
+
+Options.
+
+---
+
+
+
 ### IngressBackend <a name="org.cdk8s.plus22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -7794,14 +8003,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="org.cdk8s.plus22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="org.cdk8s.plus22.Probe.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.Probe;
-
-new Probe();
-```
 
 
 #### Static Functions <a name="Static Functions"></a>
