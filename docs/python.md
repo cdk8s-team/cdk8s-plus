@@ -501,6 +501,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -571,6 +572,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -707,6 +716,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -777,6 +787,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -1695,6 +1713,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -1765,6 +1784,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -1901,6 +1928,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -1971,6 +1999,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2385,6 +2421,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -2455,6 +2492,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2591,6 +2636,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -2661,6 +2707,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -3917,6 +3971,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -3987,6 +4042,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -4123,6 +4186,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -4193,6 +4257,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -4972,6 +5044,58 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="cdk8s_plus_20.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.ContainerLifecycle(
+  post_start: Handler = None,
+  pre_stop: Handler = None
+)
+```
+
+##### `post_start`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerLifecycle.property.post_start"></a>
+
+```python
+post_start: Handler
+```
+
+- *Type:* [`cdk8s_plus_20.Handler`](#cdk8s_plus_20.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `pre_stop`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerLifecycle.property.pre_stop"></a>
+
+```python
+pre_stop: Handler
+```
+
+- *Type:* [`cdk8s_plus_20.Handler`](#cdk8s_plus_20.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="cdk8s_plus_20.ContainerProps"></a>
 
 Properties for creating a container.
@@ -4987,6 +5111,7 @@ cdk8s_plus_20.ContainerProps(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -5077,6 +5202,18 @@ image_pull_policy: ImagePullPolicy
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.property.lifecycle"></a>
+
+```python
+lifecycle: ContainerLifecycle
+```
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -6004,6 +6141,74 @@ ingress: IngressV1Beta1
 - *Default:* An ingress will be automatically created.
 
 The ingress to add rules to.
+
+---
+
+### HandlerFromHttpGetOptions <a name="cdk8s_plus_20.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.HandlerFromHttpGetOptions(
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_20.HandlerFromHttpGetOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="cdk8s_plus_20.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.HandlerFromTcpSocketOptions(
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `host`<sup>Optional</sup> <a name="cdk8s_plus_20.HandlerFromTcpSocketOptions.property.host"></a>
+
+```python
+host: str
+```
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_20.HandlerFromTcpSocketOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -8659,6 +8864,7 @@ cdk8s_plus_20.Container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -8729,6 +8935,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -9477,6 +9691,90 @@ value_from: typing.Any
 ---
 
 
+### Handler <a name="cdk8s_plus_20.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `from_command` <a name="cdk8s_plus_20.Handler.from_command"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Handler.from_command(
+  command: typing.List[str]
+)
+```
+
+###### `command`<sup>Required</sup> <a name="cdk8s_plus_20.Handler.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+
+The command to execute.
+
+---
+
+##### `from_http_get` <a name="cdk8s_plus_20.Handler.from_http_get"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Handler.from_http_get(
+  path: str,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `path`<sup>Required</sup> <a name="cdk8s_plus_20.Handler.parameter.path"></a>
+
+- *Type:* `str`
+
+The URL path to hit.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_20.HandlerFromHttpGetOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+##### `from_tcp_socket` <a name="cdk8s_plus_20.Handler.from_tcp_socket"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Handler.from_tcp_socket(
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `host`<sup>Optional</sup> <a name="cdk8s_plus_20.HandlerFromTcpSocketOptions.parameter.host"></a>
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_20.HandlerFromTcpSocketOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
+
+
 ### IngressV1Beta1Backend <a name="cdk8s_plus_20.IngressV1Beta1Backend"></a>
 
 The backend for an ingress path.
@@ -9793,6 +10091,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -9863,6 +10162,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -9999,6 +10306,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -10069,6 +10377,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -10425,14 +10741,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="cdk8s_plus_20.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="cdk8s_plus_20.Probe.Initializer"></a>
-
-```python
-import cdk8s_plus_20
-
-cdk8s_plus_20.Probe()
-```
 
 
 #### Static Functions <a name="Static Functions"></a>
@@ -11005,6 +11313,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -11075,6 +11384,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -11186,6 +11503,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -11256,6 +11574,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_20.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_20.ContainerLifecycle`](#cdk8s_plus_20.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 

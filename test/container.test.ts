@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu } from '../src';
+import { Container, Cpu, Handler } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 describe('EnvValue', () => {
@@ -395,3 +395,32 @@ test('custom security context', () => {
   expect(container.securityContext.group).toEqual(2000);
 
 });
+
+test('can configure a postStart lifecycle hook', () => {
+
+  const container = new Container({
+    image: 'image',
+    lifecycle: {
+      postStart: Handler.fromCommand(['hello']),
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.lifecycle!.postStart).toEqual({ exec: { command: ['hello'] } });
+
+});
+
+test('can configure a preStop lifecycle hook', () => {
+
+  const container = new Container({
+    image: 'image',
+    lifecycle: {
+      preStop: Handler.fromCommand(['hello']),
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.lifecycle!.preStop).toEqual({ exec: { command: ['hello'] } });
+
+});
+
