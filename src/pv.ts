@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
 import { IPersistentVolumeClaim, PersistentVolumeClaim, PersistentVolumeMode, PersistentVolumeAccessMode } from './pvc';
+import { IStorage, Volume } from './volume';
 
 /**
  * Contract of a `PersistentVolumeClaim`.
@@ -84,7 +85,7 @@ export interface PersistentVolumeProps extends ResourceProps {
  * implementation of the storage, be that NFS, iSCSI, or a
  * cloud-provider-specific storage system.
  */
-export class PersistentVolume extends Resource implements IPersistentVolume {
+export class PersistentVolume extends Resource implements IPersistentVolume, IStorage {
 
   /**
    * Imports a pv from the cluster as a reference.
@@ -204,6 +205,11 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
       throw new Error(`Cannot bind volume '${this.name}' to claim '${pvc.name}' since it is already bound to claim '${this._claim.name}'`);
     }
     this._claim = pvc;
+  }
+
+  public asVolume(): Volume {
+    const claim = this.reserve();
+    return Volume.fromPersistentVolumeClaim(claim);
   }
 
   /**

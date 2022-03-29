@@ -1206,7 +1206,7 @@ TTL before the job is deleted after it is finished.
 
 ### PersistentVolume <a name="cdk8s-plus-20.PersistentVolume"></a>
 
-- *Implements:* [`cdk8s-plus-20.IPersistentVolume`](#cdk8s-plus-20.IPersistentVolume)
+- *Implements:* [`cdk8s-plus-20.IPersistentVolume`](#cdk8s-plus-20.IPersistentVolume), [`cdk8s-plus-20.IStorage`](#cdk8s-plus-20.IStorage)
 
 A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
 
@@ -1243,6 +1243,12 @@ new PersistentVolume(scope: Construct, id: string, props?: PersistentVolumeProps
 ---
 
 #### Methods <a name="Methods"></a>
+
+##### `asVolume` <a name="cdk8s-plus-20.PersistentVolume.asVolume"></a>
+
+```typescript
+public asVolume()
+```
 
 ##### `bind` <a name="cdk8s-plus-20.PersistentVolume.bind"></a>
 
@@ -7408,7 +7414,7 @@ The variable value.
 ##### `mount` <a name="cdk8s-plus-20.Container.mount"></a>
 
 ```typescript
-public mount(path: string, volume: Volume, options?: MountOptions)
+public mount(path: string, storage: IStorage, options?: MountOptions)
 ```
 
 ###### `path`<sup>Required</sup> <a name="cdk8s-plus-20.Container.parameter.path"></a>
@@ -7419,11 +7425,11 @@ The desired path in the container.
 
 ---
 
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-20.Container.parameter.volume"></a>
+###### `storage`<sup>Required</sup> <a name="cdk8s-plus-20.Container.parameter.storage"></a>
 
-- *Type:* [`cdk8s-plus-20.Volume`](#cdk8s-plus-20.Volume)
+- *Type:* [`cdk8s-plus-20.IStorage`](#cdk8s-plus-20.IStorage)
 
-The volume to mount.
+The storage to mount.
 
 ---
 
@@ -8325,6 +8331,8 @@ Options.
 
 ### Volume <a name="cdk8s-plus-20.Volume"></a>
 
+- *Implements:* [`cdk8s-plus-20.IStorage`](#cdk8s-plus-20.IStorage)
+
 Volume represents a named volume in a pod that may be accessed by any container in the pod.
 
 Docker also has a concept of volumes, though it is somewhat looser and less
@@ -8356,6 +8364,13 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
+#### Methods <a name="Methods"></a>
+
+##### `asVolume` <a name="cdk8s-plus-20.Volume.asVolume"></a>
+
+```typescript
+public asVolume()
+```
 
 #### Static Functions <a name="Static Functions"></a>
 
@@ -8402,26 +8417,6 @@ Volume.fromEmptyDir(name: string, options?: EmptyDirVolumeOptions)
 - *Type:* [`cdk8s-plus-20.EmptyDirVolumeOptions`](#cdk8s-plus-20.EmptyDirVolumeOptions)
 
 Additional options.
-
----
-
-##### `fromPersistentVolume` <a name="cdk8s-plus-20.Volume.fromPersistentVolume"></a>
-
-```typescript
-import { Volume } from 'cdk8s-plus-20'
-
-Volume.fromPersistentVolume(pv: PersistentVolume, options?: PersistentVolumeClaimVolumeOptions)
-```
-
-###### `pv`<sup>Required</sup> <a name="cdk8s-plus-20.Volume.parameter.pv"></a>
-
-- *Type:* [`cdk8s-plus-20.PersistentVolume`](#cdk8s-plus-20.PersistentVolume)
-
----
-
-###### `options`<sup>Optional</sup> <a name="cdk8s-plus-20.Volume.parameter.options"></a>
-
-- *Type:* [`cdk8s-plus-20.PersistentVolumeClaimVolumeOptions`](#cdk8s-plus-20.PersistentVolumeClaimVolumeOptions)
 
 ---
 
@@ -8854,6 +8849,21 @@ public readonly name: string;
 The Kubernetes name of this resource.
 
 ---
+
+### IStorage <a name="cdk8s-plus-20.IStorage"></a>
+
+- *Implemented By:* [`cdk8s-plus-20.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-20.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-20.AzureDiskPersistentVolume`](#cdk8s-plus-20.AzureDiskPersistentVolume), [`cdk8s-plus-20.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-20.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-20.PersistentVolume`](#cdk8s-plus-20.PersistentVolume), [`cdk8s-plus-20.Volume`](#cdk8s-plus-20.Volume), [`cdk8s-plus-20.IStorage`](#cdk8s-plus-20.IStorage)
+
+Represents a piece of storage in the cluster.
+
+#### Methods <a name="Methods"></a>
+
+##### `asVolume` <a name="cdk8s-plus-20.IStorage.asVolume"></a>
+
+```typescript
+public asVolume()
+```
+
 
 ## Enums <a name="Enums"></a>
 
