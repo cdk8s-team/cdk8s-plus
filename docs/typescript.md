@@ -1866,7 +1866,7 @@ The service account used to run this pod.
 
 ### Resource <a name="cdk8s-plus-22.Resource"></a>
 
-- *Implements:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+- *Implements:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 Base class for all Kubernetes objects in stdk8s.
 
@@ -2072,7 +2072,7 @@ The rule to add.
 ##### `allow` <a name="cdk8s-plus-22.RoleBase.allow"></a>
 
 ```typescript
-public allow(verbs: string[], resources: Resources)
+public allow(verbs: string[], resources: IApiResource)
 ```
 
 ###### `verbs`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.verbs"></a>
@@ -2083,7 +2083,7 @@ public allow(verbs: string[], resources: Resources)
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2092,12 +2092,12 @@ The resource(s) to apply to.
 ##### `allowCreate` <a name="cdk8s-plus-22.RoleBase.allowCreate"></a>
 
 ```typescript
-public allowCreate(resources: Resources)
+public allowCreate(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2106,12 +2106,12 @@ The resource(s) to apply to.
 ##### `allowDelete` <a name="cdk8s-plus-22.RoleBase.allowDelete"></a>
 
 ```typescript
-public allowDelete(resources: Resources)
+public allowDelete(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2120,12 +2120,12 @@ The resource(s) to apply to.
 ##### `allowDeleteCollection` <a name="cdk8s-plus-22.RoleBase.allowDeleteCollection"></a>
 
 ```typescript
-public allowDeleteCollection(resources: Resources)
+public allowDeleteCollection(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2134,12 +2134,12 @@ The resource(s) to apply to.
 ##### `allowGet` <a name="cdk8s-plus-22.RoleBase.allowGet"></a>
 
 ```typescript
-public allowGet(resources: Resources)
+public allowGet(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2148,12 +2148,12 @@ The resource(s) to apply to.
 ##### `allowList` <a name="cdk8s-plus-22.RoleBase.allowList"></a>
 
 ```typescript
-public allowList(resources: Resources)
+public allowList(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2162,12 +2162,12 @@ The resource(s) to apply to.
 ##### `allowPatch` <a name="cdk8s-plus-22.RoleBase.allowPatch"></a>
 
 ```typescript
-public allowPatch(resources: Resources)
+public allowPatch(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2176,12 +2176,12 @@ The resource(s) to apply to.
 ##### `allowRead` <a name="cdk8s-plus-22.RoleBase.allowRead"></a>
 
 ```typescript
-public allowRead(resources: Resources)
+public allowRead(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2190,12 +2190,12 @@ The resource(s) to apply to.
 ##### `allowReadWrite` <a name="cdk8s-plus-22.RoleBase.allowReadWrite"></a>
 
 ```typescript
-public allowReadWrite(resources: Resources)
+public allowReadWrite(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2204,12 +2204,12 @@ The resource(s) to apply to.
 ##### `allowUpdate` <a name="cdk8s-plus-22.RoleBase.allowUpdate"></a>
 
 ```typescript
-public allowUpdate(resources: Resources)
+public allowUpdate(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -2218,12 +2218,12 @@ The resource(s) to apply to.
 ##### `allowWatch` <a name="cdk8s-plus-22.RoleBase.allowWatch"></a>
 
 ```typescript
-public allowWatch(resources: Resources)
+public allowWatch(resources: IApiResource)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s-plus-22.Resources`](#cdk8s-plus-22.Resources)
+- *Type:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3220,23 +3220,23 @@ import { ApiResourceOptions } from 'cdk8s-plus-22'
 const apiResourceOptions: ApiResourceOptions = { ... }
 ```
 
-##### `apiGroups`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.apiGroups"></a>
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.apiGroup"></a>
 
 ```typescript
-public readonly apiGroups: string[];
+public readonly apiGroup: string;
 ```
 
-- *Type:* `string`[]
+- *Type:* `string`
 
 ---
 
-##### `resources`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.resources"></a>
+##### `type`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.type"></a>
 
 ```typescript
-public readonly resources: string[];
+public readonly type: string;
 ```
 
-- *Type:* `string`[]
+- *Type:* `string`
 
 ---
 
@@ -8333,6 +8333,8 @@ The volume to mount.
 
 ### ApiResource <a name="cdk8s-plus-22.ApiResource"></a>
 
+- *Implements:* [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
+
 Represents information about an API resource type.
 
 
@@ -8354,23 +8356,23 @@ ApiResource.custom(options: ApiResourceOptions)
 
 #### Properties <a name="Properties"></a>
 
-##### `apiGroups`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResource.property.apiGroups"></a>
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResource.property.apiGroup"></a>
 
 ```typescript
-public readonly apiGroups: string[];
+public readonly apiGroup: string;
 ```
 
-- *Type:* `string`[]
+- *Type:* `string`
 
 ---
 
-##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.ApiResource.property.resources"></a>
+##### `type`<sup>Optional</sup> <a name="cdk8s-plus-22.ApiResource.property.type"></a>
 
 ```typescript
-public readonly resources: string[];
+public readonly type: string;
 ```
 
-- *Type:* `string`[]
+- *Type:* `string`
 
 ---
 
@@ -9894,54 +9896,6 @@ Options.
 
 
 
-### Resources <a name="cdk8s-plus-22.Resources"></a>
-
-Represents a collection of resources.
-
-
-#### Static Functions <a name="Static Functions"></a>
-
-##### `fromObjects` <a name="cdk8s-plus-22.Resources.fromObjects"></a>
-
-```typescript
-import { Resources } from 'cdk8s-plus-22'
-
-Resources.fromObjects(objects: IResource)
-```
-
-###### `objects`<sup>Required</sup> <a name="cdk8s-plus-22.Resources.parameter.objects"></a>
-
-- *Type:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
-
----
-
-##### `fromTypes` <a name="cdk8s-plus-22.Resources.fromTypes"></a>
-
-```typescript
-import { Resources } from 'cdk8s-plus-22'
-
-Resources.fromTypes(types: ApiResource)
-```
-
-###### `types`<sup>Required</sup> <a name="cdk8s-plus-22.Resources.parameter.types"></a>
-
-- *Type:* [`cdk8s-plus-22.ApiResource`](#cdk8s-plus-22.ApiResource)
-
----
-
-#### Properties <a name="Properties"></a>
-
-##### `value`<sup>Required</sup> <a name="cdk8s-plus-22.Resources.property.value"></a>
-
-```typescript
-public readonly value: IRuleResources;
-```
-
-- *Type:* [`cdk8s-plus-22.IRuleResources`](#cdk8s-plus-22.IRuleResources)
-
----
-
-
 ### User <a name="cdk8s-plus-22.User"></a>
 
 - *Implements:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
@@ -10160,6 +10114,43 @@ public readonly name: string;
 
 
 ## Protocols <a name="Protocols"></a>
+
+### IApiResource <a name="cdk8s-plus-22.IApiResource"></a>
+
+- *Implemented By:* [`cdk8s-plus-22.ApiResource`](#cdk8s-plus-22.ApiResource), [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `apiGroup`<sup>Required</sup> <a name="cdk8s-plus-22.IApiResource.property.apiGroup"></a>
+
+```typescript
+public readonly apiGroup: string;
+```
+
+- *Type:* `string`
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+---
+
+##### `type`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.type"></a>
+
+```typescript
+public readonly type: string;
+```
+
+- *Type:* `string`
+
+---
 
 ### IClusterRole <a name="cdk8s-plus-22.IClusterRole"></a>
 
@@ -10749,45 +10740,6 @@ public readonly name: string;
 - *Type:* `string`
 
 The Kubernetes name of this resource.
-
----
-
-### IRuleResources <a name="cdk8s-plus-22.IRuleResources"></a>
-
-- *Implemented By:* [`cdk8s-plus-22.IRuleResources`](#cdk8s-plus-22.IRuleResources)
-
-The part of a rule that corresponds to a set of resources.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `apiGroups`<sup>Required</sup> <a name="cdk8s-plus-22.IRuleResources.property.apiGroups"></a>
-
-```typescript
-public readonly apiGroups: string[];
-```
-
-- *Type:* `string`[]
-
----
-
-##### `resourceNames`<sup>Optional</sup> <a name="cdk8s-plus-22.IRuleResources.property.resourceNames"></a>
-
-```typescript
-public readonly resourceNames: string[];
-```
-
-- *Type:* `string`[]
-
----
-
-##### `resourceTypes`<sup>Optional</sup> <a name="cdk8s-plus-22.IRuleResources.property.resourceTypes"></a>
-
-```typescript
-public readonly resourceTypes: string[];
-```
-
-- *Type:* `string`[]
 
 ---
 

@@ -110,13 +110,14 @@ Array [
     const role = new kplus.Role(chart, 'pod-reader', {
       namespace: 'default',
     });
-    role.allowRead(kplus.Resources.fromObjects(pod, secret));
+    role.allowRead(pod, secret);
 
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
+        resources: [],
         resourceNames: [pod.name, secret.name],
         verbs: ['get', 'list', 'watch'],
       },
@@ -133,7 +134,7 @@ Array [
     const role = new kplus.Role(chart, 'pod-reader', {
       namespace: 'default',
     });
-    role.allowRead(kplus.Resources.fromTypes(kplus.ApiResource.SECRET, kplus.ApiResource.POD));
+    role.allowRead(kplus.ApiResource.SECRET, kplus.ApiResource.POD);
 
     // THEN
     const manifest = Testing.synth(chart);
@@ -141,6 +142,7 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods', 'secrets'],
+        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
@@ -199,6 +201,7 @@ Array [
     role.addRule({
       apiGroups: [''],
       resources: ['pods'],
+      resourceNames: [],
       verbs: ['get', 'watch', 'list'],
     });
 
@@ -208,6 +211,7 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods'],
+        resourceNames: [],
         verbs: ['get', 'watch', 'list'],
       },
     ]));
@@ -234,12 +238,13 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'my-cluster-role');
-    role.allowRead(kplus.Resources.fromObjects(pod, secret));
+    role.allowRead(pod, secret);
 
     const manifest = Testing.synth(chart);
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
+        resources: [],
         resourceNames: [pod.name, secret.name],
         verbs: ['get', 'list', 'watch'],
       },
@@ -254,13 +259,14 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'my-cluster-role');
-    role.allowRead(kplus.Resources.fromTypes(kplus.ApiResource.SECRET, kplus.ApiResource.POD));
+    role.allowRead(kplus.ApiResource.SECRET, kplus.ApiResource.POD);
 
     const manifest = Testing.synth(chart);
     expect(manifest[0].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
         resources: ['pods', 'secrets'],
+        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
     ]));

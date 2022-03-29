@@ -3017,7 +3017,7 @@ The service account used to run this pod.
 
 ### Resource <a name="org.cdk8s.plus22.Resource"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
+- *Implements:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 Base class for all Kubernetes objects in stdk8s.
 
@@ -3257,7 +3257,7 @@ The rule to add.
 ##### `allow` <a name="org.cdk8s.plus22.RoleBase.allow"></a>
 
 ```java
-public allow(java.util.List<java.lang.String> verbs, Resources resources)
+public allow(java.util.List<java.lang.String> verbs, IApiResource resources)
 ```
 
 ###### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.verbs"></a>
@@ -3268,7 +3268,7 @@ public allow(java.util.List<java.lang.String> verbs, Resources resources)
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3277,12 +3277,12 @@ The resource(s) to apply to.
 ##### `allowCreate` <a name="org.cdk8s.plus22.RoleBase.allowCreate"></a>
 
 ```java
-public allowCreate(Resources resources)
+public allowCreate(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3291,12 +3291,12 @@ The resource(s) to apply to.
 ##### `allowDelete` <a name="org.cdk8s.plus22.RoleBase.allowDelete"></a>
 
 ```java
-public allowDelete(Resources resources)
+public allowDelete(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3305,12 +3305,12 @@ The resource(s) to apply to.
 ##### `allowDeleteCollection` <a name="org.cdk8s.plus22.RoleBase.allowDeleteCollection"></a>
 
 ```java
-public allowDeleteCollection(Resources resources)
+public allowDeleteCollection(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3319,12 +3319,12 @@ The resource(s) to apply to.
 ##### `allowGet` <a name="org.cdk8s.plus22.RoleBase.allowGet"></a>
 
 ```java
-public allowGet(Resources resources)
+public allowGet(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3333,12 +3333,12 @@ The resource(s) to apply to.
 ##### `allowList` <a name="org.cdk8s.plus22.RoleBase.allowList"></a>
 
 ```java
-public allowList(Resources resources)
+public allowList(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3347,12 +3347,12 @@ The resource(s) to apply to.
 ##### `allowPatch` <a name="org.cdk8s.plus22.RoleBase.allowPatch"></a>
 
 ```java
-public allowPatch(Resources resources)
+public allowPatch(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3361,12 +3361,12 @@ The resource(s) to apply to.
 ##### `allowRead` <a name="org.cdk8s.plus22.RoleBase.allowRead"></a>
 
 ```java
-public allowRead(Resources resources)
+public allowRead(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3375,12 +3375,12 @@ The resource(s) to apply to.
 ##### `allowReadWrite` <a name="org.cdk8s.plus22.RoleBase.allowReadWrite"></a>
 
 ```java
-public allowReadWrite(Resources resources)
+public allowReadWrite(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3389,12 +3389,12 @@ The resource(s) to apply to.
 ##### `allowUpdate` <a name="org.cdk8s.plus22.RoleBase.allowUpdate"></a>
 
 ```java
-public allowUpdate(Resources resources)
+public allowUpdate(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -3403,12 +3403,12 @@ The resource(s) to apply to.
 ##### `allowWatch` <a name="org.cdk8s.plus22.RoleBase.allowWatch"></a>
 
 ```java
-public allowWatch(Resources resources)
+public allowWatch(IApiResource resources)
 ```
 
 ###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`org.cdk8s.plus22.Resources`](#org.cdk8s.plus22.Resources)
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4772,28 +4772,28 @@ A prefix to add to all keys in the config map.
 import org.cdk8s.plus22.ApiResourceOptions;
 
 ApiResourceOptions.builder()
-    .apiGroups(java.util.List<java.lang.String>)
-    .resources(java.util.List<java.lang.String>)
+    .apiGroup(java.lang.String)
+    .type(java.lang.String)
     .build();
 ```
 
-##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.apiGroups"></a>
+##### `apiGroup`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.apiGroup"></a>
 
 ```java
-public java.util.List<java.lang.String> getApiGroups();
+public java.lang.String getApiGroup();
 ```
 
-- *Type:* java.util.List<`java.lang.String`>
+- *Type:* `java.lang.String`
 
 ---
 
-##### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.resources"></a>
+##### `type`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.type"></a>
 
 ```java
-public java.util.List<java.lang.String> getResources();
+public java.lang.String getType();
 ```
 
-- *Type:* java.util.List<`java.lang.String`>
+- *Type:* `java.lang.String`
 
 ---
 
@@ -10245,6 +10245,8 @@ The volume to mount.
 
 ### ApiResource <a name="org.cdk8s.plus22.ApiResource"></a>
 
+- *Implements:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
 Represents information about an API resource type.
 
 
@@ -10266,23 +10268,23 @@ ApiResource.custom(ApiResourceOptions options)
 
 #### Properties <a name="Properties"></a>
 
-##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResource.property.apiGroups"></a>
+##### `apiGroup`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResource.property.apiGroup"></a>
 
 ```java
-public java.util.List<java.lang.String> getApiGroups();
+public java.lang.String getApiGroup();
 ```
 
-- *Type:* java.util.List<`java.lang.String`>
+- *Type:* `java.lang.String`
 
 ---
 
-##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.ApiResource.property.resources"></a>
+##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.ApiResource.property.type"></a>
 
 ```java
-public java.util.List<java.lang.String> getResources();
+public java.lang.String getType();
 ```
 
-- *Type:* java.util.List<`java.lang.String`>
+- *Type:* `java.lang.String`
 
 ---
 
@@ -12384,54 +12386,6 @@ Options.
 
 
 
-### Resources <a name="org.cdk8s.plus22.Resources"></a>
-
-Represents a collection of resources.
-
-
-#### Static Functions <a name="Static Functions"></a>
-
-##### `fromObjects` <a name="org.cdk8s.plus22.Resources.fromObjects"></a>
-
-```java
-import org.cdk8s.plus22.Resources;
-
-Resources.fromObjects(IResource objects)
-```
-
-###### `objects`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.parameter.objects"></a>
-
-- *Type:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
-
----
-
-##### `fromTypes` <a name="org.cdk8s.plus22.Resources.fromTypes"></a>
-
-```java
-import org.cdk8s.plus22.Resources;
-
-Resources.fromTypes(ApiResource types)
-```
-
-###### `types`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.parameter.types"></a>
-
-- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
-
----
-
-#### Properties <a name="Properties"></a>
-
-##### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Resources.property.value"></a>
-
-```java
-public IRuleResources getValue();
-```
-
-- *Type:* [`org.cdk8s.plus22.IRuleResources`](#org.cdk8s.plus22.IRuleResources)
-
----
-
-
 ### User <a name="org.cdk8s.plus22.User"></a>
 
 - *Implements:* [`org.cdk8s.plus22.ISubject`](#org.cdk8s.plus22.ISubject)
@@ -12669,6 +12623,43 @@ public java.lang.String getName();
 
 
 ## Protocols <a name="Protocols"></a>
+
+### IApiResource <a name="org.cdk8s.plus22.IApiResource"></a>
+
+- *Implemented By:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource), [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole), [`org.cdk8s.plus22.ClusterRoleBinding`](#org.cdk8s.plus22.ClusterRoleBinding), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.RoleBase`](#org.cdk8s.plus22.RoleBase), [`org.cdk8s.plus22.RoleBinding`](#org.cdk8s.plus22.RoleBinding), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `apiGroup`<sup>Required</sup> <a name="org.cdk8s.plus22.IApiResource.property.apiGroup"></a>
+
+```java
+public java.lang.String getApiGroup();
+```
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.IApiResource.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.IApiResource.property.type"></a>
+
+```java
+public java.lang.String getType();
+```
+
+- *Type:* `java.lang.String`
+
+---
 
 ### IClusterRole <a name="org.cdk8s.plus22.IClusterRole"></a>
 
@@ -13258,45 +13249,6 @@ public java.lang.String getName();
 - *Type:* `java.lang.String`
 
 The Kubernetes name of this resource.
-
----
-
-### IRuleResources <a name="org.cdk8s.plus22.IRuleResources"></a>
-
-- *Implemented By:* [`org.cdk8s.plus22.IRuleResources`](#org.cdk8s.plus22.IRuleResources)
-
-The part of a rule that corresponds to a set of resources.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.IRuleResources.property.apiGroups"></a>
-
-```java
-public java.util.List<java.lang.String> getApiGroups();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-##### `resourceNames`<sup>Optional</sup> <a name="org.cdk8s.plus22.IRuleResources.property.resourceNames"></a>
-
-```java
-public java.util.List<java.lang.String> getResourceNames();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-##### `resourceTypes`<sup>Optional</sup> <a name="org.cdk8s.plus22.IRuleResources.property.resourceTypes"></a>
-
-```java
-public java.util.List<java.lang.String> getResourceTypes();
-```
-
-- *Type:* java.util.List<`java.lang.String`>
 
 ---
 

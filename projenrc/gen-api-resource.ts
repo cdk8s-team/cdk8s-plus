@@ -18,15 +18,20 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
     ts.line(`// ${ts.marker}`);
   }
   ts.line();
+  ts.open('export interface IApiResource {');
+  ts.line('readonly apiGroup: string;')
+  ts.line('readonly type?: string;')
+  ts.line('readonly name?: string;')
+  ts.close('}');
   ts.open('export interface ApiResourceOptions {');
-  ts.line('readonly apiGroups: Array<string>;');
-  ts.line('readonly resources: Array<string>;');
+  ts.line('readonly apiGroup: string;');
+  ts.line('readonly type: string;');
   ts.close('}');
   ts.line();
   ts.line('/**');
   ts.line(' * Represents information about an API resource type.');
   ts.line(' */');
-  ts.open('export class ApiResource {');
+  ts.open('export class ApiResource implements IApiResource {');
 
   for (const resource of resourceTypes) {
     const typeName = normalizeTypeName(resource.kind);
@@ -37,8 +42,8 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
     ts.line(` * API resource information for ${resource.kind}.`);
     ts.line(' */');
     ts.open(`public static readonly ${memberName} = new ApiResource({`);
-    ts.line(`apiGroups: [${apiGroups.map(group => `'${group}'`).join(', ')}],`);
-    ts.line(`resources: ['${resource.name}'],`);
+    ts.line(`apiGroup: '${apiGroups[0]}',`);
+    ts.line(`type: '${resource.name}',`);
     ts.close('});');
     ts.line();
   }
@@ -47,20 +52,12 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line('return new ApiResource(options);');
   ts.close('};');
   ts.line();
-  ts.line('private readonly _apiGroups: Array<string>;');
-  ts.line('private readonly _resources: Array<string>;');
+  ts.line('public readonly apiGroup: string;');
+  ts.line('public readonly type: string | undefined; // must be optional to satisfy interface');
   ts.line();
   ts.open('private constructor(options: ApiResourceOptions) {');
-  ts.line('this._apiGroups = options.apiGroups;');
-  ts.line('this._resources = options.resources;');
-  ts.close('}');
-  ts.line();
-  ts.open('public get apiGroups(): Array<string> {');
-  ts.line('return [...this._apiGroups];');
-  ts.close('}');
-  ts.line();
-  ts.open('public get resources(): Array<string> | undefined {');
-  ts.line('return [...this._resources];');
+  ts.line('this.apiGroup = options.apiGroup;');
+  ts.line('this.type = options.type;');
   ts.close('}');
   ts.close('}');
   ts.line();

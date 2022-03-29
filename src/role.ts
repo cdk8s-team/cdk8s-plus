@@ -1,8 +1,8 @@
 import { ApiObject, ApiObjectMetadata, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
+import { IApiResource } from './api-resource.generated';
 import { IResource, Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
-import { Resources } from './resources';
 import { ClusterRoleBinding, ISubject, RoleBinding } from './role-binding';
 import { filterUndefined, undefinedIfEmpty } from './utils';
 
@@ -40,72 +40,72 @@ export abstract class RoleBase extends Resource implements IResource {
    * Add "create" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowCreate(resources: Resources): void {
-    this.allow(['create'], resources);
+  public allowCreate(...resources: IApiResource[]): void {
+    this.allow(['create'], ...resources);
   }
 
   /**
    * Add "get" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowGet(resources: Resources): void {
-    this.allow(['get'], resources);
+  public allowGet(...resources: IApiResource[]): void {
+    this.allow(['get'], ...resources);
   }
 
   /**
    * Add "list" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowList(resources: Resources): void {
-    this.allow(['list'], resources);
+  public allowList(...resources: IApiResource[]): void {
+    this.allow(['list'], ...resources);
   }
 
   /**
    * Add "watch" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowWatch(resources: Resources): void {
-    this.allow(['watch'], resources);
+  public allowWatch(...resources: IApiResource[]): void {
+    this.allow(['watch'], ...resources);
   }
 
   /**
    * Add "update" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowUpdate(resources: Resources): void {
-    this.allow(['update'], resources);
+  public allowUpdate(...resources: IApiResource[]): void {
+    this.allow(['update'], ...resources);
   }
 
   /**
    * Add "patch" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowPatch(resources: Resources): void {
-    this.allow(['patch'], resources);
+  public allowPatch(...resources: IApiResource[]): void {
+    this.allow(['patch'], ...resources);
   }
 
   /**
    * Add "delete" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowDelete(resources: Resources): void {
-    this.allow(['delete'], resources);
+  public allowDelete(...resources: IApiResource[]): void {
+    this.allow(['delete'], ...resources);
   }
 
   /**
    * Add "deletecollection" permission for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowDeleteCollection(resources: Resources): void {
-    this.allow(['deletecollection'], resources);
+  public allowDeleteCollection(...resources: IApiResource[]): void {
+    this.allow(['deletecollection'], ...resources);
   }
 
   /**
    * Add "get", "list", and "watch" permissions for the resources.
    * @param resources The resource(s) to apply to
    */
-  public allowRead(resources: Resources): void {
-    this.allow(['get', 'list', 'watch'], resources);
+  public allowRead(...resources: IApiResource[]): void {
+    this.allow(['get', 'list', 'watch'], ...resources);
   }
 
   /**
@@ -114,8 +114,8 @@ export abstract class RoleBase extends Resource implements IResource {
    *
    * @param resources The resource(s) to apply to
    */
-  public allowReadWrite(resources: Resources): void {
-    this.allow(['get', 'list', 'watch', 'create', 'update', 'patch', 'delete', 'deletecollection'], resources);
+  public allowReadWrite(...resources: IApiResource[]): void {
+    this.allow(['get', 'list', 'watch', 'create', 'update', 'patch', 'delete', 'deletecollection'], ...resources);
   }
 
   /**
@@ -125,11 +125,24 @@ export abstract class RoleBase extends Resource implements IResource {
    * @param resources The resource(s) to apply to
    * @see https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
    */
-  public allow(verbs: string[], resources: Resources): void {
+  public allow(verbs: string[], ...resources: IApiResource[]): void {
+    const apiGroups: string[] = normalizedArray(resources
+      .map((resource) => resource.apiGroup)
+      .map((apiGroup) => apiGroup === 'core' ? '' : apiGroup),
+    );
+    const resourceTypes = normalizedArray(resources
+      .map((resource) => resource.type)
+      .filter((x) => typeof x === 'string'),
+    ) as string[];
+    const resourceNames = normalizedArray(resources
+      .map((resource) => resource.name)
+      .filter((x) => typeof x === 'string'),
+    ) as string[];
+
     this.addRule({
-      apiGroups: resources.value.apiGroups,
-      resources: resources.value.resourceTypes,
-      resourceNames: resources.value.resourceNames,
+      apiGroups,
+      resources: resourceTypes,
+      resourceNames,
       verbs,
     });
   }
@@ -356,4 +369,8 @@ export class PolicyRule {
   public _toKube(): k8s.PolicyRule {
     return filterUndefined(this.props);
   }
+}
+
+function normalizedArray<T>(xs: T[]): T[] {
+  return Array.from(new Set(xs)).sort();
 }

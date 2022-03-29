@@ -4374,7 +4374,7 @@ The service account used to run this pod.
 
 ### Resource <a name="cdk8s_plus_22.Resource"></a>
 
-- *Implements:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
+- *Implements:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 Base class for all Kubernetes objects in stdk8s.
 
@@ -4679,7 +4679,7 @@ resources.
 ```python
 def allow(
   verbs: typing.List[str],
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
@@ -4691,7 +4691,7 @@ def allow(
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4701,13 +4701,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_create(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4717,13 +4717,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_delete(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4733,13 +4733,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_delete_collection(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4749,13 +4749,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_get(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4765,13 +4765,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_list(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4781,13 +4781,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_patch(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4797,13 +4797,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_read(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4813,13 +4813,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_read_write(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4829,13 +4829,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_update(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -4845,13 +4845,13 @@ The resource(s) to apply to.
 
 ```python
 def allow_watch(
-  resources: Resources
+  resources: IApiResource
 )
 ```
 
 ###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
 
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 The resource(s) to apply to.
 
@@ -6738,28 +6738,28 @@ A prefix to add to all keys in the config map.
 import cdk8s_plus_22
 
 cdk8s_plus_22.ApiResourceOptions(
-  api_groups: typing.List[str],
-  resources: typing.List[str]
+  api_group: str,
+  type: str
 )
 ```
 
-##### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.api_groups"></a>
+##### `api_group`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.api_group"></a>
 
 ```python
-api_groups: typing.List[str]
+api_group: str
 ```
 
-- *Type:* typing.List[`str`]
+- *Type:* `str`
 
 ---
 
-##### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.resources"></a>
+##### `type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.type"></a>
 
 ```python
-resources: typing.List[str]
+type: str
 ```
 
-- *Type:* typing.List[`str`]
+- *Type:* `str`
 
 ---
 
@@ -12211,6 +12211,8 @@ The volume to mount.
 
 ### ApiResource <a name="cdk8s_plus_22.ApiResource"></a>
 
+- *Implements:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
 Represents information about an API resource type.
 
 
@@ -12222,42 +12224,42 @@ Represents information about an API resource type.
 import cdk8s_plus_22
 
 cdk8s_plus_22.ApiResource.custom(
-  api_groups: typing.List[str],
-  resources: typing.List[str]
+  api_group: str,
+  type: str
 )
 ```
 
-###### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.api_groups"></a>
+###### `api_group`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.api_group"></a>
 
-- *Type:* typing.List[`str`]
+- *Type:* `str`
 
 ---
 
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.resources"></a>
+###### `type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.type"></a>
 
-- *Type:* typing.List[`str`]
+- *Type:* `str`
 
 ---
 
 #### Properties <a name="Properties"></a>
 
-##### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResource.property.api_groups"></a>
+##### `api_group`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResource.property.api_group"></a>
 
 ```python
-api_groups: typing.List[str]
+api_group: str
 ```
 
-- *Type:* typing.List[`str`]
+- *Type:* `str`
 
 ---
 
-##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ApiResource.property.resources"></a>
+##### `type`<sup>Optional</sup> <a name="cdk8s_plus_22.ApiResource.property.type"></a>
 
 ```python
-resources: typing.List[str]
+type: str
 ```
 
-- *Type:* typing.List[`str`]
+- *Type:* `str`
 
 ---
 
@@ -15052,58 +15054,6 @@ The TCP port to connect to on the container.
 
 
 
-### Resources <a name="cdk8s_plus_22.Resources"></a>
-
-Represents a collection of resources.
-
-
-#### Static Functions <a name="Static Functions"></a>
-
-##### `from_objects` <a name="cdk8s_plus_22.Resources.from_objects"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.Resources.from_objects(
-  objects: IResource
-)
-```
-
-###### `objects`<sup>Required</sup> <a name="cdk8s_plus_22.Resources.parameter.objects"></a>
-
-- *Type:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
-
----
-
-##### `from_types` <a name="cdk8s_plus_22.Resources.from_types"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.Resources.from_types(
-  types: ApiResource
-)
-```
-
-###### `types`<sup>Required</sup> <a name="cdk8s_plus_22.Resources.parameter.types"></a>
-
-- *Type:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource)
-
----
-
-#### Properties <a name="Properties"></a>
-
-##### `value`<sup>Required</sup> <a name="cdk8s_plus_22.Resources.property.value"></a>
-
-```python
-value: IRuleResources
-```
-
-- *Type:* [`cdk8s_plus_22.IRuleResources`](#cdk8s_plus_22.IRuleResources)
-
----
-
-
 ### User <a name="cdk8s_plus_22.User"></a>
 
 - *Implements:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
@@ -15472,6 +15422,43 @@ name: str
 
 
 ## Protocols <a name="Protocols"></a>
+
+### IApiResource <a name="cdk8s_plus_22.IApiResource"></a>
+
+- *Implemented By:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+
+#### Properties <a name="Properties"></a>
+
+##### `api_group`<sup>Required</sup> <a name="cdk8s_plus_22.IApiResource.property.api_group"></a>
+
+```python
+api_group: str
+```
+
+- *Type:* `str`
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+---
+
+##### `type`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.type"></a>
+
+```python
+type: str
+```
+
+- *Type:* `str`
+
+---
 
 ### IClusterRole <a name="cdk8s_plus_22.IClusterRole"></a>
 
@@ -16415,45 +16402,6 @@ name: str
 - *Type:* `str`
 
 The Kubernetes name of this resource.
-
----
-
-### IRuleResources <a name="cdk8s_plus_22.IRuleResources"></a>
-
-- *Implemented By:* [`cdk8s_plus_22.IRuleResources`](#cdk8s_plus_22.IRuleResources)
-
-The part of a rule that corresponds to a set of resources.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.IRuleResources.property.api_groups"></a>
-
-```python
-api_groups: typing.List[str]
-```
-
-- *Type:* typing.List[`str`]
-
----
-
-##### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.IRuleResources.property.resource_names"></a>
-
-```python
-resource_names: typing.List[str]
-```
-
-- *Type:* typing.List[`str`]
-
----
-
-##### `resource_types`<sup>Optional</sup> <a name="cdk8s_plus_22.IRuleResources.property.resource_types"></a>
-
-```python
-resource_types: typing.List[str]
-```
-
-- *Type:* typing.List[`str`]
 
 ---
 

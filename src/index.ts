@@ -15,7 +15,6 @@ export * from './pvc';
 export * from './pv';
 export * from './handler';
 export * from './role';
-export * from './resources';
 export * from './role-binding';
 
 export * from './api-resource.generated';
