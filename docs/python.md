@@ -334,6 +334,7 @@ cdk8s_plus_22.Deployment(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -376,6 +377,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -492,6 +501,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -562,6 +572,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -664,6 +682,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_22.Deployment.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_22.Deployment.add_init_container"></a>
 
 ```python
@@ -673,6 +716,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -743,6 +787,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -1049,6 +1101,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -1508,6 +1574,7 @@ cdk8s_plus_22.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -1551,6 +1618,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -1680,6 +1755,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -1750,6 +1826,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -1852,6 +1936,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_22.Job.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_22.Job.add_init_container"></a>
 
 ```python
@@ -1861,6 +1970,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -1931,6 +2041,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2061,6 +2179,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -2196,6 +2328,7 @@ cdk8s_plus_22.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -2235,6 +2368,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -2322,6 +2463,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -2392,6 +2534,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2494,6 +2644,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_22.Pod.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_22.Pod.add_init_container"></a>
 
 ```python
@@ -2503,6 +2678,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -2573,6 +2749,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2703,6 +2887,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -3639,6 +3837,7 @@ cdk8s_plus_22.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -3683,6 +3882,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -3816,6 +4023,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -3886,6 +4094,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -3988,6 +4204,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_22.StatefulSet.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_22.StatefulSet.add_init_container"></a>
 
 ```python
@@ -3997,6 +4238,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -4067,6 +4309,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -4222,6 +4472,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -4832,6 +5096,58 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="cdk8s_plus_22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ContainerLifecycle(
+  post_start: Handler = None,
+  pre_stop: Handler = None
+)
+```
+
+##### `post_start`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerLifecycle.property.post_start"></a>
+
+```python
+post_start: Handler
+```
+
+- *Type:* [`cdk8s_plus_22.Handler`](#cdk8s_plus_22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `pre_stop`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerLifecycle.property.pre_stop"></a>
+
+```python
+pre_stop: Handler
+```
+
+- *Type:* [`cdk8s_plus_22.Handler`](#cdk8s_plus_22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="cdk8s_plus_22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -4847,6 +5163,7 @@ cdk8s_plus_22.ContainerProps(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -4937,6 +5254,18 @@ image_pull_policy: ImagePullPolicy
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.property.lifecycle"></a>
+
+```python
+lifecycle: ContainerLifecycle
+```
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -5210,6 +5539,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -5248,6 +5578,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -5882,6 +6224,113 @@ The type of the path.
 
 ---
 
+### HandlerFromHttpGetOptions <a name="cdk8s_plus_22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.HandlerFromHttpGetOptions(
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromHttpGetOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.HandlerFromTcpSocketOptions(
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```python
+host: str
+```
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
+### HostAlias <a name="cdk8s_plus_22.HostAlias"></a>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's /etc/hosts file.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.HostAlias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+##### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.property.hostnames"></a>
+
+```python
+hostnames: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+##### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.property.ip"></a>
+
+```python
+ip: str
+```
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ### HttpGetProbeOptions <a name="cdk8s_plus_22.HttpGetProbeOptions"></a>
 
 Options for `Probe.fromHttpGet()`.
@@ -6218,6 +6667,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6257,6 +6707,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6587,6 +7049,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6622,6 +7085,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6834,6 +7309,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6857,6 +7333,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6966,6 +7454,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -6990,6 +7479,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -7904,6 +8405,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -7944,6 +8446,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -8448,6 +8962,7 @@ cdk8s_plus_22.Container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -8518,6 +9033,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -9266,6 +9789,90 @@ value_from: typing.Any
 ---
 
 
+### Handler <a name="cdk8s_plus_22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `from_command` <a name="cdk8s_plus_22.Handler.from_command"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Handler.from_command(
+  command: typing.List[str]
+)
+```
+
+###### `command`<sup>Required</sup> <a name="cdk8s_plus_22.Handler.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+
+The command to execute.
+
+---
+
+##### `from_http_get` <a name="cdk8s_plus_22.Handler.from_http_get"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Handler.from_http_get(
+  path: str,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `path`<sup>Required</sup> <a name="cdk8s_plus_22.Handler.parameter.path"></a>
+
+- *Type:* `str`
+
+The URL path to hit.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromHttpGetOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+##### `from_tcp_socket` <a name="cdk8s_plus_22.Handler.from_tcp_socket"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Handler.from_tcp_socket(
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.parameter.host"></a>
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
+
+
 ### IngressBackend <a name="cdk8s_plus_22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -9467,6 +10074,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -9486,6 +10094,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -9573,6 +10189,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -9643,6 +10260,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -9745,6 +10370,31 @@ If not specified, the container runtime's default will be used, which might be c
 
 ---
 
+##### `add_host_alias` <a name="cdk8s_plus_22.PodSpec.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
 ##### `add_init_container` <a name="cdk8s_plus_22.PodSpec.add_init_container"></a>
 
 ```python
@@ -9754,6 +10404,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -9824,6 +10475,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -9957,6 +10616,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.init_containers"></a>
 
 ```python
@@ -10033,6 +10706,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
   security_context: PodSecurityContextProps = None,
@@ -10053,6 +10727,14 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -10157,14 +10839,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="cdk8s_plus_22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="cdk8s_plus_22.Probe.Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.Probe()
-```
 
 
 #### Static Functions <a name="Static Functions"></a>
@@ -10737,6 +11411,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -10807,6 +11482,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -10918,6 +11601,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -10988,6 +11672,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -11122,6 +11814,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.init_containers"></a>
 
 ```python
@@ -11198,6 +11904,20 @@ containers: typing.List[Container]
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 

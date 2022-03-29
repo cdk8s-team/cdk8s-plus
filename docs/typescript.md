@@ -278,6 +278,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addHostAlias` <a name="cdk8s-plus-22.Deployment.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="cdk8s-plus-22.Deployment.addInitContainer"></a>
 
 ```typescript
@@ -374,6 +386,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -735,6 +761,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addHostAlias` <a name="cdk8s-plus-22.Job.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.Job.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="cdk8s-plus-22.Job.addInitContainer"></a>
 
 ```typescript
@@ -773,6 +811,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -938,6 +990,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addHostAlias` <a name="cdk8s-plus-22.Pod.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="cdk8s-plus-22.Pod.addInitContainer"></a>
 
 ```typescript
@@ -976,6 +1040,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -1639,6 +1717,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addHostAlias` <a name="cdk8s-plus-22.StatefulSet.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="cdk8s-plus-22.StatefulSet.addInitContainer"></a>
 
 ```typescript
@@ -1699,6 +1789,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -2257,6 +2361,55 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="cdk8s-plus-22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ContainerLifecycle } from 'cdk8s-plus-22'
+
+const containerLifecycle: ContainerLifecycle = { ... }
+```
+
+##### `postStart`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerLifecycle.property.postStart"></a>
+
+```typescript
+public readonly postStart: Handler;
+```
+
+- *Type:* [`cdk8s-plus-22.Handler`](#cdk8s-plus-22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `preStop`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerLifecycle.property.preStop"></a>
+
+```typescript
+public readonly preStop: Handler;
+```
+
+- *Type:* [`cdk8s-plus-22.Handler`](#cdk8s-plus-22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="cdk8s-plus-22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -2347,6 +2500,18 @@ public readonly imagePullPolicy: ImagePullPolicy;
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s-plus-22.ContainerProps.property.lifecycle"></a>
+
+```typescript
+public readonly lifecycle: ContainerLifecycle;
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerLifecycle`](#cdk8s-plus-22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2638,6 +2803,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -3237,6 +3414,105 @@ The type of the path.
 
 ---
 
+### HandlerFromHttpGetOptions <a name="cdk8s-plus-22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { HandlerFromHttpGetOptions } from 'cdk8s-plus-22'
+
+const handlerFromHttpGetOptions: HandlerFromHttpGetOptions = { ... }
+```
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.HandlerFromHttpGetOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="cdk8s-plus-22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { HandlerFromTcpSocketOptions } from 'cdk8s-plus-22'
+
+const handlerFromTcpSocketOptions: HandlerFromTcpSocketOptions = { ... }
+```
+
+##### `host`<sup>Optional</sup> <a name="cdk8s-plus-22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```typescript
+public readonly host: string;
+```
+
+- *Type:* `string`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s-plus-22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```typescript
+public readonly port: number;
+```
+
+- *Type:* `number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
+### HostAlias <a name="cdk8s-plus-22.HostAlias"></a>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's /etc/hosts file.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { HostAlias } from 'cdk8s-plus-22'
+
+const hostAlias: HostAlias = { ... }
+```
+
+##### `hostnames`<sup>Required</sup> <a name="cdk8s-plus-22.HostAlias.property.hostnames"></a>
+
+```typescript
+public readonly hostnames: string[];
+```
+
+- *Type:* `string`[]
+
+Hostnames for the chosen IP address.
+
+---
+
+##### `ip`<sup>Required</sup> <a name="cdk8s-plus-22.HostAlias.property.ip"></a>
+
+```typescript
+public readonly ip: string;
+```
+
+- *Type:* `string`
+
+IP address of the host file entry.
+
+---
+
 ### HttpGetProbeOptions <a name="cdk8s-plus-22.HttpGetProbeOptions"></a>
 
 Options for `Probe.fromHttpGet()`.
@@ -3580,6 +3856,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -3929,6 +4217,18 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
 ##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.initContainers"></a>
 
 ```typescript
@@ -4150,6 +4450,18 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
 ##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.initContainers"></a>
 
 ```typescript
@@ -4272,6 +4584,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -5160,6 +5484,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
 
 ---
 
@@ -6134,6 +6470,71 @@ public readonly valueFrom: any;
 ---
 
 
+### Handler <a name="cdk8s-plus-22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromCommand` <a name="cdk8s-plus-22.Handler.fromCommand"></a>
+
+```typescript
+import { Handler } from 'cdk8s-plus-22'
+
+Handler.fromCommand(command: string[])
+```
+
+###### `command`<sup>Required</sup> <a name="cdk8s-plus-22.Handler.parameter.command"></a>
+
+- *Type:* `string`[]
+
+The command to execute.
+
+---
+
+##### `fromHttpGet` <a name="cdk8s-plus-22.Handler.fromHttpGet"></a>
+
+```typescript
+import { Handler } from 'cdk8s-plus-22'
+
+Handler.fromHttpGet(path: string, options?: HandlerFromHttpGetOptions)
+```
+
+###### `path`<sup>Required</sup> <a name="cdk8s-plus-22.Handler.parameter.path"></a>
+
+- *Type:* `string`
+
+The URL path to hit.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Handler.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.HandlerFromHttpGetOptions`](#cdk8s-plus-22.HandlerFromHttpGetOptions)
+
+Options.
+
+---
+
+##### `fromTcpSocket` <a name="cdk8s-plus-22.Handler.fromTcpSocket"></a>
+
+```typescript
+import { Handler } from 'cdk8s-plus-22'
+
+Handler.fromTcpSocket(options?: HandlerFromTcpSocketOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Handler.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.HandlerFromTcpSocketOptions`](#cdk8s-plus-22.HandlerFromTcpSocketOptions)
+
+Options.
+
+---
+
+
+
 ### IngressBackend <a name="cdk8s-plus-22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -6282,6 +6683,18 @@ public addContainer(container: ContainerProps)
 
 ---
 
+##### `addHostAlias` <a name="cdk8s-plus-22.PodSpec.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
 ##### `addInitContainer` <a name="cdk8s-plus-22.PodSpec.addInitContainer"></a>
 
 ```typescript
@@ -6320,6 +6733,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
@@ -6426,14 +6853,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="cdk8s-plus-22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="cdk8s-plus-22.Probe.Initializer"></a>
-
-```typescript
-import { Probe } from 'cdk8s-plus-22'
-
-new Probe()
-```
 
 
 #### Static Functions <a name="Static Functions"></a>
@@ -6736,6 +7155,20 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
 ##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.initContainers"></a>
 
 ```typescript
@@ -6812,6 +7245,20 @@ public readonly containers: Container[];
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
 
 ---
 
