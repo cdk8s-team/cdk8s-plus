@@ -3029,7 +3029,7 @@ TTL before the job is deleted after it is finished.
 
 ### PersistentVolume <a name="cdk8s_plus_22.PersistentVolume"></a>
 
-- *Implements:* [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume)
+- *Implements:* [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IStorage`](#cdk8s_plus_22.IStorage)
 
 A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
 
@@ -3157,6 +3157,12 @@ Defines what type of volume is required by the claim.
 ---
 
 #### Methods <a name="Methods"></a>
+
+##### `as_volume` <a name="cdk8s_plus_22.PersistentVolume.as_volume"></a>
+
+```python
+def as_volume()
+```
 
 ##### `bind` <a name="cdk8s_plus_22.PersistentVolume.bind"></a>
 
@@ -11309,7 +11315,7 @@ The variable value.
 ```python
 def mount(
   path: str,
-  volume: Volume,
+  storage: IStorage,
   propagation: MountPropagation = None,
   read_only: bool = None,
   sub_path: str = None,
@@ -11325,11 +11331,11 @@ The desired path in the container.
 
 ---
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Container.parameter.volume"></a>
+###### `storage`<sup>Required</sup> <a name="cdk8s_plus_22.Container.parameter.storage"></a>
 
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
+- *Type:* [`cdk8s_plus_22.IStorage`](#cdk8s_plus_22.IStorage)
 
-The volume to mount.
+The storage to mount.
 
 ---
 
@@ -13242,6 +13248,8 @@ The TCP port to connect to on the container.
 
 ### Volume <a name="cdk8s_plus_22.Volume"></a>
 
+- *Implements:* [`cdk8s_plus_22.IStorage`](#cdk8s_plus_22.IStorage)
+
 Volume represents a named volume in a pod that may be accessed by any container in the pod.
 
 Docker also has a concept of volumes, though it is somewhat looser and less
@@ -13273,6 +13281,13 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
+#### Methods <a name="Methods"></a>
+
+##### `as_volume` <a name="cdk8s_plus_22.Volume.as_volume"></a>
+
+```python
+def as_volume()
+```
 
 #### Static Functions <a name="Static Functions"></a>
 
@@ -13391,42 +13406,6 @@ The size
 limit is also applicable for memory medium. The maximum usage on memory
 medium EmptyDir would be the minimum value between the SizeLimit specified
 here and the sum of memory limits of all containers in a pod.
-
----
-
-##### `from_persistent_volume` <a name="cdk8s_plus_22.Volume.from_persistent_volume"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.Volume.from_persistent_volume(
-  pv: PersistentVolume,
-  name: str = None,
-  read_only: bool = None
-)
-```
-
-###### `pv`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.pv"></a>
-
-- *Type:* [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume)
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimVolumeOptions.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* Derived from the PVC name.
-
-The volume name.
-
----
-
-###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolumeClaimVolumeOptions.parameter.read_only"></a>
-
-- *Type:* `bool`
-- *Default:* false
-
-Will force the ReadOnly setting in VolumeMounts.
 
 ---
 
@@ -14276,6 +14255,21 @@ name: str
 The Kubernetes name of this resource.
 
 ---
+
+### IStorage <a name="cdk8s_plus_22.IStorage"></a>
+
+- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume), [`cdk8s_plus_22.IStorage`](#cdk8s_plus_22.IStorage)
+
+Represents a piece of storage in the cluster.
+
+#### Methods <a name="Methods"></a>
+
+##### `as_volume` <a name="cdk8s_plus_22.IStorage.as_volume"></a>
+
+```python
+def as_volume()
+```
+
 
 ## Enums <a name="Enums"></a>
 
