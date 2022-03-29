@@ -26,30 +26,30 @@ export interface PersistentVolumeClaimProps extends ResourceProps {
   readonly accessModes?: PersistentVolumeAccessMode[];
 
   /**
-    * Minimum storage size the volume should have.
-    *
-    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-    * @default - No storage requirement.
-    */
+   * Minimum storage size the volume should have.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+   * @default - No storage requirement.
+   */
   readonly storage?: Size;
 
   /**
-    * Name of the StorageClass required by the claim.
-    * When this property is not set, the behavior is as follows:
-    *
-    * - If the admission plugin is turned on, the storage class marked as default will be used.
-    * - If the admission plugin is turned off, the pvc can only be bound to volumes without a storage class.
-    *
-    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
-    * @default - Not set.
-    */
+   * Name of the StorageClass required by the claim.
+   * When this property is not set, the behavior is as follows:
+   *
+   * - If the admission plugin is turned on, the storage class marked as default will be used.
+   * - If the admission plugin is turned off, the pvc can only be bound to volumes without a storage class.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+   * @default - Not set.
+   */
   readonly storageClassName?: string;
 
   /**
-    * Defines what type of volume is required by the claim.
-    *
-    * @default VolumeMode.FILE_SYSTEM
-    */
+   * Defines what type of volume is required by the claim.
+   *
+   * @default VolumeMode.FILE_SYSTEM
+   */
   readonly volumeMode?: PersistentVolumeMode;
 
   /**
@@ -108,10 +108,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    */
   public readonly storageClassName?: string;
 
-  /**
-   * Access modes requirement of this claim.
-   */
-  public readonly accessModes?: PersistentVolumeAccessMode[];
+  private readonly _accessModes?: PersistentVolumeAccessMode[];
 
   private _volume?: IPersistentVolume;
 
@@ -121,7 +118,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
     this.storage = props.storage;
     this.volumeMode = props.volumeMode ?? PersistentVolumeMode.FILE_SYSTEM;
     this.storageClassName = props.storageClassName;
-    this.accessModes = props.accessModes;
+    this._accessModes = props.accessModes;
 
     if (props.volume) {
       this.bind(props.volume);
@@ -131,6 +128,13 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
       metadata: props.metadata,
       spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
     });
+  }
+
+  /**
+   * Access modes requirement of this claim.
+   */
+  public get accessModes(): PersistentVolumeAccessMode[] | undefined {
+    return this._accessModes ? [...this._accessModes] : undefined;
   }
 
   /**

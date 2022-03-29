@@ -25,11 +25,11 @@ export interface PersistentVolumeProps extends ResourceProps {
   readonly accessModes?: PersistentVolumeAccessMode[];
 
   /**
-    * What is the storage capacity of this volume.
-    *
-    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-    * @default - No specified.
-    */
+   * What is the storage capacity of this volume.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+   * @default - No specified.
+   */
   readonly storage?: Size;
 
   /**
@@ -107,8 +107,8 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
   public readonly storage?: Size;
 
   /**
-    * Volume mode of this volume.
-    */
+   * Volume mode of this volume.
+   */
   public readonly mode: PersistentVolumeMode;
 
   /**
@@ -117,9 +117,9 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
   public readonly storageClassName?: string;
 
   /**
-    * Access modes requirement of this claim.
-    */
-  public readonly accessModes?: PersistentVolumeAccessMode[];
+   * Access modes requirement of this claim.
+   */
+  private readonly _accessModes?: PersistentVolumeAccessMode[];
 
   /**
    * Mount options of this volume.
@@ -137,7 +137,7 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
     this.storage = props.storage;
     this.mode = props.volumeMode ?? PersistentVolumeMode.FILE_SYSTEM;
     this.storageClassName = props.storageClassName;
-    this.accessModes = props.accessModes;
+    this._accessModes = props.accessModes;
     this.mountOptions = props.mountOptions;
     this.reclaimPolicy = props.reclaimPolicy ?? PersistentVolumeReclaimPolicy.RETAIN;
 
@@ -149,6 +149,13 @@ export class PersistentVolume extends Resource implements IPersistentVolume {
       metadata: props.metadata,
       spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
     });
+  }
+
+  /**
+   * Access modes requirement of this claim.
+   */
+  public get accessModes(): PersistentVolumeAccessMode[] | undefined {
+    return this._accessModes ? [...this._accessModes] : undefined;
   }
 
   /**
