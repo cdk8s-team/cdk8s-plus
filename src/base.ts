@@ -23,17 +23,17 @@ export interface IResource {
   readonly name: string;
 
   /**
-   * The object's API version (e.g. `authorization.k8s.io/v1`)
+   * The object's API version (e.g. "authorization.k8s.io/v1")
    */
   readonly apiVersion: string;
 
   /**
-   * The group portion of the API version (e.g. `authorization.k8s.io`)
+   * The group portion of the API version (e.g. "authorization.k8s.io")
    */
   readonly apiGroup: string;
 
   /**
-   * The object kind.
+   * The object kind (e.g. "Deployment").
    */
   readonly kind: string;
 }
@@ -61,21 +61,21 @@ export abstract class Resource extends Construct implements IResource, IApiResou
   }
 
   /**
-   * The group portion of the API version (e.g. `authorization.k8s.io`).
+   * The object's API version (e.g. "authorization.k8s.io/v1")
    */
   public get apiVersion(): string {
     return this.apiObject.apiVersion;
   }
 
   /**
-   * The group portion of the API version (e.g. `authorization.k8s.io`).
+   * The group portion of the API version (e.g. "authorization.k8s.io").
    */
   public get apiGroup(): string {
     return this.apiObject.apiGroup;
   }
 
   /**
-   * The group portion of the API version (e.g. `authorization.k8s.io`).
+   * The object kind (e.g. "Deployment").
    */
   public get kind(): string {
     return this.apiObject.kind;

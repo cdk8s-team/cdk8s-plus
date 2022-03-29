@@ -4434,7 +4434,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -4446,7 +4446,7 @@ api_version: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -4458,7 +4458,7 @@ kind: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -5475,10 +5475,10 @@ Returns the labels which are used to select pods for this service.
 
 ---
 
-##### `type`<sup>Required</sup> <a name="cdk8s_plus_22.Service.property.type"></a>
+##### `service_type`<sup>Required</sup> <a name="cdk8s_plus_22.Service.property.service_type"></a>
 
 ```python
-type: ServiceType
+service_type: ServiceType
 ```
 
 - *Type:* [`cdk8s_plus_22.ServiceType`](#cdk8s_plus_22.ServiceType)
@@ -15472,7 +15472,7 @@ name: str
 
 - *Type:* `str`
 
-The unique, namespace-global, name of this object inside the Kubernetes cluster.
+The unique, namespace-global, name of an object inside the Kubernetes cluster.
 
 ---
 
@@ -15484,7 +15484,7 @@ type: str
 
 - *Type:* `str`
 
-The name of the resource type as it appears in the relevant API endpoint.
+The name of a resource type as it appears in the relevant API endpoint.
 
 > https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
@@ -15509,7 +15509,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -15521,7 +15521,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -15533,7 +15533,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -15568,7 +15568,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -15580,7 +15580,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -15592,7 +15592,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -15627,7 +15627,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -15639,7 +15639,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -15651,7 +15651,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -15686,7 +15686,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -15698,7 +15698,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -15710,7 +15710,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -16336,7 +16336,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -16348,7 +16348,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -16360,7 +16360,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -16395,7 +16395,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -16407,7 +16407,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -16419,7 +16419,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -16452,7 +16452,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -16464,7 +16464,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -16476,7 +16476,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -16509,7 +16509,7 @@ api_group: str
 
 - *Type:* `str`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -16521,7 +16521,7 @@ api_version: str
 
 - *Type:* `str`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -16533,7 +16533,7 @@ kind: str
 
 - *Type:* `str`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 

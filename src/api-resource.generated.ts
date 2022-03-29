@@ -10,14 +10,14 @@ export interface IApiResource {
   readonly apiGroup: string;
 
   /**
-   * The name of the resource type as it appears in the relevant API endpoint.
+   * The name of a resource type as it appears in the relevant API endpoint.
    * @example - "pods" or "pods/log"
    * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
    */
   readonly type?: string;
 
   /**
-   * The unique, namespace-global, name of this object inside the Kubernetes cluster
+   * The unique, namespace-global, name of an object inside the Kubernetes cluster
    */
   readonly name?: string;
 }

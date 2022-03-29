@@ -28,14 +28,14 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line('readonly apiGroup: string;')
   ts.line();
   ts.line('/**');
-  ts.line(' * The name of the resource type as it appears in the relevant API endpoint.');
+  ts.line(' * The name of a resource type as it appears in the relevant API endpoint.');
   ts.line(' * @example - "pods" or "pods/log"');
   ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
   ts.line(' */');
   ts.line('readonly type?: string;');
   ts.line();
   ts.line('/**');
-  ts.line(' * The unique, namespace-global, name of this object inside the Kubernetes cluster');
+  ts.line(' * The unique, namespace-global, name of an object inside the Kubernetes cluster');
   ts.line(' */')
   ts.line('readonly name?: string;')
   ts.close('}');

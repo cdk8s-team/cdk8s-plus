@@ -1921,7 +1921,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -1933,7 +1933,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -1945,7 +1945,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -2572,10 +2572,10 @@ Returns the labels which are used to select pods for this service.
 
 ---
 
-##### `type`<sup>Required</sup> <a name="cdk8s-plus-22.Service.property.type"></a>
+##### `serviceType`<sup>Required</sup> <a name="cdk8s-plus-22.Service.property.serviceType"></a>
 
 ```typescript
-public readonly type: ServiceType;
+public readonly serviceType: ServiceType;
 ```
 
 - *Type:* [`cdk8s-plus-22.ServiceType`](#cdk8s-plus-22.ServiceType)
@@ -10158,7 +10158,7 @@ public readonly name: string;
 
 - *Type:* `string`
 
-The unique, namespace-global, name of this object inside the Kubernetes cluster.
+The unique, namespace-global, name of an object inside the Kubernetes cluster.
 
 ---
 
@@ -10170,7 +10170,7 @@ public readonly type: string;
 
 - *Type:* `string`
 
-The name of the resource type as it appears in the relevant API endpoint.
+The name of a resource type as it appears in the relevant API endpoint.
 
 > https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
@@ -10195,7 +10195,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10207,7 +10207,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10219,7 +10219,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10254,7 +10254,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10266,7 +10266,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10278,7 +10278,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10313,7 +10313,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10325,7 +10325,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10337,7 +10337,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10372,7 +10372,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10384,7 +10384,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10396,7 +10396,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10668,7 +10668,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10680,7 +10680,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10692,7 +10692,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10727,7 +10727,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10739,7 +10739,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10751,7 +10751,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10784,7 +10784,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10796,7 +10796,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10808,7 +10808,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -10841,7 +10841,7 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -10853,7 +10853,7 @@ public readonly apiVersion: string;
 
 - *Type:* `string`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -10865,7 +10865,7 @@ public readonly kind: string;
 
 - *Type:* `string`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 

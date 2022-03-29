@@ -3075,7 +3075,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -3087,7 +3087,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -3099,7 +3099,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -3897,10 +3897,10 @@ Returns the labels which are used to select pods for this service.
 
 ---
 
-##### `type`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.type"></a>
+##### `serviceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.serviceType"></a>
 
 ```java
-public ServiceType getType();
+public ServiceType getServiceType();
 ```
 
 - *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
@@ -12667,7 +12667,7 @@ public java.lang.String getName();
 
 - *Type:* `java.lang.String`
 
-The unique, namespace-global, name of this object inside the Kubernetes cluster.
+The unique, namespace-global, name of an object inside the Kubernetes cluster.
 
 ---
 
@@ -12679,7 +12679,7 @@ public java.lang.String getType();
 
 - *Type:* `java.lang.String`
 
-The name of the resource type as it appears in the relevant API endpoint.
+The name of a resource type as it appears in the relevant API endpoint.
 
 > https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
@@ -12704,7 +12704,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -12716,7 +12716,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -12728,7 +12728,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -12763,7 +12763,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -12775,7 +12775,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -12787,7 +12787,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -12822,7 +12822,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -12834,7 +12834,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -12846,7 +12846,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -12881,7 +12881,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -12893,7 +12893,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -12905,7 +12905,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -13177,7 +13177,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -13189,7 +13189,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -13201,7 +13201,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -13236,7 +13236,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -13248,7 +13248,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -13260,7 +13260,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -13293,7 +13293,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -13305,7 +13305,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -13317,7 +13317,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
@@ -13350,7 +13350,7 @@ public java.lang.String getApiGroup();
 
 - *Type:* `java.lang.String`
 
-The group portion of the API version (e.g. `authorization.k8s.io`).
+The group portion of the API version (e.g. "authorization.k8s.io").
 
 ---
 
@@ -13362,7 +13362,7 @@ public java.lang.String getApiVersion();
 
 - *Type:* `java.lang.String`
 
-The object's API version (e.g. `authorization.k8s.io/v1`).
+The object's API version (e.g. "authorization.k8s.io/v1").
 
 ---
 
@@ -13374,7 +13374,7 @@ public java.lang.String getKind();
 
 - *Type:* `java.lang.String`
 
-The object kind.
+The object kind (e.g. "Deployment").
 
 ---
 
