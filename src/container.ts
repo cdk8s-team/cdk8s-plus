@@ -656,7 +656,7 @@ export class Container {
    * Every pod that is configured to use this container will autmoatically have access to the volume.
    *
    * @param path - The desired path in the container.
-   * @param mountable - The moutable resource.
+   * @param storage - The storage to mount.
    */
   public mount(path: string, storage: IStorage, options: MountOptions = { }) {
     this.mounts.push({ path, volume: storage.asVolume(), ...options });
