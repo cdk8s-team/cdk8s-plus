@@ -18,13 +18,42 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
     ts.line(`// ${ts.marker}`);
   }
   ts.line();
+  ts.line('/**');
+  ts.line(' * Represents a resource or collection of resources.');
+  ts.line(' */')
   ts.open('export interface IApiResource {');
+  ts.line('/**');
+  ts.line(' * The group portion of the API version (e.g. `authorization.k8s.io`).');
+  ts.line(' */')
   ts.line('readonly apiGroup: string;')
-  ts.line('readonly type?: string;')
+  ts.line();
+  ts.line('/**');
+  ts.line(' * The name of the resource type as it appears in the relevant API endpoint.');
+  ts.line(' * @example - "pods" or "pods/log"');
+  ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
+  ts.line(' */');
+  ts.line('readonly type?: string;');
+  ts.line();
+  ts.line('/**');
+  ts.line(' * The unique, namespace-global, name of this object inside the Kubernetes cluster');
+  ts.line(' */')
   ts.line('readonly name?: string;')
   ts.close('}');
+  ts.line();
+  ts.line('/**');
+  ts.line(' * Options for `ApiResource`.');
+  ts.line(' */');
   ts.open('export interface ApiResourceOptions {');
+  ts.line('/**');
+  ts.line(' * The group portion of the API version (e.g. `authorization.k8s.io`).');
+  ts.line(' */');
   ts.line('readonly apiGroup: string;');
+  ts.line();
+  ts.line('/**');
+  ts.line(' * The name of the resource type as it appears in the relevant API endpoint.');
+  ts.line(' * @example - "pods" or "pods/log"');
+  ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
+  ts.line(' */')
   ts.line('readonly type: string;');
   ts.close('}');
   ts.line();
@@ -52,7 +81,16 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line('return new ApiResource(options);');
   ts.close('};');
   ts.line();
+  ts.line('/**');
+  ts.line(' * The group portion of the API version (e.g. `authorization.k8s.io`).');
+  ts.line(' */')
   ts.line('public readonly apiGroup: string;');
+  ts.line();
+  ts.line('/**');
+  ts.line(' * The name of the resource type as it appears in the relevant API endpoint.');
+  ts.line(' * @example - "pods" or "pods/log"');
+  ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
+  ts.line(' */')
   ts.line('public readonly type: string | undefined; // must be optional to satisfy interface');
   ts.line();
   ts.open('private constructor(options: ApiResourceOptions) {');

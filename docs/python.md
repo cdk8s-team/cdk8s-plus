@@ -6732,6 +6732,8 @@ A prefix to add to all keys in the config map.
 
 ### ApiResourceOptions <a name="cdk8s_plus_22.ApiResourceOptions"></a>
 
+Options for `ApiResource`.
+
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```python
@@ -6751,6 +6753,8 @@ api_group: str
 
 - *Type:* `str`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ##### `type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.type"></a>
@@ -6760,6 +6764,10 @@ type: str
 ```
 
 - *Type:* `str`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
@@ -12233,11 +12241,17 @@ cdk8s_plus_22.ApiResource.custom(
 
 - *Type:* `str`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ###### `type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.type"></a>
 
 - *Type:* `str`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
@@ -12251,6 +12265,8 @@ api_group: str
 
 - *Type:* `str`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ##### `type`<sup>Optional</sup> <a name="cdk8s_plus_22.ApiResource.property.type"></a>
@@ -12260,6 +12276,10 @@ type: str
 ```
 
 - *Type:* `str`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
@@ -15427,6 +15447,8 @@ name: str
 
 - *Implemented By:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
+Represents a resource or collection of resources.
+
 
 #### Properties <a name="Properties"></a>
 
@@ -15438,6 +15460,8 @@ api_group: str
 
 - *Type:* `str`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.name"></a>
@@ -15448,6 +15472,8 @@ name: str
 
 - *Type:* `str`
 
+The unique, namespace-global, name of this object inside the Kubernetes cluster.
+
 ---
 
 ##### `type`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.type"></a>
@@ -15457,6 +15483,10 @@ type: str
 ```
 
 - *Type:* `str`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 

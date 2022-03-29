@@ -3212,6 +3212,8 @@ A prefix to add to all keys in the config map.
 
 ### ApiResourceOptions <a name="cdk8s-plus-22.ApiResourceOptions"></a>
 
+Options for `ApiResource`.
+
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```typescript
@@ -3228,6 +3230,8 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ##### `type`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.type"></a>
@@ -3237,6 +3241,10 @@ public readonly type: string;
 ```
 
 - *Type:* `string`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
@@ -8364,6 +8372,8 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ##### `type`<sup>Optional</sup> <a name="cdk8s-plus-22.ApiResource.property.type"></a>
@@ -8373,6 +8383,10 @@ public readonly type: string;
 ```
 
 - *Type:* `string`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
@@ -10119,6 +10133,8 @@ public readonly name: string;
 
 - *Implemented By:* [`cdk8s-plus-22.ApiResource`](#cdk8s-plus-22.ApiResource), [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
+Represents a resource or collection of resources.
+
 
 #### Properties <a name="Properties"></a>
 
@@ -10130,6 +10146,8 @@ public readonly apiGroup: string;
 
 - *Type:* `string`
 
+The group portion of the API version (e.g. `authorization.k8s.io`).
+
 ---
 
 ##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.name"></a>
@@ -10140,6 +10158,8 @@ public readonly name: string;
 
 - *Type:* `string`
 
+The unique, namespace-global, name of this object inside the Kubernetes cluster.
+
 ---
 
 ##### `type`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.type"></a>
@@ -10149,6 +10169,10 @@ public readonly type: string;
 ```
 
 - *Type:* `string`
+
+The name of the resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
