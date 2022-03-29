@@ -489,6 +489,66 @@ Whether or not it is mounted as a read-only volume.
 ---
 
 
+### BasicAuthSecret <a name="cdk8s_plus_22.BasicAuthSecret"></a>
+
+Create a secret for basic authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#basic-authentication-secret
+
+#### Initializers <a name="cdk8s_plus_22.BasicAuthSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.BasicAuthSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  password: str,
+  username: str
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.password"></a>
+
+- *Type:* `str`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.username"></a>
+
+- *Type:* `str`
+
+The user name for authentication.
+
+---
+
+
+
+
+
 ### ConfigMap <a name="cdk8s_plus_22.ConfigMap"></a>
 
 - *Implements:* [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap)
@@ -928,6 +988,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -998,6 +1059,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -1134,6 +1203,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -1204,6 +1274,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -1626,6 +1704,59 @@ service_account: IServiceAccount
 The service account used to run this pod.
 
 ---
+
+
+### DockerConfigSecret <a name="cdk8s_plus_22.DockerConfigSecret"></a>
+
+Create a secret for storing credentials for accessing a container image registry.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#docker-config-secrets
+
+#### Initializers <a name="cdk8s_plus_22.DockerConfigSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DockerConfigSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  data: typing.Mapping[typing.Any]
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.DockerConfigSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.DockerConfigSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.parameter.data"></a>
+
+- *Type:* typing.Mapping[`typing.Any`]
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
+
+---
+
+
+
 
 
 ### GCEPersistentDiskPersistentVolume <a name="cdk8s_plus_22.GCEPersistentDiskPersistentVolume"></a>
@@ -2342,6 +2473,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -2412,6 +2544,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -2548,6 +2688,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -2618,6 +2759,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -3512,6 +3661,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -3582,6 +3732,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -3718,6 +3876,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -3788,6 +3947,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -4727,6 +4894,108 @@ Returns a copy. To add a secret, use `addSecret()`.
 ---
 
 
+### ServiceAccountTokenSecret <a name="cdk8s_plus_22.ServiceAccountTokenSecret"></a>
+
+Create a secret for a service account token.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#service-account-token-secrets
+
+#### Initializers <a name="cdk8s_plus_22.ServiceAccountTokenSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ServiceAccountTokenSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  service_account: IServiceAccount
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.parameter.service_account"></a>
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+
+The service account to store a secret for.
+
+---
+
+
+
+
+
+### SshAuthSecret <a name="cdk8s_plus_22.SshAuthSecret"></a>
+
+Create a secret for ssh authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#ssh-authentication-secrets
+
+#### Initializers <a name="cdk8s_plus_22.SshAuthSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.SshAuthSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  ssh_private_key: str
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.SshAuthSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.SshAuthSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.parameter.ssh_private_key"></a>
+
+- *Type:* `str`
+
+The SSH private key to use.
+
+---
+
+
+
+
+
 ### StatefulSet <a name="cdk8s_plus_22.StatefulSet"></a>
 
 - *Implements:* [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
@@ -4952,6 +5221,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -5022,6 +5292,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -5158,6 +5436,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -5228,6 +5507,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -5511,6 +5798,66 @@ service_account: IServiceAccount
 The service account used to run this pod.
 
 ---
+
+
+### TlsSecret <a name="cdk8s_plus_22.TlsSecret"></a>
+
+Create a secret for storing a TLS certificate and its associated key.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets
+
+#### Initializers <a name="cdk8s_plus_22.TlsSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.TlsSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  tls_cert: str,
+  tls_key: str
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.tls_cert"></a>
+
+- *Type:* `str`
+
+The TLS cert.
+
+---
+
+##### `tls_key`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.tls_key"></a>
+
+- *Type:* `str`
+
+The TLS key.
+
+---
+
+
+
 
 
 ## Structs <a name="Structs"></a>
@@ -6083,6 +6430,58 @@ Force the ReadOnly setting in VolumeMounts.
 
 ---
 
+### BasicAuthSecretProps <a name="cdk8s_plus_22.BasicAuthSecretProps"></a>
+
+Options for `BasicAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.BasicAuthSecretProps(
+  metadata: ApiObjectMetadata = None,
+  password: str,
+  username: str
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.password"></a>
+
+```python
+password: str
+```
+
+- *Type:* `str`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.username"></a>
+
+```python
+username: str
+```
+
+- *Type:* `str`
+
+The user name for authentication.
+
+---
+
 ### CommandProbeOptions <a name="cdk8s_plus_22.CommandProbeOptions"></a>
 
 Options for `Probe.fromCommand()`.
@@ -6326,6 +6725,58 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="cdk8s_plus_22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ContainerLifecycle(
+  post_start: Handler = None,
+  pre_stop: Handler = None
+)
+```
+
+##### `post_start`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerLifecycle.property.post_start"></a>
+
+```python
+post_start: Handler
+```
+
+- *Type:* [`cdk8s_plus_22.Handler`](#cdk8s_plus_22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `pre_stop`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerLifecycle.property.pre_stop"></a>
+
+```python
+pre_stop: Handler
+```
+
+- *Type:* [`cdk8s_plus_22.Handler`](#cdk8s_plus_22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="cdk8s_plus_22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -6341,6 +6792,7 @@ cdk8s_plus_22.ContainerProps(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -6431,6 +6883,18 @@ image_pull_policy: ImagePullPolicy
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.property.lifecycle"></a>
+
+```python
+lifecycle: ContainerLifecycle
+```
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -6889,6 +7353,47 @@ replicas: typing.Union[int, float]
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### DockerConfigSecretProps <a name="cdk8s_plus_22.DockerConfigSecretProps"></a>
+
+Options for `DockerConfigSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DockerConfigSecretProps(
+  metadata: ApiObjectMetadata = None,
+  data: typing.Mapping[typing.Any]
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.property.data"></a>
+
+```python
+data: typing.Mapping[typing.Any]
+```
+
+- *Type:* typing.Mapping[`typing.Any`]
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
 
 ---
 
@@ -7553,6 +8058,74 @@ read_only: bool
 Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 > https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### HandlerFromHttpGetOptions <a name="cdk8s_plus_22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.HandlerFromHttpGetOptions(
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromHttpGetOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.HandlerFromTcpSocketOptions(
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+##### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```python
+host: str
+```
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```python
+port: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -9318,6 +9891,8 @@ memory: MemoryResources
 
 ### SecretProps <a name="cdk8s_plus_22.SecretProps"></a>
 
+Options for `Secret`.
+
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```python
@@ -9536,6 +10111,45 @@ secrets: typing.List[ISecret]
 List of secrets allowed to be used by pods running using this ServiceAccount.
 
 > https://kubernetes.io/docs/concepts/configuration/secret
+
+---
+
+### ServiceAccountTokenSecretProps <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps"></a>
+
+Options for `ServiceAccountTokenSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ServiceAccountTokenSecretProps(
+  metadata: ApiObjectMetadata = None,
+  service_account: IServiceAccount
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+
+The service account to store a secret for.
 
 ---
 
@@ -9871,6 +10485,45 @@ type: ServiceType
 Determines how the Service is exposed.
 
 More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
+---
+
+### SshAuthSecretProps <a name="cdk8s_plus_22.SshAuthSecretProps"></a>
+
+Options for `SshAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.SshAuthSecretProps(
+  metadata: ApiObjectMetadata = None,
+  ssh_private_key: str
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.property.ssh_private_key"></a>
+
+```python
+ssh_private_key: str
+```
+
+- *Type:* `str`
+
+The SSH private key to use.
 
 ---
 
@@ -10263,6 +10916,58 @@ The TCP port to connect to on the container.
 
 ---
 
+### TlsSecretProps <a name="cdk8s_plus_22.TlsSecretProps"></a>
+
+Options for `TlsSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.TlsSecretProps(
+  metadata: ApiObjectMetadata = None,
+  tls_cert: str,
+  tls_key: str
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.tls_cert"></a>
+
+```python
+tls_cert: str
+```
+
+- *Type:* `str`
+
+The TLS cert.
+
+---
+
+##### `tls_key`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.tls_key"></a>
+
+```python
+tls_key: str
+```
+
+- *Type:* `str`
+
+The TLS key.
+
+---
+
 ### VolumeMount <a name="cdk8s_plus_22.VolumeMount"></a>
 
 Mount a volume from the pod to the container.
@@ -10391,6 +11096,7 @@ cdk8s_plus_22.Container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -10461,6 +11167,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -11209,6 +11923,90 @@ value_from: typing.Any
 ---
 
 
+### Handler <a name="cdk8s_plus_22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `from_command` <a name="cdk8s_plus_22.Handler.from_command"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Handler.from_command(
+  command: typing.List[str]
+)
+```
+
+###### `command`<sup>Required</sup> <a name="cdk8s_plus_22.Handler.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+
+The command to execute.
+
+---
+
+##### `from_http_get` <a name="cdk8s_plus_22.Handler.from_http_get"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Handler.from_http_get(
+  path: str,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `path`<sup>Required</sup> <a name="cdk8s_plus_22.Handler.parameter.path"></a>
+
+- *Type:* `str`
+
+The URL path to hit.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromHttpGetOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+##### `from_tcp_socket` <a name="cdk8s_plus_22.Handler.from_tcp_socket"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Handler.from_tcp_socket(
+  host: str = None,
+  port: typing.Union[int, float] = None
+)
+```
+
+###### `host`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.parameter.host"></a>
+
+- *Type:* `str`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.HandlerFromTcpSocketOptions.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
+
+
 ### IngressBackend <a name="cdk8s_plus_22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -11525,6 +12323,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -11595,6 +12394,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -11731,6 +12538,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -11801,6 +12609,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -12157,14 +12973,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="cdk8s_plus_22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="cdk8s_plus_22.Probe.Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.Probe()
-```
 
 
 #### Static Functions <a name="Static Functions"></a>
@@ -12832,6 +13640,7 @@ def add_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -12902,6 +13711,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -13013,6 +13830,7 @@ def add_init_container(
   command: typing.List[str] = None,
   env: typing.Mapping[EnvValue] = None,
   image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
   liveness: Probe = None,
   name: str = None,
   port: typing.Union[int, float] = None,
@@ -13083,6 +13901,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -13390,7 +14216,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
 
 Represents a resource.
 
@@ -13413,7 +14239,7 @@ The Kubernetes name of this resource.
 
 - *Extends:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
 
-- *Implemented By:* [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret)
+- *Implemented By:* [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret)
 
 
 #### Properties <a name="Properties"></a>

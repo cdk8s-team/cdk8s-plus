@@ -485,6 +485,64 @@ Whether or not it is mounted as a read-only volume.
 ---
 
 
+### BasicAuthSecret <a name="org.cdk8s.plus22.BasicAuthSecret"></a>
+
+Create a secret for basic authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#basic-authentication-secret
+
+#### Initializers <a name="org.cdk8s.plus22.BasicAuthSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.BasicAuthSecret;
+
+BasicAuthSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .password(java.lang.String)
+    .username(java.lang.String)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.password"></a>
+
+- *Type:* `java.lang.String`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.username"></a>
+
+- *Type:* `java.lang.String`
+
+The user name for authentication.
+
+---
+
+
+
+
+
 ### ConfigMap <a name="org.cdk8s.plus22.ConfigMap"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap)
@@ -1126,6 +1184,57 @@ public IServiceAccount getServiceAccount();
 The service account used to run this pod.
 
 ---
+
+
+### DockerConfigSecret <a name="org.cdk8s.plus22.DockerConfigSecret"></a>
+
+Create a secret for storing credentials for accessing a container image registry.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#docker-config-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.DockerConfigSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.DockerConfigSecret;
+
+DockerConfigSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .data(java.util.Map<java.lang.String, java.lang.Object>)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.data"></a>
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.Object`>
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
+
+---
+
+
+
 
 
 ### GCEPersistentDiskPersistentVolume <a name="org.cdk8s.plus22.GCEPersistentDiskPersistentVolume"></a>
@@ -3302,6 +3411,104 @@ Returns a copy. To add a secret, use `addSecret()`.
 ---
 
 
+### ServiceAccountTokenSecret <a name="org.cdk8s.plus22.ServiceAccountTokenSecret"></a>
+
+Create a secret for a service account token.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#service-account-token-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.ServiceAccountTokenSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ServiceAccountTokenSecret;
+
+ServiceAccountTokenSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .serviceAccount(IServiceAccount)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.serviceAccount"></a>
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+
+The service account to store a secret for.
+
+---
+
+
+
+
+
+### SshAuthSecret <a name="org.cdk8s.plus22.SshAuthSecret"></a>
+
+Create a secret for ssh authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#ssh-authentication-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.SshAuthSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.SshAuthSecret;
+
+SshAuthSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .sshPrivateKey(java.lang.String)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.sshPrivateKey"></a>
+
+- *Type:* `java.lang.String`
+
+The SSH private key to use.
+
+---
+
+
+
+
+
 ### StatefulSet <a name="org.cdk8s.plus22.StatefulSet"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
@@ -3728,6 +3935,64 @@ public IServiceAccount getServiceAccount();
 The service account used to run this pod.
 
 ---
+
+
+### TlsSecret <a name="org.cdk8s.plus22.TlsSecret"></a>
+
+Create a secret for storing a TLS certificate and its associated key.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.TlsSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.TlsSecret;
+
+TlsSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .tlsCert(java.lang.String)
+    .tlsKey(java.lang.String)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.tlsCert"></a>
+
+- *Type:* `java.lang.String`
+
+The TLS cert.
+
+---
+
+##### `tlsKey`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.tlsKey"></a>
+
+- *Type:* `java.lang.String`
+
+The TLS key.
+
+---
+
+
+
 
 
 ## Structs <a name="Structs"></a>
@@ -4300,6 +4565,58 @@ Force the ReadOnly setting in VolumeMounts.
 
 ---
 
+### BasicAuthSecretProps <a name="org.cdk8s.plus22.BasicAuthSecretProps"></a>
+
+Options for `BasicAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.BasicAuthSecretProps;
+
+BasicAuthSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .password(java.lang.String)
+    .username(java.lang.String)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.password"></a>
+
+```java
+public java.lang.String getPassword();
+```
+
+- *Type:* `java.lang.String`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.username"></a>
+
+```java
+public java.lang.String getUsername();
+```
+
+- *Type:* `java.lang.String`
+
+The user name for authentication.
+
+---
+
 ### CommandProbeOptions <a name="org.cdk8s.plus22.CommandProbeOptions"></a>
 
 Options for `Probe.fromCommand()`.
@@ -4543,6 +4860,58 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="org.cdk8s.plus22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ContainerLifecycle;
+
+ContainerLifecycle.builder()
+//  .postStart(Handler)
+//  .preStop(Handler)
+    .build();
+```
+
+##### `postStart`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerLifecycle.property.postStart"></a>
+
+```java
+public Handler getPostStart();
+```
+
+- *Type:* [`org.cdk8s.plus22.Handler`](#org.cdk8s.plus22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `preStop`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerLifecycle.property.preStop"></a>
+
+```java
+public Handler getPreStop();
+```
+
+- *Type:* [`org.cdk8s.plus22.Handler`](#org.cdk8s.plus22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="org.cdk8s.plus22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -4558,6 +4927,7 @@ ContainerProps.builder()
 //  .command(java.util.List<java.lang.String>)
 //  .env(java.util.Map<java.lang.String, EnvValue>)
 //  .imagePullPolicy(ImagePullPolicy)
+//  .lifecycle(ContainerLifecycle)
 //  .liveness(Probe)
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
@@ -4648,6 +5018,18 @@ public ImagePullPolicy getImagePullPolicy();
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.lifecycle"></a>
+
+```java
+public ContainerLifecycle getLifecycle();
+```
+
+- *Type:* [`org.cdk8s.plus22.ContainerLifecycle`](#org.cdk8s.plus22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -5106,6 +5488,47 @@ public java.lang.Number getReplicas();
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### DockerConfigSecretProps <a name="org.cdk8s.plus22.DockerConfigSecretProps"></a>
+
+Options for `DockerConfigSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.DockerConfigSecretProps;
+
+DockerConfigSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .data(java.util.Map<java.lang.String, java.lang.Object>)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.data"></a>
+
+```java
+public java.util.Map<java.lang.String, java.lang.Object> getData();
+```
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.Object`>
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
 
 ---
 
@@ -5770,6 +6193,74 @@ public java.lang.Boolean getReadOnly();
 Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 > https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### HandlerFromHttpGetOptions <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HandlerFromHttpGetOptions;
+
+HandlerFromHttpGetOptions.builder()
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HandlerFromTcpSocketOptions;
+
+HandlerFromTcpSocketOptions.builder()
+//  .host(java.lang.String)
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `host`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```java
+public java.lang.String getHost();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
 
 ---
 
@@ -7535,6 +8026,8 @@ public MemoryResources getMemory();
 
 ### SecretProps <a name="org.cdk8s.plus22.SecretProps"></a>
 
+Options for `Secret`.
+
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
@@ -7753,6 +8246,45 @@ public java.util.List<ISecret> getSecrets();
 List of secrets allowed to be used by pods running using this ServiceAccount.
 
 > https://kubernetes.io/docs/concepts/configuration/secret
+
+---
+
+### ServiceAccountTokenSecretProps <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps"></a>
+
+Options for `ServiceAccountTokenSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ServiceAccountTokenSecretProps;
+
+ServiceAccountTokenSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .serviceAccount(IServiceAccount)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+
+The service account to store a secret for.
 
 ---
 
@@ -8088,6 +8620,45 @@ public ServiceType getType();
 Determines how the Service is exposed.
 
 More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
+---
+
+### SshAuthSecretProps <a name="org.cdk8s.plus22.SshAuthSecretProps"></a>
+
+Options for `SshAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.SshAuthSecretProps;
+
+SshAuthSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .sshPrivateKey(java.lang.String)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.sshPrivateKey"></a>
+
+```java
+public java.lang.String getSshPrivateKey();
+```
+
+- *Type:* `java.lang.String`
+
+The SSH private key to use.
 
 ---
 
@@ -8480,6 +9051,58 @@ The TCP port to connect to on the container.
 
 ---
 
+### TlsSecretProps <a name="org.cdk8s.plus22.TlsSecretProps"></a>
+
+Options for `TlsSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.TlsSecretProps;
+
+TlsSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .tlsCert(java.lang.String)
+    .tlsKey(java.lang.String)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.tlsCert"></a>
+
+```java
+public java.lang.String getTlsCert();
+```
+
+- *Type:* `java.lang.String`
+
+The TLS cert.
+
+---
+
+##### `tlsKey`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.tlsKey"></a>
+
+```java
+public java.lang.String getTlsKey();
+```
+
+- *Type:* `java.lang.String`
+
+The TLS key.
+
+---
+
 ### VolumeMount <a name="org.cdk8s.plus22.VolumeMount"></a>
 
 Mount a volume from the pod to the container.
@@ -8608,6 +9231,7 @@ Container.Builder.create()
 //  .command(java.util.List<java.lang.String>)
 //  .env(java.util.Map<java.lang.String, EnvValue>)
 //  .imagePullPolicy(ImagePullPolicy)
+//  .lifecycle(ContainerLifecycle)
 //  .liveness(Probe)
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
@@ -8678,6 +9302,14 @@ Cannot be updated.
 - *Default:* ImagePullPolicy.ALWAYS
 
 Image pull policy for this container.
+
+---
+
+##### `lifecycle`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerLifecycle`](#org.cdk8s.plus22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
 
 ---
 
@@ -9325,6 +9957,73 @@ public java.lang.Object getValueFrom();
 ---
 
 
+### Handler <a name="org.cdk8s.plus22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromCommand` <a name="org.cdk8s.plus22.Handler.fromCommand"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromCommand(java.util.List<java.lang.String> command)
+```
+
+###### `command`<sup>Required</sup> <a name="org.cdk8s.plus22.Handler.parameter.command"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+The command to execute.
+
+---
+
+##### `fromHttpGet` <a name="org.cdk8s.plus22.Handler.fromHttpGet"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromHttpGet(java.lang.String path)
+Handler.fromHttpGet(java.lang.String path, HandlerFromHttpGetOptions options)
+```
+
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Handler.parameter.path"></a>
+
+- *Type:* `java.lang.String`
+
+The URL path to hit.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Handler.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.HandlerFromHttpGetOptions`](#org.cdk8s.plus22.HandlerFromHttpGetOptions)
+
+Options.
+
+---
+
+##### `fromTcpSocket` <a name="org.cdk8s.plus22.Handler.fromTcpSocket"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromTcpSocket()
+Handler.fromTcpSocket(HandlerFromTcpSocketOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Handler.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.HandlerFromTcpSocketOptions`](#org.cdk8s.plus22.HandlerFromTcpSocketOptions)
+
+Options.
+
+---
+
+
+
 ### IngressBackend <a name="org.cdk8s.plus22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -9911,14 +10610,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
 
-#### Initializers <a name="org.cdk8s.plus22.Probe.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.Probe;
-
-new Probe();
-```
-
 
 #### Static Functions <a name="Static Functions"></a>
 
@@ -10467,7 +11158,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="org.cdk8s.plus22.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IPersistentVolume`](#org.cdk8s.plus22.IPersistentVolume), [`org.cdk8s.plus22.IPersistentVolumeClaim`](#org.cdk8s.plus22.IPersistentVolumeClaim), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IPersistentVolume`](#org.cdk8s.plus22.IPersistentVolume), [`org.cdk8s.plus22.IPersistentVolumeClaim`](#org.cdk8s.plus22.IPersistentVolumeClaim), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
 
 Represents a resource.
 
@@ -10490,7 +11181,7 @@ The Kubernetes name of this resource.
 
 - *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
 
-- *Implemented By:* [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Implemented By:* [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
 
 
 #### Properties <a name="Properties"></a>

@@ -13,3 +13,4 @@ export * from './ingress';
 export * from './probe';
 export * from './pvc';
 export * from './pv';
+export * from './handler';
