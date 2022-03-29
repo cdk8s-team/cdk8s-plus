@@ -2,6 +2,66 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### BasicAuthSecret <a name="cdk8s_plus_21.BasicAuthSecret"></a>
+
+Create a secret for basic authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#basic-authentication-secret
+
+#### Initializers <a name="cdk8s_plus_21.BasicAuthSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.BasicAuthSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  password: str,
+  username: str
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_21.BasicAuthSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_21.BasicAuthSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.BasicAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s_plus_21.BasicAuthSecretProps.parameter.password"></a>
+
+- *Type:* `str`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="cdk8s_plus_21.BasicAuthSecretProps.parameter.username"></a>
+
+- *Type:* `str`
+
+The user name for authentication.
+
+---
+
+
+
+
+
 ### ConfigMap <a name="cdk8s_plus_21.ConfigMap"></a>
 
 - *Implements:* [`cdk8s_plus_21.IConfigMap`](#cdk8s_plus_21.IConfigMap)
@@ -1129,6 +1189,59 @@ service_account: IServiceAccount
 The service account used to run this pod.
 
 ---
+
+
+### DockerConfigSecret <a name="cdk8s_plus_21.DockerConfigSecret"></a>
+
+Create a secret for storing credentials for accessing a container image registry.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#docker-config-secrets
+
+#### Initializers <a name="cdk8s_plus_21.DockerConfigSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.DockerConfigSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  data: typing.Mapping[typing.Any]
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_21.DockerConfigSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_21.DockerConfigSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.DockerConfigSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s_plus_21.DockerConfigSecretProps.parameter.data"></a>
+
+- *Type:* typing.Mapping[`typing.Any`]
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
+
+---
+
+
+
 
 
 ### IngressV1Beta1 <a name="cdk8s_plus_21.IngressV1Beta1"></a>
@@ -3477,6 +3590,108 @@ Returns a copy. To add a secret, use `addSecret()`.
 ---
 
 
+### ServiceAccountTokenSecret <a name="cdk8s_plus_21.ServiceAccountTokenSecret"></a>
+
+Create a secret for a service account token.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#service-account-token-secrets
+
+#### Initializers <a name="cdk8s_plus_21.ServiceAccountTokenSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.ServiceAccountTokenSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  service_account: IServiceAccount
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_21.ServiceAccountTokenSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_21.ServiceAccountTokenSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.ServiceAccountTokenSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_21.ServiceAccountTokenSecretProps.parameter.service_account"></a>
+
+- *Type:* [`cdk8s_plus_21.IServiceAccount`](#cdk8s_plus_21.IServiceAccount)
+
+The service account to store a secret for.
+
+---
+
+
+
+
+
+### SshAuthSecret <a name="cdk8s_plus_21.SshAuthSecret"></a>
+
+Create a secret for ssh authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#ssh-authentication-secrets
+
+#### Initializers <a name="cdk8s_plus_21.SshAuthSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.SshAuthSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  ssh_private_key: str
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_21.SshAuthSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_21.SshAuthSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.SshAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_21.SshAuthSecretProps.parameter.ssh_private_key"></a>
+
+- *Type:* `str`
+
+The SSH private key to use.
+
+---
+
+
+
+
+
 ### StatefulSet <a name="cdk8s_plus_21.StatefulSet"></a>
 
 - *Implements:* [`cdk8s_plus_21.IPodTemplate`](#cdk8s_plus_21.IPodTemplate)
@@ -4263,6 +4478,66 @@ The service account used to run this pod.
 ---
 
 
+### TlsSecret <a name="cdk8s_plus_21.TlsSecret"></a>
+
+Create a secret for storing a TLS certificate and its associated key.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets
+
+#### Initializers <a name="cdk8s_plus_21.TlsSecret.Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.TlsSecret(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  tls_cert: str,
+  tls_key: str
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_21.TlsSecret.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_21.TlsSecret.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.TlsSecretProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_21.TlsSecretProps.parameter.tls_cert"></a>
+
+- *Type:* `str`
+
+The TLS cert.
+
+---
+
+##### `tls_key`<sup>Required</sup> <a name="cdk8s_plus_21.TlsSecretProps.parameter.tls_key"></a>
+
+- *Type:* `str`
+
+The TLS key.
+
+---
+
+
+
+
+
 ## Structs <a name="Structs"></a>
 
 ### AddDeploymentOptions <a name="cdk8s_plus_21.AddDeploymentOptions"></a>
@@ -4399,6 +4674,58 @@ key_prefix: str
 - *Default:* ""
 
 A prefix to add to all keys in the config map.
+
+---
+
+### BasicAuthSecretProps <a name="cdk8s_plus_21.BasicAuthSecretProps"></a>
+
+Options for `BasicAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.BasicAuthSecretProps(
+  metadata: ApiObjectMetadata = None,
+  password: str,
+  username: str
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.BasicAuthSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s_plus_21.BasicAuthSecretProps.property.password"></a>
+
+```python
+password: str
+```
+
+- *Type:* `str`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="cdk8s_plus_21.BasicAuthSecretProps.property.username"></a>
+
+```python
+username: str
+```
+
+- *Type:* `str`
+
+The user name for authentication.
 
 ---
 
@@ -5208,6 +5535,47 @@ replicas: typing.Union[int, float]
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### DockerConfigSecretProps <a name="cdk8s_plus_21.DockerConfigSecretProps"></a>
+
+Options for `DockerConfigSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.DockerConfigSecretProps(
+  metadata: ApiObjectMetadata = None,
+  data: typing.Mapping[typing.Any]
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.DockerConfigSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s_plus_21.DockerConfigSecretProps.property.data"></a>
+
+```python
+data: typing.Mapping[typing.Any]
+```
+
+- *Type:* typing.Mapping[`typing.Any`]
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
 
 ---
 
@@ -7086,6 +7454,8 @@ memory: MemoryResources
 
 ### SecretProps <a name="cdk8s_plus_21.SecretProps"></a>
 
+Options for `Secret`.
+
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```python
@@ -7304,6 +7674,45 @@ secrets: typing.List[ISecret]
 List of secrets allowed to be used by pods running using this ServiceAccount.
 
 > https://kubernetes.io/docs/concepts/configuration/secret
+
+---
+
+### ServiceAccountTokenSecretProps <a name="cdk8s_plus_21.ServiceAccountTokenSecretProps"></a>
+
+Options for `ServiceAccountTokenSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.ServiceAccountTokenSecretProps(
+  metadata: ApiObjectMetadata = None,
+  service_account: IServiceAccount
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.ServiceAccountTokenSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_21.ServiceAccountTokenSecretProps.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_21.IServiceAccount`](#cdk8s_plus_21.IServiceAccount)
+
+The service account to store a secret for.
 
 ---
 
@@ -7639,6 +8048,45 @@ type: ServiceType
 Determines how the Service is exposed.
 
 More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
+---
+
+### SshAuthSecretProps <a name="cdk8s_plus_21.SshAuthSecretProps"></a>
+
+Options for `SshAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.SshAuthSecretProps(
+  metadata: ApiObjectMetadata = None,
+  ssh_private_key: str
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.SshAuthSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_21.SshAuthSecretProps.property.ssh_private_key"></a>
+
+```python
+ssh_private_key: str
+```
+
+- *Type:* `str`
+
+The SSH private key to use.
 
 ---
 
@@ -8028,6 +8476,58 @@ port: typing.Union[int, float]
 - *Default:* defaults to `container.port`.
 
 The TCP port to connect to on the container.
+
+---
+
+### TlsSecretProps <a name="cdk8s_plus_21.TlsSecretProps"></a>
+
+Options for `TlsSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_21
+
+cdk8s_plus_21.TlsSecretProps(
+  metadata: ApiObjectMetadata = None,
+  tls_cert: str,
+  tls_key: str
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_21.TlsSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_21.TlsSecretProps.property.tls_cert"></a>
+
+```python
+tls_cert: str
+```
+
+- *Type:* `str`
+
+The TLS cert.
+
+---
+
+##### `tls_key`<sup>Required</sup> <a name="cdk8s_plus_21.TlsSecretProps.property.tls_key"></a>
+
+```python
+tls_key: str
+```
+
+- *Type:* `str`
+
+The TLS key.
 
 ---
 
@@ -11063,7 +11563,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_21.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_21.ConfigMap`](#cdk8s_plus_21.ConfigMap), [`cdk8s_plus_21.Deployment`](#cdk8s_plus_21.Deployment), [`cdk8s_plus_21.IngressV1Beta1`](#cdk8s_plus_21.IngressV1Beta1), [`cdk8s_plus_21.Job`](#cdk8s_plus_21.Job), [`cdk8s_plus_21.Pod`](#cdk8s_plus_21.Pod), [`cdk8s_plus_21.Resource`](#cdk8s_plus_21.Resource), [`cdk8s_plus_21.Secret`](#cdk8s_plus_21.Secret), [`cdk8s_plus_21.Service`](#cdk8s_plus_21.Service), [`cdk8s_plus_21.ServiceAccount`](#cdk8s_plus_21.ServiceAccount), [`cdk8s_plus_21.StatefulSet`](#cdk8s_plus_21.StatefulSet), [`cdk8s_plus_21.IConfigMap`](#cdk8s_plus_21.IConfigMap), [`cdk8s_plus_21.IResource`](#cdk8s_plus_21.IResource), [`cdk8s_plus_21.ISecret`](#cdk8s_plus_21.ISecret), [`cdk8s_plus_21.IServiceAccount`](#cdk8s_plus_21.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_21.BasicAuthSecret`](#cdk8s_plus_21.BasicAuthSecret), [`cdk8s_plus_21.ConfigMap`](#cdk8s_plus_21.ConfigMap), [`cdk8s_plus_21.Deployment`](#cdk8s_plus_21.Deployment), [`cdk8s_plus_21.DockerConfigSecret`](#cdk8s_plus_21.DockerConfigSecret), [`cdk8s_plus_21.IngressV1Beta1`](#cdk8s_plus_21.IngressV1Beta1), [`cdk8s_plus_21.Job`](#cdk8s_plus_21.Job), [`cdk8s_plus_21.Pod`](#cdk8s_plus_21.Pod), [`cdk8s_plus_21.Resource`](#cdk8s_plus_21.Resource), [`cdk8s_plus_21.Secret`](#cdk8s_plus_21.Secret), [`cdk8s_plus_21.Service`](#cdk8s_plus_21.Service), [`cdk8s_plus_21.ServiceAccount`](#cdk8s_plus_21.ServiceAccount), [`cdk8s_plus_21.ServiceAccountTokenSecret`](#cdk8s_plus_21.ServiceAccountTokenSecret), [`cdk8s_plus_21.SshAuthSecret`](#cdk8s_plus_21.SshAuthSecret), [`cdk8s_plus_21.StatefulSet`](#cdk8s_plus_21.StatefulSet), [`cdk8s_plus_21.TlsSecret`](#cdk8s_plus_21.TlsSecret), [`cdk8s_plus_21.IConfigMap`](#cdk8s_plus_21.IConfigMap), [`cdk8s_plus_21.IResource`](#cdk8s_plus_21.IResource), [`cdk8s_plus_21.ISecret`](#cdk8s_plus_21.ISecret), [`cdk8s_plus_21.IServiceAccount`](#cdk8s_plus_21.IServiceAccount)
 
 Represents a resource.
 
@@ -11086,7 +11586,7 @@ The Kubernetes name of this resource.
 
 - *Extends:* [`cdk8s_plus_21.IResource`](#cdk8s_plus_21.IResource)
 
-- *Implemented By:* [`cdk8s_plus_21.Secret`](#cdk8s_plus_21.Secret), [`cdk8s_plus_21.ISecret`](#cdk8s_plus_21.ISecret)
+- *Implemented By:* [`cdk8s_plus_21.BasicAuthSecret`](#cdk8s_plus_21.BasicAuthSecret), [`cdk8s_plus_21.DockerConfigSecret`](#cdk8s_plus_21.DockerConfigSecret), [`cdk8s_plus_21.Secret`](#cdk8s_plus_21.Secret), [`cdk8s_plus_21.ServiceAccountTokenSecret`](#cdk8s_plus_21.ServiceAccountTokenSecret), [`cdk8s_plus_21.SshAuthSecret`](#cdk8s_plus_21.SshAuthSecret), [`cdk8s_plus_21.TlsSecret`](#cdk8s_plus_21.TlsSecret), [`cdk8s_plus_21.ISecret`](#cdk8s_plus_21.ISecret)
 
 
 #### Properties <a name="Properties"></a>
