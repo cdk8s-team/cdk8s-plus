@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size } from 'cdk8s';
 import * as kplus from '../src';
-import { Cpu } from '../src';
+import { Container, Cpu, Handler } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 describe('EnvValue', () => {
@@ -180,6 +180,11 @@ describe('Container', () => {
         valueFrom: undefined,
       }],
       volumeMounts: [],
+      securityContext: {
+        privileged: false,
+        readOnlyRootFilesystem: false,
+        runAsNonRoot: false,
+      },
     };
 
     expect(actual).toEqual(expected);
@@ -348,3 +353,74 @@ describe('Container', () => {
   });
 
 });
+
+test('default security context', () => {
+
+  const container = new Container({ image: 'image' });
+
+  expect(container.securityContext.ensureNonRoot).toBeFalsy();
+  expect(container.securityContext.privileged).toBeFalsy();
+  expect(container.securityContext.readOnlyRootFilesystem).toBeFalsy();
+  expect(container.securityContext.user).toBeUndefined();
+  expect(container.securityContext.group).toBeUndefined();
+
+  expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
+  expect(container.securityContext._toKube()).toStrictEqual({
+    privileged: container.securityContext.privileged,
+    readOnlyRootFilesystem: container.securityContext.readOnlyRootFilesystem,
+    runAsGroup: container.securityContext.group,
+    runAsNonRoot: container.securityContext.ensureNonRoot,
+    runAsUser: container.securityContext.user,
+  });
+
+});
+
+test('custom security context', () => {
+
+  const container = new Container({
+    image: 'image',
+    securityContext: {
+      ensureNonRoot: true,
+      readOnlyRootFilesystem: true,
+      privileged: true,
+      user: 1000,
+      group: 2000,
+    },
+  });
+
+  expect(container.securityContext.ensureNonRoot).toBeTruthy();
+  expect(container.securityContext.privileged).toBeTruthy();
+  expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
+  expect(container.securityContext.user).toEqual(1000);
+  expect(container.securityContext.group).toEqual(2000);
+
+});
+
+test('can configure a postStart lifecycle hook', () => {
+
+  const container = new Container({
+    image: 'image',
+    lifecycle: {
+      postStart: Handler.fromCommand(['hello']),
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.lifecycle!.postStart).toEqual({ exec: { command: ['hello'] } });
+
+});
+
+test('can configure a preStop lifecycle hook', () => {
+
+  const container = new Container({
+    image: 'image',
+    lifecycle: {
+      preStop: Handler.fromCommand(['hello']),
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.lifecycle!.preStop).toEqual({ exec: { command: ['hello'] } });
+
+});
+

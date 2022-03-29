@@ -2,6 +2,64 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### BasicAuthSecret <a name="org.cdk8s.plus22.BasicAuthSecret"></a>
+
+Create a secret for basic authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#basic-authentication-secret
+
+#### Initializers <a name="org.cdk8s.plus22.BasicAuthSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.BasicAuthSecret;
+
+BasicAuthSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .password(java.lang.String)
+    .username(java.lang.String)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.password"></a>
+
+- *Type:* `java.lang.String`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.username"></a>
+
+- *Type:* `java.lang.String`
+
+The user name for authentication.
+
+---
+
+
+
+
+
 ### ConfigMap <a name="org.cdk8s.plus22.ConfigMap"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap)
@@ -247,7 +305,10 @@ import org.cdk8s.plus22.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -290,6 +351,35 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.restartPolicy"></a>
 
 - *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
@@ -298,6 +388,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -367,6 +467,30 @@ Number of desired pods.
 
 ```java
 public addContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
+##### `addHostAlias` <a name="org.cdk8s.plus22.Deployment.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus22.Deployment.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
 ```
 
 ###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.container"></a>
@@ -464,6 +588,34 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
 ##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.labelSelector"></a>
 
 ```java
@@ -499,6 +651,16 @@ public java.lang.Number getReplicas();
 - *Type:* `java.lang.Number`
 
 Number of desired pods.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
 
 ---
 
@@ -539,6 +701,57 @@ public IServiceAccount getServiceAccount();
 The service account used to run this pod.
 
 ---
+
+
+### DockerConfigSecret <a name="org.cdk8s.plus22.DockerConfigSecret"></a>
+
+Create a secret for storing credentials for accessing a container image registry.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#docker-config-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.DockerConfigSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.DockerConfigSecret;
+
+DockerConfigSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .data(java.util.Map<java.lang.String, java.lang.Object>)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.data"></a>
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.Object`>
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
+
+---
+
+
+
 
 
 ### Ingress <a name="org.cdk8s.plus22.Ingress"></a>
@@ -779,7 +992,10 @@ import org.cdk8s.plus22.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -823,6 +1039,35 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.restartPolicy"></a>
 
 - *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
@@ -831,6 +1076,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -921,6 +1176,30 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.Job.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus22.Job.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus22.Job.addVolume"></a>
 
 ```java
@@ -950,6 +1229,34 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
 ##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.podMetadata"></a>
 
 ```java
@@ -959,6 +1266,16 @@ public ApiObjectMetadataDefinition getPodMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
 
 Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
 
 ---
 
@@ -1056,7 +1373,10 @@ import org.cdk8s.plus22.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
     .build();
@@ -1096,6 +1416,35 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.restartPolicy"></a>
 
 - *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
@@ -1104,6 +1453,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -1152,6 +1511,30 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.Pod.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus22.Pod.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus22.Pod.addVolume"></a>
 
 ```java
@@ -1178,6 +1561,44 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
 
 ---
 
@@ -1810,6 +2231,104 @@ Returns a copy. To add a secret, use `addSecret()`.
 ---
 
 
+### ServiceAccountTokenSecret <a name="org.cdk8s.plus22.ServiceAccountTokenSecret"></a>
+
+Create a secret for a service account token.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#service-account-token-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.ServiceAccountTokenSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ServiceAccountTokenSecret;
+
+ServiceAccountTokenSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .serviceAccount(IServiceAccount)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.serviceAccount"></a>
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+
+The service account to store a secret for.
+
+---
+
+
+
+
+
+### SshAuthSecret <a name="org.cdk8s.plus22.SshAuthSecret"></a>
+
+Create a secret for ssh authentication.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#ssh-authentication-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.SshAuthSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.SshAuthSecret;
+
+SshAuthSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .sshPrivateKey(java.lang.String)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.sshPrivateKey"></a>
+
+- *Type:* `java.lang.String`
+
+The SSH private key to use.
+
+---
+
+
+
+
+
 ### StatefulSet <a name="org.cdk8s.plus22.StatefulSet"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
@@ -1847,7 +2366,10 @@ import org.cdk8s.plus22.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -1892,6 +2414,35 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.restartPolicy"></a>
 
 - *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
@@ -1900,6 +2451,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -1994,6 +2555,30 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.StatefulSet.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus22.StatefulSet.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus22.StatefulSet.addVolume"></a>
 
 ```java
@@ -2042,6 +2627,34 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -2095,6 +2708,16 @@ Number of desired pods.
 
 ---
 
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.volumes"></a>
 
 ```java
@@ -2132,6 +2755,64 @@ public IServiceAccount getServiceAccount();
 The service account used to run this pod.
 
 ---
+
+
+### TlsSecret <a name="org.cdk8s.plus22.TlsSecret"></a>
+
+Create a secret for storing a TLS certificate and its associated key.
+
+> https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets
+
+#### Initializers <a name="org.cdk8s.plus22.TlsSecret.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.TlsSecret;
+
+TlsSecret.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+    .tlsCert(java.lang.String)
+    .tlsKey(java.lang.String)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecret.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecret.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.tlsCert"></a>
+
+- *Type:* `java.lang.String`
+
+The TLS cert.
+
+---
+
+##### `tlsKey`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.tlsKey"></a>
+
+- *Type:* `java.lang.String`
+
+The TLS key.
+
+---
+
+
+
 
 
 ## Structs <a name="Structs"></a>
@@ -2270,6 +2951,58 @@ public java.lang.String getKeyPrefix();
 - *Default:* ""
 
 A prefix to add to all keys in the config map.
+
+---
+
+### BasicAuthSecretProps <a name="org.cdk8s.plus22.BasicAuthSecretProps"></a>
+
+Options for `BasicAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.BasicAuthSecretProps;
+
+BasicAuthSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .password(java.lang.String)
+    .username(java.lang.String)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `password`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.password"></a>
+
+```java
+public java.lang.String getPassword();
+```
+
+- *Type:* `java.lang.String`
+
+The password or token for authentication.
+
+---
+
+##### `username`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.username"></a>
+
+```java
+public java.lang.String getUsername();
+```
+
+- *Type:* `java.lang.String`
+
+The user name for authentication.
 
 ---
 
@@ -2516,6 +3249,58 @@ Specify whether the ConfigMap or its keys must be defined.
 
 ---
 
+### ContainerLifecycle <a name="org.cdk8s.plus22.ContainerLifecycle"></a>
+
+Container lifecycle properties.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ContainerLifecycle;
+
+ContainerLifecycle.builder()
+//  .postStart(Handler)
+//  .preStop(Handler)
+    .build();
+```
+
+##### `postStart`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerLifecycle.property.postStart"></a>
+
+```java
+public Handler getPostStart();
+```
+
+- *Type:* [`org.cdk8s.plus22.Handler`](#org.cdk8s.plus22.Handler)
+- *Default:* No post start handler.
+
+This hook is executed immediately after a container is created.
+
+However,
+there is no guarantee that the hook will execute before the container ENTRYPOINT.
+
+---
+
+##### `preStop`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerLifecycle.property.preStop"></a>
+
+```java
+public Handler getPreStop();
+```
+
+- *Type:* [`org.cdk8s.plus22.Handler`](#org.cdk8s.plus22.Handler)
+- *Default:* No pre stop handler.
+
+This hook is called immediately before a container is terminated due to an API request or management event such as a liveness/startup probe failure, preemption, resource contention and others.
+
+A call to the PreStop hook fails if the container is already in a terminated or completed state
+and the hook must complete before the TERM signal to stop the container can be sent.
+The Pod's termination grace period countdown begins before the PreStop hook is executed,
+so regardless of the outcome of the handler, the container will eventually terminate
+within the Pod's termination grace period. No parameters are passed to the handler.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+
+---
+
 ### ContainerProps <a name="org.cdk8s.plus22.ContainerProps"></a>
 
 Properties for creating a container.
@@ -2531,11 +3316,13 @@ ContainerProps.builder()
 //  .command(java.util.List<java.lang.String>)
 //  .env(java.util.Map<java.lang.String, EnvValue>)
 //  .imagePullPolicy(ImagePullPolicy)
+//  .lifecycle(ContainerLifecycle)
 //  .liveness(Probe)
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .readiness(Probe)
 //  .resources(Resources)
+//  .securityContext(ContainerSecurityContextProps)
 //  .startup(Probe)
 //  .volumeMounts(java.util.List<VolumeMount>)
 //  .workingDir(java.lang.String)
@@ -2623,6 +3410,18 @@ Image pull policy for this container.
 
 ---
 
+##### `lifecycle`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.lifecycle"></a>
+
+```java
+public ContainerLifecycle getLifecycle();
+```
+
+- *Type:* [`org.cdk8s.plus22.ContainerLifecycle`](#org.cdk8s.plus22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
+
+---
+
 ##### `liveness`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.liveness"></a>
 
 ```java
@@ -2695,6 +3494,25 @@ Compute resources (CPU and memory requests and limits) required by the container
 
 ---
 
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.securityContext"></a>
+
+```java
+public ContainerSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.ContainerSecurityContextProps`](#org.cdk8s.plus22.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
 ##### `startup`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.property.startup"></a>
 
 ```java
@@ -2736,6 +3554,94 @@ public java.lang.String getWorkingDir();
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### ContainerSecurityContextProps <a name="org.cdk8s.plus22.ContainerSecurityContextProps"></a>
+
+Properties for `ContainerSecurityContext`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ContainerSecurityContextProps;
+
+ContainerSecurityContextProps.builder()
+//  .ensureNonRoot(java.lang.Boolean)
+//  .group(java.lang.Number)
+//  .privileged(java.lang.Boolean)
+//  .readOnlyRootFilesystem(java.lang.Boolean)
+//  .user(java.lang.Number)
+    .build();
+```
+
+##### `ensureNonRoot`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.property.ensureNonRoot"></a>
+
+```java
+public java.lang.Boolean getEnsureNonRoot();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.property.group"></a>
+
+```java
+public java.lang.Number getGroup();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.property.privileged"></a>
+
+```java
+public java.lang.Boolean getPrivileged();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Run container in privileged mode.
+
+Processes in privileged containers are essentially equivalent to root on the host.
+
+---
+
+##### `readOnlyRootFilesystem`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.property.readOnlyRootFilesystem"></a>
+
+```java
+public java.lang.Boolean getReadOnlyRootFilesystem();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Whether this container has a read-only root filesystem.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.property.user"></a>
+
+```java
+public java.lang.Number getUser();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
 
 ---
 
@@ -2786,7 +3692,10 @@ import org.cdk8s.plus22.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -2825,6 +3734,43 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.restartPolicy"></a>
 
 ```java
@@ -2837,6 +3783,20 @@ public RestartPolicy getRestartPolicy();
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -2917,6 +3877,47 @@ public java.lang.Number getReplicas();
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### DockerConfigSecretProps <a name="org.cdk8s.plus22.DockerConfigSecretProps"></a>
+
+Options for `DockerConfigSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.DockerConfigSecretProps;
+
+DockerConfigSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .data(java.util.Map<java.lang.String, java.lang.Object>)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.data"></a>
+
+```java
+public java.util.Map<java.lang.String, java.lang.Object> getData();
+```
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.Object`>
+
+JSON content to provide for the `~/.docker/config.json` file. This will be stringified and inserted as stringData.
+
+> https://docs.docker.com/engine/reference/commandline/cli/#sample-configuration-file
 
 ---
 
@@ -3376,6 +4377,113 @@ The type of the path.
 
 ---
 
+### HandlerFromHttpGetOptions <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions"></a>
+
+Options for `Handler.fromHttpGet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HandlerFromHttpGetOptions;
+
+HandlerFromHttpGetOptions.builder()
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to use when sending the GET request.
+
+---
+
+### HandlerFromTcpSocketOptions <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions"></a>
+
+Options for `Handler.fromTcpSocket`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HandlerFromTcpSocketOptions;
+
+HandlerFromTcpSocketOptions.builder()
+//  .host(java.lang.String)
+//  .port(java.lang.Number)
+    .build();
+```
+
+##### `host`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions.property.host"></a>
+
+```java
+public java.lang.String getHost();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* defaults to the pod IP
+
+The host name to connect to on the container.
+
+---
+
+##### `port`<sup>Optional</sup> <a name="org.cdk8s.plus22.HandlerFromTcpSocketOptions.property.port"></a>
+
+```java
+public java.lang.Number getPort();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* defaults to `container.port`.
+
+The TCP port to connect to on the container.
+
+---
+
+### HostAlias <a name="org.cdk8s.plus22.HostAlias"></a>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's /etc/hosts file.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.HostAlias;
+
+HostAlias.builder()
+    .hostnames(java.util.List<java.lang.String>)
+    .ip(java.lang.String)
+    .build();
+```
+
+##### `hostnames`<sup>Required</sup> <a name="org.cdk8s.plus22.HostAlias.property.hostnames"></a>
+
+```java
+public java.util.List<java.lang.String> getHostnames();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Hostnames for the chosen IP address.
+
+---
+
+##### `ip`<sup>Required</sup> <a name="org.cdk8s.plus22.HostAlias.property.ip"></a>
+
+```java
+public java.lang.String getIp();
+```
+
+- *Type:* `java.lang.String`
+
+IP address of the host file entry.
+
+---
+
 ### HttpGetProbeOptions <a name="org.cdk8s.plus22.HttpGetProbeOptions"></a>
 
 Options for `Probe.fromHttpGet()`.
@@ -3712,7 +4820,10 @@ import org.cdk8s.plus22.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -3752,6 +4863,43 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.restartPolicy"></a>
 
 ```java
@@ -3764,6 +4912,20 @@ public RestartPolicy getRestartPolicy();
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -4040,7 +5202,10 @@ import org.cdk8s.plus22.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
     .build();
@@ -4076,6 +5241,43 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.restartPolicy"></a>
 
 ```java
@@ -4088,6 +5290,20 @@ public RestartPolicy getRestartPolicy();
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -4130,6 +5346,111 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+### PodSecurityContextProps <a name="org.cdk8s.plus22.PodSecurityContextProps"></a>
+
+Properties for `PodSecurityContext`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PodSecurityContextProps;
+
+PodSecurityContextProps.builder()
+//  .ensureNonRoot(java.lang.Boolean)
+//  .fsGroup(java.lang.Number)
+//  .fsGroupChangePolicy(FsGroupChangePolicy)
+//  .group(java.lang.Number)
+//  .sysctls(java.util.List<Sysctl>)
+//  .user(java.lang.Number)
+    .build();
+```
+
+##### `ensureNonRoot`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.property.ensureNonRoot"></a>
+
+```java
+public java.lang.Boolean getEnsureNonRoot();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `fsGroup`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.property.fsGroup"></a>
+
+```java
+public java.lang.Number getFsGroup();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* Volume ownership is not changed.
+
+Modify the ownership and permissions of pod volumes to this GID.
+
+---
+
+##### `fsGroupChangePolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.property.fsGroupChangePolicy"></a>
+
+```java
+public FsGroupChangePolicy getFsGroupChangePolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.FsGroupChangePolicy`](#org.cdk8s.plus22.FsGroupChangePolicy)
+- *Default:* FsGroupChangePolicy.ALWAYS
+
+Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+
+This field will only apply to volume types which support fsGroup based ownership(and permissions).
+It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.property.group"></a>
+
+```java
+public java.lang.Number getGroup();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `sysctls`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.property.sysctls"></a>
+
+```java
+public java.util.List<Sysctl> getSysctls();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Sysctl`](#org.cdk8s.plus22.Sysctl)>
+- *Default:* No sysctls
+
+Sysctls hold a list of namespaced sysctls used for the pod.
+
+Pods with unsupported sysctls (by the container runtime) might fail to launch.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.property.user"></a>
+
+```java
+public java.lang.Number getUser();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
+
+---
+
 ### PodSpecProps <a name="org.cdk8s.plus22.PodSpecProps"></a>
 
 Properties of a `PodSpec`.
@@ -4141,7 +5462,10 @@ import org.cdk8s.plus22.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
     .build();
@@ -4165,6 +5489,43 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.restartPolicy"></a>
 
 ```java
@@ -4177,6 +5538,20 @@ public RestartPolicy getRestartPolicy();
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -4232,7 +5607,10 @@ import org.cdk8s.plus22.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -4257,6 +5635,43 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.restartPolicy"></a>
 
 ```java
@@ -4269,6 +5684,20 @@ public RestartPolicy getRestartPolicy();
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -4480,6 +5909,8 @@ public MemoryResources getMemory();
 ---
 
 ### SecretProps <a name="org.cdk8s.plus22.SecretProps"></a>
+
+Options for `Secret`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -4699,6 +6130,45 @@ public java.util.List<ISecret> getSecrets();
 List of secrets allowed to be used by pods running using this ServiceAccount.
 
 > https://kubernetes.io/docs/concepts/configuration/secret
+
+---
+
+### ServiceAccountTokenSecretProps <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps"></a>
+
+Options for `ServiceAccountTokenSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ServiceAccountTokenSecretProps;
+
+ServiceAccountTokenSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .serviceAccount(IServiceAccount)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+
+The service account to store a secret for.
 
 ---
 
@@ -5037,6 +6507,45 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#publ
 
 ---
 
+### SshAuthSecretProps <a name="org.cdk8s.plus22.SshAuthSecretProps"></a>
+
+Options for `SshAuthSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.SshAuthSecretProps;
+
+SshAuthSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .sshPrivateKey(java.lang.String)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.sshPrivateKey"></a>
+
+```java
+public java.lang.String getSshPrivateKey();
+```
+
+- *Type:* `java.lang.String`
+
+The SSH private key to use.
+
+---
+
 ### StatefulSetProps <a name="org.cdk8s.plus22.StatefulSetProps"></a>
 
 Properties for initialization of `StatefulSet`.
@@ -5049,7 +6558,10 @@ import org.cdk8s.plus22.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -5090,6 +6602,43 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.restartPolicy"></a>
 
 ```java
@@ -5102,6 +6651,20 @@ public RestartPolicy getRestartPolicy();
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -5207,6 +6770,45 @@ public java.lang.Number getReplicas();
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### Sysctl <a name="org.cdk8s.plus22.Sysctl"></a>
+
+Sysctl defines a kernel parameter to be set.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.Sysctl;
+
+Sysctl.builder()
+    .name(java.lang.String)
+    .value(java.lang.String)
+    .build();
+```
+
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.Sysctl.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+Name of a property to set.
+
+---
+
+##### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Sysctl.property.value"></a>
+
+```java
+public java.lang.String getValue();
+```
+
+- *Type:* `java.lang.String`
+
+Value of a property to set.
 
 ---
 
@@ -5330,6 +6932,58 @@ public java.lang.Number getPort();
 - *Default:* defaults to `container.port`.
 
 The TCP port to connect to on the container.
+
+---
+
+### TlsSecretProps <a name="org.cdk8s.plus22.TlsSecretProps"></a>
+
+Options for `TlsSecret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.TlsSecretProps;
+
+TlsSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+    .tlsCert(java.lang.String)
+    .tlsKey(java.lang.String)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.tlsCert"></a>
+
+```java
+public java.lang.String getTlsCert();
+```
+
+- *Type:* `java.lang.String`
+
+The TLS cert.
+
+---
+
+##### `tlsKey`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.tlsKey"></a>
+
+```java
+public java.lang.String getTlsKey();
+```
+
+- *Type:* `java.lang.String`
+
+The TLS key.
 
 ---
 
@@ -5461,11 +7115,13 @@ Container.Builder.create()
 //  .command(java.util.List<java.lang.String>)
 //  .env(java.util.Map<java.lang.String, EnvValue>)
 //  .imagePullPolicy(ImagePullPolicy)
+//  .lifecycle(ContainerLifecycle)
 //  .liveness(Probe)
 //  .name(java.lang.String)
 //  .port(java.lang.Number)
 //  .readiness(Probe)
 //  .resources(Resources)
+//  .securityContext(ContainerSecurityContextProps)
 //  .startup(Probe)
 //  .volumeMounts(java.util.List<VolumeMount>)
 //  .workingDir(java.lang.String)
@@ -5533,6 +7189,14 @@ Image pull policy for this container.
 
 ---
 
+##### `lifecycle`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerLifecycle`](#org.cdk8s.plus22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
+
+---
+
 ##### `liveness`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.liveness"></a>
 
 - *Type:* [`org.cdk8s.plus22.Probe`](#org.cdk8s.plus22.Probe)
@@ -5582,6 +7246,21 @@ Determines when the container is ready to serve traffic.
 Compute resources (CPU and memory requests and limits) required by the container.
 
 > https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerSecurityContextProps`](#org.cdk8s.plus22.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 ---
 
@@ -5735,6 +7414,18 @@ The name of the container.
 
 ---
 
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Container.property.securityContext"></a>
+
+```java
+public ContainerSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.ContainerSecurityContext`](#org.cdk8s.plus22.ContainerSecurityContext)
+
+The security context of the container.
+
+---
+
 ##### `args`<sup>Optional</sup> <a name="org.cdk8s.plus22.Container.property.args"></a>
 
 ```java
@@ -5794,6 +7485,129 @@ public java.lang.String getWorkingDir();
 - *Type:* `java.lang.String`
 
 The working directory inside the container.
+
+---
+
+
+### ContainerSecurityContext <a name="org.cdk8s.plus22.ContainerSecurityContext"></a>
+
+Container security attributes and settings.
+
+#### Initializers <a name="org.cdk8s.plus22.ContainerSecurityContext.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ContainerSecurityContext;
+
+ContainerSecurityContext.Builder.create()
+//  .ensureNonRoot(java.lang.Boolean)
+//  .group(java.lang.Number)
+//  .privileged(java.lang.Boolean)
+//  .readOnlyRootFilesystem(java.lang.Boolean)
+//  .user(java.lang.Number)
+    .build();
+```
+
+##### `ensureNonRoot`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.parameter.ensureNonRoot"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.parameter.group"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.parameter.privileged"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Run container in privileged mode.
+
+Processes in privileged containers are essentially equivalent to root on the host.
+
+---
+
+##### `readOnlyRootFilesystem`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.parameter.readOnlyRootFilesystem"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Whether this container has a read-only root filesystem.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContextProps.parameter.user"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `ensureNonRoot`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerSecurityContext.property.ensureNonRoot"></a>
+
+```java
+public java.lang.Boolean getEnsureNonRoot();
+```
+
+- *Type:* `java.lang.Boolean`
+
+---
+
+##### `privileged`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerSecurityContext.property.privileged"></a>
+
+```java
+public java.lang.Boolean getPrivileged();
+```
+
+- *Type:* `java.lang.Boolean`
+
+---
+
+##### `readOnlyRootFilesystem`<sup>Required</sup> <a name="org.cdk8s.plus22.ContainerSecurityContext.property.readOnlyRootFilesystem"></a>
+
+```java
+public java.lang.Boolean getReadOnlyRootFilesystem();
+```
+
+- *Type:* `java.lang.Boolean`
+
+---
+
+##### `group`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContext.property.group"></a>
+
+```java
+public java.lang.Number getGroup();
+```
+
+- *Type:* `java.lang.Number`
+
+---
+
+##### `user`<sup>Optional</sup> <a name="org.cdk8s.plus22.ContainerSecurityContext.property.user"></a>
+
+```java
+public java.lang.Number getUser();
+```
+
+- *Type:* `java.lang.Number`
 
 ---
 
@@ -6027,6 +7841,73 @@ public java.lang.Object getValueFrom();
 ---
 
 
+### Handler <a name="org.cdk8s.plus22.Handler"></a>
+
+Defines a specific action that should be taken.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromCommand` <a name="org.cdk8s.plus22.Handler.fromCommand"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromCommand(java.util.List<java.lang.String> command)
+```
+
+###### `command`<sup>Required</sup> <a name="org.cdk8s.plus22.Handler.parameter.command"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+The command to execute.
+
+---
+
+##### `fromHttpGet` <a name="org.cdk8s.plus22.Handler.fromHttpGet"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromHttpGet(java.lang.String path)
+Handler.fromHttpGet(java.lang.String path, HandlerFromHttpGetOptions options)
+```
+
+###### `path`<sup>Required</sup> <a name="org.cdk8s.plus22.Handler.parameter.path"></a>
+
+- *Type:* `java.lang.String`
+
+The URL path to hit.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Handler.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.HandlerFromHttpGetOptions`](#org.cdk8s.plus22.HandlerFromHttpGetOptions)
+
+Options.
+
+---
+
+##### `fromTcpSocket` <a name="org.cdk8s.plus22.Handler.fromTcpSocket"></a>
+
+```java
+import org.cdk8s.plus22.Handler;
+
+Handler.fromTcpSocket()
+Handler.fromTcpSocket(HandlerFromTcpSocketOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Handler.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.HandlerFromTcpSocketOptions`](#org.cdk8s.plus22.HandlerFromTcpSocketOptions)
+
+Options.
+
+---
+
+
+
 ### IngressBackend <a name="org.cdk8s.plus22.IngressBackend"></a>
 
 The backend for an ingress path.
@@ -6059,6 +7940,152 @@ The service object.
 
 
 
+### PodSecurityContext <a name="org.cdk8s.plus22.PodSecurityContext"></a>
+
+Holds pod-level security attributes and common container settings.
+
+#### Initializers <a name="org.cdk8s.plus22.PodSecurityContext.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PodSecurityContext;
+
+PodSecurityContext.Builder.create()
+//  .ensureNonRoot(java.lang.Boolean)
+//  .fsGroup(java.lang.Number)
+//  .fsGroupChangePolicy(FsGroupChangePolicy)
+//  .group(java.lang.Number)
+//  .sysctls(java.util.List<Sysctl>)
+//  .user(java.lang.Number)
+    .build();
+```
+
+##### `ensureNonRoot`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.parameter.ensureNonRoot"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `fsGroup`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.parameter.fsGroup"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* Volume ownership is not changed.
+
+Modify the ownership and permissions of pod volumes to this GID.
+
+---
+
+##### `fsGroupChangePolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.parameter.fsGroupChangePolicy"></a>
+
+- *Type:* [`org.cdk8s.plus22.FsGroupChangePolicy`](#org.cdk8s.plus22.FsGroupChangePolicy)
+- *Default:* FsGroupChangePolicy.ALWAYS
+
+Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+
+This field will only apply to volume types which support fsGroup based ownership(and permissions).
+It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.parameter.group"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `sysctls`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.parameter.sysctls"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Sysctl`](#org.cdk8s.plus22.Sysctl)>
+- *Default:* No sysctls
+
+Sysctls hold a list of namespaced sysctls used for the pod.
+
+Pods with unsupported sysctls (by the container runtime) might fail to launch.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContextProps.parameter.user"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `ensureNonRoot`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSecurityContext.property.ensureNonRoot"></a>
+
+```java
+public java.lang.Boolean getEnsureNonRoot();
+```
+
+- *Type:* `java.lang.Boolean`
+
+---
+
+##### `fsGroupChangePolicy`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSecurityContext.property.fsGroupChangePolicy"></a>
+
+```java
+public FsGroupChangePolicy getFsGroupChangePolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.FsGroupChangePolicy`](#org.cdk8s.plus22.FsGroupChangePolicy)
+
+---
+
+##### `sysctls`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSecurityContext.property.sysctls"></a>
+
+```java
+public java.util.List<Sysctl> getSysctls();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Sysctl`](#org.cdk8s.plus22.Sysctl)>
+
+---
+
+##### `fsGroup`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContext.property.fsGroup"></a>
+
+```java
+public java.lang.Number getFsGroup();
+```
+
+- *Type:* `java.lang.Number`
+
+---
+
+##### `group`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContext.property.group"></a>
+
+```java
+public java.lang.Number getGroup();
+```
+
+- *Type:* `java.lang.Number`
+
+---
+
+##### `user`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSecurityContext.property.user"></a>
+
+```java
+public java.lang.Number getUser();
+```
+
+- *Type:* `java.lang.Number`
+
+---
+
+
 ### PodSpec <a name="org.cdk8s.plus22.PodSpec"></a>
 
 - *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
@@ -6072,7 +8099,10 @@ import org.cdk8s.plus22.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
     .build();
@@ -6092,6 +8122,35 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.restartPolicy"></a>
 
 - *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
@@ -6100,6 +8159,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -6148,6 +8217,30 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addHostAlias` <a name="org.cdk8s.plus22.PodSpec.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus22.PodSpec.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus22.PodSpec.addVolume"></a>
 
 ```java
@@ -6174,6 +8267,44 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
 
 ---
 
@@ -6229,7 +8360,10 @@ import org.cdk8s.plus22.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
 //  .podMetadata(ApiObjectMetadata)
@@ -6250,6 +8384,35 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.restartPolicy"></a>
 
 - *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
@@ -6258,6 +8421,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -6320,14 +8493,6 @@ Provides read/write access to the underlying pod metadata of the resource.
 ### Probe <a name="org.cdk8s.plus22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-
-#### Initializers <a name="org.cdk8s.plus22.Probe.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.Probe;
-
-new Probe();
-```
 
 
 #### Static Functions <a name="Static Functions"></a>
@@ -6592,6 +8757,20 @@ The container.
 
 ---
 
+##### `addInitContainer` <a name="org.cdk8s.plus22.IPodSpec.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+The container.
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus22.IPodSpec.addVolume"></a>
 
 ```java
@@ -6619,6 +8798,34 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -6687,6 +8894,34 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.volumes"></a>
 
 ```java
@@ -6739,7 +8974,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="org.cdk8s.plus22.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
 
 Represents a resource.
 
@@ -6762,7 +8997,7 @@ The Kubernetes name of this resource.
 
 - *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
 
-- *Implemented By:* [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
+- *Implemented By:* [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret)
 
 
 #### Properties <a name="Properties"></a>
@@ -6892,6 +9127,24 @@ The ipAddress of the node.
 #### `POD_IPS` <a name="org.cdk8s.plus22.EnvFieldPaths.POD_IPS"></a>
 
 The ipAddresess of the pod.
+
+---
+
+
+### FsGroupChangePolicy <a name="FsGroupChangePolicy"></a>
+
+#### `ON_ROOT_MISMATCH` <a name="org.cdk8s.plus22.FsGroupChangePolicy.ON_ROOT_MISMATCH"></a>
+
+Only change permissions and ownership if permission and ownership of root directory does not match with expected permissions of the volume.
+
+This could help shorten the time it takes to change ownership and permission of a volume
+
+---
+
+
+#### `ALWAYS` <a name="org.cdk8s.plus22.FsGroupChangePolicy.ALWAYS"></a>
+
+Always change permission and ownership of the volume when volume is mounted.
 
 ---
 

@@ -1,10 +1,89 @@
 import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
+import { Handler } from './handler';
 import * as k8s from './imports/k8s';
 import type { ResourceRequirements } from './imports/k8s';
 import { Probe } from './probe';
 import { SecretValue } from './secret';
 import { Volume } from './volume';
+
+/**
+ * Properties for `ContainerSecurityContext`
+ */
+export interface ContainerSecurityContextProps {
+
+  /**
+    * The UID to run the entrypoint of the container process.
+    *
+    * @default - User specified in image metadata
+    */
+  readonly user?: number;
+
+  /**
+    * The GID to run the entrypoint of the container process.
+    *
+    * @default - Group configured by container runtime
+    */
+  readonly group?: number;
+
+  /**
+    * Indicates that the container must run as a non-root user.
+    * If true, the Kubelet will validate the image at runtime to ensure that it does
+    * not run as UID 0 (root) and fail to start the container if it does.
+    *
+    * @default false
+    */
+  readonly ensureNonRoot?: boolean;
+
+  /**
+   * Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host.
+   *
+   * @default false
+   */
+  readonly privileged?: boolean;
+
+  /**
+   * Whether this container has a read-only root filesystem.
+   *
+   * @default false
+   */
+  readonly readOnlyRootFilesystem?: boolean;
+
+}
+
+/**
+ * Container security attributes and settings.
+ */
+export class ContainerSecurityContext {
+
+  public readonly ensureNonRoot: boolean;
+  public readonly privileged: boolean;
+  public readonly readOnlyRootFilesystem: boolean;
+  public readonly user?: number;
+  public readonly group?: number;
+
+  constructor(props: ContainerSecurityContextProps = {}) {
+    this.ensureNonRoot = props.ensureNonRoot ?? false;
+    this.privileged = props.privileged ?? false;
+    this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? false;
+    this.user = props.user;
+    this.group = props.group;
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.SecurityContext {
+    return {
+      runAsGroup: this.group,
+      runAsUser: this.user,
+      runAsNonRoot: this.ensureNonRoot,
+      privileged: this.privileged,
+      readOnlyRootFilesystem: this.readOnlyRootFilesystem,
+    };
+  }
+
+}
 
 export enum EnvFieldPaths {
   /**
@@ -303,6 +382,37 @@ export enum ImagePullPolicy {
    */
   NEVER = 'Never',
 }
+
+/**
+ * Container lifecycle properties.
+ */
+export interface ContainerLifecycle {
+
+  /**
+   * This hook is executed immediately after a container is created. However,
+   * there is no guarantee that the hook will execute before the container ENTRYPOINT.
+   *
+   * @default - No post start handler.
+   */
+  readonly postStart?: Handler;
+
+  /**
+   * This hook is called immediately before a container is terminated due to an API request or management
+   * event such as a liveness/startup probe failure, preemption, resource contention and others.
+   * A call to the PreStop hook fails if the container is already in a terminated or completed state
+   * and the hook must complete before the TERM signal to stop the container can be sent.
+   * The Pod's termination grace period countdown begins before the PreStop hook is executed,
+   * so regardless of the outcome of the handler, the container will eventually terminate
+   * within the Pod's termination grace period. No parameters are passed to the handler.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+   *
+   * @default - No pre stop handler.
+   */
+  readonly preStop?: Handler;
+
+}
+
 /**
  * Properties for creating a container.
  */
@@ -402,10 +512,28 @@ export interface ContainerProps {
   readonly startup?: Probe;
 
   /**
+   * Describes actions that the management system should take in response to container lifecycle events.
+   */
+  readonly lifecycle?: ContainerLifecycle;
+
+  /**
    * Compute resources (CPU and memory requests and limits) required by the container
    * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
    */
   readonly resources?: Resources;
+
+  /**
+   * SecurityContext defines the security options the container should be run with.
+   * If set, the fields override equivalent fields of the pod's security context.
+   *
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+   * @default
+   *
+   *   ensureNonRoot: false
+   *   privileged: false
+   *   readOnlyRootFilesystem: false
+   */
+  readonly securityContext?: ContainerSecurityContextProps;
 }
 
 /**
@@ -449,12 +577,18 @@ export class Container {
    */
   public readonly resources?: Resources;
 
+  /**
+   * The security context of the container.
+   */
+  public readonly securityContext: ContainerSecurityContext;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _env: { [name: string]: EnvValue };
   private readonly _readiness?: Probe;
   private readonly _liveness?: Probe;
   private readonly _startup?: Probe;
+  private readonly _lifecycle?: ContainerLifecycle;
 
   constructor(props: ContainerProps) {
     if (props instanceof Container) {
@@ -470,10 +604,12 @@ export class Container {
     this._readiness = props.readiness;
     this._liveness = props.liveness;
     this._startup = props.startup;
+    this._lifecycle = props.lifecycle;
     this.resources = props.resources;
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
+    this.securityContext = new ContainerSecurityContext(props.securityContext);
   }
 
   /**
@@ -594,7 +730,12 @@ export class Container {
       readinessProbe: this._readiness?._toKube(this),
       livenessProbe: this._liveness?._toKube(this),
       startupProbe: this._startup?._toKube(this),
+      lifecycle: this._lifecycle ? {
+        postStart: this._lifecycle.postStart?._toKube(this),
+        preStop: this._lifecycle.preStop?._toKube(this),
+      } : undefined,
       resources: resourceRequirements,
+      securityContext: this.securityContext._toKube(),
     };
   }
 }

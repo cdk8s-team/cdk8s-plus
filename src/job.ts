@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplateProps, IPodTemplate, PodTemplate } from './pod';
+import { RestartPolicy, PodTemplateProps, IPodTemplate, PodTemplate, PodSecurityContext, HostAlias } from './pod';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
 
@@ -100,6 +100,14 @@ export class Job extends Resource implements IPodTemplate {
     return this._podTemplate.containers;
   }
 
+  public get initContainers(): Container[] {
+    return this._podTemplate.initContainers;
+  }
+
+  public get hostAliases(): HostAlias[] {
+    return this._podTemplate.hostAliases;
+  }
+
   public get volumes(): Volume[] {
     return this._podTemplate.volumes;
   }
@@ -112,8 +120,20 @@ export class Job extends Resource implements IPodTemplate {
     return this._podTemplate.serviceAccount;
   }
 
+  public get securityContext(): PodSecurityContext {
+    return this._podTemplate.securityContext;
+  }
+
   public addContainer(container: ContainerProps): Container {
     return this._podTemplate.addContainer(container);
+  }
+
+  public addInitContainer(container: ContainerProps): Container {
+    return this._podTemplate.addInitContainer(container);
+  }
+
+  public addHostAlias(hostAlias: HostAlias): void {
+    return this._podTemplate.addHostAlias(hostAlias);
   }
 
   public addVolume(volume: Volume): void {
