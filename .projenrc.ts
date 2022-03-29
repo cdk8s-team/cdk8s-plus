@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { cdk, javascript } from 'projen';
-import { generateResourceType } from './projenrc/gen-resource-type';
+import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
 const LATEST_SUPPORTED_K8S_VERSION = '22';
@@ -111,6 +111,6 @@ docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
 docgenTask.exec('jsii-docgen -l python -o docs/python.md');
 docgenTask.exec('jsii-docgen -l java -o docs/java.md');
 
-generateResourceType(project, 'api-resources.txt', 'src/resource-type.ts');
+generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
 project.synth();

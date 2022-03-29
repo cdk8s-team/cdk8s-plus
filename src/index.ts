@@ -11,7 +11,11 @@ export * from './statefulset';
 export * from './volume';
 export * from './ingress';
 export * from './probe';
+export * from './pvc';
+export * from './pv';
+export * from './handler';
 export * from './role';
 export * from './resources';
-export * from './resource-type';
 export * from './role-binding';
+
+export * from './api-resource.generated';

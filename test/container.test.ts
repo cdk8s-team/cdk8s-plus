@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
-import { Size } from 'cdk8s';
+import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu } from '../src';
+import { Container, Cpu, Handler } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 describe('EnvValue', () => {
@@ -239,6 +239,20 @@ describe('Container', () => {
     expect(container._toKube().volumeMounts).toEqual([expected]);
   });
 
+  test('can mount container to a pv', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod');
+
+    const volume = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'PV', { volumeId: 'vol' });
+
+    const container = pod.addContainer({ image: 'image' });
+    container.mount('/path/to/mount', volume);
+
+    const resources = Testing.synth(chart);
+    expect(resources).toMatchSnapshot();
+  });
+
   test('mount options', () => {
     const container = new kplus.Container({
       image: 'image',
@@ -395,3 +409,32 @@ test('custom security context', () => {
   expect(container.securityContext.group).toEqual(2000);
 
 });
+
+test('can configure a postStart lifecycle hook', () => {
+
+  const container = new Container({
+    image: 'image',
+    lifecycle: {
+      postStart: Handler.fromCommand(['hello']),
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.lifecycle!.postStart).toEqual({ exec: { command: ['hello'] } });
+
+});
+
+test('can configure a preStop lifecycle hook', () => {
+
+  const container = new Container({
+    image: 'image',
+    lifecycle: {
+      preStop: Handler.fromCommand(['hello']),
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.lifecycle!.preStop).toEqual({ exec: { command: ['hello'] } });
+
+});
+

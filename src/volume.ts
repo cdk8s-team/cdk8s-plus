@@ -1,7 +1,19 @@
 import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
 import * as k8s from './imports/k8s';
+import { IPersistentVolumeClaim } from './pvc';
 import { ISecret } from './secret';
+
+/**
+ * Represents a piece of storage in the cluster.
+ */
+export interface IStorage {
+
+  /**
+   * Convert the piece of storage into a concrete volume.
+   */
+  asVolume(): Volume;
+}
 
 /**
  * Volume represents a named volume in a pod that may be accessed by any
@@ -36,7 +48,7 @@ import { ISecret } from './secret';
  * hierarchy, and any volumes are mounted at the specified paths within the
  * image. Volumes can not mount onto other volumes
  */
-export class Volume {
+export class Volume implements IStorage {
   /**
    * Populate the volume from a ConfigMap.
    *
@@ -80,7 +92,7 @@ export class Volume {
       emptyDir: {
         medium: options.medium,
         sizeLimit: options.sizeLimit
-          ? `${options.sizeLimit.toMebibytes()}Mi`
+          ? k8s.Quantity.fromString(`${options.sizeLimit.toMebibytes()}Mi`)
           : undefined,
       },
     });
@@ -113,6 +125,22 @@ export class Volume {
   }
 
   /**
+   * Used to mount a PersistentVolume into a Pod.
+   * PersistentVolumeClaims are a way for users to "claim" durable storage (such as a GCE PersistentDisk or an iSCSI volume)
+   * without knowing the details of the particular cloud environment.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+   */
+  public static fromPersistentVolumeClaim(pvc: IPersistentVolumeClaim, options: PersistentVolumeClaimVolumeOptions = {}): Volume {
+    return new Volume(options.name ?? `pvc-${pvc.name}`, {
+      persistentVolumeClaim: {
+        claimName: pvc.name,
+        readOnly: options.readOnly ?? false,
+      },
+    });
+  }
+
+  /**
     * @internal
    */
   private static renderItems = (items?: { [key: string]: PathMapping }): undefined | Array<k8s.KeyToPath> => {
@@ -129,8 +157,12 @@ export class Volume {
   };
 
 
-  protected constructor(public readonly name: string, private readonly config: any) {
+  private constructor(public readonly name: string, private readonly config: Omit<k8s.Volume, 'name'>) {
 
+  }
+
+  public asVolume(): Volume {
+    return this;
   }
 
   /**
@@ -250,6 +282,26 @@ export enum EmptyDirMedium {
    * files you write will count against your Container's memory limit.
    */
   MEMORY = 'Memory'
+}
+
+/**
+ * Options for a PersistentVolumeClaim-based volume.
+ */
+export interface PersistentVolumeClaimVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - Derived from the PVC name.
+   */
+  readonly name?: string;
+
+  /**
+   * Will force the ReadOnly setting in VolumeMounts.
+   *
+   * @default false
+   */
+  readonly readOnly?: boolean;
+
 }
 
 /**

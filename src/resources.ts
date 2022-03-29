@@ -1,5 +1,5 @@
 import { IResource } from './base';
-import { ApiResource } from './resource-type';
+import { ApiResource } from './api-resource.generated';
 
 /**
  * The part of a rule that corresponds to a set of resources.

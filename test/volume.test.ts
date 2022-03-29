@@ -1,5 +1,5 @@
 import { Testing, Size } from 'cdk8s';
-import { Volume, ConfigMap, EmptyDirMedium, Secret } from '../src';
+import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim } from '../src';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -270,6 +270,43 @@ describe('fromEmptyDir', () => {
 
   test('size limit', () => {
     const vol = Volume.fromEmptyDir('main', { sizeLimit: Size.gibibytes(20) });
-    expect(vol._toKube().emptyDir?.sizeLimit).toEqual('20480Mi');
+    expect(vol._toKube().emptyDir!.sizeLimit!.value).toEqual('20480Mi');
   });
+});
+
+describe('fromPersistentVolumeClaim', () => {
+
+  test('defaults', () => {
+
+    const pvc = PersistentVolumeClaim.fromClaimName('claim');
+    const volume = Volume.fromPersistentVolumeClaim(pvc);
+
+    expect(volume.name).toEqual('pvc-claim');
+    expect(volume._toKube()).toEqual({
+      name: volume.name,
+      persistentVolumeClaim: {
+        claimName: pvc.name,
+        readOnly: false,
+      },
+    });
+  });
+
+  test('custom', () => {
+
+    const pvc = PersistentVolumeClaim.fromClaimName('claim');
+    const volume = Volume.fromPersistentVolumeClaim(pvc, {
+      name: 'custom',
+      readOnly: true,
+    });
+
+    expect(volume.name).toEqual('custom');
+    expect(volume._toKube()).toEqual({
+      name: volume.name,
+      persistentVolumeClaim: {
+        claimName: pvc.name,
+        readOnly: true,
+      },
+    });
+  });
+
 });
