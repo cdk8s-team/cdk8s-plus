@@ -2,6 +2,198 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### AwsElasticBlockStorePersistentVolume <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume"></a>
+
+Represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+#### Initializers <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.Initializer"></a>
+
+```typescript
+import { AwsElasticBlockStorePersistentVolume } from 'cdk8s-plus-22'
+
+new AwsElasticBlockStorePersistentVolume(scope: Construct, id: string, props: AwsElasticBlockStorePersistentVolumeProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `fsType`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+
+File system type of this volume.
+
+---
+
+##### `readOnly`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not it is mounted as a read-only volume.
+
+---
+
+##### `volumeId`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.property.volumeId"></a>
+
+```typescript
+public readonly volumeId: string;
+```
+
+- *Type:* `string`
+
+Volume id of this volume.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+
+Partition of this volume.
+
+---
+
+
+### AzureDiskPersistentVolume <a name="cdk8s-plus-22.AzureDiskPersistentVolume"></a>
+
+AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
+
+#### Initializers <a name="cdk8s-plus-22.AzureDiskPersistentVolume.Initializer"></a>
+
+```typescript
+import { AzureDiskPersistentVolume } from 'cdk8s-plus-22'
+
+new AzureDiskPersistentVolume(scope: Construct, id: string, props: AzureDiskPersistentVolumeProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeProps`](#cdk8s-plus-22.AzureDiskPersistentVolumeProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `cachingMode`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.property.cachingMode"></a>
+
+```typescript
+public readonly cachingMode: AzureDiskPersistentVolumeCachingMode;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode`](#cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode)
+
+Caching mode of this volume.
+
+---
+
+##### `diskName`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.property.diskName"></a>
+
+```typescript
+public readonly diskName: string;
+```
+
+- *Type:* `string`
+
+Disk name of this volume.
+
+---
+
+##### `diskUri`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.property.diskUri"></a>
+
+```typescript
+public readonly diskUri: string;
+```
+
+- *Type:* `string`
+
+Disk URI of this volume.
+
+---
+
+##### `fsType`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+
+File system type of this volume.
+
+---
+
+##### `kind`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.property.kind"></a>
+
+```typescript
+public readonly kind: AzureDiskPersistentVolumeKind;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeKind`](#cdk8s-plus-22.AzureDiskPersistentVolumeKind)
+
+Azure kind of this volume.
+
+---
+
+##### `readOnly`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolume.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not it is mounted as a read-only volume.
+
+---
+
+
 ### BasicAuthSecret <a name="cdk8s-plus-22.BasicAuthSecret"></a>
 
 Create a secret for basic authentication.
@@ -540,6 +732,93 @@ new DockerConfigSecret(scope: Construct, id: string, props: DockerConfigSecretPr
 
 
 
+### GCEPersistentDiskPersistentVolume <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume"></a>
+
+GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
+
+Provisioned by an admin.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+
+#### Initializers <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.Initializer"></a>
+
+```typescript
+import { GCEPersistentDiskPersistentVolume } from 'cdk8s-plus-22'
+
+new GCEPersistentDiskPersistentVolume(scope: Construct, id: string, props: GCEPersistentDiskPersistentVolumeProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `fsType`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+
+File system type of this volume.
+
+---
+
+##### `pdName`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.property.pdName"></a>
+
+```typescript
+public readonly pdName: string;
+```
+
+- *Type:* `string`
+
+PD resource in GCE of this volume.
+
+---
+
+##### `readOnly`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not it is mounted as a read-only volume.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolume.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+
+Partition of this volume.
+
+---
+
+
 ### Ingress <a name="cdk8s-plus-22.Ingress"></a>
 
 Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend.
@@ -937,6 +1216,310 @@ public readonly ttlAfterFinished: Duration;
 - *Type:* [`cdk8s.Duration`](#cdk8s.Duration)
 
 TTL before the job is deleted after it is finished.
+
+---
+
+
+### PersistentVolume <a name="cdk8s-plus-22.PersistentVolume"></a>
+
+- *Implements:* [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume)
+
+A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
+
+It is a resource in the cluster just like a node is a cluster resource.
+PVs are volume plugins like Volumes, but have a lifecycle independent of any
+individual Pod that uses the PV. This API object captures the details of the
+implementation of the storage, be that NFS, iSCSI, or a
+cloud-provider-specific storage system.
+
+#### Initializers <a name="cdk8s-plus-22.PersistentVolume.Initializer"></a>
+
+```typescript
+import { PersistentVolume } from 'cdk8s-plus-22'
+
+new PersistentVolume(scope: Construct, id: string, props?: PersistentVolumeProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeProps`](#cdk8s-plus-22.PersistentVolumeProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s-plus-22.PersistentVolume.bind"></a>
+
+```typescript
+public bind(pvc: IPersistentVolumeClaim)
+```
+
+###### `pvc`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.parameter.pvc"></a>
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+
+The PVC to bind to.
+
+---
+
+##### `reserve` <a name="cdk8s-plus-22.PersistentVolume.reserve"></a>
+
+```typescript
+public reserve()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromPersistentVolumeName` <a name="cdk8s-plus-22.PersistentVolume.fromPersistentVolumeName"></a>
+
+```typescript
+import { PersistentVolume } from 'cdk8s-plus-22'
+
+PersistentVolume.fromPersistentVolumeName(volumeName: string)
+```
+
+###### `volumeName`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.parameter.volumeName"></a>
+
+- *Type:* `string`
+
+The name of the pv to reference.
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `mode`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.property.mode"></a>
+
+```typescript
+public readonly mode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+
+Volume mode of this volume.
+
+---
+
+##### `reclaimPolicy`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.property.reclaimPolicy"></a>
+
+```typescript
+public readonly reclaimPolicy: PersistentVolumeReclaimPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeReclaimPolicy`](#cdk8s-plus-22.PersistentVolumeReclaimPolicy)
+
+Reclaim policy of this volume.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+
+Access modes requirement of this claim.
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.property.claim"></a>
+
+```typescript
+public readonly claim: IPersistentVolumeClaim;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+
+PVC this volume is bound to.
+
+Undefined means this volume is not yet
+claimed by any PVC.
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.property.mountOptions"></a>
+
+```typescript
+public readonly mountOptions: string[];
+```
+
+- *Type:* `string`[]
+
+Mount options of this volume.
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+Storage size of this volume.
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+
+Storage class this volume belongs to.
+
+---
+
+
+### PersistentVolumeClaim <a name="cdk8s-plus-22.PersistentVolumeClaim"></a>
+
+- *Implements:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+
+A PersistentVolumeClaim (PVC) is a request for storage by a user.
+
+It is similar to a Pod. Pods consume node resources and PVCs consume PV resources.
+Pods can request specific levels of resources (CPU and Memory).
+Claims can request specific size and access modes
+
+#### Initializers <a name="cdk8s-plus-22.PersistentVolumeClaim.Initializer"></a>
+
+```typescript
+import { PersistentVolumeClaim } from 'cdk8s-plus-22'
+
+new PersistentVolumeClaim(scope: Construct, id: string, props?: PersistentVolumeClaimProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaimProps`](#cdk8s-plus-22.PersistentVolumeClaimProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="cdk8s-plus-22.PersistentVolumeClaim.bind"></a>
+
+```typescript
+public bind(pv: IPersistentVolume)
+```
+
+###### `pv`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.pv"></a>
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume)
+
+The PV to bind to.
+
+---
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromClaimName` <a name="cdk8s-plus-22.PersistentVolumeClaim.fromClaimName"></a>
+
+```typescript
+import { PersistentVolumeClaim } from 'cdk8s-plus-22'
+
+PersistentVolumeClaim.fromClaimName(claimName: string)
+```
+
+###### `claimName`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.parameter.claimName"></a>
+
+- *Type:* `string`
+
+The name of the pvc to reference.
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `volumeMode`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+
+Volume mode requirement of this claim.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+
+Access modes requirement of this claim.
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+
+Storage requirement of this claim.
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+
+Storage class requirment of this claim.
+
+---
+
+##### `volume`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.volume"></a>
+
+```typescript
+public readonly volume: IPersistentVolume;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume)
+
+PV this claim is bound to.
+
+Undefined means the claim is not bound
+to any specific volume.
 
 ---
 
@@ -2082,6 +2665,409 @@ public readonly keyPrefix: string;
 - *Default:* ""
 
 A prefix to add to all keys in the config map.
+
+---
+
+### AwsElasticBlockStorePersistentVolumeProps <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps"></a>
+
+Properties for `AwsElasticBlockStorePersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AwsElasticBlockStorePersistentVolumeProps } from 'cdk8s-plus-22'
+
+const awsElasticBlockStorePersistentVolumeProps: AwsElasticBlockStorePersistentVolumeProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.claim"></a>
+
+```typescript
+public readonly claim: IPersistentVolumeClaim;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.mountOptions"></a>
+
+```typescript
+public readonly mountOptions: string[];
+```
+
+- *Type:* `string`[]
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.reclaimPolicy"></a>
+
+```typescript
+public readonly reclaimPolicy: PersistentVolumeReclaimPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeReclaimPolicy`](#cdk8s-plus-22.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `volumeId`<sup>Required</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.volumeId"></a>
+
+```typescript
+public readonly volumeId: string;
+```
+
+- *Type:* `string`
+
+Unique ID of the persistent disk resource in AWS (Amazon EBS volume).
+
+More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolumeProps.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### AzureDiskPersistentVolumeProps <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps"></a>
+
+Properties for `AzureDiskPersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AzureDiskPersistentVolumeProps } from 'cdk8s-plus-22'
+
+const azureDiskPersistentVolumeProps: AzureDiskPersistentVolumeProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.claim"></a>
+
+```typescript
+public readonly claim: IPersistentVolumeClaim;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.mountOptions"></a>
+
+```typescript
+public readonly mountOptions: string[];
+```
+
+- *Type:* `string`[]
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.reclaimPolicy"></a>
+
+```typescript
+public readonly reclaimPolicy: PersistentVolumeReclaimPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeReclaimPolicy`](#cdk8s-plus-22.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `diskName`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.diskName"></a>
+
+```typescript
+public readonly diskName: string;
+```
+
+- *Type:* `string`
+
+The Name of the data disk in the blob storage.
+
+---
+
+##### `diskUri`<sup>Required</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.diskUri"></a>
+
+```typescript
+public readonly diskUri: string;
+```
+
+- *Type:* `string`
+
+The URI the data disk in the blob storage.
+
+---
+
+##### `cachingMode`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.cachingMode"></a>
+
+```typescript
+public readonly cachingMode: AzureDiskPersistentVolumeCachingMode;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode`](#cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.kind"></a>
+
+```typescript
+public readonly kind: AzureDiskPersistentVolumeKind;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeKind`](#cdk8s-plus-22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
 
 ---
 
@@ -3414,6 +4400,201 @@ The type of the path.
 
 ---
 
+### GCEPersistentDiskPersistentVolumeProps <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps"></a>
+
+Properties for `GCEPersistentDiskPersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { GCEPersistentDiskPersistentVolumeProps } from 'cdk8s-plus-22'
+
+const gCEPersistentDiskPersistentVolumeProps: GCEPersistentDiskPersistentVolumeProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.claim"></a>
+
+```typescript
+public readonly claim: IPersistentVolumeClaim;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.mountOptions"></a>
+
+```typescript
+public readonly mountOptions: string[];
+```
+
+- *Type:* `string`[]
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.reclaimPolicy"></a>
+
+```typescript
+public readonly reclaimPolicy: PersistentVolumeReclaimPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeReclaimPolicy`](#cdk8s-plus-22.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `pdName`<sup>Required</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.pdName"></a>
+
+```typescript
+public readonly pdName: string;
+```
+
+- *Type:* `string`
+
+Unique name of the PD resource in GCE.
+
+Used to identify the disk in GCE.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### HandlerFromHttpGetOptions <a name="cdk8s-plus-22.HandlerFromHttpGetOptions"></a>
 
 Options for `Handler.fromHttpGet`.
@@ -4172,6 +5353,284 @@ Optional: mode bits to use on this file, must be a value between 0 and 0777.
 If not specified, the volume defaultMode will be used. This might be
 in conflict with other options that affect the file mode, like fsGroup, and
 the result can be other mode bits set.
+
+---
+
+### PersistentVolumeClaimProps <a name="cdk8s-plus-22.PersistentVolumeClaimProps"></a>
+
+Properties for `PersistentVolumeClaim`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PersistentVolumeClaimProps } from 'cdk8s-plus-22'
+
+const persistentVolumeClaimProps: PersistentVolumeClaimProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+- *Default:* No access modes requirement.
+
+Contains the access modes the volume should support.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+- *Default:* No storage requirement.
+
+Minimum storage size the volume should have.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+- *Default:* Not set.
+
+Name of the StorageClass required by the claim. When this property is not set, the behavior is as follows:.
+
+If the admission plugin is turned on, the storage class marked as default will be used.
+- If the admission plugin is turned off, the pvc can only be bound to volumes without a storage class.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+
+---
+
+##### `volume`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.volume"></a>
+
+```typescript
+public readonly volume: IPersistentVolume;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume)
+- *Default:* No specific volume binding.
+
+The PersistentVolume backing this claim.
+
+The control plane still checks that storage class, access modes,
+and requested storage size on the volume are valid.
+
+Note that in order to guarantee a proper binding, the volume should
+also define a `claimRef` referring to this claim. Otherwise, the volume may be
+claimed be other pvc's before it gets a chance to bind to this one.
+
+If the volume is managed (i.e not imported), you can use `pv.claim()` to easily
+create a bi-directional bounded claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimProps.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+### PersistentVolumeClaimVolumeOptions <a name="cdk8s-plus-22.PersistentVolumeClaimVolumeOptions"></a>
+
+Options for a PersistentVolumeClaim-based volume.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PersistentVolumeClaimVolumeOptions } from 'cdk8s-plus-22'
+
+const persistentVolumeClaimVolumeOptions: PersistentVolumeClaimVolumeOptions = { ... }
+```
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* Derived from the PVC name.
+
+The volume name.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeClaimVolumeOptions.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Will force the ReadOnly setting in VolumeMounts.
+
+---
+
+### PersistentVolumeProps <a name="cdk8s-plus-22.PersistentVolumeProps"></a>
+
+Properties for `PersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PersistentVolumeProps } from 'cdk8s-plus-22'
+
+const persistentVolumeProps: PersistentVolumeProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.accessModes"></a>
+
+```typescript
+public readonly accessModes: PersistentVolumeAccessMode[];
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeAccessMode`](#cdk8s-plus-22.PersistentVolumeAccessMode)[]
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.claim"></a>
+
+```typescript
+public readonly claim: IPersistentVolumeClaim;
+```
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.mountOptions"></a>
+
+```typescript
+public readonly mountOptions: string[];
+```
+
+- *Type:* `string`[]
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.reclaimPolicy"></a>
+
+```typescript
+public readonly reclaimPolicy: PersistentVolumeReclaimPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeReclaimPolicy`](#cdk8s-plus-22.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.storage"></a>
+
+```typescript
+public readonly storage: Size;
+```
+
+- *Type:* [`cdk8s.Size`](#cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.storageClassName"></a>
+
+```typescript
+public readonly storageClassName: string;
+```
+
+- *Type:* `string`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolumeProps.property.volumeMode"></a>
+
+```typescript
+public readonly volumeMode: PersistentVolumeMode;
+```
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeMode`](#cdk8s-plus-22.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
 
 ---
 
@@ -6956,26 +8415,6 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
-#### Initializers <a name="cdk8s-plus-22.Volume.Initializer"></a>
-
-```typescript
-import { Volume } from 'cdk8s-plus-22'
-
-new Volume(name: string, config: any)
-```
-
-##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.name"></a>
-
-- *Type:* `string`
-
----
-
-##### `config`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.config"></a>
-
-- *Type:* `any`
-
----
-
 
 #### Static Functions <a name="Static Functions"></a>
 
@@ -7022,6 +8461,46 @@ Volume.fromEmptyDir(name: string, options?: EmptyDirVolumeOptions)
 - *Type:* [`cdk8s-plus-22.EmptyDirVolumeOptions`](#cdk8s-plus-22.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromPersistentVolume` <a name="cdk8s-plus-22.Volume.fromPersistentVolume"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromPersistentVolume(pv: PersistentVolume, options?: PersistentVolumeClaimVolumeOptions)
+```
+
+###### `pv`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.pv"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume)
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaimVolumeOptions`](#cdk8s-plus-22.PersistentVolumeClaimVolumeOptions)
+
+---
+
+##### `fromPersistentVolumeClaim` <a name="cdk8s-plus-22.Volume.fromPersistentVolumeClaim"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromPersistentVolumeClaim(pvc: IPersistentVolumeClaim, options?: PersistentVolumeClaimVolumeOptions)
+```
+
+###### `pvc`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.pvc"></a>
+
+- *Type:* [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.PersistentVolumeClaimVolumeOptions`](#cdk8s-plus-22.PersistentVolumeClaimVolumeOptions)
 
 ---
 
@@ -7076,6 +8555,52 @@ Represents a config map.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IConfigMap.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The Kubernetes name of this resource.
+
+---
+
+### IPersistentVolume <a name="cdk8s-plus-22.IPersistentVolume"></a>
+
+- *Extends:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume)
+
+Contract of a `PersistentVolumeClaim`.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IPersistentVolume.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The Kubernetes name of this resource.
+
+---
+
+### IPersistentVolumeClaim <a name="cdk8s-plus-22.IPersistentVolumeClaim"></a>
+
+- *Extends:* [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource)
+
+- *Implemented By:* [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim)
+
+Contract of a `PersistentVolumeClaim`.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.IPersistentVolumeClaim.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -7328,7 +8853,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
 
 Represents a resource.
 
@@ -7390,6 +8915,56 @@ The Kubernetes name of this resource.
 ---
 
 ## Enums <a name="Enums"></a>
+
+### AzureDiskPersistentVolumeCachingMode <a name="AzureDiskPersistentVolumeCachingMode"></a>
+
+Azure disk caching modes.
+
+#### `NONE` <a name="cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode.NONE"></a>
+
+None.
+
+---
+
+
+#### `READ_ONLY` <a name="cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode.READ_ONLY"></a>
+
+ReadOnly.
+
+---
+
+
+#### `READ_WRITE` <a name="cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode.READ_WRITE"></a>
+
+ReadWrite.
+
+---
+
+
+### AzureDiskPersistentVolumeKind <a name="AzureDiskPersistentVolumeKind"></a>
+
+Azure Disk kinds.
+
+#### `SHARED` <a name="cdk8s-plus-22.AzureDiskPersistentVolumeKind.SHARED"></a>
+
+Multiple blob disks per storage account.
+
+---
+
+
+#### `DEDICATED` <a name="cdk8s-plus-22.AzureDiskPersistentVolumeKind.DEDICATED"></a>
+
+Single blob disk per storage account.
+
+---
+
+
+#### `MANAGED` <a name="cdk8s-plus-22.AzureDiskPersistentVolumeKind.MANAGED"></a>
+
+Azure managed data disk.
+
+---
+
 
 ### EmptyDirMedium <a name="EmptyDirMedium"></a>
 
@@ -7618,6 +9193,108 @@ the host operating system and therefore it is allowed only in privileged
 Containers. Familiarity with Linux kernel behavior is strongly recommended.
 In addition, any volume mounts created by Containers in Pods must be
 destroyed (unmounted) by the Containers on termination.
+
+---
+
+
+### PersistentVolumeAccessMode <a name="PersistentVolumeAccessMode"></a>
+
+Access Modes.
+
+#### `READ_WRITE_ONCE` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_WRITE_ONCE"></a>
+
+The volume can be mounted as read-write by a single node.
+
+ReadWriteOnce access mode still can allow multiple pods to access
+the volume when the pods are running on the same node.
+
+---
+
+
+#### `READ_ONLY_MANY` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_ONLY_MANY"></a>
+
+The volume can be mounted as read-only by many nodes.
+
+---
+
+
+#### `READ_WRITE_MANY` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_WRITE_MANY"></a>
+
+The volume can be mounted as read-write by many nodes.
+
+---
+
+
+#### `READ_WRITE_ONCE_POD` <a name="cdk8s-plus-22.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD"></a>
+
+The volume can be mounted as read-write by a single Pod.
+
+Use ReadWriteOncePod access mode if you want to ensure that
+only one pod across whole cluster can read that PVC or write to it.
+This is only supported for CSI volumes and Kubernetes version 1.22+.
+
+---
+
+
+### PersistentVolumeMode <a name="PersistentVolumeMode"></a>
+
+Volume Modes.
+
+#### `FILE_SYSTEM` <a name="cdk8s-plus-22.PersistentVolumeMode.FILE_SYSTEM"></a>
+
+Volume is ounted into Pods into a directory.
+
+If the volume is backed by a block device and the device is empty,
+Kubernetes creates a filesystem on the device before mounting it
+for the first time.
+
+---
+
+
+#### `BLOCK` <a name="cdk8s-plus-22.PersistentVolumeMode.BLOCK"></a>
+
+Use a volume as a raw block device.
+
+Such volume is presented into a Pod as a block device,
+without any filesystem on it. This mode is useful to provide a Pod the fastest possible way
+to access a volume, without any filesystem layer between the Pod
+and the volume. On the other hand, the application running in
+the Pod must know how to handle a raw block device
+
+---
+
+
+### PersistentVolumeReclaimPolicy <a name="PersistentVolumeReclaimPolicy"></a>
+
+Reclaim Policies.
+
+#### `RETAIN` <a name="cdk8s-plus-22.PersistentVolumeReclaimPolicy.RETAIN"></a>
+
+The Retain reclaim policy allows for manual reclamation of the resource.
+
+When the PersistentVolumeClaim is deleted, the PersistentVolume still exists and the
+volume is considered "released". But it is not yet available for another claim
+because the previous claimant's data remains on the volume.
+An administrator can manually reclaim the volume with the following steps:
+
+1. Delete the PersistentVolume. The associated storage asset in external
+    infrastructure (such as an AWS EBS, GCE PD, Azure Disk, or Cinder volume) still exists after the PV is deleted.
+2. Manually clean up the data on the associated storage asset accordingly.
+3. Manually delete the associated storage asset.
+
+If you want to reuse the same storage asset, create a new PersistentVolume
+with the same storage asset definition.
+
+---
+
+
+#### `DELETE` <a name="cdk8s-plus-22.PersistentVolumeReclaimPolicy.DELETE"></a>
+
+For volume plugins that support the Delete reclaim policy, deletion removes both the PersistentVolume object from Kubernetes, as well as the associated storage asset in the external infrastructure, such as an AWS EBS, GCE PD, Azure Disk, or Cinder volume.
+
+Volumes that were dynamically provisioned inherit the reclaim policy of their StorageClass, which defaults to Delete.
+The administrator should configure the StorageClass according to users' expectations; otherwise,
+the PV must be edited or patched after it is created
 
 ---
 
