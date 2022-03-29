@@ -1,6 +1,5 @@
 import { Testing, Size } from 'cdk8s';
 import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim } from '../src';
-import { AzureDiskPersistentVolume } from '../src/pv';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
