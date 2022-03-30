@@ -51,6 +51,16 @@ export interface IPodSpec {
   readonly hostAliases: HostAlias[];
 
   /**
+   * The pod's DNS settings.
+   */
+  readonly dns: PodDns;
+
+  /**
+   * The pod's security context.
+   */
+  readonly securityContext: PodSecurityContext;
+
+  /**
    * Add a container to the pod.
    *
    * @param container The container.
@@ -240,6 +250,9 @@ export class PodSpec implements IPodSpec {
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
       dnsPolicy: dns.policy,
       dnsConfig: dns.config,
+      hostname: dns.hostname,
+      subdomain: dns.subdomain,
+      setHostnameAsFqdn: dns.hostnameAsFQDN,
     };
 
   }
@@ -505,6 +518,10 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.hostAliases;
   }
 
+  public get dns(): PodDns {
+    return this._spec.dns;
+  }
+
   public addContainer(container: ContainerProps): Container {
     return this._spec.addContainer(container);
   }
@@ -527,6 +544,32 @@ export class Pod extends Resource implements IPodSpec {
  * Properties for `PodDns`.
  */
 export interface PodDnsProps {
+
+  /**
+   * Specifies the hostname of the Pod.
+   *
+   * @default - Set to a system-defined value.
+   */
+  readonly hostname?: string;
+
+  /**
+   * If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+   *
+   * @default - No subdomain.
+   */
+  readonly subdomain?: string;
+
+  /**
+   * If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+   * In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+   * In Windows containers, this means setting the registry value of hostname for the registry
+   * key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+   * If a pod does not have FQDN, this has no effect.
+   *
+   * @default false
+   */
+  readonly hostnameAsFQDN?: boolean;
+
   /**
    * Set DNS policy for the pod.
    *
@@ -574,12 +617,30 @@ export class PodDns {
    */
   public readonly policy: DnsPolicy;
 
+  /**
+   * The configured hostname of the pod. Undefined means its set to a system-defined value.
+   */
+  public readonly hostname?: string;
+
+  /**
+   * The configured subdomain of the pod.
+   */
+  public readonly subdomain?: string;
+
+  /**
+   * Whether or not the pods hostname is set to its FQDN.
+   */
+  public readonly hostnameAsFQDN: boolean;
+
   private readonly _nameservers: string[];
   private readonly _searches: string[];
   private readonly _options: DnsOption[];
 
   constructor(props: PodDnsProps = {}) {
+    this.hostname = props.hostname;
+    this.subdomain = props.subdomain;
     this.policy = props.policy ?? DnsPolicy.CLUSTER_FIRST;
+    this.hostnameAsFQDN = props.hostnameAsFQDN ?? false;
     this._nameservers = props.nameservers ?? [];
     this._searches = props.searches ?? [];
     this._options = props.options ?? [];
@@ -630,10 +691,10 @@ export class PodDns {
   /**
    * @internal
    */
-  public _toKube(): { policy: string; config: k8s.PodDnsConfig } {
+  public _toKube(): { hostname?: string; subdomain?: string; hostnameAsFQDN: boolean; policy: string; config: k8s.PodDnsConfig } {
 
     if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
-      throw new Error('When dns policy is set to "DnsPolicy.NONE", at least one nameserver is required');
+      throw new Error('When dns policy is set to NONE, at least one nameserver is required');
     }
 
     if (this.nameservers.length > 3) {
@@ -645,6 +706,9 @@ export class PodDns {
     }
 
     return {
+      hostname: this.hostname,
+      subdomain: this.subdomain,
+      hostnameAsFQDN: this.hostnameAsFQDN,
       policy: this.policy,
       config: {
         nameservers: this.nameservers,

@@ -788,6 +788,7 @@ import org.cdk8s.plus22.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -831,6 +832,16 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.dns"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -1071,6 +1082,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.hostAliases"></a>
 
 ```java
@@ -1144,6 +1167,8 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -1704,6 +1729,7 @@ import org.cdk8s.plus22.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -1748,6 +1774,16 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.dns"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -1941,6 +1977,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.hostAliases"></a>
 
 ```java
@@ -1988,6 +2036,8 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -2559,6 +2609,7 @@ import org.cdk8s.plus22.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -2599,6 +2650,16 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.dns"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -2750,6 +2811,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.hostAliases"></a>
 
 ```java
@@ -2785,6 +2858,8 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -3552,6 +3627,7 @@ import org.cdk8s.plus22.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -3597,6 +3673,16 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.dns"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -3816,6 +3902,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.hostAliases"></a>
 
 ```java
@@ -3901,6 +3999,8 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -5309,6 +5409,7 @@ import org.cdk8s.plus22.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -5348,6 +5449,20 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.dns"></a>
+
+```java
+public PodDnsProps getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -5494,6 +5609,46 @@ public java.lang.Number getReplicas();
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### DnsOption <a name="org.cdk8s.plus22.DnsOption"></a>
+
+Custom DNS option.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.DnsOption;
+
+DnsOption.builder()
+    .name(java.lang.String)
+//  .value(java.lang.String)
+    .build();
+```
+
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.DnsOption.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+Option name.
+
+---
+
+##### `value`<sup>Optional</sup> <a name="org.cdk8s.plus22.DnsOption.property.value"></a>
+
+```java
+public java.lang.String getValue();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* No value.
+
+Option value.
 
 ---
 
@@ -6645,6 +6800,7 @@ import org.cdk8s.plus22.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -6685,6 +6841,20 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.dns"></a>
+
+```java
+public PodDnsProps getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -7312,6 +7482,137 @@ Defines what type of volume is required by the claim.
 
 ---
 
+### PodDnsProps <a name="org.cdk8s.plus22.PodDnsProps"></a>
+
+Properties for `PodDns`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PodDnsProps;
+
+PodDnsProps.builder()
+//  .hostname(java.lang.String)
+//  .hostnameAsFQDN(java.lang.Boolean)
+//  .nameservers(java.util.List<java.lang.String>)
+//  .options(java.util.List<DnsOption>)
+//  .policy(DnsPolicy)
+//  .searches(java.util.List<java.lang.String>)
+//  .subdomain(java.lang.String)
+    .build();
+```
+
+##### `hostname`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.hostname"></a>
+
+```java
+public java.lang.String getHostname();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Set to a system-defined value.
+
+Specifies the hostname of the Pod.
+
+---
+
+##### `hostnameAsFQDN`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.hostnameAsFQDN"></a>
+
+```java
+public java.lang.Boolean getHostnameAsFQDN();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+
+In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+In Windows containers, this means setting the registry value of hostname for the registry
+key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+If a pod does not have FQDN, this has no effect.
+
+---
+
+##### `nameservers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.nameservers"></a>
+
+```java
+public java.util.List<java.lang.String> getNameservers();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+A list of IP addresses that will be used as DNS servers for the Pod.
+
+There can be at most 3 IP addresses specified.
+When the policy is set to "NONE", the list must contain at least one IP address,
+otherwise this property is optional.
+The servers listed will be combined to the base nameservers generated from
+the specified DNS policy with duplicate addresses removed.
+
+---
+
+##### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.options"></a>
+
+```java
+public java.util.List<DnsOption> getOptions();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.DnsOption`](#org.cdk8s.plus22.DnsOption)>
+
+List of objects where each object may have a name property (required) and a value property (optional).
+
+The contents in this property
+will be merged to the options generated from the specified DNS policy.
+Duplicate entries are removed.
+
+---
+
+##### `policy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.policy"></a>
+
+```java
+public DnsPolicy getPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.DnsPolicy`](#org.cdk8s.plus22.DnsPolicy)
+- *Default:* DnsPolicy.CLUSTER_FIRST
+
+Set DNS policy for the pod.
+
+If policy is set to `None`, other configuration must be supplied.
+
+---
+
+##### `searches`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.searches"></a>
+
+```java
+public java.util.List<java.lang.String> getSearches();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+A list of DNS search domains for hostname lookup in the Pod.
+
+When specified, the provided list will be merged into the base
+search domain names generated from the chosen DNS policy.
+Duplicate domain names are removed.
+
+Kubernetes allows for at most 6 search domains.
+
+---
+
+##### `subdomain`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.property.subdomain"></a>
+
+```java
+public java.lang.String getSubdomain();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* No subdomain.
+
+If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+
+---
+
 ### PodProps <a name="org.cdk8s.plus22.PodProps"></a>
 
 Properties for initialization of `Pod`.
@@ -7324,6 +7625,7 @@ import org.cdk8s.plus22.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7360,6 +7662,20 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.dns"></a>
+
+```java
+public PodDnsProps getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -7584,6 +7900,7 @@ import org.cdk8s.plus22.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7608,6 +7925,20 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.dns"></a>
+
+```java
+public PodDnsProps getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -7729,6 +8060,7 @@ import org.cdk8s.plus22.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7754,6 +8086,20 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.dns"></a>
+
+```java
+public PodDnsProps getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -8680,6 +9026,7 @@ import org.cdk8s.plus22.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -8721,6 +9068,20 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.dns"></a>
+
+```java
+public PodDnsProps getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -10062,6 +10423,237 @@ The service object.
 
 
 
+### PodDns <a name="org.cdk8s.plus22.PodDns"></a>
+
+Holds dns settings of the pod.
+
+#### Initializers <a name="org.cdk8s.plus22.PodDns.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.PodDns;
+
+PodDns.Builder.create()
+//  .hostname(java.lang.String)
+//  .hostnameAsFQDN(java.lang.Boolean)
+//  .nameservers(java.util.List<java.lang.String>)
+//  .options(java.util.List<DnsOption>)
+//  .policy(DnsPolicy)
+//  .searches(java.util.List<java.lang.String>)
+//  .subdomain(java.lang.String)
+    .build();
+```
+
+##### `hostname`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.hostname"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* Set to a system-defined value.
+
+Specifies the hostname of the Pod.
+
+---
+
+##### `hostnameAsFQDN`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.hostnameAsFQDN"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+
+In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+In Windows containers, this means setting the registry value of hostname for the registry
+key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+If a pod does not have FQDN, this has no effect.
+
+---
+
+##### `nameservers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.nameservers"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+A list of IP addresses that will be used as DNS servers for the Pod.
+
+There can be at most 3 IP addresses specified.
+When the policy is set to "NONE", the list must contain at least one IP address,
+otherwise this property is optional.
+The servers listed will be combined to the base nameservers generated from
+the specified DNS policy with duplicate addresses removed.
+
+---
+
+##### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.options"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.DnsOption`](#org.cdk8s.plus22.DnsOption)>
+
+List of objects where each object may have a name property (required) and a value property (optional).
+
+The contents in this property
+will be merged to the options generated from the specified DNS policy.
+Duplicate entries are removed.
+
+---
+
+##### `policy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.policy"></a>
+
+- *Type:* [`org.cdk8s.plus22.DnsPolicy`](#org.cdk8s.plus22.DnsPolicy)
+- *Default:* DnsPolicy.CLUSTER_FIRST
+
+Set DNS policy for the pod.
+
+If policy is set to `None`, other configuration must be supplied.
+
+---
+
+##### `searches`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.searches"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+A list of DNS search domains for hostname lookup in the Pod.
+
+When specified, the provided list will be merged into the base
+search domain names generated from the chosen DNS policy.
+Duplicate domain names are removed.
+
+Kubernetes allows for at most 6 search domains.
+
+---
+
+##### `subdomain`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDnsProps.parameter.subdomain"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* No subdomain.
+
+If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addNameserver` <a name="org.cdk8s.plus22.PodDns.addNameserver"></a>
+
+```java
+public addNameserver(java.lang.String nameservers)
+```
+
+###### `nameservers`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.parameter.nameservers"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `addOption` <a name="org.cdk8s.plus22.PodDns.addOption"></a>
+
+```java
+public addOption(DnsOption options)
+```
+
+###### `options`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.DnsOption`](#org.cdk8s.plus22.DnsOption)
+
+---
+
+##### `addSearch` <a name="org.cdk8s.plus22.PodDns.addSearch"></a>
+
+```java
+public addSearch(java.lang.String searches)
+```
+
+###### `searches`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.parameter.searches"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `hostnameAsFQDN`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.property.hostnameAsFQDN"></a>
+
+```java
+public java.lang.Boolean getHostnameAsFQDN();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not the pods hostname is set to its FQDN.
+
+---
+
+##### `nameservers`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.property.nameservers"></a>
+
+```java
+public java.util.List<java.lang.String> getNameservers();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Nameservers defined for this pod.
+
+---
+
+##### `options`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.property.options"></a>
+
+```java
+public java.util.List<DnsOption> getOptions();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.DnsOption`](#org.cdk8s.plus22.DnsOption)>
+
+Custom dns options defined for this pod.
+
+---
+
+##### `policy`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.property.policy"></a>
+
+```java
+public DnsPolicy getPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.DnsPolicy`](#org.cdk8s.plus22.DnsPolicy)
+
+The DNS policy of this pod.
+
+---
+
+##### `searches`<sup>Required</sup> <a name="org.cdk8s.plus22.PodDns.property.searches"></a>
+
+```java
+public java.util.List<java.lang.String> getSearches();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Search domains defined for this pod.
+
+---
+
+##### `hostname`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDns.property.hostname"></a>
+
+```java
+public java.lang.String getHostname();
+```
+
+- *Type:* `java.lang.String`
+
+The configured hostname of the pod.
+
+Undefined means its set to a system-defined value.
+
+---
+
+##### `subdomain`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodDns.property.subdomain"></a>
+
+```java
+public java.lang.String getSubdomain();
+```
+
+- *Type:* `java.lang.String`
+
+The configured subdomain of the pod.
+
+---
+
+
 ### PodSecurityContext <a name="org.cdk8s.plus22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -10221,6 +10813,7 @@ import org.cdk8s.plus22.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -10241,6 +10834,16 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.dns"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -10392,6 +10995,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.hostAliases"></a>
 
 ```java
@@ -10427,6 +11042,8 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -10482,6 +11099,7 @@ import org.cdk8s.plus22.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dns(PodDnsProps)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -10503,6 +11121,16 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.dns"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -10979,6 +11607,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.hostAliases"></a>
 
 ```java
@@ -11004,6 +11644,18 @@ public java.util.List<Container> getInitContainers();
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -11072,6 +11724,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.dns"></a>
+
+```java
+public PodDns getDns();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodDns`](#org.cdk8s.plus22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.hostAliases"></a>
 
 ```java
@@ -11097,6 +11761,18 @@ public java.util.List<Container> getInitContainers();
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -11276,6 +11952,41 @@ Single blob disk per storage account.
 #### `MANAGED` <a name="org.cdk8s.plus22.AzureDiskPersistentVolumeKind.MANAGED"></a>
 
 Azure managed data disk.
+
+---
+
+
+### DnsPolicy <a name="DnsPolicy"></a>
+
+Pod DNS policies.
+
+#### `CLUSTER_FIRST` <a name="org.cdk8s.plus22.DnsPolicy.CLUSTER_FIRST"></a>
+
+Any DNS query that does not match the configured cluster domain suffix, such as "www.kubernetes.io", is forwarded to the upstream nameserver inherited from the node. Cluster administrators may have extra stub-domain and upstream DNS servers configured.
+
+---
+
+
+#### `CLUSTER_FIRST_WITH_HOST_NET` <a name="org.cdk8s.plus22.DnsPolicy.CLUSTER_FIRST_WITH_HOST_NET"></a>
+
+For Pods running with hostNetwork, you should explicitly set its DNS policy "ClusterFirstWithHostNet".
+
+---
+
+
+#### `DEFAULT` <a name="org.cdk8s.plus22.DnsPolicy.DEFAULT"></a>
+
+The Pod inherits the name resolution configuration from the node that the pods run on.
+
+---
+
+
+#### `NONE` <a name="org.cdk8s.plus22.DnsPolicy.NONE"></a>
+
+It allows a Pod to ignore DNS settings from the Kubernetes environment.
+
+All DNS settings are supposed to be provided using the dnsConfig
+field in the Pod Spec.
 
 ---
 
