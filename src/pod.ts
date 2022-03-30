@@ -461,7 +461,8 @@ export interface PodSpecProps {
    *
    * @default
    *
-   *
+   *  policy: DnsPolicy.CLUSTER_FIRST
+   *  hostnameAsFQDN: false
    */
   readonly dns?: PodDnsProps;
 }
