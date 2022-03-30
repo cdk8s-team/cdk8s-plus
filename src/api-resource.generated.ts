@@ -14,7 +14,7 @@ export interface IApiResource {
    * @example - "pods" or "pods/log"
    * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
    */
-  readonly type?: string;
+  readonly resourceType: string;
 
   /**
    * The unique, namespace-global, name of an object inside the Kubernetes cluster
@@ -36,7 +36,7 @@ export interface ApiResourceOptions {
    * @example - "pods" or "pods/log"
    * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
    */
-  readonly type: string;
+  readonly resourceType: string;
 }
 
 /**
@@ -48,7 +48,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly BINDING = new ApiResource({
     apiGroup: '',
-    type: 'bindings',
+    resourceType: 'bindings',
   });
 
   /**
@@ -56,7 +56,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly COMPONENT_STATUS = new ApiResource({
     apiGroup: '',
-    type: 'componentstatuses',
+    resourceType: 'componentstatuses',
   });
 
   /**
@@ -64,7 +64,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CONFIG_MAP = new ApiResource({
     apiGroup: '',
-    type: 'configmaps',
+    resourceType: 'configmaps',
   });
 
   /**
@@ -72,7 +72,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly ENDPOINTS = new ApiResource({
     apiGroup: '',
-    type: 'endpoints',
+    resourceType: 'endpoints',
   });
 
   /**
@@ -80,7 +80,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly EVENT = new ApiResource({
     apiGroup: '',
-    type: 'events',
+    resourceType: 'events',
   });
 
   /**
@@ -88,7 +88,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly LIMIT_RANGE = new ApiResource({
     apiGroup: '',
-    type: 'limitranges',
+    resourceType: 'limitranges',
   });
 
   /**
@@ -96,7 +96,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly NAMESPACE = new ApiResource({
     apiGroup: '',
-    type: 'namespaces',
+    resourceType: 'namespaces',
   });
 
   /**
@@ -104,7 +104,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly NODE = new ApiResource({
     apiGroup: '',
-    type: 'nodes',
+    resourceType: 'nodes',
   });
 
   /**
@@ -112,7 +112,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly PERSISTENT_VOLUME_CLAIM = new ApiResource({
     apiGroup: '',
-    type: 'persistentvolumeclaims',
+    resourceType: 'persistentvolumeclaims',
   });
 
   /**
@@ -120,7 +120,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly PERSISTENT_VOLUME = new ApiResource({
     apiGroup: '',
-    type: 'persistentvolumes',
+    resourceType: 'persistentvolumes',
   });
 
   /**
@@ -128,7 +128,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly POD = new ApiResource({
     apiGroup: '',
-    type: 'pods',
+    resourceType: 'pods',
   });
 
   /**
@@ -136,7 +136,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly POD_TEMPLATE = new ApiResource({
     apiGroup: '',
-    type: 'podtemplates',
+    resourceType: 'podtemplates',
   });
 
   /**
@@ -144,7 +144,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly REPLICATION_CONTROLLER = new ApiResource({
     apiGroup: '',
-    type: 'replicationcontrollers',
+    resourceType: 'replicationcontrollers',
   });
 
   /**
@@ -152,7 +152,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly RESOURCE_QUOTA = new ApiResource({
     apiGroup: '',
-    type: 'resourcequotas',
+    resourceType: 'resourcequotas',
   });
 
   /**
@@ -160,7 +160,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly SECRET = new ApiResource({
     apiGroup: '',
-    type: 'secrets',
+    resourceType: 'secrets',
   });
 
   /**
@@ -168,7 +168,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly SERVICE_ACCOUNT = new ApiResource({
     apiGroup: '',
-    type: 'serviceaccounts',
+    resourceType: 'serviceaccounts',
   });
 
   /**
@@ -176,7 +176,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly SERVICE = new ApiResource({
     apiGroup: '',
-    type: 'services',
+    resourceType: 'services',
   });
 
   /**
@@ -184,7 +184,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly MUTATING_WEBHOOK_CONFIGURATION = new ApiResource({
     apiGroup: 'admissionregistration.k8s.io',
-    type: 'mutatingwebhookconfigurations',
+    resourceType: 'mutatingwebhookconfigurations',
   });
 
   /**
@@ -192,7 +192,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly VALIDATING_WEBHOOK_CONFIGURATION = new ApiResource({
     apiGroup: 'admissionregistration.k8s.io',
-    type: 'validatingwebhookconfigurations',
+    resourceType: 'validatingwebhookconfigurations',
   });
 
   /**
@@ -200,7 +200,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CUSTOM_RESOURCE_DEFINITION = new ApiResource({
     apiGroup: 'apiextensions.k8s.io',
-    type: 'customresourcedefinitions',
+    resourceType: 'customresourcedefinitions',
   });
 
   /**
@@ -208,7 +208,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly API_SERVICE = new ApiResource({
     apiGroup: 'apiregistration.k8s.io',
-    type: 'apiservices',
+    resourceType: 'apiservices',
   });
 
   /**
@@ -216,7 +216,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CONTROLLER_REVISION = new ApiResource({
     apiGroup: 'apps',
-    type: 'controllerrevisions',
+    resourceType: 'controllerrevisions',
   });
 
   /**
@@ -224,7 +224,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly DAEMON_SET = new ApiResource({
     apiGroup: 'apps',
-    type: 'daemonsets',
+    resourceType: 'daemonsets',
   });
 
   /**
@@ -232,7 +232,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly DEPLOYMENT = new ApiResource({
     apiGroup: 'apps',
-    type: 'deployments',
+    resourceType: 'deployments',
   });
 
   /**
@@ -240,7 +240,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly REPLICA_SET = new ApiResource({
     apiGroup: 'apps',
-    type: 'replicasets',
+    resourceType: 'replicasets',
   });
 
   /**
@@ -248,7 +248,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly STATEFUL_SET = new ApiResource({
     apiGroup: 'apps',
-    type: 'statefulsets',
+    resourceType: 'statefulsets',
   });
 
   /**
@@ -256,7 +256,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly TOKEN_REVIEW = new ApiResource({
     apiGroup: 'authentication.k8s.io',
-    type: 'tokenreviews',
+    resourceType: 'tokenreviews',
   });
 
   /**
@@ -264,7 +264,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly LOCAL_SUBJECT_ACCESS_REVIEW = new ApiResource({
     apiGroup: 'authorization.k8s.io',
-    type: 'localsubjectaccessreviews',
+    resourceType: 'localsubjectaccessreviews',
   });
 
   /**
@@ -272,7 +272,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly SELF_SUBJECT_ACCESS_REVIEW = new ApiResource({
     apiGroup: 'authorization.k8s.io',
-    type: 'selfsubjectaccessreviews',
+    resourceType: 'selfsubjectaccessreviews',
   });
 
   /**
@@ -280,7 +280,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly SELF_SUBJECT_RULES_REVIEW = new ApiResource({
     apiGroup: 'authorization.k8s.io',
-    type: 'selfsubjectrulesreviews',
+    resourceType: 'selfsubjectrulesreviews',
   });
 
   /**
@@ -288,7 +288,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly SUBJECT_ACCESS_REVIEW = new ApiResource({
     apiGroup: 'authorization.k8s.io',
-    type: 'subjectaccessreviews',
+    resourceType: 'subjectaccessreviews',
   });
 
   /**
@@ -296,7 +296,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly HORIZONTAL_POD_AUTOSCALER = new ApiResource({
     apiGroup: 'autoscaling',
-    type: 'horizontalpodautoscalers',
+    resourceType: 'horizontalpodautoscalers',
   });
 
   /**
@@ -304,7 +304,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CRON_JOB = new ApiResource({
     apiGroup: 'batch',
-    type: 'cronjobs',
+    resourceType: 'cronjobs',
   });
 
   /**
@@ -312,7 +312,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly JOB = new ApiResource({
     apiGroup: 'batch',
-    type: 'jobs',
+    resourceType: 'jobs',
   });
 
   /**
@@ -320,7 +320,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CERTIFICATE_SIGNING_REQUEST = new ApiResource({
     apiGroup: 'certificates.k8s.io',
-    type: 'certificatesigningrequests',
+    resourceType: 'certificatesigningrequests',
   });
 
   /**
@@ -328,7 +328,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly LEASE = new ApiResource({
     apiGroup: 'coordination.k8s.io',
-    type: 'leases',
+    resourceType: 'leases',
   });
 
   /**
@@ -336,7 +336,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly ENDPOINT_SLICE = new ApiResource({
     apiGroup: 'discovery.k8s.io',
-    type: 'endpointslices',
+    resourceType: 'endpointslices',
   });
 
   /**
@@ -344,7 +344,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly FLOW_SCHEMA = new ApiResource({
     apiGroup: 'flowcontrol.apiserver.k8s.io',
-    type: 'flowschemas',
+    resourceType: 'flowschemas',
   });
 
   /**
@@ -352,7 +352,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly PRIORITY_LEVEL_CONFIGURATION = new ApiResource({
     apiGroup: 'flowcontrol.apiserver.k8s.io',
-    type: 'prioritylevelconfigurations',
+    resourceType: 'prioritylevelconfigurations',
   });
 
   /**
@@ -360,7 +360,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly INGRESS_CLASS = new ApiResource({
     apiGroup: 'networking.k8s.io',
-    type: 'ingressclasses',
+    resourceType: 'ingressclasses',
   });
 
   /**
@@ -368,7 +368,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly INGRESS = new ApiResource({
     apiGroup: 'networking.k8s.io',
-    type: 'ingresses',
+    resourceType: 'ingresses',
   });
 
   /**
@@ -376,7 +376,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly NETWORK_POLICY = new ApiResource({
     apiGroup: 'networking.k8s.io',
-    type: 'networkpolicies',
+    resourceType: 'networkpolicies',
   });
 
   /**
@@ -384,7 +384,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly RUNTIME_CLASS = new ApiResource({
     apiGroup: 'node.k8s.io',
-    type: 'runtimeclasses',
+    resourceType: 'runtimeclasses',
   });
 
   /**
@@ -392,7 +392,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly POD_DISRUPTION_BUDGET = new ApiResource({
     apiGroup: 'policy',
-    type: 'poddisruptionbudgets',
+    resourceType: 'poddisruptionbudgets',
   });
 
   /**
@@ -400,7 +400,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly POD_SECURITY_POLICY = new ApiResource({
     apiGroup: 'policy',
-    type: 'podsecuritypolicies',
+    resourceType: 'podsecuritypolicies',
   });
 
   /**
@@ -408,7 +408,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CLUSTER_ROLE_BINDING = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
-    type: 'clusterrolebindings',
+    resourceType: 'clusterrolebindings',
   });
 
   /**
@@ -416,7 +416,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CLUSTER_ROLE = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
-    type: 'clusterroles',
+    resourceType: 'clusterroles',
   });
 
   /**
@@ -424,7 +424,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly ROLE_BINDING = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
-    type: 'rolebindings',
+    resourceType: 'rolebindings',
   });
 
   /**
@@ -432,7 +432,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly ROLE = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
-    type: 'roles',
+    resourceType: 'roles',
   });
 
   /**
@@ -440,7 +440,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly PRIORITY_CLASS = new ApiResource({
     apiGroup: 'scheduling.k8s.io',
-    type: 'priorityclasses',
+    resourceType: 'priorityclasses',
   });
 
   /**
@@ -448,7 +448,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CSI_DRIVER = new ApiResource({
     apiGroup: 'storage.k8s.io',
-    type: 'csidrivers',
+    resourceType: 'csidrivers',
   });
 
   /**
@@ -456,7 +456,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CSI_NODE = new ApiResource({
     apiGroup: 'storage.k8s.io',
-    type: 'csinodes',
+    resourceType: 'csinodes',
   });
 
   /**
@@ -464,7 +464,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly CSI_STORAGE_CAPACITY = new ApiResource({
     apiGroup: 'storage.k8s.io',
-    type: 'csistoragecapacities',
+    resourceType: 'csistoragecapacities',
   });
 
   /**
@@ -472,7 +472,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly STORAGE_CLASS = new ApiResource({
     apiGroup: 'storage.k8s.io',
-    type: 'storageclasses',
+    resourceType: 'storageclasses',
   });
 
   /**
@@ -480,7 +480,7 @@ export class ApiResource implements IApiResource {
    */
   public static readonly VOLUME_ATTACHMENT = new ApiResource({
     apiGroup: 'storage.k8s.io',
-    type: 'volumeattachments',
+    resourceType: 'volumeattachments',
   });
 
   public static custom(options: ApiResourceOptions): ApiResource {
@@ -497,10 +497,10 @@ export class ApiResource implements IApiResource {
    * @example - "pods" or "pods/log"
    * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
    */
-  public readonly type: string | undefined; // must be optional to satisfy interface
+  public readonly resourceType: string;
 
   private constructor(options: ApiResourceOptions) {
     this.apiGroup = options.apiGroup;
-    this.type = options.type;
+    this.resourceType = options.resourceType;
   }
 }

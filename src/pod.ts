@@ -448,6 +448,8 @@ export class Pod extends Resource implements IPodSpec {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'pods';
+
   private readonly _spec: PodSpec;
 
   constructor(scope: Construct, id: string, props: PodProps = {}) {

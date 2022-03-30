@@ -101,6 +101,8 @@ export class StatefulSet extends Resource implements IPodTemplate {
     */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'statefulsets';
+
   private readonly _podTemplate: PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 

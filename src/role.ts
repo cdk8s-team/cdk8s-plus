@@ -131,7 +131,7 @@ export abstract class RoleBase extends Resource implements IResource {
       .map((apiGroup) => apiGroup === 'core' ? '' : apiGroup),
     );
     const resourceTypes = normalizedArray(resources
-      .map((resource) => resource.type)
+      .map((resource) => resource.resourceType)
       .filter((x) => typeof x === 'string'),
     ) as string[];
     const resourceNames = normalizedArray(resources
@@ -184,6 +184,8 @@ export class Role extends RoleBase implements IRole {
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'roles';
 
   constructor(scope: Construct, id: string, props: RoleProps) {
     super(scope, id);
@@ -249,6 +251,8 @@ export class ClusterRole extends RoleBase implements IClusterRole {
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'clusterroles';
 
   private readonly _labelSelector: Record<string, string>;
 

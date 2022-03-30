@@ -32,7 +32,7 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' * @example - "pods" or "pods/log"');
   ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
   ts.line(' */');
-  ts.line('readonly type?: string;');
+  ts.line('readonly resourceType: string;');
   ts.line();
   ts.line('/**');
   ts.line(' * The unique, namespace-global, name of an object inside the Kubernetes cluster');
@@ -54,7 +54,7 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' * @example - "pods" or "pods/log"');
   ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
   ts.line(' */')
-  ts.line('readonly type: string;');
+  ts.line('readonly resourceType: string;');
   ts.close('}');
   ts.line();
   ts.line('/**');
@@ -72,7 +72,7 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
     ts.line(' */');
     ts.open(`public static readonly ${memberName} = new ApiResource({`);
     ts.line(`apiGroup: '${apiGroups[0]}',`);
-    ts.line(`type: '${resource.name}',`);
+    ts.line(`resourceType: '${resource.name}',`);
     ts.close('});');
     ts.line();
   }
@@ -91,11 +91,11 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' * @example - "pods" or "pods/log"');
   ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
   ts.line(' */')
-  ts.line('public readonly type: string | undefined; // must be optional to satisfy interface');
+  ts.line('public readonly resourceType: string;');
   ts.line();
   ts.open('private constructor(options: ApiResourceOptions) {');
   ts.line('this.apiGroup = options.apiGroup;');
-  ts.line('this.type = options.type;');
+  ts.line('this.resourceType = options.resourceType;');
   ts.close('}');
   ts.close('}');
   ts.line();

@@ -72,6 +72,8 @@ export class Secret extends Resource implements ISecret {
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
+  public readonly resourceType = 'secrets';
+
   private readonly stringData: { [key: string]: string };
 
   public constructor(scope: Construct, id: string, props: SecretProps = { }) {

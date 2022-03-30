@@ -55,6 +55,8 @@ export class ServiceAccount extends Resource implements IServiceAccount {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'serviceaccounts';
+
   private readonly _secrets: ISecret[];
 
   constructor(scope: Construct, id: string, props: ServiceAccountProps = { }) {

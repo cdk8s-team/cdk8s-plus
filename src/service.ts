@@ -177,6 +177,8 @@ export class Service extends Resource {
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
+  public readonly resourceType = 'services';
+
   private readonly _externalIPs: string[];
   private readonly _selector: Record<string, string>;
   private readonly _ports: ServicePort[];

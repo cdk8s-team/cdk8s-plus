@@ -120,6 +120,8 @@ export class Deployment extends Resource implements IPodTemplate {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'deployments';
+
   private readonly _podTemplate: PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 

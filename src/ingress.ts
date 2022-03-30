@@ -77,6 +77,8 @@ export class Ingress extends Resource {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'ingresses';
+
   private readonly _rulesPerHost: { [host: string]: k8s.HttpIngressPath[] } = {};
   private _defaultBackend?: IngressBackend;
   private readonly _tlsConfig: IngressTls[] = [];

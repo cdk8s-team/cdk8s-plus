@@ -117,7 +117,7 @@ Array [
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: [],
+        resources: ['pods', 'secrets'],
         resourceNames: [pod.name, secret.name],
         verbs: ['get', 'list', 'watch'],
       },
@@ -142,6 +142,30 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods', 'secrets'],
+        resourceNames: [],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
+  });
+
+  test('can be granted read access to a custom resource type', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const role = new kplus.Role(chart, 'pod-reader', {
+      namespace: 'default',
+    });
+    role.allowRead(kplus.ApiResource.custom({ apiGroup: '', resourceType: 'pods/log' }));
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[0].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['pods/log'],
         resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
@@ -244,7 +268,7 @@ Array [
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: [],
+        resources: ['pods', 'secrets'],
         resourceNames: [pod.name, secret.name],
         verbs: ['get', 'list', 'watch'],
       },
@@ -266,6 +290,28 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods', 'secrets'],
+        resourceNames: [],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
+  });
+
+  test('can be granted read access to a custom resource type', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const role = new kplus.ClusterRole(chart, 'pod-reader');
+    role.allowRead(kplus.ApiResource.custom({ apiGroup: '', resourceType: 'pods/log' }));
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[0].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['pods/log'],
         resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },

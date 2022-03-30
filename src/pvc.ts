@@ -98,6 +98,8 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
+  public readonly resourceType = 'persistentvolumeclaims';
+
   /**
    * Storage requirement of this claim.
    */

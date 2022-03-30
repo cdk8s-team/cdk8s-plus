@@ -63,6 +63,8 @@ export class RoleBinding extends Resource {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'rolebindings';
+
   public readonly role: IRole;
 
   private readonly _subjects: Array<ISubject>;
@@ -141,6 +143,8 @@ export class ClusterRoleBinding extends Resource {
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'clusterrolebindings';
 
   public readonly role: IRole;
 

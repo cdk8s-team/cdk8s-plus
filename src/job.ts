@@ -72,6 +72,8 @@ export class Job extends Resource implements IPodTemplate {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'jobs';
+
   private readonly _podTemplate: PodTemplate;
 
   constructor(scope: Construct, id: string, props: JobProps = {}) {
