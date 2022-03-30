@@ -3861,6 +3861,8 @@ public readonly dns: PodDnsProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodDnsProps`](#cdk8s-plus-22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -5160,6 +5162,8 @@ public readonly dns: PodDnsProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodDnsProps`](#cdk8s-plus-22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -5933,6 +5937,8 @@ public readonly dns: PodDnsProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodDnsProps`](#cdk8s-plus-22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -6180,6 +6186,8 @@ public readonly dns: PodDnsProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodDnsProps`](#cdk8s-plus-22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -6331,6 +6339,8 @@ public readonly dns: PodDnsProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodDnsProps`](#cdk8s-plus-22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -7245,6 +7255,8 @@ public readonly dns: PodDnsProps;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodDnsProps`](#cdk8s-plus-22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 

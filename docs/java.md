@@ -838,6 +838,8 @@ You can add additionnal containers using `podSpec.addContainer()`
 ##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.dns"></a>
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -1780,6 +1782,8 @@ You can add additionnal containers using `podSpec.addContainer()`
 ##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.dns"></a>
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -2656,6 +2660,8 @@ You can add additionnal containers using `podSpec.addContainer()`
 ##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.dns"></a>
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -3679,6 +3685,8 @@ You can add additionnal containers using `podSpec.addContainer()`
 ##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.dns"></a>
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -5459,6 +5467,8 @@ public PodDnsProps getDns();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -6851,6 +6861,8 @@ public PodDnsProps getDns();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -7672,6 +7684,8 @@ public PodDnsProps getDns();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -7935,6 +7949,8 @@ public PodDnsProps getDns();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -8096,6 +8112,8 @@ public PodDnsProps getDns();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -9078,6 +9096,8 @@ public PodDnsProps getDns();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -10840,6 +10860,8 @@ You can add additionnal containers using `podSpec.addContainer()`
 ##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.dns"></a>
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
@@ -11127,6 +11149,8 @@ You can add additionnal containers using `podSpec.addContainer()`
 ##### `dns`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.dns"></a>
 
 - *Type:* [`org.cdk8s.plus22.PodDnsProps`](#org.cdk8s.plus22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
 
 DNS settings for the pod.
 
