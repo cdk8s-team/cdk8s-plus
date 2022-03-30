@@ -661,6 +661,19 @@ a list of subjects to bind to.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### ClusterRoleBinding <a name="cdk8s_plus_22.ClusterRoleBinding"></a>
@@ -728,6 +741,18 @@ The subjects to add.
 
 
 #### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRoleBinding.property.role"></a>
 
@@ -980,6 +1005,18 @@ data: typing.Mapping[str]
 The data associated with this config map.
 
 Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
+
+---
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ConfigMap.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
@@ -1858,6 +1895,18 @@ Number of desired pods.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.security_context"></a>
 
 ```python
@@ -2469,6 +2518,19 @@ def add_tls(
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Ingress.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### Job <a name="cdk8s_plus_22.Job"></a>
@@ -3141,6 +3203,18 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.security_context"></a>
 
 ```python
@@ -3433,6 +3507,18 @@ Reclaim policy of this volume.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolume.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `access_modes`<sup>Optional</sup> <a name="cdk8s_plus_22.PersistentVolume.property.access_modes"></a>
 
 ```python
@@ -3649,6 +3735,18 @@ The name of the pvc to reference.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaim.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `volume_mode`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaim.property.volume_mode"></a>
 
@@ -4323,6 +4421,18 @@ Use `addInitContainer` to add init containers.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.security_context"></a>
 
 ```python
@@ -4484,6 +4594,18 @@ The name of this API object.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Resource.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 
 ### Role <a name="cdk8s_plus_22.Role"></a>
 
@@ -4558,6 +4680,19 @@ a list of subjects to bind to.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Role.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### RoleBase <a name="cdk8s_plus_22.RoleBase"></a>
@@ -4952,6 +5087,18 @@ The subjects to add.
 
 #### Properties <a name="Properties"></a>
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `role`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBinding.property.role"></a>
 
 ```python
@@ -5107,6 +5254,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Secret.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### Service <a name="cdk8s_plus_22.Service"></a>
@@ -5463,6 +5623,18 @@ Use `serve()` to expose additional service ports.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Service.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `selector`<sup>Required</sup> <a name="cdk8s_plus_22.Service.property.selector"></a>
 
 ```python
@@ -5609,6 +5781,18 @@ The name of the service account resource.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccount.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `secrets`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccount.property.secrets"></a>
 
@@ -6482,6 +6666,18 @@ Number of desired pods.
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.security_context"></a>
 
 ```python
@@ -6741,7 +6937,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.ApiResourceOptions(
   api_group: str,
-  type: str
+  resource_type: str
 )
 ```
 
@@ -6757,10 +6953,10 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-##### `type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.type"></a>
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.property.resource_type"></a>
 
 ```python
-type: str
+resource_type: str
 ```
 
 - *Type:* `str`
@@ -12233,7 +12429,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.ApiResource.custom(
   api_group: str,
-  type: str
+  resource_type: str
 )
 ```
 
@@ -12245,7 +12441,7 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-###### `type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.type"></a>
+###### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResourceOptions.parameter.resource_type"></a>
 
 - *Type:* `str`
 
@@ -12269,10 +12465,10 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="cdk8s_plus_22.ApiResource.property.type"></a>
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ApiResource.property.resource_type"></a>
 
 ```python
-type: str
+resource_type: str
 ```
 
 - *Type:* `str`
@@ -15464,6 +15660,20 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.IApiResource.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
+
+---
+
 ##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.name"></a>
 
 ```python
@@ -15473,20 +15683,6 @@ name: str
 - *Type:* `str`
 
 The unique, namespace-global, name of an object inside the Kubernetes cluster.
-
----
-
-##### `type`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.type"></a>
-
-```python
-type: str
-```
-
-- *Type:* `str`
-
-The name of a resource type as it appears in the relevant API endpoint.
-
-> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 

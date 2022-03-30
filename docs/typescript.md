@@ -313,6 +313,19 @@ a list of subjects to bind to.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### ClusterRoleBinding <a name="cdk8s-plus-22.ClusterRoleBinding"></a>
@@ -363,6 +376,18 @@ The subjects to add.
 
 
 #### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `role`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRoleBinding.property.role"></a>
 
@@ -552,6 +577,18 @@ public readonly data: {[ key: string ]: string};
 The data associated with this config map.
 
 Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
+
+---
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
@@ -799,6 +836,18 @@ public readonly replicas: number;
 - *Type:* `number`
 
 Number of desired pods.
+
+---
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
@@ -1141,6 +1190,19 @@ public addTls(tls: IngressTls[])
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Ingress.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### Job <a name="cdk8s-plus-22.Job"></a>
@@ -1285,6 +1347,18 @@ public readonly podMetadata: ApiObjectMetadataDefinition;
 - *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
 
 Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
@@ -1485,6 +1559,18 @@ Reclaim policy of this volume.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolume.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `accessModes`<sup>Optional</sup> <a name="cdk8s-plus-22.PersistentVolume.property.accessModes"></a>
 
 ```typescript
@@ -1620,6 +1706,18 @@ The name of the pvc to reference.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `volumeMode`<sup>Required</sup> <a name="cdk8s-plus-22.PersistentVolumeClaim.property.volumeMode"></a>
 
@@ -1815,6 +1913,18 @@ Use `addInitContainer` to add init containers.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.securityContext"></a>
 
 ```typescript
@@ -1971,6 +2081,18 @@ The name of this API object.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Resource.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 
 ### Role <a name="cdk8s-plus-22.Role"></a>
 
@@ -2021,6 +2143,19 @@ a list of subjects to bind to.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Role.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### RoleBase <a name="cdk8s-plus-22.RoleBase"></a>
@@ -2296,6 +2431,18 @@ The subjects to add.
 
 #### Properties <a name="Properties"></a>
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `role`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBinding.property.role"></a>
 
 ```typescript
@@ -2411,6 +2558,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### Service <a name="cdk8s-plus-22.Service"></a>
@@ -2560,6 +2720,18 @@ Use `serve()` to expose additional service ports.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Service.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `selector`<sup>Required</sup> <a name="cdk8s-plus-22.Service.property.selector"></a>
 
 ```typescript
@@ -2685,6 +2857,18 @@ The name of the service account resource.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ServiceAccount.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `secrets`<sup>Required</sup> <a name="cdk8s-plus-22.ServiceAccount.property.secrets"></a>
 
@@ -2995,6 +3179,18 @@ Number of desired pods.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.securityContext"></a>
 
 ```typescript
@@ -3234,10 +3430,10 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-##### `type`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.type"></a>
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResourceOptions.property.resourceType"></a>
 
 ```typescript
-public readonly type: string;
+public readonly resourceType: string;
 ```
 
 - *Type:* `string`
@@ -8376,10 +8572,10 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="cdk8s-plus-22.ApiResource.property.type"></a>
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ApiResource.property.resourceType"></a>
 
 ```typescript
-public readonly type: string;
+public readonly resourceType: string;
 ```
 
 - *Type:* `string`
@@ -10150,6 +10346,20 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.IApiResource.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
+
+---
+
 ##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.name"></a>
 
 ```typescript
@@ -10159,20 +10369,6 @@ public readonly name: string;
 - *Type:* `string`
 
 The unique, namespace-global, name of an object inside the Kubernetes cluster.
-
----
-
-##### `type`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.type"></a>
-
-```typescript
-public readonly type: string;
-```
-
-- *Type:* `string`
-
-The name of a resource type as it appears in the relevant API endpoint.
-
-> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 

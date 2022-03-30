@@ -646,6 +646,19 @@ a list of subjects to bind to.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### ClusterRoleBinding <a name="org.cdk8s.plus22.ClusterRoleBinding"></a>
@@ -709,6 +722,18 @@ The subjects to add.
 
 
 #### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRoleBinding.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `role`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRoleBinding.property.role"></a>
 
@@ -936,6 +961,18 @@ public java.util.Map<java.lang.String, java.lang.String> getData();
 The data associated with this config map.
 
 Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
+
+---
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
@@ -1322,6 +1359,18 @@ public java.lang.Number getReplicas();
 - *Type:* `java.lang.Number`
 
 Number of desired pods.
+
+---
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
@@ -1870,6 +1919,19 @@ public addTls(java.util.List<IngressTls> tls)
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Ingress.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### Job <a name="org.cdk8s.plus22.Job"></a>
@@ -2169,6 +2231,18 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.securityContext"></a>
 
 ```java
@@ -2455,6 +2529,18 @@ Reclaim policy of this volume.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolume.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PersistentVolume.property.accessModes"></a>
 
 ```java
@@ -2665,6 +2751,18 @@ The name of the pvc to reference.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaim.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `volumeMode`<sup>Required</sup> <a name="org.cdk8s.plus22.PersistentVolumeClaim.property.volumeMode"></a>
 
@@ -2966,6 +3064,18 @@ Use `addInitContainer` to add init containers.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.securityContext"></a>
 
 ```java
@@ -3125,6 +3235,18 @@ The name of this API object.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Resource.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 
 ### Role <a name="org.cdk8s.plus22.Role"></a>
 
@@ -3195,6 +3317,19 @@ a list of subjects to bind to.
 ---
 
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### RoleBase <a name="org.cdk8s.plus22.RoleBase"></a>
@@ -3505,6 +3640,18 @@ The subjects to add.
 
 #### Properties <a name="Properties"></a>
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBinding.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `role`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBinding.property.role"></a>
 
 ```java
@@ -3651,6 +3798,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 
 ### Service <a name="org.cdk8s.plus22.Service"></a>
@@ -3885,6 +4045,18 @@ Use `serve()` to expose additional service ports.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `selector`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.selector"></a>
 
 ```java
@@ -4025,6 +4197,18 @@ The name of the service account resource.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
 
 ##### `secrets`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccount.property.secrets"></a>
 
@@ -4518,6 +4702,18 @@ Number of desired pods.
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
 ##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.securityContext"></a>
 
 ```java
@@ -4775,7 +4971,7 @@ import org.cdk8s.plus22.ApiResourceOptions;
 
 ApiResourceOptions.builder()
     .apiGroup(java.lang.String)
-    .type(java.lang.String)
+    .resourceType(java.lang.String)
     .build();
 ```
 
@@ -4791,10 +4987,10 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-##### `type`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.type"></a>
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResourceOptions.property.resourceType"></a>
 
 ```java
-public java.lang.String getType();
+public java.lang.String getResourceType();
 ```
 
 - *Type:* `java.lang.String`
@@ -10288,10 +10484,10 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
-##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.ApiResource.property.type"></a>
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.ApiResource.property.resourceType"></a>
 
 ```java
-public java.lang.String getType();
+public java.lang.String getResourceType();
 ```
 
 - *Type:* `java.lang.String`
@@ -12659,6 +12855,20 @@ The group portion of the API version (e.g. `authorization.k8s.io`).
 
 ---
 
+##### `resourceType`<sup>Required</sup> <a name="org.cdk8s.plus22.IApiResource.property.resourceType"></a>
+
+```java
+public java.lang.String getResourceType();
+```
+
+- *Type:* `java.lang.String`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
+
+---
+
 ##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.IApiResource.property.name"></a>
 
 ```java
@@ -12668,20 +12878,6 @@ public java.lang.String getName();
 - *Type:* `java.lang.String`
 
 The unique, namespace-global, name of an object inside the Kubernetes cluster.
-
----
-
-##### `type`<sup>Optional</sup> <a name="org.cdk8s.plus22.IApiResource.property.type"></a>
-
-```java
-public java.lang.String getType();
-```
-
-- *Type:* `java.lang.String`
-
-The name of a resource type as it appears in the relevant API endpoint.
-
-> https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources
 
 ---
 
