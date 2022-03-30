@@ -2869,6 +2869,80 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### AwsElasticBlockStoreVolumeOptions <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions"></a>
+
+Options of `Volume.fromAwsElasticBlockStore`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AwsElasticBlockStoreVolumeOptions } from 'cdk8s-plus-22'
+
+const awsElasticBlockStoreVolumeOptions: AwsElasticBlockStoreVolumeOptions = { ... }
+```
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### AzureDiskPersistentVolumeProps <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps"></a>
 
 Properties for `AzureDiskPersistentVolume`.
@@ -3065,6 +3139,85 @@ Kind of disk.
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
+### AzureDiskVolumeOptions <a name="cdk8s-plus-22.AzureDiskVolumeOptions"></a>
+
+Options of `Volume.fromAzureDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AzureDiskVolumeOptions } from 'cdk8s-plus-22'
+
+const azureDiskVolumeOptions: AzureDiskVolumeOptions = { ... }
+```
+
+##### `cachingMode`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.cachingMode"></a>
+
+```typescript
+public readonly cachingMode: AzureDiskPersistentVolumeCachingMode;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode`](#cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.kind"></a>
+
+```typescript
+public readonly kind: AzureDiskPersistentVolumeKind;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeKind`](#cdk8s-plus-22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.readOnly"></a>
 
 ```typescript
 public readonly readOnly: boolean;
@@ -4587,6 +4740,80 @@ Similarly, the volume partition for /dev/sda is "0" (or you can leave the proper
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskPersistentVolumeProps.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### GCEPersistentDiskVolumeOptions <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions"></a>
+
+Options of `Volume.fromGcePersistentDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { GCEPersistentDiskVolumeOptions } from 'cdk8s-plus-22'
+
+const gCEPersistentDiskVolumeOptions: GCEPersistentDiskVolumeOptions = { ... }
+```
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.readOnly"></a>
 
 ```typescript
 public readonly readOnly: boolean;
@@ -8433,6 +8660,52 @@ public asVolume()
 
 #### Static Functions <a name="Static Functions"></a>
 
+##### `fromAwsElasticBlockStore` <a name="cdk8s-plus-22.Volume.fromAwsElasticBlockStore"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromAwsElasticBlockStore(volumeId: string, options?: AwsElasticBlockStoreVolumeOptions)
+```
+
+###### `volumeId`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.volumeId"></a>
+
+- *Type:* `string`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions`](#cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions)
+
+---
+
+##### `fromAzureDisk` <a name="cdk8s-plus-22.Volume.fromAzureDisk"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromAzureDisk(diskName: string, diskUri: string, options?: AzureDiskVolumeOptions)
+```
+
+###### `diskName`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.diskName"></a>
+
+- *Type:* `string`
+
+---
+
+###### `diskUri`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.diskUri"></a>
+
+- *Type:* `string`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.AzureDiskVolumeOptions`](#cdk8s-plus-22.AzureDiskVolumeOptions)
+
+---
+
 ##### `fromConfigMap` <a name="cdk8s-plus-22.Volume.fromConfigMap"></a>
 
 ```typescript
@@ -8476,6 +8749,26 @@ Volume.fromEmptyDir(name: string, options?: EmptyDirVolumeOptions)
 - *Type:* [`cdk8s-plus-22.EmptyDirVolumeOptions`](#cdk8s-plus-22.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromGcePersistentDisk` <a name="cdk8s-plus-22.Volume.fromGcePersistentDisk"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromGcePersistentDisk(pdName: string, options?: GCEPersistentDiskVolumeOptions)
+```
+
+###### `pdName`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.pdName"></a>
+
+- *Type:* `string`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.GCEPersistentDiskVolumeOptions`](#cdk8s-plus-22.GCEPersistentDiskVolumeOptions)
 
 ---
 
