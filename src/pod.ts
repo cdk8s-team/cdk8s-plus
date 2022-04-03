@@ -240,73 +240,73 @@ export interface AbstractPodProps extends ResourceProps {
   readonly containers?: ContainerProps[];
 
   /**
-    * List of initialization containers belonging to the pod.
-    * Init containers are executed in order prior to containers being started.
-    * If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-    * The name for an init container or normal container must be unique among all containers.
-    * Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-    * The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-    * for each resource type, and then using the max of of that value or the sum of the normal containers.
-    * Limits are applied to init containers in a similar fashion.
-    *
-    * Init containers cannot currently be added ,removed or updated.
-    *
-    * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-    * @default - No init containers.
-    */
+   * List of initialization containers belonging to the pod.
+   * Init containers are executed in order prior to containers being started.
+   * If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+   * The name for an init container or normal container must be unique among all containers.
+   * Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+   * The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+   * for each resource type, and then using the max of of that value or the sum of the normal containers.
+   * Limits are applied to init containers in a similar fashion.
+   *
+   * Init containers cannot currently be added ,removed or updated.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+   * @default - No init containers.
+   */
   readonly initContainers?: ContainerProps[];
 
   /**
-    * List of volumes that can be mounted by containers belonging to the pod.
-    *
-    * You can also add volumes later using `podSpec.addVolume()`
-    *
-    * @see https://kubernetes.io/docs/concepts/storage/volumes
-    *
-    * @default - No volumes.
-    */
+   * List of volumes that can be mounted by containers belonging to the pod.
+   *
+   * You can also add volumes later using `podSpec.addVolume()`
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes
+   *
+   * @default - No volumes.
+   */
   readonly volumes?: Volume[];
 
   /**
-    * Restart policy for all containers within the pod.
-    *
-    * @see https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-    *
-    * @default RestartPolicy.ALWAYS
-    */
+   * Restart policy for all containers within the pod.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+   *
+   * @default RestartPolicy.ALWAYS
+   */
   readonly restartPolicy?: RestartPolicy;
 
   /**
-    * A service account provides an identity for processes that run in a Pod.
-    *
-    * When you (a human) access the cluster (for example, using kubectl), you are
-    * authenticated by the apiserver as a particular User Account (currently this
-    * is usually admin, unless your cluster administrator has customized your
-    * cluster). Processes in containers inside pods can also contact the
-    * apiserver. When they do, they are authenticated as a particular Service
-    * Account (for example, default).
-    *
-    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-    *
-    * @default - No service account.
-    */
+   * A service account provides an identity for processes that run in a Pod.
+   *
+   * When you (a human) access the cluster (for example, using kubectl), you are
+   * authenticated by the apiserver as a particular User Account (currently this
+   * is usually admin, unless your cluster administrator has customized your
+   * cluster). Processes in containers inside pods can also contact the
+   * apiserver. When they do, they are authenticated as a particular Service
+   * Account (for example, default).
+   *
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+   *
+   * @default - No service account.
+   */
   readonly serviceAccount?: IServiceAccount;
 
   /**
-    * SecurityContext holds pod-level security attributes and common container settings.
-    *
-    * @default
-    *
-    *   fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-    *   ensureNonRoot: false
-    */
+   * SecurityContext holds pod-level security attributes and common container settings.
+   *
+   * @default
+   *
+   *   fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+   *   ensureNonRoot: false
+   */
   readonly securityContext?: PodSecurityContextProps;
 
   /**
-    * HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-    *
-    * @schema io.k8s.api.core.v1.HostAlias
-    */
+   * HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+   *
+   * @schema io.k8s.api.core.v1.HostAlias
+   */
   readonly hostAliases?: HostAlias[];
 
 }
