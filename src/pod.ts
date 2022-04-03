@@ -237,7 +237,7 @@ export class PodSpec implements IPodSpec {
       initContainers: initContainers,
       hostAliases: this.hostAliases,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
-      imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth?.name }] : undefined,
+      imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
     };
 
   }
