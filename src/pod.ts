@@ -1,4 +1,4 @@
-import { ApiObject, ApiObjectMetadata, ApiObjectMetadataDefinition, Lazy } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import { ResourceProps, Resource } from './base';
 import { Container, ContainerProps } from './container';
@@ -71,19 +71,6 @@ export interface IPodSpec {
    */
   addVolume(volume: Volume): void;
 
-}
-
-/**
- * Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
- *
- * Use the `PodTemplate` class as an implementation helper.
- */
-export interface IPodTemplate extends IPodSpec {
-
-  /**
-   * Provides read/write access to the underlying pod metadata of the resource.
-   */
-  readonly podMetadata: ApiObjectMetadataDefinition;
 }
 
 /**
@@ -240,42 +227,6 @@ export class PodSpec implements IPodSpec {
 
 }
 
-/**
- * Properties of a `PodTemplate`.
- *
- * Adds metadata information on top of the spec.
- */
-export interface PodTemplateProps extends PodSpecProps {
-
-  /**
-   * The pod metadata.
-   */
-  readonly podMetadata?: ApiObjectMetadata;
-}
-
-
-/**
- * Provides read/write capabilities ontop of a `PodTemplateProps`.
- */
-export class PodTemplate extends PodSpec implements IPodTemplate {
-
-  public readonly podMetadata: ApiObjectMetadataDefinition;
-
-  constructor(props: PodTemplateProps = {}) {
-    super(props);
-    this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-  }
-
-  /**
-   * @internal
-   */
-  public _toPodTemplateSpec(): k8s.PodTemplateSpec {
-    return {
-      metadata: this.podMetadata.toJson(),
-      spec: this._toKube(),
-    };
-  }
-}
 
 /**
  * Sysctl defines a kernel parameter to be set
