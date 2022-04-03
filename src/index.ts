@@ -7,7 +7,7 @@ export * from './pod';
 export * from './secret';
 export * from './service-account';
 export * from './service';
-export * from './statefulset';
+export * from './stateful-set';
 export * from './volume';
 export * from './ingress';
 export * from './probe';

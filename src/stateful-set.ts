@@ -1,6 +1,6 @@
-import { ApiObject, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Workload, WorkloadProps } from './_workload';
+import { LongRunningWorkload, LongRunningWorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { Service } from './service';
 
@@ -24,7 +24,7 @@ export enum PodManagementPolicy {
 /**
  * Properties for initialization of `StatefulSet`.
  */
-export interface StatefulSetProps extends WorkloadProps {
+export interface StatefulSetProps extends LongRunningWorkloadProps {
   /**
    * Service to associate with the statefulset.
    */
@@ -36,16 +36,6 @@ export interface StatefulSetProps extends WorkloadProps {
     * @default 1
     */
   readonly replicas?: number;
-
-  /**
-    * Automatically allocates a pod selector for this statefulset.
-    *
-    * If this is set to `false` you must define your selector through
-    * `statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
-    *
-    * @default true
-    */
-  readonly defaultSelector?: boolean;
 
   /**
     * Pod management policy to use for this statefulset.
@@ -81,7 +71,7 @@ export interface StatefulSetProps extends WorkloadProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends Workload {
+export class StatefulSet extends LongRunningWorkload {
   /**
     * Number of desired pods.
     */
@@ -97,7 +87,6 @@ export class StatefulSet extends Workload {
     */
   protected readonly apiObject: ApiObject;
 
-  private readonly _labelSelector: Record<string, string>;
   private readonly _service: Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
@@ -113,39 +102,11 @@ export class StatefulSet extends Workload {
 
     this.replicas = props.replicas ?? 1;
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.statefulset';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
 
     const selectors = Object.entries(this.labelSelector);
     for (const [k, v] of selectors) {
       this._service.addSelector(k, v);
     }
-  }
-
-  /**
-    * The labels this statefulset will match against in order to select pods.
-    *
-    * Returns a a copy. Use `selectByLabel()` to add labels.
-    */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  /**
-    * Configure a label selector to this deployment.
-    * Pods that have the label will be selected by deployments configured with this spec.
-    *
-    * @param key - The label key.
-    * @param value - The label value.
-    */
-  public selectByLabel(key: string, value: string): void {
-    this._labelSelector[key] = value;
   }
 
   /**
@@ -160,7 +121,7 @@ export class StatefulSet extends Workload {
         spec: this.podSpec._toKube(),
       },
       selector: {
-        matchLabels: this._labelSelector,
+        matchLabels: this.labelSelector,
       },
       podManagementPolicy: this.podManagementPolicy,
     };

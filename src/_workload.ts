@@ -1,4 +1,4 @@
-import { ApiObjectMetadata, ApiObjectMetadataDefinition } from 'cdk8s';
+import { ApiObjectMetadata, ApiObjectMetadataDefinition, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
@@ -76,6 +76,57 @@ export abstract class Workload extends Resource {
 
   public addHostAlias(hostAlias: HostAlias): void {
     return this.podSpec.addHostAlias(hostAlias);
+  }
+
+}
+
+export interface LongRunningWorkloadProps extends WorkloadProps {
+
+  /**
+   * Automatically allocates a pod selector for this deployment.
+   *
+   * If this is set to `false` you must define your selector through
+   * `deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
+   *
+   * @default true
+   */
+  readonly defaultSelector?: boolean;
+
+}
+
+export abstract class LongRunningWorkload extends Workload {
+
+  private readonly _labelSelector: Record<string, string> = {};
+
+  constructor(scope: Construct, id: string, props: LongRunningWorkloadProps = {}) {
+    super(scope, id, props);
+
+    if (props.defaultSelector ?? true) {
+      const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
+      const matcher = Names.toLabelValue(this);
+      this.podMetadata.addLabel(selector, matcher);
+      this.selectByLabel(selector, matcher);
+    }
+  }
+
+  /**
+   * Configure a label selector to this deployment.
+   * Pods that have the label will be selected by deployments configured with this spec.
+   *
+   * @param key - The label key.
+   * @param value - The label value.
+   */
+  public selectByLabel(key: string, value: string) {
+    this._labelSelector[key] = value;
+  }
+
+  /**
+   * The labels this deployment will match against in order to select pods.
+   *
+   * Returns a a copy. Use `selectByLabel()` to add labels.
+   */
+  public get labelSelector(): Record<string, string> {
+    return { ...this._labelSelector };
   }
 
 }

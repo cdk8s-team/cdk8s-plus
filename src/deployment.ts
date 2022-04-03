@@ -1,6 +1,6 @@
-import { ApiObject, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Workload, WorkloadProps } from './_workload';
+import { LongRunningWorkload, LongRunningWorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { Ingress } from './ingress';
 import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
@@ -8,7 +8,7 @@ import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from '
 /**
  * Properties for initialization of `Deployment`.
  */
-export interface DeploymentProps extends WorkloadProps {
+export interface DeploymentProps extends LongRunningWorkloadProps {
 
   /**
    * Number of desired pods.
@@ -16,16 +16,6 @@ export interface DeploymentProps extends WorkloadProps {
    * @default 1
    */
   readonly replicas?: number;
-
-  /**
-   * Automatically allocates a pod selector for this deployment.
-   *
-   * If this is set to `false` you must define your selector through
-   * `deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
-   *
-   * @default true
-   */
-  readonly defaultSelector?: boolean;
 
 }
 
@@ -104,7 +94,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends Workload {
+export class Deployment extends LongRunningWorkload {
 
   /**
    * Number of desired pods.
@@ -116,8 +106,6 @@ export class Deployment extends Workload {
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _labelSelector: Record<string, string>;
-
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
     super(scope, id, props);
 
@@ -127,34 +115,6 @@ export class Deployment extends Workload {
     });
 
     this.replicas = props.replicas ?? 1;
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.deployment';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
-  }
-
-  /**
-   * The labels this deployment will match against in order to select pods.
-   *
-   * Returns a a copy. Use `selectByLabel()` to add labels.
-   */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  /**
-   * Configure a label selector to this deployment.
-   * Pods that have the label will be selected by deployments configured with this spec.
-   *
-   * @param key - The label key.
-   * @param value - The label value.
-   */
-  public selectByLabel(key: string, value: string) {
-    this._labelSelector[key] = value;
   }
 
   /**
@@ -197,7 +157,7 @@ export class Deployment extends Workload {
         spec: this.podSpec._toKube(),
       },
       selector: {
-        matchLabels: this._labelSelector,
+        matchLabels: this.labelSelector,
       },
     };
   }
