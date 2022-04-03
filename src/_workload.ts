@@ -20,7 +20,7 @@ export interface WorkloadProps extends ResourceProps, PodSpecProps {
 
 export abstract class Workload extends Resource {
 
-  protected readonly _spec: PodSpec;
+  protected readonly podSpec: PodSpec;
 
   /**
    * The metadata of pods in this deployment.
@@ -30,52 +30,52 @@ export abstract class Workload extends Resource {
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id);
 
-    this._spec = new PodSpec(props);
+    this.podSpec = new PodSpec(props);
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
   }
 
   public get containers(): Container[] {
-    return this._spec.containers;
+    return this.podSpec.containers;
   }
 
   public get initContainers(): Container[] {
-    return this._spec.initContainers;
+    return this.podSpec.initContainers;
   }
 
   public get volumes(): Volume[] {
-    return this._spec.volumes;
+    return this.podSpec.volumes;
   }
 
   public get restartPolicy(): RestartPolicy | undefined {
-    return this._spec.restartPolicy;
+    return this.podSpec.restartPolicy;
   }
 
   public get serviceAccount(): IServiceAccount | undefined {
-    return this._spec.serviceAccount;
+    return this.podSpec.serviceAccount;
   }
 
   public get securityContext(): PodSecurityContext {
-    return this._spec.securityContext;
+    return this.podSpec.securityContext;
   }
 
   public get hostAliases(): HostAlias[] {
-    return this._spec.hostAliases;
+    return this.podSpec.hostAliases;
   }
 
   public addContainer(container: ContainerProps): Container {
-    return this._spec.addContainer(container);
+    return this.podSpec.addContainer(container);
   }
 
   public addInitContainer(container: ContainerProps): Container {
-    return this._spec.addInitContainer(container);
+    return this.podSpec.addInitContainer(container);
   }
 
   public addVolume(volume: Volume): void {
-    return this._spec.addVolume(volume);
+    return this.podSpec.addVolume(volume);
   }
 
   public addHostAlias(hostAlias: HostAlias): void {
-    return this._spec.addHostAlias(hostAlias);
+    return this.podSpec.addHostAlias(hostAlias);
   }
 
 }

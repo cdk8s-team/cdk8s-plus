@@ -157,7 +157,7 @@ export class StatefulSet extends Workload {
       replicas: this.replicas,
       template: {
         metadata: this.podMetadata.toJson(),
-        spec: this._spec._toPodSpec(),
+        spec: this.podSpec._toPodSpec(),
       },
       selector: {
         matchLabels: this._labelSelector,
