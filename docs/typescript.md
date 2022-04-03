@@ -3798,6 +3798,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.hostAliases"></a>
 
 ```typescript
@@ -5046,6 +5059,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.hostAliases"></a>
 
 ```typescript
@@ -5682,6 +5708,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.hostAliases"></a>
 
 ```typescript
@@ -5915,6 +5954,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.hostAliases"></a>
 
 ```typescript
@@ -6049,6 +6101,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6949,6 +7014,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8250,6 +8328,16 @@ public readonly volumes: Volume[];
 The volumes associated with this pod.
 
 Use `addVolume` to add volumes.
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
 
 ---
 
