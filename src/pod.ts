@@ -101,7 +101,7 @@ export abstract class AbstractPod extends Resource {
   }
 
   /**
-   * @intenral
+   * @internal
    */
   public _toPodSpec(): k8s.PodSpec {
 
