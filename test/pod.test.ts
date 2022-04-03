@@ -1,7 +1,8 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { FsGroupChangePolicy, Probe } from '../src';
+import { DockerConfigSecret, FsGroupChangePolicy, Probe } from '../src';
+import * as k8s from '../src/imports/k8s';
 
 test('fails with two volumes with the same name', () => {
 
@@ -359,5 +360,24 @@ test('custom host aliases', () => {
     { ip: '127.0.0.1', hostnames: ['foo.local', 'bar.local'] },
     { ip: '10.1.2.3', hostnames: ['foo.remote', 'bar.remote'] },
   ]);
+
+});
+
+test('can configure auth to docker registry', () => {
+
+  const chart = Testing.chart();
+
+  const auth = new DockerConfigSecret(chart, 'Secret', {
+    data: { foo: 'bar' },
+  });
+
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    dockerRegistryAuth: auth,
+  });
+
+  const spec: k8s.PodSpec = Testing.synth(chart)[1].spec;
+
+  expect(spec.imagePullSecrets).toEqual([{ name: auth.name }]);
 
 });

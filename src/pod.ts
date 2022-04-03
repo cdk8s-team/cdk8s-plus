@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { ResourceProps, Resource } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
+import { DockerConfigSecret } from './secret';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
 
@@ -94,6 +95,7 @@ export class PodSpec implements IPodSpec {
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: IServiceAccount;
   public readonly securityContext: PodSecurityContext;
+  public readonly dockerRegistryAuth?: DockerConfigSecret;
 
   private readonly _containers: Container[] = [];
   private readonly _initContainers: Container[] = [];
@@ -104,6 +106,7 @@ export class PodSpec implements IPodSpec {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
+    this.dockerRegistryAuth = props.dockerRegistryAuth;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -234,6 +237,7 @@ export class PodSpec implements IPodSpec {
       initContainers: initContainers,
       hostAliases: this.hostAliases,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
+      imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth?.name }] : undefined,
     };
 
   }
@@ -434,6 +438,13 @@ export interface PodSpecProps {
    * @schema io.k8s.api.core.v1.HostAlias
    */
   readonly hostAliases?: HostAlias[];
+
+  /**
+   * A secret containing docker credentials for authenticating to a registry.
+   *
+   * @default - No auth. Images are assumed to be publicly available.
+   */
+  readonly dockerRegistryAuth?: DockerConfigSecret;
 
 }
 
