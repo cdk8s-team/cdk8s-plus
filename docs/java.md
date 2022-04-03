@@ -2,6 +2,264 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### AbstractPod <a name="org.cdk8s.plus22.AbstractPod"></a>
+
+#### Initializers <a name="org.cdk8s.plus22.AbstractPod.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AbstractPod;
+
+AbstractPod.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
+//  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
+//  .serviceAccount(IServiceAccount)
+//  .volumes(java.util.List<Volume>)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.containers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.restartPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.serviceAccount"></a>
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.parameter.volumes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addContainer` <a name="org.cdk8s.plus22.AbstractPod.addContainer"></a>
+
+```java
+public addContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
+##### `addHostAlias` <a name="org.cdk8s.plus22.AbstractPod.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus22.AbstractPod.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
+
+---
+
+##### `addVolume` <a name="org.cdk8s.plus22.AbstractPod.addVolume"></a>
+
+```java
+public addVolume(Volume volume)
+```
+
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.parameter.volume"></a>
+
+- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.property.containers"></a>
+
+```java
+public java.util.List<Container> getContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.AbstractPod.property.volumes"></a>
+
+```java
+public java.util.List<Volume> getVolumes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPod.property.restartPolicy"></a>
+
+```java
+public RestartPolicy getRestartPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPod.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+
+---
+
+
 ### AwsElasticBlockStorePersistentVolume <a name="org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume"></a>
 
 Represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
@@ -754,8 +1012,6 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ### Deployment <a name="org.cdk8s.plus22.Deployment"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
-
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
 You describe a desired state in a Deployment, and the Deployment Controller changes the actual
@@ -794,8 +1050,8 @@ Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
-//  .podMetadata(ApiObjectMetadata)
 //  .defaultSelector(java.lang.Boolean)
+//  .podMetadata(ApiObjectMetadata)
 //  .replicas(java.lang.Number)
     .build();
 ```
@@ -915,23 +1171,20 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.podMetadata"></a>
-
-- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
 ##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.defaultSelector"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* true
 
-Automatically allocates a pod selector for this deployment.
+Automatically allocates a pod selector for this workload.
 
-If this is set to `false` you must define your selector through
-`deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.podMetadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -945,54 +1198,6 @@ Number of desired pods.
 ---
 
 #### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="org.cdk8s.plus22.Deployment.addContainer"></a>
-
-```java
-public addContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="org.cdk8s.plus22.Deployment.addHostAlias"></a>
-
-```java
-public addHostAlias(HostAlias hostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.hostAlias"></a>
-
-- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="org.cdk8s.plus22.Deployment.addInitContainer"></a>
-
-```java
-public addInitContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addVolume` <a name="org.cdk8s.plus22.Deployment.addVolume"></a>
-
-```java
-public addVolume(Volume volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.volume"></a>
-
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
-
----
 
 ##### `exposeViaIngress` <a name="org.cdk8s.plus22.Deployment.exposeViaIngress"></a>
 
@@ -1032,98 +1237,8 @@ Options to determine details of the service and port exposed.
 
 ---
 
-##### `selectByLabel` <a name="org.cdk8s.plus22.Deployment.selectByLabel"></a>
-
-```java
-public selectByLabel(java.lang.String key, java.lang.String value)
-```
-
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.key"></a>
-
-- *Type:* `java.lang.String`
-
-The label key.
-
----
-
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.parameter.value"></a>
-
-- *Type:* `java.lang.String`
-
-The label value.
-
----
-
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.labelSelector"></a>
-
-```java
-public java.util.Map<java.lang.String, java.lang.String> getLabelSelector();
-```
-
-- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
-
-The labels this deployment will match against in order to select pods.
-
-Returns a a copy. Use `selectByLabel()` to add labels.
-
----
-
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadataDefinition getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
 
 ##### `replicas`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.replicas"></a>
 
@@ -1134,54 +1249,6 @@ public java.lang.Number getReplicas();
 - *Type:* `java.lang.Number`
 
 Number of desired pods.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.securityContext"></a>
-
-```java
-public PodSecurityContext getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.Deployment.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -1686,8 +1753,6 @@ public addTls(java.util.List<IngressTls> tls)
 
 ### Job <a name="org.cdk8s.plus22.Job"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
-
 A Job creates one or more Pods and ensures that a specified number of them successfully terminate.
 
 As pods successfully complete,
@@ -1710,6 +1775,7 @@ Job.Builder.create(Construct scope, java.lang.String id)
 //  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
+//  .defaultSelector(java.lang.Boolean)
 //  .podMetadata(ApiObjectMetadata)
 //  .activeDeadline(Duration)
 //  .backoffLimit(java.lang.Number)
@@ -1832,11 +1898,20 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.defaultSelector"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.podMetadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -1874,136 +1949,9 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="org.cdk8s.plus22.Job.addContainer"></a>
-
-```java
-public addContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="org.cdk8s.plus22.Job.addHostAlias"></a>
-
-```java
-public addHostAlias(HostAlias hostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.hostAlias"></a>
-
-- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="org.cdk8s.plus22.Job.addInitContainer"></a>
-
-```java
-public addInitContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addVolume` <a name="org.cdk8s.plus22.Job.addVolume"></a>
-
-```java
-public addVolume(Volume volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.parameter.volume"></a>
-
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
-
----
 
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadataDefinition getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.securityContext"></a>
-
-```java
-public PodSecurityContext getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Job.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
 
 ##### `activeDeadline`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.activeDeadline"></a>
 
@@ -2028,30 +1976,6 @@ public java.lang.Number getBackoffLimit();
 - *Type:* `java.lang.Number`
 
 Number of retries before marking failed.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.Job.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -2544,8 +2468,6 @@ to any specific volume.
 
 ### Pod <a name="org.cdk8s.plus22.Pod"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
-
 Pod is a collection of containers that can run on a host.
 
 This resource is
@@ -2683,148 +2605,8 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="org.cdk8s.plus22.Pod.addContainer"></a>
-
-```java
-public addContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="org.cdk8s.plus22.Pod.addHostAlias"></a>
-
-```java
-public addHostAlias(HostAlias hostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.hostAlias"></a>
-
-- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="org.cdk8s.plus22.Pod.addInitContainer"></a>
-
-```java
-public addInitContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addVolume` <a name="org.cdk8s.plus22.Pod.addVolume"></a>
-
-```java
-public addVolume(Volume volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.parameter.volume"></a>
-
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
-
----
 
 
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.securityContext"></a>
-
-```java
-public PodSecurityContext getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Pod.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.Pod.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.Pod.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
-
----
 
 
 ### Resource <a name="org.cdk8s.plus22.Resource"></a>
@@ -3517,8 +3299,6 @@ The SSH private key to use.
 
 ### StatefulSet <a name="org.cdk8s.plus22.StatefulSet"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
-
 StatefulSet is the workload API object used to manage stateful applications.
 
 Manages the deployment and scaling of a set of Pods, and provides guarantees
@@ -3558,9 +3338,9 @@ StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
+//  .defaultSelector(java.lang.Boolean)
 //  .podMetadata(ApiObjectMetadata)
     .service(Service)
-//  .defaultSelector(java.lang.Boolean)
 //  .podManagementPolicy(PodManagementPolicy)
 //  .replicas(java.lang.Number)
     .build();
@@ -3681,11 +3461,20 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.defaultSelector"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.podMetadata"></a>
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -3694,18 +3483,6 @@ The pod metadata.
 - *Type:* [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service)
 
 Service to associate with the statefulset.
-
----
-
-##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.defaultSelector"></a>
-
-- *Type:* `java.lang.Boolean`
-- *Default:* true
-
-Automatically allocates a pod selector for this statefulset.
-
-If this is set to `false` you must define your selector through
-`statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
 
 ---
 
@@ -3727,136 +3504,9 @@ Number of desired pods.
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="org.cdk8s.plus22.StatefulSet.addContainer"></a>
-
-```java
-public addContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="org.cdk8s.plus22.StatefulSet.addHostAlias"></a>
-
-```java
-public addHostAlias(HostAlias hostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.hostAlias"></a>
-
-- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="org.cdk8s.plus22.StatefulSet.addInitContainer"></a>
-
-```java
-public addInitContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addVolume` <a name="org.cdk8s.plus22.StatefulSet.addVolume"></a>
-
-```java
-public addVolume(Volume volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.volume"></a>
-
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
-
----
-
-##### `selectByLabel` <a name="org.cdk8s.plus22.StatefulSet.selectByLabel"></a>
-
-```java
-public selectByLabel(java.lang.String key, java.lang.String value)
-```
-
-###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.key"></a>
-
-- *Type:* `java.lang.String`
-
-The label key.
-
----
-
-###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.parameter.value"></a>
-
-- *Type:* `java.lang.String`
-
-The label value.
-
----
 
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.labelSelector"></a>
-
-```java
-public java.util.Map<java.lang.String, java.lang.String> getLabelSelector();
-```
-
-- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
-
-The labels this statefulset will match against in order to select pods.
-
-Returns a a copy. Use `selectByLabel()` to add labels.
-
----
 
 ##### `podManagementPolicy`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.podManagementPolicy"></a>
 
@@ -3870,18 +3520,6 @@ Management policy to use for the set.
 
 ---
 
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadataDefinition getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
 ##### `replicas`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.replicas"></a>
 
 ```java
@@ -3891,54 +3529,6 @@ public java.lang.Number getReplicas();
 - *Type:* `java.lang.Number`
 
 Number of desired pods.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.securityContext"></a>
-
-```java
-public PodSecurityContext getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSet.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSet.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -4001,7 +3591,376 @@ The TLS key.
 
 
 
+### Workload <a name="org.cdk8s.plus22.Workload"></a>
+
+A workload is an application running on Kubernetes.
+
+Whether your workload is a single
+component or several that work together, on Kubernetes you run it inside a set of pods.
+In Kubernetes, a Pod represents a set of running containers on your cluster.
+
+#### Initializers <a name="org.cdk8s.plus22.Workload.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.Workload;
+
+Workload.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
+//  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
+//  .serviceAccount(IServiceAccount)
+//  .volumes(java.util.List<Volume>)
+//  .defaultSelector(java.lang.Boolean)
+//  .podMetadata(ApiObjectMetadata)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.Workload.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.Workload.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.containers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.restartPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.serviceAccount"></a>
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.volumes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.defaultSelector"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.parameter.podMetadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `selectByLabel` <a name="org.cdk8s.plus22.Workload.selectByLabel"></a>
+
+```java
+public selectByLabel(java.lang.String key, java.lang.String value)
+```
+
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.Workload.parameter.key"></a>
+
+- *Type:* `java.lang.String`
+
+The label key.
+
+---
+
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.Workload.parameter.value"></a>
+
+- *Type:* `java.lang.String`
+
+The label value.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus22.Workload.property.labelSelector"></a>
+
+```java
+public java.util.Map<java.lang.String, java.lang.String> getLabelSelector();
+```
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
+
+The labels this workload will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.Workload.property.podMetadata"></a>
+
+```java
+public ApiObjectMetadataDefinition getPodMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
+
+The metadata of pods in this workload.
+
+---
+
+
 ## Structs <a name="Structs"></a>
+
+### AbstractPodProps <a name="org.cdk8s.plus22.AbstractPodProps"></a>
+
+Properties for `AbstractPod`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AbstractPodProps;
+
+AbstractPodProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
+//  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
+//  .serviceAccount(IServiceAccount)
+//  .volumes(java.util.List<Volume>)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.containers"></a>
+
+```java
+public java.util.List<ContainerProps> getContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.restartPolicy"></a>
+
+```java
+public RestartPolicy getRestartPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.AbstractPodProps.property.volumes"></a>
+
+```java
+public java.util.List<Volume> getVolumes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
 
 ### AddDeploymentOptions <a name="org.cdk8s.plus22.AddDeploymentOptions"></a>
 
@@ -5299,7 +5258,7 @@ public Cpu getRequest();
 
 ### DeploymentProps <a name="org.cdk8s.plus22.DeploymentProps"></a>
 
-Properties for initialization of `Deployment`.
+Properties for `Deployment`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -5315,8 +5274,8 @@ DeploymentProps.builder()
 //  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
-//  .podMetadata(ApiObjectMetadata)
 //  .defaultSelector(java.lang.Boolean)
+//  .podMetadata(ApiObjectMetadata)
 //  .replicas(java.lang.Number)
     .build();
 ```
@@ -5456,18 +5415,6 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadata getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
 ##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.defaultSelector"></a>
 
 ```java
@@ -5477,10 +5424,19 @@ public java.lang.Boolean getDefaultSelector();
 - *Type:* `java.lang.Boolean`
 - *Default:* true
 
-Automatically allocates a pod selector for this deployment.
+Automatically allocates a pod selector for this workload.
 
-If this is set to `false` you must define your selector through
-`deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.podMetadata"></a>
+
+```java
+public ApiObjectMetadata getPodMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -6635,7 +6591,7 @@ termination and value of the Host header is used for routing.
 
 ### JobProps <a name="org.cdk8s.plus22.JobProps"></a>
 
-Properties for initialization of `Job`.
+Properties for `Job`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -6651,6 +6607,7 @@ JobProps.builder()
 //  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
+//  .defaultSelector(java.lang.Boolean)
 //  .podMetadata(ApiObjectMetadata)
 //  .activeDeadline(Duration)
 //  .backoffLimit(java.lang.Number)
@@ -6793,6 +6750,19 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.defaultSelector"></a>
+
+```java
+public java.lang.Boolean getDefaultSelector();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.podMetadata"></a>
 
 ```java
@@ -6801,7 +6771,7 @@ public ApiObjectMetadata getPodMetadata();
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -7314,7 +7284,7 @@ Defines what type of volume is required by the claim.
 
 ### PodProps <a name="org.cdk8s.plus22.PodProps"></a>
 
-Properties for initialization of `Pod`.
+Properties for `Pod`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -7570,307 +7540,6 @@ public java.lang.Number getUser();
 - *Default:* User specified in image metadata
 
 The UID to run the entrypoint of the container process.
-
----
-
-### PodSpecProps <a name="org.cdk8s.plus22.PodSpecProps"></a>
-
-Properties of a `PodSpec`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```java
-import org.cdk8s.plus22.PodSpecProps;
-
-PodSpecProps.builder()
-//  .containers(java.util.List<ContainerProps>)
-//  .hostAliases(java.util.List<HostAlias>)
-//  .initContainers(java.util.List<ContainerProps>)
-//  .restartPolicy(RestartPolicy)
-//  .securityContext(PodSecurityContextProps)
-//  .serviceAccount(IServiceAccount)
-//  .volumes(java.util.List<Volume>)
-    .build();
-```
-
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.containers"></a>
-
-```java
-public java.util.List<ContainerProps> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.initContainers"></a>
-
-```java
-public java.util.List<ContainerProps> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.securityContext"></a>
-
-```java
-public PodSecurityContextProps getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-### PodTemplateProps <a name="org.cdk8s.plus22.PodTemplateProps"></a>
-
-Properties of a `PodTemplate`.
-
-Adds metadata information on top of the spec.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```java
-import org.cdk8s.plus22.PodTemplateProps;
-
-PodTemplateProps.builder()
-//  .containers(java.util.List<ContainerProps>)
-//  .hostAliases(java.util.List<HostAlias>)
-//  .initContainers(java.util.List<ContainerProps>)
-//  .restartPolicy(RestartPolicy)
-//  .securityContext(PodSecurityContextProps)
-//  .serviceAccount(IServiceAccount)
-//  .volumes(java.util.List<Volume>)
-//  .podMetadata(ApiObjectMetadata)
-    .build();
-```
-
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.containers"></a>
-
-```java
-public java.util.List<ContainerProps> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.initContainers"></a>
-
-```java
-public java.util.List<ContainerProps> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.securityContext"></a>
-
-```java
-public PodSecurityContextProps getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadata getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
-
-The pod metadata.
 
 ---
 
@@ -8686,9 +8355,9 @@ StatefulSetProps.builder()
 //  .securityContext(PodSecurityContextProps)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
+//  .defaultSelector(java.lang.Boolean)
 //  .podMetadata(ApiObjectMetadata)
     .service(Service)
-//  .defaultSelector(java.lang.Boolean)
 //  .podManagementPolicy(PodManagementPolicy)
 //  .replicas(java.lang.Number)
     .build();
@@ -8829,6 +8498,19 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.defaultSelector"></a>
+
+```java
+public java.lang.Boolean getDefaultSelector();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.podMetadata"></a>
 
 ```java
@@ -8837,7 +8519,7 @@ public ApiObjectMetadata getPodMetadata();
 
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -8850,22 +8532,6 @@ public Service getService();
 - *Type:* [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service)
 
 Service to associate with the statefulset.
-
----
-
-##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.defaultSelector"></a>
-
-```java
-public java.lang.Boolean getDefaultSelector();
-```
-
-- *Type:* `java.lang.Boolean`
-- *Default:* true
-
-Automatically allocates a pod selector for this statefulset.
-
-If this is set to `false` you must define your selector through
-`statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
 
 ---
 
@@ -9217,6 +8883,189 @@ public Volume getVolume();
 - *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
 
 The volume to mount.
+
+---
+
+### WorkloadProps <a name="org.cdk8s.plus22.WorkloadProps"></a>
+
+Properties for `Workload`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.WorkloadProps;
+
+WorkloadProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
+//  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
+//  .serviceAccount(IServiceAccount)
+//  .volumes(java.util.List<Volume>)
+//  .defaultSelector(java.lang.Boolean)
+//  .podMetadata(ApiObjectMetadata)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.containers"></a>
+
+```java
+public java.util.List<ContainerProps> getContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.restartPolicy"></a>
+
+```java
+public RestartPolicy getRestartPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.volumes"></a>
+
+```java
+public java.util.List<Volume> getVolumes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.defaultSelector"></a>
+
+```java
+public java.lang.Boolean getDefaultSelector();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.WorkloadProps.property.podMetadata"></a>
+
+```java
+public ApiObjectMetadata getPodMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -10208,410 +10057,6 @@ public java.lang.Number getUser();
 ---
 
 
-### PodSpec <a name="org.cdk8s.plus22.PodSpec"></a>
-
-- *Implements:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
-
-Provides read/write capabilities ontop of a `PodSpecProps`.
-
-#### Initializers <a name="org.cdk8s.plus22.PodSpec.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.PodSpec;
-
-PodSpec.Builder.create()
-//  .containers(java.util.List<ContainerProps>)
-//  .hostAliases(java.util.List<HostAlias>)
-//  .initContainers(java.util.List<ContainerProps>)
-//  .restartPolicy(RestartPolicy)
-//  .securityContext(PodSecurityContextProps)
-//  .serviceAccount(IServiceAccount)
-//  .volumes(java.util.List<Volume>)
-    .build();
-```
-
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.containers"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.hostAliases"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.initContainers"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.restartPolicy"></a>
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.securityContext"></a>
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.serviceAccount"></a>
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.volumes"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="org.cdk8s.plus22.PodSpec.addContainer"></a>
-
-```java
-public addContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="org.cdk8s.plus22.PodSpec.addHostAlias"></a>
-
-```java
-public addHostAlias(HostAlias hostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.hostAlias"></a>
-
-- *Type:* [`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="org.cdk8s.plus22.PodSpec.addInitContainer"></a>
-
-```java
-public addInitContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
----
-
-##### `addVolume` <a name="org.cdk8s.plus22.PodSpec.addVolume"></a>
-
-```java
-public addVolume(Volume volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.parameter.volume"></a>
-
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
-
----
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.securityContext"></a>
-
-```java
-public PodSecurityContext getSecurityContext();
-```
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContext`](#org.cdk8s.plus22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.PodSpec.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-
-### PodTemplate <a name="org.cdk8s.plus22.PodTemplate"></a>
-
-- *Implements:* [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
-
-Provides read/write capabilities ontop of a `PodTemplateProps`.
-
-#### Initializers <a name="org.cdk8s.plus22.PodTemplate.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.PodTemplate;
-
-PodTemplate.Builder.create()
-//  .containers(java.util.List<ContainerProps>)
-//  .hostAliases(java.util.List<HostAlias>)
-//  .initContainers(java.util.List<ContainerProps>)
-//  .restartPolicy(RestartPolicy)
-//  .securityContext(PodSecurityContextProps)
-//  .serviceAccount(IServiceAccount)
-//  .volumes(java.util.List<Volume>)
-//  .podMetadata(ApiObjectMetadata)
-    .build();
-```
-
-##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.containers"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.hostAliases"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.initContainers"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)>
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.restartPolicy"></a>
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.securityContext"></a>
-
-- *Type:* [`org.cdk8s.plus22.PodSecurityContextProps`](#org.cdk8s.plus22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.serviceAccount"></a>
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.volumes"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.podMetadata"></a>
-
-- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
-
-
-#### Properties <a name="Properties"></a>
-
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.PodTemplate.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadataDefinition getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
-
 ### Probe <a name="org.cdk8s.plus22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -10911,248 +10356,9 @@ The Kubernetes name of this resource.
 
 ---
 
-### IPodSpec <a name="org.cdk8s.plus22.IPodSpec"></a>
-
-- *Implemented By:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.PodSpec`](#org.cdk8s.plus22.PodSpec), [`org.cdk8s.plus22.PodTemplate`](#org.cdk8s.plus22.PodTemplate), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec), [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
-
-Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
-
-Use the `PodSpec` class as an implementation helper.
-
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="org.cdk8s.plus22.IPodSpec.addContainer"></a>
-
-```java
-public addContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
-The container.
-
----
-
-##### `addInitContainer` <a name="org.cdk8s.plus22.IPodSpec.addInitContainer"></a>
-
-```java
-public addInitContainer(ContainerProps container)
-```
-
-###### `container`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.parameter.container"></a>
-
-- *Type:* [`org.cdk8s.plus22.ContainerProps`](#org.cdk8s.plus22.ContainerProps)
-
-The container.
-
----
-
-##### `addVolume` <a name="org.cdk8s.plus22.IPodSpec.addVolume"></a>
-
-```java
-public addVolume(Volume volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.parameter.volume"></a>
-
-- *Type:* [`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)
-
-The volume.
-
----
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodSpec.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodSpec.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodSpec.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-### IPodTemplate <a name="org.cdk8s.plus22.IPodTemplate"></a>
-
-- *Extends:* [`org.cdk8s.plus22.IPodSpec`](#org.cdk8s.plus22.IPodSpec)
-
-- *Implemented By:* [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PodTemplate`](#org.cdk8s.plus22.PodTemplate), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.IPodTemplate`](#org.cdk8s.plus22.IPodTemplate)
-
-Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
-
-Use the `PodTemplate` class as an implementation helper.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.containers"></a>
-
-```java
-public java.util.List<Container> getContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.hostAliases"></a>
-
-```java
-public java.util.List<HostAlias> getHostAliases();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.HostAlias`](#org.cdk8s.plus22.HostAlias)>
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.initContainers"></a>
-
-```java
-public java.util.List<Container> getInitContainers();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Container`](#org.cdk8s.plus22.Container)>
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.volumes"></a>
-
-```java
-public java.util.List<Volume> getVolumes();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.Volume`](#org.cdk8s.plus22.Volume)>
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.restartPolicy"></a>
-
-```java
-public RestartPolicy getRestartPolicy();
-```
-
-- *Type:* [`org.cdk8s.plus22.RestartPolicy`](#org.cdk8s.plus22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.serviceAccount"></a>
-
-```java
-public IServiceAccount getServiceAccount();
-```
-
-- *Type:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus22.IPodTemplate.property.podMetadata"></a>
-
-```java
-public ApiObjectMetadataDefinition getPodMetadata();
-```
-
-- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
 ### IResource <a name="org.cdk8s.plus22.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IPersistentVolume`](#org.cdk8s.plus22.IPersistentVolume), [`org.cdk8s.plus22.IPersistentVolumeClaim`](#org.cdk8s.plus22.IPersistentVolumeClaim), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus22.AbstractPod`](#org.cdk8s.plus22.AbstractPod), [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.Workload`](#org.cdk8s.plus22.Workload), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IPersistentVolume`](#org.cdk8s.plus22.IPersistentVolume), [`org.cdk8s.plus22.IPersistentVolumeClaim`](#org.cdk8s.plus22.IPersistentVolumeClaim), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
 
 Represents a resource.
 

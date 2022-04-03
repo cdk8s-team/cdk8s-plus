@@ -2,6 +2,637 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### AbstractPod <a name="cdk8s_plus_22.AbstractPod"></a>
+
+#### Initializers <a name="cdk8s_plus_22.AbstractPod.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.AbstractPod(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
+  init_containers: typing.List[ContainerProps] = None,
+  restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
+  service_account: IServiceAccount = None,
+  volumes: typing.List[Volume] = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.restart_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.service_account"></a>
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.parameter.volumes"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `add_container` <a name="cdk8s_plus_22.AbstractPod.add_container"></a>
+
+```python
+def add_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+##### `add_host_alias` <a name="cdk8s_plus_22.AbstractPod.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
+##### `add_init_container` <a name="cdk8s_plus_22.AbstractPod.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: Resources = None,
+  security_context: ContainerSecurityContextProps = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+##### `add_volume` <a name="cdk8s_plus_22.AbstractPod.add_volume"></a>
+
+```python
+def add_volume(
+  volume: Volume
+)
+```
+
+###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.parameter.volume"></a>
+
+- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.property.containers"></a>
+
+```python
+containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.AbstractPod.property.volumes"></a>
+
+```python
+volumes: typing.List[Volume]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPod.property.restart_policy"></a>
+
+```python
+restart_policy: RestartPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPod.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+
+---
+
+
 ### AwsElasticBlockStorePersistentVolume <a name="cdk8s_plus_22.AwsElasticBlockStorePersistentVolume"></a>
 
 Represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
@@ -785,8 +1416,6 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ### Deployment <a name="cdk8s_plus_22.Deployment"></a>
 
-- *Implements:* [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
-
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
 You describe a desired state in a Deployment, and the Deployment Controller changes the actual
@@ -827,8 +1456,8 @@ cdk8s_plus_22.Deployment(
   security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
-  pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
+  pod_metadata: ApiObjectMetadata = None,
   replicas: typing.Union[int, float] = None
 )
 ```
@@ -948,23 +1577,20 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.pod_metadata"></a>
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
 ##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.default_selector"></a>
 
 - *Type:* `bool`
 - *Default:* true
 
-Automatically allocates a pod selector for this deployment.
+Automatically allocates a pod selector for this workload.
 
-If this is set to `false` you must define your selector through
-`deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
+---
+
+##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.pod_metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -978,425 +1604,6 @@ Number of desired pods.
 ---
 
 #### Methods <a name="Methods"></a>
-
-##### `add_container` <a name="cdk8s_plus_22.Deployment.add_container"></a>
-
-```python
-def add_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_host_alias` <a name="cdk8s_plus_22.Deployment.add_host_alias"></a>
-
-```python
-def add_host_alias(
-  hostnames: typing.List[str],
-  ip: str
-)
-```
-
-###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
-
-- *Type:* typing.List[`str`]
-
-Hostnames for the chosen IP address.
-
----
-
-###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
-
-- *Type:* `str`
-
-IP address of the host file entry.
-
----
-
-##### `add_init_container` <a name="cdk8s_plus_22.Deployment.add_init_container"></a>
-
-```python
-def add_init_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_volume` <a name="cdk8s_plus_22.Deployment.add_volume"></a>
-
-```python
-def add_volume(
-  volume: Volume
-)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.volume"></a>
-
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
-
----
 
 ##### `expose_via_ingress` <a name="cdk8s_plus_22.Deployment.expose_via_ingress"></a>
 
@@ -1549,101 +1756,8 @@ The port number the service will redirect to.
 
 ---
 
-##### `select_by_label` <a name="cdk8s_plus_22.Deployment.select_by_label"></a>
-
-```python
-def select_by_label(
-  key: str,
-  value: str
-)
-```
-
-###### `key`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.key"></a>
-
-- *Type:* `str`
-
-The label key.
-
----
-
-###### `value`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.value"></a>
-
-- *Type:* `str`
-
-The label value.
-
----
-
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `label_selector`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.label_selector"></a>
-
-```python
-label_selector: typing.Mapping[str]
-```
-
-- *Type:* typing.Mapping[`str`]
-
-The labels this deployment will match against in order to select pods.
-
-Returns a a copy. Use `selectByLabel()` to add labels.
-
----
-
-##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadataDefinition
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
 
 ##### `replicas`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.replicas"></a>
 
@@ -1654,54 +1768,6 @@ replicas: typing.Union[int, float]
 - *Type:* `typing.Union[int, float]`
 
 Number of desired pods.
-
----
-
-##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.security_context"></a>
-
-```python
-security_context: PodSecurityContext
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.Deployment.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.Deployment.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -2272,8 +2338,6 @@ def add_tls(
 
 ### Job <a name="cdk8s_plus_22.Job"></a>
 
-- *Implements:* [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
-
 A Job creates one or more Pods and ensures that a specified number of them successfully terminate.
 
 As pods successfully complete,
@@ -2298,6 +2362,7 @@ cdk8s_plus_22.Job(
   security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
+  default_selector: bool = None,
   pod_metadata: ApiObjectMetadata = None,
   active_deadline: Duration = None,
   backoff_limit: typing.Union[int, float] = None,
@@ -2420,11 +2485,20 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.default_selector"></a>
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.pod_metadata"></a>
 
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -2462,507 +2536,9 @@ field is alpha-level and is only honored by servers that enable the
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `add_container` <a name="cdk8s_plus_22.Job.add_container"></a>
-
-```python
-def add_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_host_alias` <a name="cdk8s_plus_22.Job.add_host_alias"></a>
-
-```python
-def add_host_alias(
-  hostnames: typing.List[str],
-  ip: str
-)
-```
-
-###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
-
-- *Type:* typing.List[`str`]
-
-Hostnames for the chosen IP address.
-
----
-
-###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
-
-- *Type:* `str`
-
-IP address of the host file entry.
-
----
-
-##### `add_init_container` <a name="cdk8s_plus_22.Job.add_init_container"></a>
-
-```python
-def add_init_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_volume` <a name="cdk8s_plus_22.Job.add_volume"></a>
-
-```python
-def add_volume(
-  volume: Volume
-)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Job.parameter.volume"></a>
-
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
-
----
 
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadataDefinition
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
-##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.security_context"></a>
-
-```python
-security_context: PodSecurityContext
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
 
 ##### `active_deadline`<sup>Optional</sup> <a name="cdk8s_plus_22.Job.property.active_deadline"></a>
 
@@ -2987,30 +2563,6 @@ backoff_limit: typing.Union[int, float]
 - *Type:* `typing.Union[int, float]`
 
 Number of retries before marking failed.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.Job.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.Job.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -3515,8 +3067,6 @@ to any specific volume.
 
 ### Pod <a name="cdk8s_plus_22.Pod"></a>
 
-- *Implements:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
-
 Pod is a collection of containers that can run on a host.
 
 This resource is
@@ -3656,519 +3206,8 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-#### Methods <a name="Methods"></a>
 
-##### `add_container` <a name="cdk8s_plus_22.Pod.add_container"></a>
 
-```python
-def add_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_host_alias` <a name="cdk8s_plus_22.Pod.add_host_alias"></a>
-
-```python
-def add_host_alias(
-  hostnames: typing.List[str],
-  ip: str
-)
-```
-
-###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
-
-- *Type:* typing.List[`str`]
-
-Hostnames for the chosen IP address.
-
----
-
-###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
-
-- *Type:* `str`
-
-IP address of the host file entry.
-
----
-
-##### `add_init_container` <a name="cdk8s_plus_22.Pod.add_init_container"></a>
-
-```python
-def add_init_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_volume` <a name="cdk8s_plus_22.Pod.add_volume"></a>
-
-```python
-def add_volume(
-  volume: Volume
-)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.parameter.volume"></a>
-
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
-
----
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.security_context"></a>
-
-```python
-security_context: PodSecurityContext
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.Pod.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.Pod.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
-
----
 
 
 ### Resource <a name="cdk8s_plus_22.Resource"></a>
@@ -5004,8 +4043,6 @@ The SSH private key to use.
 
 ### StatefulSet <a name="cdk8s_plus_22.StatefulSet"></a>
 
-- *Implements:* [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
-
 StatefulSet is the workload API object used to manage stateful applications.
 
 Manages the deployment and scaling of a set of Pods, and provides guarantees
@@ -5047,9 +4084,9 @@ cdk8s_plus_22.StatefulSet(
   security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
+  default_selector: bool = None,
   pod_metadata: ApiObjectMetadata = None,
   service: Service,
-  default_selector: bool = None,
   pod_management_policy: PodManagementPolicy = None,
   replicas: typing.Union[int, float] = None
 )
@@ -5170,11 +4207,20 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.default_selector"></a>
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.pod_metadata"></a>
 
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -5183,18 +4229,6 @@ The pod metadata.
 - *Type:* [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service)
 
 Service to associate with the statefulset.
-
----
-
-##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.default_selector"></a>
-
-- *Type:* `bool`
-- *Default:* true
-
-Automatically allocates a pod selector for this statefulset.
-
-If this is set to `false` you must define your selector through
-`statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
 
 ---
 
@@ -5216,510 +4250,9 @@ Number of desired pods.
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `add_container` <a name="cdk8s_plus_22.StatefulSet.add_container"></a>
-
-```python
-def add_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_host_alias` <a name="cdk8s_plus_22.StatefulSet.add_host_alias"></a>
-
-```python
-def add_host_alias(
-  hostnames: typing.List[str],
-  ip: str
-)
-```
-
-###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
-
-- *Type:* typing.List[`str`]
-
-Hostnames for the chosen IP address.
-
----
-
-###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
-
-- *Type:* `str`
-
-IP address of the host file entry.
-
----
-
-##### `add_init_container` <a name="cdk8s_plus_22.StatefulSet.add_init_container"></a>
-
-```python
-def add_init_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_volume` <a name="cdk8s_plus_22.StatefulSet.add_volume"></a>
-
-```python
-def add_volume(
-  volume: Volume
-)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.parameter.volume"></a>
-
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
-
----
-
-##### `select_by_label` <a name="cdk8s_plus_22.StatefulSet.select_by_label"></a>
-
-```python
-def select_by_label(
-  key: str,
-  value: str
-)
-```
-
-###### `key`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.parameter.key"></a>
-
-- *Type:* `str`
-
-The label key.
-
----
-
-###### `value`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.parameter.value"></a>
-
-- *Type:* `str`
-
-The label value.
-
----
 
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `label_selector`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.label_selector"></a>
-
-```python
-label_selector: typing.Mapping[str]
-```
-
-- *Type:* typing.Mapping[`str`]
-
-The labels this statefulset will match against in order to select pods.
-
-Returns a a copy. Use `selectByLabel()` to add labels.
-
----
 
 ##### `pod_management_policy`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.pod_management_policy"></a>
 
@@ -5733,18 +4266,6 @@ Management policy to use for the set.
 
 ---
 
-##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadataDefinition
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
 ##### `replicas`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.replicas"></a>
 
 ```python
@@ -5754,54 +4275,6 @@ replicas: typing.Union[int, float]
 - *Type:* `typing.Union[int, float]`
 
 Number of desired pods.
-
----
-
-##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.security_context"></a>
-
-```python
-security_context: PodSecurityContext
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSet.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSet.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -5866,7 +4339,381 @@ The TLS key.
 
 
 
+### Workload <a name="cdk8s_plus_22.Workload"></a>
+
+A workload is an application running on Kubernetes.
+
+Whether your workload is a single
+component or several that work together, on Kubernetes you run it inside a set of pods.
+In Kubernetes, a Pod represents a set of running containers on your cluster.
+
+#### Initializers <a name="cdk8s_plus_22.Workload.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Workload(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
+  init_containers: typing.List[ContainerProps] = None,
+  restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
+  service_account: IServiceAccount = None,
+  volumes: typing.List[Volume] = None,
+  default_selector: bool = None,
+  pod_metadata: ApiObjectMetadata = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.Workload.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.Workload.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.restart_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.service_account"></a>
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.volumes"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.default_selector"></a>
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
+##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.parameter.pod_metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `select_by_label` <a name="cdk8s_plus_22.Workload.select_by_label"></a>
+
+```python
+def select_by_label(
+  key: str,
+  value: str
+)
+```
+
+###### `key`<sup>Required</sup> <a name="cdk8s_plus_22.Workload.parameter.key"></a>
+
+- *Type:* `str`
+
+The label key.
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s_plus_22.Workload.parameter.value"></a>
+
+- *Type:* `str`
+
+The label value.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `label_selector`<sup>Required</sup> <a name="cdk8s_plus_22.Workload.property.label_selector"></a>
+
+```python
+label_selector: typing.Mapping[str]
+```
+
+- *Type:* typing.Mapping[`str`]
+
+The labels this workload will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.Workload.property.pod_metadata"></a>
+
+```python
+pod_metadata: ApiObjectMetadataDefinition
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
+
+The metadata of pods in this workload.
+
+---
+
+
 ## Structs <a name="Structs"></a>
+
+### AbstractPodProps <a name="cdk8s_plus_22.AbstractPodProps"></a>
+
+Properties for `AbstractPod`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.AbstractPodProps(
+  metadata: ApiObjectMetadata = None,
+  containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
+  init_containers: typing.List[ContainerProps] = None,
+  restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
+  service_account: IServiceAccount = None,
+  volumes: typing.List[Volume] = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.containers"></a>
+
+```python
+containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.restart_policy"></a>
+
+```python
+restart_policy: RestartPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.AbstractPodProps.property.volumes"></a>
+
+```python
+volumes: typing.List[Volume]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
 
 ### AddDeploymentOptions <a name="cdk8s_plus_22.AddDeploymentOptions"></a>
 
@@ -7164,7 +6011,7 @@ request: Cpu
 
 ### DeploymentProps <a name="cdk8s_plus_22.DeploymentProps"></a>
 
-Properties for initialization of `Deployment`.
+Properties for `Deployment`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -7180,8 +6027,8 @@ cdk8s_plus_22.DeploymentProps(
   security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
-  pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
+  pod_metadata: ApiObjectMetadata = None,
   replicas: typing.Union[int, float] = None
 )
 ```
@@ -7321,18 +6168,6 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadata
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
 ##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.default_selector"></a>
 
 ```python
@@ -7342,10 +6177,19 @@ default_selector: bool
 - *Type:* `bool`
 - *Default:* true
 
-Automatically allocates a pod selector for this deployment.
+Automatically allocates a pod selector for this workload.
 
-If this is set to `false` you must define your selector through
-`deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
+---
+
+##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.pod_metadata"></a>
+
+```python
+pod_metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -8500,7 +7344,7 @@ termination and value of the Host header is used for routing.
 
 ### JobProps <a name="cdk8s_plus_22.JobProps"></a>
 
-Properties for initialization of `Job`.
+Properties for `Job`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -8516,6 +7360,7 @@ cdk8s_plus_22.JobProps(
   security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
+  default_selector: bool = None,
   pod_metadata: ApiObjectMetadata = None,
   active_deadline: Duration = None,
   backoff_limit: typing.Union[int, float] = None,
@@ -8658,6 +7503,19 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.default_selector"></a>
+
+```python
+default_selector: bool
+```
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.pod_metadata"></a>
 
 ```python
@@ -8666,7 +7524,7 @@ pod_metadata: ApiObjectMetadata
 
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -9179,7 +8037,7 @@ Defines what type of volume is required by the claim.
 
 ### PodProps <a name="cdk8s_plus_22.PodProps"></a>
 
-Properties for initialization of `Pod`.
+Properties for `Pod`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -9435,307 +8293,6 @@ user: typing.Union[int, float]
 - *Default:* User specified in image metadata
 
 The UID to run the entrypoint of the container process.
-
----
-
-### PodSpecProps <a name="cdk8s_plus_22.PodSpecProps"></a>
-
-Properties of a `PodSpec`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.PodSpecProps(
-  containers: typing.List[ContainerProps] = None,
-  host_aliases: typing.List[HostAlias] = None,
-  init_containers: typing.List[ContainerProps] = None,
-  restart_policy: RestartPolicy = None,
-  security_context: PodSecurityContextProps = None,
-  service_account: IServiceAccount = None,
-  volumes: typing.List[Volume] = None
-)
-```
-
-##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.containers"></a>
-
-```python
-containers: typing.List[ContainerProps]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.init_containers"></a>
-
-```python
-init_containers: typing.List[ContainerProps]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.security_context"></a>
-
-```python
-security_context: PodSecurityContextProps
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-### PodTemplateProps <a name="cdk8s_plus_22.PodTemplateProps"></a>
-
-Properties of a `PodTemplate`.
-
-Adds metadata information on top of the spec.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.PodTemplateProps(
-  containers: typing.List[ContainerProps] = None,
-  host_aliases: typing.List[HostAlias] = None,
-  init_containers: typing.List[ContainerProps] = None,
-  restart_policy: RestartPolicy = None,
-  security_context: PodSecurityContextProps = None,
-  service_account: IServiceAccount = None,
-  volumes: typing.List[Volume] = None,
-  pod_metadata: ApiObjectMetadata = None
-)
-```
-
-##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.containers"></a>
-
-```python
-containers: typing.List[ContainerProps]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.init_containers"></a>
-
-```python
-init_containers: typing.List[ContainerProps]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.security_context"></a>
-
-```python
-security_context: PodSecurityContextProps
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadata
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-The pod metadata.
 
 ---
 
@@ -10551,9 +9108,9 @@ cdk8s_plus_22.StatefulSetProps(
   security_context: PodSecurityContextProps = None,
   service_account: IServiceAccount = None,
   volumes: typing.List[Volume] = None,
+  default_selector: bool = None,
   pod_metadata: ApiObjectMetadata = None,
   service: Service,
-  default_selector: bool = None,
   pod_management_policy: PodManagementPolicy = None,
   replicas: typing.Union[int, float] = None
 )
@@ -10694,6 +9251,19 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.default_selector"></a>
+
+```python
+default_selector: bool
+```
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.pod_metadata"></a>
 
 ```python
@@ -10702,7 +9272,7 @@ pod_metadata: ApiObjectMetadata
 
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -10715,22 +9285,6 @@ service: Service
 - *Type:* [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service)
 
 Service to associate with the statefulset.
-
----
-
-##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.default_selector"></a>
-
-```python
-default_selector: bool
-```
-
-- *Type:* `bool`
-- *Default:* true
-
-Automatically allocates a pod selector for this statefulset.
-
-If this is set to `false` you must define your selector through
-`statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
 
 ---
 
@@ -11082,6 +9636,189 @@ volume: Volume
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
 The volume to mount.
+
+---
+
+### WorkloadProps <a name="cdk8s_plus_22.WorkloadProps"></a>
+
+Properties for `Workload`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.WorkloadProps(
+  metadata: ApiObjectMetadata = None,
+  containers: typing.List[ContainerProps] = None,
+  host_aliases: typing.List[HostAlias] = None,
+  init_containers: typing.List[ContainerProps] = None,
+  restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
+  service_account: IServiceAccount = None,
+  volumes: typing.List[Volume] = None,
+  default_selector: bool = None,
+  pod_metadata: ApiObjectMetadata = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.containers"></a>
+
+```python
+containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.restart_policy"></a>
+
+```python
+restart_policy: RestartPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.volumes"></a>
+
+```python
+volumes: typing.List[Volume]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.default_selector"></a>
+
+```python
+default_selector: bool
+```
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
+##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.WorkloadProps.property.pod_metadata"></a>
+
+```python
+pod_metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -12201,781 +10938,6 @@ user: typing.Union[int, float]
 ---
 
 
-### PodSpec <a name="cdk8s_plus_22.PodSpec"></a>
-
-- *Implements:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
-
-Provides read/write capabilities ontop of a `PodSpecProps`.
-
-#### Initializers <a name="cdk8s_plus_22.PodSpec.Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.PodSpec(
-  containers: typing.List[ContainerProps] = None,
-  host_aliases: typing.List[HostAlias] = None,
-  init_containers: typing.List[ContainerProps] = None,
-  restart_policy: RestartPolicy = None,
-  security_context: PodSecurityContextProps = None,
-  service_account: IServiceAccount = None,
-  volumes: typing.List[Volume] = None
-)
-```
-
-##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.containers"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.host_aliases"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.init_containers"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.restart_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.service_account"></a>
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.volumes"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-#### Methods <a name="Methods"></a>
-
-##### `add_container` <a name="cdk8s_plus_22.PodSpec.add_container"></a>
-
-```python
-def add_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_host_alias` <a name="cdk8s_plus_22.PodSpec.add_host_alias"></a>
-
-```python
-def add_host_alias(
-  hostnames: typing.List[str],
-  ip: str
-)
-```
-
-###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
-
-- *Type:* typing.List[`str`]
-
-Hostnames for the chosen IP address.
-
----
-
-###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
-
-- *Type:* `str`
-
-IP address of the host file entry.
-
----
-
-##### `add_init_container` <a name="cdk8s_plus_22.PodSpec.add_init_container"></a>
-
-```python
-def add_init_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_volume` <a name="cdk8s_plus_22.PodSpec.add_volume"></a>
-
-```python
-def add_volume(
-  volume: Volume
-)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.parameter.volume"></a>
-
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
-
----
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.security_context"></a>
-
-```python
-security_context: PodSecurityContext
-```
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-
-### PodTemplate <a name="cdk8s_plus_22.PodTemplate"></a>
-
-- *Implements:* [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
-
-Provides read/write capabilities ontop of a `PodTemplateProps`.
-
-#### Initializers <a name="cdk8s_plus_22.PodTemplate.Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.PodTemplate(
-  containers: typing.List[ContainerProps] = None,
-  host_aliases: typing.List[HostAlias] = None,
-  init_containers: typing.List[ContainerProps] = None,
-  restart_policy: RestartPolicy = None,
-  security_context: PodSecurityContextProps = None,
-  service_account: IServiceAccount = None,
-  volumes: typing.List[Volume] = None,
-  pod_metadata: ApiObjectMetadata = None
-)
-```
-
-##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.containers"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.host_aliases"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.init_containers"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.restart_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.service_account"></a>
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.volumes"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.pod_metadata"></a>
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
-
-
-#### Properties <a name="Properties"></a>
-
-##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.PodTemplate.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadataDefinition
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
-
 ### Probe <a name="cdk8s_plus_22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -13600,602 +11562,9 @@ The Kubernetes name of this resource.
 
 ---
 
-### IPodSpec <a name="cdk8s_plus_22.IPodSpec"></a>
-
-- *Implemented By:* [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.PodSpec`](#cdk8s_plus_22.PodSpec), [`cdk8s_plus_22.PodTemplate`](#cdk8s_plus_22.PodTemplate), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec), [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
-
-Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
-
-Use the `PodSpec` class as an implementation helper.
-
-#### Methods <a name="Methods"></a>
-
-##### `add_container` <a name="cdk8s_plus_22.IPodSpec.add_container"></a>
-
-```python
-def add_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_init_container` <a name="cdk8s_plus_22.IPodSpec.add_init_container"></a>
-
-```python
-def add_init_container(
-  image: str,
-  args: typing.List[str] = None,
-  command: typing.List[str] = None,
-  env: typing.Mapping[EnvValue] = None,
-  image_pull_policy: ImagePullPolicy = None,
-  lifecycle: ContainerLifecycle = None,
-  liveness: Probe = None,
-  name: str = None,
-  port: typing.Union[int, float] = None,
-  readiness: Probe = None,
-  resources: Resources = None,
-  security_context: ContainerSecurityContextProps = None,
-  startup: Probe = None,
-  volume_mounts: typing.List[VolumeMount] = None,
-  working_dir: str = None
-)
-```
-
-###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
-
-- *Type:* `str`
-
-Docker image name.
-
----
-
-###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* []
-
-Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
-
-Variable references $(VAR_NAME) are expanded using the container's
-environment. If a variable cannot be resolved, the reference in the input
-string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
-double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
-regardless of whether the variable exists or not.
-
-Cannot be updated.
-
-> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
-
-- *Type:* typing.List[`str`]
-- *Default:* The docker image's ENTRYPOINT.
-
-Entrypoint array.
-
-Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
-If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
-More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-
----
-
-###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
-
-- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
-- *Default:* No environment variables.
-
-List of environment variables to set in the container.
-
-Cannot be updated.
-
----
-
-###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
-
-- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
-- *Default:* ImagePullPolicy.ALWAYS
-
-Image pull policy for this container.
-
----
-
-###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
-
-Describes actions that the management system should take in response to container lifecycle events.
-
----
-
-###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no liveness probe is defined
-
-Periodic probe of container liveness.
-
-Container will be restarted if the probe fails.
-
----
-
-###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
-
-- *Type:* `str`
-- *Default:* 'main'
-
-Name of the container specified as a DNS_LABEL.
-
-Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
-
----
-
-###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
-
-- *Type:* `typing.Union[int, float]`
-- *Default:* No port is exposed.
-
-Number of port to expose on the pod's IP address.
-
-This must be a valid port number, 0 < x < 65536.
-
----
-
-###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no readiness probe is defined
-
-Determines when the container is ready to serve traffic.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.Resources`](#cdk8s_plus_22.Resources)
-
-Compute resources (CPU and memory requests and limits) required by the container.
-
-> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-
----
-
-###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
-
-- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
-- *Default:* ensureNonRoot: false
-  privileged: false
-  readOnlyRootFilesystem: false
-
-SecurityContext defines the security options the container should be run with.
-
-If set, the fields override equivalent fields of the pod's security context.
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-
----
-
-###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
-
-- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
-- *Default:* no startup probe is defined.
-
-StartupProbe indicates that the Pod has successfully initialized.
-
-If specified, no other probes are executed until this completes successfully
-
----
-
-###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
-
-Pod volumes to mount into the container's filesystem.
-
-Cannot be updated.
-
----
-
-###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
-
-- *Type:* `str`
-- *Default:* The container runtime's default.
-
-Container's working directory.
-
-If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
-
----
-
-##### `add_volume` <a name="cdk8s_plus_22.IPodSpec.add_volume"></a>
-
-```python
-def add_volume(
-  volume: Volume
-)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.parameter.volume"></a>
-
-- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
-
-The volume.
-
----
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.IPodSpec.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.IPodSpec.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-### IPodTemplate <a name="cdk8s_plus_22.IPodTemplate"></a>
-
-- *Extends:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
-
-- *Implemented By:* [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PodTemplate`](#cdk8s_plus_22.PodTemplate), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
-
-Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
-
-Use the `PodTemplate` class as an implementation helper.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.containers"></a>
-
-```python
-containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.host_aliases"></a>
-
-```python
-host_aliases: typing.List[HostAlias]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.init_containers"></a>
-
-```python
-init_containers: typing.List[Container]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.volumes"></a>
-
-```python
-volumes: typing.List[Volume]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.IPodTemplate.property.restart_policy"></a>
-
-```python
-restart_policy: RestartPolicy
-```
-
-- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.IPodTemplate.property.service_account"></a>
-
-```python
-service_account: IServiceAccount
-```
-
-- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.pod_metadata"></a>
-
-```python
-pod_metadata: ApiObjectMetadataDefinition
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.AbstractPod`](#cdk8s_plus_22.AbstractPod), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.Workload`](#cdk8s_plus_22.Workload), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
 
 Represents a resource.
 

@@ -2,6 +2,158 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### AbstractPod <a name="cdk8s-plus-22.AbstractPod"></a>
+
+#### Initializers <a name="cdk8s-plus-22.AbstractPod.Initializer"></a>
+
+```typescript
+import { AbstractPod } from 'cdk8s-plus-22'
+
+new AbstractPod(scope: Construct, id: string, props?: AbstractPodProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.AbstractPodProps`](#cdk8s-plus-22.AbstractPodProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addContainer` <a name="cdk8s-plus-22.AbstractPod.addContainer"></a>
+
+```typescript
+public addContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
+##### `addHostAlias` <a name="cdk8s-plus-22.AbstractPod.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="cdk8s-plus-22.AbstractPod.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
+##### `addVolume` <a name="cdk8s-plus-22.AbstractPod.addVolume"></a>
+
+```typescript
+public addVolume(volume: Volume)
+```
+
+###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.parameter.volume"></a>
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.property.containers"></a>
+
+```typescript
+public readonly containers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.AbstractPod.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPod.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPod.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+
+---
+
+
 ### AwsElasticBlockStorePersistentVolume <a name="cdk8s-plus-22.AwsElasticBlockStorePersistentVolume"></a>
 
 Represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
@@ -403,8 +555,6 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ### Deployment <a name="cdk8s-plus-22.Deployment"></a>
 
-- *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
-
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
 You describe a desired state in a Deployment, and the Deployment Controller changes the actual
@@ -458,54 +608,6 @@ new Deployment(scope: Construct, id: string, props?: DeploymentProps)
 
 #### Methods <a name="Methods"></a>
 
-##### `addContainer` <a name="cdk8s-plus-22.Deployment.addContainer"></a>
-
-```typescript
-public addContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="cdk8s-plus-22.Deployment.addHostAlias"></a>
-
-```typescript
-public addHostAlias(hostAlias: HostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.hostAlias"></a>
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="cdk8s-plus-22.Deployment.addInitContainer"></a>
-
-```typescript
-public addInitContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addVolume` <a name="cdk8s-plus-22.Deployment.addVolume"></a>
-
-```typescript
-public addVolume(volume: Volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.volume"></a>
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
-
----
-
 ##### `exposeViaIngress` <a name="cdk8s-plus-22.Deployment.exposeViaIngress"></a>
 
 ```typescript
@@ -542,98 +644,8 @@ Options to determine details of the service and port exposed.
 
 ---
 
-##### `selectByLabel` <a name="cdk8s-plus-22.Deployment.selectByLabel"></a>
-
-```typescript
-public selectByLabel(key: string, value: string)
-```
-
-###### `key`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.key"></a>
-
-- *Type:* `string`
-
-The label key.
-
----
-
-###### `value`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.parameter.value"></a>
-
-- *Type:* `string`
-
-The label value.
-
----
-
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `labelSelector`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.labelSelector"></a>
-
-```typescript
-public readonly labelSelector: {[ key: string ]: string};
-```
-
-- *Type:* {[ key: string ]: `string`}
-
-The labels this deployment will match against in order to select pods.
-
-Returns a a copy. Use `selectByLabel()` to add labels.
-
----
-
-##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadataDefinition;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
 
 ##### `replicas`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.replicas"></a>
 
@@ -644,54 +656,6 @@ public readonly replicas: number;
 - *Type:* `number`
 
 Number of desired pods.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContext;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.Deployment.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.Deployment.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -990,8 +954,6 @@ public addTls(tls: IngressTls[])
 
 ### Job <a name="cdk8s-plus-22.Job"></a>
 
-- *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
-
 A Job creates one or more Pods and ensures that a specified number of them successfully terminate.
 
 As pods successfully complete,
@@ -1026,136 +988,9 @@ new Job(scope: Construct, id: string, props?: JobProps)
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="cdk8s-plus-22.Job.addContainer"></a>
-
-```typescript
-public addContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Job.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="cdk8s-plus-22.Job.addHostAlias"></a>
-
-```typescript
-public addHostAlias(hostAlias: HostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.Job.parameter.hostAlias"></a>
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="cdk8s-plus-22.Job.addInitContainer"></a>
-
-```typescript
-public addInitContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Job.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addVolume` <a name="cdk8s-plus-22.Job.addVolume"></a>
-
-```typescript
-public addVolume(volume: Volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.Job.parameter.volume"></a>
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
-
----
 
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadataDefinition;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContext;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.Job.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
 
 ##### `activeDeadline`<sup>Optional</sup> <a name="cdk8s-plus-22.Job.property.activeDeadline"></a>
 
@@ -1180,30 +1015,6 @@ public readonly backoffLimit: number;
 - *Type:* `number`
 
 Number of retries before marking failed.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.Job.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.Job.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -1532,8 +1343,6 @@ to any specific volume.
 
 ### Pod <a name="cdk8s-plus-22.Pod"></a>
 
-- *Implements:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
-
 Pod is a collection of containers that can run on a host.
 
 This resource is
@@ -1565,148 +1374,8 @@ new Pod(scope: Construct, id: string, props?: PodProps)
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="cdk8s-plus-22.Pod.addContainer"></a>
-
-```typescript
-public addContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="cdk8s-plus-22.Pod.addHostAlias"></a>
-
-```typescript
-public addHostAlias(hostAlias: HostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.parameter.hostAlias"></a>
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="cdk8s-plus-22.Pod.addInitContainer"></a>
-
-```typescript
-public addInitContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addVolume` <a name="cdk8s-plus-22.Pod.addVolume"></a>
-
-```typescript
-public addVolume(volume: Volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.parameter.volume"></a>
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
-
----
 
 
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContext;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.Pod.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.Pod.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.Pod.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
-
----
 
 
 ### Resource <a name="cdk8s-plus-22.Resource"></a>
@@ -2239,8 +1908,6 @@ new SshAuthSecret(scope: Construct, id: string, props: SshAuthSecretProps)
 
 ### StatefulSet <a name="cdk8s-plus-22.StatefulSet"></a>
 
-- *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
-
 StatefulSet is the workload API object used to manage stateful applications.
 
 Manages the deployment and scaling of a set of Pods, and provides guarantees
@@ -2292,136 +1959,9 @@ new StatefulSet(scope: Construct, id: string, props: StatefulSetProps)
 
 ---
 
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="cdk8s-plus-22.StatefulSet.addContainer"></a>
-
-```typescript
-public addContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="cdk8s-plus-22.StatefulSet.addHostAlias"></a>
-
-```typescript
-public addHostAlias(hostAlias: HostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.hostAlias"></a>
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="cdk8s-plus-22.StatefulSet.addInitContainer"></a>
-
-```typescript
-public addInitContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addVolume` <a name="cdk8s-plus-22.StatefulSet.addVolume"></a>
-
-```typescript
-public addVolume(volume: Volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.volume"></a>
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
-
----
-
-##### `selectByLabel` <a name="cdk8s-plus-22.StatefulSet.selectByLabel"></a>
-
-```typescript
-public selectByLabel(key: string, value: string)
-```
-
-###### `key`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.key"></a>
-
-- *Type:* `string`
-
-The label key.
-
----
-
-###### `value`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.parameter.value"></a>
-
-- *Type:* `string`
-
-The label value.
-
----
 
 
 #### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `labelSelector`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.labelSelector"></a>
-
-```typescript
-public readonly labelSelector: {[ key: string ]: string};
-```
-
-- *Type:* {[ key: string ]: `string`}
-
-The labels this statefulset will match against in order to select pods.
-
-Returns a a copy. Use `selectByLabel()` to add labels.
-
----
 
 ##### `podManagementPolicy`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.podManagementPolicy"></a>
 
@@ -2435,18 +1975,6 @@ Management policy to use for the set.
 
 ---
 
-##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadataDefinition;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
 ##### `replicas`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.replicas"></a>
 
 ```typescript
@@ -2456,54 +1984,6 @@ public readonly replicas: number;
 - *Type:* `number`
 
 Number of desired pods.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContext;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSet.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSet.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
 
 ---
 
@@ -2544,7 +2024,242 @@ new TlsSecret(scope: Construct, id: string, props: TlsSecretProps)
 
 
 
+### Workload <a name="cdk8s-plus-22.Workload"></a>
+
+A workload is an application running on Kubernetes.
+
+Whether your workload is a single
+component or several that work together, on Kubernetes you run it inside a set of pods.
+In Kubernetes, a Pod represents a set of running containers on your cluster.
+
+#### Initializers <a name="cdk8s-plus-22.Workload.Initializer"></a>
+
+```typescript
+import { Workload } from 'cdk8s-plus-22'
+
+new Workload(scope: Construct, id: string, props?: WorkloadProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.Workload.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.Workload.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.Workload.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.WorkloadProps`](#cdk8s-plus-22.WorkloadProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `selectByLabel` <a name="cdk8s-plus-22.Workload.selectByLabel"></a>
+
+```typescript
+public selectByLabel(key: string, value: string)
+```
+
+###### `key`<sup>Required</sup> <a name="cdk8s-plus-22.Workload.parameter.key"></a>
+
+- *Type:* `string`
+
+The label key.
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s-plus-22.Workload.parameter.value"></a>
+
+- *Type:* `string`
+
+The label value.
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `labelSelector`<sup>Required</sup> <a name="cdk8s-plus-22.Workload.property.labelSelector"></a>
+
+```typescript
+public readonly labelSelector: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: `string`}
+
+The labels this workload will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.Workload.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadataDefinition;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
+
+The metadata of pods in this workload.
+
+---
+
+
 ## Structs <a name="Structs"></a>
+
+### AbstractPodProps <a name="cdk8s-plus-22.AbstractPodProps"></a>
+
+Properties for `AbstractPod`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AbstractPodProps } from 'cdk8s-plus-22'
+
+const abstractPodProps: AbstractPodProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.containers"></a>
+
+```typescript
+public readonly containers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s-plus-22.AbstractPodProps.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
 
 ### AddDeploymentOptions <a name="cdk8s-plus-22.AddDeploymentOptions"></a>
 
@@ -3758,7 +3473,7 @@ public readonly request: Cpu;
 
 ### DeploymentProps <a name="cdk8s-plus-22.DeploymentProps"></a>
 
-Properties for initialization of `Deployment`.
+Properties for `Deployment`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -3903,18 +3618,6 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
-##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadata;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-The pod metadata.
-
----
-
 ##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.defaultSelector"></a>
 
 ```typescript
@@ -3924,10 +3627,19 @@ public readonly defaultSelector: boolean;
 - *Type:* `boolean`
 - *Default:* true
 
-Automatically allocates a pod selector for this deployment.
+Automatically allocates a pod selector for this workload.
 
-If this is set to `false` you must define your selector through
-`deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -5006,7 +4718,7 @@ termination and value of the Host header is used for routing.
 
 ### JobProps <a name="cdk8s-plus-22.JobProps"></a>
 
-Properties for initialization of `Job`.
+Properties for `Job`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -5151,6 +4863,19 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.defaultSelector"></a>
+
+```typescript
+public readonly defaultSelector: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.podMetadata"></a>
 
 ```typescript
@@ -5159,7 +4884,7 @@ public readonly podMetadata: ApiObjectMetadata;
 
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -5642,7 +5367,7 @@ Defines what type of volume is required by the claim.
 
 ### PodProps <a name="cdk8s-plus-22.PodProps"></a>
 
-Properties for initialization of `Pod`.
+Properties for `Pod`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -5882,290 +5607,6 @@ public readonly user: number;
 - *Default:* User specified in image metadata
 
 The UID to run the entrypoint of the container process.
-
----
-
-### PodSpecProps <a name="cdk8s-plus-22.PodSpecProps"></a>
-
-Properties of a `PodSpec`.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```typescript
-import { PodSpecProps } from 'cdk8s-plus-22'
-
-const podSpecProps: PodSpecProps = { ... }
-```
-
-##### `containers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.containers"></a>
-
-```typescript
-public readonly containers: ContainerProps[];
-```
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: ContainerProps[];
-```
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContextProps;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-### PodTemplateProps <a name="cdk8s-plus-22.PodTemplateProps"></a>
-
-Properties of a `PodTemplate`.
-
-Adds metadata information on top of the spec.
-
-#### Initializer <a name="[object Object].Initializer"></a>
-
-```typescript
-import { PodTemplateProps } from 'cdk8s-plus-22'
-
-const podTemplateProps: PodTemplateProps = { ... }
-```
-
-##### `containers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.containers"></a>
-
-```typescript
-public readonly containers: ContainerProps[];
-```
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
-- *Default:* No containers. Note that a pod spec must include at least one container.
-
-List of containers belonging to the pod.
-
-Containers cannot currently be
-added or removed. There must be at least one container in a Pod.
-
-You can add additionnal containers using `podSpec.addContainer()`
-
----
-
-##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-
----
-
-##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: ContainerProps[];
-```
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
-- *Default:* No init containers.
-
-List of initialization containers belonging to the pod.
-
-Init containers are executed in order prior to containers being started.
-If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
-The name for an init container or normal container must be unique among all containers.
-Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
-The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
-for each resource type, and then using the max of of that value or the sum of the normal containers.
-Limits are applied to init containers in a similar fashion.
-
-Init containers cannot currently be added ,removed or updated.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-- *Default:* RestartPolicy.ALWAYS
-
-Restart policy for all containers within the pod.
-
-> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
----
-
-##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContextProps;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
-- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-  ensureNonRoot: false
-
-SecurityContext holds pod-level security attributes and common container settings.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-- *Default:* No service account.
-
-A service account provides an identity for processes that run in a Pod.
-
-When you (a human) access the cluster (for example, using kubectl), you are
-authenticated by the apiserver as a particular User Account (currently this
-is usually admin, unless your cluster administrator has customized your
-cluster). Processes in containers inside pods can also contact the
-apiserver. When they do, they are authenticated as a particular Service
-Account (for example, default).
-
-> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
----
-
-##### `volumes`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-- *Default:* No volumes.
-
-List of volumes that can be mounted by containers belonging to the pod.
-
-You can also add volumes later using `podSpec.addVolume()`
-
-> https://kubernetes.io/docs/concepts/storage/volumes
-
----
-
-##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadata;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-The pod metadata.
 
 ---
 
@@ -7057,6 +6498,19 @@ You can also add volumes later using `podSpec.addVolume()`
 
 ---
 
+##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.defaultSelector"></a>
+
+```typescript
+public readonly defaultSelector: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
 ##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.podMetadata"></a>
 
 ```typescript
@@ -7065,7 +6519,7 @@ public readonly podMetadata: ApiObjectMetadata;
 
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
-The pod metadata.
+The pod metadata of this workload.
 
 ---
 
@@ -7078,22 +6532,6 @@ public readonly service: Service;
 - *Type:* [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service)
 
 Service to associate with the statefulset.
-
----
-
-##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.defaultSelector"></a>
-
-```typescript
-public readonly defaultSelector: boolean;
-```
-
-- *Type:* `boolean`
-- *Default:* true
-
-Automatically allocates a pod selector for this statefulset.
-
-If this is set to `false` you must define your selector through
-`statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
 
 ---
 
@@ -7423,6 +6861,178 @@ public readonly volume: Volume;
 - *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
 
 The volume to mount.
+
+---
+
+### WorkloadProps <a name="cdk8s-plus-22.WorkloadProps"></a>
+
+Properties for `Workload`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { WorkloadProps } from 'cdk8s-plus-22'
+
+const workloadProps: WorkloadProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.containers"></a>
+
+```typescript
+public readonly containers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.defaultSelector"></a>
+
+```typescript
+public readonly defaultSelector: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this workload.
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.WorkloadProps.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata of this workload.
 
 ---
 
@@ -8114,207 +7724,6 @@ public readonly user: number;
 ---
 
 
-### PodSpec <a name="cdk8s-plus-22.PodSpec"></a>
-
-- *Implements:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
-
-Provides read/write capabilities ontop of a `PodSpecProps`.
-
-#### Initializers <a name="cdk8s-plus-22.PodSpec.Initializer"></a>
-
-```typescript
-import { PodSpec } from 'cdk8s-plus-22'
-
-new PodSpec(props?: PodSpecProps)
-```
-
-##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.parameter.props"></a>
-
-- *Type:* [`cdk8s-plus-22.PodSpecProps`](#cdk8s-plus-22.PodSpecProps)
-
----
-
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="cdk8s-plus-22.PodSpec.addContainer"></a>
-
-```typescript
-public addContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addHostAlias` <a name="cdk8s-plus-22.PodSpec.addHostAlias"></a>
-
-```typescript
-public addHostAlias(hostAlias: HostAlias)
-```
-
-###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.parameter.hostAlias"></a>
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
-
----
-
-##### `addInitContainer` <a name="cdk8s-plus-22.PodSpec.addInitContainer"></a>
-
-```typescript
-public addInitContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
----
-
-##### `addVolume` <a name="cdk8s-plus-22.PodSpec.addVolume"></a>
-
-```typescript
-public addVolume(volume: Volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.parameter.volume"></a>
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
-
----
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.securityContext"></a>
-
-```typescript
-public readonly securityContext: PodSecurityContext;
-```
-
-- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.PodSpec.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-
-### PodTemplate <a name="cdk8s-plus-22.PodTemplate"></a>
-
-- *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
-
-Provides read/write capabilities ontop of a `PodTemplateProps`.
-
-#### Initializers <a name="cdk8s-plus-22.PodTemplate.Initializer"></a>
-
-```typescript
-import { PodTemplate } from 'cdk8s-plus-22'
-
-new PodTemplate(props?: PodTemplateProps)
-```
-
-##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplate.parameter.props"></a>
-
-- *Type:* [`cdk8s-plus-22.PodTemplateProps`](#cdk8s-plus-22.PodTemplateProps)
-
----
-
-
-
-#### Properties <a name="Properties"></a>
-
-##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.PodTemplate.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadataDefinition;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
-
 ### Probe <a name="cdk8s-plus-22.Probe"></a>
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -8607,248 +8016,9 @@ The Kubernetes name of this resource.
 
 ---
 
-### IPodSpec <a name="cdk8s-plus-22.IPodSpec"></a>
-
-- *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.PodSpec`](#cdk8s-plus-22.PodSpec), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
-
-Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
-
-Use the `PodSpec` class as an implementation helper.
-
-#### Methods <a name="Methods"></a>
-
-##### `addContainer` <a name="cdk8s-plus-22.IPodSpec.addContainer"></a>
-
-```typescript
-public addContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
-The container.
-
----
-
-##### `addInitContainer` <a name="cdk8s-plus-22.IPodSpec.addInitContainer"></a>
-
-```typescript
-public addInitContainer(container: ContainerProps)
-```
-
-###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.parameter.container"></a>
-
-- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
-
-The container.
-
----
-
-##### `addVolume` <a name="cdk8s-plus-22.IPodSpec.addVolume"></a>
-
-```typescript
-public addVolume(volume: Volume)
-```
-
-###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.parameter.volume"></a>
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
-
-The volume.
-
----
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.IPodSpec.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.IPodSpec.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.IPodSpec.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-### IPodTemplate <a name="cdk8s-plus-22.IPodTemplate"></a>
-
-- *Extends:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
-
-- *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
-
-Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
-
-Use the `PodTemplate` class as an implementation helper.
-
-
-#### Properties <a name="Properties"></a>
-
-##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.containers"></a>
-
-```typescript
-public readonly containers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The containers belonging to the pod.
-
-Use `addContainer` to add containers.
-
----
-
-##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.hostAliases"></a>
-
-```typescript
-public readonly hostAliases: HostAlias[];
-```
-
-- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
-
-An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
-
-This is only valid for non-hostNetwork pods.
-
----
-
-##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.initContainers"></a>
-
-```typescript
-public readonly initContainers: Container[];
-```
-
-- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
-
-The init containers belonging to the pod.
-
-Use `addInitContainer` to add init containers.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.volumes"></a>
-
-```typescript
-public readonly volumes: Volume[];
-```
-
-- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
-
-The volumes associated with this pod.
-
-Use `addVolume` to add volumes.
-
----
-
-##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.IPodTemplate.property.restartPolicy"></a>
-
-```typescript
-public readonly restartPolicy: RestartPolicy;
-```
-
-- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
-
-Restart policy for all containers within the pod.
-
----
-
-##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.IPodTemplate.property.serviceAccount"></a>
-
-```typescript
-public readonly serviceAccount: IServiceAccount;
-```
-
-- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
-
-The service account used to run this pod.
-
----
-
-##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.IPodTemplate.property.podMetadata"></a>
-
-```typescript
-public readonly podMetadata: ApiObjectMetadataDefinition;
-```
-
-- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
-
-Provides read/write access to the underlying pod metadata of the resource.
-
----
-
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.AbstractPod`](#cdk8s-plus-22.AbstractPod), [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.Workload`](#cdk8s-plus-22.Workload), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
 
 Represents a resource.
 

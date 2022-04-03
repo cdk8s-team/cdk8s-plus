@@ -1,9 +1,9 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { Ingress } from './ingress';
 import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
+import { Workload, WorkloadProps } from './workload';
 
 /**
  * Properties for `Deployment`.

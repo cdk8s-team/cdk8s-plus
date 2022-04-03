@@ -1,8 +1,8 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { RestartPolicy } from './pod';
+import { Workload, WorkloadProps } from './workload';
 
 
 /**
