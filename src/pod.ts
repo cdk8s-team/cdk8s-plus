@@ -184,7 +184,7 @@ export class PodSpec implements IPodSpec {
   /**
    * @internal
    */
-  public _toPodSpec(): k8s.PodSpec {
+  public _toKube(): k8s.PodSpec {
 
     if (this.containers.length === 0) {
       throw new Error('PodSpec must have at least 1 container');
@@ -272,7 +272,7 @@ export class PodTemplate extends PodSpec implements IPodTemplate {
   public _toPodTemplateSpec(): k8s.PodTemplateSpec {
     return {
       metadata: this.podMetadata.toJson(),
-      spec: this._toPodSpec(),
+      spec: this._toKube(),
     };
   }
 }
@@ -455,7 +455,7 @@ export class Pod extends Resource implements IPodSpec {
 
     this.apiObject = new k8s.KubePod(this, 'Resource', {
       metadata: props.metadata,
-      spec: Lazy.any({ produce: () => this._spec._toPodSpec() }),
+      spec: Lazy.any({ produce: () => this._spec._toKube() }),
     });
 
     this._spec = new PodSpec(props);
