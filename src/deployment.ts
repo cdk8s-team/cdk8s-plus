@@ -1,4 +1,4 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
@@ -30,6 +30,30 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
    * @default true
    */
   readonly defaultSelector?: boolean;
+
+  /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   *
+   * Zero means the pod will be considered available as soon as it is ready.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
+   * @default Duration.seconds(0)
+   */
+  readonly minReady?: Duration;
+
+  /**
+   * The maximum duration for a deployment to make progress before it
+   * is considered to be failed. The deployment controller will continue
+   * to process failed deployments and a condition with a ProgressDeadlineExceeded
+   * reason will be surfaced in the deployment status.
+   *
+   * Note that progress will not be estimated during the time a deployment is paused.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#progress-deadline-seconds
+   * @default Duration.seconds(600)
+   */
+  readonly progressDeadline?: Duration;
 
 }
 
@@ -116,6 +140,17 @@ export class Deployment extends Resource implements IPodTemplate {
   public readonly replicas: number;
 
   /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   */
+  public readonly minReady: Duration;
+
+  /**
+   * The maximum duration for a deployment to make progress before it is considered to be failed.
+   */
+  public readonly progressDeadline: Duration;
+
+  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
@@ -130,6 +165,13 @@ export class Deployment extends Resource implements IPodTemplate {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this.minReady = props.minReady ?? Duration.seconds(0);
+    this.progressDeadline = props.progressDeadline ?? Duration.seconds(600);
+
+    if (this.progressDeadline.toSeconds() <= this.minReady.toSeconds()) {
+      throw new Error(`'progressDeadline' (${this.progressDeadline.toSeconds()}s) must be greater than 'minReady' (${this.minReady.toSeconds()}s)`);
+    }
 
     this.replicas = props.replicas ?? 1;
     this._podTemplate = new PodTemplate(props);
@@ -246,6 +288,8 @@ export class Deployment extends Resource implements IPodTemplate {
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
+      minReadySeconds: this.minReady.toSeconds(),
+      progressDeadlineSeconds: this.progressDeadline.toSeconds(),
       replicas: this.replicas,
       template: this._podTemplate._toPodTemplateSpec(),
       selector: {
