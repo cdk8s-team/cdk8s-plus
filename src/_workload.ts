@@ -23,7 +23,7 @@ export abstract class Workload extends Resource {
   protected readonly podSpec: PodSpec;
 
   /**
-   * The metadata of pods in this deployment.
+   * The metadata of pods in this workload.
    */
   public readonly podMetadata: ApiObjectMetadataDefinition;
 

@@ -6,7 +6,7 @@ import { RestartPolicy } from './pod';
 
 
 /**
- * Properties for initialization of `Job`.
+ * Properties for `Job`.
  */
 export interface JobProps extends WorkloadProps {
 
