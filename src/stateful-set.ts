@@ -1,6 +1,6 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { LongRunningWorkload, LongRunningWorkloadProps } from './_workload';
+import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { Service } from './service';
 
@@ -24,7 +24,7 @@ export enum PodManagementPolicy {
 /**
  * Properties for initialization of `StatefulSet`.
  */
-export interface StatefulSetProps extends LongRunningWorkloadProps {
+export interface StatefulSetProps extends WorkloadProps {
   /**
    * Service to associate with the statefulset.
    */
@@ -71,7 +71,7 @@ export interface StatefulSetProps extends LongRunningWorkloadProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends LongRunningWorkload {
+export class StatefulSet extends Workload {
   /**
     * Number of desired pods.
     */

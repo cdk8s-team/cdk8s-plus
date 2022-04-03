@@ -1,13 +1,14 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { RestartPolicy, TemplatedWorkload, TemplatedWorkloadProps } from './_workload';
+import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
+import { RestartPolicy } from './pod';
 
 
 /**
  * Properties for `Job`.
  */
-export interface JobProps extends TemplatedWorkloadProps {
+export interface JobProps extends WorkloadProps {
 
   /**
    * Specifies the duration the job may be active before the system tries to terminate it.
@@ -45,7 +46,7 @@ export interface JobProps extends TemplatedWorkloadProps {
  * The Job object will start a new Pod if the first Pod fails or is deleted (for example due to a node hardware failure or a node reboot).
  * You can also use a Job to run multiple Pods in parallel.
  */
-export class Job extends TemplatedWorkload {
+export class Job extends Workload {
 
   /**
    * Duration before job is terminated. If undefined, there is no deadline.
@@ -70,6 +71,7 @@ export class Job extends TemplatedWorkload {
   constructor(scope: Construct, id: string, props: JobProps = {}) {
     super(scope, id, {
       restartPolicy: RestartPolicy.NEVER,
+      defaultSelector: false,
       ...props,
     });
 

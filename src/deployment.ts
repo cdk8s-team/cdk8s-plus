@@ -1,14 +1,14 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { LongRunningWorkload, LongRunningWorkloadProps } from './_workload';
+import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { Ingress } from './ingress';
 import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
 
 /**
- * Properties for initialization of `Deployment`.
+ * Properties for `Deployment`.
  */
-export interface DeploymentProps extends LongRunningWorkloadProps {
+export interface DeploymentProps extends WorkloadProps {
 
   /**
    * Number of desired pods.
@@ -94,7 +94,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends LongRunningWorkload {
+export class Deployment extends Workload {
 
   /**
    * Number of desired pods.
