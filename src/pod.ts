@@ -100,7 +100,10 @@ export abstract class AbstractPod extends Resource {
     this._volumes.set(volume.name, volume);
   }
 
-  protected get podSpec(): k8s.PodSpec {
+  /**
+   * @intenral
+   */
+  public _toPodSpec(): k8s.PodSpec {
 
     if (this.containers.length === 0) {
       throw new Error('PodSpec must have at least 1 container');
@@ -336,7 +339,7 @@ export class Pod extends AbstractPod {
    * @internal
    */
   public _toKube(): k8s.PodSpec {
-    return this.podSpec;
+    return this._toPodSpec();
   }
 
 }
