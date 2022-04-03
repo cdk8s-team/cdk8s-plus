@@ -1,18 +1,14 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
+import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
 import { Ingress } from './ingress';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
 import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
 
 /**
  * Properties for initialization of `Deployment`.
  */
-export interface DeploymentProps extends ResourceProps, PodTemplateProps {
+export interface DeploymentProps extends WorkloadProps {
 
   /**
    * Number of desired pods.
@@ -108,7 +104,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends Resource implements IPodTemplate {
+export class Deployment extends Workload {
 
   /**
    * Number of desired pods.
@@ -120,11 +116,10 @@ export class Deployment extends Resource implements IPodTemplate {
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeDeployment(this, 'Resource', {
       metadata: props.metadata,
@@ -132,7 +127,6 @@ export class Deployment extends Resource implements IPodTemplate {
     });
 
     this.replicas = props.replicas ?? 1;
-    this._podTemplate = new PodTemplate(props);
     this._labelSelector = {};
 
     if (props.defaultSelector ?? true) {
@@ -143,10 +137,6 @@ export class Deployment extends Resource implements IPodTemplate {
     }
   }
 
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
   /**
    * The labels this deployment will match against in order to select pods.
    *
@@ -154,34 +144,6 @@ export class Deployment extends Resource implements IPodTemplate {
    */
   public get labelSelector(): Record<string, string> {
     return { ...this._labelSelector };
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
   }
 
   /**
@@ -224,30 +186,16 @@ export class Deployment extends Resource implements IPodTemplate {
     return service.exposeViaIngress(path, options);
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
-  }
-
-
   /**
    * @internal
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
       replicas: this.replicas,
-      template: this._podTemplate._toPodTemplateSpec(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._spec._toPodSpec(),
+      },
       selector: {
         matchLabels: this._labelSelector,
       },

@@ -1,12 +1,8 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
+import { Workload, WorkloadProps } from './_workload';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
 import { Service } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
 
 
 /**
@@ -28,7 +24,7 @@ export enum PodManagementPolicy {
 /**
  * Properties for initialization of `StatefulSet`.
  */
-export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
+export interface StatefulSetProps extends WorkloadProps {
   /**
    * Service to associate with the statefulset.
    */
@@ -85,7 +81,7 @@ export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends Resource implements IPodTemplate {
+export class StatefulSet extends Workload {
   /**
     * Number of desired pods.
     */
@@ -101,13 +97,11 @@ export class StatefulSet extends Resource implements IPodTemplate {
     */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
   private readonly _labelSelector: Record<string, string>;
-
   private readonly _service: Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeStatefulSet(this, 'Resource', {
       metadata: props.metadata,
@@ -119,7 +113,6 @@ export class StatefulSet extends Resource implements IPodTemplate {
 
     this.replicas = props.replicas ?? 1;
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
-    this._podTemplate = new PodTemplate(props);
     this._labelSelector = {};
 
     if (props.defaultSelector ?? true) {
@@ -135,10 +128,6 @@ export class StatefulSet extends Resource implements IPodTemplate {
     }
   }
 
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
   /**
     * The labels this statefulset will match against in order to select pods.
     *
@@ -146,30 +135,6 @@ export class StatefulSet extends Resource implements IPodTemplate {
     */
   public get labelSelector(): Record<string, string> {
     return { ...this._labelSelector };
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
   }
 
   /**
@@ -183,26 +148,6 @@ export class StatefulSet extends Resource implements IPodTemplate {
     this._labelSelector[key] = value;
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
-  }
-
   /**
     * @internal
     */
@@ -210,7 +155,10 @@ export class StatefulSet extends Resource implements IPodTemplate {
     return {
       serviceName: this._service.name,
       replicas: this.replicas,
-      template: this._podTemplate._toPodTemplateSpec(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._spec._toPodSpec(),
+      },
       selector: {
         matchLabels: this._labelSelector,
       },
