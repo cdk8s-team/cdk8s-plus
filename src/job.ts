@@ -92,7 +92,7 @@ export class Job extends Workload {
     return {
       template: {
         metadata: this.podMetadata.toJson(),
-        spec: this.podSpec._toKube(),
+        spec: this.podSpec,
       },
       activeDeadlineSeconds: this.activeDeadline?.toSeconds(),
       backoffLimit: this.backoffLimit,

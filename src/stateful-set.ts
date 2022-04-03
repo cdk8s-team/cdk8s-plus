@@ -118,7 +118,7 @@ export class StatefulSet extends LongRunningWorkload {
       replicas: this.replicas,
       template: {
         metadata: this.podMetadata.toJson(),
-        spec: this.podSpec._toKube(),
+        spec: this.podSpec,
       },
       selector: {
         matchLabels: this.labelSelector,

@@ -1,232 +1,11 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { ResourceProps, Resource } from './base';
-import { Container, ContainerProps } from './container';
+import { Workload } from './_workload';
+import { ResourceProps } from './base';
+import { ContainerProps } from './container';
 import * as k8s from './imports/k8s';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
-
-/**
- * Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
- *
- * Use the `PodSpec` class as an implementation helper.
- */
-export interface IPodSpec {
-
-  /**
-   * The containers belonging to the pod.
-   *
-   * Use `addContainer` to add containers.
-   */
-  readonly containers: Container[];
-
-  /**
-   * The init containers belonging to the pod.
-   *
-   * Use `addInitContainer` to add init containers.
-   */
-  readonly initContainers: Container[];
-
-  /**
-   * The volumes associated with this pod.
-   *
-   * Use `addVolume` to add volumes.
-   */
-  readonly volumes: Volume[];
-
-  /**
-   * Restart policy for all containers within the pod.
-   */
-  readonly restartPolicy?: RestartPolicy;
-
-  /**
-   * The service account used to run this pod.
-   */
-  readonly serviceAccount?: IServiceAccount;
-
-  /**
-   * An optional list of hosts and IPs that will be injected into the pod's
-   * hosts file if specified. This is only valid for non-hostNetwork pods.
-   */
-  readonly hostAliases: HostAlias[];
-
-  /**
-   * Add a container to the pod.
-   *
-   * @param container The container.
-   */
-  addContainer(container: ContainerProps): Container;
-
-  /**
-   * Add an init container to the pod.
-   *
-   * @param container The container.
-   */
-  addInitContainer(container: ContainerProps): Container;
-
-  /**
-   * Add a volume to the pod.
-   *
-   * @param volume The volume.
-   */
-  addVolume(volume: Volume): void;
-
-}
-
-/**
- * Provides read/write capabilities ontop of a `PodSpecProps`.
- */
-export class PodSpec implements IPodSpec {
-
-  public readonly restartPolicy?: RestartPolicy;
-  public readonly serviceAccount?: IServiceAccount;
-  public readonly securityContext: PodSecurityContext;
-
-  private readonly _containers: Container[] = [];
-  private readonly _initContainers: Container[] = [];
-  private readonly _hostAliases: HostAlias[] = [];
-  private readonly _volumes: Map<string, Volume> = new Map();
-
-  constructor(props: PodSpecProps = {}) {
-    this.restartPolicy = props.restartPolicy;
-    this.serviceAccount = props.serviceAccount;
-    this.securityContext = new PodSecurityContext(props.securityContext);
-
-    if (props.containers) {
-      props.containers.forEach(c => this.addContainer(c));
-    }
-
-    if (props.volumes) {
-      props.volumes.forEach(v => this.addVolume(v));
-    }
-
-    if (props.initContainers) {
-      props.initContainers.forEach(c => this.addInitContainer(c));
-    }
-
-    if (props.hostAliases) {
-      props.hostAliases.forEach(c => this.addHostAlias(c));
-    }
-
-  }
-
-  public get containers(): Container[] {
-    return [...this._containers];
-  }
-
-  public get initContainers(): Container[] {
-    return [...this._initContainers];
-  }
-
-  public get volumes(): Volume[] {
-    return Array.from(this._volumes.values());
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return [...this._hostAliases];
-  }
-
-  public addContainer(container: ContainerProps): Container {
-    const impl = new Container(container);
-    this._containers.push(impl);
-    return impl;
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-
-    // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
-    if (container.readiness) {
-      throw new Error('Init containers must not have a readiness probe');
-    }
-
-    if (container.liveness) {
-      throw new Error('Init containers must not have a liveness probe');
-    }
-
-    if (container.startup) {
-      throw new Error('Init containers must not have a startup probe');
-    }
-
-    const impl = new Container({
-      ...container,
-      name: container.name ?? `init-${this._initContainers.length}`,
-    });
-
-    this._initContainers.push(impl);
-    return impl;
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    this._hostAliases.push(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    const existingVolume = this._volumes.get(volume.name);
-    if (existingVolume) {
-      throw new Error(`Volume with name ${volume.name} already exists`);
-    }
-    this._volumes.set(volume.name, volume);
-  }
-
-  /**
-   * @internal
-   */
-  public _toKube(): k8s.PodSpec {
-
-    if (this.containers.length === 0) {
-      throw new Error('PodSpec must have at least 1 container');
-    }
-
-    const volumes: Map<string, Volume> = new Map();
-    const containers: k8s.Container[] = [];
-    const initContainers: k8s.Container[] = [];
-
-    for (const container of this.containers) {
-      // automatically add volume from the container mount
-      // to this pod so thats its available to the container.
-      for (const mount of container.mounts) {
-        addVolume(mount.volume);
-      }
-      containers.push(container._toKube());
-    }
-
-    for (const container of this.initContainers) {
-      // automatically add volume from the container mount
-      // to this pod so thats its available to the container.
-      for (const mount of container.mounts) {
-        addVolume(mount.volume);
-      }
-      initContainers.push(container._toKube());
-    }
-
-    for (const volume of this.volumes) {
-      addVolume(volume);
-    }
-
-    function addVolume(volume: Volume) {
-      const existingVolume = volumes.get(volume.name);
-      // its ok to call this function twice on the same volume, but its not ok to
-      // call it twice on a different volume with the same name.
-      if (existingVolume && existingVolume !== volume) {
-        throw new Error(`Invalid mount configuration. At least two different volumes have the same name: ${volume.name}`);
-      }
-      volumes.set(volume.name, volume);
-    }
-
-    return {
-      restartPolicy: this.restartPolicy,
-      serviceAccountName: this.serviceAccount?.name,
-      containers: containers,
-      securityContext: this.securityContext._toKube(),
-      initContainers: initContainers,
-      hostAliases: this.hostAliases,
-      volumes: Array.from(volumes.values()).map(v => v._toKube()),
-    };
-
-  }
-
-}
-
 
 /**
  * Sysctl defines a kernel parameter to be set
@@ -392,68 +171,21 @@ export interface PodSpecProps {
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
-export class Pod extends Resource implements IPodSpec {
+export class Pod extends Workload {
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _spec: PodSpec;
-
   constructor(scope: Construct, id: string, props: PodProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubePod(this, 'Resource', {
       metadata: props.metadata,
-      spec: Lazy.any({ produce: () => this._spec._toKube() }),
+      spec: Lazy.any({ produce: () => this.podSpec }),
     });
 
-    this._spec = new PodSpec(props);
-  }
-
-  public get containers(): Container[] {
-    return this._spec.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._spec.initContainers;
-  }
-
-  public get volumes(): Volume[] {
-    return this._spec.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._spec.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._spec.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._spec.securityContext;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._spec.hostAliases;
-  }
-
-  public addContainer(container: ContainerProps): Container {
-    return this._spec.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._spec.addInitContainer(container);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._spec.addVolume(volume);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._spec.addHostAlias(hostAlias);
   }
 
 }
