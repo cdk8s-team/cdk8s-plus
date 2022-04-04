@@ -4087,6 +4087,7 @@ StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .defaultSelector(java.lang.Boolean)
 //  .podManagementPolicy(PodManagementPolicy)
 //  .replicas(java.lang.Number)
+//  .strategy(StatefulSetUpdateStrategy)
     .build();
 ```
 
@@ -4257,6 +4258,15 @@ Pod management policy to use for this statefulset.
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.strategy"></a>
+
+- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategy`](#org.cdk8s.plus22.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
@@ -4437,7 +4447,19 @@ public PodSecurityContext getSecurityContext();
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus21.StatefulSet.property.volumes"></a>
+##### `strategy`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.strategy"></a>
+
+```java
+public StatefulSetUpdateStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategy`](#org.cdk8s.plus22.StatefulSetUpdateStrategy)
+
+The update startegy of this stateful set.
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
@@ -9929,6 +9951,7 @@ StatefulSetProps.builder()
 //  .defaultSelector(java.lang.Boolean)
 //  .podManagementPolicy(PodManagementPolicy)
 //  .replicas(java.lang.Number)
+//  .strategy(StatefulSetUpdateStrategy)
     .build();
 ```
 
@@ -10146,7 +10169,53 @@ Number of desired pods.
 
 ---
 
-### Sysctl <a name="org.cdk8s.plus21.Sysctl"></a>
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.strategy"></a>
+
+```java
+public StatefulSetUpdateStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategy`](#org.cdk8s.plus22.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+
+---
+
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+
+Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions;
+
+StatefulSetUpdateStrategyRollingUpdateOptions.builder()
+//  .partition(java.lang.Number)
+    .build();
+```
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
+
+---
+
+### Sysctl <a name="org.cdk8s.plus22.Sysctl"></a>
 
 Sysctl defines a kernel parameter to be set.
 
@@ -12072,7 +12141,39 @@ Options.
 
 
 
-### Volume <a name="org.cdk8s.plus21.Volume"></a>
+### StatefulSetUpdateStrategy <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy"></a>
+
+StatefulSet update strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `onDelete` <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy.onDelete"></a>
+
+```java
+import org.cdk8s.plus22.StatefulSetUpdateStrategy;
+
+StatefulSetUpdateStrategy.onDelete()
+```
+
+##### `rollingUpdate` <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy.rollingUpdate"></a>
+
+```java
+import org.cdk8s.plus22.StatefulSetUpdateStrategy;
+
+StatefulSetUpdateStrategy.rollingUpdate()
+StatefulSetUpdateStrategy.rollingUpdate(StatefulSetUpdateStrategyRollingUpdateOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions`](#org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions)
+
+---
+
+
+
+### Volume <a name="org.cdk8s.plus22.Volume"></a>
 
 - *Implements:* [`org.cdk8s.plus21.IStorage`](#org.cdk8s.plus21.IStorage)
 
