@@ -400,6 +400,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### Deployment <a name="cdk8s-plus-22.Deployment"></a>
 
@@ -654,6 +666,18 @@ public readonly securityContext: PodSecurityContext;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.strategy"></a>
+
+```typescript
+public readonly strategy: DeploymentStrategy;
+```
+
+- *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
 
 ---
 
@@ -1875,6 +1899,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="cdk8s-plus-22.Service"></a>
@@ -3101,6 +3138,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `password`<sup>Required</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.password"></a>
 
 ```typescript
@@ -3214,6 +3266,45 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="cdk8s-plus-22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CommonSecretProps } from 'cdk8s-plus-22'
+
+const commonSecretProps: CommonSecretProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="cdk8s-plus-22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -3273,6 +3364,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ConfigMapProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3798,6 +3904,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.hostAliases"></a>
 
 ```typescript
@@ -3944,6 +4063,75 @@ Number of desired pods.
 
 ---
 
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.strategy"></a>
+
+```typescript
+public readonly strategy: DeploymentStrategy;
+```
+
+- *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { DeploymentStrategyRollingUpdateOptions } from 'cdk8s-plus-22'
+
+const deploymentStrategyRollingUpdateOptions: DeploymentStrategyRollingUpdateOptions = { ... }
+```
+
+##### `maxSurge`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
+
+```typescript
+public readonly maxSurge: PercentOrAbsolute;
+```
+
+- *Type:* [`cdk8s-plus-22.PercentOrAbsolute`](#cdk8s-plus-22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `maxUnavailable`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
+
+```typescript
+public readonly maxUnavailable: PercentOrAbsolute;
+```
+
+- *Type:* [`cdk8s-plus-22.PercentOrAbsolute`](#cdk8s-plus-22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
 ### DockerConfigSecretProps <a name="cdk8s-plus-22.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
@@ -3965,6 +4153,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.DockerConfigSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5046,6 +5249,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.hostAliases"></a>
 
 ```typescript
@@ -5682,6 +5898,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.hostAliases"></a>
 
 ```typescript
@@ -5915,6 +6144,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.hostAliases"></a>
 
 ```typescript
@@ -6049,6 +6291,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6338,6 +6593,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `stringData`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.stringData"></a>
 
 ```typescript
@@ -6545,6 +6815,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6898,6 +7183,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `sshPrivateKey`<sup>Required</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.sshPrivateKey"></a>
 
 ```typescript
@@ -6949,6 +7249,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7295,6 +7608,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.TlsSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -7761,6 +8089,37 @@ public readonly amount: string;
 ---
 
 
+### DeploymentStrategy <a name="cdk8s-plus-22.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="cdk8s-plus-22.DeploymentStrategy.recreate"></a>
+
+```typescript
+import { DeploymentStrategy } from 'cdk8s-plus-22'
+
+DeploymentStrategy.recreate()
+```
+
+##### `rollingUpdate` <a name="cdk8s-plus-22.DeploymentStrategy.rollingUpdate"></a>
+
+```typescript
+import { DeploymentStrategy } from 'cdk8s-plus-22'
+
+DeploymentStrategy.rollingUpdate(options?: DeploymentStrategyRollingUpdateOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategy.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions`](#cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions)
+
+---
+
+
+
 ### EnvValue <a name="cdk8s-plus-22.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -8031,6 +8390,61 @@ The service object.
 
 
 
+### PercentOrAbsolute <a name="cdk8s-plus-22.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `isZero` <a name="cdk8s-plus-22.PercentOrAbsolute.isZero"></a>
+
+```typescript
+public isZero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="cdk8s-plus-22.PercentOrAbsolute.absolute"></a>
+
+```typescript
+import { PercentOrAbsolute } from 'cdk8s-plus-22'
+
+PercentOrAbsolute.absolute(num: number)
+```
+
+###### `num`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `number`
+
+---
+
+##### `percent` <a name="cdk8s-plus-22.PercentOrAbsolute.percent"></a>
+
+```typescript
+import { PercentOrAbsolute } from 'cdk8s-plus-22'
+
+PercentOrAbsolute.percent(percent: number)
+```
+
+###### `percent`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.property.value"></a>
+
+```typescript
+public readonly value: any;
+```
+
+- *Type:* `any`
+
+---
+
+
 ### PodSecurityContext <a name="cdk8s-plus-22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -8250,6 +8664,16 @@ public readonly volumes: Volume[];
 The volumes associated with this pod.
 
 Use `addVolume` to add volumes.
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
 
 ---
 

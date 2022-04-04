@@ -7,6 +7,7 @@ Array [
     "data": Object {
       "file1.txt": "Hello, world!",
     },
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "test-my-config-map-c8eaefa4",
@@ -23,6 +24,7 @@ Array [
       "prefix.file1.txt": "Hello, world!",
       "prefix.file2.html": "<html>Hey</html>",
     },
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "test-my-config-map-c8eaefa4",
@@ -39,6 +41,7 @@ Array [
       "file1.txt": "Hello, world!",
       "file2.html": "<html>Hey</html>",
     },
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "test-my-config-map-c8eaefa4",
@@ -54,6 +57,7 @@ Array [
     "data": Object {
       "file1.txt": "Hello, world!",
     },
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "test-my-config-map-c8eaefa4",
@@ -70,6 +74,7 @@ Array [
       "file1.txt": "Hello, world!",
       "hey-there": "<html>Hey</html>",
     },
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "test-my-config-map-c8eaefa4",
