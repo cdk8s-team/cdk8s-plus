@@ -27,6 +27,7 @@ test('minimal', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -55,6 +56,7 @@ test('with data', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -83,6 +85,7 @@ test('with binaryData', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -117,6 +120,7 @@ test('with binaryData and data', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -176,6 +180,7 @@ test('addData()/addBinaryDataq() can be used to add data', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -279,6 +284,7 @@ test('metadata is synthesized', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "my-name",
@@ -286,4 +292,18 @@ Array [
   },
 ]
 `);
+});
+
+test('can configure an immutable config map', () => {
+
+  const chart = Testing.chart();
+  const cm = new ConfigMap(chart, 'my-config-map', {
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(cm.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
 });

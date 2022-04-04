@@ -504,6 +504,7 @@ cdk8s_plus_22.BasicAuthSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   password: str,
   username: str
 )
@@ -526,6 +527,17 @@ cdk8s_plus_22.BasicAuthSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -565,7 +577,8 @@ cdk8s_plus_22.ConfigMap(
   id: str,
   metadata: ApiObjectMetadata = None,
   binary_data: typing.Mapping[str] = None,
-  data: typing.Mapping[str] = None
+  data: typing.Mapping[str] = None,
+  immutable: bool = None
 )
 ```
 
@@ -616,6 +629,17 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -782,6 +806,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.ConfigMap.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### Deployment <a name="cdk8s_plus_22.Deployment"></a>
 
@@ -821,6 +857,7 @@ cdk8s_plus_22.Deployment(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -829,7 +866,8 @@ cdk8s_plus_22.Deployment(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -864,6 +902,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -974,6 +1021,15 @@ If this is set to `false` you must define your selector through
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.strategy"></a>
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -1667,6 +1723,18 @@ security_context: PodSecurityContext
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.volumes"></a>
 
 ```python
@@ -1721,6 +1789,7 @@ cdk8s_plus_22.DockerConfigSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   data: typing.Mapping[typing.Any]
 )
 ```
@@ -1742,6 +1811,17 @@ cdk8s_plus_22.DockerConfigSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -2292,6 +2372,7 @@ cdk8s_plus_22.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -2336,6 +2417,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -3532,6 +3622,7 @@ cdk8s_plus_22.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -3572,6 +3663,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -4269,6 +4369,7 @@ cdk8s_plus_22.Secret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   string_data: typing.Mapping[str] = None,
   type: str = None
 )
@@ -4291,6 +4392,17 @@ cdk8s_plus_22.Secret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4382,6 +4494,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.Secret.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="cdk8s_plus_22.Service"></a>
@@ -4915,6 +5040,7 @@ cdk8s_plus_22.ServiceAccountTokenSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   service_account: IServiceAccount
 )
 ```
@@ -4936,6 +5062,17 @@ cdk8s_plus_22.ServiceAccountTokenSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4966,6 +5103,7 @@ cdk8s_plus_22.SshAuthSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   ssh_private_key: str
 )
 ```
@@ -4987,6 +5125,17 @@ cdk8s_plus_22.SshAuthSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5041,6 +5190,7 @@ cdk8s_plus_22.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -5086,6 +5236,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -5821,6 +5980,7 @@ cdk8s_plus_22.TlsSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   tls_cert: str,
   tls_key: str
 )
@@ -5843,6 +6003,17 @@ cdk8s_plus_22.TlsSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6611,6 +6782,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.BasicAuthSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   password: str,
   username: str
 )
@@ -6625,6 +6797,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6747,6 +6934,48 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="cdk8s_plus_22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.CommonSecretProps(
+  metadata: ApiObjectMetadata = None,
+  immutable: bool = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.CommonSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.CommonSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="cdk8s_plus_22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -6759,7 +6988,8 @@ import cdk8s_plus_22
 cdk8s_plus_22.ConfigMapProps(
   metadata: ApiObjectMetadata = None,
   binary_data: typing.Mapping[str] = None,
-  data: typing.Mapping[str] = None
+  data: typing.Mapping[str] = None,
+  immutable: bool = None
 )
 ```
 
@@ -6810,6 +7040,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -7338,6 +7583,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -7346,7 +7592,8 @@ cdk8s_plus_22.DeploymentProps(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -7377,6 +7624,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7526,6 +7786,78 @@ Number of desired pods.
 
 ---
 
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions(
+  max_surge: PercentOrAbsolute = None,
+  max_unavailable: PercentOrAbsolute = None
+)
+```
+
+##### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_surge"></a>
+
+```python
+max_surge: PercentOrAbsolute
+```
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_unavailable"></a>
+
+```python
+max_unavailable: PercentOrAbsolute
+```
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
 ### DockerConfigSecretProps <a name="cdk8s_plus_22.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
@@ -7537,6 +7869,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.DockerConfigSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   data: typing.Mapping[typing.Any]
 )
 ```
@@ -7550,6 +7883,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8753,6 +9101,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -8793,6 +9142,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -9432,6 +9794,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -9468,6 +9831,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -9692,6 +10068,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -9716,6 +10093,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -9837,6 +10227,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -9862,6 +10253,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10149,6 +10553,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.SecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   string_data: typing.Mapping[str] = None,
   type: str = None
 )
@@ -10163,6 +10568,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -10374,6 +10794,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.ServiceAccountTokenSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   service_account: IServiceAccount
 )
 ```
@@ -10387,6 +10808,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -10748,6 +11184,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.SshAuthSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   ssh_private_key: str
 )
 ```
@@ -10761,6 +11198,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -10788,6 +11240,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10829,6 +11282,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -11176,6 +11642,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.TlsSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   tls_cert: str,
   tls_key: str
 )
@@ -11190,6 +11657,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -11948,6 +12430,70 @@ amount: str
 ---
 
 
+### DeploymentStrategy <a name="cdk8s_plus_22.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="cdk8s_plus_22.DeploymentStrategy.recreate"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategy.recreate()
+```
+
+##### `rolling_update` <a name="cdk8s_plus_22.DeploymentStrategy.rolling_update"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategy.rolling_update(
+  max_surge: PercentOrAbsolute = None,
+  max_unavailable: PercentOrAbsolute = None
+)
+```
+
+###### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_surge"></a>
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+###### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_unavailable"></a>
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
+
+
 ### EnvValue <a name="cdk8s_plus_22.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -12298,6 +12844,65 @@ The port to use to access the service.
 
 
 
+### PercentOrAbsolute <a name="cdk8s_plus_22.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `is_zero` <a name="cdk8s_plus_22.PercentOrAbsolute.is_zero"></a>
+
+```python
+def is_zero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="cdk8s_plus_22.PercentOrAbsolute.absolute"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PercentOrAbsolute.absolute(
+  num: typing.Union[int, float]
+)
+```
+
+###### `num`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `percent` <a name="cdk8s_plus_22.PercentOrAbsolute.percent"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PercentOrAbsolute.percent(
+  percent: typing.Union[int, float]
+)
+```
+
+###### `percent`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.property.value"></a>
+
+```python
+value: typing.Any
+```
+
+- *Type:* `typing.Any`
+
+---
+
+
 ### PodSecurityContext <a name="cdk8s_plus_22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -12457,6 +13062,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -12477,6 +13083,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -13051,6 +13666,16 @@ Use `addVolume` to add volumes.
 
 ---
 
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+
+---
+
 ##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.restart_policy"></a>
 
 ```python
@@ -13089,6 +13714,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -13110,6 +13736,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
