@@ -28,20 +28,21 @@ test('Can create a new secret', () => {
   });
 
   expect(Testing.synth(chart)).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "apiVersion": "v1",
-        "kind": "Secret",
-        "metadata": Object {
-          "name": "test-secret-c837fa76",
-        },
-        "stringData": Object {
-          "key": "value",
-        },
-        "type": "kubernetes.io/tls",
-      },
-    ]
-  `);
+Array [
+  Object {
+    "apiVersion": "v1",
+    "immutable": false,
+    "kind": "Secret",
+    "metadata": Object {
+      "name": "test-secret-c837fa76",
+    },
+    "stringData": Object {
+      "key": "value",
+    },
+    "type": "kubernetes.io/tls",
+  },
+]
+`);
 });
 
 test('Can add data to new secrets', () => {
@@ -54,6 +55,7 @@ test('Can add data to new secrets', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "Secret",
     "metadata": Object {
       "name": "test-secret-c837fa76",
@@ -78,6 +80,7 @@ test('Can create a basic auth secret', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "Secret",
     "metadata": Object {
       "name": "test-basicauthsecret-c82606a8",
@@ -103,6 +106,7 @@ test('Can create an ssh auth secret', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "Secret",
     "metadata": Object {
       "name": "test-sshauthsecret-c8356ec6",
@@ -138,6 +142,7 @@ Array [
   },
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "Secret",
     "metadata": Object {
       "annotations": Object {
@@ -166,6 +171,7 @@ test('Can create a TLS secret', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "Secret",
     "metadata": Object {
       "name": "test-tlssecret-c8c8af35",
@@ -200,6 +206,7 @@ test('Can create a Docker config secret', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "Secret",
     "metadata": Object {
       "name": "test-dockerconfigsecret-c8b65039",
@@ -211,4 +218,114 @@ Array [
   },
 ]
 `);
+});
+
+test('default immutability', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.Secret(chart, 'Secret');
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeFalsy();
+  expect(spec.immutable).toBeFalsy();
+
+});
+
+test('can configure an immutable generic secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.Secret(chart, 'Secret', {
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
+});
+
+test('can configure an immutable basic auth secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.BasicAuthSecret(chart, 'Secret', {
+    username: 'user',
+    password: 'pass',
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
+});
+
+test('can configure an immutable ssh auth secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.SshAuthSecret(chart, 'Secret', {
+    sshPrivateKey: 'private',
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
+});
+
+test('can configure an immutable service account token secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.ServiceAccountTokenSecret(chart, 'Secret', {
+    serviceAccount: kplus.ServiceAccount.fromServiceAccountName('sa'),
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
+});
+
+test('can configure an immutable tls secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.TlsSecret(chart, 'Secret', {
+    tlsCert: 'cert',
+    tlsKey: 'key',
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
+});
+
+test('can configure an immutable docker config secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.DockerConfigSecret(chart, 'Secret', {
+    data: {},
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(secret.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
 });
