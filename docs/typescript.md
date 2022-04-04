@@ -400,6 +400,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### Deployment <a name="cdk8s-plus-22.Deployment"></a>
 
@@ -1875,6 +1887,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="cdk8s-plus-22.Service"></a>
@@ -3101,6 +3126,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `password`<sup>Required</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.password"></a>
 
 ```typescript
@@ -3214,6 +3254,45 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="cdk8s-plus-22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CommonSecretProps } from 'cdk8s-plus-22'
+
+const commonSecretProps: CommonSecretProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="cdk8s-plus-22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -3273,6 +3352,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ConfigMapProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3978,6 +4072,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.DockerConfigSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6403,6 +6512,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `stringData`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.stringData"></a>
 
 ```typescript
@@ -6610,6 +6734,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6960,6 +7099,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -7373,6 +7527,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.TlsSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
