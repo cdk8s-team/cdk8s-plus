@@ -56,6 +56,7 @@ test('with data', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -84,6 +85,7 @@ test('with binaryData', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -118,6 +120,7 @@ test('with binaryData and data', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -177,6 +180,7 @@ test('addData()/addBinaryDataq() can be used to add data', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -280,6 +284,7 @@ test('metadata is synthesized', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "immutable": false,
     "kind": "ConfigMap",
     "metadata": Object {
       "name": "my-name",
