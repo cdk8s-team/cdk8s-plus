@@ -4519,6 +4519,85 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### AwsElasticBlockStoreVolumeOptions <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions"></a>
+
+Options of `Volume.fromAwsElasticBlockStore`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions;
+
+AwsElasticBlockStoreVolumeOptions.builder()
+//  .fsType(java.lang.String)
+//  .name(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### AzureDiskPersistentVolumeProps <a name="org.cdk8s.plus22.AzureDiskPersistentVolumeProps"></a>
 
 Properties for `AzureDiskPersistentVolume`.
@@ -4730,6 +4809,91 @@ Kind of disk.
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskPersistentVolumeProps.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
+### AzureDiskVolumeOptions <a name="org.cdk8s.plus22.AzureDiskVolumeOptions"></a>
+
+Options of `Volume.fromAzureDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AzureDiskVolumeOptions;
+
+AzureDiskVolumeOptions.builder()
+//  .cachingMode(AzureDiskPersistentVolumeCachingMode)
+//  .fsType(java.lang.String)
+//  .kind(AzureDiskPersistentVolumeKind)
+//  .name(java.lang.String)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `cachingMode`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.cachingMode"></a>
+
+```java
+public AzureDiskPersistentVolumeCachingMode getCachingMode();
+```
+
+- *Type:* [`org.cdk8s.plus22.AzureDiskPersistentVolumeCachingMode`](#org.cdk8s.plus22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.kind"></a>
+
+```java
+public AzureDiskPersistentVolumeKind getKind();
+```
+
+- *Type:* [`org.cdk8s.plus22.AzureDiskPersistentVolumeKind`](#org.cdk8s.plus22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.readOnly"></a>
 
 ```java
 public java.lang.Boolean getReadOnly();
@@ -6536,6 +6700,85 @@ Similarly, the volume partition for /dev/sda is "0" (or you can leave the proper
 ---
 
 ##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskPersistentVolumeProps.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### GCEPersistentDiskVolumeOptions <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions"></a>
+
+Options of `Volume.fromGcePersistentDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.GCEPersistentDiskVolumeOptions;
+
+GCEPersistentDiskVolumeOptions.builder()
+//  .fsType(java.lang.String)
+//  .name(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.readOnly"></a>
 
 ```java
 public java.lang.Boolean getReadOnly();
@@ -11332,6 +11575,54 @@ public asVolume()
 
 #### Static Functions <a name="Static Functions"></a>
 
+##### `fromAwsElasticBlockStore` <a name="org.cdk8s.plus22.Volume.fromAwsElasticBlockStore"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromAwsElasticBlockStore(java.lang.String volumeId)
+Volume.fromAwsElasticBlockStore(java.lang.String volumeId, AwsElasticBlockStoreVolumeOptions options)
+```
+
+###### `volumeId`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.volumeId"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions`](#org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions)
+
+---
+
+##### `fromAzureDisk` <a name="org.cdk8s.plus22.Volume.fromAzureDisk"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromAzureDisk(java.lang.String diskName, java.lang.String diskUri)
+Volume.fromAzureDisk(java.lang.String diskName, java.lang.String diskUri, AzureDiskVolumeOptions options)
+```
+
+###### `diskName`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.diskName"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `diskUri`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.diskUri"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.AzureDiskVolumeOptions`](#org.cdk8s.plus22.AzureDiskVolumeOptions)
+
+---
+
 ##### `fromConfigMap` <a name="org.cdk8s.plus22.Volume.fromConfigMap"></a>
 
 ```java
@@ -11377,6 +11668,27 @@ Volume.fromEmptyDir(java.lang.String name, EmptyDirVolumeOptions options)
 - *Type:* [`org.cdk8s.plus22.EmptyDirVolumeOptions`](#org.cdk8s.plus22.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromGcePersistentDisk` <a name="org.cdk8s.plus22.Volume.fromGcePersistentDisk"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromGcePersistentDisk(java.lang.String pdName)
+Volume.fromGcePersistentDisk(java.lang.String pdName, GCEPersistentDiskVolumeOptions options)
+```
+
+###### `pdName`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.pdName"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.GCEPersistentDiskVolumeOptions`](#org.cdk8s.plus22.GCEPersistentDiskVolumeOptions)
 
 ---
 

@@ -4,7 +4,7 @@ import { Construct } from 'constructs';
 import { IResource, Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
 import { IPersistentVolumeClaim, PersistentVolumeClaim, PersistentVolumeMode, PersistentVolumeAccessMode } from './pvc';
-import { IStorage, Volume } from './volume';
+import { IStorage, Volume, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind } from './volume';
 
 /**
  * Contract of a `PersistentVolumeClaim`.
@@ -467,48 +467,6 @@ export class AzureDiskPersistentVolume extends PersistentVolume {
       },
     };
   }
-}
-
-/**
- * Azure Disk kinds.
- */
-export enum AzureDiskPersistentVolumeKind {
-
-  /**
-   * Multiple blob disks per storage account.
-   */
-  SHARED = 'Shared',
-
-  /**
-   * Single blob disk per storage account.
-   */
-  DEDICATED = 'Dedicated',
-
-  /**
-   * Azure managed data disk.
-   */
-  MANAGED = 'Managed',
-}
-
-/**
- * Azure disk caching modes.
- */
-export enum AzureDiskPersistentVolumeCachingMode {
-
-  /**
-   * None.
-   */
-  NONE = 'None',
-
-  /**
-   * ReadOnly.
-   */
-  READ_ONLY = 'ReadOnly',
-
-  /**
-   * ReadWrite.
-   */
-  READ_WRITE = 'ReadWrite'
 }
 
 /**

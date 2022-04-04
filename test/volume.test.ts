@@ -1,5 +1,5 @@
 import { Testing, Size } from 'cdk8s';
-import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim } from '../src';
+import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind } from '../src';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -307,6 +307,132 @@ describe('fromPersistentVolumeClaim', () => {
         readOnly: true,
       },
     });
+  });
+
+});
+
+describe('fromAwsElasticBlockStore', () => {
+
+  test('defaults', () => {
+
+    const volume = Volume.fromAwsElasticBlockStore('vol');
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'ebs-vol',
+      awsElasticBlockStore: {
+        fsType: 'ext4',
+        readOnly: false,
+        volumeId: 'vol',
+      },
+    });
+
+  });
+
+  test('custom', () => {
+
+    const volume = Volume.fromAwsElasticBlockStore('vol', {
+      fsType: 'fs',
+      name: 'name',
+      partition: 1,
+      readOnly: true,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'name',
+      awsElasticBlockStore: {
+        fsType: 'fs',
+        readOnly: true,
+        volumeId: 'vol',
+        partition: 1,
+      },
+    });
+
+  });
+
+});
+
+describe('fromGcePersistentDisk', () => {
+
+  test('defaults', () => {
+
+    const volume = Volume.fromGcePersistentDisk('pd');
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'gcedisk-pd',
+      gcePersistentDisk: {
+        fsType: 'ext4',
+        pdName: 'pd',
+        readOnly: false,
+      },
+    });
+
+  });
+
+  test('custom', () => {
+
+    const volume = Volume.fromGcePersistentDisk('pd', {
+      fsType: 'fs',
+      name: 'name',
+      partition: 1,
+      readOnly: true,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'name',
+      gcePersistentDisk: {
+        fsType: 'fs',
+        pdName: 'pd',
+        readOnly: true,
+        partition: 1,
+      },
+    });
+
+  });
+
+});
+
+describe('fromAzureDisk', () => {
+
+  test('defaults', () => {
+
+    const volume = Volume.fromAzureDisk('disk', 'uri');
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'azuredisk-disk',
+      azureDisk: {
+        cachingMode: 'None',
+        diskName: 'disk',
+        diskUri: 'uri',
+        fsType: 'ext4',
+        readOnly: false,
+        kind: 'Shared',
+      },
+    });
+
+  });
+
+  test('custom', () => {
+
+    const volume = Volume.fromAzureDisk('disk', 'uri', {
+      cachingMode: AzureDiskPersistentVolumeCachingMode.READ_ONLY,
+      fsType: 'fs',
+      kind: AzureDiskPersistentVolumeKind.DEDICATED,
+      name: 'name',
+      readOnly: true,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'name',
+      azureDisk: {
+        cachingMode: 'ReadOnly',
+        diskName: 'disk',
+        diskUri: 'uri',
+        fsType: 'fs',
+        readOnly: true,
+        kind: 'Dedicated',
+      },
+    });
+
   });
 
 });
