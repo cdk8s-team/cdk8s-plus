@@ -570,6 +570,7 @@ ConfigMap.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .binaryData(java.util.Map<java.lang.String, java.lang.String>)
 //  .data(java.util.Map<java.lang.String, java.lang.String>)
+//  .immutable(java.lang.Boolean)
     .build();
 ```
 
@@ -620,6 +621,17 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -760,6 +772,18 @@ public java.util.Map<java.lang.String, java.lang.String> getData();
 The data associated with this config map.
 
 Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
+
+---
+
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not this config map is immutable.
 
 ---
 
@@ -4874,6 +4898,7 @@ ConfigMapProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .binaryData(java.util.Map<java.lang.String, java.lang.String>)
 //  .data(java.util.Map<java.lang.String, java.lang.String>)
+//  .immutable(java.lang.Boolean)
     .build();
 ```
 
@@ -4924,6 +4949,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
