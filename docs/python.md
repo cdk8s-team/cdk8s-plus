@@ -866,7 +866,8 @@ cdk8s_plus_22.Deployment(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -1020,6 +1021,15 @@ If this is set to `false` you must define your selector through
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.strategy"></a>
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -1710,6 +1720,18 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
 
 ---
 
@@ -7406,7 +7428,8 @@ cdk8s_plus_22.DeploymentProps(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -7596,6 +7619,78 @@ replicas: typing.Union[int, float]
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions(
+  max_surge: PercentOrAbsolute = None,
+  max_unavailable: PercentOrAbsolute = None
+)
+```
+
+##### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_surge"></a>
+
+```python
+max_surge: PercentOrAbsolute
+```
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_unavailable"></a>
+
+```python
+max_unavailable: PercentOrAbsolute
+```
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
 
 ---
 
@@ -12092,6 +12187,70 @@ amount: str
 ---
 
 
+### DeploymentStrategy <a name="cdk8s_plus_22.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="cdk8s_plus_22.DeploymentStrategy.recreate"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategy.recreate()
+```
+
+##### `rolling_update` <a name="cdk8s_plus_22.DeploymentStrategy.rolling_update"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategy.rolling_update(
+  max_surge: PercentOrAbsolute = None,
+  max_unavailable: PercentOrAbsolute = None
+)
+```
+
+###### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_surge"></a>
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+###### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_unavailable"></a>
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
+
+
 ### EnvValue <a name="cdk8s_plus_22.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -12440,6 +12599,65 @@ The port to use to access the service.
 
 ---
 
+
+
+### PercentOrAbsolute <a name="cdk8s_plus_22.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `is_zero` <a name="cdk8s_plus_22.PercentOrAbsolute.is_zero"></a>
+
+```python
+def is_zero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="cdk8s_plus_22.PercentOrAbsolute.absolute"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PercentOrAbsolute.absolute(
+  num: typing.Union[int, float]
+)
+```
+
+###### `num`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `percent` <a name="cdk8s_plus_22.PercentOrAbsolute.percent"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PercentOrAbsolute.percent(
+  percent: typing.Union[int, float]
+)
+```
+
+###### `percent`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.property.value"></a>
+
+```python
+value: typing.Any
+```
+
+- *Type:* `typing.Any`
+
+---
 
 
 ### PodSecurityContext <a name="cdk8s_plus_22.PodSecurityContext"></a>
