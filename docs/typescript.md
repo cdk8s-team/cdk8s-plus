@@ -4301,6 +4301,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.hostAliases"></a>
 
 ```typescript

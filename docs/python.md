@@ -849,6 +849,7 @@ cdk8s_plus_22.DaemonSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -892,6 +893,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8341,6 +8351,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DaemonSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -8380,6 +8391,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
