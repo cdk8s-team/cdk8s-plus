@@ -123,7 +123,7 @@ export class Deployment extends Resource implements IPodTemplate {
   public readonly replicas: number;
 
   /**
-   * The upgrade startegy of this deployment.
+   * The upgrade strategy of this deployment.
    */
   public readonly strategy: DeploymentStrategy;
 
