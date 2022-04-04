@@ -504,6 +504,7 @@ cdk8s_plus_20.BasicAuthSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   password: str,
   username: str
 )
@@ -529,7 +530,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `password`<sup>Required</sup> <a name="cdk8s_plus_20.BasicAuthSecretProps.parameter.password"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.password"></a>
 
 - *Type:* `str`
 
@@ -1612,17 +1624,8 @@ cdk8s_plus_20.Deployment(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
-  containers: typing.List[ContainerProps] = None,
-  docker_registry_auth: DockerConfigSecret = None,
-  host_aliases: typing.List[HostAlias] = None,
-  init_containers: typing.List[ContainerProps] = None,
-  restart_policy: RestartPolicy = None,
-  security_context: PodSecurityContextProps = None,
-  service_account: IServiceAccount = None,
-  volumes: typing.List[Volume] = None,
-  pod_metadata: ApiObjectMetadata = None,
-  default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  immutable: bool = None,
+  data: typing.Mapping[typing.Any]
 )
 ```
 
@@ -1646,7 +1649,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_20.DeploymentProps.parameter.containers"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.parameter.data"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_20.ContainerProps`](#cdk8s_plus_20.ContainerProps)]
 - *Default:* No containers. Note that a pod spec must include at least one container.
@@ -5049,6 +5063,7 @@ cdk8s_plus_20.Secret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   string_data: typing.Mapping[str] = None,
   type: str = None
 )
@@ -5074,7 +5089,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `string_data`<sup>Optional</sup> <a name="cdk8s_plus_20.SecretProps.parameter.string_data"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `string_data`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.parameter.string_data"></a>
 
 - *Type:* typing.Mapping[`str`]
 
@@ -5162,6 +5188,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.Secret.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="cdk8s_plus_20.Service"></a>
@@ -5685,6 +5724,7 @@ cdk8s_plus_20.ServiceAccountTokenSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   service_account: IServiceAccount
 )
 ```
@@ -5709,7 +5749,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_20.ServiceAccountTokenSecretProps.parameter.service_account"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.parameter.service_account"></a>
 
 - *Type:* [`cdk8s_plus_20.IServiceAccount`](#cdk8s_plus_20.IServiceAccount)
 
@@ -5736,6 +5787,7 @@ cdk8s_plus_20.SshAuthSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   ssh_private_key: str
 )
 ```
@@ -5760,7 +5812,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_20.SshAuthSecretProps.parameter.ssh_private_key"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.parameter.ssh_private_key"></a>
 
 - *Type:* `str`
 
@@ -6601,6 +6664,7 @@ cdk8s_plus_20.TlsSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   tls_cert: str,
   tls_key: str
 )
@@ -6626,7 +6690,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_20.TlsSecretProps.parameter.tls_cert"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.tls_cert"></a>
 
 - *Type:* `str`
 
@@ -7391,6 +7466,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.BasicAuthSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   password: str,
   username: str
 )
@@ -7408,7 +7484,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `password`<sup>Required</sup> <a name="cdk8s_plus_20.BasicAuthSecretProps.property.password"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.password"></a>
 
 ```python
 password: str
@@ -7527,7 +7618,49 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-### ConfigMapProps <a name="cdk8s_plus_20.ConfigMapProps"></a>
+### CommonSecretProps <a name="cdk8s_plus_22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.CommonSecretProps(
+  metadata: ApiObjectMetadata = None,
+  immutable: bool = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.CommonSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.CommonSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+### ConfigMapProps <a name="cdk8s_plus_22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
 
@@ -8561,6 +8694,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.DockerConfigSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   data: typing.Mapping[typing.Any]
 )
 ```
@@ -8577,7 +8711,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `data`<sup>Required</sup> <a name="cdk8s_plus_20.DockerConfigSecretProps.property.data"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.property.data"></a>
 
 ```python
 data: typing.Mapping[typing.Any]
@@ -11183,6 +11332,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.SecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   string_data: typing.Mapping[str] = None,
   type: str = None
 )
@@ -11200,7 +11350,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `string_data`<sup>Optional</sup> <a name="cdk8s_plus_20.SecretProps.property.string_data"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `string_data`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.property.string_data"></a>
 
 ```python
 string_data: typing.Mapping[str]
@@ -11408,6 +11573,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.ServiceAccountTokenSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   service_account: IServiceAccount
 )
 ```
@@ -11424,7 +11590,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_20.ServiceAccountTokenSecretProps.property.service_account"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `service_account`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.property.service_account"></a>
 
 ```python
 service_account: IServiceAccount
@@ -11782,6 +11963,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.SshAuthSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   ssh_private_key: str
 )
 ```
@@ -11798,7 +11980,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_20.SshAuthSecretProps.property.ssh_private_key"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `ssh_private_key`<sup>Required</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.property.ssh_private_key"></a>
 
 ```python
 ssh_private_key: str
@@ -12224,6 +12421,7 @@ import cdk8s_plus_20
 
 cdk8s_plus_20.TlsSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   tls_cert: str,
   tls_key: str
 )
@@ -12241,7 +12439,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_20.TlsSecretProps.property.tls_cert"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `tls_cert`<sup>Required</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.tls_cert"></a>
 
 ```python
 tls_cert: str
