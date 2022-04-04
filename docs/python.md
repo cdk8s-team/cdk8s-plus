@@ -565,7 +565,8 @@ cdk8s_plus_22.ConfigMap(
   id: str,
   metadata: ApiObjectMetadata = None,
   binary_data: typing.Mapping[str] = None,
-  data: typing.Mapping[str] = None
+  data: typing.Mapping[str] = None,
+  immutable: bool = None
 )
 ```
 
@@ -616,6 +617,17 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -779,6 +791,18 @@ data: typing.Mapping[str]
 The data associated with this config map.
 
 Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
+
+---
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.ConfigMap.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+
+Whether or not this config map is immutable.
 
 ---
 
@@ -6595,7 +6619,8 @@ import cdk8s_plus_22
 cdk8s_plus_22.ConfigMapProps(
   metadata: ApiObjectMetadata = None,
   binary_data: typing.Mapping[str] = None,
-  data: typing.Mapping[str] = None
+  data: typing.Mapping[str] = None,
+  immutable: bool = None
 )
 ```
 
@@ -6646,6 +6671,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
