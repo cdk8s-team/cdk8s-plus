@@ -413,6 +413,250 @@ Whether or not this config map is immutable.
 ---
 
 
+### DaemonSet <a name="cdk8s-plus-22.DaemonSet"></a>
+
+- *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
+
+A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+
+As nodes are added to the cluster, Pods are added to them.
+As nodes are removed from the cluster, those Pods are garbage collected.
+Deleting a DaemonSet will clean up the Pods it created.
+
+Some typical uses of a DaemonSet are:
+
+- running a cluster storage daemon on every node
+- running a logs collection daemon on every node
+- running a node monitoring daemon on every node
+
+In a simple case, one DaemonSet, covering all nodes, would be used for each type of daemon.
+A more complex setup might use multiple DaemonSets for a single type of daemon,
+but with different flags and/or different memory and cpu requests for different hardware types.
+
+#### Initializers <a name="cdk8s-plus-22.DaemonSet.Initializer"></a>
+
+```typescript
+import { DaemonSet } from 'cdk8s-plus-22'
+
+new DaemonSet(scope: Construct, id: string, props?: DaemonSetProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.DaemonSetProps`](#cdk8s-plus-22.DaemonSetProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addContainer` <a name="cdk8s-plus-22.DaemonSet.addContainer"></a>
+
+```typescript
+public addContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
+##### `addHostAlias` <a name="cdk8s-plus-22.DaemonSet.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="cdk8s-plus-22.DaemonSet.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
+##### `addVolume` <a name="cdk8s-plus-22.DaemonSet.addVolume"></a>
+
+```typescript
+public addVolume(volume: Volume)
+```
+
+###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.volume"></a>
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
+
+---
+
+##### `selectByLabel` <a name="cdk8s-plus-22.DaemonSet.selectByLabel"></a>
+
+```typescript
+public selectByLabel(key: string, value: string)
+```
+
+###### `key`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.key"></a>
+
+- *Type:* `string`
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.value"></a>
+
+- *Type:* `string`
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.containers"></a>
+
+```typescript
+public readonly containers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The containers belonging to the pod.
+
+Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
+##### `labelSelector`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.labelSelector"></a>
+
+```typescript
+public readonly labelSelector: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: `string`}
+
+The labels this daemon set will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `minReadySeconds`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.minReadySeconds"></a>
+
+```typescript
+public readonly minReadySeconds: number;
+```
+
+- *Type:* `number`
+
+---
+
+##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadataDefinition;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
+
+Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+
+The volumes associated with this pod.
+
+Use `addVolume` to add volumes.
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSet.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+
+Restart policy for all containers within the pod.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSet.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+
+The service account used to run this pod.
+
+---
+
+
 ### Deployment <a name="cdk8s-plus-22.Deployment"></a>
 
 - *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
@@ -4024,6 +4268,207 @@ public readonly request: Cpu;
 ```
 
 - *Type:* [`cdk8s-plus-22.Cpu`](#cdk8s-plus-22.Cpu)
+
+---
+
+### DaemonSetProps <a name="cdk8s-plus-22.DaemonSetProps"></a>
+
+Properties for `DaemonSet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { DaemonSetProps } from 'cdk8s-plus-22'
+
+const daemonSetProps: DaemonSetProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.containers"></a>
+
+```typescript
+public readonly containers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata.
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.defaultSelector"></a>
+
+```typescript
+public readonly defaultSelector: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this daemon set.
+
+If this is set to `false` you must define your selector through
+`dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
+
+---
+
+##### `minReadySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.minReadySeconds"></a>
+
+```typescript
+public readonly minReadySeconds: number;
+```
+
+- *Type:* `number`
+- *Default:* 0
+
+Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
 
 ---
 
@@ -9413,7 +9858,7 @@ The Kubernetes name of this resource.
 
 ### IPodSpec <a name="cdk8s-plus-22.IPodSpec"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.PodSpec`](#cdk8s-plus-22.PodSpec), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
+- *Implemented By:* [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.PodSpec`](#cdk8s-plus-22.PodSpec), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
 
@@ -9549,7 +9994,7 @@ The service account used to run this pod.
 
 - *Extends:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
 
-- *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
+- *Implemented By:* [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
 
@@ -9652,7 +10097,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
 
 Represents a resource.
 
