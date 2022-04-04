@@ -400,6 +400,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### Deployment <a name="cdk8s-plus-22.Deployment"></a>
 
@@ -1887,6 +1899,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="cdk8s-plus-22.Service"></a>
@@ -3113,6 +3138,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `password`<sup>Required</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.password"></a>
 
 ```typescript
@@ -3226,6 +3266,45 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="cdk8s-plus-22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CommonSecretProps } from 'cdk8s-plus-22'
+
+const commonSecretProps: CommonSecretProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="cdk8s-plus-22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -3285,6 +3364,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ConfigMapProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3810,6 +3904,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.hostAliases"></a>
 
 ```typescript
@@ -4046,6 +4153,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.DockerConfigSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5127,6 +5249,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.hostAliases"></a>
 
 ```typescript
@@ -5763,6 +5898,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.hostAliases"></a>
 
 ```typescript
@@ -5996,6 +6144,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.hostAliases"></a>
 
 ```typescript
@@ -6130,6 +6291,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6419,6 +6593,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `stringData`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.stringData"></a>
 
 ```typescript
@@ -6626,6 +6815,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6979,6 +7183,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `sshPrivateKey`<sup>Required</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.sshPrivateKey"></a>
 
 ```typescript
@@ -7030,6 +7249,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7376,6 +7608,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.TlsSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8417,6 +8664,16 @@ public readonly volumes: Volume[];
 The volumes associated with this pod.
 
 Use `addVolume` to add volumes.
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
 
 ---
 

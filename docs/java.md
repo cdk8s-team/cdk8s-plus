@@ -498,6 +498,7 @@ import org.cdk8s.plus22.BasicAuthSecret;
 
 BasicAuthSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .password(java.lang.String)
     .username(java.lang.String)
     .build();
@@ -520,6 +521,17 @@ BasicAuthSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -558,6 +570,7 @@ ConfigMap.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .binaryData(java.util.Map<java.lang.String, java.lang.String>)
 //  .data(java.util.Map<java.lang.String, java.lang.String>)
+//  .immutable(java.lang.Boolean)
     .build();
 ```
 
@@ -608,6 +621,17 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -751,6 +775,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### Deployment <a name="org.cdk8s.plus22.Deployment"></a>
 
@@ -788,6 +824,7 @@ import org.cdk8s.plus22.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -832,6 +869,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -1221,6 +1267,7 @@ import org.cdk8s.plus22.DockerConfigSecret;
 
 DockerConfigSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .data(java.util.Map<java.lang.String, java.lang.Object>)
     .build();
 ```
@@ -1242,6 +1289,17 @@ DockerConfigSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -1726,6 +1784,7 @@ import org.cdk8s.plus22.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -1770,6 +1829,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -2581,6 +2649,7 @@ import org.cdk8s.plus22.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -2621,6 +2690,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -2943,6 +3021,7 @@ import org.cdk8s.plus22.Secret;
 
 Secret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
 //  .stringData(java.util.Map<java.lang.String, java.lang.String>)
 //  .type(java.lang.String)
     .build();
@@ -2965,6 +3044,17 @@ Secret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3049,6 +3139,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="org.cdk8s.plus22.Service"></a>
@@ -3452,6 +3555,7 @@ import org.cdk8s.plus22.ServiceAccountTokenSecret;
 
 ServiceAccountTokenSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .serviceAccount(IServiceAccount)
     .build();
 ```
@@ -3473,6 +3577,17 @@ ServiceAccountTokenSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3501,6 +3616,7 @@ import org.cdk8s.plus22.SshAuthSecret;
 
 SshAuthSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .sshPrivateKey(java.lang.String)
     .build();
 ```
@@ -3522,6 +3638,17 @@ SshAuthSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3574,6 +3701,7 @@ import org.cdk8s.plus22.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -3619,6 +3747,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -3978,6 +4115,7 @@ import org.cdk8s.plus22.TlsSecret;
 
 TlsSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .tlsCert(java.lang.String)
     .tlsKey(java.lang.String)
     .build();
@@ -4000,6 +4138,17 @@ TlsSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4604,6 +4753,7 @@ import org.cdk8s.plus22.BasicAuthSecretProps;
 
 BasicAuthSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .password(java.lang.String)
     .username(java.lang.String)
     .build();
@@ -4618,6 +4768,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4740,6 +4905,48 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="org.cdk8s.plus22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.CommonSecretProps;
+
+CommonSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommonSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommonSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="org.cdk8s.plus22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -4753,6 +4960,7 @@ ConfigMapProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .binaryData(java.util.Map<java.lang.String, java.lang.String>)
 //  .data(java.util.Map<java.lang.String, java.lang.String>)
+//  .immutable(java.lang.Boolean)
     .build();
 ```
 
@@ -4803,6 +5011,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5331,6 +5554,7 @@ import org.cdk8s.plus22.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -5371,6 +5595,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -5603,6 +5840,7 @@ import org.cdk8s.plus22.DockerConfigSecretProps;
 
 DockerConfigSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .data(java.util.Map<java.lang.String, java.lang.Object>)
     .build();
 ```
@@ -5616,6 +5854,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6740,6 +6993,7 @@ import org.cdk8s.plus22.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -6780,6 +7034,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7419,6 +7686,7 @@ import org.cdk8s.plus22.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7455,6 +7723,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7679,6 +7960,7 @@ import org.cdk8s.plus22.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7703,6 +7985,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7824,6 +8119,7 @@ import org.cdk8s.plus22.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7849,6 +8145,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8136,6 +8445,7 @@ import org.cdk8s.plus22.SecretProps;
 
 SecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
 //  .stringData(java.util.Map<java.lang.String, java.lang.String>)
 //  .type(java.lang.String)
     .build();
@@ -8150,6 +8460,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8361,6 +8686,7 @@ import org.cdk8s.plus22.ServiceAccountTokenSecretProps;
 
 ServiceAccountTokenSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .serviceAccount(IServiceAccount)
     .build();
 ```
@@ -8374,6 +8700,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8735,6 +9076,7 @@ import org.cdk8s.plus22.SshAuthSecretProps;
 
 SshAuthSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .sshPrivateKey(java.lang.String)
     .build();
 ```
@@ -8748,6 +9090,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8775,6 +9132,7 @@ import org.cdk8s.plus22.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -8816,6 +9174,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -9163,6 +9534,7 @@ import org.cdk8s.plus22.TlsSecretProps;
 
 TlsSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .tlsCert(java.lang.String)
     .tlsKey(java.lang.String)
     .build();
@@ -9177,6 +9549,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -10403,6 +10790,7 @@ import org.cdk8s.plus22.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -10423,6 +10811,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10626,6 +11023,16 @@ Use `addVolume` to add volumes.
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.restartPolicy"></a>
 
 ```java
@@ -10664,6 +11071,7 @@ import org.cdk8s.plus22.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -10685,6 +11093,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
