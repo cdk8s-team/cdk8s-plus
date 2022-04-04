@@ -6161,6 +6161,85 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### AwsElasticBlockStoreVolumeOptions <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions"></a>
+
+Options of `Volume.fromAwsElasticBlockStore`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions(
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+##### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.property.fs_type"></a>
+
+```python
+fs_type: str
+```
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.property.partition"></a>
+
+```python
+partition: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.property.read_only"></a>
+
+```python
+read_only: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### AzureDiskPersistentVolumeProps <a name="cdk8s_plus_20.AzureDiskPersistentVolumeProps"></a>
 
 Properties for `AzureDiskPersistentVolume`.
@@ -6372,6 +6451,91 @@ Kind of disk.
 ---
 
 ##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskPersistentVolumeProps.property.read_only"></a>
+
+```python
+read_only: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
+### AzureDiskVolumeOptions <a name="cdk8s_plus_20.AzureDiskVolumeOptions"></a>
+
+Options of `Volume.fromAzureDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.AzureDiskVolumeOptions(
+  caching_mode: AzureDiskPersistentVolumeCachingMode = None,
+  fs_type: str = None,
+  kind: AzureDiskPersistentVolumeKind = None,
+  name: str = None,
+  read_only: bool = None
+)
+```
+
+##### `caching_mode`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.property.caching_mode"></a>
+
+```python
+caching_mode: AzureDiskPersistentVolumeCachingMode
+```
+
+- *Type:* [`cdk8s_plus_20.AzureDiskPersistentVolumeCachingMode`](#cdk8s_plus_20.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.property.fs_type"></a>
+
+```python
+fs_type: str
+```
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.property.kind"></a>
+
+```python
+kind: AzureDiskPersistentVolumeKind
+```
+
+- *Type:* [`cdk8s_plus_20.AzureDiskPersistentVolumeKind`](#cdk8s_plus_20.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.property.read_only"></a>
 
 ```python
 read_only: bool
@@ -7973,6 +8137,85 @@ Similarly, the volume partition for /dev/sda is "0" (or you can leave the proper
 ---
 
 ##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskPersistentVolumeProps.property.read_only"></a>
+
+```python
+read_only: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### GCEPersistentDiskVolumeOptions <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions"></a>
+
+Options of `Volume.fromGcePersistentDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.GCEPersistentDiskVolumeOptions(
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+##### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.property.fs_type"></a>
+
+```python
+fs_type: str
+```
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.property.partition"></a>
+
+```python
+partition: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.property.read_only"></a>
 
 ```python
 read_only: bool
@@ -13193,6 +13436,147 @@ def as_volume()
 
 #### Static Functions <a name="Static Functions"></a>
 
+##### `from_aws_elastic_block_store` <a name="cdk8s_plus_20.Volume.from_aws_elastic_block_store"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Volume.from_aws_elastic_block_store(
+  volume_id: str,
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+###### `volume_id`<sup>Required</sup> <a name="cdk8s_plus_20.Volume.parameter.volume_id"></a>
+
+- *Type:* `str`
+
+---
+
+###### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.parameter.fs_type"></a>
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.parameter.partition"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.AwsElasticBlockStoreVolumeOptions.parameter.read_only"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `from_azure_disk` <a name="cdk8s_plus_20.Volume.from_azure_disk"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Volume.from_azure_disk(
+  disk_name: str,
+  disk_uri: str,
+  caching_mode: AzureDiskPersistentVolumeCachingMode = None,
+  fs_type: str = None,
+  kind: AzureDiskPersistentVolumeKind = None,
+  name: str = None,
+  read_only: bool = None
+)
+```
+
+###### `disk_name`<sup>Required</sup> <a name="cdk8s_plus_20.Volume.parameter.disk_name"></a>
+
+- *Type:* `str`
+
+---
+
+###### `disk_uri`<sup>Required</sup> <a name="cdk8s_plus_20.Volume.parameter.disk_uri"></a>
+
+- *Type:* `str`
+
+---
+
+###### `caching_mode`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.parameter.caching_mode"></a>
+
+- *Type:* [`cdk8s_plus_20.AzureDiskPersistentVolumeCachingMode`](#cdk8s_plus_20.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+###### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.parameter.fs_type"></a>
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+###### `kind`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.parameter.kind"></a>
+
+- *Type:* [`cdk8s_plus_20.AzureDiskPersistentVolumeKind`](#cdk8s_plus_20.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.AzureDiskVolumeOptions.parameter.read_only"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
 ##### `from_config_map` <a name="cdk8s_plus_20.Volume.from_config_map"></a>
 
 ```python
@@ -13308,6 +13692,72 @@ The size
 limit is also applicable for memory medium. The maximum usage on memory
 medium EmptyDir would be the minimum value between the SizeLimit specified
 here and the sum of memory limits of all containers in a pod.
+
+---
+
+##### `from_gce_persistent_disk` <a name="cdk8s_plus_20.Volume.from_gce_persistent_disk"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.Volume.from_gce_persistent_disk(
+  pd_name: str,
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+###### `pd_name`<sup>Required</sup> <a name="cdk8s_plus_20.Volume.parameter.pd_name"></a>
+
+- *Type:* `str`
+
+---
+
+###### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.parameter.fs_type"></a>
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.parameter.partition"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_20.GCEPersistentDiskVolumeOptions.parameter.read_only"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
 
 ---
 
