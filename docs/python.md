@@ -813,6 +813,7 @@ cdk8s_plus_21.DaemonSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -859,7 +860,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.DaemonSetProps.parameter.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.host_aliases"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_21.HostAlias`](#cdk8s_plus_21.HostAlias)]
 
@@ -3008,6 +3018,7 @@ cdk8s_plus_21.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -3055,7 +3066,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.JobProps.parameter.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.host_aliases"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_21.HostAlias`](#cdk8s_plus_21.HostAlias)]
 
@@ -4248,6 +4268,7 @@ cdk8s_plus_21.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -4291,7 +4312,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.PodProps.parameter.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.host_aliases"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_21.HostAlias`](#cdk8s_plus_21.HostAlias)]
 
@@ -5747,6 +5777,7 @@ cdk8s_plus_21.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -5795,7 +5826,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.StatefulSetProps.parameter.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.host_aliases"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_21.HostAlias`](#cdk8s_plus_21.HostAlias)]
 
@@ -8244,6 +8284,7 @@ import cdk8s_plus_21
 cdk8s_plus_21.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -8286,7 +8327,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentProps.property.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.host_aliases"></a>
 
 ```python
 host_aliases: typing.List[HostAlias]
@@ -9613,6 +9667,7 @@ import cdk8s_plus_21
 cdk8s_plus_21.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -9656,7 +9711,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.JobProps.property.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.host_aliases"></a>
 
 ```python
 host_aliases: typing.List[HostAlias]
@@ -10292,6 +10360,7 @@ import cdk8s_plus_21
 cdk8s_plus_21.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10331,7 +10400,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.PodProps.property.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.host_aliases"></a>
 
 ```python
 host_aliases: typing.List[HostAlias]
@@ -10552,6 +10634,7 @@ import cdk8s_plus_21
 
 cdk8s_plus_21.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10579,7 +10662,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.PodSpecProps.property.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.host_aliases"></a>
 
 ```python
 host_aliases: typing.List[HostAlias]
@@ -10697,6 +10793,7 @@ import cdk8s_plus_21
 
 cdk8s_plus_21.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10725,7 +10822,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.PodTemplateProps.property.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.host_aliases"></a>
 
 ```python
 host_aliases: typing.List[HostAlias]
@@ -11648,6 +11758,7 @@ import cdk8s_plus_21
 cdk8s_plus_21.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -11692,7 +11803,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.StatefulSetProps.property.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.host_aliases"></a>
 
 ```python
 host_aliases: typing.List[HostAlias]
@@ -13317,6 +13441,7 @@ import cdk8s_plus_21
 
 cdk8s_plus_21.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -13340,7 +13465,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.PodSpecProps.parameter.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.host_aliases"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_21.HostAlias`](#cdk8s_plus_21.HostAlias)]
 
@@ -13911,7 +14045,17 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_21.PodSpec.property.restart_policy"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.restart_policy"></a>
 
 ```python
 restart_policy: RestartPolicy
@@ -13949,6 +14093,7 @@ import cdk8s_plus_21
 
 cdk8s_plus_21.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -13973,7 +14118,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_21.PodTemplateProps.parameter.host_aliases"></a>
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.host_aliases"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_21.HostAlias`](#cdk8s_plus_21.HostAlias)]
 
