@@ -27,6 +27,7 @@ test('minimal', () => {
       metadata: {
         name: 'test-my-config-map-c8eaefa4',
       },
+      immutable: false,
     },
   ]);
 });
@@ -286,4 +287,18 @@ Array [
   },
 ]
 `);
+});
+
+test('can configure an immutable config map', () => {
+
+  const chart = Testing.chart();
+  const cm = new ConfigMap(chart, 'my-config-map', {
+    immutable: true,
+  });
+
+  const spec = Testing.synth(chart)[0];
+
+  expect(cm.immutable).toBeTruthy();
+  expect(spec.immutable).toBeTruthy();
+
 });
