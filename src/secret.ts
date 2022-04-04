@@ -5,9 +5,24 @@ import * as k8s from './imports/k8s';
 import { IServiceAccount } from './service-account';
 
 /**
+ * Common properties for `Secret`.
+ */
+export interface CommonSecretProps extends ResourceProps {
+
+  /**
+   * If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+   * If not set to true, the field can be modified at any time.
+   *
+   * @default false
+   */
+  readonly immutable?: boolean;
+
+}
+
+/**
  * Options for `Secret`.
  */
-export interface SecretProps extends ResourceProps {
+export interface SecretProps extends CommonSecretProps {
   /**
    * stringData allows specifying non-binary secret data in string form. It is
    * provided as a write-only convenience method. All keys and values are merged
@@ -23,6 +38,7 @@ export interface SecretProps extends ResourceProps {
    * @default undefined - Don't set a type.
    */
   readonly type?: string;
+
 }
 
 export interface ISecret extends IResource {
@@ -67,6 +83,11 @@ export class Secret extends Resource implements ISecret {
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
+  /**
+   * Whether or not the secret is immutable.
+   */
+  public readonly immutable: boolean;
+
   private readonly stringData: { [key: string]: string };
 
   public constructor(scope: Construct, id: string, props: SecretProps = { }) {
@@ -74,10 +95,12 @@ export class Secret extends Resource implements ISecret {
 
     this.stringData = props.stringData ?? {};
 
+    this.immutable = props.immutable ?? false;
     this.apiObject = new k8s.KubeSecret(this, 'Resource', {
       metadata: props.metadata,
       type: props.type,
       stringData: this.stringData,
+      immutable: this.immutable,
     });
   }
 
@@ -102,7 +125,7 @@ export class Secret extends Resource implements ISecret {
 /**
  * Options for `BasicAuthSecret`.
  */
-export interface BasicAuthSecretProps extends ResourceProps {
+export interface BasicAuthSecretProps extends CommonSecretProps {
   /**
    * The user name for authentication
    */
@@ -127,6 +150,7 @@ export class BasicAuthSecret extends Secret {
         username: props.username,
         password: props.password,
       },
+      immutable: props.immutable,
     });
   }
 }
@@ -134,7 +158,7 @@ export class BasicAuthSecret extends Secret {
 /**
  * Options for `SshAuthSecret`.
  */
-export interface SshAuthSecretProps extends ResourceProps {
+export interface SshAuthSecretProps extends CommonSecretProps {
   /**
    * The SSH private key to use
    */
@@ -153,6 +177,7 @@ export class SshAuthSecret extends Secret {
       stringData: {
         'ssh-privatekey': props.sshPrivateKey,
       },
+      immutable: props.immutable,
     });
   }
 }
@@ -160,7 +185,7 @@ export class SshAuthSecret extends Secret {
 /**
  * Options for `ServiceAccountTokenSecret`.
  */
-export interface ServiceAccountTokenSecretProps extends ResourceProps {
+export interface ServiceAccountTokenSecretProps extends CommonSecretProps {
   /**
    * The service account to store a secret for
    */
@@ -181,6 +206,7 @@ export class ServiceAccountTokenSecret extends Secret {
           'kubernetes.io/service-account.name': props.serviceAccount.name,
         },
       },
+      immutable: props.immutable,
     });
   }
 }
@@ -188,7 +214,7 @@ export class ServiceAccountTokenSecret extends Secret {
 /**
  * Options for `TlsSecret`.
  */
-export interface TlsSecretProps extends ResourceProps {
+export interface TlsSecretProps extends CommonSecretProps {
   /**
    * The TLS cert
    */
@@ -213,6 +239,7 @@ export class TlsSecret extends Secret {
         'tls.crt': props.tlsCert,
         'tls.key': props.tlsKey,
       },
+      immutable: props.immutable,
     });
   }
 }
@@ -220,7 +247,7 @@ export class TlsSecret extends Secret {
 /**
  * Options for `DockerConfigSecret`.
  */
-export interface DockerConfigSecretProps extends ResourceProps {
+export interface DockerConfigSecretProps extends CommonSecretProps {
   /**
    * JSON content to provide for the `~/.docker/config.json` file. This will
    * be stringified and inserted as stringData.
@@ -243,6 +270,7 @@ export class DockerConfigSecret extends Secret {
       stringData: {
         '.dockerconfigjson': JSON.stringify(props.data),
       },
+      immutable: props.immutable,
     });
   }
 }

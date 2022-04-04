@@ -147,7 +147,7 @@ you should run "npx projen build" to make sure all tests pass and documentation
 is automatically updated.
 
 When you clone the repo, it will check out the branch corresponding to the
-latest version (k8s-22/main), and when you create the pull request on GitHub, it
+latest version (`k8s-22/main`), and when you create the pull request on GitHub, it
 should automatically target this branch. We will take care of backporting your
 change to the other branches corresponding to cdk8s-plus-21 and cdk8s-plus-20
 once the changes are merged to cdk8s-plus-22.
