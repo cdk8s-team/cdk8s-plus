@@ -752,6 +752,388 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 ---
 
 
+### DaemonSet <a name="org.cdk8s.plus21.DaemonSet"></a>
+
+- *Implements:* [`org.cdk8s.plus21.IPodTemplate`](#org.cdk8s.plus21.IPodTemplate)
+
+A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+
+As nodes are added to the cluster, Pods are added to them.
+As nodes are removed from the cluster, those Pods are garbage collected.
+Deleting a DaemonSet will clean up the Pods it created.
+
+Some typical uses of a DaemonSet are:
+
+* running a cluster storage daemon on every node
+* running a logs collection daemon on every node
+* running a node monitoring daemon on every node
+
+In a simple case, one DaemonSet, covering all nodes, would be used for each type of daemon.
+A more complex setup might use multiple DaemonSets for a single type of daemon,
+but with different flags and/or different memory and cpu requests for different hardware types.
+
+#### Initializers <a name="org.cdk8s.plus21.DaemonSet.Initializer"></a>
+
+```java
+import org.cdk8s.plus21.DaemonSet;
+
+DaemonSet.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
+//  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
+//  .serviceAccount(IServiceAccount)
+//  .volumes(java.util.List<Volume>)
+//  .podMetadata(ApiObjectMetadata)
+//  .defaultSelector(java.lang.Boolean)
+//  .minReadySeconds(java.lang.Number)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.containers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.ContainerProps`](#org.cdk8s.plus21.ContainerProps)>
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.hostAliases"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.HostAlias`](#org.cdk8s.plus21.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.ContainerProps`](#org.cdk8s.plus21.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.restartPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus21.RestartPolicy`](#org.cdk8s.plus21.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.securityContext"></a>
+
+- *Type:* [`org.cdk8s.plus21.PodSecurityContextProps`](#org.cdk8s.plus21.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.serviceAccount"></a>
+
+- *Type:* [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.volumes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.Volume`](#org.cdk8s.plus21.Volume)>
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.podMetadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+The pod metadata.
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.defaultSelector"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this daemon set.
+
+If this is set to `false` you must define your selector through
+`dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
+
+---
+
+##### `minReadySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.minReadySeconds"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* 0
+
+Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addContainer` <a name="org.cdk8s.plus21.DaemonSet.addContainer"></a>
+
+```java
+public addContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus21.ContainerProps`](#org.cdk8s.plus21.ContainerProps)
+
+---
+
+##### `addHostAlias` <a name="org.cdk8s.plus21.DaemonSet.addHostAlias"></a>
+
+```java
+public addHostAlias(HostAlias hostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.hostAlias"></a>
+
+- *Type:* [`org.cdk8s.plus21.HostAlias`](#org.cdk8s.plus21.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus21.DaemonSet.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus21.ContainerProps`](#org.cdk8s.plus21.ContainerProps)
+
+---
+
+##### `addVolume` <a name="org.cdk8s.plus21.DaemonSet.addVolume"></a>
+
+```java
+public addVolume(Volume volume)
+```
+
+###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.volume"></a>
+
+- *Type:* [`org.cdk8s.plus21.Volume`](#org.cdk8s.plus21.Volume)
+
+---
+
+##### `selectByLabel` <a name="org.cdk8s.plus21.DaemonSet.selectByLabel"></a>
+
+```java
+public selectByLabel(java.lang.String key, java.lang.String value)
+```
+
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.key"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.parameter.value"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.containers"></a>
+
+```java
+public java.util.List<Container> getContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.Container`](#org.cdk8s.plus21.Container)>
+
+The containers belonging to the pod.
+
+Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.HostAlias`](#org.cdk8s.plus21.HostAlias)>
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.Container`](#org.cdk8s.plus21.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
+##### `labelSelector`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.labelSelector"></a>
+
+```java
+public java.util.Map<java.lang.String, java.lang.String> getLabelSelector();
+```
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
+
+The labels this daemon set will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `minReadySeconds`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.minReadySeconds"></a>
+
+```java
+public java.lang.Number getMinReadySeconds();
+```
+
+- *Type:* `java.lang.Number`
+
+---
+
+##### `podMetadata`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.podMetadata"></a>
+
+```java
+public ApiObjectMetadataDefinition getPodMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadataDefinition`](#org.cdk8s.ApiObjectMetadataDefinition)
+
+Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.securityContext"></a>
+
+```java
+public PodSecurityContext getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus21.PodSecurityContext`](#org.cdk8s.plus21.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus21.DaemonSet.property.volumes"></a>
+
+```java
+public java.util.List<Volume> getVolumes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.Volume`](#org.cdk8s.plus21.Volume)>
+
+The volumes associated with this pod.
+
+Use `addVolume` to add volumes.
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSet.property.restartPolicy"></a>
+
+```java
+public RestartPolicy getRestartPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.RestartPolicy`](#org.cdk8s.plus21.RestartPolicy)
+
+Restart policy for all containers within the pod.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSet.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
+
+The service account used to run this pod.
+
+---
+
+
 ### Deployment <a name="org.cdk8s.plus21.Deployment"></a>
 
 - *Implements:* [`org.cdk8s.plus21.IPodTemplate`](#org.cdk8s.plus21.IPodTemplate)
@@ -5440,6 +5822,206 @@ public Cpu getRequest();
 ```
 
 - *Type:* [`org.cdk8s.plus21.Cpu`](#org.cdk8s.plus21.Cpu)
+
+---
+
+### DaemonSetProps <a name="org.cdk8s.plus21.DaemonSetProps"></a>
+
+Properties for `DaemonSet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.DaemonSetProps;
+
+DaemonSetProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .containers(java.util.List<ContainerProps>)
+//  .hostAliases(java.util.List<HostAlias>)
+//  .initContainers(java.util.List<ContainerProps>)
+//  .restartPolicy(RestartPolicy)
+//  .securityContext(PodSecurityContextProps)
+//  .serviceAccount(IServiceAccount)
+//  .volumes(java.util.List<Volume>)
+//  .podMetadata(ApiObjectMetadata)
+//  .defaultSelector(java.lang.Boolean)
+//  .minReadySeconds(java.lang.Number)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.containers"></a>
+
+```java
+public java.util.List<ContainerProps> getContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.ContainerProps`](#org.cdk8s.plus21.ContainerProps)>
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.hostAliases"></a>
+
+```java
+public java.util.List<HostAlias> getHostAliases();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.HostAlias`](#org.cdk8s.plus21.HostAlias)>
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.ContainerProps`](#org.cdk8s.plus21.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.restartPolicy"></a>
+
+```java
+public RestartPolicy getRestartPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.RestartPolicy`](#org.cdk8s.plus21.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.securityContext"></a>
+
+```java
+public PodSecurityContextProps getSecurityContext();
+```
+
+- *Type:* [`org.cdk8s.plus21.PodSecurityContextProps`](#org.cdk8s.plus21.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.serviceAccount"></a>
+
+```java
+public IServiceAccount getServiceAccount();
+```
+
+- *Type:* [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.volumes"></a>
+
+```java
+public java.util.List<Volume> getVolumes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.Volume`](#org.cdk8s.plus21.Volume)>
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.podMetadata"></a>
+
+```java
+public ApiObjectMetadata getPodMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+The pod metadata.
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.defaultSelector"></a>
+
+```java
+public java.lang.Boolean getDefaultSelector();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this daemon set.
+
+If this is set to `false` you must define your selector through
+`dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
+
+---
+
+##### `minReadySeconds`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.minReadySeconds"></a>
+
+```java
+public java.lang.Number getMinReadySeconds();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* 0
+
+Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
 
 ---
 
@@ -11161,7 +11743,7 @@ The Kubernetes name of this resource.
 
 ### IPodSpec <a name="org.cdk8s.plus21.IPodSpec"></a>
 
-- *Implemented By:* [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.Pod`](#org.cdk8s.plus21.Pod), [`org.cdk8s.plus21.PodSpec`](#org.cdk8s.plus21.PodSpec), [`org.cdk8s.plus21.PodTemplate`](#org.cdk8s.plus21.PodTemplate), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.IPodSpec`](#org.cdk8s.plus21.IPodSpec), [`org.cdk8s.plus21.IPodTemplate`](#org.cdk8s.plus21.IPodTemplate)
+- *Implemented By:* [`org.cdk8s.plus21.DaemonSet`](#org.cdk8s.plus21.DaemonSet), [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.Pod`](#org.cdk8s.plus21.Pod), [`org.cdk8s.plus21.PodSpec`](#org.cdk8s.plus21.PodSpec), [`org.cdk8s.plus21.PodTemplate`](#org.cdk8s.plus21.PodTemplate), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.IPodSpec`](#org.cdk8s.plus21.IPodSpec), [`org.cdk8s.plus21.IPodTemplate`](#org.cdk8s.plus21.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
 
@@ -11297,7 +11879,7 @@ The service account used to run this pod.
 
 - *Extends:* [`org.cdk8s.plus21.IPodSpec`](#org.cdk8s.plus21.IPodSpec)
 
-- *Implemented By:* [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.PodTemplate`](#org.cdk8s.plus21.PodTemplate), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.IPodTemplate`](#org.cdk8s.plus21.IPodTemplate)
+- *Implemented By:* [`org.cdk8s.plus21.DaemonSet`](#org.cdk8s.plus21.DaemonSet), [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.PodTemplate`](#org.cdk8s.plus21.PodTemplate), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.IPodTemplate`](#org.cdk8s.plus21.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
 
@@ -11400,7 +11982,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="org.cdk8s.plus21.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus21.AzureDiskPersistentVolume`](#org.cdk8s.plus21.AzureDiskPersistentVolume), [`org.cdk8s.plus21.BasicAuthSecret`](#org.cdk8s.plus21.BasicAuthSecret), [`org.cdk8s.plus21.ConfigMap`](#org.cdk8s.plus21.ConfigMap), [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret), [`org.cdk8s.plus21.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus21.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus21.IngressV1Beta1`](#org.cdk8s.plus21.IngressV1Beta1), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.PersistentVolume`](#org.cdk8s.plus21.PersistentVolume), [`org.cdk8s.plus21.PersistentVolumeClaim`](#org.cdk8s.plus21.PersistentVolumeClaim), [`org.cdk8s.plus21.Pod`](#org.cdk8s.plus21.Pod), [`org.cdk8s.plus21.Resource`](#org.cdk8s.plus21.Resource), [`org.cdk8s.plus21.Secret`](#org.cdk8s.plus21.Secret), [`org.cdk8s.plus21.Service`](#org.cdk8s.plus21.Service), [`org.cdk8s.plus21.ServiceAccount`](#org.cdk8s.plus21.ServiceAccount), [`org.cdk8s.plus21.ServiceAccountTokenSecret`](#org.cdk8s.plus21.ServiceAccountTokenSecret), [`org.cdk8s.plus21.SshAuthSecret`](#org.cdk8s.plus21.SshAuthSecret), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.TlsSecret`](#org.cdk8s.plus21.TlsSecret), [`org.cdk8s.plus21.IConfigMap`](#org.cdk8s.plus21.IConfigMap), [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume), [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim), [`org.cdk8s.plus21.IResource`](#org.cdk8s.plus21.IResource), [`org.cdk8s.plus21.ISecret`](#org.cdk8s.plus21.ISecret), [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus21.AzureDiskPersistentVolume`](#org.cdk8s.plus21.AzureDiskPersistentVolume), [`org.cdk8s.plus21.BasicAuthSecret`](#org.cdk8s.plus21.BasicAuthSecret), [`org.cdk8s.plus21.ConfigMap`](#org.cdk8s.plus21.ConfigMap), [`org.cdk8s.plus21.DaemonSet`](#org.cdk8s.plus21.DaemonSet), [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret), [`org.cdk8s.plus21.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus21.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus21.IngressV1Beta1`](#org.cdk8s.plus21.IngressV1Beta1), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.PersistentVolume`](#org.cdk8s.plus21.PersistentVolume), [`org.cdk8s.plus21.PersistentVolumeClaim`](#org.cdk8s.plus21.PersistentVolumeClaim), [`org.cdk8s.plus21.Pod`](#org.cdk8s.plus21.Pod), [`org.cdk8s.plus21.Resource`](#org.cdk8s.plus21.Resource), [`org.cdk8s.plus21.Secret`](#org.cdk8s.plus21.Secret), [`org.cdk8s.plus21.Service`](#org.cdk8s.plus21.Service), [`org.cdk8s.plus21.ServiceAccount`](#org.cdk8s.plus21.ServiceAccount), [`org.cdk8s.plus21.ServiceAccountTokenSecret`](#org.cdk8s.plus21.ServiceAccountTokenSecret), [`org.cdk8s.plus21.SshAuthSecret`](#org.cdk8s.plus21.SshAuthSecret), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.TlsSecret`](#org.cdk8s.plus21.TlsSecret), [`org.cdk8s.plus21.IConfigMap`](#org.cdk8s.plus21.IConfigMap), [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume), [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim), [`org.cdk8s.plus21.IResource`](#org.cdk8s.plus21.IResource), [`org.cdk8s.plus21.ISecret`](#org.cdk8s.plus21.ISecret), [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
 
 Represents a resource.
 
