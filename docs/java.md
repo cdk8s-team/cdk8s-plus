@@ -498,6 +498,7 @@ import org.cdk8s.plus22.BasicAuthSecret;
 
 BasicAuthSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .password(java.lang.String)
     .username(java.lang.String)
     .build();
@@ -520,6 +521,17 @@ BasicAuthSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -558,6 +570,7 @@ ConfigMap.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .binaryData(java.util.Map<java.lang.String, java.lang.String>)
 //  .data(java.util.Map<java.lang.String, java.lang.String>)
+//  .immutable(java.lang.Boolean)
     .build();
 ```
 
@@ -608,6 +621,17 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -751,6 +775,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### Deployment <a name="org.cdk8s.plus22.Deployment"></a>
 
@@ -788,6 +824,7 @@ import org.cdk8s.plus22.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -797,6 +834,7 @@ Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .podMetadata(ApiObjectMetadata)
 //  .defaultSelector(java.lang.Boolean)
 //  .replicas(java.lang.Number)
+//  .strategy(DeploymentStrategy)
     .build();
 ```
 
@@ -831,6 +869,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -941,6 +988,15 @@ If this is set to `false` you must define your selector through
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.strategy"></a>
+
+- *Type:* [`org.cdk8s.plus22.DeploymentStrategy`](#org.cdk8s.plus22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -1147,6 +1203,18 @@ public PodSecurityContext getSecurityContext();
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.strategy"></a>
+
+```java
+public DeploymentStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus22.DeploymentStrategy`](#org.cdk8s.plus22.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.Deployment.property.volumes"></a>
 
 ```java
@@ -1199,6 +1267,7 @@ import org.cdk8s.plus22.DockerConfigSecret;
 
 DockerConfigSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .data(java.util.Map<java.lang.String, java.lang.Object>)
     .build();
 ```
@@ -1220,6 +1289,17 @@ DockerConfigSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -1704,6 +1784,7 @@ import org.cdk8s.plus22.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -1748,6 +1829,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -2559,6 +2649,7 @@ import org.cdk8s.plus22.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -2599,6 +2690,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -2921,6 +3021,7 @@ import org.cdk8s.plus22.Secret;
 
 Secret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
 //  .stringData(java.util.Map<java.lang.String, java.lang.String>)
 //  .type(java.lang.String)
     .build();
@@ -2943,6 +3044,17 @@ Secret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3027,6 +3139,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="org.cdk8s.plus22.Service"></a>
@@ -3430,6 +3555,7 @@ import org.cdk8s.plus22.ServiceAccountTokenSecret;
 
 ServiceAccountTokenSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .serviceAccount(IServiceAccount)
     .build();
 ```
@@ -3451,6 +3577,17 @@ ServiceAccountTokenSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3479,6 +3616,7 @@ import org.cdk8s.plus22.SshAuthSecret;
 
 SshAuthSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .sshPrivateKey(java.lang.String)
     .build();
 ```
@@ -3500,6 +3638,17 @@ SshAuthSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -3552,6 +3701,7 @@ import org.cdk8s.plus22.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -3598,6 +3748,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -3978,6 +4137,7 @@ import org.cdk8s.plus22.TlsSecret;
 
 TlsSecret.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .tlsCert(java.lang.String)
     .tlsKey(java.lang.String)
     .build();
@@ -4000,6 +4160,17 @@ TlsSecret.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.immutable"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4370,6 +4541,85 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### AwsElasticBlockStoreVolumeOptions <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions"></a>
+
+Options of `Volume.fromAwsElasticBlockStore`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions;
+
+AwsElasticBlockStoreVolumeOptions.builder()
+//  .fsType(java.lang.String)
+//  .name(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### AzureDiskPersistentVolumeProps <a name="org.cdk8s.plus22.AzureDiskPersistentVolumeProps"></a>
 
 Properties for `AzureDiskPersistentVolume`.
@@ -4593,6 +4843,91 @@ Force the ReadOnly setting in VolumeMounts.
 
 ---
 
+### AzureDiskVolumeOptions <a name="org.cdk8s.plus22.AzureDiskVolumeOptions"></a>
+
+Options of `Volume.fromAzureDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.AzureDiskVolumeOptions;
+
+AzureDiskVolumeOptions.builder()
+//  .cachingMode(AzureDiskPersistentVolumeCachingMode)
+//  .fsType(java.lang.String)
+//  .kind(AzureDiskPersistentVolumeKind)
+//  .name(java.lang.String)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `cachingMode`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.cachingMode"></a>
+
+```java
+public AzureDiskPersistentVolumeCachingMode getCachingMode();
+```
+
+- *Type:* [`org.cdk8s.plus22.AzureDiskPersistentVolumeCachingMode`](#org.cdk8s.plus22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.kind"></a>
+
+```java
+public AzureDiskPersistentVolumeKind getKind();
+```
+
+- *Type:* [`org.cdk8s.plus22.AzureDiskPersistentVolumeKind`](#org.cdk8s.plus22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.AzureDiskVolumeOptions.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
 ### BasicAuthSecretProps <a name="org.cdk8s.plus22.BasicAuthSecretProps"></a>
 
 Options for `BasicAuthSecret`.
@@ -4604,6 +4939,7 @@ import org.cdk8s.plus22.BasicAuthSecretProps;
 
 BasicAuthSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .password(java.lang.String)
     .username(java.lang.String)
     .build();
@@ -4618,6 +4954,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4740,6 +5091,48 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="org.cdk8s.plus22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.CommonSecretProps;
+
+CommonSecretProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommonSecretProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommonSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="org.cdk8s.plus22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -4753,6 +5146,7 @@ ConfigMapProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .binaryData(java.util.Map<java.lang.String, java.lang.String>)
 //  .data(java.util.Map<java.lang.String, java.lang.String>)
+//  .immutable(java.lang.Boolean)
     .build();
 ```
 
@@ -4803,6 +5197,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5331,6 +5740,7 @@ import org.cdk8s.plus22.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -5340,6 +5750,7 @@ DeploymentProps.builder()
 //  .podMetadata(ApiObjectMetadata)
 //  .defaultSelector(java.lang.Boolean)
 //  .replicas(java.lang.Number)
+//  .strategy(DeploymentStrategy)
     .build();
 ```
 
@@ -5370,6 +5781,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -5519,6 +5943,78 @@ Number of desired pods.
 
 ---
 
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.strategy"></a>
+
+```java
+public DeploymentStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus22.DeploymentStrategy`](#org.cdk8s.plus22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="org.cdk8s.plus22.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.DeploymentStrategyRollingUpdateOptions;
+
+DeploymentStrategyRollingUpdateOptions.builder()
+//  .maxSurge(PercentOrAbsolute)
+//  .maxUnavailable(PercentOrAbsolute)
+    .build();
+```
+
+##### `maxSurge`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
+
+```java
+public PercentOrAbsolute getMaxSurge();
+```
+
+- *Type:* [`org.cdk8s.plus22.PercentOrAbsolute`](#org.cdk8s.plus22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `maxUnavailable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
+
+```java
+public PercentOrAbsolute getMaxUnavailable();
+```
+
+- *Type:* [`org.cdk8s.plus22.PercentOrAbsolute`](#org.cdk8s.plus22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
 ### DockerConfigSecretProps <a name="org.cdk8s.plus22.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
@@ -5530,6 +6026,7 @@ import org.cdk8s.plus22.DockerConfigSecretProps;
 
 DockerConfigSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .data(java.util.Map<java.lang.String, java.lang.Object>)
     .build();
 ```
@@ -5543,6 +6040,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -6224,6 +6736,85 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### GCEPersistentDiskVolumeOptions <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions"></a>
+
+Options of `Volume.fromGcePersistentDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.GCEPersistentDiskVolumeOptions;
+
+GCEPersistentDiskVolumeOptions.builder()
+//  .fsType(java.lang.String)
+//  .name(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus22.GCEPersistentDiskVolumeOptions.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### HandlerFromHttpGetOptions <a name="org.cdk8s.plus22.HandlerFromHttpGetOptions"></a>
 
 Options for `Handler.fromHttpGet`.
@@ -6667,6 +7258,7 @@ import org.cdk8s.plus22.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -6707,6 +7299,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7346,6 +7951,7 @@ import org.cdk8s.plus22.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7382,6 +7988,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7606,6 +8225,7 @@ import org.cdk8s.plus22.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7630,6 +8250,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7751,6 +8384,7 @@ import org.cdk8s.plus22.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7776,6 +8410,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8063,6 +8710,7 @@ import org.cdk8s.plus22.SecretProps;
 
 SecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
 //  .stringData(java.util.Map<java.lang.String, java.lang.String>)
 //  .type(java.lang.String)
     .build();
@@ -8077,6 +8725,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8288,6 +8951,7 @@ import org.cdk8s.plus22.ServiceAccountTokenSecretProps;
 
 ServiceAccountTokenSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .serviceAccount(IServiceAccount)
     .build();
 ```
@@ -8301,6 +8965,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8662,6 +9341,7 @@ import org.cdk8s.plus22.SshAuthSecretProps;
 
 SshAuthSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .sshPrivateKey(java.lang.String)
     .build();
 ```
@@ -8675,6 +9355,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8702,6 +9397,7 @@ import org.cdk8s.plus22.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -8744,6 +9440,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -9137,6 +9846,7 @@ import org.cdk8s.plus22.TlsSecretProps;
 
 TlsSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
+//  .immutable(java.lang.Boolean)
     .tlsCert(java.lang.String)
     .tlsKey(java.lang.String)
     .build();
@@ -9151,6 +9861,21 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -9853,6 +10578,38 @@ public java.lang.String getAmount();
 ---
 
 
+### DeploymentStrategy <a name="org.cdk8s.plus22.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="org.cdk8s.plus22.DeploymentStrategy.recreate"></a>
+
+```java
+import org.cdk8s.plus22.DeploymentStrategy;
+
+DeploymentStrategy.recreate()
+```
+
+##### `rollingUpdate` <a name="org.cdk8s.plus22.DeploymentStrategy.rollingUpdate"></a>
+
+```java
+import org.cdk8s.plus22.DeploymentStrategy;
+
+DeploymentStrategy.rollingUpdate()
+DeploymentStrategy.rollingUpdate(DeploymentStrategyRollingUpdateOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentStrategy.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.DeploymentStrategyRollingUpdateOptions`](#org.cdk8s.plus22.DeploymentStrategyRollingUpdateOptions)
+
+---
+
+
+
 ### EnvValue <a name="org.cdk8s.plus22.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -10131,6 +10888,61 @@ The service object.
 
 
 
+### PercentOrAbsolute <a name="org.cdk8s.plus22.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `isZero` <a name="org.cdk8s.plus22.PercentOrAbsolute.isZero"></a>
+
+```java
+public isZero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="org.cdk8s.plus22.PercentOrAbsolute.absolute"></a>
+
+```java
+import org.cdk8s.plus22.PercentOrAbsolute;
+
+PercentOrAbsolute.absolute(java.lang.Number num)
+```
+
+###### `num`<sup>Required</sup> <a name="org.cdk8s.plus22.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `java.lang.Number`
+
+---
+
+##### `percent` <a name="org.cdk8s.plus22.PercentOrAbsolute.percent"></a>
+
+```java
+import org.cdk8s.plus22.PercentOrAbsolute;
+
+PercentOrAbsolute.percent(java.lang.Number percent)
+```
+
+###### `percent`<sup>Required</sup> <a name="org.cdk8s.plus22.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `java.lang.Number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.PercentOrAbsolute.property.value"></a>
+
+```java
+public java.lang.Object getValue();
+```
+
+- *Type:* `java.lang.Object`
+
+---
+
+
 ### PodSecurityContext <a name="org.cdk8s.plus22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -10290,6 +11102,7 @@ import org.cdk8s.plus22.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -10310,6 +11123,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10513,6 +11335,16 @@ Use `addVolume` to add volumes.
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.restartPolicy"></a>
 
 ```java
@@ -10551,6 +11383,7 @@ import org.cdk8s.plus22.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -10572,6 +11405,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10834,6 +11676,54 @@ public asVolume()
 
 #### Static Functions <a name="Static Functions"></a>
 
+##### `fromAwsElasticBlockStore` <a name="org.cdk8s.plus22.Volume.fromAwsElasticBlockStore"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromAwsElasticBlockStore(java.lang.String volumeId)
+Volume.fromAwsElasticBlockStore(java.lang.String volumeId, AwsElasticBlockStoreVolumeOptions options)
+```
+
+###### `volumeId`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.volumeId"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions`](#org.cdk8s.plus22.AwsElasticBlockStoreVolumeOptions)
+
+---
+
+##### `fromAzureDisk` <a name="org.cdk8s.plus22.Volume.fromAzureDisk"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromAzureDisk(java.lang.String diskName, java.lang.String diskUri)
+Volume.fromAzureDisk(java.lang.String diskName, java.lang.String diskUri, AzureDiskVolumeOptions options)
+```
+
+###### `diskName`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.diskName"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `diskUri`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.diskUri"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.AzureDiskVolumeOptions`](#org.cdk8s.plus22.AzureDiskVolumeOptions)
+
+---
+
 ##### `fromConfigMap` <a name="org.cdk8s.plus22.Volume.fromConfigMap"></a>
 
 ```java
@@ -10879,6 +11769,27 @@ Volume.fromEmptyDir(java.lang.String name, EmptyDirVolumeOptions options)
 - *Type:* [`org.cdk8s.plus22.EmptyDirVolumeOptions`](#org.cdk8s.plus22.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromGcePersistentDisk` <a name="org.cdk8s.plus22.Volume.fromGcePersistentDisk"></a>
+
+```java
+import org.cdk8s.plus22.Volume;
+
+Volume.fromGcePersistentDisk(java.lang.String pdName)
+Volume.fromGcePersistentDisk(java.lang.String pdName, GCEPersistentDiskVolumeOptions options)
+```
+
+###### `pdName`<sup>Required</sup> <a name="org.cdk8s.plus22.Volume.parameter.pdName"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus22.GCEPersistentDiskVolumeOptions`](#org.cdk8s.plus22.GCEPersistentDiskVolumeOptions)
 
 ---
 

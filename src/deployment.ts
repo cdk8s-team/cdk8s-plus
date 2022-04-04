@@ -31,6 +31,13 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
    */
   readonly defaultSelector?: boolean;
 
+  /**
+   * Specifies the strategy used to replace old Pods by new ones.
+   *
+   * @default - RollingUpdate with maxSurge and maxUnavailable set to 25%.
+   */
+  readonly strategy?: DeploymentStrategy;
+
 }
 
 /**
@@ -116,6 +123,11 @@ export class Deployment extends Resource implements IPodTemplate {
   public readonly replicas: number;
 
   /**
+   * The upgrade strategy of this deployment.
+   */
+  public readonly strategy: DeploymentStrategy;
+
+  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
@@ -132,6 +144,7 @@ export class Deployment extends Resource implements IPodTemplate {
     });
 
     this.replicas = props.replicas ?? 1;
+    this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
     this._podTemplate = new PodTemplate(props);
     this._labelSelector = {};
 
@@ -251,7 +264,115 @@ export class Deployment extends Resource implements IPodTemplate {
       selector: {
         matchLabels: this._labelSelector,
       },
+      strategy: this.strategy._toKube(),
     };
+  }
+
+}
+
+/**
+ * Options for `DeploymentStrategy.rollingUpdate`.
+ */
+export interface DeploymentStrategyRollingUpdateOptions {
+
+  /**
+   * The maximum number of pods that can be scheduled above the desired number of pods.
+   * Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+   * Absolute number is calculated from percentage by rounding up.
+   * This can not be 0 if `maxUnavailable` is 0.
+   *
+   * Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+   * starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+   * Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+   * total number of pods running at any time during the update is at most 130% of desired pods.
+   *
+   * @default '25%'
+   */
+  readonly maxSurge?: PercentOrAbsolute;
+
+  /**
+   * The maximum number of pods that can be unavailable during the update.
+   * Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+   * Absolute number is calculated from percentage by rounding down.
+   * This can not be 0 if `maxSurge` is 0.
+   *
+   * Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+   * pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+   * be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+   * number of pods available at all times during the update is at least 70% of desired pods.
+   *
+   * @default '25%'
+   */
+  readonly maxUnavailable?: PercentOrAbsolute;
+
+}
+
+/**
+ * Union like class repsenting either a ration in
+ * percents or an absolute number.
+ */
+export class PercentOrAbsolute {
+
+  /**
+   * Percent ratio.
+   */
+  public static percent(percent: number): PercentOrAbsolute {
+    return new PercentOrAbsolute(`${percent}%`);
+  }
+
+  /**
+   * Absolute number.
+   */
+  public static absolute(num: number): PercentOrAbsolute {
+    return new PercentOrAbsolute(num);
+  }
+
+  private constructor(public readonly value: any) {}
+
+  public isZero(): boolean {
+    return this.value === PercentOrAbsolute.absolute(0).value || this.value === PercentOrAbsolute.percent(0).value;
+  }
+
+}
+
+/**
+ * Deployment strategies.
+ */
+export class DeploymentStrategy {
+
+  /**
+   * All existing Pods are killed before new ones are created.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#recreate-deployment
+   */
+  public static recreate(): DeploymentStrategy {
+    return new DeploymentStrategy({
+      type: 'Recreate',
+    });
+  }
+
+  public static rollingUpdate(options: DeploymentStrategyRollingUpdateOptions = {}): DeploymentStrategy {
+
+    const maxSurge = options.maxSurge ?? PercentOrAbsolute.percent(25);
+    const maxUnavailable = options.maxSurge ?? PercentOrAbsolute.percent(25);
+
+    if (maxSurge.isZero() && maxUnavailable.isZero()) {
+      throw new Error('\'maxSurge\' and \'maxUnavailable\' cannot be both zero');
+    }
+
+    return new DeploymentStrategy({
+      type: 'RollingUpdate',
+      rollingUpdate: { maxSurge, maxUnavailable },
+    });
+  }
+
+  private constructor(private readonly strategy: k8s.DeploymentStrategy) {}
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.DeploymentStrategy {
+    return this.strategy;
   }
 
 }
