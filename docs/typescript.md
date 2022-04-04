@@ -2115,6 +2115,19 @@ The name of the secret to reference.
 
 ---
 
+#### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not the secret is immutable.
+
+---
 
 
 ### Service <a name="cdk8s-plus-21.Service"></a>
@@ -3494,7 +3507,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `password`<sup>Required</sup> <a name="cdk8s-plus-21.BasicAuthSecretProps.property.password"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `password`<sup>Required</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.password"></a>
 
 ```typescript
 public readonly password: string;
@@ -3607,7 +3635,46 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-### ConfigMapProps <a name="cdk8s-plus-21.ConfigMapProps"></a>
+### CommonSecretProps <a name="cdk8s-plus-22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CommonSecretProps } from 'cdk8s-plus-22'
+
+const commonSecretProps: CommonSecretProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+### ConfigMapProps <a name="cdk8s-plus-22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
 
@@ -4590,7 +4657,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `data`<sup>Required</sup> <a name="cdk8s-plus-21.DockerConfigSecretProps.property.data"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.DockerConfigSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `data`<sup>Required</sup> <a name="cdk8s-plus-22.DockerConfigSecretProps.property.data"></a>
 
 ```typescript
 public readonly data: {[ key: string ]: any};
@@ -7043,7 +7125,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `stringData`<sup>Optional</sup> <a name="cdk8s-plus-21.SecretProps.property.stringData"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `stringData`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.stringData"></a>
 
 ```typescript
 public readonly stringData: {[ key: string ]: string};
@@ -7253,7 +7350,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `serviceAccount`<sup>Required</sup> <a name="cdk8s-plus-21.ServiceAccountTokenSecretProps.property.serviceAccount"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `serviceAccount`<sup>Required</sup> <a name="cdk8s-plus-22.ServiceAccountTokenSecretProps.property.serviceAccount"></a>
 
 ```typescript
 public readonly serviceAccount: IServiceAccount;
@@ -7603,7 +7715,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `sshPrivateKey`<sup>Required</sup> <a name="cdk8s-plus-21.SshAuthSecretProps.property.sshPrivateKey"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `sshPrivateKey`<sup>Required</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.sshPrivateKey"></a>
 
 ```typescript
 public readonly sshPrivateKey: string;
@@ -8016,7 +8143,22 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `tlsCert`<sup>Required</sup> <a name="cdk8s-plus-21.TlsSecretProps.property.tlsCert"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.TlsSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
+##### `tlsCert`<sup>Required</sup> <a name="cdk8s-plus-22.TlsSecretProps.property.tlsCert"></a>
 
 ```typescript
 public readonly tlsCert: string;
