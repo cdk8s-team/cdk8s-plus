@@ -665,7 +665,7 @@ public readonly strategy: DeploymentStrategy;
 
 - *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
 
-The upgrade startegy of this deployment.
+The upgrade strategy of this deployment.
 
 ---
 

@@ -1165,7 +1165,7 @@ public DeploymentStrategy getStrategy();
 
 - *Type:* [`org.cdk8s.plus22.DeploymentStrategy`](#org.cdk8s.plus22.DeploymentStrategy)
 
-The upgrade startegy of this deployment.
+The upgrade strategy of this deployment.
 
 ---
 

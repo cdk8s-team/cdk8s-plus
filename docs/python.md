@@ -1685,7 +1685,7 @@ strategy: DeploymentStrategy
 
 - *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
 
-The upgrade startegy of this deployment.
+The upgrade strategy of this deployment.
 
 ---
 
