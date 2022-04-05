@@ -798,10 +798,10 @@ The resource(s) to apply to.
 
 ---
 
-##### `bindInCluster` <a name="org.cdk8s.plus22.ClusterRole.bindInCluster"></a>
+##### `bind` <a name="org.cdk8s.plus22.ClusterRole.bind"></a>
 
 ```java
-public bindInCluster(ISubject subjects)
+public bind(ISubject subjects)
 ```
 
 ###### `subjects`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.subjects"></a>

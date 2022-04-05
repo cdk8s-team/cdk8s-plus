@@ -450,10 +450,10 @@ The resource(s) to apply to.
 
 ---
 
-##### `bindInCluster` <a name="cdk8s-plus-22.ClusterRole.bindInCluster"></a>
+##### `bind` <a name="cdk8s-plus-22.ClusterRole.bind"></a>
 
 ```typescript
-public bindInCluster(subjects: ISubject)
+public bind(subjects: ISubject)
 ```
 
 ###### `subjects`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.subjects"></a>

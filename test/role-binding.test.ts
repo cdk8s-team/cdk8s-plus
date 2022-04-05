@@ -127,7 +127,7 @@ test('can create a ClusterRoleBinding from a ClusterRole', () => {
   const user = new kplus.User({
     name: 'alice@example.com',
   });
-  role.bindInCluster(user);
+  role.bind(user);
 
   // THEN
   const manifest = Testing.synth(chart);

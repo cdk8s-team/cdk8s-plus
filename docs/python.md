@@ -886,10 +886,10 @@ The resource(s) to apply to.
 
 ---
 
-##### `bind_in_cluster` <a name="cdk8s_plus_22.ClusterRole.bind_in_cluster"></a>
+##### `bind` <a name="cdk8s_plus_22.ClusterRole.bind"></a>
 
 ```python
-def bind_in_cluster(
+def bind(
   subjects: ISubject
 )
 ```

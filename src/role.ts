@@ -336,7 +336,7 @@ export class ClusterRole extends RoleBase implements IRole, IClusterRole {
    * ClusterRole to a list of subjects, without namespace restrictions.
    * @param subjects a list of subjects to bind to
    */
-  public bindInCluster(...subjects: ISubject[]): ClusterRoleBinding {
+  public bind(...subjects: ISubject[]): ClusterRoleBinding {
     const binding = new ClusterRoleBinding(this, 'ClusterRoleBinding', {
       role: this,
     });
