@@ -5486,6 +5486,20 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
+##### `resource_name`<sup>Optional</sup> <a name="cdk8s_plus_22.Resource.property.resource_name"></a>
+
+```python
+resource_name: str
+```
+
+- *Type:* `str`
+
+The unique, namespace-global, name of an object inside the Kubernetes cluster.
+
+If this is omitted, the ApiResource should represent all objects of the given type.
+
+---
+
 
 ### Role <a name="cdk8s_plus_22.Role"></a>
 
@@ -17863,15 +17877,17 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.name"></a>
+##### `resource_name`<sup>Optional</sup> <a name="cdk8s_plus_22.IApiResource.property.resource_name"></a>
 
 ```python
-name: str
+resource_name: str
 ```
 
 - *Type:* `str`
 
 The unique, namespace-global, name of an object inside the Kubernetes cluster.
+
+If this is omitted, the ApiResource should represent all objects of the given type.
 
 ---
 

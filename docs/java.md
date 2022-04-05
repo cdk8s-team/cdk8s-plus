@@ -3751,6 +3751,20 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
+##### `resourceName`<sup>Optional</sup> <a name="org.cdk8s.plus22.Resource.property.resourceName"></a>
+
+```java
+public java.lang.String getResourceName();
+```
+
+- *Type:* `java.lang.String`
+
+The unique, namespace-global, name of an object inside the Kubernetes cluster.
+
+If this is omitted, the ApiResource should represent all objects of the given type.
+
+---
+
 
 ### Role <a name="org.cdk8s.plus22.Role"></a>
 
@@ -14498,15 +14512,17 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus22.IApiResource.property.name"></a>
+##### `resourceName`<sup>Optional</sup> <a name="org.cdk8s.plus22.IApiResource.property.resourceName"></a>
 
 ```java
-public java.lang.String getName();
+public java.lang.String getResourceName();
 ```
 
 - *Type:* `java.lang.String`
 
 The unique, namespace-global, name of an object inside the Kubernetes cluster.
+
+If this is omitted, the ApiResource should represent all objects of the given type.
 
 ---
 

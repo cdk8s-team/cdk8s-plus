@@ -17,9 +17,11 @@ export interface IApiResource {
   readonly resourceType: string;
 
   /**
-   * The unique, namespace-global, name of an object inside the Kubernetes cluster
+   * The unique, namespace-global, name of an object inside the Kubernetes cluster.
+   *
+   * If this is omitted, the ApiResource should represent all objects of the given type.
    */
-  readonly name?: string;
+  readonly resourceName?: string;
 }
 
 /**
@@ -483,6 +485,9 @@ export class ApiResource implements IApiResource {
     resourceType: 'volumeattachments',
   });
 
+  /**
+   * API resource information for a custom resource type.
+   */
   public static custom(options: ApiResourceOptions): ApiResource {
     return new ApiResource(options);
   };

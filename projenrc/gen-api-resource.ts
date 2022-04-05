@@ -35,9 +35,11 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line('readonly resourceType: string;');
   ts.line();
   ts.line('/**');
-  ts.line(' * The unique, namespace-global, name of an object inside the Kubernetes cluster');
+  ts.line(' * The unique, namespace-global, name of an object inside the Kubernetes cluster.');
+  ts.line(' *');
+  ts.line(' * If this is omitted, the ApiResource should represent all objects of the given type.');
   ts.line(' */')
-  ts.line('readonly name?: string;')
+  ts.line('readonly resourceName?: string;')
   ts.close('}');
   ts.line();
   ts.line('/**');
@@ -77,6 +79,9 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
     ts.line();
   }
 
+  ts.line('/**');
+  ts.line(' * API resource information for a custom resource type.');
+  ts.line(' */')
   ts.open('public static custom(options: ApiResourceOptions): ApiResource {');
   ts.line('return new ApiResource(options);');
   ts.close('};');

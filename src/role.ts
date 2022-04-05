@@ -135,7 +135,7 @@ export abstract class RoleBase extends Resource implements IResource {
       .filter((x) => typeof x === 'string'),
     ) as string[];
     const resourceNames = normalizedArray(resources
-      .map((resource) => resource.name)
+      .map((resource) => resource.resourceName)
       .filter((x) => typeof x === 'string'),
     ) as string[];
 

@@ -240,6 +240,15 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
+    "regenerate-api-information": {
+      "name": "regenerate-api-information",
+      "description": "Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.",
+      "steps": [
+        {
+          "exec": "kubectl api-resources -o wide > api-resources.txt"
+        }
+      ]
+    },
     "release:k8s-22/main": {
       "name": "release:k8s-22/main",
       "description": "Prepare a release from \"k8s-22/main\" branch",

@@ -81,5 +81,9 @@ export abstract class Resource extends Construct implements IResource, IApiResou
     return this.apiObject.kind;
   }
 
+  public get resourceName(): string | undefined {
+    return this.name;
+  }
+
   public readonly abstract resourceType: string;
 }

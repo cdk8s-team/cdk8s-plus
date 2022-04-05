@@ -131,6 +131,10 @@ backport.addJob('backport', {
   }],
 });
 
+project.addTask('regenerate-api-information', {
+  description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
+  exec: 'kubectl api-resources -o wide > api-resources.txt'
+});
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
 project.synth();

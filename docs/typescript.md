@@ -2373,6 +2373,20 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
+##### `resourceName`<sup>Optional</sup> <a name="cdk8s-plus-22.Resource.property.resourceName"></a>
+
+```typescript
+public readonly resourceName: string;
+```
+
+- *Type:* `string`
+
+The unique, namespace-global, name of an object inside the Kubernetes cluster.
+
+If this is omitted, the ApiResource should represent all objects of the given type.
+
+---
+
 
 ### Role <a name="cdk8s-plus-22.Role"></a>
 
@@ -11620,15 +11634,17 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.name"></a>
+##### `resourceName`<sup>Optional</sup> <a name="cdk8s-plus-22.IApiResource.property.resourceName"></a>
 
 ```typescript
-public readonly name: string;
+public readonly resourceName: string;
 ```
 
 - *Type:* `string`
 
 The unique, namespace-global, name of an object inside the Kubernetes cluster.
+
+If this is omitted, the ApiResource should represent all objects of the given type.
 
 ---
 

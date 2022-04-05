@@ -26,6 +26,7 @@
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
+    "regenerate-api-information": "npx projen regenerate-api-information",
     "release:k8s-22/main": "npx projen release:k8s-22/main",
     "test": "npx projen test",
     "test:update": "npx projen test:update",
