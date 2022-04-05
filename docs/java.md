@@ -596,6 +596,9 @@ Metadata that all persisted resources must have, which includes all objects user
 ##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.parameter.rules"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -3807,6 +3810,9 @@ Metadata that all persisted resources must have, which includes all objects user
 ##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleProps.parameter.rules"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -3814,7 +3820,10 @@ Metadata that all persisted resources must have, which includes all objects user
 
 - *Type:* `java.lang.String`
 
-The namespace of the resources this role's permissions should apply to (required).
+The namespace this role is created in.
+
+Permissions added to this role must
+refer to resources in the same namespace.
 
 ---
 
@@ -3854,6 +3863,8 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 - *Implements:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
 
+An abstract class containing APIs shared between `Role` and `ClusterRole`.
+
 #### Initializers <a name="org.cdk8s.plus22.RoleBase.Initializer"></a>
 
 ```java
@@ -3888,6 +3899,9 @@ Metadata that all persisted resources must have, which includes all objects user
 ##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleCommonProps.parameter.rules"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -4078,7 +4092,7 @@ public java.util.List<PolicyRule> getRules();
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRule`](#org.cdk8s.plus22.PolicyRule)>
 
-List of rules included in this rule.
+List of rules included in this role.
 
 Returns a copy. To add a rule, use `addRule()`.
 
@@ -4611,10 +4625,10 @@ Returns the labels which are used to select pods for this service.
 
 ---
 
-##### `serviceType`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.serviceType"></a>
+##### `type`<sup>Required</sup> <a name="org.cdk8s.plus22.Service.property.type"></a>
 
 ```java
-public ServiceType getServiceType();
+public ServiceType getType();
 ```
 
 - *Type:* [`org.cdk8s.plus22.ServiceType`](#org.cdk8s.plus22.ServiceType)
@@ -6348,6 +6362,9 @@ public java.util.List<PolicyRuleProps> getRules();
 ```
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -10214,7 +10231,7 @@ import org.cdk8s.plus22.PolicyRuleProps;
 PolicyRuleProps.builder()
     .verbs(java.util.List<java.lang.String>)
 //  .apiGroups(java.util.List<java.lang.String>)
-//  .nonResourceUrLs(java.util.List<java.lang.String>)
+//  .nonResourceUrls(java.util.List<java.lang.String>)
 //  .resourceNames(java.util.List<java.lang.String>)
 //  .resources(java.util.List<java.lang.String>)
     .build();
@@ -10250,10 +10267,10 @@ enumerated resources in any API group will be allowed.
 
 ---
 
-##### `nonResourceUrLs`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRuleProps.property.nonResourceUrLs"></a>
+##### `nonResourceUrls`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRuleProps.property.nonResourceUrls"></a>
 
 ```java
-public java.util.List<java.lang.String> getNonResourceUrLs();
+public java.util.List<java.lang.String> getNonResourceUrls();
 ```
 
 - *Type:* java.util.List<`java.lang.String`>
@@ -10474,6 +10491,8 @@ A RoleBinding can reference a Role or a ClusterRole.
 
 ### RoleCommonProps <a name="org.cdk8s.plus22.RoleCommonProps"></a>
 
+Properties for `RoleBase`.
+
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
@@ -10504,12 +10523,15 @@ public java.util.List<PolicyRuleProps> getRules();
 ```
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
 ### RoleProps <a name="org.cdk8s.plus22.RoleProps"></a>
 
-Options for `Role`.
+Properties for `Role`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -10542,6 +10564,9 @@ public java.util.List<PolicyRuleProps> getRules();
 ```
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -10553,7 +10578,10 @@ public java.lang.String getNamespace();
 
 - *Type:* `java.lang.String`
 
-The namespace of the resources this role's permissions should apply to (required).
+The namespace this role is created in.
+
+Permissions added to this role must
+refer to resources in the same namespace.
 
 ---
 
@@ -11925,7 +11953,7 @@ The name of the resource type as it appears in the relevant API endpoint.
 
 #### Constants <a name="Constants"></a>
 
-##### `API_SERVICE` <a name="org.cdk8s.plus22.ApiResource.property.API_SERVICE"></a>
+##### `API_SERVICES` <a name="org.cdk8s.plus22.ApiResource.property.API_SERVICES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11933,7 +11961,7 @@ API resource information for APIService.
 
 ---
 
-##### `BINDING` <a name="org.cdk8s.plus22.ApiResource.property.BINDING"></a>
+##### `BINDINGS` <a name="org.cdk8s.plus22.ApiResource.property.BINDINGS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11941,7 +11969,7 @@ API resource information for Binding.
 
 ---
 
-##### `CERTIFICATE_SIGNING_REQUEST` <a name="org.cdk8s.plus22.ApiResource.property.CERTIFICATE_SIGNING_REQUEST"></a>
+##### `CERTIFICATE_SIGNING_REQUESTS` <a name="org.cdk8s.plus22.ApiResource.property.CERTIFICATE_SIGNING_REQUESTS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11949,15 +11977,7 @@ API resource information for CertificateSigningRequest.
 
 ---
 
-##### `CLUSTER_ROLE` <a name="org.cdk8s.plus22.ApiResource.property.CLUSTER_ROLE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
-
-API resource information for ClusterRole.
-
----
-
-##### `CLUSTER_ROLE_BINDING` <a name="org.cdk8s.plus22.ApiResource.property.CLUSTER_ROLE_BINDING"></a>
+##### `CLUSTER_ROLE_BINDINGS` <a name="org.cdk8s.plus22.ApiResource.property.CLUSTER_ROLE_BINDINGS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11965,7 +11985,15 @@ API resource information for ClusterRoleBinding.
 
 ---
 
-##### `COMPONENT_STATUS` <a name="org.cdk8s.plus22.ApiResource.property.COMPONENT_STATUS"></a>
+##### `CLUSTER_ROLES` <a name="org.cdk8s.plus22.ApiResource.property.CLUSTER_ROLES"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for ClusterRole.
+
+---
+
+##### `COMPONENT_STATUSES` <a name="org.cdk8s.plus22.ApiResource.property.COMPONENT_STATUSES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11973,7 +12001,7 @@ API resource information for ComponentStatus.
 
 ---
 
-##### `CONFIG_MAP` <a name="org.cdk8s.plus22.ApiResource.property.CONFIG_MAP"></a>
+##### `CONFIG_MAPS` <a name="org.cdk8s.plus22.ApiResource.property.CONFIG_MAPS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11981,7 +12009,7 @@ API resource information for ConfigMap.
 
 ---
 
-##### `CONTROLLER_REVISION` <a name="org.cdk8s.plus22.ApiResource.property.CONTROLLER_REVISION"></a>
+##### `CONTROLLER_REVISIONS` <a name="org.cdk8s.plus22.ApiResource.property.CONTROLLER_REVISIONS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11989,7 +12017,7 @@ API resource information for ControllerRevision.
 
 ---
 
-##### `CRON_JOB` <a name="org.cdk8s.plus22.ApiResource.property.CRON_JOB"></a>
+##### `CRON_JOBS` <a name="org.cdk8s.plus22.ApiResource.property.CRON_JOBS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -11997,7 +12025,7 @@ API resource information for CronJob.
 
 ---
 
-##### `CSI_DRIVER` <a name="org.cdk8s.plus22.ApiResource.property.CSI_DRIVER"></a>
+##### `CSI_DRIVERS` <a name="org.cdk8s.plus22.ApiResource.property.CSI_DRIVERS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12005,7 +12033,7 @@ API resource information for CSIDriver.
 
 ---
 
-##### `CSI_NODE` <a name="org.cdk8s.plus22.ApiResource.property.CSI_NODE"></a>
+##### `CSI_NODES` <a name="org.cdk8s.plus22.ApiResource.property.CSI_NODES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12013,7 +12041,7 @@ API resource information for CSINode.
 
 ---
 
-##### `CSI_STORAGE_CAPACITY` <a name="org.cdk8s.plus22.ApiResource.property.CSI_STORAGE_CAPACITY"></a>
+##### `CSI_STORAGE_CAPACITIES` <a name="org.cdk8s.plus22.ApiResource.property.CSI_STORAGE_CAPACITIES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12021,7 +12049,7 @@ API resource information for CSIStorageCapacity.
 
 ---
 
-##### `CUSTOM_RESOURCE_DEFINITION` <a name="org.cdk8s.plus22.ApiResource.property.CUSTOM_RESOURCE_DEFINITION"></a>
+##### `CUSTOM_RESOURCE_DEFINITIONS` <a name="org.cdk8s.plus22.ApiResource.property.CUSTOM_RESOURCE_DEFINITIONS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12029,7 +12057,7 @@ API resource information for CustomResourceDefinition.
 
 ---
 
-##### `DAEMON_SET` <a name="org.cdk8s.plus22.ApiResource.property.DAEMON_SET"></a>
+##### `DAEMON_SETS` <a name="org.cdk8s.plus22.ApiResource.property.DAEMON_SETS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12037,7 +12065,7 @@ API resource information for DaemonSet.
 
 ---
 
-##### `DEPLOYMENT` <a name="org.cdk8s.plus22.ApiResource.property.DEPLOYMENT"></a>
+##### `DEPLOYMENTS` <a name="org.cdk8s.plus22.ApiResource.property.DEPLOYMENTS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12045,7 +12073,7 @@ API resource information for Deployment.
 
 ---
 
-##### `ENDPOINT_SLICE` <a name="org.cdk8s.plus22.ApiResource.property.ENDPOINT_SLICE"></a>
+##### `ENDPOINT_SLICES` <a name="org.cdk8s.plus22.ApiResource.property.ENDPOINT_SLICES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12061,7 +12089,7 @@ API resource information for Endpoints.
 
 ---
 
-##### `EVENT` <a name="org.cdk8s.plus22.ApiResource.property.EVENT"></a>
+##### `EVENTS` <a name="org.cdk8s.plus22.ApiResource.property.EVENTS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12069,7 +12097,7 @@ API resource information for Event.
 
 ---
 
-##### `FLOW_SCHEMA` <a name="org.cdk8s.plus22.ApiResource.property.FLOW_SCHEMA"></a>
+##### `FLOW_SCHEMAS` <a name="org.cdk8s.plus22.ApiResource.property.FLOW_SCHEMAS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12077,7 +12105,7 @@ API resource information for FlowSchema.
 
 ---
 
-##### `HORIZONTAL_POD_AUTOSCALER` <a name="org.cdk8s.plus22.ApiResource.property.HORIZONTAL_POD_AUTOSCALER"></a>
+##### `HORIZONTAL_POD_AUTOSCALERS` <a name="org.cdk8s.plus22.ApiResource.property.HORIZONTAL_POD_AUTOSCALERS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12085,15 +12113,7 @@ API resource information for HorizontalPodAutoscaler.
 
 ---
 
-##### `INGRESS` <a name="org.cdk8s.plus22.ApiResource.property.INGRESS"></a>
-
-- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
-
-API resource information for Ingress.
-
----
-
-##### `INGRESS_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.INGRESS_CLASS"></a>
+##### `INGRESS_CLASSES` <a name="org.cdk8s.plus22.ApiResource.property.INGRESS_CLASSES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12101,7 +12121,15 @@ API resource information for IngressClass.
 
 ---
 
-##### `JOB` <a name="org.cdk8s.plus22.ApiResource.property.JOB"></a>
+##### `INGRESSES` <a name="org.cdk8s.plus22.ApiResource.property.INGRESSES"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Ingress.
+
+---
+
+##### `JOBS` <a name="org.cdk8s.plus22.ApiResource.property.JOBS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12109,7 +12137,7 @@ API resource information for Job.
 
 ---
 
-##### `LEASE` <a name="org.cdk8s.plus22.ApiResource.property.LEASE"></a>
+##### `LEASES` <a name="org.cdk8s.plus22.ApiResource.property.LEASES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12117,7 +12145,7 @@ API resource information for Lease.
 
 ---
 
-##### `LIMIT_RANGE` <a name="org.cdk8s.plus22.ApiResource.property.LIMIT_RANGE"></a>
+##### `LIMIT_RANGES` <a name="org.cdk8s.plus22.ApiResource.property.LIMIT_RANGES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12125,7 +12153,7 @@ API resource information for LimitRange.
 
 ---
 
-##### `LOCAL_SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.LOCAL_SUBJECT_ACCESS_REVIEW"></a>
+##### `LOCAL_SUBJECT_ACCESS_REVIEWS` <a name="org.cdk8s.plus22.ApiResource.property.LOCAL_SUBJECT_ACCESS_REVIEWS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12133,7 +12161,7 @@ API resource information for LocalSubjectAccessReview.
 
 ---
 
-##### `MUTATING_WEBHOOK_CONFIGURATION` <a name="org.cdk8s.plus22.ApiResource.property.MUTATING_WEBHOOK_CONFIGURATION"></a>
+##### `MUTATING_WEBHOOK_CONFIGURATIONS` <a name="org.cdk8s.plus22.ApiResource.property.MUTATING_WEBHOOK_CONFIGURATIONS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12141,7 +12169,7 @@ API resource information for MutatingWebhookConfiguration.
 
 ---
 
-##### `NAMESPACE` <a name="org.cdk8s.plus22.ApiResource.property.NAMESPACE"></a>
+##### `NAMESPACES` <a name="org.cdk8s.plus22.ApiResource.property.NAMESPACES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12149,7 +12177,7 @@ API resource information for Namespace.
 
 ---
 
-##### `NETWORK_POLICY` <a name="org.cdk8s.plus22.ApiResource.property.NETWORK_POLICY"></a>
+##### `NETWORK_POLICIES` <a name="org.cdk8s.plus22.ApiResource.property.NETWORK_POLICIES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12157,7 +12185,7 @@ API resource information for NetworkPolicy.
 
 ---
 
-##### `NODE` <a name="org.cdk8s.plus22.ApiResource.property.NODE"></a>
+##### `NODES` <a name="org.cdk8s.plus22.ApiResource.property.NODES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12165,15 +12193,7 @@ API resource information for Node.
 
 ---
 
-##### `PERSISTENT_VOLUME` <a name="org.cdk8s.plus22.ApiResource.property.PERSISTENT_VOLUME"></a>
-
-- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
-
-API resource information for PersistentVolume.
-
----
-
-##### `PERSISTENT_VOLUME_CLAIM` <a name="org.cdk8s.plus22.ApiResource.property.PERSISTENT_VOLUME_CLAIM"></a>
+##### `PERSISTENT_VOLUME_CLAIMS` <a name="org.cdk8s.plus22.ApiResource.property.PERSISTENT_VOLUME_CLAIMS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12181,15 +12201,15 @@ API resource information for PersistentVolumeClaim.
 
 ---
 
-##### `POD` <a name="org.cdk8s.plus22.ApiResource.property.POD"></a>
+##### `PERSISTENT_VOLUMES` <a name="org.cdk8s.plus22.ApiResource.property.PERSISTENT_VOLUMES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
-API resource information for Pod.
+API resource information for PersistentVolume.
 
 ---
 
-##### `POD_DISRUPTION_BUDGET` <a name="org.cdk8s.plus22.ApiResource.property.POD_DISRUPTION_BUDGET"></a>
+##### `POD_DISRUPTION_BUDGETS` <a name="org.cdk8s.plus22.ApiResource.property.POD_DISRUPTION_BUDGETS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12197,7 +12217,7 @@ API resource information for PodDisruptionBudget.
 
 ---
 
-##### `POD_SECURITY_POLICY` <a name="org.cdk8s.plus22.ApiResource.property.POD_SECURITY_POLICY"></a>
+##### `POD_SECURITY_POLICIES` <a name="org.cdk8s.plus22.ApiResource.property.POD_SECURITY_POLICIES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12205,7 +12225,7 @@ API resource information for PodSecurityPolicy.
 
 ---
 
-##### `POD_TEMPLATE` <a name="org.cdk8s.plus22.ApiResource.property.POD_TEMPLATE"></a>
+##### `POD_TEMPLATES` <a name="org.cdk8s.plus22.ApiResource.property.POD_TEMPLATES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12213,7 +12233,15 @@ API resource information for PodTemplate.
 
 ---
 
-##### `PRIORITY_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.PRIORITY_CLASS"></a>
+##### `PODS` <a name="org.cdk8s.plus22.ApiResource.property.PODS"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Pod.
+
+---
+
+##### `PRIORITY_CLASSES` <a name="org.cdk8s.plus22.ApiResource.property.PRIORITY_CLASSES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12221,7 +12249,7 @@ API resource information for PriorityClass.
 
 ---
 
-##### `PRIORITY_LEVEL_CONFIGURATION` <a name="org.cdk8s.plus22.ApiResource.property.PRIORITY_LEVEL_CONFIGURATION"></a>
+##### `PRIORITY_LEVEL_CONFIGURATIONS` <a name="org.cdk8s.plus22.ApiResource.property.PRIORITY_LEVEL_CONFIGURATIONS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12229,7 +12257,7 @@ API resource information for PriorityLevelConfiguration.
 
 ---
 
-##### `REPLICA_SET` <a name="org.cdk8s.plus22.ApiResource.property.REPLICA_SET"></a>
+##### `REPLICA_SETS` <a name="org.cdk8s.plus22.ApiResource.property.REPLICA_SETS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12237,7 +12265,7 @@ API resource information for ReplicaSet.
 
 ---
 
-##### `REPLICATION_CONTROLLER` <a name="org.cdk8s.plus22.ApiResource.property.REPLICATION_CONTROLLER"></a>
+##### `REPLICATION_CONTROLLERS` <a name="org.cdk8s.plus22.ApiResource.property.REPLICATION_CONTROLLERS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12245,7 +12273,7 @@ API resource information for ReplicationController.
 
 ---
 
-##### `RESOURCE_QUOTA` <a name="org.cdk8s.plus22.ApiResource.property.RESOURCE_QUOTA"></a>
+##### `RESOURCE_QUOTAS` <a name="org.cdk8s.plus22.ApiResource.property.RESOURCE_QUOTAS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12253,15 +12281,7 @@ API resource information for ResourceQuota.
 
 ---
 
-##### `ROLE` <a name="org.cdk8s.plus22.ApiResource.property.ROLE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
-
-API resource information for Role.
-
----
-
-##### `ROLE_BINDING` <a name="org.cdk8s.plus22.ApiResource.property.ROLE_BINDING"></a>
+##### `ROLE_BINDINGS` <a name="org.cdk8s.plus22.ApiResource.property.ROLE_BINDINGS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12269,7 +12289,15 @@ API resource information for RoleBinding.
 
 ---
 
-##### `RUNTIME_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.RUNTIME_CLASS"></a>
+##### `ROLES` <a name="org.cdk8s.plus22.ApiResource.property.ROLES"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Role.
+
+---
+
+##### `RUNTIME_CLASSES` <a name="org.cdk8s.plus22.ApiResource.property.RUNTIME_CLASSES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12277,7 +12305,7 @@ API resource information for RuntimeClass.
 
 ---
 
-##### `SECRET` <a name="org.cdk8s.plus22.ApiResource.property.SECRET"></a>
+##### `SECRETS` <a name="org.cdk8s.plus22.ApiResource.property.SECRETS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12285,7 +12313,7 @@ API resource information for Secret.
 
 ---
 
-##### `SELF_SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.SELF_SUBJECT_ACCESS_REVIEW"></a>
+##### `SELF_SUBJECT_ACCESS_REVIEWS` <a name="org.cdk8s.plus22.ApiResource.property.SELF_SUBJECT_ACCESS_REVIEWS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12293,7 +12321,7 @@ API resource information for SelfSubjectAccessReview.
 
 ---
 
-##### `SELF_SUBJECT_RULES_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.SELF_SUBJECT_RULES_REVIEW"></a>
+##### `SELF_SUBJECT_RULES_REVIEWS` <a name="org.cdk8s.plus22.ApiResource.property.SELF_SUBJECT_RULES_REVIEWS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12301,15 +12329,7 @@ API resource information for SelfSubjectRulesReview.
 
 ---
 
-##### `SERVICE` <a name="org.cdk8s.plus22.ApiResource.property.SERVICE"></a>
-
-- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
-
-API resource information for Service.
-
----
-
-##### `SERVICE_ACCOUNT` <a name="org.cdk8s.plus22.ApiResource.property.SERVICE_ACCOUNT"></a>
+##### `SERVICE_ACCOUNTS` <a name="org.cdk8s.plus22.ApiResource.property.SERVICE_ACCOUNTS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12317,7 +12337,15 @@ API resource information for ServiceAccount.
 
 ---
 
-##### `STATEFUL_SET` <a name="org.cdk8s.plus22.ApiResource.property.STATEFUL_SET"></a>
+##### `SERVICES` <a name="org.cdk8s.plus22.ApiResource.property.SERVICES"></a>
+
+- *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
+
+API resource information for Service.
+
+---
+
+##### `STATEFUL_SETS` <a name="org.cdk8s.plus22.ApiResource.property.STATEFUL_SETS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12325,7 +12353,7 @@ API resource information for StatefulSet.
 
 ---
 
-##### `STORAGE_CLASS` <a name="org.cdk8s.plus22.ApiResource.property.STORAGE_CLASS"></a>
+##### `STORAGE_CLASSES` <a name="org.cdk8s.plus22.ApiResource.property.STORAGE_CLASSES"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12333,7 +12361,7 @@ API resource information for StorageClass.
 
 ---
 
-##### `SUBJECT_ACCESS_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.SUBJECT_ACCESS_REVIEW"></a>
+##### `SUBJECT_ACCESS_REVIEWS` <a name="org.cdk8s.plus22.ApiResource.property.SUBJECT_ACCESS_REVIEWS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12341,7 +12369,7 @@ API resource information for SubjectAccessReview.
 
 ---
 
-##### `TOKEN_REVIEW` <a name="org.cdk8s.plus22.ApiResource.property.TOKEN_REVIEW"></a>
+##### `TOKEN_REVIEWS` <a name="org.cdk8s.plus22.ApiResource.property.TOKEN_REVIEWS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12349,7 +12377,7 @@ API resource information for TokenReview.
 
 ---
 
-##### `VALIDATING_WEBHOOK_CONFIGURATION` <a name="org.cdk8s.plus22.ApiResource.property.VALIDATING_WEBHOOK_CONFIGURATION"></a>
+##### `VALIDATING_WEBHOOK_CONFIGURATIONS` <a name="org.cdk8s.plus22.ApiResource.property.VALIDATING_WEBHOOK_CONFIGURATIONS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -12357,7 +12385,7 @@ API resource information for ValidatingWebhookConfiguration.
 
 ---
 
-##### `VOLUME_ATTACHMENT` <a name="org.cdk8s.plus22.ApiResource.property.VOLUME_ATTACHMENT"></a>
+##### `VOLUME_ATTACHMENTS` <a name="org.cdk8s.plus22.ApiResource.property.VOLUME_ATTACHMENTS"></a>
 
 - *Type:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource)
 
@@ -13984,7 +14012,7 @@ import org.cdk8s.plus22.PolicyRule;
 PolicyRule.Builder.create()
     .verbs(java.util.List<java.lang.String>)
 //  .apiGroups(java.util.List<java.lang.String>)
-//  .nonResourceUrLs(java.util.List<java.lang.String>)
+//  .nonResourceUrls(java.util.List<java.lang.String>)
 //  .resourceNames(java.util.List<java.lang.String>)
 //  .resources(java.util.List<java.lang.String>)
     .build();
@@ -14012,7 +14040,7 @@ enumerated resources in any API group will be allowed.
 
 ---
 
-##### `nonResourceUrLs`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRuleProps.parameter.nonResourceUrLs"></a>
+##### `nonResourceUrls`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRuleProps.parameter.nonResourceUrls"></a>
 
 - *Type:* java.util.List<`java.lang.String`>
 
@@ -14051,10 +14079,10 @@ resources.
 
 #### Properties <a name="Properties"></a>
 
-##### `props`<sup>Required</sup> <a name="org.cdk8s.plus22.PolicyRule.property.props"></a>
+##### `config`<sup>Required</sup> <a name="org.cdk8s.plus22.PolicyRule.property.config"></a>
 
 ```java
-public PolicyRuleProps getProps();
+public PolicyRuleProps getConfig();
 ```
 
 - *Type:* [`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)

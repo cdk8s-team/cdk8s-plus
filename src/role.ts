@@ -6,10 +6,21 @@ import * as k8s from './imports/k8s';
 import { ClusterRoleBinding, ISubject, RoleBinding } from './role-binding';
 import { filterUndefined, undefinedIfEmpty } from './utils';
 
+/**
+ * Properties for `RoleBase`.
+ */
 export interface RoleCommonProps extends ResourceProps {
+  /**
+   * A list of explicit rules the role should grant permission to.
+   *
+   * @default []
+   */
   readonly rules?: PolicyRuleProps[];
 }
 
+/**
+ * An abstract class containing APIs shared between `Role` and `ClusterRole`.
+ */
 export abstract class RoleBase extends Resource implements IResource {
   /**
    * @internal
@@ -148,7 +159,7 @@ export abstract class RoleBase extends Resource implements IResource {
   }
 
   /**
-   * List of rules included in this rule.
+   * List of rules included in this role.
    *
    * Returns a copy. To add a rule, use `addRule()`.
    */
@@ -339,7 +350,7 @@ export interface PolicyRuleProps {
    * to API resources (such as "pods" or "secrets") or non-resource URL paths
    * (such as "/api"),  but not both.
    */
-  readonly nonResourceUrLs?: string[];
+  readonly nonResourceUrls?: string[];
 
   /**
    * ResourceNames is an optional white list of names that the rule applies to.
