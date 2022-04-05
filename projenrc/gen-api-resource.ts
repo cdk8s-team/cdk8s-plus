@@ -219,8 +219,8 @@ interface Column {
 /**
  * Given a string of this form:
  *
- * "NAME      SHORTNAMES  APIVERSION"
- *  0         10          22        31
+ *          "NAME      SHORTNAMES  APIVERSION"
+ *  indices: 0         10          22        31
  *
  * we return an array like:
  *
@@ -254,6 +254,8 @@ function calculateColumnMetadata(header: string): Array<Column> {
 /**
  * Convert all-caps acronyms (e.g. "VPC", "FooBARZooFIGoo") to pascal case
  * (e.g. "Vpc", "FooBarZooFiGoo").
+ * 
+ * note: code borrowed from json2jsii
  */
 function normalizeTypeName(typeName: string) {
   // start with the full string and then use the regex to match all-caps sequences.
