@@ -8,7 +8,7 @@ test('can create a RoleBinding from a Role', () => {
   const role = new kplus.Role(chart, 'pod-reader', {
     namespace: 'default',
   });
-  role.allowRead(kplus.ApiResource.POD);
+  role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
   const user = new kplus.User({ name: 'alice@example.com' });
@@ -53,7 +53,7 @@ test('can create a RoleBinding from a ClusterRole', () => {
   const chart = Testing.chart();
 
   const role = new kplus.ClusterRole(chart, 'pod-reader');
-  role.allowRead(kplus.ApiResource.POD);
+  role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
   const user = new kplus.User({
@@ -95,7 +95,7 @@ test('can create a ClusterRoleBinding from a ClusterRole', () => {
   const chart = Testing.chart();
 
   const role = new kplus.ClusterRole(chart, 'pod-reader');
-  role.allowRead(kplus.ApiResource.POD);
+  role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
   const user = new kplus.User({
@@ -137,7 +137,7 @@ test('can bind a ServiceAccount to a role', () => {
   const role = new kplus.Role(chart, 'pod-reader', {
     namespace: 'default',
   });
-  role.allowRead(kplus.ApiResource.POD);
+  role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
   const serviceAccount = new kplus.ServiceAccount(chart, 'my-service-account');
@@ -161,7 +161,7 @@ test('can add subjects to a RoleBinding after creating it', () => {
   const role = new kplus.Role(chart, 'pod-reader', {
     namespace: 'default',
   });
-  role.allowRead(kplus.ApiResource.POD);
+  role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
   const user = new kplus.User({ name: 'alice@example.com' });

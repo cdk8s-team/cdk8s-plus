@@ -365,13 +365,13 @@ export interface PolicyRuleProps {
  * about who the rule applies to or which namespace the rule applies to.
  */
 export class PolicyRule {
-  constructor(public readonly props: PolicyRuleProps) {}
+  constructor(public readonly config: PolicyRuleProps) {}
 
   /**
    * @internal
    */
   public _toKube(): k8s.PolicyRule {
-    return filterUndefined(this.props);
+    return filterUndefined(this.config);
   }
 }
 
