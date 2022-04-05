@@ -165,12 +165,12 @@ export interface IRole extends IResource {
 }
 
 /**
- * Options for `Role`.
+ * Properties for `Role`.
  */
 export interface RoleProps extends RoleCommonProps {
   /**
-   * The namespace of the resources this role's permissions should apply to
-   * (required).
+   * The namespace this role is created in. Permissions added to this role must
+   * refer to resources in the same namespace.
    */
   readonly namespace: string;
 }
