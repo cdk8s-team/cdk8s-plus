@@ -4,7 +4,7 @@ import { IApiResource } from './api-resource.generated';
 import { IResource, Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
 import { ClusterRoleBinding, ISubject, RoleBinding } from './role-binding';
-import { filterUndefined, undefinedIfEmpty } from './utils';
+import { filterUndefined } from './utils';
 
 /**
  * Properties for `RoleBase`.
@@ -205,8 +205,8 @@ export class Role extends RoleBase implements IRole {
     return impl;
   }
 
-  private synthesizeRules(): any {
-    return undefinedIfEmpty(this._rules.map(rule => rule._toKube()));
+  private synthesizeRules(): k8s.PolicyRule[] {
+    return this._rules.map(rule => rule._toKube());
   }
 
   /**
@@ -216,7 +216,9 @@ export class Role extends RoleBase implements IRole {
    */
   public bind(...subjects: ISubject[]): RoleBinding {
     const binding = new RoleBinding(this, 'RoleBinding', {
-      namespace: this.metadata.namespace!,
+      metadata: {
+        namespace: this.metadata.namespace,
+      },
       role: this,
     });
     binding.addSubjects(...subjects);
@@ -300,8 +302,8 @@ export class ClusterRole extends RoleBase implements IRole, IClusterRole {
     this._labelSelector[selector] = 'true';
   }
 
-  private synthesizeRules(): any {
-    return undefinedIfEmpty(this._rules.map(rule => rule._toKube()));
+  private synthesizeRules(): k8s.PolicyRule[] {
+    return this._rules.map(rule => rule._toKube());
   }
 
   private synthesizeAggregationRules(): k8s.AggregationRule | undefined {
@@ -320,7 +322,9 @@ export class ClusterRole extends RoleBase implements IRole, IClusterRole {
    */
   public bindInNamespace(namespace: string, ...subjects: ISubject[]): RoleBinding {
     const binding = new RoleBinding(this, 'RoleBinding', {
-      namespace,
+      metadata: {
+        namespace,
+      },
       role: this,
     });
     binding.addSubjects(...subjects);

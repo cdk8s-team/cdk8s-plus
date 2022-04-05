@@ -6116,7 +6116,6 @@ cdk8s_plus_22.RoleBinding(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
-  namespace: str,
   role: IRole
 )
 ```
@@ -6138,14 +6137,6 @@ cdk8s_plus_22.RoleBinding(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBindingProps.parameter.namespace"></a>
-
-- *Type:* `str`
-
-Namespace of the resources the RoleBinding should apply to.
 
 ---
 
@@ -6803,7 +6794,7 @@ The externalName to be used for EXTERNAL_NAME types.
 
 ### ServiceAccount <a name="cdk8s_plus_22.ServiceAccount"></a>
 
-- *Implements:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implements:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount), [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
 
 A service account provides an identity for processes that run in a Pod.
 
@@ -8817,7 +8808,7 @@ The user name for authentication.
 
 ### ClusterRoleBindingProps <a name="cdk8s_plus_22.ClusterRoleBindingProps"></a>
 
-Options for `ClusterRoleBinding`.
+Properties for `ClusterRoleBinding`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -10977,9 +10968,7 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ### GroupProps <a name="cdk8s_plus_22.GroupProps"></a>
 
-Options for `User`.
-
-Options for `Group`.
+Properties for `Group`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -10987,8 +10976,7 @@ Options for `Group`.
 import cdk8s_plus_22
 
 cdk8s_plus_22.GroupProps(
-  name: str,
-  namespace: str = None
+  name: str
 )
 ```
 
@@ -11000,21 +10988,7 @@ name: str
 
 - *Type:* `str`
 
-The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.GroupProps.property.namespace"></a>
-
-```python
-namespace: str
-```
-
-- *Type:* `str`
-
-The namespace that the group applies to.
+The name of the group.
 
 ---
 
@@ -13040,7 +13014,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ### RoleBindingProps <a name="cdk8s_plus_22.RoleBindingProps"></a>
 
-Options for `RoleBinding`.
+Properties for `RoleBinding`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -13049,7 +13023,6 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.RoleBindingProps(
   metadata: ApiObjectMetadata = None,
-  namespace: str,
   role: IRole
 )
 ```
@@ -13063,18 +13036,6 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBindingProps.property.namespace"></a>
-
-```python
-namespace: str
-```
-
-- *Type:* `str`
-
-Namespace of the resources the RoleBinding should apply to.
 
 ---
 
@@ -14357,6 +14318,32 @@ tls_key: str
 - *Type:* `str`
 
 The TLS key.
+
+---
+
+### UserProps <a name="cdk8s_plus_22.UserProps"></a>
+
+Properties for `User`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.UserProps(
+  name: str
+)
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.UserProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+The name of the user.
 
 ---
 
@@ -15899,8 +15886,7 @@ Represents a group.
 import cdk8s_plus_22
 
 cdk8s_plus_22.Group(
-  name: str,
-  namespace: str = None
+  name: str
 )
 ```
 
@@ -15908,17 +15894,7 @@ cdk8s_plus_22.Group(
 
 - *Type:* `str`
 
-The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.GroupProps.parameter.namespace"></a>
-
-- *Type:* `str`
-
-The namespace that the group applies to.
+The name of the group.
 
 ---
 
@@ -15967,22 +15943,6 @@ APIGroup holds the API group of the referenced subject.
 Defaults to "" for
 ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
 and Group subjects.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.Group.property.namespace"></a>
-
-```python
-namespace: str
-```
-
-- *Type:* `str`
-
-Namespace of the referenced object.
-
-If the object kind is non-namespace,
-such as "User" or "Group", and this value is not empty the Authorizer
-should report an error.
 
 ---
 
@@ -17604,26 +17564,15 @@ Represents a user.
 import cdk8s_plus_22
 
 cdk8s_plus_22.User(
-  name: str,
-  namespace: str = None
+  name: str
 )
 ```
 
-##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.GroupProps.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.UserProps.parameter.name"></a>
 
 - *Type:* `str`
 
 The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="cdk8s_plus_22.GroupProps.parameter.namespace"></a>
-
-- *Type:* `str`
-
-The namespace that the group applies to.
 
 ---
 
@@ -19293,7 +19242,7 @@ def as_volume()
 
 ### ISubject <a name="cdk8s_plus_22.ISubject"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.Group`](#cdk8s_plus_22.Group), [`cdk8s_plus_22.User`](#cdk8s_plus_22.User), [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
+- *Implemented By:* [`cdk8s_plus_22.Group`](#cdk8s_plus_22.Group), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.User`](#cdk8s_plus_22.User), [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
 
 Subject contains a reference to the object or user identities a role binding applies to.
 

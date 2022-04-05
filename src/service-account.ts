@@ -2,6 +2,7 @@ import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Resource, ResourceProps, IResource } from './base';
 import * as k8s from './imports/k8s';
+import { ISubject } from './role-binding';
 import { ISecret } from './secret';
 import { undefinedIfEmpty } from './utils';
 
@@ -35,7 +36,7 @@ export interface ServiceAccountProps extends ResourceProps {
  *
  * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account
  */
-export class ServiceAccount extends Resource implements IServiceAccount {
+export class ServiceAccount extends Resource implements IServiceAccount, ISubject {
 
   /**
    * Imports a service account from the cluster as a reference.

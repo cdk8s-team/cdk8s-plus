@@ -4234,7 +4234,6 @@ import org.cdk8s.plus22.RoleBinding;
 
 RoleBinding.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
-    .namespace(java.lang.String)
     .role(IRole)
     .build();
 ```
@@ -4256,14 +4255,6 @@ RoleBinding.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBindingProps.parameter.namespace"></a>
-
-- *Type:* `java.lang.String`
-
-Namespace of the resources the RoleBinding should apply to.
 
 ---
 
@@ -4788,7 +4779,7 @@ The externalName to be used for EXTERNAL_NAME types.
 
 ### ServiceAccount <a name="org.cdk8s.plus22.ServiceAccount"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implements:* [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount), [`org.cdk8s.plus22.ISubject`](#org.cdk8s.plus22.ISubject)
 
 A service account provides an identity for processes that run in a Pod.
 
@@ -6414,7 +6405,7 @@ The user name for authentication.
 
 ### ClusterRoleBindingProps <a name="org.cdk8s.plus22.ClusterRoleBindingProps"></a>
 
-Options for `ClusterRoleBinding`.
+Properties for `ClusterRoleBinding`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -8574,9 +8565,7 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ### GroupProps <a name="org.cdk8s.plus22.GroupProps"></a>
 
-Options for `User`.
-
-Options for `Group`.
+Properties for `Group`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -8585,7 +8574,6 @@ import org.cdk8s.plus22.GroupProps;
 
 GroupProps.builder()
     .name(java.lang.String)
-//  .namespace(java.lang.String)
     .build();
 ```
 
@@ -8597,21 +8585,7 @@ public java.lang.String getName();
 
 - *Type:* `java.lang.String`
 
-The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="org.cdk8s.plus22.GroupProps.property.namespace"></a>
-
-```java
-public java.lang.String getNamespace();
-```
-
-- *Type:* `java.lang.String`
-
-The namespace that the group applies to.
+The name of the group.
 
 ---
 
@@ -10637,7 +10611,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ### RoleBindingProps <a name="org.cdk8s.plus22.RoleBindingProps"></a>
 
-Options for `RoleBinding`.
+Properties for `RoleBinding`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -10646,7 +10620,6 @@ import org.cdk8s.plus22.RoleBindingProps;
 
 RoleBindingProps.builder()
 //  .metadata(ApiObjectMetadata)
-    .namespace(java.lang.String)
     .role(IRole)
     .build();
 ```
@@ -10660,18 +10633,6 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBindingProps.property.namespace"></a>
-
-```java
-public java.lang.String getNamespace();
-```
-
-- *Type:* `java.lang.String`
-
-Namespace of the resources the RoleBinding should apply to.
 
 ---
 
@@ -11954,6 +11915,32 @@ public java.lang.String getTlsKey();
 - *Type:* `java.lang.String`
 
 The TLS key.
+
+---
+
+### UserProps <a name="org.cdk8s.plus22.UserProps"></a>
+
+Properties for `User`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.UserProps;
+
+UserProps.builder()
+    .name(java.lang.String)
+    .build();
+```
+
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.UserProps.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+The name of the user.
 
 ---
 
@@ -13349,7 +13336,6 @@ import org.cdk8s.plus22.Group;
 
 Group.Builder.create()
     .name(java.lang.String)
-//  .namespace(java.lang.String)
     .build();
 ```
 
@@ -13357,17 +13343,7 @@ Group.Builder.create()
 
 - *Type:* `java.lang.String`
 
-The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="org.cdk8s.plus22.GroupProps.parameter.namespace"></a>
-
-- *Type:* `java.lang.String`
-
-The namespace that the group applies to.
+The name of the group.
 
 ---
 
@@ -13416,22 +13392,6 @@ APIGroup holds the API group of the referenced subject.
 Defaults to "" for
 ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User
 and Group subjects.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="org.cdk8s.plus22.Group.property.namespace"></a>
-
-```java
-public java.lang.String getNamespace();
-```
-
-- *Type:* `java.lang.String`
-
-Namespace of the referenced object.
-
-If the object kind is non-namespace,
-such as "User" or "Group", and this value is not empty the Authorizer
-should report an error.
 
 ---
 
@@ -14448,25 +14408,14 @@ import org.cdk8s.plus22.User;
 
 User.Builder.create()
     .name(java.lang.String)
-//  .namespace(java.lang.String)
     .build();
 ```
 
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.GroupProps.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus22.UserProps.parameter.name"></a>
 
 - *Type:* `java.lang.String`
 
 The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="org.cdk8s.plus22.GroupProps.parameter.namespace"></a>
-
-- *Type:* `java.lang.String`
-
-The namespace that the group applies to.
 
 ---
 
@@ -15513,7 +15462,7 @@ public asVolume()
 
 ### ISubject <a name="org.cdk8s.plus22.ISubject"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.Group`](#org.cdk8s.plus22.Group), [`org.cdk8s.plus22.User`](#org.cdk8s.plus22.User), [`org.cdk8s.plus22.ISubject`](#org.cdk8s.plus22.ISubject)
+- *Implemented By:* [`org.cdk8s.plus22.Group`](#org.cdk8s.plus22.Group), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.User`](#org.cdk8s.plus22.User), [`org.cdk8s.plus22.ISubject`](#org.cdk8s.plus22.ISubject)
 
 Subject contains a reference to the object or user identities a role binding applies to.
 

@@ -1,4 +1,4 @@
-import { ApiObject, ApiObjectMetadata, Lazy } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
@@ -39,18 +39,13 @@ export interface ISubject {
 }
 
 /**
- * Options for `RoleBinding`.
+ * Properties for `RoleBinding`.
  */
 export interface RoleBindingProps extends ResourceProps {
   /**
    * The role to bind to. A RoleBinding can reference a Role or a ClusterRole.
    */
   readonly role: IRole;
-
-  /**
-   * Namespace of the resources the RoleBinding should apply to.
-   */
-  readonly namespace: string;
 }
 
 /**
@@ -74,19 +69,10 @@ export class RoleBinding extends Resource {
 
     this.role = props.role;
 
-    if (props.metadata?.namespace && props.metadata.namespace !== props.namespace) {
-      throw new Error('If `metadata.namespace` is passed as an option, its value must match the value of `namespace`.');
-    }
-
-    const metadata: ApiObjectMetadata = {
-      ...props.metadata,
-      namespace: props.namespace,
-    };
-
     this._subjects = new Array<ISubject>();
 
     this.apiObject = new k8s.KubeRoleBinding(this, 'Resource', {
-      metadata,
+      metadata: props.metadata,
       subjects: Lazy.any({ produce: () => this.synthesizeSubjects() }),
       roleRef: Lazy.any({ produce: () => this.synthesizeRoleRef() }),
     });
@@ -125,7 +111,7 @@ export class RoleBinding extends Resource {
 }
 
 /**
- * Options for `ClusterRoleBinding`.
+ * Properties for `ClusterRoleBinding`.
  */
 export interface ClusterRoleBindingProps extends ResourceProps {
   /**
@@ -197,9 +183,9 @@ export class ClusterRoleBinding extends Resource {
 }
 
 /**
- * Options for `User`.
+ * Properties for `User`.
  */
-export interface GroupProps {
+export interface UserProps {
   /**
    * The name of the user.
    */
@@ -213,23 +199,19 @@ export class User implements ISubject {
   public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
   public readonly kind: string = 'User';
   public readonly name: string;
-  constructor(props: GroupProps) {
+  constructor(props: UserProps) {
     this.name = props.name;
   }
 }
 
 /**
- * Options for `Group`.
+ * Properties for `Group`.
  */
 export interface GroupProps {
   /**
-   * The name of the user.
+   * The name of the group.
    */
   readonly name: string;
-  /**
-   * The namespace that the group applies to.
-   */
-  readonly namespace?: string;
 }
 
 /**
@@ -239,9 +221,7 @@ export class Group implements ISubject {
   public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
   public readonly kind: string = 'Group';
   public readonly name: string;
-  public readonly namespace?: string;
   constructor(props: GroupProps) {
     this.name = props.name;
-    this.namespace = props.namespace;
   }
 }

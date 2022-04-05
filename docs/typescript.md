@@ -3241,7 +3241,7 @@ The externalName to be used for EXTERNAL_NAME types.
 
 ### ServiceAccount <a name="cdk8s-plus-22.ServiceAccount"></a>
 
-- *Implements:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implements:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount), [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
 
 A service account provides an identity for processes that run in a Pod.
 
@@ -4535,7 +4535,7 @@ The user name for authentication.
 
 ### ClusterRoleBindingProps <a name="cdk8s-plus-22.ClusterRoleBindingProps"></a>
 
-Options for `ClusterRoleBinding`.
+Properties for `ClusterRoleBinding`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -6554,9 +6554,7 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ### GroupProps <a name="cdk8s-plus-22.GroupProps"></a>
 
-Options for `User`.
-
-Options for `Group`.
+Properties for `Group`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -6574,21 +6572,7 @@ public readonly name: string;
 
 - *Type:* `string`
 
-The name of the user.
-
-The name of the user.
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="cdk8s-plus-22.GroupProps.property.namespace"></a>
-
-```typescript
-public readonly namespace: string;
-```
-
-- *Type:* `string`
-
-The namespace that the group applies to.
+The name of the group.
 
 ---
 
@@ -8487,7 +8471,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ### RoleBindingProps <a name="cdk8s-plus-22.RoleBindingProps"></a>
 
-Options for `RoleBinding`.
+Properties for `RoleBinding`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -8506,18 +8490,6 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="cdk8s-plus-22.RoleBindingProps.property.namespace"></a>
-
-```typescript
-public readonly namespace: string;
-```
-
-- *Type:* `string`
-
-Namespace of the resources the RoleBinding should apply to.
 
 ---
 
@@ -9716,6 +9688,30 @@ public readonly tlsKey: string;
 - *Type:* `string`
 
 The TLS key.
+
+---
+
+### UserProps <a name="cdk8s-plus-22.UserProps"></a>
+
+Properties for `User`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { UserProps } from 'cdk8s-plus-22'
+
+const userProps: UserProps = { ... }
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-22.UserProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+The name of the user.
 
 ---
 
@@ -10924,22 +10920,6 @@ and Group subjects.
 
 ---
 
-##### `namespace`<sup>Optional</sup> <a name="cdk8s-plus-22.Group.property.namespace"></a>
-
-```typescript
-public readonly namespace: string;
-```
-
-- *Type:* `string`
-
-Namespace of the referenced object.
-
-If the object kind is non-namespace,
-such as "User" or "Group", and this value is not empty the Authorizer
-should report an error.
-
----
-
 
 ### Handler <a name="cdk8s-plus-22.Handler"></a>
 
@@ -11559,12 +11539,12 @@ Represents a user.
 ```typescript
 import { User } from 'cdk8s-plus-22'
 
-new User(props: GroupProps)
+new User(props: UserProps)
 ```
 
 ##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.User.parameter.props"></a>
 
-- *Type:* [`cdk8s-plus-22.GroupProps`](#cdk8s-plus-22.GroupProps)
+- *Type:* [`cdk8s-plus-22.UserProps`](#cdk8s-plus-22.UserProps)
 
 ---
 
@@ -12604,7 +12584,7 @@ public asVolume()
 
 ### ISubject <a name="cdk8s-plus-22.ISubject"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.Group`](#cdk8s-plus-22.Group), [`cdk8s-plus-22.User`](#cdk8s-plus-22.User), [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
+- *Implemented By:* [`cdk8s-plus-22.Group`](#cdk8s-plus-22.Group), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.User`](#cdk8s-plus-22.User), [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
 
 Subject contains a reference to the object or user identities a role binding applies to.
 

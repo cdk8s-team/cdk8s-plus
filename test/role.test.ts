@@ -35,6 +35,7 @@ Array [
     "metadata": Object {
       "name": "test-pod-reader-c8ec1643",
     },
+    "rules": Array [],
   },
 ]
 `);
@@ -183,6 +184,7 @@ Array [
     "metadata": Object {
       "name": "test-my-cluster-role-c86cea4f",
     },
+    "rules": Array [],
   },
 ]
 `);
