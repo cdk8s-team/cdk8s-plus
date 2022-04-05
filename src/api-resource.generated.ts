@@ -48,7 +48,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Binding.
    */
-  public static readonly BINDING = new ApiResource({
+  public static readonly BINDINGS = new ApiResource({
     apiGroup: '',
     resourceType: 'bindings',
   });
@@ -56,7 +56,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ComponentStatus.
    */
-  public static readonly COMPONENT_STATUS = new ApiResource({
+  public static readonly COMPONENT_STATUSES = new ApiResource({
     apiGroup: '',
     resourceType: 'componentstatuses',
   });
@@ -64,7 +64,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ConfigMap.
    */
-  public static readonly CONFIG_MAP = new ApiResource({
+  public static readonly CONFIG_MAPS = new ApiResource({
     apiGroup: '',
     resourceType: 'configmaps',
   });
@@ -80,7 +80,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Event.
    */
-  public static readonly EVENT = new ApiResource({
+  public static readonly EVENTS = new ApiResource({
     apiGroup: '',
     resourceType: 'events',
   });
@@ -88,7 +88,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for LimitRange.
    */
-  public static readonly LIMIT_RANGE = new ApiResource({
+  public static readonly LIMIT_RANGES = new ApiResource({
     apiGroup: '',
     resourceType: 'limitranges',
   });
@@ -96,7 +96,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Namespace.
    */
-  public static readonly NAMESPACE = new ApiResource({
+  public static readonly NAMESPACES = new ApiResource({
     apiGroup: '',
     resourceType: 'namespaces',
   });
@@ -104,7 +104,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Node.
    */
-  public static readonly NODE = new ApiResource({
+  public static readonly NODES = new ApiResource({
     apiGroup: '',
     resourceType: 'nodes',
   });
@@ -112,7 +112,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PersistentVolumeClaim.
    */
-  public static readonly PERSISTENT_VOLUME_CLAIM = new ApiResource({
+  public static readonly PERSISTENT_VOLUME_CLAIMS = new ApiResource({
     apiGroup: '',
     resourceType: 'persistentvolumeclaims',
   });
@@ -120,7 +120,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PersistentVolume.
    */
-  public static readonly PERSISTENT_VOLUME = new ApiResource({
+  public static readonly PERSISTENT_VOLUMES = new ApiResource({
     apiGroup: '',
     resourceType: 'persistentvolumes',
   });
@@ -128,7 +128,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Pod.
    */
-  public static readonly POD = new ApiResource({
+  public static readonly PODS = new ApiResource({
     apiGroup: '',
     resourceType: 'pods',
   });
@@ -136,7 +136,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PodTemplate.
    */
-  public static readonly POD_TEMPLATE = new ApiResource({
+  public static readonly POD_TEMPLATES = new ApiResource({
     apiGroup: '',
     resourceType: 'podtemplates',
   });
@@ -144,7 +144,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ReplicationController.
    */
-  public static readonly REPLICATION_CONTROLLER = new ApiResource({
+  public static readonly REPLICATION_CONTROLLERS = new ApiResource({
     apiGroup: '',
     resourceType: 'replicationcontrollers',
   });
@@ -152,7 +152,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ResourceQuota.
    */
-  public static readonly RESOURCE_QUOTA = new ApiResource({
+  public static readonly RESOURCE_QUOTAS = new ApiResource({
     apiGroup: '',
     resourceType: 'resourcequotas',
   });
@@ -160,7 +160,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Secret.
    */
-  public static readonly SECRET = new ApiResource({
+  public static readonly SECRETS = new ApiResource({
     apiGroup: '',
     resourceType: 'secrets',
   });
@@ -168,7 +168,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ServiceAccount.
    */
-  public static readonly SERVICE_ACCOUNT = new ApiResource({
+  public static readonly SERVICE_ACCOUNTS = new ApiResource({
     apiGroup: '',
     resourceType: 'serviceaccounts',
   });
@@ -176,7 +176,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Service.
    */
-  public static readonly SERVICE = new ApiResource({
+  public static readonly SERVICES = new ApiResource({
     apiGroup: '',
     resourceType: 'services',
   });
@@ -184,7 +184,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for MutatingWebhookConfiguration.
    */
-  public static readonly MUTATING_WEBHOOK_CONFIGURATION = new ApiResource({
+  public static readonly MUTATING_WEBHOOK_CONFIGURATIONS = new ApiResource({
     apiGroup: 'admissionregistration.k8s.io',
     resourceType: 'mutatingwebhookconfigurations',
   });
@@ -192,7 +192,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ValidatingWebhookConfiguration.
    */
-  public static readonly VALIDATING_WEBHOOK_CONFIGURATION = new ApiResource({
+  public static readonly VALIDATING_WEBHOOK_CONFIGURATIONS = new ApiResource({
     apiGroup: 'admissionregistration.k8s.io',
     resourceType: 'validatingwebhookconfigurations',
   });
@@ -200,7 +200,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for CustomResourceDefinition.
    */
-  public static readonly CUSTOM_RESOURCE_DEFINITION = new ApiResource({
+  public static readonly CUSTOM_RESOURCE_DEFINITIONS = new ApiResource({
     apiGroup: 'apiextensions.k8s.io',
     resourceType: 'customresourcedefinitions',
   });
@@ -208,7 +208,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for APIService.
    */
-  public static readonly API_SERVICE = new ApiResource({
+  public static readonly API_SERVICES = new ApiResource({
     apiGroup: 'apiregistration.k8s.io',
     resourceType: 'apiservices',
   });
@@ -216,7 +216,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ControllerRevision.
    */
-  public static readonly CONTROLLER_REVISION = new ApiResource({
+  public static readonly CONTROLLER_REVISIONS = new ApiResource({
     apiGroup: 'apps',
     resourceType: 'controllerrevisions',
   });
@@ -224,7 +224,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for DaemonSet.
    */
-  public static readonly DAEMON_SET = new ApiResource({
+  public static readonly DAEMON_SETS = new ApiResource({
     apiGroup: 'apps',
     resourceType: 'daemonsets',
   });
@@ -232,7 +232,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Deployment.
    */
-  public static readonly DEPLOYMENT = new ApiResource({
+  public static readonly DEPLOYMENTS = new ApiResource({
     apiGroup: 'apps',
     resourceType: 'deployments',
   });
@@ -240,7 +240,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ReplicaSet.
    */
-  public static readonly REPLICA_SET = new ApiResource({
+  public static readonly REPLICA_SETS = new ApiResource({
     apiGroup: 'apps',
     resourceType: 'replicasets',
   });
@@ -248,7 +248,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for StatefulSet.
    */
-  public static readonly STATEFUL_SET = new ApiResource({
+  public static readonly STATEFUL_SETS = new ApiResource({
     apiGroup: 'apps',
     resourceType: 'statefulsets',
   });
@@ -256,7 +256,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for TokenReview.
    */
-  public static readonly TOKEN_REVIEW = new ApiResource({
+  public static readonly TOKEN_REVIEWS = new ApiResource({
     apiGroup: 'authentication.k8s.io',
     resourceType: 'tokenreviews',
   });
@@ -264,7 +264,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for LocalSubjectAccessReview.
    */
-  public static readonly LOCAL_SUBJECT_ACCESS_REVIEW = new ApiResource({
+  public static readonly LOCAL_SUBJECT_ACCESS_REVIEWS = new ApiResource({
     apiGroup: 'authorization.k8s.io',
     resourceType: 'localsubjectaccessreviews',
   });
@@ -272,7 +272,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for SelfSubjectAccessReview.
    */
-  public static readonly SELF_SUBJECT_ACCESS_REVIEW = new ApiResource({
+  public static readonly SELF_SUBJECT_ACCESS_REVIEWS = new ApiResource({
     apiGroup: 'authorization.k8s.io',
     resourceType: 'selfsubjectaccessreviews',
   });
@@ -280,7 +280,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for SelfSubjectRulesReview.
    */
-  public static readonly SELF_SUBJECT_RULES_REVIEW = new ApiResource({
+  public static readonly SELF_SUBJECT_RULES_REVIEWS = new ApiResource({
     apiGroup: 'authorization.k8s.io',
     resourceType: 'selfsubjectrulesreviews',
   });
@@ -288,7 +288,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for SubjectAccessReview.
    */
-  public static readonly SUBJECT_ACCESS_REVIEW = new ApiResource({
+  public static readonly SUBJECT_ACCESS_REVIEWS = new ApiResource({
     apiGroup: 'authorization.k8s.io',
     resourceType: 'subjectaccessreviews',
   });
@@ -296,7 +296,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for HorizontalPodAutoscaler.
    */
-  public static readonly HORIZONTAL_POD_AUTOSCALER = new ApiResource({
+  public static readonly HORIZONTAL_POD_AUTOSCALERS = new ApiResource({
     apiGroup: 'autoscaling',
     resourceType: 'horizontalpodautoscalers',
   });
@@ -304,7 +304,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for CronJob.
    */
-  public static readonly CRON_JOB = new ApiResource({
+  public static readonly CRON_JOBS = new ApiResource({
     apiGroup: 'batch',
     resourceType: 'cronjobs',
   });
@@ -312,7 +312,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Job.
    */
-  public static readonly JOB = new ApiResource({
+  public static readonly JOBS = new ApiResource({
     apiGroup: 'batch',
     resourceType: 'jobs',
   });
@@ -320,7 +320,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for CertificateSigningRequest.
    */
-  public static readonly CERTIFICATE_SIGNING_REQUEST = new ApiResource({
+  public static readonly CERTIFICATE_SIGNING_REQUESTS = new ApiResource({
     apiGroup: 'certificates.k8s.io',
     resourceType: 'certificatesigningrequests',
   });
@@ -328,7 +328,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Lease.
    */
-  public static readonly LEASE = new ApiResource({
+  public static readonly LEASES = new ApiResource({
     apiGroup: 'coordination.k8s.io',
     resourceType: 'leases',
   });
@@ -336,7 +336,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for EndpointSlice.
    */
-  public static readonly ENDPOINT_SLICE = new ApiResource({
+  public static readonly ENDPOINT_SLICES = new ApiResource({
     apiGroup: 'discovery.k8s.io',
     resourceType: 'endpointslices',
   });
@@ -344,7 +344,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for FlowSchema.
    */
-  public static readonly FLOW_SCHEMA = new ApiResource({
+  public static readonly FLOW_SCHEMAS = new ApiResource({
     apiGroup: 'flowcontrol.apiserver.k8s.io',
     resourceType: 'flowschemas',
   });
@@ -352,7 +352,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PriorityLevelConfiguration.
    */
-  public static readonly PRIORITY_LEVEL_CONFIGURATION = new ApiResource({
+  public static readonly PRIORITY_LEVEL_CONFIGURATIONS = new ApiResource({
     apiGroup: 'flowcontrol.apiserver.k8s.io',
     resourceType: 'prioritylevelconfigurations',
   });
@@ -360,7 +360,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for IngressClass.
    */
-  public static readonly INGRESS_CLASS = new ApiResource({
+  public static readonly INGRESS_CLASSES = new ApiResource({
     apiGroup: 'networking.k8s.io',
     resourceType: 'ingressclasses',
   });
@@ -368,7 +368,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Ingress.
    */
-  public static readonly INGRESS = new ApiResource({
+  public static readonly INGRESSES = new ApiResource({
     apiGroup: 'networking.k8s.io',
     resourceType: 'ingresses',
   });
@@ -376,7 +376,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for NetworkPolicy.
    */
-  public static readonly NETWORK_POLICY = new ApiResource({
+  public static readonly NETWORK_POLICIES = new ApiResource({
     apiGroup: 'networking.k8s.io',
     resourceType: 'networkpolicies',
   });
@@ -384,7 +384,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for RuntimeClass.
    */
-  public static readonly RUNTIME_CLASS = new ApiResource({
+  public static readonly RUNTIME_CLASSES = new ApiResource({
     apiGroup: 'node.k8s.io',
     resourceType: 'runtimeclasses',
   });
@@ -392,7 +392,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PodDisruptionBudget.
    */
-  public static readonly POD_DISRUPTION_BUDGET = new ApiResource({
+  public static readonly POD_DISRUPTION_BUDGETS = new ApiResource({
     apiGroup: 'policy',
     resourceType: 'poddisruptionbudgets',
   });
@@ -400,7 +400,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PodSecurityPolicy.
    */
-  public static readonly POD_SECURITY_POLICY = new ApiResource({
+  public static readonly POD_SECURITY_POLICIES = new ApiResource({
     apiGroup: 'policy',
     resourceType: 'podsecuritypolicies',
   });
@@ -408,7 +408,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ClusterRoleBinding.
    */
-  public static readonly CLUSTER_ROLE_BINDING = new ApiResource({
+  public static readonly CLUSTER_ROLE_BINDINGS = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
     resourceType: 'clusterrolebindings',
   });
@@ -416,7 +416,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for ClusterRole.
    */
-  public static readonly CLUSTER_ROLE = new ApiResource({
+  public static readonly CLUSTER_ROLES = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
     resourceType: 'clusterroles',
   });
@@ -424,7 +424,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for RoleBinding.
    */
-  public static readonly ROLE_BINDING = new ApiResource({
+  public static readonly ROLE_BINDINGS = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
     resourceType: 'rolebindings',
   });
@@ -432,7 +432,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for Role.
    */
-  public static readonly ROLE = new ApiResource({
+  public static readonly ROLES = new ApiResource({
     apiGroup: 'rbac.authorization.k8s.io',
     resourceType: 'roles',
   });
@@ -440,7 +440,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for PriorityClass.
    */
-  public static readonly PRIORITY_CLASS = new ApiResource({
+  public static readonly PRIORITY_CLASSES = new ApiResource({
     apiGroup: 'scheduling.k8s.io',
     resourceType: 'priorityclasses',
   });
@@ -448,7 +448,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for CSIDriver.
    */
-  public static readonly CSI_DRIVER = new ApiResource({
+  public static readonly CSI_DRIVERS = new ApiResource({
     apiGroup: 'storage.k8s.io',
     resourceType: 'csidrivers',
   });
@@ -456,7 +456,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for CSINode.
    */
-  public static readonly CSI_NODE = new ApiResource({
+  public static readonly CSI_NODES = new ApiResource({
     apiGroup: 'storage.k8s.io',
     resourceType: 'csinodes',
   });
@@ -464,7 +464,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for CSIStorageCapacity.
    */
-  public static readonly CSI_STORAGE_CAPACITY = new ApiResource({
+  public static readonly CSI_STORAGE_CAPACITIES = new ApiResource({
     apiGroup: 'storage.k8s.io',
     resourceType: 'csistoragecapacities',
   });
@@ -472,7 +472,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for StorageClass.
    */
-  public static readonly STORAGE_CLASS = new ApiResource({
+  public static readonly STORAGE_CLASSES = new ApiResource({
     apiGroup: 'storage.k8s.io',
     resourceType: 'storageclasses',
   });
@@ -480,7 +480,7 @@ export class ApiResource implements IApiResource {
   /**
    * API resource information for VolumeAttachment.
    */
-  public static readonly VOLUME_ATTACHMENT = new ApiResource({
+  public static readonly VOLUME_ATTACHMENTS = new ApiResource({
     apiGroup: 'storage.k8s.io',
     resourceType: 'volumeattachments',
   });

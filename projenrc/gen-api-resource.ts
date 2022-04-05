@@ -66,7 +66,14 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
 
   for (const resource of resourceTypes) {
     const typeName = normalizeTypeName(resource.kind);
-    const memberName = snakeCase(typeName.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+    let memberName = snakeCase(typeName.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+
+    // Pluralize the resource name -- we strip some characters off of memberName
+    // in order to handle some weird english plurals, e.g.
+    // "CSI_STORAGE_CAPACITY" -> "CSI_STORAGE_CAPACITIES"
+    const pluralSuffix = resource.name.substring(resource.kind.length - 1).toUpperCase();
+    memberName = memberName.slice(0, -1) + pluralSuffix;
+
     const apiGroups = resource.apiVersions.map(parseApiGroup);
 
     ts.line('/**');
