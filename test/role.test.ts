@@ -461,8 +461,8 @@ Array [
     });
 
     const combined = new kplus.ClusterRole(chart, 'combined-role');
-    combined.aggregateFrom(role1);
-    combined.aggregateFrom(role2);
+    combined.combine(role1);
+    combined.combine(role2);
 
     // THEN
     const manifest = Testing.synth(chart);
@@ -502,6 +502,8 @@ Object {
         'rbac.authorization.k8s.io/aggregate-to-view': 'true',
       },
     });
+    // add these permissions to the "admin" default role
+    role.aggregate('rbac.authorization.k8s.io/aggregate-to-admin', 'true');
     role.addRule({
       apiGroups: [''],
       resources: ['secrets'],
@@ -515,6 +517,7 @@ Object {
   "clusterRoleSelectors": Array [
     Object {
       "matchLabels": Object {
+        "rbac.authorization.k8s.io/aggregate-to-admin": "true",
         "rbac.authorization.k8s.io/aggregate-to-view": "true",
       },
     },

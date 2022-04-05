@@ -689,17 +689,24 @@ resources.
 
 ---
 
-##### `aggregate_from` <a name="cdk8s_plus_22.ClusterRole.aggregate_from"></a>
+##### `aggregate` <a name="cdk8s_plus_22.ClusterRole.aggregate"></a>
 
 ```python
-def aggregate_from(
-  role: ClusterRole
+def aggregate(
+  key: str,
+  value: str
 )
 ```
 
-###### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.role"></a>
+###### `key`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.key"></a>
 
-- *Type:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole)
+- *Type:* `str`
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.value"></a>
+
+- *Type:* `str`
 
 ---
 
@@ -924,6 +931,20 @@ the namespace to limit permissions to.
 - *Type:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
 
 a list of subjects to bind to.
+
+---
+
+##### `combine` <a name="cdk8s_plus_22.ClusterRole.combine"></a>
+
+```python
+def combine(
+  role: ClusterRole
+)
+```
+
+###### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.role"></a>
+
+- *Type:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole)
 
 ---
 

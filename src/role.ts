@@ -281,14 +281,22 @@ export class ClusterRole extends RoleBase implements IRole, IClusterRole {
   }
 
   /**
-   * Add the rules of the argument ClusterRole into this ClusterRole.
+   * Aggregate rules from roles matching this label selector.
+   */
+  public aggregate(key: string, value: string): void {
+    this._labelSelector[key] = value;
+  }
+
+  /**
+   * Combines the rules of the argument ClusterRole into this ClusterRole
+   * using aggregation labels.
    * @param role
    */
-  public aggregateFrom(role: ClusterRole): void {
-    const name = Names.toLabelValue(this);
-    const selector = `cdk8s.cluster-role/aggregate-to-${name}`;
-    role.metadata.addLabel(selector, 'true');
-    this._labelSelector[selector] = 'true';
+  public combine(role: ClusterRole): void {
+    const key = `cdk8s.cluster-role/aggregate-to-${Names.toLabelValue(this)}`;
+    const value = 'true';
+    role.metadata.addLabel(key, value);
+    this.aggregate(key, value);
   }
 
   private synthesizeRules(): k8s.PolicyRule[] {

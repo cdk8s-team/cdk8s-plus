@@ -626,15 +626,21 @@ The rule to add.
 
 ---
 
-##### `aggregateFrom` <a name="org.cdk8s.plus22.ClusterRole.aggregateFrom"></a>
+##### `aggregate` <a name="org.cdk8s.plus22.ClusterRole.aggregate"></a>
 
 ```java
-public aggregateFrom(ClusterRole role)
+public aggregate(java.lang.String key, java.lang.String value)
 ```
 
-###### `role`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.role"></a>
+###### `key`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.key"></a>
 
-- *Type:* [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole)
+- *Type:* `java.lang.String`
+
+---
+
+###### `value`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.value"></a>
+
+- *Type:* `java.lang.String`
 
 ---
 
@@ -831,6 +837,18 @@ the namespace to limit permissions to.
 - *Type:* [`org.cdk8s.plus22.ISubject`](#org.cdk8s.plus22.ISubject)
 
 a list of subjects to bind to.
+
+---
+
+##### `combine` <a name="org.cdk8s.plus22.ClusterRole.combine"></a>
+
+```java
+public combine(ClusterRole role)
+```
+
+###### `role`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.role"></a>
+
+- *Type:* [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole)
 
 ---
 

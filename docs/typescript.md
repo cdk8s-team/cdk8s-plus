@@ -278,15 +278,21 @@ The rule to add.
 
 ---
 
-##### `aggregateFrom` <a name="cdk8s-plus-22.ClusterRole.aggregateFrom"></a>
+##### `aggregate` <a name="cdk8s-plus-22.ClusterRole.aggregate"></a>
 
 ```typescript
-public aggregateFrom(role: ClusterRole)
+public aggregate(key: string, value: string)
 ```
 
-###### `role`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.role"></a>
+###### `key`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.key"></a>
 
-- *Type:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole)
+- *Type:* `string`
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.value"></a>
+
+- *Type:* `string`
 
 ---
 
@@ -483,6 +489,18 @@ the namespace to limit permissions to.
 - *Type:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
 
 a list of subjects to bind to.
+
+---
+
+##### `combine` <a name="cdk8s-plus-22.ClusterRole.combine"></a>
+
+```typescript
+public combine(role: ClusterRole)
+```
+
+###### `role`<sup>Required</sup> <a name="cdk8s-plus-22.ClusterRole.parameter.role"></a>
+
+- *Type:* [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole)
 
 ---
 
