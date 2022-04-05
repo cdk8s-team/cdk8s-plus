@@ -1,5 +1,6 @@
 import * as path from 'path';
-import { cdk, javascript } from 'projen';
+import { cdk, github, javascript } from 'projen';
+import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
@@ -27,7 +28,7 @@ const project = new cdk.JsiiProject({
     'microservices',
   ],
 
-  projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+  projenCredentials: github.GithubCredentials.fromPersonalAccessToken(),
   prerelease: 'beta',
 
   peerDeps: [
@@ -110,6 +111,25 @@ docgenTask.reset();
 docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
 docgenTask.exec('jsii-docgen -l python -o docs/python.md');
 docgenTask.exec('jsii-docgen -l java -o docs/java.md');
+
+// backport PR's to other branches
+// see https://github.com/tibdex/backport
+const backport = project.github!.addWorkflow('backport');
+backport.on({ pullRequest: { types: ['closed'] } });
+backport.addJob('backport', {
+  runsOn: ['ubuntu-18.04'],
+  permissions: {
+    contents: JobPermission.WRITE,
+  },
+  steps: [{
+    name: 'backport',
+    uses: 'tibdex/backport@v1',
+    with: {
+      github_token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+      title_template: '{{originalTitle}}',
+    },
+  }],
+});
 
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 

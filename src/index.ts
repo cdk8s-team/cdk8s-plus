@@ -14,6 +14,7 @@ export * from './probe';
 export * from './pvc';
 export * from './pv';
 export * from './handler';
+export * from './daemon-set';
 export * from './role';
 export * from './role-binding';
 

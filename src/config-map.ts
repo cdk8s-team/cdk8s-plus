@@ -34,6 +34,15 @@ export interface ConfigMapProps extends ResourceProps {
    * You can also add data using `configMap.addData()`.
    */
   readonly data?: { [key: string]: string };
+
+  /**
+   * If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+   * If not set to true, the field can be modified at any time.
+   *
+   * @default false
+   */
+  readonly immutable?: boolean;
+
 }
 
 /**
@@ -70,15 +79,22 @@ export class ConfigMap extends Resource implements IConfigMap {
   private readonly _binaryData: { [key: string]: string } = { };
   private readonly _data: { [key: string]: string } = { };
 
+  /**
+   * Whether or not this config map is immutable.
+   */
+  public readonly immutable: boolean;
+
   public constructor(scope: Construct, id: string, props: ConfigMapProps = { }) {
     super(scope, id);
 
+    this.immutable = props.immutable ?? false;
     this.apiObject = new k8s.KubeConfigMap(this, 'Resource', {
       metadata: props.metadata,
 
       // we need lazy here because we filter empty
       data: cdk8s.Lazy.any({ produce: () => this.synthesizeData() }),
       binaryData: cdk8s.Lazy.any({ produce: () => this.synthesizeBinaryData() }),
+      immutable: this.immutable,
     });
 
     for (const [k, v] of Object.entries(props.data ?? { })) {
@@ -88,6 +104,7 @@ export class ConfigMap extends Resource implements IConfigMap {
     for (const [k, v] of Object.entries(props.binaryData ?? { })) {
       this.addBinaryData(k, v);
     }
+
   }
 
   /**

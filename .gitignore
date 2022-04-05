@@ -53,4 +53,5 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
+!/.github/workflows/backport.yml
 !/src/api-resource.generated.ts

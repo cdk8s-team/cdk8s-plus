@@ -504,6 +504,7 @@ cdk8s_plus_22.BasicAuthSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   password: str,
   username: str
 )
@@ -526,6 +527,17 @@ cdk8s_plus_22.BasicAuthSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -791,7 +803,8 @@ cdk8s_plus_22.ConfigMap(
   id: str,
   metadata: ApiObjectMetadata = None,
   binary_data: typing.Mapping[str] = None,
-  data: typing.Mapping[str] = None
+  data: typing.Mapping[str] = None,
+  immutable: bool = None
 )
 ```
 
@@ -842,6 +855,17 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -1008,6 +1032,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.ConfigMap.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+
+Whether or not this config map is immutable.
+
+---
+
 ##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.ConfigMap.property.resource_type"></a>
 
 ```python
@@ -1017,6 +1053,786 @@ resource_type: str
 - *Type:* `str`
 
 The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
+
+### DaemonSet <a name="cdk8s_plus_22.DaemonSet"></a>
+
+- *Implements:* [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
+
+A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+
+As nodes are added to the cluster, Pods are added to them.
+As nodes are removed from the cluster, those Pods are garbage collected.
+Deleting a DaemonSet will clean up the Pods it created.
+
+Some typical uses of a DaemonSet are:
+
+* running a cluster storage daemon on every node
+* running a logs collection daemon on every node
+* running a node monitoring daemon on every node
+
+In a simple case, one DaemonSet, covering all nodes, would be used for each type of daemon.
+A more complex setup might use multiple DaemonSets for a single type of daemon,
+but with different flags and/or different memory and cpu requests for different hardware types.
+
+#### Initializers <a name="cdk8s_plus_22.DaemonSet.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DaemonSet(
+  scope: Construct,
+  id: str,
+  metadata: ApiObjectMetadata = None,
+  containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
+  host_aliases: typing.List[HostAlias] = None,
+  init_containers: typing.List[ContainerProps] = None,
+  restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
+  service_account: IServiceAccount = None,
+  volumes: typing.List[Volume] = None,
+  pod_metadata: ApiObjectMetadata = None,
+  default_selector: bool = None,
+  min_ready_seconds: typing.Union[int, float] = None
+)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.id"></a>
+
+- *Type:* `str`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.host_aliases"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.init_containers"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.restart_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.service_account"></a>
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.volumes"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.pod_metadata"></a>
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata.
+
+---
+
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.default_selector"></a>
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this daemon set.
+
+If this is set to `false` you must define your selector through
+`dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
+
+---
+
+##### `min_ready_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.min_ready_seconds"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0
+
+Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `add_container` <a name="cdk8s_plus_22.DaemonSet.add_container"></a>
+
+```python
+def add_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: ContainerResources = None,
+  security_context: ContainerSecurityContextProps = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerResources`](#cdk8s_plus_22.ContainerResources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+##### `add_host_alias` <a name="cdk8s_plus_22.DaemonSet.add_host_alias"></a>
+
+```python
+def add_host_alias(
+  hostnames: typing.List[str],
+  ip: str
+)
+```
+
+###### `hostnames`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.hostnames"></a>
+
+- *Type:* typing.List[`str`]
+
+Hostnames for the chosen IP address.
+
+---
+
+###### `ip`<sup>Required</sup> <a name="cdk8s_plus_22.HostAlias.parameter.ip"></a>
+
+- *Type:* `str`
+
+IP address of the host file entry.
+
+---
+
+##### `add_init_container` <a name="cdk8s_plus_22.DaemonSet.add_init_container"></a>
+
+```python
+def add_init_container(
+  image: str,
+  args: typing.List[str] = None,
+  command: typing.List[str] = None,
+  env: typing.Mapping[EnvValue] = None,
+  image_pull_policy: ImagePullPolicy = None,
+  lifecycle: ContainerLifecycle = None,
+  liveness: Probe = None,
+  name: str = None,
+  port: typing.Union[int, float] = None,
+  readiness: Probe = None,
+  resources: ContainerResources = None,
+  security_context: ContainerSecurityContextProps = None,
+  startup: Probe = None,
+  volume_mounts: typing.List[VolumeMount] = None,
+  working_dir: str = None
+)
+```
+
+###### `image`<sup>Required</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image"></a>
+
+- *Type:* `str`
+
+Docker image name.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.args"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* []
+
+Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.
+
+Variable references $(VAR_NAME) are expanded using the container's
+environment. If a variable cannot be resolved, the reference in the input
+string will be unchanged. The $(VAR_NAME) syntax can be escaped with a
+double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
+regardless of whether the variable exists or not.
+
+Cannot be updated.
+
+> https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `command`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.command"></a>
+
+- *Type:* typing.List[`str`]
+- *Default:* The docker image's ENTRYPOINT.
+
+Entrypoint array.
+
+Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
+If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated.
+More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+---
+
+###### `env`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.env"></a>
+
+- *Type:* typing.Mapping[[`cdk8s_plus_22.EnvValue`](#cdk8s_plus_22.EnvValue)]
+- *Default:* No environment variables.
+
+List of environment variables to set in the container.
+
+Cannot be updated.
+
+---
+
+###### `image_pull_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.image_pull_policy"></a>
+
+- *Type:* [`cdk8s_plus_22.ImagePullPolicy`](#cdk8s_plus_22.ImagePullPolicy)
+- *Default:* ImagePullPolicy.ALWAYS
+
+Image pull policy for this container.
+
+---
+
+###### `lifecycle`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.lifecycle"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerLifecycle`](#cdk8s_plus_22.ContainerLifecycle)
+
+Describes actions that the management system should take in response to container lifecycle events.
+
+---
+
+###### `liveness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.liveness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no liveness probe is defined
+
+Periodic probe of container liveness.
+
+Container will be restarted if the probe fails.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* 'main'
+
+Name of the container specified as a DNS_LABEL.
+
+Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
+
+---
+
+###### `port`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.port"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No port is exposed.
+
+Number of port to expose on the pod's IP address.
+
+This must be a valid port number, 0 < x < 65536.
+
+---
+
+###### `readiness`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.readiness"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no readiness probe is defined
+
+Determines when the container is ready to serve traffic.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerResources`](#cdk8s_plus_22.ContainerResources)
+
+Compute resources (CPU and memory requests and limits) required by the container.
+
+> https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+---
+
+###### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.security_context"></a>
+
+- *Type:* [`cdk8s_plus_22.ContainerSecurityContextProps`](#cdk8s_plus_22.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
+###### `startup`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.startup"></a>
+
+- *Type:* [`cdk8s_plus_22.Probe`](#cdk8s_plus_22.Probe)
+- *Default:* no startup probe is defined.
+
+StartupProbe indicates that the Pod has successfully initialized.
+
+If specified, no other probes are executed until this completes successfully
+
+---
+
+###### `volume_mounts`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.volume_mounts"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.VolumeMount`](#cdk8s_plus_22.VolumeMount)]
+
+Pod volumes to mount into the container's filesystem.
+
+Cannot be updated.
+
+---
+
+###### `working_dir`<sup>Optional</sup> <a name="cdk8s_plus_22.ContainerProps.parameter.working_dir"></a>
+
+- *Type:* `str`
+- *Default:* The container runtime's default.
+
+Container's working directory.
+
+If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+##### `add_volume` <a name="cdk8s_plus_22.DaemonSet.add_volume"></a>
+
+```python
+def add_volume(
+  volume: Volume
+)
+```
+
+###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.volume"></a>
+
+- *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
+
+---
+
+##### `select_by_label` <a name="cdk8s_plus_22.DaemonSet.select_by_label"></a>
+
+```python
+def select_by_label(
+  key: str,
+  value: str
+)
+```
+
+###### `key`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.key"></a>
+
+- *Type:* `str`
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.value"></a>
+
+- *Type:* `str`
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.containers"></a>
+
+```python
+containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The containers belonging to the pod.
+
+Use `addContainer` to add containers.
+
+---
+
+##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `init_containers`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.init_containers"></a>
+
+```python
+init_containers: typing.List[Container]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Container`](#cdk8s_plus_22.Container)]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
+##### `label_selector`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.label_selector"></a>
+
+```python
+label_selector: typing.Mapping[str]
+```
+
+- *Type:* typing.Mapping[`str`]
+
+The labels this daemon set will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `min_ready_seconds`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.min_ready_seconds"></a>
+
+```python
+min_ready_seconds: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `pod_metadata`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.pod_metadata"></a>
+
+```python
+pod_metadata: ApiObjectMetadataDefinition
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
+
+Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.resource_type"></a>
+
+```python
+resource_type: str
+```
+
+- *Type:* `str`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.volumes"></a>
+
+```python
+volumes: typing.List[Volume]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+
+The volumes associated with this pod.
+
+Use `addVolume` to add volumes.
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSet.property.restart_policy"></a>
+
+```python
+restart_policy: RestartPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+
+Restart policy for all containers within the pod.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSet.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+
+The service account used to run this pod.
 
 ---
 
@@ -1059,6 +1875,7 @@ cdk8s_plus_22.Deployment(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -1067,7 +1884,8 @@ cdk8s_plus_22.Deployment(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -1102,6 +1920,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -1212,6 +2039,15 @@ If this is set to `false` you must define your selector through
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.strategy"></a>
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -1917,6 +2753,18 @@ security_context: PodSecurityContext
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.volumes"></a>
 
 ```python
@@ -1971,6 +2819,7 @@ cdk8s_plus_22.DockerConfigSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   data: typing.Mapping[typing.Any]
 )
 ```
@@ -1992,6 +2841,17 @@ cdk8s_plus_22.DockerConfigSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -2555,6 +3415,7 @@ cdk8s_plus_22.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -2599,6 +3460,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -3831,6 +4701,7 @@ cdk8s_plus_22.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -3871,6 +4742,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -5141,6 +6021,7 @@ cdk8s_plus_22.Secret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   string_data: typing.Mapping[str] = None,
   type: str = None
 )
@@ -5163,6 +6044,17 @@ cdk8s_plus_22.Secret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5255,6 +6147,18 @@ The name of the secret to reference.
 ---
 
 #### Properties <a name="Properties"></a>
+
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.Secret.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+
+Whether or not the secret is immutable.
+
+---
 
 ##### `resource_type`<sup>Required</sup> <a name="cdk8s_plus_22.Secret.property.resource_type"></a>
 
@@ -5824,6 +6728,7 @@ cdk8s_plus_22.ServiceAccountTokenSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   service_account: IServiceAccount
 )
 ```
@@ -5845,6 +6750,17 @@ cdk8s_plus_22.ServiceAccountTokenSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5875,6 +6791,7 @@ cdk8s_plus_22.SshAuthSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   ssh_private_key: str
 )
 ```
@@ -5896,6 +6813,17 @@ cdk8s_plus_22.SshAuthSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5950,6 +6878,7 @@ cdk8s_plus_22.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -5960,7 +6889,8 @@ cdk8s_plus_22.StatefulSet(
   service: Service,
   default_selector: bool = None,
   pod_management_policy: PodManagementPolicy = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: StatefulSetUpdateStrategy = None
 )
 ```
 
@@ -5995,6 +6925,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6122,6 +7061,15 @@ Pod management policy to use for this statefulset.
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.strategy"></a>
+
+- *Type:* [`cdk8s_plus_22.StatefulSetUpdateStrategy`](#cdk8s_plus_22.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
@@ -6688,6 +7636,18 @@ security_context: PodSecurityContext
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.strategy"></a>
+
+```python
+strategy: StatefulSetUpdateStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.StatefulSetUpdateStrategy`](#cdk8s_plus_22.StatefulSetUpdateStrategy)
+
+The update startegy of this stateful set.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.volumes"></a>
 
 ```python
@@ -6742,6 +7702,7 @@ cdk8s_plus_22.TlsSecret(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   tls_cert: str,
   tls_key: str
 )
@@ -6764,6 +7725,17 @@ cdk8s_plus_22.TlsSecret(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.parameter.immutable"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -7175,6 +8147,85 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### AwsElasticBlockStoreVolumeOptions <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions"></a>
+
+Options of `Volume.fromAwsElasticBlockStore`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions(
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+##### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.property.fs_type"></a>
+
+```python
+fs_type: str
+```
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.property.partition"></a>
+
+```python
+partition: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.property.read_only"></a>
+
+```python
+read_only: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### AzureDiskPersistentVolumeProps <a name="cdk8s_plus_22.AzureDiskPersistentVolumeProps"></a>
 
 Properties for `AzureDiskPersistentVolume`.
@@ -7398,6 +8449,91 @@ Force the ReadOnly setting in VolumeMounts.
 
 ---
 
+### AzureDiskVolumeOptions <a name="cdk8s_plus_22.AzureDiskVolumeOptions"></a>
+
+Options of `Volume.fromAzureDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.AzureDiskVolumeOptions(
+  caching_mode: AzureDiskPersistentVolumeCachingMode = None,
+  fs_type: str = None,
+  kind: AzureDiskPersistentVolumeKind = None,
+  name: str = None,
+  read_only: bool = None
+)
+```
+
+##### `caching_mode`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.property.caching_mode"></a>
+
+```python
+caching_mode: AzureDiskPersistentVolumeCachingMode
+```
+
+- *Type:* [`cdk8s_plus_22.AzureDiskPersistentVolumeCachingMode`](#cdk8s_plus_22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.property.fs_type"></a>
+
+```python
+fs_type: str
+```
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.property.kind"></a>
+
+```python
+kind: AzureDiskPersistentVolumeKind
+```
+
+- *Type:* [`cdk8s_plus_22.AzureDiskPersistentVolumeKind`](#cdk8s_plus_22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.property.read_only"></a>
+
+```python
+read_only: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
 ### BasicAuthSecretProps <a name="cdk8s_plus_22.BasicAuthSecretProps"></a>
 
 Options for `BasicAuthSecret`.
@@ -7409,6 +8545,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.BasicAuthSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   password: str,
   username: str
 )
@@ -7423,6 +8560,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.BasicAuthSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -7634,6 +8786,48 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="cdk8s_plus_22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.CommonSecretProps(
+  metadata: ApiObjectMetadata = None,
+  immutable: bool = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.CommonSecretProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.CommonSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="cdk8s_plus_22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -7646,7 +8840,8 @@ import cdk8s_plus_22
 cdk8s_plus_22.ConfigMapProps(
   metadata: ApiObjectMetadata = None,
   binary_data: typing.Mapping[str] = None,
-  data: typing.Mapping[str] = None
+  data: typing.Mapping[str] = None,
+  immutable: bool = None
 )
 ```
 
@@ -7697,6 +8892,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8248,6 +9458,220 @@ request: Cpu
 
 ---
 
+### DaemonSetProps <a name="cdk8s_plus_22.DaemonSetProps"></a>
+
+Properties for `DaemonSet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DaemonSetProps(
+  metadata: ApiObjectMetadata = None,
+  containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
+  host_aliases: typing.List[HostAlias] = None,
+  init_containers: typing.List[ContainerProps] = None,
+  restart_policy: RestartPolicy = None,
+  security_context: PodSecurityContextProps = None,
+  service_account: IServiceAccount = None,
+  volumes: typing.List[Volume] = None,
+  pod_metadata: ApiObjectMetadata = None,
+  default_selector: bool = None,
+  min_ready_seconds: typing.Union[int, float] = None
+)
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.metadata"></a>
+
+```python
+metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.containers"></a>
+
+```python
+containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `host_aliases`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.host_aliases"></a>
+
+```python
+host_aliases: typing.List[HostAlias]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.HostAlias`](#cdk8s_plus_22.HostAlias)]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `init_containers`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.init_containers"></a>
+
+```python
+init_containers: typing.List[ContainerProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ContainerProps`](#cdk8s_plus_22.ContainerProps)]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.restart_policy"></a>
+
+```python
+restart_policy: RestartPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.RestartPolicy`](#cdk8s_plus_22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `security_context`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.security_context"></a>
+
+```python
+security_context: PodSecurityContextProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContextProps`](#cdk8s_plus_22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `service_account`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.service_account"></a>
+
+```python
+service_account: IServiceAccount
+```
+
+- *Type:* [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.volumes"></a>
+
+```python
+volumes: typing.List[Volume]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `pod_metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.pod_metadata"></a>
+
+```python
+pod_metadata: ApiObjectMetadata
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata.
+
+---
+
+##### `default_selector`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.default_selector"></a>
+
+```python
+default_selector: bool
+```
+
+- *Type:* `bool`
+- *Default:* true
+
+Automatically allocates a pod selector for this daemon set.
+
+If this is set to `false` you must define your selector through
+`dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
+
+---
+
+##### `min_ready_seconds`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.min_ready_seconds"></a>
+
+```python
+min_ready_seconds: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0
+
+Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+
+---
+
 ### DeploymentProps <a name="cdk8s_plus_22.DeploymentProps"></a>
 
 Properties for initialization of `Deployment`.
@@ -8260,6 +9684,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -8268,7 +9693,8 @@ cdk8s_plus_22.DeploymentProps(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -8299,6 +9725,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8448,6 +9887,78 @@ Number of desired pods.
 
 ---
 
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions(
+  max_surge: PercentOrAbsolute = None,
+  max_unavailable: PercentOrAbsolute = None
+)
+```
+
+##### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_surge"></a>
+
+```python
+max_surge: PercentOrAbsolute
+```
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_unavailable"></a>
+
+```python
+max_unavailable: PercentOrAbsolute
+```
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
 ### DockerConfigSecretProps <a name="cdk8s_plus_22.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
@@ -8459,6 +9970,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.DockerConfigSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   data: typing.Mapping[typing.Any]
 )
 ```
@@ -8472,6 +9984,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.DockerConfigSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -9153,6 +10680,85 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### GCEPersistentDiskVolumeOptions <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions"></a>
+
+Options of `Volume.fromGcePersistentDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.GCEPersistentDiskVolumeOptions(
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+##### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.property.fs_type"></a>
+
+```python
+fs_type: str
+```
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.property.partition"></a>
+
+```python
+partition: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.property.read_only"></a>
+
+```python
+read_only: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### GroupProps <a name="cdk8s_plus_22.GroupProps"></a>
 
 Options for `User`.
@@ -9639,6 +11245,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -9679,6 +11286,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10318,6 +11938,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10354,6 +11975,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10578,6 +12212,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10602,6 +12237,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10723,6 +12371,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -10748,6 +12397,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -11234,6 +12896,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.SecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   string_data: typing.Mapping[str] = None,
   type: str = None
 )
@@ -11248,6 +12911,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -11457,6 +13135,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.ServiceAccountTokenSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   service_account: IServiceAccount
 )
 ```
@@ -11470,6 +13149,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -11831,6 +13525,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.SshAuthSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   ssh_private_key: str
 )
 ```
@@ -11844,6 +13539,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.SshAuthSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -11871,6 +13581,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -11881,7 +13592,8 @@ cdk8s_plus_22.StatefulSetProps(
   service: Service,
   default_selector: bool = None,
   pod_management_policy: PodManagementPolicy = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: StatefulSetUpdateStrategy = None
 )
 ```
 
@@ -11912,6 +13624,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -12083,6 +13808,52 @@ replicas: typing.Union[int, float]
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.strategy"></a>
+
+```python
+strategy: StatefulSetUpdateStrategy
+```
+
+- *Type:* [`cdk8s_plus_22.StatefulSetUpdateStrategy`](#cdk8s_plus_22.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+
+---
+
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+
+Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions(
+  partition: typing.Union[int, float] = None
+)
+```
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+
+```python
+partition: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
 
 ---
 
@@ -12259,6 +14030,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.TlsSecretProps(
   metadata: ApiObjectMetadata = None,
+  immutable: bool = None,
   tls_cert: str,
   tls_key: str
 )
@@ -12273,6 +14045,21 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.TlsSecretProps.property.immutable"></a>
+
+```python
+immutable: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -13539,6 +15326,70 @@ amount: str
 ---
 
 
+### DeploymentStrategy <a name="cdk8s_plus_22.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="cdk8s_plus_22.DeploymentStrategy.recreate"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategy.recreate()
+```
+
+##### `rolling_update` <a name="cdk8s_plus_22.DeploymentStrategy.rolling_update"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DeploymentStrategy.rolling_update(
+  max_surge: PercentOrAbsolute = None,
+  max_unavailable: PercentOrAbsolute = None
+)
+```
+
+###### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_surge"></a>
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+###### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_unavailable"></a>
+
+- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
+
+
 ### EnvValue <a name="cdk8s_plus_22.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -13989,6 +15840,65 @@ The port to use to access the service.
 
 
 
+### PercentOrAbsolute <a name="cdk8s_plus_22.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `is_zero` <a name="cdk8s_plus_22.PercentOrAbsolute.is_zero"></a>
+
+```python
+def is_zero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="cdk8s_plus_22.PercentOrAbsolute.absolute"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PercentOrAbsolute.absolute(
+  num: typing.Union[int, float]
+)
+```
+
+###### `num`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+##### `percent` <a name="cdk8s_plus_22.PercentOrAbsolute.percent"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PercentOrAbsolute.percent(
+  percent: typing.Union[int, float]
+)
+```
+
+###### `percent`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `typing.Union[int, float]`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.property.value"></a>
+
+```python
+value: typing.Any
+```
+
+- *Type:* `typing.Any`
+
+---
+
+
 ### PodSecurityContext <a name="cdk8s_plus_22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -14148,6 +16058,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -14168,6 +16079,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -14742,6 +16662,16 @@ Use `addVolume` to add volumes.
 
 ---
 
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.docker_registry_auth"></a>
+
+```python
+docker_registry_auth: DockerConfigSecret
+```
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+
+---
+
 ##### `restart_policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpec.property.restart_policy"></a>
 
 ```python
@@ -14780,6 +16710,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
   restart_policy: RestartPolicy = None,
@@ -14801,6 +16732,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `docker_registry_auth`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.docker_registry_auth"></a>
+
+- *Type:* [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -15270,6 +17210,48 @@ The TCP port to connect to on the container.
 
 
 
+### StatefulSetUpdateStrategy <a name="cdk8s_plus_22.StatefulSetUpdateStrategy"></a>
+
+StatefulSet update strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `on_delete` <a name="cdk8s_plus_22.StatefulSetUpdateStrategy.on_delete"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.StatefulSetUpdateStrategy.on_delete()
+```
+
+##### `rolling_update` <a name="cdk8s_plus_22.StatefulSetUpdateStrategy.rolling_update"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.StatefulSetUpdateStrategy.rolling_update(
+  partition: typing.Union[int, float] = None
+)
+```
+
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions.parameter.partition"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
+
+---
+
+
+
 ### User <a name="cdk8s_plus_22.User"></a>
 
 - *Implements:* [`cdk8s_plus_22.ISubject`](#cdk8s_plus_22.ISubject)
@@ -15399,6 +17381,147 @@ def as_volume()
 
 #### Static Functions <a name="Static Functions"></a>
 
+##### `from_aws_elastic_block_store` <a name="cdk8s_plus_22.Volume.from_aws_elastic_block_store"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Volume.from_aws_elastic_block_store(
+  volume_id: str,
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+###### `volume_id`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.volume_id"></a>
+
+- *Type:* `str`
+
+---
+
+###### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.parameter.fs_type"></a>
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.parameter.partition"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.AwsElasticBlockStoreVolumeOptions.parameter.read_only"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `from_azure_disk` <a name="cdk8s_plus_22.Volume.from_azure_disk"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Volume.from_azure_disk(
+  disk_name: str,
+  disk_uri: str,
+  caching_mode: AzureDiskPersistentVolumeCachingMode = None,
+  fs_type: str = None,
+  kind: AzureDiskPersistentVolumeKind = None,
+  name: str = None,
+  read_only: bool = None
+)
+```
+
+###### `disk_name`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.disk_name"></a>
+
+- *Type:* `str`
+
+---
+
+###### `disk_uri`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.disk_uri"></a>
+
+- *Type:* `str`
+
+---
+
+###### `caching_mode`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.parameter.caching_mode"></a>
+
+- *Type:* [`cdk8s_plus_22.AzureDiskPersistentVolumeCachingMode`](#cdk8s_plus_22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+###### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.parameter.fs_type"></a>
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+###### `kind`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.parameter.kind"></a>
+
+- *Type:* [`cdk8s_plus_22.AzureDiskPersistentVolumeKind`](#cdk8s_plus_22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.AzureDiskVolumeOptions.parameter.read_only"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
 ##### `from_config_map` <a name="cdk8s_plus_22.Volume.from_config_map"></a>
 
 ```python
@@ -15514,6 +17637,72 @@ The size
 limit is also applicable for memory medium. The maximum usage on memory
 medium EmptyDir would be the minimum value between the SizeLimit specified
 here and the sum of memory limits of all containers in a pod.
+
+---
+
+##### `from_gce_persistent_disk` <a name="cdk8s_plus_22.Volume.from_gce_persistent_disk"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.Volume.from_gce_persistent_disk(
+  pd_name: str,
+  fs_type: str = None,
+  name: str = None,
+  partition: typing.Union[int, float] = None,
+  read_only: bool = None
+)
+```
+
+###### `pd_name`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.pd_name"></a>
+
+- *Type:* `str`
+
+---
+
+###### `fs_type`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.parameter.fs_type"></a>
+
+- *Type:* `str`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+###### `name`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.parameter.name"></a>
+
+- *Type:* `str`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.parameter.partition"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+###### `read_only`<sup>Optional</sup> <a name="cdk8s_plus_22.GCEPersistentDiskVolumeOptions.parameter.read_only"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
 
 ---
 
@@ -15641,7 +17830,7 @@ name: str
 
 ### IApiResource <a name="cdk8s_plus_22.IApiResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+- *Implemented By:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 Represents a resource or collection of resources.
 
@@ -15924,7 +18113,7 @@ The Kubernetes name of this resource.
 
 ### IPodSpec <a name="cdk8s_plus_22.IPodSpec"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.PodSpec`](#cdk8s_plus_22.PodSpec), [`cdk8s_plus_22.PodTemplate`](#cdk8s_plus_22.PodTemplate), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec), [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
+- *Implemented By:* [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.PodSpec`](#cdk8s_plus_22.PodSpec), [`cdk8s_plus_22.PodTemplate`](#cdk8s_plus_22.PodTemplate), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec), [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
 
@@ -16414,7 +18603,7 @@ The service account used to run this pod.
 
 - *Extends:* [`cdk8s_plus_22.IPodSpec`](#cdk8s_plus_22.IPodSpec)
 
-- *Implemented By:* [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PodTemplate`](#cdk8s_plus_22.PodTemplate), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
+- *Implemented By:* [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PodTemplate`](#cdk8s_plus_22.PodTemplate), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.IPodTemplate`](#cdk8s_plus_22.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
 
@@ -16517,7 +18706,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
 
 Represents a resource.
 

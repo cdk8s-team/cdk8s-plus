@@ -580,6 +580,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 ##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.resourceType"></a>
 
 ```typescript
@@ -589,6 +601,262 @@ public readonly resourceType: string;
 - *Type:* `string`
 
 The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
+
+### DaemonSet <a name="cdk8s-plus-22.DaemonSet"></a>
+
+- *Implements:* [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
+
+A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+
+As nodes are added to the cluster, Pods are added to them.
+As nodes are removed from the cluster, those Pods are garbage collected.
+Deleting a DaemonSet will clean up the Pods it created.
+
+Some typical uses of a DaemonSet are:
+
+- running a cluster storage daemon on every node
+- running a logs collection daemon on every node
+- running a node monitoring daemon on every node
+
+In a simple case, one DaemonSet, covering all nodes, would be used for each type of daemon.
+A more complex setup might use multiple DaemonSets for a single type of daemon,
+but with different flags and/or different memory and cpu requests for different hardware types.
+
+#### Initializers <a name="cdk8s-plus-22.DaemonSet.Initializer"></a>
+
+```typescript
+import { DaemonSet } from 'cdk8s-plus-22'
+
+new DaemonSet(scope: Construct, id: string, props?: DaemonSetProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.scope"></a>
+
+- *Type:* [`constructs.Construct`](#constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-22.DaemonSetProps`](#cdk8s-plus-22.DaemonSetProps)
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `addContainer` <a name="cdk8s-plus-22.DaemonSet.addContainer"></a>
+
+```typescript
+public addContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
+##### `addHostAlias` <a name="cdk8s-plus-22.DaemonSet.addHostAlias"></a>
+
+```typescript
+public addHostAlias(hostAlias: HostAlias)
+```
+
+###### `hostAlias`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.hostAlias"></a>
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)
+
+---
+
+##### `addInitContainer` <a name="cdk8s-plus-22.DaemonSet.addInitContainer"></a>
+
+```typescript
+public addInitContainer(container: ContainerProps)
+```
+
+###### `container`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.container"></a>
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)
+
+---
+
+##### `addVolume` <a name="cdk8s-plus-22.DaemonSet.addVolume"></a>
+
+```typescript
+public addVolume(volume: Volume)
+```
+
+###### `volume`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.volume"></a>
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)
+
+---
+
+##### `selectByLabel` <a name="cdk8s-plus-22.DaemonSet.selectByLabel"></a>
+
+```typescript
+public selectByLabel(key: string, value: string)
+```
+
+###### `key`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.key"></a>
+
+- *Type:* `string`
+
+---
+
+###### `value`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.parameter.value"></a>
+
+- *Type:* `string`
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `containers`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.containers"></a>
+
+```typescript
+public readonly containers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The containers belonging to the pod.
+
+Use `addContainer` to add containers.
+
+---
+
+##### `hostAliases`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+An optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+
+This is only valid for non-hostNetwork pods.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: Container[];
+```
+
+- *Type:* [`cdk8s-plus-22.Container`](#cdk8s-plus-22.Container)[]
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
+
+---
+
+##### `labelSelector`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.labelSelector"></a>
+
+```typescript
+public readonly labelSelector: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: `string`}
+
+The labels this daemon set will match against in order to select pods.
+
+Returns a a copy. Use `selectByLabel()` to add labels.
+
+---
+
+##### `minReadySeconds`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.minReadySeconds"></a>
+
+```typescript
+public readonly minReadySeconds: number;
+```
+
+- *Type:* `number`
+
+---
+
+##### `podMetadata`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadataDefinition;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadataDefinition`](#cdk8s.ApiObjectMetadataDefinition)
+
+Provides read/write access to the underlying pod metadata of the resource.
+
+---
+
+##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.resourceType"></a>
+
+```typescript
+public readonly resourceType: string;
+```
+
+- *Type:* `string`
+
+The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
+
+---
+
+##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.DaemonSet.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+
+The volumes associated with this pod.
+
+Use `addVolume` to add volumes.
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSet.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+
+Restart policy for all containers within the pod.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSet.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+
+The service account used to run this pod.
 
 ---
 
@@ -858,6 +1126,18 @@ public readonly securityContext: PodSecurityContext;
 ```
 
 - *Type:* [`cdk8s-plus-22.PodSecurityContext`](#cdk8s-plus-22.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.strategy"></a>
+
+```typescript
+public readonly strategy: DeploymentStrategy;
+```
+
+- *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
 
 ---
 
@@ -2560,6 +2840,18 @@ The name of the secret to reference.
 
 #### Properties <a name="Properties"></a>
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not the secret is immutable.
+
+---
+
 ##### `resourceType`<sup>Required</sup> <a name="cdk8s-plus-22.Secret.property.resourceType"></a>
 
 ```typescript
@@ -3201,6 +3493,18 @@ public readonly securityContext: PodSecurityContext;
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.strategy"></a>
+
+```typescript
+public readonly strategy: StatefulSetUpdateStrategy;
+```
+
+- *Type:* [`cdk8s-plus-22.StatefulSetUpdateStrategy`](#cdk8s-plus-22.StatefulSetUpdateStrategy)
+
+The update startegy of this stateful set.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.volumes"></a>
 
 ```typescript
@@ -3639,6 +3943,80 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### AwsElasticBlockStoreVolumeOptions <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions"></a>
+
+Options of `Volume.fromAwsElasticBlockStore`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AwsElasticBlockStoreVolumeOptions } from 'cdk8s-plus-22'
+
+const awsElasticBlockStoreVolumeOptions: AwsElasticBlockStoreVolumeOptions = { ... }
+```
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### AzureDiskPersistentVolumeProps <a name="cdk8s-plus-22.AzureDiskPersistentVolumeProps"></a>
 
 Properties for `AzureDiskPersistentVolume`.
@@ -3847,6 +4225,85 @@ Force the ReadOnly setting in VolumeMounts.
 
 ---
 
+### AzureDiskVolumeOptions <a name="cdk8s-plus-22.AzureDiskVolumeOptions"></a>
+
+Options of `Volume.fromAzureDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { AzureDiskVolumeOptions } from 'cdk8s-plus-22'
+
+const azureDiskVolumeOptions: AzureDiskVolumeOptions = { ... }
+```
+
+##### `cachingMode`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.cachingMode"></a>
+
+```typescript
+public readonly cachingMode: AzureDiskPersistentVolumeCachingMode;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode`](#cdk8s-plus-22.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.kind"></a>
+
+```typescript
+public readonly kind: AzureDiskPersistentVolumeKind;
+```
+
+- *Type:* [`cdk8s-plus-22.AzureDiskPersistentVolumeKind`](#cdk8s-plus-22.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.AzureDiskVolumeOptions.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
 ### BasicAuthSecretProps <a name="cdk8s-plus-22.BasicAuthSecretProps"></a>
 
 Options for `BasicAuthSecret`.
@@ -3868,6 +4325,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.BasicAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4066,6 +4538,45 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### CommonSecretProps <a name="cdk8s-plus-22.CommonSecretProps"></a>
+
+Common properties for `Secret`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { CommonSecretProps } from 'cdk8s-plus-22'
+
+const commonSecretProps: CommonSecretProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.CommonSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ### ConfigMapProps <a name="cdk8s-plus-22.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
@@ -4125,6 +4636,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ConfigMapProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -4640,6 +5166,207 @@ public readonly request: Cpu;
 
 ---
 
+### DaemonSetProps <a name="cdk8s-plus-22.DaemonSetProps"></a>
+
+Properties for `DaemonSet`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { DaemonSetProps } from 'cdk8s-plus-22'
+
+const daemonSetProps: DaemonSetProps = { ... }
+```
+
+##### `metadata`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.metadata"></a>
+
+```typescript
+public readonly metadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `containers`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.containers"></a>
+
+```typescript
+public readonly containers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No containers. Note that a pod spec must include at least one container.
+
+List of containers belonging to the pod.
+
+Containers cannot currently be
+added or removed. There must be at least one container in a Pod.
+
+You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
+##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.hostAliases"></a>
+
+```typescript
+public readonly hostAliases: HostAlias[];
+```
+
+- *Type:* [`cdk8s-plus-22.HostAlias`](#cdk8s-plus-22.HostAlias)[]
+
+HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.initContainers"></a>
+
+```typescript
+public readonly initContainers: ContainerProps[];
+```
+
+- *Type:* [`cdk8s-plus-22.ContainerProps`](#cdk8s-plus-22.ContainerProps)[]
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+
+---
+
+##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.restartPolicy"></a>
+
+```typescript
+public readonly restartPolicy: RestartPolicy;
+```
+
+- *Type:* [`cdk8s-plus-22.RestartPolicy`](#cdk8s-plus-22.RestartPolicy)
+- *Default:* RestartPolicy.ALWAYS
+
+Restart policy for all containers within the pod.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-22.PodSecurityContextProps`](#cdk8s-plus-22.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
+##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.serviceAccount"></a>
+
+```typescript
+public readonly serviceAccount: IServiceAccount;
+```
+
+- *Type:* [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Default:* No service account.
+
+A service account provides an identity for processes that run in a Pod.
+
+When you (a human) access the cluster (for example, using kubectl), you are
+authenticated by the apiserver as a particular User Account (currently this
+is usually admin, unless your cluster administrator has customized your
+cluster). Processes in containers inside pods can also contact the
+apiserver. When they do, they are authenticated as a particular Service
+Account (for example, default).
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.volumes"></a>
+
+```typescript
+public readonly volumes: Volume[];
+```
+
+- *Type:* [`cdk8s-plus-22.Volume`](#cdk8s-plus-22.Volume)[]
+- *Default:* No volumes.
+
+List of volumes that can be mounted by containers belonging to the pod.
+
+You can also add volumes later using `podSpec.addVolume()`
+
+> https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+##### `podMetadata`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.podMetadata"></a>
+
+```typescript
+public readonly podMetadata: ApiObjectMetadata;
+```
+
+- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
+
+The pod metadata.
+
+---
+
+##### `defaultSelector`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.defaultSelector"></a>
+
+```typescript
+public readonly defaultSelector: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* true
+
+Automatically allocates a pod selector for this daemon set.
+
+If this is set to `false` you must define your selector through
+`dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
+
+---
+
+##### `minReadySeconds`<sup>Optional</sup> <a name="cdk8s-plus-22.DaemonSetProps.property.minReadySeconds"></a>
+
+```typescript
+public readonly minReadySeconds: number;
+```
+
+- *Type:* `number`
+- *Default:* 0
+
+Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
+
+---
+
 ### DeploymentProps <a name="cdk8s-plus-22.DeploymentProps"></a>
 
 Properties for initialization of `Deployment`.
@@ -4679,6 +5406,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -4828,6 +5568,75 @@ Number of desired pods.
 
 ---
 
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.strategy"></a>
+
+```typescript
+public readonly strategy: DeploymentStrategy;
+```
+
+- *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { DeploymentStrategyRollingUpdateOptions } from 'cdk8s-plus-22'
+
+const deploymentStrategyRollingUpdateOptions: DeploymentStrategyRollingUpdateOptions = { ... }
+```
+
+##### `maxSurge`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
+
+```typescript
+public readonly maxSurge: PercentOrAbsolute;
+```
+
+- *Type:* [`cdk8s-plus-22.PercentOrAbsolute`](#cdk8s-plus-22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `maxUnavailable`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
+
+```typescript
+public readonly maxUnavailable: PercentOrAbsolute;
+```
+
+- *Type:* [`cdk8s-plus-22.PercentOrAbsolute`](#cdk8s-plus-22.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
 ### DockerConfigSecretProps <a name="cdk8s-plus-22.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
@@ -4849,6 +5658,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.DockerConfigSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -5485,6 +6309,80 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 
 ---
 
+### GCEPersistentDiskVolumeOptions <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions"></a>
+
+Options of `Volume.fromGcePersistentDisk`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { GCEPersistentDiskVolumeOptions } from 'cdk8s-plus-22'
+
+const gCEPersistentDiskVolumeOptions: GCEPersistentDiskVolumeOptions = { ... }
+```
+
+##### `fsType`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.fsType"></a>
+
+```typescript
+public readonly fsType: string;
+```
+
+- *Type:* `string`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `name`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+- *Default:* auto-generated
+
+The volume name.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="cdk8s-plus-22.GCEPersistentDiskVolumeOptions.property.readOnly"></a>
+
+```typescript
+public readonly readOnly: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### GroupProps <a name="cdk8s-plus-22.GroupProps"></a>
 
 Options for `User`.
@@ -5967,6 +6865,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.JobProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6606,6 +7517,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodProps.property.hostAliases"></a>
 
 ```typescript
@@ -6839,6 +7763,19 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
+
+---
+
 ##### `hostAliases`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpecProps.property.hostAliases"></a>
 
 ```typescript
@@ -6973,6 +7910,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7447,6 +8397,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `stringData`<sup>Optional</sup> <a name="cdk8s-plus-22.SecretProps.property.stringData"></a>
 
 ```typescript
@@ -7652,6 +8617,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ServiceAccountTokenSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -8005,6 +8985,21 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
+
+---
+
 ##### `sshPrivateKey`<sup>Required</sup> <a name="cdk8s-plus-22.SshAuthSecretProps.property.sshPrivateKey"></a>
 
 ```typescript
@@ -8056,6 +9051,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8227,6 +9235,50 @@ public readonly replicas: number;
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.strategy"></a>
+
+```typescript
+public readonly strategy: StatefulSetUpdateStrategy;
+```
+
+- *Type:* [`cdk8s-plus-22.StatefulSetUpdateStrategy`](#cdk8s-plus-22.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+
+---
+
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+
+Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { StatefulSetUpdateStrategyRollingUpdateOptions } from 'cdk8s-plus-22'
+
+const statefulSetUpdateStrategyRollingUpdateOptions: StatefulSetUpdateStrategyRollingUpdateOptions = { ... }
+```
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
 
 ---
 
@@ -8402,6 +9454,21 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.TlsSecretProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
@@ -9361,6 +10428,37 @@ public readonly amount: string;
 ---
 
 
+### DeploymentStrategy <a name="cdk8s-plus-22.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="cdk8s-plus-22.DeploymentStrategy.recreate"></a>
+
+```typescript
+import { DeploymentStrategy } from 'cdk8s-plus-22'
+
+DeploymentStrategy.recreate()
+```
+
+##### `rollingUpdate` <a name="cdk8s-plus-22.DeploymentStrategy.rollingUpdate"></a>
+
+```typescript
+import { DeploymentStrategy } from 'cdk8s-plus-22'
+
+DeploymentStrategy.rollingUpdate(options?: DeploymentStrategyRollingUpdateOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategy.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions`](#cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions)
+
+---
+
+
+
 ### EnvValue <a name="cdk8s-plus-22.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -9716,6 +10814,61 @@ The service object.
 
 
 
+### PercentOrAbsolute <a name="cdk8s-plus-22.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `isZero` <a name="cdk8s-plus-22.PercentOrAbsolute.isZero"></a>
+
+```typescript
+public isZero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="cdk8s-plus-22.PercentOrAbsolute.absolute"></a>
+
+```typescript
+import { PercentOrAbsolute } from 'cdk8s-plus-22'
+
+PercentOrAbsolute.absolute(num: number)
+```
+
+###### `num`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `number`
+
+---
+
+##### `percent` <a name="cdk8s-plus-22.PercentOrAbsolute.percent"></a>
+
+```typescript
+import { PercentOrAbsolute } from 'cdk8s-plus-22'
+
+PercentOrAbsolute.percent(percent: number)
+```
+
+###### `percent`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.property.value"></a>
+
+```typescript
+public readonly value: any;
+```
+
+- *Type:* `any`
+
+---
+
+
 ### PodSecurityContext <a name="cdk8s-plus-22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -9938,6 +11091,16 @@ Use `addVolume` to add volumes.
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.dockerRegistryAuth"></a>
+
+```typescript
+public readonly dockerRegistryAuth: DockerConfigSecret;
+```
+
+- *Type:* [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret)
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="cdk8s-plus-22.PodSpec.property.restartPolicy"></a>
 
 ```typescript
@@ -10106,6 +11269,37 @@ Options.
 
 
 
+### StatefulSetUpdateStrategy <a name="cdk8s-plus-22.StatefulSetUpdateStrategy"></a>
+
+StatefulSet update strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `onDelete` <a name="cdk8s-plus-22.StatefulSetUpdateStrategy.onDelete"></a>
+
+```typescript
+import { StatefulSetUpdateStrategy } from 'cdk8s-plus-22'
+
+StatefulSetUpdateStrategy.onDelete()
+```
+
+##### `rollingUpdate` <a name="cdk8s-plus-22.StatefulSetUpdateStrategy.rollingUpdate"></a>
+
+```typescript
+import { StatefulSetUpdateStrategy } from 'cdk8s-plus-22'
+
+StatefulSetUpdateStrategy.rollingUpdate(options?: StatefulSetUpdateStrategyRollingUpdateOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetUpdateStrategy.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions`](#cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions)
+
+---
+
+
+
 ### User <a name="cdk8s-plus-22.User"></a>
 
 - *Implements:* [`cdk8s-plus-22.ISubject`](#cdk8s-plus-22.ISubject)
@@ -10220,6 +11414,52 @@ public asVolume()
 
 #### Static Functions <a name="Static Functions"></a>
 
+##### `fromAwsElasticBlockStore` <a name="cdk8s-plus-22.Volume.fromAwsElasticBlockStore"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromAwsElasticBlockStore(volumeId: string, options?: AwsElasticBlockStoreVolumeOptions)
+```
+
+###### `volumeId`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.volumeId"></a>
+
+- *Type:* `string`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions`](#cdk8s-plus-22.AwsElasticBlockStoreVolumeOptions)
+
+---
+
+##### `fromAzureDisk` <a name="cdk8s-plus-22.Volume.fromAzureDisk"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromAzureDisk(diskName: string, diskUri: string, options?: AzureDiskVolumeOptions)
+```
+
+###### `diskName`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.diskName"></a>
+
+- *Type:* `string`
+
+---
+
+###### `diskUri`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.diskUri"></a>
+
+- *Type:* `string`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.AzureDiskVolumeOptions`](#cdk8s-plus-22.AzureDiskVolumeOptions)
+
+---
+
 ##### `fromConfigMap` <a name="cdk8s-plus-22.Volume.fromConfigMap"></a>
 
 ```typescript
@@ -10263,6 +11503,26 @@ Volume.fromEmptyDir(name: string, options?: EmptyDirVolumeOptions)
 - *Type:* [`cdk8s-plus-22.EmptyDirVolumeOptions`](#cdk8s-plus-22.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromGcePersistentDisk` <a name="cdk8s-plus-22.Volume.fromGcePersistentDisk"></a>
+
+```typescript
+import { Volume } from 'cdk8s-plus-22'
+
+Volume.fromGcePersistentDisk(pdName: string, options?: GCEPersistentDiskVolumeOptions)
+```
+
+###### `pdName`<sup>Required</sup> <a name="cdk8s-plus-22.Volume.parameter.pdName"></a>
+
+- *Type:* `string`
+
+---
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.Volume.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-22.GCEPersistentDiskVolumeOptions`](#cdk8s-plus-22.GCEPersistentDiskVolumeOptions)
 
 ---
 
@@ -10327,7 +11587,7 @@ public readonly name: string;
 
 ### IApiResource <a name="cdk8s-plus-22.IApiResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.ApiResource`](#cdk8s-plus-22.ApiResource), [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
+- *Implemented By:* [`cdk8s-plus-22.ApiResource`](#cdk8s-plus-22.ApiResource), [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IApiResource`](#cdk8s-plus-22.IApiResource)
 
 Represents a resource or collection of resources.
 
@@ -10610,7 +11870,7 @@ The Kubernetes name of this resource.
 
 ### IPodSpec <a name="cdk8s-plus-22.IPodSpec"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.PodSpec`](#cdk8s-plus-22.PodSpec), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
+- *Implemented By:* [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.PodSpec`](#cdk8s-plus-22.PodSpec), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
 
@@ -10746,7 +12006,7 @@ The service account used to run this pod.
 
 - *Extends:* [`cdk8s-plus-22.IPodSpec`](#cdk8s-plus-22.IPodSpec)
 
-- *Implemented By:* [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
+- *Implemented By:* [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PodTemplate`](#cdk8s-plus-22.PodTemplate), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.IPodTemplate`](#cdk8s-plus-22.IPodTemplate)
 
 Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
 
@@ -10849,7 +12109,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s-plus-22.IResource"></a>
 
-- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
+- *Implemented By:* [`cdk8s-plus-22.AwsElasticBlockStorePersistentVolume`](#cdk8s-plus-22.AwsElasticBlockStorePersistentVolume), [`cdk8s-plus-22.AzureDiskPersistentVolume`](#cdk8s-plus-22.AzureDiskPersistentVolume), [`cdk8s-plus-22.BasicAuthSecret`](#cdk8s-plus-22.BasicAuthSecret), [`cdk8s-plus-22.ClusterRole`](#cdk8s-plus-22.ClusterRole), [`cdk8s-plus-22.ClusterRoleBinding`](#cdk8s-plus-22.ClusterRoleBinding), [`cdk8s-plus-22.ConfigMap`](#cdk8s-plus-22.ConfigMap), [`cdk8s-plus-22.DaemonSet`](#cdk8s-plus-22.DaemonSet), [`cdk8s-plus-22.Deployment`](#cdk8s-plus-22.Deployment), [`cdk8s-plus-22.DockerConfigSecret`](#cdk8s-plus-22.DockerConfigSecret), [`cdk8s-plus-22.GCEPersistentDiskPersistentVolume`](#cdk8s-plus-22.GCEPersistentDiskPersistentVolume), [`cdk8s-plus-22.Ingress`](#cdk8s-plus-22.Ingress), [`cdk8s-plus-22.Job`](#cdk8s-plus-22.Job), [`cdk8s-plus-22.PersistentVolume`](#cdk8s-plus-22.PersistentVolume), [`cdk8s-plus-22.PersistentVolumeClaim`](#cdk8s-plus-22.PersistentVolumeClaim), [`cdk8s-plus-22.Pod`](#cdk8s-plus-22.Pod), [`cdk8s-plus-22.Resource`](#cdk8s-plus-22.Resource), [`cdk8s-plus-22.Role`](#cdk8s-plus-22.Role), [`cdk8s-plus-22.RoleBase`](#cdk8s-plus-22.RoleBase), [`cdk8s-plus-22.RoleBinding`](#cdk8s-plus-22.RoleBinding), [`cdk8s-plus-22.Secret`](#cdk8s-plus-22.Secret), [`cdk8s-plus-22.Service`](#cdk8s-plus-22.Service), [`cdk8s-plus-22.ServiceAccount`](#cdk8s-plus-22.ServiceAccount), [`cdk8s-plus-22.ServiceAccountTokenSecret`](#cdk8s-plus-22.ServiceAccountTokenSecret), [`cdk8s-plus-22.SshAuthSecret`](#cdk8s-plus-22.SshAuthSecret), [`cdk8s-plus-22.StatefulSet`](#cdk8s-plus-22.StatefulSet), [`cdk8s-plus-22.TlsSecret`](#cdk8s-plus-22.TlsSecret), [`cdk8s-plus-22.IClusterRole`](#cdk8s-plus-22.IClusterRole), [`cdk8s-plus-22.IConfigMap`](#cdk8s-plus-22.IConfigMap), [`cdk8s-plus-22.IPersistentVolume`](#cdk8s-plus-22.IPersistentVolume), [`cdk8s-plus-22.IPersistentVolumeClaim`](#cdk8s-plus-22.IPersistentVolumeClaim), [`cdk8s-plus-22.IResource`](#cdk8s-plus-22.IResource), [`cdk8s-plus-22.IRole`](#cdk8s-plus-22.IRole), [`cdk8s-plus-22.ISecret`](#cdk8s-plus-22.ISecret), [`cdk8s-plus-22.IServiceAccount`](#cdk8s-plus-22.IServiceAccount)
 
 Represents a resource.
 

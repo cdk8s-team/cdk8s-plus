@@ -49,6 +49,68 @@ export interface IStorage {
  * image. Volumes can not mount onto other volumes
  */
 export class Volume implements IStorage {
+
+  /**
+   * Mounts an Amazon Web Services (AWS) EBS volume into your pod.
+   * Unlike emptyDir, which is erased when a pod is removed, the contents of an EBS volume are
+   * persisted and the volume is unmounted. This means that an EBS volume can be pre-populated with data,
+   * and that data can be shared between pods.
+   *
+   * There are some restrictions when using an awsElasticBlockStore volume:
+   *
+   * - the nodes on which pods are running must be AWS EC2 instances.
+   * - those instances need to be in the same region and availability zone as the EBS volume.
+   * - EBS only supports a single EC2 instance mounting a volume.
+   */
+  public static fromAwsElasticBlockStore(volumeId: string, options: AwsElasticBlockStoreVolumeOptions = {}): Volume {
+    return new Volume(options.name ?? `ebs-${volumeId}`, {
+      awsElasticBlockStore: {
+        volumeId,
+        fsType: options.fsType ?? 'ext4',
+        partition: options.partition,
+        readOnly: options.readOnly ?? false,
+      },
+    });
+  }
+
+  /**
+   * Mounts a Microsoft Azure Data Disk into a pod.
+   */
+  public static fromAzureDisk(diskName: string, diskUri: string, options: AzureDiskVolumeOptions = {}): Volume {
+    return new Volume(options.name ?? `azuredisk-${diskName}`, {
+      azureDisk: {
+        diskName,
+        diskUri,
+        cachingMode: options.cachingMode ?? AzureDiskPersistentVolumeCachingMode.NONE,
+        fsType: options.fsType ?? 'ext4',
+        kind: options.kind ?? AzureDiskPersistentVolumeKind.SHARED,
+        readOnly: options.readOnly ?? false,
+      },
+    });
+  }
+
+  /**
+   * Mounts a Google Compute Engine (GCE) persistent disk (PD) into your Pod.
+   * Unlike emptyDir, which is erased when a pod is removed, the contents of a PD are
+   * preserved and the volume is merely unmounted. This means that a PD can be pre-populated
+   * with data, and that data can be shared between pods.
+   *
+   * There are some restrictions when using a gcePersistentDisk:
+   *
+   * - the nodes on which Pods are running must be GCE VMs
+   * - those VMs need to be in the same GCE project and zone as the persistent disk
+   */
+  public static fromGcePersistentDisk(pdName: string, options: GCEPersistentDiskVolumeOptions = {}): Volume {
+    return new Volume(options.name ?? `gcedisk-${pdName}`, {
+      gcePersistentDisk: {
+        pdName,
+        fsType: options.fsType ?? 'ext4',
+        partition: options.partition,
+        readOnly: options.readOnly ?? false,
+      },
+    });
+  }
+
   /**
    * Populate the volume from a ConfigMap.
    *
@@ -174,6 +236,123 @@ export class Volume implements IStorage {
       ...this.config,
     };
   }
+}
+
+/**
+ * Options of `Volume.fromGcePersistentDisk`.
+ */
+export interface GCEPersistentDiskVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * Filesystem type of the volume that you want to mount.
+   * Tip: Ensure that the filesystem type is supported by the host operating system.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+   * @default 'ext4'
+   */
+  readonly fsType?: string;
+
+  /**
+   * The partition in the volume that you want to mount. If omitted, the default is to mount by volume name.
+   * Examples: For volume /dev/sda1, you specify the partition as "1".
+   * Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+   *
+   * @default - No partition.
+   */
+  readonly partition?: number;
+
+  /**
+   * Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+   * @default false
+   */
+  readonly readOnly?: boolean;
+
+}
+
+/**
+ * Options of `Volume.fromAzureDisk`.
+ */
+export interface AzureDiskVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * Host Caching mode.
+   *
+   * @default - AzureDiskPersistentVolumeCachingMode.NONE.
+   */
+  readonly cachingMode?: AzureDiskPersistentVolumeCachingMode;
+
+  /**
+   * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
+   *
+   * @default 'ext4'
+   */
+  readonly fsType?: string;
+
+  /**
+   * Kind of disk.
+   *
+   * @default AzureDiskPersistentVolumeKind.SHARED
+   */
+  readonly kind?: AzureDiskPersistentVolumeKind;
+
+  /**
+   * Force the ReadOnly setting in VolumeMounts.
+   *
+   * @default false
+   */
+  readonly readOnly?: boolean;
+}
+
+/**
+ * Options of `Volume.fromAwsElasticBlockStore`.
+ */
+export interface AwsElasticBlockStoreVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * Filesystem type of the volume that you want to mount.
+   * Tip: Ensure that the filesystem type is supported by the host operating system.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+   * @default 'ext4'
+   */
+  readonly fsType?: string;
+
+  /**
+   * The partition in the volume that you want to mount. If omitted, the default is to mount by volume name.
+   * Examples: For volume /dev/sda1, you specify the partition as "1".
+   * Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+   *
+   * @default - No partition.
+   */
+  readonly partition?: number;
+
+  /**
+   * Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+   * @default false
+   */
+  readonly readOnly?: boolean;
 }
 
 /**
@@ -346,4 +525,46 @@ export interface SecretVolumeOptions {
    */
   readonly items?: { [key: string]: PathMapping };
 
+}
+
+/**
+ * Azure Disk kinds.
+ */
+export enum AzureDiskPersistentVolumeKind {
+
+  /**
+   * Multiple blob disks per storage account.
+   */
+  SHARED = 'Shared',
+
+  /**
+   * Single blob disk per storage account.
+   */
+  DEDICATED = 'Dedicated',
+
+  /**
+   * Azure managed data disk.
+   */
+  MANAGED = 'Managed',
+}
+
+/**
+ * Azure disk caching modes.
+ */
+export enum AzureDiskPersistentVolumeCachingMode {
+
+  /**
+   * None.
+   */
+  NONE = 'None',
+
+  /**
+   * ReadOnly.
+   */
+  READ_ONLY = 'ReadOnly',
+
+  /**
+   * ReadWrite.
+   */
+  READ_WRITE = 'ReadWrite'
 }
