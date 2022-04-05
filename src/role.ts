@@ -321,7 +321,7 @@ export class ClusterRole extends RoleBase implements IRole, IClusterRole {
    * @param subjects a list of subjects to bind to
    */
   public bindInNamespace(namespace: string, ...subjects: ISubject[]): RoleBinding {
-    const binding = new RoleBinding(this, 'RoleBinding', {
+    const binding = new RoleBinding(this, `RoleBinding-${namespace}`, {
       metadata: {
         namespace,
       },

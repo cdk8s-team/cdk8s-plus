@@ -68,7 +68,7 @@ Object {
   "apiVersion": "rbac.authorization.k8s.io/v1",
   "kind": "RoleBinding",
   "metadata": Object {
-    "name": "test-pod-reader-rolebinding-c893c967",
+    "name": "test-pod-reader-rolebinding-development-c87e6459",
     "namespace": "development",
   },
   "roleRef": Object {
@@ -85,6 +85,35 @@ Object {
   ],
 }
 `);
+});
+
+test('can call bindInNamespace multiple times', () => {
+  // GIVEN
+  const chart = Testing.chart();
+
+  const role = new kplus.ClusterRole(chart, 'pod-reader');
+  role.allowRead(kplus.ApiResource.PODS);
+
+  // WHEN
+  const user1 = new kplus.User({
+    name: 'alice@example.com',
+  });
+  const user2 = new kplus.User({
+    name: 'bob@example.com',
+  });
+  role.bindInNamespace('staging', user1);
+  role.bindInNamespace('development', user2);
+
+  // THEN
+  const manifest = Testing.synth(chart);
+  expect(manifest[1].kind).toEqual('RoleBinding');
+  expect(manifest[1].metadata.namespace).toEqual('staging');
+  expect(manifest[1].roleRef.kind).toEqual('ClusterRole');
+  expect(manifest[1].subjects[0].name).toEqual('alice@example.com');
+  expect(manifest[2].kind).toEqual('RoleBinding');
+  expect(manifest[2].metadata.namespace).toEqual('development');
+  expect(manifest[2].roleRef.kind).toEqual('ClusterRole');
+  expect(manifest[2].subjects[0].name).toEqual('bob@example.com');
 });
 
 test('can create a ClusterRoleBinding from a ClusterRole', () => {
