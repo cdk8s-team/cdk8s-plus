@@ -5,9 +5,7 @@ test('can create a RoleBinding from a Role', () => {
   // GIVEN
   const chart = Testing.chart();
 
-  const role = new kplus.Role(chart, 'pod-reader', {
-    namespace: 'default',
-  });
+  const role = new kplus.Role(chart, 'pod-reader');
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
@@ -25,7 +23,6 @@ Object {
   "kind": "RoleBinding",
   "metadata": Object {
     "name": "test-pod-reader-rolebinding-c893c967",
-    "namespace": "default",
   },
   "roleRef": Object {
     "apiGroup": "rbac.authorization.k8s.io",
@@ -134,9 +131,7 @@ test('can bind a ServiceAccount to a role', () => {
   // GIVEN
   const chart = Testing.chart();
 
-  const role = new kplus.Role(chart, 'pod-reader', {
-    namespace: 'default',
-  });
+  const role = new kplus.Role(chart, 'pod-reader');
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
@@ -158,9 +153,7 @@ test('can add subjects to a RoleBinding after creating it', () => {
   // GIVEN
   const chart = Testing.chart();
 
-  const role = new kplus.Role(chart, 'pod-reader', {
-    namespace: 'default',
-  });
+  const role = new kplus.Role(chart, 'pod-reader');
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN

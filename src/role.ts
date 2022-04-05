@@ -1,4 +1,4 @@
-import { ApiObject, ApiObjectMetadata, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IApiResource } from './api-resource.generated';
 import { IResource, Resource, ResourceProps } from './base';
@@ -168,12 +168,6 @@ export interface RoleProps extends RoleCommonProps {
    * @default []
    */
   readonly rules?: ResourcePolicyRuleProps[];
-
-  /**
-   * The namespace this role is created in. Permissions added to this role must
-   * refer to resources in the same namespace.
-   */
-  readonly namespace: string;
 }
 
 /**
@@ -188,20 +182,11 @@ export class Role extends RoleBase implements IRole {
 
   public readonly resourceType = 'roles';
 
-  constructor(scope: Construct, id: string, props: RoleProps) {
+  constructor(scope: Construct, id: string, props: RoleProps = {}) {
     super(scope, id);
 
-    if (props.metadata?.namespace && props.metadata.namespace !== props.namespace) {
-      throw new Error('If `metadata.namespace` is passed as an option, its value must match the value of `namespace`.');
-    }
-
-    const metadata: ApiObjectMetadata = {
-      ...props.metadata,
-      namespace: props.namespace,
-    };
-
     this.apiObject = new k8s.KubeRole(this, 'Resource', {
-      metadata,
+      metadata: props.metadata,
       rules: Lazy.any({ produce: () => this.synthesizeRules() }),
     });
 
@@ -359,7 +344,7 @@ export class ClusterRole extends RoleBase implements IRole, IClusterRole {
 /**
  * Options for `PolicyRule`.
  */
- export interface PolicyRuleProps {
+export interface PolicyRuleProps {
   /**
    * APIGroups is the name of the APIGroup that contains the resources.  If
    * multiple API groups are specified, any action requested against one of the
@@ -405,7 +390,7 @@ export class PolicyRule {
     this.config = config;
 
     if (config.nonResourceUrls && (config.apiGroups || config.resourceNames || config.resources)) {
-      throw new Error(`A rule cannot refer to both API resources and non-resource URLs.`);
+      throw new Error('A rule cannot refer to both API resources and non-resource URLs.');
     }
 
     if (!config.nonResourceUrls && !config.apiGroups && !config.resources) {

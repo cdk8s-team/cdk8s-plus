@@ -10,9 +10,7 @@ describe('Role', () => {
 
     // WHEN
     const defaultChild = Node.of(
-      new kplus.Role(chart, 'my-role', {
-        namespace: 'default',
-      }),
+      new kplus.Role(chart, 'pod-reader'),
     ).defaultChild as ApiObject;
 
     // THEN
@@ -26,9 +24,7 @@ describe('Role', () => {
     const chart = Testing.chart();
 
     // WHEN
-    new kplus.Role(chart, 'my-role', {
-      namespace: 'default',
-    });
+    new kplus.Role(chart, 'pod-reader');
 
     // THEN
     expect(Testing.synth(chart)).toMatchInlineSnapshot(`
@@ -37,8 +33,7 @@ Array [
     "apiVersion": "rbac.authorization.k8s.io/v1",
     "kind": "Role",
     "metadata": Object {
-      "name": "test-my-role-c8fa903b",
-      "namespace": "default",
+      "name": "test-pod-reader-c8ec1643",
     },
   },
 ]
@@ -51,9 +46,7 @@ Array [
     const chart = Testing.chart();
 
     // WHEN
-    const role = new kplus.Role(chart, 'pod-reader', {
-      namespace: 'default',
-    });
+    const role = new kplus.Role(chart, 'pod-reader');
     const rule = role.addRule({
       apiGroups: [''],
       resources: ['pods'],
@@ -72,22 +65,6 @@ Array [
     expect(rule.config.apiGroups).toEqual(['']);
     expect(rule.config.resources).toEqual(['pods']);
     expect(rule.config.verbs).toEqual(['get', 'watch', 'list']);
-
-  });
-
-  test('with a custom namespace', () => {
-
-    // GIVEN
-    const chart = Testing.chart();
-
-    // WHEN
-    new kplus.Role(chart, 'pod-reader', {
-      namespace: 'my-namespace',
-    });
-
-    // THEN
-    const manifest = Testing.synth(chart);
-    expect(manifest[0].metadata.namespace).toEqual('my-namespace');
 
   });
 
@@ -110,9 +87,7 @@ Array [
     });
 
     // WHEN
-    const role = new kplus.Role(chart, 'pod-reader', {
-      namespace: 'default',
-    });
+    const role = new kplus.Role(chart, 'pod-reader');
     role.allowRead(pod, secret);
 
     // THEN
@@ -134,9 +109,7 @@ Array [
     const chart = Testing.chart();
 
     // WHEN
-    const role = new kplus.Role(chart, 'pod-reader', {
-      namespace: 'default',
-    });
+    const role = new kplus.Role(chart, 'pod-reader');
     role.allowRead(kplus.ApiResource.SECRETS, kplus.ApiResource.PODS);
 
     // THEN
@@ -158,9 +131,7 @@ Array [
     const chart = Testing.chart();
 
     // WHEN
-    const role = new kplus.Role(chart, 'pod-reader', {
-      namespace: 'default',
-    });
+    const role = new kplus.Role(chart, 'pod-reader');
     role.allowRead(kplus.ApiResource.custom({ apiGroup: '', resourceType: 'pods/log' }));
 
     // THEN
@@ -256,7 +227,7 @@ Array [
     // WHEN
     const role = new kplus.ClusterRole(chart, 'pod-reader');
     const rule = role.addRule({
-      nonResourceUrls: ["/healthz", "/healthz/*"],
+      nonResourceUrls: ['/healthz', '/healthz/*'],
       verbs: ['get', 'post'],
     });
 
@@ -264,11 +235,11 @@ Array [
     const manifest = Testing.synth(chart);
     expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
       {
-        nonResourceURLs: ["/healthz", "/healthz/*"],
+        nonResourceURLs: ['/healthz', '/healthz/*'],
         verbs: ['get', 'post'],
       },
     ]));
-    expect(rule.config.nonResourceUrls).toEqual(["/healthz", "/healthz/*"]);
+    expect(rule.config.nonResourceUrls).toEqual(['/healthz', '/healthz/*']);
     expect(rule.config.verbs).toEqual(['get', 'post']);
 
   });
@@ -283,13 +254,13 @@ Array [
 
     // THEN
     expect(() => role.addRule({
-      verbs: ['get', 'read', 'list']
+      verbs: ['get', 'read', 'list'],
     })).toThrowError('A rule must refer to either API resources ("apiGroups" and "resources") or non-resource URLs ("nonResourceUrls").');
     expect(() => role.addRule({
       apiGroups: [''],
-      nonResourceUrls: ["/healthz", "/healthz/*"],
+      nonResourceUrls: ['/healthz', '/healthz/*'],
       resources: ['pod', 'log'],
-      verbs: ['get', 'read', 'list']
+      verbs: ['get', 'read', 'list'],
     })).toThrowError('A rule cannot refer to both API resources and non-resource URLs.');
 
   });

@@ -3970,7 +3970,6 @@ import org.cdk8s.plus22.Role;
 
 Role.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
-    .namespace(java.lang.String)
 //  .rules(java.util.List<ResourcePolicyRuleProps>)
     .build();
 ```
@@ -3992,17 +3991,6 @@ Role.Builder.create(Construct scope, java.lang.String id)
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleProps.parameter.namespace"></a>
-
-- *Type:* `java.lang.String`
-
-The namespace this role is created in.
-
-Permissions added to this role must
-refer to resources in the same namespace.
 
 ---
 
@@ -10738,7 +10726,6 @@ import org.cdk8s.plus22.RoleProps;
 
 RoleProps.builder()
 //  .metadata(ApiObjectMetadata)
-    .namespace(java.lang.String)
 //  .rules(java.util.List<ResourcePolicyRuleProps>)
     .build();
 ```
@@ -10752,21 +10739,6 @@ public ApiObjectMetadata getMetadata();
 - *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleProps.property.namespace"></a>
-
-```java
-public java.lang.String getNamespace();
-```
-
-- *Type:* `java.lang.String`
-
-The namespace this role is created in.
-
-Permissions added to this role must
-refer to resources in the same namespace.
 
 ---
 

@@ -2587,7 +2587,7 @@ Role is a namespaced, logical grouping of PolicyRules that can be referenced as 
 ```typescript
 import { Role } from 'cdk8s-plus-22'
 
-new Role(scope: Construct, id: string, props: RoleProps)
+new Role(scope: Construct, id: string, props?: RoleProps)
 ```
 
 ##### `scope`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.scope"></a>
@@ -2602,7 +2602,7 @@ new Role(scope: Construct, id: string, props: RoleProps)
 
 ---
 
-##### `props`<sup>Required</sup> <a name="cdk8s-plus-22.Role.parameter.props"></a>
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-22.Role.parameter.props"></a>
 
 - *Type:* [`cdk8s-plus-22.RoleProps`](#cdk8s-plus-22.RoleProps)
 
@@ -8580,21 +8580,6 @@ public readonly metadata: ApiObjectMetadata;
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="cdk8s-plus-22.RoleProps.property.namespace"></a>
-
-```typescript
-public readonly namespace: string;
-```
-
-- *Type:* `string`
-
-The namespace this role is created in.
-
-Permissions added to this role must
-refer to resources in the same namespace.
 
 ---
 

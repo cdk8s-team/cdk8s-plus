@@ -5785,7 +5785,6 @@ cdk8s_plus_22.Role(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
-  namespace: str,
   rules: typing.List[ResourcePolicyRuleProps] = None
 )
 ```
@@ -5807,17 +5806,6 @@ cdk8s_plus_22.Role(
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleProps.parameter.namespace"></a>
-
-- *Type:* `str`
-
-The namespace this role is created in.
-
-Permissions added to this role must
-refer to resources in the same namespace.
 
 ---
 
@@ -13141,7 +13129,6 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.RoleProps(
   metadata: ApiObjectMetadata = None,
-  namespace: str,
   rules: typing.List[ResourcePolicyRuleProps] = None
 )
 ```
@@ -13155,21 +13142,6 @@ metadata: ApiObjectMetadata
 - *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
 
 Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleProps.property.namespace"></a>
-
-```python
-namespace: str
-```
-
-- *Type:* `str`
-
-The namespace this role is created in.
-
-Permissions added to this role must
-refer to resources in the same namespace.
 
 ---
 
