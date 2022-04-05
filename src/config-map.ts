@@ -62,10 +62,9 @@ export class ConfigMap extends Resource implements IConfigMap {
    */
   public static fromConfigMapName(name: string): IConfigMap {
     return {
-      apiVersion: 'v1',
       apiGroup: '',
-      kind: 'ConfigMap',
       name,
+      ...k8s.KubeConfigMap.GVK,
     };
   }
 

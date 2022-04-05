@@ -76,10 +76,9 @@ export class Secret extends Resource implements ISecret {
    */
   public static fromSecretName(name: string): ISecret {
     return {
-      apiVersion: 'v1',
       apiGroup: '',
-      kind: 'Secret',
       name,
+      ...k8s.KubeSecret.GVK,
     };
   }
 

@@ -43,10 +43,9 @@ export class ServiceAccount extends Resource implements IServiceAccount {
    */
   public static fromServiceAccountName(name: string): IServiceAccount {
     return {
-      apiVersion: 'v1',
       apiGroup: '',
-      kind: 'ServiceAccount',
       name,
+      ...k8s.KubeServiceAccount.GVK,
     };
   }
 

@@ -94,9 +94,8 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
   public static fromPersistentVolumeName(volumeName: string): IPersistentVolume {
     return {
       apiGroup: '',
-      apiVersion: 'v1',
-      kind: 'PersistentVolume',
       name: volumeName,
+      ...k8s.KubePersistentVolume.GVK,
     };
   }
 

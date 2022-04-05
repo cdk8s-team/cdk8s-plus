@@ -87,9 +87,8 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
   public static fromClaimName(claimName: string): IPersistentVolumeClaim {
     return {
       apiGroup: '',
-      apiVersion: 'v1',
-      kind: 'PersistentVolumeClaim',
       name: claimName,
+      ...k8s.KubePersistentVolumeClaim.GVK,
     };
   }
 
