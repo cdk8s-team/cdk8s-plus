@@ -165,7 +165,7 @@ export class Service extends Resource {
   /**
    * Determines how the Service is exposed.
    */
-  public readonly serviceType: ServiceType;
+  public readonly type: ServiceType;
 
   /**
    * The externalName to be used for EXTERNAL_NAME types
@@ -196,9 +196,9 @@ export class Service extends Resource {
     this.externalName = props.externalName;
 
     if (props.externalName !== undefined) {
-      this.serviceType = ServiceType.EXTERNAL_NAME;
+      this.type = ServiceType.EXTERNAL_NAME;
     } else {
-      this.serviceType = props.type ?? ServiceType.CLUSTER_IP;
+      this.type = props.type ?? ServiceType.CLUSTER_IP;
     }
 
     this._externalIPs = props.externalIPs ?? [];
@@ -308,11 +308,11 @@ export class Service extends Resource {
    * @internal
    */
   public _toKube(): k8s.ServiceSpec {
-    if (this._ports.length === 0 && this.serviceType !== ServiceType.EXTERNAL_NAME) {
+    if (this._ports.length === 0 && this.type !== ServiceType.EXTERNAL_NAME) {
       throw new Error('A service must be configured with a port');
     }
 
-    if (this.serviceType === ServiceType.EXTERNAL_NAME && this.externalName === undefined) {
+    if (this.type === ServiceType.EXTERNAL_NAME && this.externalName === undefined) {
       throw new Error('A service with type EXTERNAL_NAME requires an externalName prop');
     }
 
@@ -328,16 +328,16 @@ export class Service extends Resource {
       });
     }
 
-    return this.serviceType !== ServiceType.EXTERNAL_NAME ? {
+    return this.type !== ServiceType.EXTERNAL_NAME ? {
       clusterIp: this.clusterIP,
       externalIPs: this._externalIPs,
       externalName: this.externalName,
-      type: this.serviceType,
+      type: this.type,
       selector: this._selector,
       ports: ports,
       loadBalancerSourceRanges: this._loadBalancerSourceRanges,
     } : {
-      type: this.serviceType,
+      type: this.type,
       externalName: this.externalName,
     };
   }
