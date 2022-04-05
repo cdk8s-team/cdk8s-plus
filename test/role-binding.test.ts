@@ -11,9 +11,14 @@ test('can create a RoleBinding from a Role', () => {
   // WHEN
   const user = new kplus.User({ name: 'alice@example.com' });
   const group = new kplus.Group({ name: 'frontend-admins' });
-  role.bind(user, group);
+  const binding = role.bind(user, group);
 
   // THEN
+  expect(binding.kind).toEqual('RoleBinding');
+  expect(binding.role).toEqual(role);
+  expect(binding.metadata.namespace).toBeUndefined();
+  expect(binding.subjects).toEqual([user, group]);
+
   const manifest = Testing.synth(chart);
   expect(manifest[1].kind).toEqual('RoleBinding');
   expect(manifest[1].roleRef.kind).toEqual('Role');
@@ -53,12 +58,16 @@ test('can create a RoleBinding from a ClusterRole', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user = new kplus.User({
-    name: 'alice@example.com',
-  });
-  role.bindInNamespace('development', user);
+  const user = new kplus.User({ name: 'alice@example.com' });
+  const group = new kplus.Group({ name: 'frontend-admins' });
+  const binding = role.bindInNamespace('development', user, group);
 
   // THEN
+  expect(binding.kind).toEqual('RoleBinding');
+  expect(binding.role).toEqual(role);
+  expect(binding.metadata.namespace).toEqual('development');
+  expect(binding.subjects).toEqual([user, group]);
+
   const manifest = Testing.synth(chart);
   expect(manifest[1].kind).toEqual('RoleBinding');
   expect(manifest[1].metadata.namespace).toEqual('development');
@@ -82,6 +91,11 @@ Object {
       "kind": "User",
       "name": "alice@example.com",
     },
+    Object {
+      "apiGroup": "rbac.authorization.k8s.io",
+      "kind": "Group",
+      "name": "frontend-admins",
+    },
   ],
 }
 `);
@@ -95,16 +109,21 @@ test('can call bindInNamespace multiple times', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user1 = new kplus.User({
-    name: 'alice@example.com',
-  });
-  const user2 = new kplus.User({
-    name: 'bob@example.com',
-  });
-  role.bindInNamespace('staging', user1);
-  role.bindInNamespace('development', user2);
+  const user1 = new kplus.User({ name: 'alice@example.com' });
+  const user2 = new kplus.User({ name: 'bob@example.com' });
+  const binding1 = role.bindInNamespace('staging', user1);
+  const binding2 = role.bindInNamespace('development', user2);
 
   // THEN
+  expect(binding1.kind).toEqual('RoleBinding');
+  expect(binding1.metadata.namespace).toEqual('staging');
+  expect(binding1.role).toEqual(role);
+  expect(binding1.subjects).toEqual([user1]);
+  expect(binding2.kind).toEqual('RoleBinding');
+  expect(binding2.metadata.namespace).toEqual('development');
+  expect(binding2.role).toEqual(role);
+  expect(binding2.subjects).toEqual([user2]);
+
   const manifest = Testing.synth(chart);
   expect(manifest[1].kind).toEqual('RoleBinding');
   expect(manifest[1].metadata.namespace).toEqual('staging');
@@ -124,12 +143,16 @@ test('can create a ClusterRoleBinding from a ClusterRole', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user = new kplus.User({
-    name: 'alice@example.com',
-  });
-  role.bind(user);
+  const user = new kplus.User({ name: 'alice@example.com' });
+  const group = new kplus.Group({ name: 'frontend-admins' });
+  const binding = role.bind(user, group);
 
   // THEN
+  expect(binding.kind).toEqual('ClusterRoleBinding');
+  expect(binding.metadata.namespace).toBeUndefined();
+  expect(binding.role).toEqual(role);
+  expect(binding.subjects).toEqual([user, group]);
+
   const manifest = Testing.synth(chart);
   expect(manifest[1].kind).toEqual('ClusterRoleBinding');
   expect(manifest[1].roleRef.kind).toEqual('ClusterRole');
@@ -151,6 +174,11 @@ Object {
       "kind": "User",
       "name": "alice@example.com",
     },
+    Object {
+      "apiGroup": "rbac.authorization.k8s.io",
+      "kind": "Group",
+      "name": "frontend-admins",
+    },
   ],
 }
 `);
@@ -165,9 +193,14 @@ test('can bind a ServiceAccount to a role', () => {
 
   // WHEN
   const serviceAccount = new kplus.ServiceAccount(chart, 'my-service-account');
-  role.bind(serviceAccount);
+  const binding = role.bind(serviceAccount);
 
   // THEN
+  expect(binding.kind).toEqual('RoleBinding');
+  expect(binding.metadata.namespace).toBeUndefined();
+  expect(binding.role).toEqual(role);
+  expect(binding.subjects).toEqual([serviceAccount]);
+
   const manifest = Testing.synth(chart);
   expect(manifest[1].subjects).toEqual([
     {
@@ -192,6 +225,11 @@ test('can add subjects to a RoleBinding after creating it', () => {
   binding.addSubjects(user, group);
 
   // THEN
+  expect(binding.kind).toEqual('RoleBinding');
+  expect(binding.metadata.namespace).toBeUndefined();
+  expect(binding.role).toEqual(role);
+  expect(binding.subjects).toEqual([user, group]);
+
   const manifest = Testing.synth(chart);
   expect(manifest[1].subjects).toEqual([
     {
