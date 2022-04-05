@@ -390,8 +390,46 @@ export interface PolicyRuleProps {
  * ClusterRole.
  */
 export class PolicyRule {
-  constructor(public readonly config: PolicyRuleProps) {
-    this.config = config;
+  /**
+   * The name of the APIGroups that contains the resources.  If multiple API
+   * groups are specified, any action requested against one of the enumerated
+   * resources in any API group will be allowed.
+   */
+  readonly apiGroups?: string[];
+
+  /**
+   * A set of partial urls that a user should have access to. *s are allowed,
+   * but only as the full, final step in the path. Since non-resource URLs are
+   * not namespaced, this field is only applicable for ClusterRoles referenced
+   * from a ClusterRoleBinding. Rules can either apply to API resources (such as
+   * "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not
+   * both.
+   */
+  readonly nonResourceUrls?: string[];
+
+  /**
+   * An optional white list of names that the rule applies to. An empty set
+   * means that everything is allowed.
+   */
+  readonly resourceNames?: string[];
+
+  /**
+   * A list of resources this rule applies to. '*' represents all resources.
+   */
+  readonly resources?: string[];
+
+  /**
+   * A list of Verbs that apply to ALL the ResourceKinds and
+   * AttributeRestrictions contained in this rule. '*' represents all verbs.
+   */
+  readonly verbs: string[];
+
+  constructor(config: PolicyRuleProps) {
+    this.apiGroups = config.apiGroups;
+    this.nonResourceUrls = config.nonResourceUrls;
+    this.resourceNames = config.resourceNames;
+    this.resources = config.resources;
+    this.verbs = config.verbs;
 
     if (config.nonResourceUrls && (config.apiGroups || config.resourceNames || config.resources)) {
       throw new Error('A rule cannot refer to both API resources and non-resource URLs.');
@@ -407,13 +445,13 @@ export class PolicyRule {
    */
   public _toKube(): k8s.PolicyRule {
     return filterUndefined({
-      apiGroups: this.config.apiGroups,
-      // named due to bug in how k8s is generated
+      apiGroups: this.apiGroups,
+      // named due to bug in how imports are generated
       // see https://github.com/cdk8s-team/cdk8s-cli/issues/251
-      nonResourceUrLs: this.config.nonResourceUrls,
-      resourceNames: this.config.resourceNames,
-      resources: this.config.resources,
-      verbs: this.config.verbs,
+      nonResourceUrLs: this.nonResourceUrls,
+      resourceNames: this.resourceNames,
+      resources: this.resources,
+      verbs: this.verbs,
     });
   }
 }

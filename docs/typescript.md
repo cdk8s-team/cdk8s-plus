@@ -11388,13 +11388,81 @@ new PolicyRule(config: PolicyRuleProps)
 
 #### Properties <a name="Properties"></a>
 
-##### `config`<sup>Required</sup> <a name="cdk8s-plus-22.PolicyRule.property.config"></a>
+##### `verbs`<sup>Required</sup> <a name="cdk8s-plus-22.PolicyRule.property.verbs"></a>
 
 ```typescript
-public readonly config: PolicyRuleProps;
+public readonly verbs: string[];
 ```
 
-- *Type:* [`cdk8s-plus-22.PolicyRuleProps`](#cdk8s-plus-22.PolicyRuleProps)
+- *Type:* `string`[]
+
+A list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `apiGroups`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRule.property.apiGroups"></a>
+
+```typescript
+public readonly apiGroups: string[];
+```
+
+- *Type:* `string`[]
+
+The name of the APIGroups that contains the resources.
+
+If multiple API
+groups are specified, any action requested against one of the enumerated
+resources in any API group will be allowed.
+
+---
+
+##### `nonResourceUrls`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRule.property.nonResourceUrls"></a>
+
+```typescript
+public readonly nonResourceUrls: string[];
+```
+
+- *Type:* `string`[]
+
+A set of partial urls that a user should have access to.
+
+*s are allowed,
+but only as the full, final step in the path. Since non-resource URLs are
+not namespaced, this field is only applicable for ClusterRoles referenced
+from a ClusterRoleBinding. Rules can either apply to API resources (such as
+"pods" or "secrets") or non-resource URL paths (such as "/api"),  but not
+both.
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRule.property.resourceNames"></a>
+
+```typescript
+public readonly resourceNames: string[];
+```
+
+- *Type:* `string`[]
+
+An optional white list of names that the rule applies to.
+
+An empty set
+means that everything is allowed.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s-plus-22.PolicyRule.property.resources"></a>
+
+```typescript
+public readonly resources: string[];
+```
+
+- *Type:* `string`[]
+
+A list of resources this rule applies to.
+
+'*' represents all resources.
 
 ---
 

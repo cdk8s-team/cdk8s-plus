@@ -17162,13 +17162,81 @@ resources.
 
 #### Properties <a name="Properties"></a>
 
-##### `config`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRule.property.config"></a>
+##### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRule.property.verbs"></a>
 
 ```python
-config: PolicyRuleProps
+verbs: typing.List[str]
 ```
 
-- *Type:* [`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)
+- *Type:* typing.List[`str`]
+
+A list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `api_groups`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRule.property.api_groups"></a>
+
+```python
+api_groups: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+The name of the APIGroups that contains the resources.
+
+If multiple API
+groups are specified, any action requested against one of the enumerated
+resources in any API group will be allowed.
+
+---
+
+##### `non_resource_urls`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRule.property.non_resource_urls"></a>
+
+```python
+non_resource_urls: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+A set of partial urls that a user should have access to.
+
+*s are allowed,
+but only as the full, final step in the path. Since non-resource URLs are
+not namespaced, this field is only applicable for ClusterRoles referenced
+from a ClusterRoleBinding. Rules can either apply to API resources (such as
+"pods" or "secrets") or non-resource URL paths (such as "/api"),  but not
+both.
+
+---
+
+##### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRule.property.resource_names"></a>
+
+```python
+resource_names: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+An optional white list of names that the rule applies to.
+
+An empty set
+means that everything is allowed.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRule.property.resources"></a>
+
+```python
+resources: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+A list of resources this rule applies to.
+
+'*' represents all resources.
 
 ---
 

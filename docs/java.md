@@ -14209,13 +14209,81 @@ resources.
 
 #### Properties <a name="Properties"></a>
 
-##### `config`<sup>Required</sup> <a name="org.cdk8s.plus22.PolicyRule.property.config"></a>
+##### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.PolicyRule.property.verbs"></a>
 
 ```java
-public PolicyRuleProps getConfig();
+public java.util.List<java.lang.String> getVerbs();
 ```
 
-- *Type:* [`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)
+- *Type:* java.util.List<`java.lang.String`>
+
+A list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `apiGroups`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRule.property.apiGroups"></a>
+
+```java
+public java.util.List<java.lang.String> getApiGroups();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+The name of the APIGroups that contains the resources.
+
+If multiple API
+groups are specified, any action requested against one of the enumerated
+resources in any API group will be allowed.
+
+---
+
+##### `nonResourceUrls`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRule.property.nonResourceUrls"></a>
+
+```java
+public java.util.List<java.lang.String> getNonResourceUrls();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+A set of partial urls that a user should have access to.
+
+*s are allowed,
+but only as the full, final step in the path. Since non-resource URLs are
+not namespaced, this field is only applicable for ClusterRoles referenced
+from a ClusterRoleBinding. Rules can either apply to API resources (such as
+"pods" or "secrets") or non-resource URL paths (such as "/api"),  but not
+both.
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRule.property.resourceNames"></a>
+
+```java
+public java.util.List<java.lang.String> getResourceNames();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+An optional white list of names that the rule applies to.
+
+An empty set
+means that everything is allowed.
+
+---
+
+##### `resources`<sup>Optional</sup> <a name="org.cdk8s.plus22.PolicyRule.property.resources"></a>
+
+```java
+public java.util.List<java.lang.String> getResources();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+A list of resources this rule applies to.
+
+'*' represents all resources.
 
 ---
 

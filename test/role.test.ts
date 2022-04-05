@@ -63,9 +63,9 @@ Array [
         verbs: ['get', 'watch', 'list'],
       },
     ]));
-    expect(rule.config.apiGroups).toEqual(['']);
-    expect(rule.config.resources).toEqual(['pods']);
-    expect(rule.config.verbs).toEqual(['get', 'watch', 'list']);
+    expect(rule.apiGroups).toEqual(['']);
+    expect(rule.resources).toEqual(['pods']);
+    expect(rule.verbs).toEqual(['get', 'watch', 'list']);
 
   });
 
@@ -215,9 +215,9 @@ Array [
         verbs: ['get', 'watch', 'list'],
       },
     ]));
-    expect(rule.config.apiGroups).toEqual(['']);
-    expect(rule.config.resources).toEqual(['pods']);
-    expect(rule.config.verbs).toEqual(['get', 'watch', 'list']);
+    expect(rule.apiGroups).toEqual(['']);
+    expect(rule.resources).toEqual(['pods']);
+    expect(rule.verbs).toEqual(['get', 'watch', 'list']);
 
   });
 
@@ -241,8 +241,8 @@ Array [
         verbs: ['get', 'post'],
       },
     ]));
-    expect(rule.config.nonResourceUrls).toEqual(['/healthz', '/healthz/*']);
-    expect(rule.config.verbs).toEqual(['get', 'post']);
+    expect(rule.nonResourceUrls).toEqual(['/healthz', '/healthz/*']);
+    expect(rule.verbs).toEqual(['get', 'post']);
 
   });
 
