@@ -10,42 +10,25 @@ import { filterUndefined, undefinedIfEmpty } from './utils';
  * Properties for `RoleBase`.
  */
 export interface RoleCommonProps extends ResourceProps {
-  /**
-   * A list of explicit rules the role should grant permission to.
-   *
-   * @default []
-   */
-  readonly rules?: PolicyRuleProps[];
+
 }
 
 /**
  * An abstract class containing APIs shared between `Role` and `ClusterRole`.
  */
-export abstract class RoleBase extends Resource implements IResource {
+abstract class RoleBase extends Resource implements IResource {
   /**
    * @internal
    */
   protected readonly _rules: Array<PolicyRule>;
 
-  constructor(scope: Construct, id: string, props: RoleCommonProps = {}) {
+  constructor(scope: Construct, id: string, _props: RoleCommonProps = {}) {
     super(scope, id);
 
     this._rules = [];
-
-    for (const rule of props.rules ?? []) {
-      this.addRule(rule);
-    }
   }
 
-  /**
-   * Directly add a custom policy rule to the role.
-   * @param rule The rule to add
-   */
-  public addRule(rule: PolicyRuleProps): PolicyRule {
-    const impl = new PolicyRule(rule);
-    this._rules.push(impl);
-    return impl;
-  }
+  public abstract addRule(rule: PolicyRuleProps): PolicyRule;
 
   /**
    * Add "create" permission for the resources.
@@ -180,6 +163,13 @@ export interface IRole extends IResource {
  */
 export interface RoleProps extends RoleCommonProps {
   /**
+   * A list of explicit rules the role should grant permission to.
+   *
+   * @default []
+   */
+  readonly rules?: ResourcePolicyRuleProps[];
+
+  /**
    * The namespace this role is created in. Permissions added to this role must
    * refer to resources in the same namespace.
    */
@@ -214,6 +204,20 @@ export class Role extends RoleBase implements IRole {
       metadata,
       rules: Lazy.any({ produce: () => this.synthesizeRules() }),
     });
+
+    for (const rule of props.rules ?? []) {
+      this.addRule(rule);
+    }
+  }
+
+  /**
+   * Directly add a custom policy rule to the role.
+   * @param rule The rule to add
+   */
+  public addRule(rule: ResourcePolicyRuleProps): ResourcePolicyRule {
+    const impl = new ResourcePolicyRule(rule);
+    this._rules.push(impl);
+    return impl;
   }
 
   private synthesizeRules(): any {
@@ -247,6 +251,13 @@ export interface IClusterRole extends IResource {
  */
 export interface ClusterRoleProps extends RoleCommonProps {
   /**
+   * A list of explicit rules the role should grant permission to.
+   *
+   * @default []
+   */
+  readonly rules?: PolicyRuleProps[];
+
+  /**
    * Specify labels that should be used to locate ClusterRoles, whose rules
    * will be automatically filled into this ClusterRole's rules.
    */
@@ -257,7 +268,7 @@ export interface ClusterRoleProps extends RoleCommonProps {
  * ClusterRole is a cluster level, logical grouping of PolicyRules that can be
  * referenced as a unit by a RoleBinding or ClusterRoleBinding.
  */
-export class ClusterRole extends RoleBase implements IClusterRole {
+export class ClusterRole extends RoleBase implements IRole, IClusterRole {
   /**
    * @see base.Resource.apiObject
    */
@@ -277,6 +288,20 @@ export class ClusterRole extends RoleBase implements IClusterRole {
       rules: Lazy.any({ produce: () => this.synthesizeRules() }),
       aggregationRule: Lazy.any({ produce: () => this.synthesizeAggregationRules() }),
     });
+
+    for (const rule of props.rules ?? []) {
+      this.addRule(rule);
+    }
+  }
+
+  /**
+   * Directly add a custom policy rule to the role.
+   * @param rule The rule to add
+   */
+  public addRule(rule: PolicyRuleProps): PolicyRule {
+    const impl = new PolicyRule(rule);
+    this._rules.push(impl);
+    return impl;
   }
 
   /**
@@ -332,9 +357,9 @@ export class ClusterRole extends RoleBase implements IClusterRole {
 }
 
 /**
- * Options for `Rule`.
+ * Options for `PolicyRule`.
  */
-export interface PolicyRuleProps {
+ export interface PolicyRuleProps {
   /**
    * APIGroups is the name of the APIGroup that contains the resources.  If
    * multiple API groups are specified, any action requested against one of the
@@ -372,17 +397,75 @@ export interface PolicyRuleProps {
 }
 
 /**
- * Information that describes a policy rule, but does not contain information
- * about who the rule applies to or which namespace the rule applies to.
+ * Information that describes a policy rule that can be applied to a
+ * ClusterRole.
  */
 export class PolicyRule {
-  constructor(public readonly config: PolicyRuleProps) {}
+  constructor(public readonly config: PolicyRuleProps) {
+    this.config = config;
+
+    if (config.nonResourceUrls && (config.apiGroups || config.resourceNames || config.resources)) {
+      throw new Error(`A rule cannot refer to both API resources and non-resource URLs.`);
+    }
+
+    if (!config.nonResourceUrls && !config.apiGroups && !config.resources) {
+      throw new Error('A rule must refer to either API resources ("apiGroups" and "resources") or non-resource URLs ("nonResourceUrls").');
+    }
+  }
 
   /**
    * @internal
    */
   public _toKube(): k8s.PolicyRule {
-    return filterUndefined(this.config);
+    return filterUndefined({
+      apiGroups: this.config.apiGroups,
+      // named due to bug in how k8s is generated
+      // see https://github.com/cdk8s-team/cdk8s-cli/issues/251
+      nonResourceUrLs: this.config.nonResourceUrls,
+      resourceNames: this.config.resourceNames,
+      resources: this.config.resources,
+      verbs: this.config.verbs,
+    });
+  }
+}
+
+/**
+ * Options for `ResourcePolicyRule`.
+ */
+export interface ResourcePolicyRuleProps {
+  /**
+   * APIGroups is the name of the APIGroup that contains the resources.  If
+   * multiple API groups are specified, any action requested against one of the
+   * enumerated resources in any API group will be allowed.
+   */
+  readonly apiGroups: string[];
+
+  /**
+   * ResourceNames is an optional white list of names that the rule applies to.
+   * An empty set means that everything is allowed.
+   */
+  readonly resourceNames?: string[];
+
+  /**
+   * Resources is a list of resources this rule applies to. '*' represents all
+   * resources.
+   */
+  readonly resources: string[];
+
+  /**
+   * Verbs is a list of Verbs that apply to ALL the ResourceKinds and
+   * AttributeRestrictions contained in this rule. '*' represents all verbs.
+   */
+  readonly verbs: string[];
+}
+
+/**
+ * Information that describes a policy rule about an API resource. This rule can
+ * be applied to a Role or a ClusterRole.
+ */
+export class ResourcePolicyRule extends PolicyRule {
+  constructor(config: ResourcePolicyRuleProps) {
+    super(config);
   }
 }
 

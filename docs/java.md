@@ -557,7 +557,7 @@ The user name for authentication.
 
 ### ClusterRole <a name="org.cdk8s.plus22.ClusterRole"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IClusterRole`](#org.cdk8s.plus22.IClusterRole)
+- *Implements:* [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole), [`org.cdk8s.plus22.IClusterRole`](#org.cdk8s.plus22.IClusterRole), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
 
 ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
 
@@ -568,8 +568,8 @@ import org.cdk8s.plus22.ClusterRole;
 
 ClusterRole.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
-//  .rules(java.util.List<PolicyRuleProps>)
 //  .aggregationLabels(java.util.Map<java.lang.String, java.lang.String>)
+//  .rules(java.util.List<PolicyRuleProps>)
     .build();
 ```
 
@@ -593,6 +593,14 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `aggregationLabels`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.parameter.aggregationLabels"></a>
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+
+---
+
 ##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.parameter.rules"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
@@ -602,15 +610,21 @@ A list of explicit rules the role should grant permission to.
 
 ---
 
-##### `aggregationLabels`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.parameter.aggregationLabels"></a>
+#### Methods <a name="Methods"></a>
 
-- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
+##### `addRule` <a name="org.cdk8s.plus22.ClusterRole.addRule"></a>
 
-Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+```java
+public addRule(PolicyRuleProps rule)
+```
+
+###### `rule`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.rule"></a>
+
+- *Type:* [`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)
+
+The rule to add.
 
 ---
-
-#### Methods <a name="Methods"></a>
 
 ##### `aggregateFrom` <a name="org.cdk8s.plus22.ClusterRole.aggregateFrom"></a>
 
@@ -621,6 +635,166 @@ public aggregateFrom(ClusterRole role)
 ###### `role`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.role"></a>
 
 - *Type:* [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole)
+
+---
+
+##### `allow` <a name="org.cdk8s.plus22.ClusterRole.allow"></a>
+
+```java
+public allow(java.util.List<java.lang.String> verbs, IApiResource resources)
+```
+
+###### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.verbs"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowCreate` <a name="org.cdk8s.plus22.ClusterRole.allowCreate"></a>
+
+```java
+public allowCreate(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowDelete` <a name="org.cdk8s.plus22.ClusterRole.allowDelete"></a>
+
+```java
+public allowDelete(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowDeleteCollection` <a name="org.cdk8s.plus22.ClusterRole.allowDeleteCollection"></a>
+
+```java
+public allowDeleteCollection(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowGet` <a name="org.cdk8s.plus22.ClusterRole.allowGet"></a>
+
+```java
+public allowGet(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowList` <a name="org.cdk8s.plus22.ClusterRole.allowList"></a>
+
+```java
+public allowList(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowPatch` <a name="org.cdk8s.plus22.ClusterRole.allowPatch"></a>
+
+```java
+public allowPatch(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowRead` <a name="org.cdk8s.plus22.ClusterRole.allowRead"></a>
+
+```java
+public allowRead(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowReadWrite` <a name="org.cdk8s.plus22.ClusterRole.allowReadWrite"></a>
+
+```java
+public allowReadWrite(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowUpdate` <a name="org.cdk8s.plus22.ClusterRole.allowUpdate"></a>
+
+```java
+public allowUpdate(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowWatch` <a name="org.cdk8s.plus22.ClusterRole.allowWatch"></a>
+
+```java
+public allowWatch(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
 
 ---
 
@@ -672,6 +846,20 @@ public java.lang.String getResourceType();
 - *Type:* `java.lang.String`
 
 The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
+##### `rules`<sup>Required</sup> <a name="org.cdk8s.plus22.ClusterRole.property.rules"></a>
+
+```java
+public java.util.List<PolicyRule> getRules();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRule`](#org.cdk8s.plus22.PolicyRule)>
+
+List of rules included in this role.
+
+Returns a copy. To add a rule, use `addRule()`.
 
 ---
 
@@ -3771,7 +3959,7 @@ If this is omitted, the ApiResource should represent all objects of the given ty
 
 ### Role <a name="org.cdk8s.plus22.Role"></a>
 
-- *Implements:* [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole)
+- *Implements:* [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
 
 Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
 
@@ -3782,8 +3970,8 @@ import org.cdk8s.plus22.Role;
 
 Role.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
-//  .rules(java.util.List<PolicyRuleProps>)
     .namespace(java.lang.String)
+//  .rules(java.util.List<ResourcePolicyRuleProps>)
     .build();
 ```
 
@@ -3807,15 +3995,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleProps.parameter.rules"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
 ##### `namespace`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleProps.parameter.namespace"></a>
 
 - *Type:* `java.lang.String`
@@ -3827,7 +4006,190 @@ refer to resources in the same namespace.
 
 ---
 
+##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleProps.parameter.rules"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ResourcePolicyRuleProps`](#org.cdk8s.plus22.ResourcePolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
+
+---
+
 #### Methods <a name="Methods"></a>
+
+##### `addRule` <a name="org.cdk8s.plus22.Role.addRule"></a>
+
+```java
+public addRule(ResourcePolicyRuleProps rule)
+```
+
+###### `rule`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.rule"></a>
+
+- *Type:* [`org.cdk8s.plus22.ResourcePolicyRuleProps`](#org.cdk8s.plus22.ResourcePolicyRuleProps)
+
+The rule to add.
+
+---
+
+##### `allow` <a name="org.cdk8s.plus22.Role.allow"></a>
+
+```java
+public allow(java.util.List<java.lang.String> verbs, IApiResource resources)
+```
+
+###### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.verbs"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+---
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowCreate` <a name="org.cdk8s.plus22.Role.allowCreate"></a>
+
+```java
+public allowCreate(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowDelete` <a name="org.cdk8s.plus22.Role.allowDelete"></a>
+
+```java
+public allowDelete(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowDeleteCollection` <a name="org.cdk8s.plus22.Role.allowDeleteCollection"></a>
+
+```java
+public allowDeleteCollection(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowGet` <a name="org.cdk8s.plus22.Role.allowGet"></a>
+
+```java
+public allowGet(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowList` <a name="org.cdk8s.plus22.Role.allowList"></a>
+
+```java
+public allowList(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowPatch` <a name="org.cdk8s.plus22.Role.allowPatch"></a>
+
+```java
+public allowPatch(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowRead` <a name="org.cdk8s.plus22.Role.allowRead"></a>
+
+```java
+public allowRead(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowReadWrite` <a name="org.cdk8s.plus22.Role.allowReadWrite"></a>
+
+```java
+public allowReadWrite(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowUpdate` <a name="org.cdk8s.plus22.Role.allowUpdate"></a>
+
+```java
+public allowUpdate(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allowWatch` <a name="org.cdk8s.plus22.Role.allowWatch"></a>
+
+```java
+public allowWatch(IApiResource resources)
+```
+
+###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.parameter.resources"></a>
+
+- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+
+The resource(s) to apply to.
+
+---
 
 ##### `bind` <a name="org.cdk8s.plus22.Role.bind"></a>
 
@@ -3858,233 +4220,7 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
-
-### RoleBase <a name="org.cdk8s.plus22.RoleBase"></a>
-
-- *Implements:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
-
-An abstract class containing APIs shared between `Role` and `ClusterRole`.
-
-#### Initializers <a name="org.cdk8s.plus22.RoleBase.Initializer"></a>
-
-```java
-import org.cdk8s.plus22.RoleBase;
-
-RoleBase.Builder.create(Construct scope, java.lang.String id)
-//  .metadata(ApiObjectMetadata)
-//  .rules(java.util.List<PolicyRuleProps>)
-    .build();
-```
-
-##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.scope"></a>
-
-- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
-
----
-
-##### `id`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.id"></a>
-
-- *Type:* `java.lang.String`
-
----
-
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleCommonProps.parameter.metadata"></a>
-
-- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
-
-Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleCommonProps.parameter.rules"></a>
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
-#### Methods <a name="Methods"></a>
-
-##### `addRule` <a name="org.cdk8s.plus22.RoleBase.addRule"></a>
-
-```java
-public addRule(PolicyRuleProps rule)
-```
-
-###### `rule`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.rule"></a>
-
-- *Type:* [`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)
-
-The rule to add.
-
----
-
-##### `allow` <a name="org.cdk8s.plus22.RoleBase.allow"></a>
-
-```java
-public allow(java.util.List<java.lang.String> verbs, IApiResource resources)
-```
-
-###### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.verbs"></a>
-
-- *Type:* java.util.List<`java.lang.String`>
-
----
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowCreate` <a name="org.cdk8s.plus22.RoleBase.allowCreate"></a>
-
-```java
-public allowCreate(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowDelete` <a name="org.cdk8s.plus22.RoleBase.allowDelete"></a>
-
-```java
-public allowDelete(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowDeleteCollection` <a name="org.cdk8s.plus22.RoleBase.allowDeleteCollection"></a>
-
-```java
-public allowDeleteCollection(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowGet` <a name="org.cdk8s.plus22.RoleBase.allowGet"></a>
-
-```java
-public allowGet(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowList` <a name="org.cdk8s.plus22.RoleBase.allowList"></a>
-
-```java
-public allowList(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowPatch` <a name="org.cdk8s.plus22.RoleBase.allowPatch"></a>
-
-```java
-public allowPatch(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowRead` <a name="org.cdk8s.plus22.RoleBase.allowRead"></a>
-
-```java
-public allowRead(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowReadWrite` <a name="org.cdk8s.plus22.RoleBase.allowReadWrite"></a>
-
-```java
-public allowReadWrite(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowUpdate` <a name="org.cdk8s.plus22.RoleBase.allowUpdate"></a>
-
-```java
-public allowUpdate(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allowWatch` <a name="org.cdk8s.plus22.RoleBase.allowWatch"></a>
-
-```java
-public allowWatch(IApiResource resources)
-```
-
-###### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-
-#### Properties <a name="Properties"></a>
-
-##### `rules`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleBase.property.rules"></a>
+##### `rules`<sup>Required</sup> <a name="org.cdk8s.plus22.Role.property.rules"></a>
 
 ```java
 public java.util.List<PolicyRule> getRules();
@@ -6338,8 +6474,8 @@ import org.cdk8s.plus22.ClusterRoleProps;
 
 ClusterRoleProps.builder()
 //  .metadata(ApiObjectMetadata)
-//  .rules(java.util.List<PolicyRuleProps>)
 //  .aggregationLabels(java.util.Map<java.lang.String, java.lang.String>)
+//  .rules(java.util.List<PolicyRuleProps>)
     .build();
 ```
 
@@ -6355,6 +6491,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `aggregationLabels`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.property.aggregationLabels"></a>
+
+```java
+public java.util.Map<java.lang.String, java.lang.String> getAggregationLabels();
+```
+
+- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+
+---
+
 ##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.property.rules"></a>
 
 ```java
@@ -6365,18 +6513,6 @@ public java.util.List<PolicyRuleProps> getRules();
 - *Default:* []
 
 A list of explicit rules the role should grant permission to.
-
----
-
-##### `aggregationLabels`<sup>Optional</sup> <a name="org.cdk8s.plus22.ClusterRoleProps.property.aggregationLabels"></a>
-
-```java
-public java.util.Map<java.lang.String, java.lang.String> getAggregationLabels();
-```
-
-- *Type:* java.util.Map<java.lang.String, `java.lang.String`>
-
-Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
 
 ---
 
@@ -10221,7 +10357,7 @@ The pod metadata.
 
 ### PolicyRuleProps <a name="org.cdk8s.plus22.PolicyRuleProps"></a>
 
-Options for `Rule`.
+Options for `PolicyRule`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -10409,6 +10545,82 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### ResourcePolicyRuleProps <a name="org.cdk8s.plus22.ResourcePolicyRuleProps"></a>
+
+Options for `ResourcePolicyRule`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ResourcePolicyRuleProps;
+
+ResourcePolicyRuleProps.builder()
+    .apiGroups(java.util.List<java.lang.String>)
+    .resources(java.util.List<java.lang.String>)
+    .verbs(java.util.List<java.lang.String>)
+//  .resourceNames(java.util.List<java.lang.String>)
+    .build();
+```
+
+##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.property.apiGroups"></a>
+
+```java
+public java.util.List<java.lang.String> getApiGroups();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.property.resources"></a>
+
+```java
+public java.util.List<java.lang.String> getResources();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+##### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.property.verbs"></a>
+
+```java
+public java.util.List<java.lang.String> getVerbs();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.property.resourceNames"></a>
+
+```java
+public java.util.List<java.lang.String> getResourceNames();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
 ### ResourceProps <a name="org.cdk8s.plus22.ResourceProps"></a>
 
 Initialization properties for resources.
@@ -10500,7 +10712,6 @@ import org.cdk8s.plus22.RoleCommonProps;
 
 RoleCommonProps.builder()
 //  .metadata(ApiObjectMetadata)
-//  .rules(java.util.List<PolicyRuleProps>)
     .build();
 ```
 
@@ -10516,19 +10727,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleCommonProps.property.rules"></a>
-
-```java
-public java.util.List<PolicyRuleProps> getRules();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
 ### RoleProps <a name="org.cdk8s.plus22.RoleProps"></a>
 
 Properties for `Role`.
@@ -10540,8 +10738,8 @@ import org.cdk8s.plus22.RoleProps;
 
 RoleProps.builder()
 //  .metadata(ApiObjectMetadata)
-//  .rules(java.util.List<PolicyRuleProps>)
     .namespace(java.lang.String)
+//  .rules(java.util.List<ResourcePolicyRuleProps>)
     .build();
 ```
 
@@ -10557,19 +10755,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleProps.property.rules"></a>
-
-```java
-public java.util.List<PolicyRuleProps> getRules();
-```
-
-- *Type:* java.util.List<[`org.cdk8s.plus22.PolicyRuleProps`](#org.cdk8s.plus22.PolicyRuleProps)>
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
 ##### `namespace`<sup>Required</sup> <a name="org.cdk8s.plus22.RoleProps.property.namespace"></a>
 
 ```java
@@ -10582,6 +10767,19 @@ The namespace this role is created in.
 
 Permissions added to this role must
 refer to resources in the same namespace.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="org.cdk8s.plus22.RoleProps.property.rules"></a>
+
+```java
+public java.util.List<ResourcePolicyRuleProps> getRules();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus22.ResourcePolicyRuleProps`](#org.cdk8s.plus22.ResourcePolicyRuleProps)>
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -14002,7 +14200,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### PolicyRule <a name="org.cdk8s.plus22.PolicyRule"></a>
 
-Information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.
+Information that describes a policy rule that can be applied to a ClusterRole.
 
 #### Initializers <a name="org.cdk8s.plus22.PolicyRule.Initializer"></a>
 
@@ -14163,6 +14361,73 @@ Probe.fromTcpSocket(TcpSocketProbeOptions options)
 Options.
 
 ---
+
+
+
+### ResourcePolicyRule <a name="org.cdk8s.plus22.ResourcePolicyRule"></a>
+
+Information that describes a policy rule about an API resource.
+
+This rule can
+be applied to a Role or a ClusterRole.
+
+#### Initializers <a name="org.cdk8s.plus22.ResourcePolicyRule.Initializer"></a>
+
+```java
+import org.cdk8s.plus22.ResourcePolicyRule;
+
+ResourcePolicyRule.Builder.create()
+    .apiGroups(java.util.List<java.lang.String>)
+    .resources(java.util.List<java.lang.String>)
+    .verbs(java.util.List<java.lang.String>)
+//  .resourceNames(java.util.List<java.lang.String>)
+    .build();
+```
+
+##### `apiGroups`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.parameter.apiGroups"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `resources`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.parameter.resources"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+##### `verbs`<sup>Required</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.parameter.verbs"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `resourceNames`<sup>Optional</sup> <a name="org.cdk8s.plus22.ResourcePolicyRuleProps.parameter.resourceNames"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+
 
 
 
@@ -14507,7 +14772,7 @@ public java.lang.String getName();
 
 ### IApiResource <a name="org.cdk8s.plus22.IApiResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource), [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole), [`org.cdk8s.plus22.ClusterRoleBinding`](#org.cdk8s.plus22.ClusterRoleBinding), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.DaemonSet`](#org.cdk8s.plus22.DaemonSet), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.RoleBase`](#org.cdk8s.plus22.RoleBase), [`org.cdk8s.plus22.RoleBinding`](#org.cdk8s.plus22.RoleBinding), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
+- *Implemented By:* [`org.cdk8s.plus22.ApiResource`](#org.cdk8s.plus22.ApiResource), [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole), [`org.cdk8s.plus22.ClusterRoleBinding`](#org.cdk8s.plus22.ClusterRoleBinding), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.DaemonSet`](#org.cdk8s.plus22.DaemonSet), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.RoleBinding`](#org.cdk8s.plus22.RoleBinding), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IApiResource`](#org.cdk8s.plus22.IApiResource)
 
 Represents a resource or collection of resources.
 
@@ -15031,7 +15296,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="org.cdk8s.plus22.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole), [`org.cdk8s.plus22.ClusterRoleBinding`](#org.cdk8s.plus22.ClusterRoleBinding), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.DaemonSet`](#org.cdk8s.plus22.DaemonSet), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.RoleBase`](#org.cdk8s.plus22.RoleBase), [`org.cdk8s.plus22.RoleBinding`](#org.cdk8s.plus22.RoleBinding), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IClusterRole`](#org.cdk8s.plus22.IClusterRole), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IPersistentVolume`](#org.cdk8s.plus22.IPersistentVolume), [`org.cdk8s.plus22.IPersistentVolumeClaim`](#org.cdk8s.plus22.IPersistentVolumeClaim), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus22.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus22.AzureDiskPersistentVolume`](#org.cdk8s.plus22.AzureDiskPersistentVolume), [`org.cdk8s.plus22.BasicAuthSecret`](#org.cdk8s.plus22.BasicAuthSecret), [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole), [`org.cdk8s.plus22.ClusterRoleBinding`](#org.cdk8s.plus22.ClusterRoleBinding), [`org.cdk8s.plus22.ConfigMap`](#org.cdk8s.plus22.ConfigMap), [`org.cdk8s.plus22.DaemonSet`](#org.cdk8s.plus22.DaemonSet), [`org.cdk8s.plus22.Deployment`](#org.cdk8s.plus22.Deployment), [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret), [`org.cdk8s.plus22.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus22.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus22.Ingress`](#org.cdk8s.plus22.Ingress), [`org.cdk8s.plus22.Job`](#org.cdk8s.plus22.Job), [`org.cdk8s.plus22.PersistentVolume`](#org.cdk8s.plus22.PersistentVolume), [`org.cdk8s.plus22.PersistentVolumeClaim`](#org.cdk8s.plus22.PersistentVolumeClaim), [`org.cdk8s.plus22.Pod`](#org.cdk8s.plus22.Pod), [`org.cdk8s.plus22.Resource`](#org.cdk8s.plus22.Resource), [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.RoleBinding`](#org.cdk8s.plus22.RoleBinding), [`org.cdk8s.plus22.Secret`](#org.cdk8s.plus22.Secret), [`org.cdk8s.plus22.Service`](#org.cdk8s.plus22.Service), [`org.cdk8s.plus22.ServiceAccount`](#org.cdk8s.plus22.ServiceAccount), [`org.cdk8s.plus22.ServiceAccountTokenSecret`](#org.cdk8s.plus22.ServiceAccountTokenSecret), [`org.cdk8s.plus22.SshAuthSecret`](#org.cdk8s.plus22.SshAuthSecret), [`org.cdk8s.plus22.StatefulSet`](#org.cdk8s.plus22.StatefulSet), [`org.cdk8s.plus22.TlsSecret`](#org.cdk8s.plus22.TlsSecret), [`org.cdk8s.plus22.IClusterRole`](#org.cdk8s.plus22.IClusterRole), [`org.cdk8s.plus22.IConfigMap`](#org.cdk8s.plus22.IConfigMap), [`org.cdk8s.plus22.IPersistentVolume`](#org.cdk8s.plus22.IPersistentVolume), [`org.cdk8s.plus22.IPersistentVolumeClaim`](#org.cdk8s.plus22.IPersistentVolumeClaim), [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource), [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole), [`org.cdk8s.plus22.ISecret`](#org.cdk8s.plus22.ISecret), [`org.cdk8s.plus22.IServiceAccount`](#org.cdk8s.plus22.IServiceAccount)
 
 Represents a resource.
 
@@ -15090,7 +15355,7 @@ The Kubernetes name of this resource.
 
 - *Extends:* [`org.cdk8s.plus22.IResource`](#org.cdk8s.plus22.IResource)
 
-- *Implemented By:* [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole)
+- *Implemented By:* [`org.cdk8s.plus22.ClusterRole`](#org.cdk8s.plus22.ClusterRole), [`org.cdk8s.plus22.Role`](#org.cdk8s.plus22.Role), [`org.cdk8s.plus22.IRole`](#org.cdk8s.plus22.IRole)
 
 A reference to any Role or ClusterRole.
 

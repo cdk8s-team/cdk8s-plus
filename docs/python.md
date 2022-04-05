@@ -563,7 +563,7 @@ The user name for authentication.
 
 ### ClusterRole <a name="cdk8s_plus_22.ClusterRole"></a>
 
-- *Implements:* [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole)
+- *Implements:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
 
 ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
 
@@ -576,8 +576,8 @@ cdk8s_plus_22.ClusterRole(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
-  rules: typing.List[PolicyRuleProps] = None,
-  aggregation_labels: typing.Mapping[str] = None
+  aggregation_labels: typing.Mapping[str] = None,
+  rules: typing.List[PolicyRuleProps] = None
 )
 ```
 
@@ -601,6 +601,14 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `aggregation_labels`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.parameter.aggregation_labels"></a>
+
+- *Type:* typing.Mapping[`str`]
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+
+---
+
 ##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.parameter.rules"></a>
 
 - *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
@@ -610,15 +618,76 @@ A list of explicit rules the role should grant permission to.
 
 ---
 
-##### `aggregation_labels`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.parameter.aggregation_labels"></a>
+#### Methods <a name="Methods"></a>
 
-- *Type:* typing.Mapping[`str`]
+##### `add_rule` <a name="cdk8s_plus_22.ClusterRole.add_rule"></a>
 
-Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+```python
+def add_rule(
+  verbs: typing.List[str],
+  api_groups: typing.List[str] = None,
+  non_resource_urls: typing.List[str] = None,
+  resource_names: typing.List[str] = None,
+  resources: typing.List[str] = None
+)
+```
+
+###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
 
 ---
 
-#### Methods <a name="Methods"></a>
+###### `api_groups`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.api_groups"></a>
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+###### `non_resource_urls`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.non_resource_urls"></a>
+
+- *Type:* typing.List[`str`]
+
+NonResourceURLs is a set of partial urls that a user should have access to.
+
+*s are allowed, but only as the full, final step in the path. Since
+non-resource URLs are not namespaced, this field is only applicable for
+ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
+to API resources (such as "pods" or "secrets") or non-resource URL paths
+(such as "/api"),  but not both.
+
+---
+
+###### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resource_names"></a>
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resources"></a>
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
 
 ##### `aggregate_from` <a name="cdk8s_plus_22.ClusterRole.aggregate_from"></a>
 
@@ -631,6 +700,189 @@ def aggregate_from(
 ###### `role`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.role"></a>
 
 - *Type:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole)
+
+---
+
+##### `allow` <a name="cdk8s_plus_22.ClusterRole.allow"></a>
+
+```python
+def allow(
+  verbs: typing.List[str],
+  resources: IApiResource
+)
+```
+
+###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+---
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_create` <a name="cdk8s_plus_22.ClusterRole.allow_create"></a>
+
+```python
+def allow_create(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_delete` <a name="cdk8s_plus_22.ClusterRole.allow_delete"></a>
+
+```python
+def allow_delete(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_delete_collection` <a name="cdk8s_plus_22.ClusterRole.allow_delete_collection"></a>
+
+```python
+def allow_delete_collection(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_get` <a name="cdk8s_plus_22.ClusterRole.allow_get"></a>
+
+```python
+def allow_get(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_list` <a name="cdk8s_plus_22.ClusterRole.allow_list"></a>
+
+```python
+def allow_list(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_patch` <a name="cdk8s_plus_22.ClusterRole.allow_patch"></a>
+
+```python
+def allow_patch(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_read` <a name="cdk8s_plus_22.ClusterRole.allow_read"></a>
+
+```python
+def allow_read(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_read_write` <a name="cdk8s_plus_22.ClusterRole.allow_read_write"></a>
+
+```python
+def allow_read_write(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_update` <a name="cdk8s_plus_22.ClusterRole.allow_update"></a>
+
+```python
+def allow_update(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_watch` <a name="cdk8s_plus_22.ClusterRole.allow_watch"></a>
+
+```python
+def allow_watch(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
 
 ---
 
@@ -687,6 +939,20 @@ resource_type: str
 - *Type:* `str`
 
 The name of a resource type as it appears in the relevant API endpoint.
+
+---
+
+##### `rules`<sup>Required</sup> <a name="cdk8s_plus_22.ClusterRole.property.rules"></a>
+
+```python
+rules: typing.List[PolicyRule]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.PolicyRule`](#cdk8s_plus_22.PolicyRule)]
+
+List of rules included in this role.
+
+Returns a copy. To add a rule, use `addRule()`.
 
 ---
 
@@ -5506,7 +5772,7 @@ If this is omitted, the ApiResource should represent all objects of the given ty
 
 ### Role <a name="cdk8s_plus_22.Role"></a>
 
-- *Implements:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+- *Implements:* [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
 
 Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
 
@@ -5519,8 +5785,8 @@ cdk8s_plus_22.Role(
   scope: Construct,
   id: str,
   metadata: ApiObjectMetadata = None,
-  rules: typing.List[PolicyRuleProps] = None,
-  namespace: str
+  namespace: str,
+  rules: typing.List[ResourcePolicyRuleProps] = None
 )
 ```
 
@@ -5544,15 +5810,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.parameter.rules"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
 ##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleProps.parameter.namespace"></a>
 
 - *Type:* `str`
@@ -5564,7 +5821,253 @@ refer to resources in the same namespace.
 
 ---
 
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.parameter.rules"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.ResourcePolicyRuleProps`](#cdk8s_plus_22.ResourcePolicyRuleProps)]
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
+
+---
+
 #### Methods <a name="Methods"></a>
+
+##### `add_rule` <a name="cdk8s_plus_22.Role.add_rule"></a>
+
+```python
+def add_rule(
+  api_groups: typing.List[str],
+  resources: typing.List[str],
+  verbs: typing.List[str],
+  resource_names: typing.List[str] = None
+)
+```
+
+###### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.api_groups"></a>
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.resources"></a>
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+###### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.resource_names"></a>
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+##### `allow` <a name="cdk8s_plus_22.Role.allow"></a>
+
+```python
+def allow(
+  verbs: typing.List[str],
+  resources: IApiResource
+)
+```
+
+###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+---
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_create` <a name="cdk8s_plus_22.Role.allow_create"></a>
+
+```python
+def allow_create(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_delete` <a name="cdk8s_plus_22.Role.allow_delete"></a>
+
+```python
+def allow_delete(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_delete_collection` <a name="cdk8s_plus_22.Role.allow_delete_collection"></a>
+
+```python
+def allow_delete_collection(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_get` <a name="cdk8s_plus_22.Role.allow_get"></a>
+
+```python
+def allow_get(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_list` <a name="cdk8s_plus_22.Role.allow_list"></a>
+
+```python
+def allow_list(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_patch` <a name="cdk8s_plus_22.Role.allow_patch"></a>
+
+```python
+def allow_patch(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_read` <a name="cdk8s_plus_22.Role.allow_read"></a>
+
+```python
+def allow_read(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_read_write` <a name="cdk8s_plus_22.Role.allow_read_write"></a>
+
+```python
+def allow_read_write(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_update` <a name="cdk8s_plus_22.Role.allow_update"></a>
+
+```python
+def allow_update(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
+
+##### `allow_watch` <a name="cdk8s_plus_22.Role.allow_watch"></a>
+
+```python
+def allow_watch(
+  resources: IApiResource
+)
+```
+
+###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.Role.parameter.resources"></a>
+
+- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+
+The resource(s) to apply to.
+
+---
 
 ##### `bind` <a name="cdk8s_plus_22.Role.bind"></a>
 
@@ -5597,313 +6100,7 @@ The name of a resource type as it appears in the relevant API endpoint.
 
 ---
 
-
-### RoleBase <a name="cdk8s_plus_22.RoleBase"></a>
-
-- *Implements:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
-
-An abstract class containing APIs shared between `Role` and `ClusterRole`.
-
-#### Initializers <a name="cdk8s_plus_22.RoleBase.Initializer"></a>
-
-```python
-import cdk8s_plus_22
-
-cdk8s_plus_22.RoleBase(
-  scope: Construct,
-  id: str,
-  metadata: ApiObjectMetadata = None,
-  rules: typing.List[PolicyRuleProps] = None
-)
-```
-
-##### `scope`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.scope"></a>
-
-- *Type:* [`constructs.Construct`](#constructs.Construct)
-
----
-
-##### `id`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.id"></a>
-
-- *Type:* `str`
-
----
-
-##### `metadata`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.parameter.metadata"></a>
-
-- *Type:* [`cdk8s.ApiObjectMetadata`](#cdk8s.ApiObjectMetadata)
-
-Metadata that all persisted resources must have, which includes all objects users must create.
-
----
-
-##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.parameter.rules"></a>
-
-- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
-#### Methods <a name="Methods"></a>
-
-##### `add_rule` <a name="cdk8s_plus_22.RoleBase.add_rule"></a>
-
-```python
-def add_rule(
-  verbs: typing.List[str],
-  api_groups: typing.List[str] = None,
-  non_resource_urls: typing.List[str] = None,
-  resource_names: typing.List[str] = None,
-  resources: typing.List[str] = None
-)
-```
-
-###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.verbs"></a>
-
-- *Type:* typing.List[`str`]
-
-Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
-
-'*' represents all verbs.
-
----
-
-###### `api_groups`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.api_groups"></a>
-
-- *Type:* typing.List[`str`]
-
-APIGroups is the name of the APIGroup that contains the resources.
-
-If
-multiple API groups are specified, any action requested against one of the
-enumerated resources in any API group will be allowed.
-
----
-
-###### `non_resource_urls`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.non_resource_urls"></a>
-
-- *Type:* typing.List[`str`]
-
-NonResourceURLs is a set of partial urls that a user should have access to.
-
-*s are allowed, but only as the full, final step in the path. Since
-non-resource URLs are not namespaced, this field is only applicable for
-ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply
-to API resources (such as "pods" or "secrets") or non-resource URL paths
-(such as "/api"),  but not both.
-
----
-
-###### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resource_names"></a>
-
-- *Type:* typing.List[`str`]
-
-ResourceNames is an optional white list of names that the rule applies to.
-
-An empty set means that everything is allowed.
-
----
-
-###### `resources`<sup>Optional</sup> <a name="cdk8s_plus_22.PolicyRuleProps.parameter.resources"></a>
-
-- *Type:* typing.List[`str`]
-
-Resources is a list of resources this rule applies to.
-
-'*' represents all
-resources.
-
----
-
-##### `allow` <a name="cdk8s_plus_22.RoleBase.allow"></a>
-
-```python
-def allow(
-  verbs: typing.List[str],
-  resources: IApiResource
-)
-```
-
-###### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.verbs"></a>
-
-- *Type:* typing.List[`str`]
-
----
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_create` <a name="cdk8s_plus_22.RoleBase.allow_create"></a>
-
-```python
-def allow_create(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_delete` <a name="cdk8s_plus_22.RoleBase.allow_delete"></a>
-
-```python
-def allow_delete(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_delete_collection` <a name="cdk8s_plus_22.RoleBase.allow_delete_collection"></a>
-
-```python
-def allow_delete_collection(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_get` <a name="cdk8s_plus_22.RoleBase.allow_get"></a>
-
-```python
-def allow_get(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_list` <a name="cdk8s_plus_22.RoleBase.allow_list"></a>
-
-```python
-def allow_list(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_patch` <a name="cdk8s_plus_22.RoleBase.allow_patch"></a>
-
-```python
-def allow_patch(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_read` <a name="cdk8s_plus_22.RoleBase.allow_read"></a>
-
-```python
-def allow_read(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_read_write` <a name="cdk8s_plus_22.RoleBase.allow_read_write"></a>
-
-```python
-def allow_read_write(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_update` <a name="cdk8s_plus_22.RoleBase.allow_update"></a>
-
-```python
-def allow_update(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-##### `allow_watch` <a name="cdk8s_plus_22.RoleBase.allow_watch"></a>
-
-```python
-def allow_watch(
-  resources: IApiResource
-)
-```
-
-###### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.parameter.resources"></a>
-
-- *Type:* [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
-
-The resource(s) to apply to.
-
----
-
-
-#### Properties <a name="Properties"></a>
-
-##### `rules`<sup>Required</sup> <a name="cdk8s_plus_22.RoleBase.property.rules"></a>
+##### `rules`<sup>Required</sup> <a name="cdk8s_plus_22.Role.property.rules"></a>
 
 ```python
 rules: typing.List[PolicyRule]
@@ -8680,8 +8877,8 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.ClusterRoleProps(
   metadata: ApiObjectMetadata = None,
-  rules: typing.List[PolicyRuleProps] = None,
-  aggregation_labels: typing.Mapping[str] = None
+  aggregation_labels: typing.Mapping[str] = None,
+  rules: typing.List[PolicyRuleProps] = None
 )
 ```
 
@@ -8697,6 +8894,18 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
+##### `aggregation_labels`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.property.aggregation_labels"></a>
+
+```python
+aggregation_labels: typing.Mapping[str]
+```
+
+- *Type:* typing.Mapping[`str`]
+
+Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
+
+---
+
 ##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.property.rules"></a>
 
 ```python
@@ -8707,18 +8916,6 @@ rules: typing.List[PolicyRuleProps]
 - *Default:* []
 
 A list of explicit rules the role should grant permission to.
-
----
-
-##### `aggregation_labels`<sup>Optional</sup> <a name="cdk8s_plus_22.ClusterRoleProps.property.aggregation_labels"></a>
-
-```python
-aggregation_labels: typing.Mapping[str]
-```
-
-- *Type:* typing.Mapping[`str`]
-
-Specify labels that should be used to locate ClusterRoles, whose rules will be automatically filled into this ClusterRole's rules.
 
 ---
 
@@ -12563,7 +12760,7 @@ The pod metadata.
 
 ### PolicyRuleProps <a name="cdk8s_plus_22.PolicyRuleProps"></a>
 
-Options for `Rule`.
+Options for `PolicyRule`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
@@ -12751,6 +12948,82 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
+### ResourcePolicyRuleProps <a name="cdk8s_plus_22.ResourcePolicyRuleProps"></a>
+
+Options for `ResourcePolicyRule`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ResourcePolicyRuleProps(
+  api_groups: typing.List[str],
+  resources: typing.List[str],
+  verbs: typing.List[str],
+  resource_names: typing.List[str] = None
+)
+```
+
+##### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.property.api_groups"></a>
+
+```python
+api_groups: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.property.resources"></a>
+
+```python
+resources: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+##### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.property.verbs"></a>
+
+```python
+verbs: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.property.resource_names"></a>
+
+```python
+resource_names: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
 ### ResourceProps <a name="cdk8s_plus_22.ResourceProps"></a>
 
 Initialization properties for resources.
@@ -12841,8 +13114,7 @@ Properties for `RoleBase`.
 import cdk8s_plus_22
 
 cdk8s_plus_22.RoleCommonProps(
-  metadata: ApiObjectMetadata = None,
-  rules: typing.List[PolicyRuleProps] = None
+  metadata: ApiObjectMetadata = None
 )
 ```
 
@@ -12858,19 +13130,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleCommonProps.property.rules"></a>
-
-```python
-rules: typing.List[PolicyRuleProps]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
 ### RoleProps <a name="cdk8s_plus_22.RoleProps"></a>
 
 Properties for `Role`.
@@ -12882,8 +13141,8 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.RoleProps(
   metadata: ApiObjectMetadata = None,
-  rules: typing.List[PolicyRuleProps] = None,
-  namespace: str
+  namespace: str,
+  rules: typing.List[ResourcePolicyRuleProps] = None
 )
 ```
 
@@ -12899,19 +13158,6 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.property.rules"></a>
-
-```python
-rules: typing.List[PolicyRuleProps]
-```
-
-- *Type:* typing.List[[`cdk8s_plus_22.PolicyRuleProps`](#cdk8s_plus_22.PolicyRuleProps)]
-- *Default:* []
-
-A list of explicit rules the role should grant permission to.
-
----
-
 ##### `namespace`<sup>Required</sup> <a name="cdk8s_plus_22.RoleProps.property.namespace"></a>
 
 ```python
@@ -12924,6 +13170,19 @@ The namespace this role is created in.
 
 Permissions added to this role must
 refer to resources in the same namespace.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="cdk8s_plus_22.RoleProps.property.rules"></a>
+
+```python
+rules: typing.List[ResourcePolicyRuleProps]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.ResourcePolicyRuleProps`](#cdk8s_plus_22.ResourcePolicyRuleProps)]
+- *Default:* []
+
+A list of explicit rules the role should grant permission to.
 
 ---
 
@@ -16894,7 +17153,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### PolicyRule <a name="cdk8s_plus_22.PolicyRule"></a>
 
-Information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.
+Information that describes a policy rule that can be applied to a ClusterRole.
 
 #### Initializers <a name="cdk8s_plus_22.PolicyRule.Initializer"></a>
 
@@ -17249,6 +17508,73 @@ The host name to connect to on the container.
 The TCP port to connect to on the container.
 
 ---
+
+
+
+### ResourcePolicyRule <a name="cdk8s_plus_22.ResourcePolicyRule"></a>
+
+Information that describes a policy rule about an API resource.
+
+This rule can
+be applied to a Role or a ClusterRole.
+
+#### Initializers <a name="cdk8s_plus_22.ResourcePolicyRule.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.ResourcePolicyRule(
+  api_groups: typing.List[str],
+  resources: typing.List[str],
+  verbs: typing.List[str],
+  resource_names: typing.List[str] = None
+)
+```
+
+##### `api_groups`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.api_groups"></a>
+
+- *Type:* typing.List[`str`]
+
+APIGroups is the name of the APIGroup that contains the resources.
+
+If
+multiple API groups are specified, any action requested against one of the
+enumerated resources in any API group will be allowed.
+
+---
+
+##### `resources`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.resources"></a>
+
+- *Type:* typing.List[`str`]
+
+Resources is a list of resources this rule applies to.
+
+'*' represents all
+resources.
+
+---
+
+##### `verbs`<sup>Required</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.verbs"></a>
+
+- *Type:* typing.List[`str`]
+
+Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.
+
+'*' represents all verbs.
+
+---
+
+##### `resource_names`<sup>Optional</sup> <a name="cdk8s_plus_22.ResourcePolicyRuleProps.parameter.resource_names"></a>
+
+- *Type:* typing.List[`str`]
+
+ResourceNames is an optional white list of names that the rule applies to.
+
+An empty set means that everything is allowed.
+
+---
+
+
 
 
 
@@ -17872,7 +18198,7 @@ name: str
 
 ### IApiResource <a name="cdk8s_plus_22.IApiResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
+- *Implemented By:* [`cdk8s_plus_22.ApiResource`](#cdk8s_plus_22.ApiResource), [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IApiResource`](#cdk8s_plus_22.IApiResource)
 
 Represents a resource or collection of resources.
 
@@ -18750,7 +19076,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="cdk8s_plus_22.IResource"></a>
 
-- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBase`](#cdk8s_plus_22.RoleBase), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
+- *Implemented By:* [`cdk8s_plus_22.AwsElasticBlockStorePersistentVolume`](#cdk8s_plus_22.AwsElasticBlockStorePersistentVolume), [`cdk8s_plus_22.AzureDiskPersistentVolume`](#cdk8s_plus_22.AzureDiskPersistentVolume), [`cdk8s_plus_22.BasicAuthSecret`](#cdk8s_plus_22.BasicAuthSecret), [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.ClusterRoleBinding`](#cdk8s_plus_22.ClusterRoleBinding), [`cdk8s_plus_22.ConfigMap`](#cdk8s_plus_22.ConfigMap), [`cdk8s_plus_22.DaemonSet`](#cdk8s_plus_22.DaemonSet), [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment), [`cdk8s_plus_22.DockerConfigSecret`](#cdk8s_plus_22.DockerConfigSecret), [`cdk8s_plus_22.GCEPersistentDiskPersistentVolume`](#cdk8s_plus_22.GCEPersistentDiskPersistentVolume), [`cdk8s_plus_22.Ingress`](#cdk8s_plus_22.Ingress), [`cdk8s_plus_22.Job`](#cdk8s_plus_22.Job), [`cdk8s_plus_22.PersistentVolume`](#cdk8s_plus_22.PersistentVolume), [`cdk8s_plus_22.PersistentVolumeClaim`](#cdk8s_plus_22.PersistentVolumeClaim), [`cdk8s_plus_22.Pod`](#cdk8s_plus_22.Pod), [`cdk8s_plus_22.Resource`](#cdk8s_plus_22.Resource), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.RoleBinding`](#cdk8s_plus_22.RoleBinding), [`cdk8s_plus_22.Secret`](#cdk8s_plus_22.Secret), [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service), [`cdk8s_plus_22.ServiceAccount`](#cdk8s_plus_22.ServiceAccount), [`cdk8s_plus_22.ServiceAccountTokenSecret`](#cdk8s_plus_22.ServiceAccountTokenSecret), [`cdk8s_plus_22.SshAuthSecret`](#cdk8s_plus_22.SshAuthSecret), [`cdk8s_plus_22.StatefulSet`](#cdk8s_plus_22.StatefulSet), [`cdk8s_plus_22.TlsSecret`](#cdk8s_plus_22.TlsSecret), [`cdk8s_plus_22.IClusterRole`](#cdk8s_plus_22.IClusterRole), [`cdk8s_plus_22.IConfigMap`](#cdk8s_plus_22.IConfigMap), [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume), [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim), [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole), [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret), [`cdk8s_plus_22.IServiceAccount`](#cdk8s_plus_22.IServiceAccount)
 
 Represents a resource.
 
@@ -18809,7 +19135,7 @@ The Kubernetes name of this resource.
 
 - *Extends:* [`cdk8s_plus_22.IResource`](#cdk8s_plus_22.IResource)
 
-- *Implemented By:* [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
+- *Implemented By:* [`cdk8s_plus_22.ClusterRole`](#cdk8s_plus_22.ClusterRole), [`cdk8s_plus_22.Role`](#cdk8s_plus_22.Role), [`cdk8s_plus_22.IRole`](#cdk8s_plus_22.IRole)
 
 A reference to any Role or ClusterRole.
 

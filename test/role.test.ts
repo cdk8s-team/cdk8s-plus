@@ -45,7 +45,7 @@ Array [
 `);
   });
 
-  test('with a custom rule', () => {
+  test('with a custom resource rule', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -218,7 +218,7 @@ Array [
 
   });
 
-  test('with a custom rule', () => {
+  test('with a custom resource rule', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -245,6 +245,52 @@ Array [
     expect(rule.config.apiGroups).toEqual(['']);
     expect(rule.config.resources).toEqual(['pods']);
     expect(rule.config.verbs).toEqual(['get', 'watch', 'list']);
+
+  });
+
+  test('with a custom non-resource rule', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const role = new kplus.ClusterRole(chart, 'pod-reader');
+    const rule = role.addRule({
+      nonResourceUrls: ["/healthz", "/healthz/*"],
+      verbs: ['get', 'post'],
+    });
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
+      {
+        nonResourceURLs: ["/healthz", "/healthz/*"],
+        verbs: ['get', 'post'],
+      },
+    ]));
+    expect(rule.config.nonResourceUrls).toEqual(["/healthz", "/healthz/*"]);
+    expect(rule.config.verbs).toEqual(['get', 'post']);
+
+  });
+
+  test('throws if adding an invalid rule', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const role = new kplus.ClusterRole(chart, 'pod-reader');
+
+    // THEN
+    expect(() => role.addRule({
+      verbs: ['get', 'read', 'list']
+    })).toThrowError('A rule must refer to either API resources ("apiGroups" and "resources") or non-resource URLs ("nonResourceUrls").');
+    expect(() => role.addRule({
+      apiGroups: [''],
+      nonResourceUrls: ["/healthz", "/healthz/*"],
+      resources: ['pod', 'log'],
+      verbs: ['get', 'read', 'list']
+    })).toThrowError('A rule cannot refer to both API resources and non-resource URLs.');
 
   });
 
