@@ -69,7 +69,7 @@ Array [
 
   });
 
-  test('can be granted read access to a pod and secret', () => {
+  test('can be allowed read access to a pod and secret', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -96,15 +96,93 @@ Array [
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: ['pods', 'secrets'],
-        resourceNames: [pod.name, secret.name],
+        resources: ['pods'],
+        resourceNames: [pod.name],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
+        resourceNames: [secret.name],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
 
   });
 
-  test('can be granted read access to all pods and secrets in a namespace', () => {
+  test('can be allowed read access to a mix of resources', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'my-pod', {
+      containers: [
+        {
+          image: 'nginx',
+        },
+      ],
+    });
+
+    // WHEN
+    const role = new kplus.Role(chart, 'my-role');
+    role.allowRead(kplus.ApiResource.SECRETS, pod);
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
+        resourceNames: [],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        resourceNames: ['test-my-pod-c8a0e457'],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+
+  });
+
+  test('giving access to a single pod and all pods still gives access to all pods', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'my-pod', {
+      containers: [
+        {
+          image: 'nginx',
+        },
+      ],
+    });
+
+    // WHEN
+    const role = new kplus.Role(chart, 'my-role');
+    role.allowRead(kplus.ApiResource.PODS, pod);
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        resourceNames: [],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+    expect(manifest[1].rules).not.toEqual([
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        resourceNames: ['test-my-pod-c8a0e457'],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]);
+
+  });
+
+  test('can be allowed read access to all pods and secrets in a namespace', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -118,7 +196,13 @@ Array [
     expect(manifest[0].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: ['pods', 'secrets'],
+        resources: ['pods'],
+        resourceNames: [],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
         resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
@@ -126,7 +210,7 @@ Array [
 
   });
 
-  test('can be granted read access to a custom resource type', () => {
+  test('can be allowed read access to a custom resource type', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -267,7 +351,7 @@ Array [
 
   });
 
-  test('can be granted read access to a pod and secret', () => {
+  test('can be allowed read access to a pod and secret', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -293,15 +377,21 @@ Array [
     expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: ['pods', 'secrets'],
-        resourceNames: [pod.name, secret.name],
+        resources: ['pods'],
+        resourceNames: [pod.name],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
+        resourceNames: [secret.name],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
 
   });
 
-  test('can be granted read access to all pods and secrets in the cluster', () => {
+  test('can be allowed read access to all pods and secrets in the cluster', () => {
 
     // GIVEN
     const chart = Testing.chart();
@@ -314,7 +404,13 @@ Array [
     expect(manifest[0].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
-        resources: ['pods', 'secrets'],
+        resources: ['pods'],
+        resourceNames: [],
+        verbs: ['get', 'list', 'watch'],
+      },
+      {
+        apiGroups: [''],
+        resources: ['secrets'],
         resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
@@ -322,7 +418,7 @@ Array [
 
   });
 
-  test('can be granted read access to a custom resource type', () => {
+  test('can be allowed read access to a custom resource type', () => {
 
     // GIVEN
     const chart = Testing.chart();

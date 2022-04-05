@@ -120,25 +120,14 @@ abstract class RoleBase extends Resource implements IResource {
    * @see https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
    */
   public allow(verbs: string[], ...resources: IApiResource[]): void {
-    const apiGroups: string[] = normalizedArray(resources
-      .map((resource) => resource.apiGroup)
-      .map((apiGroup) => apiGroup === 'core' ? '' : apiGroup),
-    );
-    const resourceTypes = normalizedArray(resources
-      .map((resource) => resource.resourceType)
-      .filter((x) => typeof x === 'string'),
-    ) as string[];
-    const resourceNames = normalizedArray(resources
-      .map((resource) => resource.resourceName)
-      .filter((x) => typeof x === 'string'),
-    ) as string[];
-
-    this.addRule({
-      apiGroups,
-      resources: resourceTypes,
-      resourceNames,
-      verbs,
-    });
+    for (const resource of resources) {
+      this.addRule({
+        apiGroups: [resource.apiGroup === 'core' ? '' : resource.apiGroup],
+        resources: [resource.resourceType],
+        resourceNames: resource.resourceName ? [resource.resourceName] : [],
+        verbs,
+      });
+    }
   }
 
   /**
@@ -494,8 +483,4 @@ export class ResourcePolicyRule extends PolicyRule {
   constructor(config: ResourcePolicyRuleProps) {
     super(config);
   }
-}
-
-function normalizedArray<T>(xs: T[]): T[] {
-  return Array.from(new Set(xs)).sort();
 }
