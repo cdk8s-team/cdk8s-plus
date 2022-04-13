@@ -5,7 +5,7 @@ import * as k8s from './imports/k8s';
 import type { ResourceRequirements } from './imports/k8s';
 import { Probe } from './probe';
 import { SecretValue } from './secret';
-import { Volume } from './volume';
+import { IStorage, Volume } from './volume';
 
 /**
  * Properties for `ContainerSecurityContext`
@@ -656,10 +656,10 @@ export class Container {
    * Every pod that is configured to use this container will autmoatically have access to the volume.
    *
    * @param path - The desired path in the container.
-   * @param volume - The volume to mount.
+   * @param storage - The storage to mount.
    */
-  public mount(path: string, volume: Volume, options: MountOptions = { }) {
-    this.mounts.push({ path, volume, ...options });
+  public mount(path: string, storage: IStorage, options: MountOptions = { }) {
+    this.mounts.push({ path, volume: storage.asVolume(), ...options });
   }
 
   /**
