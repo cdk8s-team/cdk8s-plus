@@ -11,3 +11,4 @@ export * from './statefulset';
 export * from './volume';
 export * from './ingress-v1beta1';
 export * from './probe';
+export * from './handler';
