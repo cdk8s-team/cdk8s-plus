@@ -109,6 +109,11 @@ docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
 docgenTask.exec('jsii-docgen -l python -o docs/python.md');
 docgenTask.exec('jsii-docgen -l java -o docs/java.md');
 
+const hooks = project.addTask('hooks');
+hooks.exec('./git-hooks/setup.sh');
+
+project.compileTask.prependSpawn(hooks);
+
 // backport PR's to other branches
 // see https://github.com/tibdex/backport
 const backport = project.github.addWorkflow('backport');

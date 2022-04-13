@@ -87,6 +87,9 @@
       "description": "Only compile",
       "steps": [
         {
+          "spawn": "hooks"
+        },
+        {
           "spawn": "import"
         },
         {
@@ -136,6 +139,14 @@
       "steps": [
         {
           "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
+        }
+      ]
+    },
+    "hooks": {
+      "name": "hooks",
+      "steps": [
+        {
+          "exec": "./git-hooks/setup.sh"
         }
       ]
     },
