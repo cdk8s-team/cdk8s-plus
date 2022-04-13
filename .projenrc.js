@@ -123,6 +123,14 @@ backport.addJob('backport', {
   },
   steps: [
     {
+      name: 'checkout',
+      uses: 'actions/checkout@v2',
+    },
+    {
+      name: hooks.name,
+      run: `npx projen ${hooks.name}`,
+    },
+    {
       name: 'backport',
       uses: 'tibdex/backport@v1',
       with: {
