@@ -2052,7 +2052,7 @@ TTL before the job is deleted after it is finished.
 
 ### PersistentVolume <a name="org.cdk8s.plus20.PersistentVolume"></a>
 
-- *Implements:* [`org.cdk8s.plus20.IPersistentVolume`](#org.cdk8s.plus20.IPersistentVolume)
+- *Implements:* [`org.cdk8s.plus20.IPersistentVolume`](#org.cdk8s.plus20.IPersistentVolume), [`org.cdk8s.plus20.IStorage`](#org.cdk8s.plus20.IStorage)
 
 A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
 
@@ -2178,6 +2178,12 @@ Defines what type of volume is required by the claim.
 ---
 
 #### Methods <a name="Methods"></a>
+
+##### `asVolume` <a name="org.cdk8s.plus20.PersistentVolume.asVolume"></a>
+
+```java
+public asVolume()
+```
 
 ##### `bind` <a name="org.cdk8s.plus20.PersistentVolume.bind"></a>
 
@@ -9375,8 +9381,8 @@ The variable value.
 ##### `mount` <a name="org.cdk8s.plus20.Container.mount"></a>
 
 ```java
-public mount(java.lang.String path, Volume volume)
-public mount(java.lang.String path, Volume volume, MountOptions options)
+public mount(java.lang.String path, IStorage storage)
+public mount(java.lang.String path, IStorage storage, MountOptions options)
 ```
 
 ###### `path`<sup>Required</sup> <a name="org.cdk8s.plus20.Container.parameter.path"></a>
@@ -9387,11 +9393,11 @@ The desired path in the container.
 
 ---
 
-###### `volume`<sup>Required</sup> <a name="org.cdk8s.plus20.Container.parameter.volume"></a>
+###### `storage`<sup>Required</sup> <a name="org.cdk8s.plus20.Container.parameter.storage"></a>
 
-- *Type:* [`org.cdk8s.plus20.Volume`](#org.cdk8s.plus20.Volume)
+- *Type:* [`org.cdk8s.plus20.IStorage`](#org.cdk8s.plus20.IStorage)
 
-The volume to mount.
+The storage to mount.
 
 ---
 
@@ -10620,6 +10626,8 @@ Options.
 
 ### Volume <a name="org.cdk8s.plus20.Volume"></a>
 
+- *Implements:* [`org.cdk8s.plus20.IStorage`](#org.cdk8s.plus20.IStorage)
+
 Volume represents a named volume in a pod that may be accessed by any container in the pod.
 
 Docker also has a concept of volumes, though it is somewhat looser and less
@@ -10651,6 +10659,13 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
+#### Methods <a name="Methods"></a>
+
+##### `asVolume` <a name="org.cdk8s.plus20.Volume.asVolume"></a>
+
+```java
+public asVolume()
+```
 
 #### Static Functions <a name="Static Functions"></a>
 
@@ -10699,27 +10714,6 @@ Volume.fromEmptyDir(java.lang.String name, EmptyDirVolumeOptions options)
 - *Type:* [`org.cdk8s.plus20.EmptyDirVolumeOptions`](#org.cdk8s.plus20.EmptyDirVolumeOptions)
 
 Additional options.
-
----
-
-##### `fromPersistentVolume` <a name="org.cdk8s.plus20.Volume.fromPersistentVolume"></a>
-
-```java
-import org.cdk8s.plus20.Volume;
-
-Volume.fromPersistentVolume(PersistentVolume pv)
-Volume.fromPersistentVolume(PersistentVolume pv, PersistentVolumeClaimVolumeOptions options)
-```
-
-###### `pv`<sup>Required</sup> <a name="org.cdk8s.plus20.Volume.parameter.pv"></a>
-
-- *Type:* [`org.cdk8s.plus20.PersistentVolume`](#org.cdk8s.plus20.PersistentVolume)
-
----
-
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus20.Volume.parameter.options"></a>
-
-- *Type:* [`org.cdk8s.plus20.PersistentVolumeClaimVolumeOptions`](#org.cdk8s.plus20.PersistentVolumeClaimVolumeOptions)
 
 ---
 
@@ -11154,6 +11148,21 @@ public java.lang.String getName();
 The Kubernetes name of this resource.
 
 ---
+
+### IStorage <a name="org.cdk8s.plus20.IStorage"></a>
+
+- *Implemented By:* [`org.cdk8s.plus20.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus20.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus20.AzureDiskPersistentVolume`](#org.cdk8s.plus20.AzureDiskPersistentVolume), [`org.cdk8s.plus20.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus20.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus20.PersistentVolume`](#org.cdk8s.plus20.PersistentVolume), [`org.cdk8s.plus20.Volume`](#org.cdk8s.plus20.Volume), [`org.cdk8s.plus20.IStorage`](#org.cdk8s.plus20.IStorage)
+
+Represents a piece of storage in the cluster.
+
+#### Methods <a name="Methods"></a>
+
+##### `asVolume` <a name="org.cdk8s.plus20.IStorage.asVolume"></a>
+
+```java
+public asVolume()
+```
+
 
 ## Enums <a name="Enums"></a>
 

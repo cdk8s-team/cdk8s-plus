@@ -1,9 +1,19 @@
 import { Size } from 'cdk8s';
 import { IConfigMap } from './config-map';
 import * as k8s from './imports/k8s';
-import { PersistentVolume } from './pv';
 import { IPersistentVolumeClaim } from './pvc';
 import { ISecret } from './secret';
+
+/**
+ * Represents a piece of storage in the cluster.
+ */
+export interface IStorage {
+
+  /**
+   * Convert the piece of storage into a concrete volume.
+   */
+  asVolume(): Volume;
+}
 
 /**
  * Volume represents a named volume in a pod that may be accessed by any
@@ -38,7 +48,7 @@ import { ISecret } from './secret';
  * hierarchy, and any volumes are mounted at the specified paths within the
  * image. Volumes can not mount onto other volumes
  */
-export class Volume {
+export class Volume implements IStorage {
   /**
    * Populate the volume from a ConfigMap.
    *
@@ -131,16 +141,6 @@ export class Volume {
   }
 
   /**
-   * Create a volume from a specific PersistentVolume. This will implicitly create
-   * the appropriate PersistentVolumeClaim and use it as the volume reference.
-   *
-   * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
-   */
-  public static fromPersistentVolume(pv: PersistentVolume, options: PersistentVolumeClaimVolumeOptions = {}) {
-    return Volume.fromPersistentVolumeClaim(pv.reserve(), { name: pv.name, ...options });
-  }
-
-  /**
     * @internal
    */
   private static renderItems = (items?: { [key: string]: PathMapping }): undefined | Array<k8s.KeyToPath> => {
@@ -159,6 +159,10 @@ export class Volume {
 
   private constructor(public readonly name: string, private readonly config: Omit<k8s.Volume, 'name'>) {
 
+  }
+
+  public asVolume(): Volume {
+    return this;
   }
 
   /**

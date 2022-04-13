@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container can mount container to a pv 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "image",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [
+            Object {
+              "mountPath": "/path/to/mount",
+              "name": "pvc-pvc-test-pv-c8b2a2c6",
+            },
+          ],
+        },
+      ],
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "volumes": Array [
+        Object {
+          "name": "pvc-pvc-test-pv-c8b2a2c6",
+          "persistentVolumeClaim": Object {
+            "claimName": "pvc-test-pv-c8b2a2c6",
+            "readOnly": false,
+          },
+        },
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolume",
+    "metadata": Object {
+      "name": "test-pv-c8b2a2c6",
+    },
+    "spec": Object {
+      "awsElasticBlockStore": Object {
+        "fsType": "ext4",
+        "readOnly": false,
+        "volumeID": "vol",
+      },
+      "claimRef": Object {
+        "name": "pvc-test-pv-c8b2a2c6",
+      },
+      "persistentVolumeReclaimPolicy": "Retain",
+      "volumeMode": "Filesystem",
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "pvc-test-pv-c8b2a2c6",
+    },
+    "spec": Object {
+      "volumeMode": "Filesystem",
+      "volumeName": "test-pv-c8b2a2c6",
+    },
+  },
+]
+`;
