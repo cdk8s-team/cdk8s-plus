@@ -123,18 +123,6 @@ backport.addJob('backport', {
   },
   steps: [
     {
-      name: 'checkout',
-      uses: 'actions/checkout@v2',
-      with: {
-        ref: '${{ github.event.pull_request.head.ref }}',
-        repository: '${{ github.event.pull_request.head.repo.full_name }}',
-      },
-    },
-    {
-      name: hooks.name,
-      run: `npx projen ${hooks.name}`,
-    },
-    {
       name: 'backport',
       uses: 'tibdex/backport@v1',
       with: {
