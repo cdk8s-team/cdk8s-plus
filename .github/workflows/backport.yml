@@ -11,6 +11,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: hooks
         run: npx projen hooks
       - name: backport
