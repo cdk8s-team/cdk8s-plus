@@ -1,7 +1,7 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { Probe } from '../src';
+import { FsGroupChangePolicy, Probe } from '../src';
 
 test('fails with two volumes with the same name', () => {
 
@@ -288,5 +288,57 @@ test('automatically adds volumes from init container mounts', () => {
 
   expect(spec.volumes[0].name).toEqual('volume');
   expect(spec.volumes[0].emptyDir).toBeTruthy();
+
+});
+
+test('default security context', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(pod.securityContext.ensureNonRoot).toBeFalsy();
+  expect(pod.securityContext.sysctls).toEqual([]);
+  expect(pod.securityContext.fsGroup).toBeUndefined();
+  expect(pod.securityContext.fsGroupChangePolicy).toEqual(FsGroupChangePolicy.ALWAYS);
+  expect(pod.securityContext.user).toBeUndefined();
+  expect(pod.securityContext.group).toBeUndefined();
+
+  expect(spec.securityContext).toEqual(pod.securityContext._toKube());
+  expect(spec.securityContext).toStrictEqual({
+    // undefined values are ommitted at synth
+    fsGroupChangePolicy: pod.securityContext.fsGroupChangePolicy.toString(),
+    runAsNonRoot: pod.securityContext.ensureNonRoot,
+    sysctls: pod.securityContext.sysctls,
+  });
+
+});
+
+test('custom security context', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    securityContext: {
+      ensureNonRoot: true,
+      fsGroup: 5000,
+      fsGroupChangePolicy: FsGroupChangePolicy.ON_ROOT_MISMATCH,
+      group: 2000,
+      user: 1000,
+      sysctls: [{ name: 's1', value: 'v1' }],
+    },
+  });
+
+  expect(pod.securityContext.ensureNonRoot).toBeTruthy();
+  expect(pod.securityContext.sysctls).toEqual([{ name: 's1', value: 'v1' }]);
+  expect(pod.securityContext.fsGroup).toEqual(5000);
+  expect(pod.securityContext.fsGroupChangePolicy).toEqual(FsGroupChangePolicy.ON_ROOT_MISMATCH);
+  expect(pod.securityContext.user).toEqual(1000);
+  expect(pod.securityContext.group).toEqual(2000);
 
 });

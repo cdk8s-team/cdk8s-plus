@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps } from './pod';
+import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext } from './pod';
 import { Service } from './service';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
@@ -189,6 +189,10 @@ export class StatefulSet extends Resource implements IPodTemplate {
 
   public addVolume(volume: Volume): void {
     return this._podTemplate.addVolume(volume);
+  }
+
+  public get securityContext(): PodSecurityContext {
+    return this._podTemplate.securityContext;
   }
 
   /**

@@ -393,6 +393,16 @@ Number of desired pods.
 
 ---
 
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-20.Deployment.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContext`](#cdk8s-plus-20.PodSecurityContext)
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-20.Deployment.property.volumes"></a>
 
 ```typescript
@@ -704,6 +714,16 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ---
 
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-20.Job.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContext`](#cdk8s-plus-20.PodSecurityContext)
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-20.Job.property.volumes"></a>
 
 ```typescript
@@ -882,6 +902,16 @@ public readonly initContainers: Container[];
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-20.Pod.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContext`](#cdk8s-plus-20.PodSecurityContext)
 
 ---
 
@@ -1576,6 +1606,16 @@ Number of desired pods.
 
 ---
 
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-20.StatefulSet.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContext`](#cdk8s-plus-20.PodSecurityContext)
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-20.StatefulSet.property.volumes"></a>
 
 ```typescript
@@ -2138,6 +2178,25 @@ Compute resources (CPU and memory requests and limits) required by the container
 
 ---
 
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: ContainerSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.ContainerSecurityContextProps`](#cdk8s-plus-20.ContainerSecurityContextProps)
+- *Default:* ensureNonRoot: false
+  privileged: false
+  readOnlyRootFilesystem: false
+
+SecurityContext defines the security options the container should be run with.
+
+If set, the fields override equivalent fields of the pod's security context.
+
+> https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+---
+
 ##### `startup`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerProps.property.startup"></a>
 
 ```typescript
@@ -2179,6 +2238,88 @@ public readonly workingDir: string;
 Container's working directory.
 
 If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+
+---
+
+### ContainerSecurityContextProps <a name="cdk8s-plus-20.ContainerSecurityContextProps"></a>
+
+Properties for `ContainerSecurityContext`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ContainerSecurityContextProps } from 'cdk8s-plus-20'
+
+const containerSecurityContextProps: ContainerSecurityContextProps = { ... }
+```
+
+##### `ensureNonRoot`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContextProps.property.ensureNonRoot"></a>
+
+```typescript
+public readonly ensureNonRoot: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContextProps.property.group"></a>
+
+```typescript
+public readonly group: number;
+```
+
+- *Type:* `number`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContextProps.property.privileged"></a>
+
+```typescript
+public readonly privileged: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Run container in privileged mode.
+
+Processes in privileged containers are essentially equivalent to root on the host.
+
+---
+
+##### `readOnlyRootFilesystem`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContextProps.property.readOnlyRootFilesystem"></a>
+
+```typescript
+public readonly readOnlyRootFilesystem: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Whether this container has a read-only root filesystem.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContextProps.property.user"></a>
+
+```typescript
+public readonly user: number;
+```
+
+- *Type:* `number`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
 
 ---
 
@@ -2293,6 +2434,20 @@ public readonly restartPolicy: RestartPolicy;
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.DeploymentProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -3143,6 +3298,20 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.JobProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-20.JobProps.property.serviceAccount"></a>
 
 ```typescript
@@ -3475,6 +3644,20 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.PodProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-20.PodProps.property.serviceAccount"></a>
 
 ```typescript
@@ -3511,6 +3694,104 @@ List of volumes that can be mounted by containers belonging to the pod.
 You can also add volumes later using `podSpec.addVolume()`
 
 > https://kubernetes.io/docs/concepts/storage/volumes
+
+---
+
+### PodSecurityContextProps <a name="cdk8s-plus-20.PodSecurityContextProps"></a>
+
+Properties for `PodSecurityContext`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { PodSecurityContextProps } from 'cdk8s-plus-20'
+
+const podSecurityContextProps: PodSecurityContextProps = { ... }
+```
+
+##### `ensureNonRoot`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContextProps.property.ensureNonRoot"></a>
+
+```typescript
+public readonly ensureNonRoot: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+Indicates that the container must run as a non-root user.
+
+If true, the Kubelet will validate the image at runtime to ensure that it does
+not run as UID 0 (root) and fail to start the container if it does.
+
+---
+
+##### `fsGroup`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContextProps.property.fsGroup"></a>
+
+```typescript
+public readonly fsGroup: number;
+```
+
+- *Type:* `number`
+- *Default:* Volume ownership is not changed.
+
+Modify the ownership and permissions of pod volumes to this GID.
+
+---
+
+##### `fsGroupChangePolicy`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContextProps.property.fsGroupChangePolicy"></a>
+
+```typescript
+public readonly fsGroupChangePolicy: FsGroupChangePolicy;
+```
+
+- *Type:* [`cdk8s-plus-20.FsGroupChangePolicy`](#cdk8s-plus-20.FsGroupChangePolicy)
+- *Default:* FsGroupChangePolicy.ALWAYS
+
+Defines behavior of changing ownership and permission of the volume before being exposed inside Pod.
+
+This field will only apply to volume types which support fsGroup based ownership(and permissions).
+It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir.
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContextProps.property.group"></a>
+
+```typescript
+public readonly group: number;
+```
+
+- *Type:* `number`
+- *Default:* Group configured by container runtime
+
+The GID to run the entrypoint of the container process.
+
+---
+
+##### `sysctls`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContextProps.property.sysctls"></a>
+
+```typescript
+public readonly sysctls: Sysctl[];
+```
+
+- *Type:* [`cdk8s-plus-20.Sysctl`](#cdk8s-plus-20.Sysctl)[]
+- *Default:* No sysctls
+
+Sysctls hold a list of namespaced sysctls used for the pod.
+
+Pods with unsupported sysctls (by the container runtime) might fail to launch.
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContextProps.property.user"></a>
+
+```typescript
+public readonly user: number;
+```
+
+- *Type:* `number`
+- *Default:* User specified in image metadata
+
+The UID to run the entrypoint of the container process.
 
 ---
 
@@ -3581,6 +3862,20 @@ public readonly restartPolicy: RestartPolicy;
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSpecProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -3692,6 +3987,20 @@ public readonly restartPolicy: RestartPolicy;
 Restart policy for all containers within the pod.
 
 > https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+---
+
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.PodTemplateProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
 
 ---
 
@@ -4495,6 +4804,20 @@ Restart policy for all containers within the pod.
 
 ---
 
+##### `securityContext`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetProps.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContextProps;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+- *Default:* fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
+  ensureNonRoot: false
+
+SecurityContext holds pod-level security attributes and common container settings.
+
+---
+
 ##### `serviceAccount`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetProps.property.serviceAccount"></a>
 
 ```typescript
@@ -4597,6 +4920,42 @@ public readonly replicas: number;
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+### Sysctl <a name="cdk8s-plus-20.Sysctl"></a>
+
+Sysctl defines a kernel parameter to be set.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { Sysctl } from 'cdk8s-plus-20'
+
+const sysctl: Sysctl = { ... }
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s-plus-20.Sysctl.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* `string`
+
+Name of a property to set.
+
+---
+
+##### `value`<sup>Required</sup> <a name="cdk8s-plus-20.Sysctl.property.value"></a>
+
+```typescript
+public readonly value: string;
+```
+
+- *Type:* `string`
+
+Value of a property to set.
 
 ---
 
@@ -4956,6 +5315,18 @@ The name of the container.
 
 ---
 
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-20.Container.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: ContainerSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-20.ContainerSecurityContext`](#cdk8s-plus-20.ContainerSecurityContext)
+
+The security context of the container.
+
+---
+
 ##### `args`<sup>Optional</sup> <a name="cdk8s-plus-20.Container.property.args"></a>
 
 ```typescript
@@ -5015,6 +5386,79 @@ public readonly workingDir: string;
 - *Type:* `string`
 
 The working directory inside the container.
+
+---
+
+
+### ContainerSecurityContext <a name="cdk8s-plus-20.ContainerSecurityContext"></a>
+
+Container security attributes and settings.
+
+#### Initializers <a name="cdk8s-plus-20.ContainerSecurityContext.Initializer"></a>
+
+```typescript
+import { ContainerSecurityContext } from 'cdk8s-plus-20'
+
+new ContainerSecurityContext(props?: ContainerSecurityContextProps)
+```
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContext.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-20.ContainerSecurityContextProps`](#cdk8s-plus-20.ContainerSecurityContextProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `ensureNonRoot`<sup>Required</sup> <a name="cdk8s-plus-20.ContainerSecurityContext.property.ensureNonRoot"></a>
+
+```typescript
+public readonly ensureNonRoot: boolean;
+```
+
+- *Type:* `boolean`
+
+---
+
+##### `privileged`<sup>Required</sup> <a name="cdk8s-plus-20.ContainerSecurityContext.property.privileged"></a>
+
+```typescript
+public readonly privileged: boolean;
+```
+
+- *Type:* `boolean`
+
+---
+
+##### `readOnlyRootFilesystem`<sup>Required</sup> <a name="cdk8s-plus-20.ContainerSecurityContext.property.readOnlyRootFilesystem"></a>
+
+```typescript
+public readonly readOnlyRootFilesystem: boolean;
+```
+
+- *Type:* `boolean`
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContext.property.group"></a>
+
+```typescript
+public readonly group: number;
+```
+
+- *Type:* `number`
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s-plus-20.ContainerSecurityContext.property.user"></a>
+
+```typescript
+public readonly user: number;
+```
+
+- *Type:* `number`
 
 ---
 
@@ -5274,6 +5718,89 @@ The service object.
 
 
 
+### PodSecurityContext <a name="cdk8s-plus-20.PodSecurityContext"></a>
+
+Holds pod-level security attributes and common container settings.
+
+#### Initializers <a name="cdk8s-plus-20.PodSecurityContext.Initializer"></a>
+
+```typescript
+import { PodSecurityContext } from 'cdk8s-plus-20'
+
+new PodSecurityContext(props?: PodSecurityContextProps)
+```
+
+##### `props`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContext.parameter.props"></a>
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContextProps`](#cdk8s-plus-20.PodSecurityContextProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `ensureNonRoot`<sup>Required</sup> <a name="cdk8s-plus-20.PodSecurityContext.property.ensureNonRoot"></a>
+
+```typescript
+public readonly ensureNonRoot: boolean;
+```
+
+- *Type:* `boolean`
+
+---
+
+##### `fsGroupChangePolicy`<sup>Required</sup> <a name="cdk8s-plus-20.PodSecurityContext.property.fsGroupChangePolicy"></a>
+
+```typescript
+public readonly fsGroupChangePolicy: FsGroupChangePolicy;
+```
+
+- *Type:* [`cdk8s-plus-20.FsGroupChangePolicy`](#cdk8s-plus-20.FsGroupChangePolicy)
+
+---
+
+##### `sysctls`<sup>Required</sup> <a name="cdk8s-plus-20.PodSecurityContext.property.sysctls"></a>
+
+```typescript
+public readonly sysctls: Sysctl[];
+```
+
+- *Type:* [`cdk8s-plus-20.Sysctl`](#cdk8s-plus-20.Sysctl)[]
+
+---
+
+##### `fsGroup`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContext.property.fsGroup"></a>
+
+```typescript
+public readonly fsGroup: number;
+```
+
+- *Type:* `number`
+
+---
+
+##### `group`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContext.property.group"></a>
+
+```typescript
+public readonly group: number;
+```
+
+- *Type:* `number`
+
+---
+
+##### `user`<sup>Optional</sup> <a name="cdk8s-plus-20.PodSecurityContext.property.user"></a>
+
+```typescript
+public readonly user: number;
+```
+
+- *Type:* `number`
+
+---
+
+
 ### PodSpec <a name="cdk8s-plus-20.PodSpec"></a>
 
 - *Implements:* [`cdk8s-plus-20.IPodSpec`](#cdk8s-plus-20.IPodSpec)
@@ -5360,6 +5887,16 @@ public readonly initContainers: Container[];
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `securityContext`<sup>Required</sup> <a name="cdk8s-plus-20.PodSpec.property.securityContext"></a>
+
+```typescript
+public readonly securityContext: PodSecurityContext;
+```
+
+- *Type:* [`cdk8s-plus-20.PodSecurityContext`](#cdk8s-plus-20.PodSecurityContext)
 
 ---
 
@@ -6050,6 +6587,24 @@ The ipAddress of the node.
 #### `POD_IPS` <a name="cdk8s-plus-20.EnvFieldPaths.POD_IPS"></a>
 
 The ipAddresess of the pod.
+
+---
+
+
+### FsGroupChangePolicy <a name="FsGroupChangePolicy"></a>
+
+#### `ON_ROOT_MISMATCH` <a name="cdk8s-plus-20.FsGroupChangePolicy.ON_ROOT_MISMATCH"></a>
+
+Only change permissions and ownership if permission and ownership of root directory does not match with expected permissions of the volume.
+
+This could help shorten the time it takes to change ownership and permission of a volume
+
+---
+
+
+#### `ALWAYS` <a name="cdk8s-plus-20.FsGroupChangePolicy.ALWAYS"></a>
+
+Always change permission and ownership of the volume when volume is mounted.
 
 ---
 
