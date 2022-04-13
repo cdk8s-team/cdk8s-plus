@@ -100,6 +100,10 @@ export class Job extends Resource implements IPodTemplate {
     return this._podTemplate.containers;
   }
 
+  public get initContainers(): Container[] {
+    return this._podTemplate.initContainers;
+  }
+
   public get volumes(): Volume[] {
     return this._podTemplate.volumes;
   }
@@ -114,6 +118,10 @@ export class Job extends Resource implements IPodTemplate {
 
   public addContainer(container: ContainerProps): Container {
     return this._podTemplate.addContainer(container);
+  }
+
+  public addInitContainer(container: ContainerProps): Container {
+    return this._podTemplate.addInitContainer(container);
   }
 
   public addVolume(volume: Volume): void {
