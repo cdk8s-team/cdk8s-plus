@@ -15,6 +15,7 @@
     "docgen": "npx projen docgen",
     "eject": "npx projen eject",
     "eslint": "npx projen eslint",
+    "hooks": "npx projen hooks",
     "import": "npx projen import",
     "package": "npx projen package",
     "package-all": "npx projen package-all",
