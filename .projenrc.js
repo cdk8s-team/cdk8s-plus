@@ -112,8 +112,6 @@ docgenTask.exec('jsii-docgen -l java -o docs/java.md');
 const hooks = project.addTask('hooks');
 hooks.exec('./git-hooks/setup.sh');
 
-project.compileTask.prependSpawn(hooks);
-
 // backport PR's to other branches
 // see https://github.com/tibdex/backport
 const backport = project.github.addWorkflow('backport');
@@ -125,8 +123,8 @@ backport.addJob('backport', {
   },
   steps: [
     {
-      name: 'setup-hooks',
-      run: './git-hooks/setup.sh',
+      name: hooks.name,
+      run: `npx projen ${hooks.name}`,
     },
     {
       name: 'backport',

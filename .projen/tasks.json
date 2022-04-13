@@ -87,9 +87,6 @@
       "description": "Only compile",
       "steps": [
         {
-          "spawn": "hooks"
-        },
-        {
           "spawn": "import"
         },
         {

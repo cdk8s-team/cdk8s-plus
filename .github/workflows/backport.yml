@@ -11,8 +11,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: setup-hooks
-        run: ./git-hooks/setup.sh
+      - name: hooks
+        run: npx projen hooks
       - name: backport
         uses: tibdex/backport@v1
         with:
