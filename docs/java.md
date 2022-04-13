@@ -2,6 +2,489 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### AwsElasticBlockStorePersistentVolume <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume"></a>
+
+Represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+#### Initializers <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.Initializer"></a>
+
+```java
+import org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume;
+
+AwsElasticBlockStorePersistentVolume.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .volumeId(java.lang.String)
+//  .fsType(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.accessModes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.claim"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.mountOptions"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.reclaimPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.storage"></a>
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.storageClassName"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.volumeMode"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `volumeId`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.volumeId"></a>
+
+- *Type:* `java.lang.String`
+
+Unique ID of the persistent disk resource in AWS (Amazon EBS volume).
+
+More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.fsType"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.partition"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.parameter.readOnly"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `fsType`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+
+File system type of this volume.
+
+---
+
+##### `readOnly`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not it is mounted as a read-only volume.
+
+---
+
+##### `volumeId`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.property.volumeId"></a>
+
+```java
+public java.lang.String getVolumeId();
+```
+
+- *Type:* `java.lang.String`
+
+Volume id of this volume.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+
+Partition of this volume.
+
+---
+
+
+### AzureDiskPersistentVolume <a name="org.cdk8s.plus21.AzureDiskPersistentVolume"></a>
+
+AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
+
+#### Initializers <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.Initializer"></a>
+
+```java
+import org.cdk8s.plus21.AzureDiskPersistentVolume;
+
+AzureDiskPersistentVolume.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .diskName(java.lang.String)
+    .diskUri(java.lang.String)
+//  .cachingMode(AzureDiskPersistentVolumeCachingMode)
+//  .fsType(java.lang.String)
+//  .kind(AzureDiskPersistentVolumeKind)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.accessModes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.claim"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.mountOptions"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.reclaimPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.storage"></a>
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.storageClassName"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.volumeMode"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `diskName`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.diskName"></a>
+
+- *Type:* `java.lang.String`
+
+The Name of the data disk in the blob storage.
+
+---
+
+##### `diskUri`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.diskUri"></a>
+
+- *Type:* `java.lang.String`
+
+The URI the data disk in the blob storage.
+
+---
+
+##### `cachingMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.cachingMode"></a>
+
+- *Type:* [`org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode`](#org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.fsType"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.kind"></a>
+
+- *Type:* [`org.cdk8s.plus21.AzureDiskPersistentVolumeKind`](#org.cdk8s.plus21.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.parameter.readOnly"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `cachingMode`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.property.cachingMode"></a>
+
+```java
+public AzureDiskPersistentVolumeCachingMode getCachingMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode`](#org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode)
+
+Caching mode of this volume.
+
+---
+
+##### `diskName`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.property.diskName"></a>
+
+```java
+public java.lang.String getDiskName();
+```
+
+- *Type:* `java.lang.String`
+
+Disk name of this volume.
+
+---
+
+##### `diskUri`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.property.diskUri"></a>
+
+```java
+public java.lang.String getDiskUri();
+```
+
+- *Type:* `java.lang.String`
+
+Disk URI of this volume.
+
+---
+
+##### `fsType`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+
+File system type of this volume.
+
+---
+
+##### `kind`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.property.kind"></a>
+
+```java
+public AzureDiskPersistentVolumeKind getKind();
+```
+
+- *Type:* [`org.cdk8s.plus21.AzureDiskPersistentVolumeKind`](#org.cdk8s.plus21.AzureDiskPersistentVolumeKind)
+
+Azure kind of this volume.
+
+---
+
+##### `readOnly`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolume.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not it is mounted as a read-only volume.
+
+---
+
+
 ### BasicAuthSecret <a name="org.cdk8s.plus21.BasicAuthSecret"></a>
 
 Create a secret for basic authentication.
@@ -754,6 +1237,235 @@ JSON content to provide for the `~/.docker/config.json` file. This will be strin
 
 
 
+### GCEPersistentDiskPersistentVolume <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume"></a>
+
+GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod.
+
+Provisioned by an admin.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+
+#### Initializers <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.Initializer"></a>
+
+```java
+import org.cdk8s.plus21.GCEPersistentDiskPersistentVolume;
+
+GCEPersistentDiskPersistentVolume.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .pdName(java.lang.String)
+//  .fsType(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.accessModes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.claim"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.mountOptions"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.reclaimPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.storage"></a>
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.storageClassName"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.volumeMode"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `pdName`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.pdName"></a>
+
+- *Type:* `java.lang.String`
+
+Unique name of the PD resource in GCE.
+
+Used to identify the disk in GCE.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.fsType"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.partition"></a>
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.parameter.readOnly"></a>
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `fsType`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+
+File system type of this volume.
+
+---
+
+##### `pdName`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.property.pdName"></a>
+
+```java
+public java.lang.String getPdName();
+```
+
+- *Type:* `java.lang.String`
+
+PD resource in GCE of this volume.
+
+---
+
+##### `readOnly`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not it is mounted as a read-only volume.
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolume.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+
+Partition of this volume.
+
+---
+
+
 ### IngressV1Beta1 <a name="org.cdk8s.plus21.IngressV1Beta1"></a>
 
 Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend.
@@ -1334,6 +2046,474 @@ public Duration getTtlAfterFinished();
 - *Type:* [`org.cdk8s.Duration`](#org.cdk8s.Duration)
 
 TTL before the job is deleted after it is finished.
+
+---
+
+
+### PersistentVolume <a name="org.cdk8s.plus21.PersistentVolume"></a>
+
+- *Implements:* [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume)
+
+A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
+
+It is a resource in the cluster just like a node is a cluster resource.
+PVs are volume plugins like Volumes, but have a lifecycle independent of any
+individual Pod that uses the PV. This API object captures the details of the
+implementation of the storage, be that NFS, iSCSI, or a
+cloud-provider-specific storage system.
+
+#### Initializers <a name="org.cdk8s.plus21.PersistentVolume.Initializer"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolume;
+
+PersistentVolume.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolume.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolume.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.accessModes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.claim"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.mountOptions"></a>
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.reclaimPolicy"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.storage"></a>
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.storageClassName"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.parameter.volumeMode"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="org.cdk8s.plus21.PersistentVolume.bind"></a>
+
+```java
+public bind(IPersistentVolumeClaim pvc)
+```
+
+###### `pvc`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolume.parameter.pvc"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+
+The PVC to bind to.
+
+---
+
+##### `reserve` <a name="org.cdk8s.plus21.PersistentVolume.reserve"></a>
+
+```java
+public reserve()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromPersistentVolumeName` <a name="org.cdk8s.plus21.PersistentVolume.fromPersistentVolumeName"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolume;
+
+PersistentVolume.fromPersistentVolumeName(java.lang.String volumeName)
+```
+
+###### `volumeName`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolume.parameter.volumeName"></a>
+
+- *Type:* `java.lang.String`
+
+The name of the pv to reference.
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `mode`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.mode"></a>
+
+```java
+public PersistentVolumeMode getMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+
+Volume mode of this volume.
+
+---
+
+##### `reclaimPolicy`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.reclaimPolicy"></a>
+
+```java
+public PersistentVolumeReclaimPolicy getReclaimPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+
+Reclaim policy of this volume.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+
+Access modes requirement of this claim.
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.claim"></a>
+
+```java
+public IPersistentVolumeClaim getClaim();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+
+PVC this volume is bound to.
+
+Undefined means this volume is not yet
+claimed by any PVC.
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.mountOptions"></a>
+
+```java
+public java.util.List<java.lang.String> getMountOptions();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+
+Mount options of this volume.
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+
+Storage size of this volume.
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolume.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+
+Storage class this volume belongs to.
+
+---
+
+
+### PersistentVolumeClaim <a name="org.cdk8s.plus21.PersistentVolumeClaim"></a>
+
+- *Implements:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+
+A PersistentVolumeClaim (PVC) is a request for storage by a user.
+
+It is similar to a Pod. Pods consume node resources and PVCs consume PV resources.
+Pods can request specific levels of resources (CPU and Memory).
+Claims can request specific size and access modes
+
+#### Initializers <a name="org.cdk8s.plus21.PersistentVolumeClaim.Initializer"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolumeClaim;
+
+PersistentVolumeClaim.Builder.create(Construct scope, java.lang.String id)
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volume(IPersistentVolume)
+//  .volumeMode(PersistentVolumeMode)
+    .build();
+```
+
+##### `scope`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.parameter.scope"></a>
+
+- *Type:* [`software.constructs.Construct`](#software.constructs.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.parameter.id"></a>
+
+- *Type:* `java.lang.String`
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.parameter.metadata"></a>
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.parameter.accessModes"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes requirement.
+
+Contains the access modes the volume should support.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.parameter.storage"></a>
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No storage requirement.
+
+Minimum storage size the volume should have.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.parameter.storageClassName"></a>
+
+- *Type:* `java.lang.String`
+- *Default:* Not set.
+
+Name of the StorageClass required by the claim. When this property is not set, the behavior is as follows:.
+
+* If the admission plugin is turned on, the storage class marked as default will be used.
+* If the admission plugin is turned off, the pvc can only be bound to volumes without a storage class.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+
+---
+
+##### `volume`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.parameter.volume"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume)
+- *Default:* No specific volume binding.
+
+The PersistentVolume backing this claim.
+
+The control plane still checks that storage class, access modes,
+and requested storage size on the volume are valid.
+
+Note that in order to guarantee a proper binding, the volume should
+also define a `claimRef` referring to this claim. Otherwise, the volume may be
+claimed be other pvc's before it gets a chance to bind to this one.
+
+If the volume is managed (i.e not imported), you can use `pv.claim()` to easily
+create a bi-directional bounded claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.parameter.volumeMode"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `bind` <a name="org.cdk8s.plus21.PersistentVolumeClaim.bind"></a>
+
+```java
+public bind(IPersistentVolume pv)
+```
+
+###### `pv`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.parameter.pv"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume)
+
+The PV to bind to.
+
+---
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `fromClaimName` <a name="org.cdk8s.plus21.PersistentVolumeClaim.fromClaimName"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolumeClaim;
+
+PersistentVolumeClaim.fromClaimName(java.lang.String claimName)
+```
+
+###### `claimName`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.parameter.claimName"></a>
+
+- *Type:* `java.lang.String`
+
+The name of the pvc to reference.
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `volumeMode`<sup>Required</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+
+Volume mode requirement of this claim.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+
+Access modes requirement of this claim.
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+
+Storage requirement of this claim.
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+
+Storage class requirment of this claim.
+
+---
+
+##### `volume`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaim.property.volume"></a>
+
+```java
+public IPersistentVolume getVolume();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume)
+
+PV this claim is bound to.
+
+Undefined means the claim is not bound
+to any specific volume.
 
 ---
 
@@ -2936,6 +4116,437 @@ A prefix to add to all keys in the config map.
 
 ---
 
+### AwsElasticBlockStorePersistentVolumeProps <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps"></a>
+
+Properties for `AwsElasticBlockStorePersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps;
+
+AwsElasticBlockStorePersistentVolumeProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .volumeId(java.lang.String)
+//  .fsType(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.claim"></a>
+
+```java
+public IPersistentVolumeClaim getClaim();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.mountOptions"></a>
+
+```java
+public java.util.List<java.lang.String> getMountOptions();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.reclaimPolicy"></a>
+
+```java
+public PersistentVolumeReclaimPolicy getReclaimPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `volumeId`<sup>Required</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.volumeId"></a>
+
+```java
+public java.lang.String getVolumeId();
+```
+
+- *Type:* `java.lang.String`
+
+Unique ID of the persistent disk resource in AWS (Amazon EBS volume).
+
+More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.AwsElasticBlockStorePersistentVolumeProps.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+### AzureDiskPersistentVolumeProps <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps"></a>
+
+Properties for `AzureDiskPersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.AzureDiskPersistentVolumeProps;
+
+AzureDiskPersistentVolumeProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .diskName(java.lang.String)
+    .diskUri(java.lang.String)
+//  .cachingMode(AzureDiskPersistentVolumeCachingMode)
+//  .fsType(java.lang.String)
+//  .kind(AzureDiskPersistentVolumeKind)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.claim"></a>
+
+```java
+public IPersistentVolumeClaim getClaim();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.mountOptions"></a>
+
+```java
+public java.util.List<java.lang.String> getMountOptions();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.reclaimPolicy"></a>
+
+```java
+public PersistentVolumeReclaimPolicy getReclaimPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `diskName`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.diskName"></a>
+
+```java
+public java.lang.String getDiskName();
+```
+
+- *Type:* `java.lang.String`
+
+The Name of the data disk in the blob storage.
+
+---
+
+##### `diskUri`<sup>Required</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.diskUri"></a>
+
+```java
+public java.lang.String getDiskUri();
+```
+
+- *Type:* `java.lang.String`
+
+The URI the data disk in the blob storage.
+
+---
+
+##### `cachingMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.cachingMode"></a>
+
+```java
+public AzureDiskPersistentVolumeCachingMode getCachingMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode`](#org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode)
+- *Default:* AzureDiskPersistentVolumeCachingMode.NONE.
+
+Host Caching mode.
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type to mount.
+
+Must be a filesystem type supported by the host operating system.
+
+---
+
+##### `kind`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.kind"></a>
+
+```java
+public AzureDiskPersistentVolumeKind getKind();
+```
+
+- *Type:* [`org.cdk8s.plus21.AzureDiskPersistentVolumeKind`](#org.cdk8s.plus21.AzureDiskPersistentVolumeKind)
+- *Default:* AzureDiskPersistentVolumeKind.SHARED
+
+Kind of disk.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeProps.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Force the ReadOnly setting in VolumeMounts.
+
+---
+
 ### BasicAuthSecretProps <a name="org.cdk8s.plus21.BasicAuthSecretProps"></a>
 
 Options for `BasicAuthSecret`.
@@ -4331,6 +5942,214 @@ The ingress to add rules to.
 
 ---
 
+### GCEPersistentDiskPersistentVolumeProps <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps"></a>
+
+Properties for `GCEPersistentDiskPersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps;
+
+GCEPersistentDiskPersistentVolumeProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .pdName(java.lang.String)
+//  .fsType(java.lang.String)
+//  .partition(java.lang.Number)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.claim"></a>
+
+```java
+public IPersistentVolumeClaim getClaim();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.mountOptions"></a>
+
+```java
+public java.util.List<java.lang.String> getMountOptions();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.reclaimPolicy"></a>
+
+```java
+public PersistentVolumeReclaimPolicy getReclaimPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+##### `pdName`<sup>Required</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.pdName"></a>
+
+```java
+public java.lang.String getPdName();
+```
+
+- *Type:* `java.lang.String`
+
+Unique name of the PD resource in GCE.
+
+Used to identify the disk in GCE.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
+
+---
+
+##### `fsType`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.fsType"></a>
+
+```java
+public java.lang.String getFsType();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* 'ext4'
+
+Filesystem type of the volume that you want to mount.
+
+Tip: Ensure that the filesystem type is supported by the host operating system.
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* No partition.
+
+The partition in the volume that you want to mount.
+
+If omitted, the default is to mount by volume name.
+Examples: For volume /dev/sda1, you specify the partition as "1".
+Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.GCEPersistentDiskPersistentVolumeProps.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
+
+> https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+
+---
+
 ### HandlerFromHttpGetOptions <a name="org.cdk8s.plus21.HandlerFromHttpGetOptions"></a>
 
 Options for `Handler.fromHttpGet`.
@@ -5123,6 +6942,303 @@ Optional: mode bits to use on this file, must be a value between 0 and 0777.
 If not specified, the volume defaultMode will be used. This might be
 in conflict with other options that affect the file mode, like fsGroup, and
 the result can be other mode bits set.
+
+---
+
+### PersistentVolumeClaimProps <a name="org.cdk8s.plus21.PersistentVolumeClaimProps"></a>
+
+Properties for `PersistentVolumeClaim`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolumeClaimProps;
+
+PersistentVolumeClaimProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volume(IPersistentVolume)
+//  .volumeMode(PersistentVolumeMode)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes requirement.
+
+Contains the access modes the volume should support.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No storage requirement.
+
+Minimum storage size the volume should have.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Not set.
+
+Name of the StorageClass required by the claim. When this property is not set, the behavior is as follows:.
+
+* If the admission plugin is turned on, the storage class marked as default will be used.
+* If the admission plugin is turned off, the pvc can only be bound to volumes without a storage class.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+
+---
+
+##### `volume`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.property.volume"></a>
+
+```java
+public IPersistentVolume getVolume();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume)
+- *Default:* No specific volume binding.
+
+The PersistentVolume backing this claim.
+
+The control plane still checks that storage class, access modes,
+and requested storage size on the volume are valid.
+
+Note that in order to guarantee a proper binding, the volume should
+also define a `claimRef` referring to this claim. Otherwise, the volume may be
+claimed be other pvc's before it gets a chance to bind to this one.
+
+If the volume is managed (i.e not imported), you can use `pv.claim()` to easily
+create a bi-directional bounded claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimProps.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
+
+---
+
+### PersistentVolumeClaimVolumeOptions <a name="org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions"></a>
+
+Options for a PersistentVolumeClaim-based volume.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions;
+
+PersistentVolumeClaimVolumeOptions.builder()
+//  .name(java.lang.String)
+//  .readOnly(java.lang.Boolean)
+    .build();
+```
+
+##### `name`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Derived from the PVC name.
+
+The volume name.
+
+---
+
+##### `readOnly`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions.property.readOnly"></a>
+
+```java
+public java.lang.Boolean getReadOnly();
+```
+
+- *Type:* `java.lang.Boolean`
+- *Default:* false
+
+Will force the ReadOnly setting in VolumeMounts.
+
+---
+
+### PersistentVolumeProps <a name="org.cdk8s.plus21.PersistentVolumeProps"></a>
+
+Properties for `PersistentVolume`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus21.PersistentVolumeProps;
+
+PersistentVolumeProps.builder()
+//  .metadata(ApiObjectMetadata)
+//  .accessModes(java.util.List<PersistentVolumeAccessMode>)
+//  .claim(IPersistentVolumeClaim)
+//  .mountOptions(java.util.List<java.lang.String>)
+//  .reclaimPolicy(PersistentVolumeReclaimPolicy)
+//  .storage(Size)
+//  .storageClassName(java.lang.String)
+//  .volumeMode(PersistentVolumeMode)
+    .build();
+```
+
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.metadata"></a>
+
+```java
+public ApiObjectMetadata getMetadata();
+```
+
+- *Type:* [`org.cdk8s.ApiObjectMetadata`](#org.cdk8s.ApiObjectMetadata)
+
+Metadata that all persisted resources must have, which includes all objects users must create.
+
+---
+
+##### `accessModes`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.accessModes"></a>
+
+```java
+public java.util.List<PersistentVolumeAccessMode> getAccessModes();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus21.PersistentVolumeAccessMode`](#org.cdk8s.plus21.PersistentVolumeAccessMode)>
+- *Default:* No access modes.
+
+Contains all ways the volume can be mounted.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
+
+---
+
+##### `claim`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.claim"></a>
+
+```java
+public IPersistentVolumeClaim getClaim();
+```
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+- *Default:* Not bound to a specific claim.
+
+Part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim.
+
+Expected to be non-nil when bound.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
+
+---
+
+##### `mountOptions`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.mountOptions"></a>
+
+```java
+public java.util.List<java.lang.String> getMountOptions();
+```
+
+- *Type:* java.util.List<`java.lang.String`>
+- *Default:* No options.
+
+A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+
+---
+
+##### `reclaimPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.reclaimPolicy"></a>
+
+```java
+public PersistentVolumeReclaimPolicy getReclaimPolicy();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeReclaimPolicy`](#org.cdk8s.plus21.PersistentVolumeReclaimPolicy)
+- *Default:* PersistentVolumeReclaimPolicy.RETAIN
+
+When a user is done with their volume, they can delete the PVC objects from the API that allows reclamation of the resource.
+
+The reclaim policy tells the cluster what to do with
+the volume after it has been released of its claim.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.storage"></a>
+
+```java
+public Size getStorage();
+```
+
+- *Type:* [`org.cdk8s.Size`](#org.cdk8s.Size)
+- *Default:* No specified.
+
+What is the storage capacity of this volume.
+
+> https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+
+---
+
+##### `storageClassName`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.storageClassName"></a>
+
+```java
+public java.lang.String getStorageClassName();
+```
+
+- *Type:* `java.lang.String`
+- *Default:* Volume does not belong to any storage class.
+
+Name of StorageClass to which this persistent volume belongs.
+
+---
+
+##### `volumeMode`<sup>Optional</sup> <a name="org.cdk8s.plus21.PersistentVolumeProps.property.volumeMode"></a>
+
+```java
+public PersistentVolumeMode getVolumeMode();
+```
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeMode`](#org.cdk8s.plus21.PersistentVolumeMode)
+- *Default:* VolumeMode.FILE_SYSTEM
+
+Defines what type of volume is required by the claim.
 
 ---
 
@@ -8535,26 +10651,6 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
-#### Initializers <a name="org.cdk8s.plus21.Volume.Initializer"></a>
-
-```java
-import org.cdk8s.plus21.Volume;
-
-new Volume(java.lang.String name, java.lang.Object config);
-```
-
-##### `name`<sup>Required</sup> <a name="org.cdk8s.plus21.Volume.parameter.name"></a>
-
-- *Type:* `java.lang.String`
-
----
-
-##### `config`<sup>Required</sup> <a name="org.cdk8s.plus21.Volume.parameter.config"></a>
-
-- *Type:* `java.lang.Object`
-
----
-
 
 #### Static Functions <a name="Static Functions"></a>
 
@@ -8603,6 +10699,48 @@ Volume.fromEmptyDir(java.lang.String name, EmptyDirVolumeOptions options)
 - *Type:* [`org.cdk8s.plus21.EmptyDirVolumeOptions`](#org.cdk8s.plus21.EmptyDirVolumeOptions)
 
 Additional options.
+
+---
+
+##### `fromPersistentVolume` <a name="org.cdk8s.plus21.Volume.fromPersistentVolume"></a>
+
+```java
+import org.cdk8s.plus21.Volume;
+
+Volume.fromPersistentVolume(PersistentVolume pv)
+Volume.fromPersistentVolume(PersistentVolume pv, PersistentVolumeClaimVolumeOptions options)
+```
+
+###### `pv`<sup>Required</sup> <a name="org.cdk8s.plus21.Volume.parameter.pv"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolume`](#org.cdk8s.plus21.PersistentVolume)
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions`](#org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions)
+
+---
+
+##### `fromPersistentVolumeClaim` <a name="org.cdk8s.plus21.Volume.fromPersistentVolumeClaim"></a>
+
+```java
+import org.cdk8s.plus21.Volume;
+
+Volume.fromPersistentVolumeClaim(IPersistentVolumeClaim pvc)
+Volume.fromPersistentVolumeClaim(IPersistentVolumeClaim pvc, PersistentVolumeClaimVolumeOptions options)
+```
+
+###### `pvc`<sup>Required</sup> <a name="org.cdk8s.plus21.Volume.parameter.pvc"></a>
+
+- *Type:* [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+
+---
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.Volume.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions`](#org.cdk8s.plus21.PersistentVolumeClaimVolumeOptions)
 
 ---
 
@@ -8658,6 +10796,52 @@ Represents a config map.
 #### Properties <a name="Properties"></a>
 
 ##### `name`<sup>Required</sup> <a name="org.cdk8s.plus21.IConfigMap.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+The Kubernetes name of this resource.
+
+---
+
+### IPersistentVolume <a name="org.cdk8s.plus21.IPersistentVolume"></a>
+
+- *Extends:* [`org.cdk8s.plus21.IResource`](#org.cdk8s.plus21.IResource)
+
+- *Implemented By:* [`org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus21.AzureDiskPersistentVolume`](#org.cdk8s.plus21.AzureDiskPersistentVolume), [`org.cdk8s.plus21.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus21.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus21.PersistentVolume`](#org.cdk8s.plus21.PersistentVolume), [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume)
+
+Contract of a `PersistentVolumeClaim`.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus21.IPersistentVolume.property.name"></a>
+
+```java
+public java.lang.String getName();
+```
+
+- *Type:* `java.lang.String`
+
+The Kubernetes name of this resource.
+
+---
+
+### IPersistentVolumeClaim <a name="org.cdk8s.plus21.IPersistentVolumeClaim"></a>
+
+- *Extends:* [`org.cdk8s.plus21.IResource`](#org.cdk8s.plus21.IResource)
+
+- *Implemented By:* [`org.cdk8s.plus21.PersistentVolumeClaim`](#org.cdk8s.plus21.PersistentVolumeClaim), [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim)
+
+Contract of a `PersistentVolumeClaim`.
+
+
+#### Properties <a name="Properties"></a>
+
+##### `name`<sup>Required</sup> <a name="org.cdk8s.plus21.IPersistentVolumeClaim.property.name"></a>
 
 ```java
 public java.lang.String getName();
@@ -8910,7 +11094,7 @@ Provides read/write access to the underlying pod metadata of the resource.
 
 ### IResource <a name="org.cdk8s.plus21.IResource"></a>
 
-- *Implemented By:* [`org.cdk8s.plus21.BasicAuthSecret`](#org.cdk8s.plus21.BasicAuthSecret), [`org.cdk8s.plus21.ConfigMap`](#org.cdk8s.plus21.ConfigMap), [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret), [`org.cdk8s.plus21.IngressV1Beta1`](#org.cdk8s.plus21.IngressV1Beta1), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.Pod`](#org.cdk8s.plus21.Pod), [`org.cdk8s.plus21.Resource`](#org.cdk8s.plus21.Resource), [`org.cdk8s.plus21.Secret`](#org.cdk8s.plus21.Secret), [`org.cdk8s.plus21.Service`](#org.cdk8s.plus21.Service), [`org.cdk8s.plus21.ServiceAccount`](#org.cdk8s.plus21.ServiceAccount), [`org.cdk8s.plus21.ServiceAccountTokenSecret`](#org.cdk8s.plus21.ServiceAccountTokenSecret), [`org.cdk8s.plus21.SshAuthSecret`](#org.cdk8s.plus21.SshAuthSecret), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.TlsSecret`](#org.cdk8s.plus21.TlsSecret), [`org.cdk8s.plus21.IConfigMap`](#org.cdk8s.plus21.IConfigMap), [`org.cdk8s.plus21.IResource`](#org.cdk8s.plus21.IResource), [`org.cdk8s.plus21.ISecret`](#org.cdk8s.plus21.ISecret), [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
+- *Implemented By:* [`org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume`](#org.cdk8s.plus21.AwsElasticBlockStorePersistentVolume), [`org.cdk8s.plus21.AzureDiskPersistentVolume`](#org.cdk8s.plus21.AzureDiskPersistentVolume), [`org.cdk8s.plus21.BasicAuthSecret`](#org.cdk8s.plus21.BasicAuthSecret), [`org.cdk8s.plus21.ConfigMap`](#org.cdk8s.plus21.ConfigMap), [`org.cdk8s.plus21.Deployment`](#org.cdk8s.plus21.Deployment), [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret), [`org.cdk8s.plus21.GCEPersistentDiskPersistentVolume`](#org.cdk8s.plus21.GCEPersistentDiskPersistentVolume), [`org.cdk8s.plus21.IngressV1Beta1`](#org.cdk8s.plus21.IngressV1Beta1), [`org.cdk8s.plus21.Job`](#org.cdk8s.plus21.Job), [`org.cdk8s.plus21.PersistentVolume`](#org.cdk8s.plus21.PersistentVolume), [`org.cdk8s.plus21.PersistentVolumeClaim`](#org.cdk8s.plus21.PersistentVolumeClaim), [`org.cdk8s.plus21.Pod`](#org.cdk8s.plus21.Pod), [`org.cdk8s.plus21.Resource`](#org.cdk8s.plus21.Resource), [`org.cdk8s.plus21.Secret`](#org.cdk8s.plus21.Secret), [`org.cdk8s.plus21.Service`](#org.cdk8s.plus21.Service), [`org.cdk8s.plus21.ServiceAccount`](#org.cdk8s.plus21.ServiceAccount), [`org.cdk8s.plus21.ServiceAccountTokenSecret`](#org.cdk8s.plus21.ServiceAccountTokenSecret), [`org.cdk8s.plus21.SshAuthSecret`](#org.cdk8s.plus21.SshAuthSecret), [`org.cdk8s.plus21.StatefulSet`](#org.cdk8s.plus21.StatefulSet), [`org.cdk8s.plus21.TlsSecret`](#org.cdk8s.plus21.TlsSecret), [`org.cdk8s.plus21.IConfigMap`](#org.cdk8s.plus21.IConfigMap), [`org.cdk8s.plus21.IPersistentVolume`](#org.cdk8s.plus21.IPersistentVolume), [`org.cdk8s.plus21.IPersistentVolumeClaim`](#org.cdk8s.plus21.IPersistentVolumeClaim), [`org.cdk8s.plus21.IResource`](#org.cdk8s.plus21.IResource), [`org.cdk8s.plus21.ISecret`](#org.cdk8s.plus21.ISecret), [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
 
 Represents a resource.
 
@@ -8972,6 +11156,56 @@ The Kubernetes name of this resource.
 ---
 
 ## Enums <a name="Enums"></a>
+
+### AzureDiskPersistentVolumeCachingMode <a name="AzureDiskPersistentVolumeCachingMode"></a>
+
+Azure disk caching modes.
+
+#### `NONE` <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode.NONE"></a>
+
+None.
+
+---
+
+
+#### `READ_ONLY` <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode.READ_ONLY"></a>
+
+ReadOnly.
+
+---
+
+
+#### `READ_WRITE` <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeCachingMode.READ_WRITE"></a>
+
+ReadWrite.
+
+---
+
+
+### AzureDiskPersistentVolumeKind <a name="AzureDiskPersistentVolumeKind"></a>
+
+Azure Disk kinds.
+
+#### `SHARED` <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeKind.SHARED"></a>
+
+Multiple blob disks per storage account.
+
+---
+
+
+#### `DEDICATED` <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeKind.DEDICATED"></a>
+
+Single blob disk per storage account.
+
+---
+
+
+#### `MANAGED` <a name="org.cdk8s.plus21.AzureDiskPersistentVolumeKind.MANAGED"></a>
+
+Azure managed data disk.
+
+---
+
 
 ### EmptyDirMedium <a name="EmptyDirMedium"></a>
 
@@ -9173,6 +11407,108 @@ the host operating system and therefore it is allowed only in privileged
 Containers. Familiarity with Linux kernel behavior is strongly recommended.
 In addition, any volume mounts created by Containers in Pods must be
 destroyed (unmounted) by the Containers on termination.
+
+---
+
+
+### PersistentVolumeAccessMode <a name="PersistentVolumeAccessMode"></a>
+
+Access Modes.
+
+#### `READ_WRITE_ONCE` <a name="org.cdk8s.plus21.PersistentVolumeAccessMode.READ_WRITE_ONCE"></a>
+
+The volume can be mounted as read-write by a single node.
+
+ReadWriteOnce access mode still can allow multiple pods to access
+the volume when the pods are running on the same node.
+
+---
+
+
+#### `READ_ONLY_MANY` <a name="org.cdk8s.plus21.PersistentVolumeAccessMode.READ_ONLY_MANY"></a>
+
+The volume can be mounted as read-only by many nodes.
+
+---
+
+
+#### `READ_WRITE_MANY` <a name="org.cdk8s.plus21.PersistentVolumeAccessMode.READ_WRITE_MANY"></a>
+
+The volume can be mounted as read-write by many nodes.
+
+---
+
+
+#### `READ_WRITE_ONCE_POD` <a name="org.cdk8s.plus21.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD"></a>
+
+The volume can be mounted as read-write by a single Pod.
+
+Use ReadWriteOncePod access mode if you want to ensure that
+only one pod across whole cluster can read that PVC or write to it.
+This is only supported for CSI volumes and Kubernetes version 1.22+.
+
+---
+
+
+### PersistentVolumeMode <a name="PersistentVolumeMode"></a>
+
+Volume Modes.
+
+#### `FILE_SYSTEM` <a name="org.cdk8s.plus21.PersistentVolumeMode.FILE_SYSTEM"></a>
+
+Volume is ounted into Pods into a directory.
+
+If the volume is backed by a block device and the device is empty,
+Kubernetes creates a filesystem on the device before mounting it
+for the first time.
+
+---
+
+
+#### `BLOCK` <a name="org.cdk8s.plus21.PersistentVolumeMode.BLOCK"></a>
+
+Use a volume as a raw block device.
+
+Such volume is presented into a Pod as a block device,
+without any filesystem on it. This mode is useful to provide a Pod the fastest possible way
+to access a volume, without any filesystem layer between the Pod
+and the volume. On the other hand, the application running in
+the Pod must know how to handle a raw block device
+
+---
+
+
+### PersistentVolumeReclaimPolicy <a name="PersistentVolumeReclaimPolicy"></a>
+
+Reclaim Policies.
+
+#### `RETAIN` <a name="org.cdk8s.plus21.PersistentVolumeReclaimPolicy.RETAIN"></a>
+
+The Retain reclaim policy allows for manual reclamation of the resource.
+
+When the PersistentVolumeClaim is deleted, the PersistentVolume still exists and the
+volume is considered "released". But it is not yet available for another claim
+because the previous claimant's data remains on the volume.
+An administrator can manually reclaim the volume with the following steps:
+
+1. Delete the PersistentVolume. The associated storage asset in external
+   infrastructure (such as an AWS EBS, GCE PD, Azure Disk, or Cinder volume) still exists after the PV is deleted.
+2. Manually clean up the data on the associated storage asset accordingly.
+3. Manually delete the associated storage asset.
+
+If you want to reuse the same storage asset, create a new PersistentVolume
+with the same storage asset definition.
+
+---
+
+
+#### `DELETE` <a name="org.cdk8s.plus21.PersistentVolumeReclaimPolicy.DELETE"></a>
+
+For volume plugins that support the Delete reclaim policy, deletion removes both the PersistentVolume object from Kubernetes, as well as the associated storage asset in the external infrastructure, such as an AWS EBS, GCE PD, Azure Disk, or Cinder volume.
+
+Volumes that were dynamically provisioned inherit the reclaim policy of their StorageClass, which defaults to Delete.
+The administrator should configure the StorageClass according to users' expectations; otherwise,
+the PV must be edited or patched after it is created
 
 ---
 
