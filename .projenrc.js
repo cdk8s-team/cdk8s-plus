@@ -125,10 +125,6 @@ backport.addJob('backport', {
     {
       name: 'checkout',
       uses: 'actions/checkout@v2',
-      with: {
-        ref: '${{ github.event.pull_request.head.ref }}',
-        repository: '${{ github.event.pull_request.head.repo.full_name }}',
-      },
     },
     {
       name: hooks.name,
