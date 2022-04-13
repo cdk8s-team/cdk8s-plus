@@ -247,6 +247,7 @@ import org.cdk8s.plus20.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -287,6 +288,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -367,6 +389,18 @@ Number of desired pods.
 
 ```java
 public addContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.Deployment.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)
+
+---
+
+##### `addInitContainer` <a name="org.cdk8s.plus20.Deployment.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
 ```
 
 ###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.Deployment.parameter.container"></a>
@@ -461,6 +495,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.Deployment.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -761,6 +809,7 @@ import org.cdk8s.plus20.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -802,6 +851,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.JobProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -903,6 +973,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addInitContainer` <a name="org.cdk8s.plus20.Job.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.Job.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus20.Job.addVolume"></a>
 
 ```java
@@ -929,6 +1011,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.Job.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -1038,6 +1134,7 @@ import org.cdk8s.plus20.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -1075,6 +1172,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -1134,6 +1252,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addInitContainer` <a name="org.cdk8s.plus20.Pod.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.Pod.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus20.Pod.addVolume"></a>
 
 ```java
@@ -1160,6 +1290,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.Pod.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -1829,6 +1973,7 @@ import org.cdk8s.plus20.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -1871,6 +2016,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -1976,6 +2142,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addInitContainer` <a name="org.cdk8s.plus20.StatefulSet.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.StatefulSet.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus20.StatefulSet.addVolume"></a>
 
 ```java
@@ -2024,6 +2202,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.StatefulSet.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -2768,6 +2960,7 @@ import org.cdk8s.plus20.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -2804,6 +2997,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -3648,6 +3866,7 @@ import org.cdk8s.plus20.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -3685,6 +3904,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.JobProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -3976,6 +4220,7 @@ import org.cdk8s.plus20.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -4009,6 +4254,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -4077,6 +4347,7 @@ import org.cdk8s.plus20.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -4098,6 +4369,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpecProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -4168,6 +4464,7 @@ import org.cdk8s.plus20.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -4190,6 +4487,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodTemplateProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -4985,6 +5307,7 @@ import org.cdk8s.plus20.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -5023,6 +5346,31 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.property.initContainers"></a>
+
+```java
+public java.util.List<ContainerProps> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -6008,6 +6356,7 @@ import org.cdk8s.plus20.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -6025,6 +6374,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpecProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -6084,6 +6454,18 @@ public addContainer(ContainerProps container)
 
 ---
 
+##### `addInitContainer` <a name="org.cdk8s.plus20.PodSpec.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.PodSpec.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus20.PodSpec.addVolume"></a>
 
 ```java
@@ -6110,6 +6492,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.PodSpec.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -6165,6 +6561,7 @@ import org.cdk8s.plus20.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
 //  .serviceAccount(IServiceAccount)
 //  .volumes(java.util.List<Volume>)
@@ -6183,6 +6580,27 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `initContainers`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodTemplateProps.parameter.initContainers"></a>
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)>
+- *Default:* No init containers.
+
+List of initialization containers belonging to the pod.
+
+Init containers are executed in order prior to containers being started.
+If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy.
+The name for an init container or normal container must be unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit
+for each resource type, and then using the max of of that value or the sum of the normal containers.
+Limits are applied to init containers in a similar fashion.
+
+Init containers cannot currently be added ,removed or updated.
+
+> https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 
 ---
 
@@ -6528,6 +6946,20 @@ The container.
 
 ---
 
+##### `addInitContainer` <a name="org.cdk8s.plus20.IPodSpec.addInitContainer"></a>
+
+```java
+public addInitContainer(ContainerProps container)
+```
+
+###### `container`<sup>Required</sup> <a name="org.cdk8s.plus20.IPodSpec.parameter.container"></a>
+
+- *Type:* [`org.cdk8s.plus20.ContainerProps`](#org.cdk8s.plus20.ContainerProps)
+
+The container.
+
+---
+
 ##### `addVolume` <a name="org.cdk8s.plus20.IPodSpec.addVolume"></a>
 
 ```java
@@ -6555,6 +6987,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.IPodSpec.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
@@ -6620,6 +7066,20 @@ public java.util.List<Container> getContainers();
 The containers belonging to the pod.
 
 Use `addContainer` to add containers.
+
+---
+
+##### `initContainers`<sup>Required</sup> <a name="org.cdk8s.plus20.IPodTemplate.property.initContainers"></a>
+
+```java
+public java.util.List<Container> getInitContainers();
+```
+
+- *Type:* java.util.List<[`org.cdk8s.plus20.Container`](#org.cdk8s.plus20.Container)>
+
+The init containers belonging to the pod.
+
+Use `addInitContainer` to add init containers.
 
 ---
 
