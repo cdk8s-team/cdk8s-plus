@@ -139,6 +139,14 @@
         }
       ]
     },
+    "hooks": {
+      "name": "hooks",
+      "steps": [
+        {
+          "exec": "./git-hooks/setup.sh"
+        }
+      ]
+    },
     "import": {
       "name": "import",
       "description": "Updates imports based on latest version of cdk8s-cli.",

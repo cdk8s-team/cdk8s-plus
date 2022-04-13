@@ -109,6 +109,9 @@ docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
 docgenTask.exec('jsii-docgen -l python -o docs/python.md');
 docgenTask.exec('jsii-docgen -l java -o docs/java.md');
 
+const hooks = project.addTask('hooks');
+hooks.exec('./git-hooks/setup.sh');
+
 // backport PR's to other branches
 // see https://github.com/tibdex/backport
 const backport = project.github.addWorkflow('backport');
@@ -120,8 +123,16 @@ backport.addJob('backport', {
   },
   steps: [
     {
-      name: 'setup-hooks',
-      run: './git-hooks/setup.sh',
+      name: 'checkout',
+      uses: 'actions/checkout@v2',
+      with: {
+        ref: '${{ github.event.pull_request.head.ref }}',
+        repository: '${{ github.event.pull_request.head.repo.full_name }}',
+      },
+    },
+    {
+      name: hooks.name,
+      run: `npx projen ${hooks.name}`,
     },
     {
       name: 'backport',
