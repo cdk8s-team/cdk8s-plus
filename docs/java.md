@@ -524,7 +524,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.BasicAuthSecretProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -535,7 +535,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `password`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.parameter.password"></a>
+##### `password`<sup>Required</sup> <a name="org.cdk8s.plus21.BasicAuthSecretProps.parameter.password"></a>
 
 - *Type:* `java.lang.String`
 
@@ -1662,7 +1662,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.DockerConfigSecretProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -1673,7 +1673,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.parameter.data"></a>
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus21.DockerConfigSecretProps.parameter.data"></a>
 
 - *Type:* java.util.Map<java.lang.String, `java.lang.Object`>
 
@@ -3399,7 +3399,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -3410,7 +3410,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.parameter.stringData"></a>
+##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretProps.parameter.stringData"></a>
 
 - *Type:* java.util.Map<java.lang.String, `java.lang.String`>
 
@@ -3493,7 +3493,7 @@ The name of the secret to reference.
 
 #### Properties <a name="Properties"></a>
 
-##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.Secret.property.immutable"></a>
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus21.Secret.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -3932,7 +3932,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.ServiceAccountTokenSecretProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -3943,7 +3943,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.parameter.serviceAccount"></a>
+##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus21.ServiceAccountTokenSecretProps.parameter.serviceAccount"></a>
 
 - *Type:* [`org.cdk8s.plus21.IServiceAccount`](#org.cdk8s.plus21.IServiceAccount)
 
@@ -3993,7 +3993,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.SshAuthSecretProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -4004,7 +4004,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.parameter.sshPrivateKey"></a>
+##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus21.SshAuthSecretProps.parameter.sshPrivateKey"></a>
 
 - *Type:* `java.lang.String`
 
@@ -4493,7 +4493,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.TlsSecretProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -4504,7 +4504,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.parameter.tlsCert"></a>
+##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus21.TlsSecretProps.parameter.tlsCert"></a>
 
 - *Type:* `java.lang.String`
 
@@ -5287,7 +5287,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.BasicAuthSecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -5302,7 +5302,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `password`<sup>Required</sup> <a name="org.cdk8s.plus22.BasicAuthSecretProps.property.password"></a>
+##### `password`<sup>Required</sup> <a name="org.cdk8s.plus21.BasicAuthSecretProps.property.password"></a>
 
 ```java
 public java.lang.String getPassword();
@@ -5421,14 +5421,14 @@ Defaults to 1 second. Minimum value is 1.
 
 ---
 
-### CommonSecretProps <a name="org.cdk8s.plus22.CommonSecretProps"></a>
+### CommonSecretProps <a name="org.cdk8s.plus21.CommonSecretProps"></a>
 
 Common properties for `Secret`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.CommonSecretProps;
+import org.cdk8s.plus21.CommonSecretProps;
 
 CommonSecretProps.builder()
 //  .metadata(ApiObjectMetadata)
@@ -5436,7 +5436,7 @@ CommonSecretProps.builder()
     .build();
 ```
 
-##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommonSecretProps.property.metadata"></a>
+##### `metadata`<sup>Optional</sup> <a name="org.cdk8s.plus21.CommonSecretProps.property.metadata"></a>
 
 ```java
 public ApiObjectMetadata getMetadata();
@@ -5448,7 +5448,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.CommonSecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.CommonSecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -5463,7 +5463,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-### ConfigMapProps <a name="org.cdk8s.plus22.ConfigMapProps"></a>
+### ConfigMapProps <a name="org.cdk8s.plus21.ConfigMapProps"></a>
 
 Properties for initialization of `ConfigMap`.
 
@@ -6514,7 +6514,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.DockerConfigSecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -6529,7 +6529,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `data`<sup>Required</sup> <a name="org.cdk8s.plus22.DockerConfigSecretProps.property.data"></a>
+##### `data`<sup>Required</sup> <a name="org.cdk8s.plus21.DockerConfigSecretProps.property.data"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.Object> getData();
@@ -9153,7 +9153,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -9168,7 +9168,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus22.SecretProps.property.stringData"></a>
+##### `stringData`<sup>Optional</sup> <a name="org.cdk8s.plus21.SecretProps.property.stringData"></a>
 
 ```java
 public java.util.Map<java.lang.String, java.lang.String> getStringData();
@@ -9393,7 +9393,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.ServiceAccountTokenSecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -9408,7 +9408,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus22.ServiceAccountTokenSecretProps.property.serviceAccount"></a>
+##### `serviceAccount`<sup>Required</sup> <a name="org.cdk8s.plus21.ServiceAccountTokenSecretProps.property.serviceAccount"></a>
 
 ```java
 public IServiceAccount getServiceAccount();
@@ -9783,7 +9783,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.SshAuthSecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -9798,7 +9798,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus22.SshAuthSecretProps.property.sshPrivateKey"></a>
+##### `sshPrivateKey`<sup>Required</sup> <a name="org.cdk8s.plus21.SshAuthSecretProps.property.sshPrivateKey"></a>
 
 ```java
 public java.lang.String getSshPrivateKey();
@@ -10242,7 +10242,7 @@ Metadata that all persisted resources must have, which includes all objects user
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus21.TlsSecretProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -10257,7 +10257,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus22.TlsSecretProps.property.tlsCert"></a>
+##### `tlsCert`<sup>Required</sup> <a name="org.cdk8s.plus21.TlsSecretProps.property.tlsCert"></a>
 
 ```java
 public java.lang.String getTlsCert();
