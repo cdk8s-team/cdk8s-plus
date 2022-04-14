@@ -612,7 +612,7 @@ You can also add data using `configMap.addData()`.
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus20.ConfigMapProps.parameter.immutable"></a>
 
 - *Type:* `java.lang.Boolean`
 - *Default:* false
@@ -760,6 +760,18 @@ public java.util.Map<java.lang.String, java.lang.String> getData();
 The data associated with this config map.
 
 Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
+
+---
+
+##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus20.ConfigMap.property.immutable"></a>
+
+```java
+public java.lang.Boolean getImmutable();
+```
+
+- *Type:* `java.lang.Boolean`
+
+Whether or not this config map is immutable.
 
 ---
 
@@ -1152,18 +1164,6 @@ public IServiceAccount getServiceAccount();
 - *Type:* [`org.cdk8s.plus20.IServiceAccount`](#org.cdk8s.plus20.IServiceAccount)
 
 The service account used to run this pod.
-
----
-
-##### `immutable`<sup>Required</sup> <a name="org.cdk8s.plus22.ConfigMap.property.immutable"></a>
-
-```java
-public java.lang.Boolean getImmutable();
-```
-
-- *Type:* `java.lang.Boolean`
-
-Whether or not this config map is immutable.
 
 ---
 
@@ -5387,7 +5387,7 @@ You can also add data using `configMap.addData()`.
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus22.ConfigMapProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="org.cdk8s.plus20.ConfigMapProps.property.immutable"></a>
 
 ```java
 public java.lang.Boolean getImmutable();
@@ -5402,7 +5402,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-### ConfigMapVolumeOptions <a name="org.cdk8s.plus22.ConfigMapVolumeOptions"></a>
+### ConfigMapVolumeOptions <a name="org.cdk8s.plus20.ConfigMapVolumeOptions"></a>
 
 Options for the ConfigMap-based volume.
 

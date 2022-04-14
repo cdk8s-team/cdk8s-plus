@@ -620,7 +620,7 @@ You can also add data using `configMap.addData()`.
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.parameter.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_20.ConfigMapProps.parameter.immutable"></a>
 
 - *Type:* `bool`
 - *Default:* false
@@ -794,7 +794,7 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
-##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_22.ConfigMap.property.immutable"></a>
+##### `immutable`<sup>Required</sup> <a name="cdk8s_plus_20.ConfigMap.property.immutable"></a>
 
 ```python
 immutable: bool
@@ -7594,7 +7594,7 @@ You can also add data using `configMap.addData()`.
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_22.ConfigMapProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s_plus_20.ConfigMapProps.property.immutable"></a>
 
 ```python
 immutable: bool
@@ -7609,7 +7609,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-### ConfigMapVolumeOptions <a name="cdk8s_plus_22.ConfigMapVolumeOptions"></a>
+### ConfigMapVolumeOptions <a name="cdk8s_plus_20.ConfigMapVolumeOptions"></a>
 
 Options for the ConfigMap-based volume.
 
