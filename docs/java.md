@@ -1226,6 +1226,7 @@ Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .podMetadata(ApiObjectMetadata)
 //  .defaultSelector(java.lang.Boolean)
 //  .replicas(java.lang.Number)
+//  .strategy(DeploymentStrategy)
     .build();
 ```
 
@@ -1379,6 +1380,15 @@ If this is set to `false` you must define your selector through
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.parameter.strategy"></a>
+
+- *Type:* [`org.cdk8s.plus20.DeploymentStrategy`](#org.cdk8s.plus20.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -1582,6 +1592,18 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus20.PodSecurityContext`](#org.cdk8s.plus20.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="org.cdk8s.plus20.Deployment.property.strategy"></a>
+
+```java
+public DeploymentStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus20.DeploymentStrategy`](#org.cdk8s.plus20.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
 
 ---
 
@@ -6294,6 +6316,7 @@ DeploymentProps.builder()
 //  .podMetadata(ApiObjectMetadata)
 //  .defaultSelector(java.lang.Boolean)
 //  .replicas(java.lang.Number)
+//  .strategy(DeploymentStrategy)
     .build();
 ```
 
@@ -6483,6 +6506,78 @@ public java.lang.Number getReplicas();
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.property.strategy"></a>
+
+```java
+public DeploymentStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus20.DeploymentStrategy`](#org.cdk8s.plus20.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="org.cdk8s.plus20.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus20.DeploymentStrategyRollingUpdateOptions;
+
+DeploymentStrategyRollingUpdateOptions.builder()
+//  .maxSurge(PercentOrAbsolute)
+//  .maxUnavailable(PercentOrAbsolute)
+    .build();
+```
+
+##### `maxSurge`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
+
+```java
+public PercentOrAbsolute getMaxSurge();
+```
+
+- *Type:* [`org.cdk8s.plus20.PercentOrAbsolute`](#org.cdk8s.plus20.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `maxUnavailable`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
+
+```java
+public PercentOrAbsolute getMaxUnavailable();
+```
+
+- *Type:* [`org.cdk8s.plus20.PercentOrAbsolute`](#org.cdk8s.plus20.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
 
 ---
 
@@ -10956,6 +11051,38 @@ public java.lang.String getAmount();
 ---
 
 
+### DeploymentStrategy <a name="org.cdk8s.plus20.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="org.cdk8s.plus20.DeploymentStrategy.recreate"></a>
+
+```java
+import org.cdk8s.plus20.DeploymentStrategy;
+
+DeploymentStrategy.recreate()
+```
+
+##### `rollingUpdate` <a name="org.cdk8s.plus20.DeploymentStrategy.rollingUpdate"></a>
+
+```java
+import org.cdk8s.plus20.DeploymentStrategy;
+
+DeploymentStrategy.rollingUpdate()
+DeploymentStrategy.rollingUpdate(DeploymentStrategyRollingUpdateOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentStrategy.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus20.DeploymentStrategyRollingUpdateOptions`](#org.cdk8s.plus20.DeploymentStrategyRollingUpdateOptions)
+
+---
+
+
+
 ### EnvValue <a name="org.cdk8s.plus20.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -11232,6 +11359,61 @@ The service object.
 
 ---
 
+
+
+### PercentOrAbsolute <a name="org.cdk8s.plus20.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `isZero` <a name="org.cdk8s.plus20.PercentOrAbsolute.isZero"></a>
+
+```java
+public isZero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="org.cdk8s.plus20.PercentOrAbsolute.absolute"></a>
+
+```java
+import org.cdk8s.plus20.PercentOrAbsolute;
+
+PercentOrAbsolute.absolute(java.lang.Number num)
+```
+
+###### `num`<sup>Required</sup> <a name="org.cdk8s.plus20.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `java.lang.Number`
+
+---
+
+##### `percent` <a name="org.cdk8s.plus20.PercentOrAbsolute.percent"></a>
+
+```java
+import org.cdk8s.plus20.PercentOrAbsolute;
+
+PercentOrAbsolute.percent(java.lang.Number percent)
+```
+
+###### `percent`<sup>Required</sup> <a name="org.cdk8s.plus20.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `java.lang.Number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="org.cdk8s.plus20.PercentOrAbsolute.property.value"></a>
+
+```java
+public java.lang.Object getValue();
+```
+
+- *Type:* `java.lang.Object`
+
+---
 
 
 ### PodSecurityContext <a name="org.cdk8s.plus20.PodSecurityContext"></a>
