@@ -1,6 +1,8 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
+import { StatefulSetUpdateStrategy } from '../src';
+import * as k8s from '../src/imports/k8s';
 
 test('defaultChild', () => {
 
@@ -143,4 +145,48 @@ test('Synthesizes spec lazily', () => {
 
   expect(container.image).toEqual('image');
   expect(container.ports[0].containerPort).toEqual(9300);
+});
+
+test('default update strategy', () => {
+
+  const chart = Testing.chart();
+
+  const service = new kplus.Service(chart, 'Service', {
+    ports: [{ port: 80 }],
+  });
+
+  const set = new kplus.StatefulSet(chart, 'StatefulSet', { service });
+  set.addContainer({ image: 'image' });
+
+  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[1].spec;
+
+  expect(set.strategy).toEqual(kplus.StatefulSetUpdateStrategy.rollingUpdate());
+  expect(spec.updateStrategy).toEqual({
+    type: 'RollingUpdate',
+    rollingUpdate: {
+      partition: 0,
+    },
+  });
+
+});
+
+test('custom update strategy', () => {
+
+  const chart = Testing.chart();
+
+  const service = new kplus.Service(chart, 'Service', {
+    ports: [{ port: 80 }],
+  });
+
+  const set = new kplus.StatefulSet(chart, 'StatefulSet', {
+    service,
+    strategy: StatefulSetUpdateStrategy.onDelete(),
+  });
+  set.addContainer({ image: 'image' });
+
+  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[1].spec;
+
+  expect(set.strategy).toEqual(kplus.StatefulSetUpdateStrategy.onDelete());
+  expect(spec.updateStrategy).toEqual({ type: 'OnDelete' });
+
 });
