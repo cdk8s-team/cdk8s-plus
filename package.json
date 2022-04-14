@@ -6,6 +6,9 @@
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
   },
   "scripts": {
+    "backport:20": "npx projen backport:20",
+    "backport:21": "npx projen backport:21",
+    "backport:22": "npx projen backport:22",
     "build": "npx projen build",
     "bump": "npx projen bump",
     "clobber": "npx projen clobber",
@@ -47,6 +50,7 @@
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
+    "backport": "^8.3.1",
     "cdk8s": "1.5.67",
     "cdk8s-cli": "^1.0.146",
     "constructs": "3.3.266",

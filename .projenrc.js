@@ -45,6 +45,7 @@ const project = new cdk.JsiiProject({
     'cdk8s',
     'cdk8s-cli',
     'constructs',
+    'backport',
   ],
 
   majorVersion: 1,
@@ -112,11 +113,18 @@ docgenTask.exec('jsii-docgen -l java -o docs/java.md');
 const hooks = project.addTask('hooks');
 hooks.exec('./git-hooks/setup.sh');
 
+for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
+  const backportTask = project.addTask(`backport:${spec}`);
+  backportTask.exec(`backport --accesstoken \${GITHUB_TOKEN} --repo cdk8s-team/cdk8s-plus --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
+}
+
 // backport PR's to other branches
+// this doesn't use the backport tasks because there's a dedicated
+// action for it which already invokes it.
 // see https://github.com/tibdex/backport
-const backport = project.github.addWorkflow('backport');
-backport.on({ pullRequest: { types: ['closed'] } });
-backport.addJob('backport', {
+const backportWorkflow = project.github.addWorkflow('backport');
+backportWorkflow.on({ pullRequest: { types: ['closed'] } });
+backportWorkflow.addJob('backport', {
   runsOn: 'ubuntu-18.04',
   permissions: {
     contents: JobPermission.WRITE,
@@ -126,6 +134,7 @@ backport.addJob('backport', {
       name: 'checkout',
       uses: 'actions/checkout@v2',
     },
+    // to ensure backports are signed for DCO
     {
       name: hooks.name,
       run: `npx projen ${hooks.name}`,

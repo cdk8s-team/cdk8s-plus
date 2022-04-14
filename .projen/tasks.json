@@ -1,5 +1,29 @@
 {
   "tasks": {
+    "backport:20": {
+      "name": "backport:20",
+      "steps": [
+        {
+          "exec": "backport --accesstoken ${GITHUB_TOKEN} --repo cdk8s-team/cdk8s-plus --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main --noFork --prTitle \"{commitMessages}\""
+        }
+      ]
+    },
+    "backport:21": {
+      "name": "backport:21",
+      "steps": [
+        {
+          "exec": "backport --accesstoken ${GITHUB_TOKEN} --repo cdk8s-team/cdk8s-plus --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main --noFork --prTitle \"{commitMessages}\""
+        }
+      ]
+    },
+    "backport:22": {
+      "name": "backport:22",
+      "steps": [
+        {
+          "exec": "backport --accesstoken ${GITHUB_TOKEN} --repo cdk8s-team/cdk8s-plus --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main --noFork --prTitle \"{commitMessages}\""
+        }
+      ]
+    },
     "build": {
       "name": "build",
       "description": "Full release build",
