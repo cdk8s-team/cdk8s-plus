@@ -4261,9 +4261,9 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus21.StatefulSetProps.parameter.strategy"></a>
 
-- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategy`](#org.cdk8s.plus22.StatefulSetUpdateStrategy)
+- *Type:* [`org.cdk8s.plus21.StatefulSetUpdateStrategy`](#org.cdk8s.plus21.StatefulSetUpdateStrategy)
 - *Default:* RollingUpdate with partition set to 0
 
 Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
@@ -4447,19 +4447,19 @@ public PodSecurityContext getSecurityContext();
 
 ---
 
-##### `strategy`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.strategy"></a>
+##### `strategy`<sup>Required</sup> <a name="org.cdk8s.plus21.StatefulSet.property.strategy"></a>
 
 ```java
 public StatefulSetUpdateStrategy getStrategy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategy`](#org.cdk8s.plus22.StatefulSetUpdateStrategy)
+- *Type:* [`org.cdk8s.plus21.StatefulSetUpdateStrategy`](#org.cdk8s.plus21.StatefulSetUpdateStrategy)
 
 The update startegy of this stateful set.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus22.StatefulSet.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="org.cdk8s.plus21.StatefulSet.property.volumes"></a>
 
 ```java
 public java.util.List<Volume> getVolumes();
@@ -10169,34 +10169,34 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus21.StatefulSetProps.property.strategy"></a>
 
 ```java
 public StatefulSetUpdateStrategy getStrategy();
 ```
 
-- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategy`](#org.cdk8s.plus22.StatefulSetUpdateStrategy)
+- *Type:* [`org.cdk8s.plus21.StatefulSetUpdateStrategy`](#org.cdk8s.plus21.StatefulSetUpdateStrategy)
 - *Default:* RollingUpdate with partition set to 0
 
 Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
-### StatefulSetUpdateStrategyRollingUpdateOptions <a name="org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="org.cdk8s.plus21.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
 
 Options for `StatefulSetUpdateStrategy.rollingUpdate`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```java
-import org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions;
+import org.cdk8s.plus21.StatefulSetUpdateStrategyRollingUpdateOptions;
 
 StatefulSetUpdateStrategyRollingUpdateOptions.builder()
 //  .partition(java.lang.Number)
     .build();
 ```
 
-##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus21.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
 
 ```java
 public java.lang.Number getPartition();
@@ -10215,7 +10215,7 @@ update, roll out a canary, or perform a phased roll out.
 
 ---
 
-### Sysctl <a name="org.cdk8s.plus22.Sysctl"></a>
+### Sysctl <a name="org.cdk8s.plus21.Sysctl"></a>
 
 Sysctl defines a kernel parameter to be set.
 
@@ -12141,39 +12141,39 @@ Options.
 
 
 
-### StatefulSetUpdateStrategy <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy"></a>
+### StatefulSetUpdateStrategy <a name="org.cdk8s.plus21.StatefulSetUpdateStrategy"></a>
 
 StatefulSet update strategies.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `onDelete` <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy.onDelete"></a>
+##### `onDelete` <a name="org.cdk8s.plus21.StatefulSetUpdateStrategy.onDelete"></a>
 
 ```java
-import org.cdk8s.plus22.StatefulSetUpdateStrategy;
+import org.cdk8s.plus21.StatefulSetUpdateStrategy;
 
 StatefulSetUpdateStrategy.onDelete()
 ```
 
-##### `rollingUpdate` <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy.rollingUpdate"></a>
+##### `rollingUpdate` <a name="org.cdk8s.plus21.StatefulSetUpdateStrategy.rollingUpdate"></a>
 
 ```java
-import org.cdk8s.plus22.StatefulSetUpdateStrategy;
+import org.cdk8s.plus21.StatefulSetUpdateStrategy;
 
 StatefulSetUpdateStrategy.rollingUpdate()
 StatefulSetUpdateStrategy.rollingUpdate(StatefulSetUpdateStrategyRollingUpdateOptions options)
 ```
 
-###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetUpdateStrategy.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus21.StatefulSetUpdateStrategy.parameter.options"></a>
 
-- *Type:* [`org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions`](#org.cdk8s.plus22.StatefulSetUpdateStrategyRollingUpdateOptions)
+- *Type:* [`org.cdk8s.plus21.StatefulSetUpdateStrategyRollingUpdateOptions`](#org.cdk8s.plus21.StatefulSetUpdateStrategyRollingUpdateOptions)
 
 ---
 
 
 
-### Volume <a name="org.cdk8s.plus22.Volume"></a>
+### Volume <a name="org.cdk8s.plus21.Volume"></a>
 
 - *Implements:* [`org.cdk8s.plus21.IStorage`](#org.cdk8s.plus21.IStorage)
 
