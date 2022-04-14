@@ -400,7 +400,7 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
-##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-22.ConfigMap.property.immutable"></a>
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-21.ConfigMap.property.immutable"></a>
 
 ```typescript
 public readonly immutable: boolean;
@@ -3669,7 +3669,7 @@ You can also add data using `configMap.addData()`.
 
 ---
 
-##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-22.ConfigMapProps.property.immutable"></a>
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-21.ConfigMapProps.property.immutable"></a>
 
 ```typescript
 public readonly immutable: boolean;
@@ -3684,7 +3684,7 @@ If not set to true, the field can be modified at any time.
 
 ---
 
-### ConfigMapVolumeOptions <a name="cdk8s-plus-22.ConfigMapVolumeOptions"></a>
+### ConfigMapVolumeOptions <a name="cdk8s-plus-21.ConfigMapVolumeOptions"></a>
 
 Options for the ConfigMap-based volume.
 
