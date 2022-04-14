@@ -400,6 +400,18 @@ Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
 
 ---
 
+##### `immutable`<sup>Required</sup> <a name="cdk8s-plus-21.ConfigMap.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+
+Whether or not this config map is immutable.
+
+---
+
 
 ### DaemonSet <a name="cdk8s-plus-21.DaemonSet"></a>
 
@@ -3654,6 +3666,21 @@ stored in Data must not overlap with the keys in the BinaryData field, this
 is enforced during validation process.
 
 You can also add data using `configMap.addData()`.
+
+---
+
+##### `immutable`<sup>Optional</sup> <a name="cdk8s-plus-21.ConfigMapProps.property.immutable"></a>
+
+```typescript
+public readonly immutable: boolean;
+```
+
+- *Type:* `boolean`
+- *Default:* false
+
+If set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified).
+
+If not set to true, the field can be modified at any time.
 
 ---
 
