@@ -4087,6 +4087,7 @@ StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .defaultSelector(java.lang.Boolean)
 //  .podManagementPolicy(PodManagementPolicy)
 //  .replicas(java.lang.Number)
+//  .strategy(StatefulSetUpdateStrategy)
     .build();
 ```
 
@@ -4257,6 +4258,15 @@ Pod management policy to use for this statefulset.
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.parameter.strategy"></a>
+
+- *Type:* [`org.cdk8s.plus20.StatefulSetUpdateStrategy`](#org.cdk8s.plus20.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
@@ -4434,6 +4444,18 @@ public PodSecurityContext getSecurityContext();
 ```
 
 - *Type:* [`org.cdk8s.plus20.PodSecurityContext`](#org.cdk8s.plus20.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="org.cdk8s.plus20.StatefulSet.property.strategy"></a>
+
+```java
+public StatefulSetUpdateStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus20.StatefulSetUpdateStrategy`](#org.cdk8s.plus20.StatefulSetUpdateStrategy)
+
+The update startegy of this stateful set.
 
 ---
 
@@ -9929,6 +9951,7 @@ StatefulSetProps.builder()
 //  .defaultSelector(java.lang.Boolean)
 //  .podManagementPolicy(PodManagementPolicy)
 //  .replicas(java.lang.Number)
+//  .strategy(StatefulSetUpdateStrategy)
     .build();
 ```
 
@@ -10143,6 +10166,52 @@ public java.lang.Number getReplicas();
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.property.strategy"></a>
+
+```java
+public StatefulSetUpdateStrategy getStrategy();
+```
+
+- *Type:* [`org.cdk8s.plus20.StatefulSetUpdateStrategy`](#org.cdk8s.plus20.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+
+---
+
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="org.cdk8s.plus20.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+
+Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```java
+import org.cdk8s.plus20.StatefulSetUpdateStrategyRollingUpdateOptions;
+
+StatefulSetUpdateStrategyRollingUpdateOptions.builder()
+//  .partition(java.lang.Number)
+    .build();
+```
+
+##### `partition`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+
+```java
+public java.lang.Number getPartition();
+```
+
+- *Type:* `java.lang.Number`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
 
 ---
 
@@ -12067,6 +12136,38 @@ Probe.fromTcpSocket(TcpSocketProbeOptions options)
 - *Type:* [`org.cdk8s.plus20.TcpSocketProbeOptions`](#org.cdk8s.plus20.TcpSocketProbeOptions)
 
 Options.
+
+---
+
+
+
+### StatefulSetUpdateStrategy <a name="org.cdk8s.plus20.StatefulSetUpdateStrategy"></a>
+
+StatefulSet update strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `onDelete` <a name="org.cdk8s.plus20.StatefulSetUpdateStrategy.onDelete"></a>
+
+```java
+import org.cdk8s.plus20.StatefulSetUpdateStrategy;
+
+StatefulSetUpdateStrategy.onDelete()
+```
+
+##### `rollingUpdate` <a name="org.cdk8s.plus20.StatefulSetUpdateStrategy.rollingUpdate"></a>
+
+```java
+import org.cdk8s.plus20.StatefulSetUpdateStrategy;
+
+StatefulSetUpdateStrategy.rollingUpdate()
+StatefulSetUpdateStrategy.rollingUpdate(StatefulSetUpdateStrategyRollingUpdateOptions options)
+```
+
+###### `options`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetUpdateStrategy.parameter.options"></a>
+
+- *Type:* [`org.cdk8s.plus20.StatefulSetUpdateStrategyRollingUpdateOptions`](#org.cdk8s.plus20.StatefulSetUpdateStrategyRollingUpdateOptions)
 
 ---
 

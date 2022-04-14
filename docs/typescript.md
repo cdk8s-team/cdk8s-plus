@@ -2734,6 +2734,18 @@ public readonly securityContext: PodSecurityContext;
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-20.StatefulSet.property.strategy"></a>
+
+```typescript
+public readonly strategy: StatefulSetUpdateStrategy;
+```
+
+- *Type:* [`cdk8s-plus-20.StatefulSetUpdateStrategy`](#cdk8s-plus-20.StatefulSetUpdateStrategy)
+
+The update startegy of this stateful set.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-20.StatefulSet.property.volumes"></a>
 
 ```typescript
@@ -8049,6 +8061,50 @@ Number of desired pods.
 
 ---
 
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetProps.property.strategy"></a>
+
+```typescript
+public readonly strategy: StatefulSetUpdateStrategy;
+```
+
+- *Type:* [`cdk8s-plus-20.StatefulSetUpdateStrategy`](#cdk8s-plus-20.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+
+---
+
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+
+Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { StatefulSetUpdateStrategyRollingUpdateOptions } from 'cdk8s-plus-20'
+
+const statefulSetUpdateStrategyRollingUpdateOptions: StatefulSetUpdateStrategyRollingUpdateOptions = { ... }
+```
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+
+```typescript
+public readonly partition: number;
+```
+
+- *Type:* `number`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
+
+---
+
 ### Sysctl <a name="cdk8s-plus-20.Sysctl"></a>
 
 Sysctl defines a kernel parameter to be set.
@@ -9420,6 +9476,37 @@ Probe.fromTcpSocket(options?: TcpSocketProbeOptions)
 - *Type:* [`cdk8s-plus-20.TcpSocketProbeOptions`](#cdk8s-plus-20.TcpSocketProbeOptions)
 
 Options.
+
+---
+
+
+
+### StatefulSetUpdateStrategy <a name="cdk8s-plus-20.StatefulSetUpdateStrategy"></a>
+
+StatefulSet update strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `onDelete` <a name="cdk8s-plus-20.StatefulSetUpdateStrategy.onDelete"></a>
+
+```typescript
+import { StatefulSetUpdateStrategy } from 'cdk8s-plus-20'
+
+StatefulSetUpdateStrategy.onDelete()
+```
+
+##### `rollingUpdate` <a name="cdk8s-plus-20.StatefulSetUpdateStrategy.rollingUpdate"></a>
+
+```typescript
+import { StatefulSetUpdateStrategy } from 'cdk8s-plus-20'
+
+StatefulSetUpdateStrategy.rollingUpdate(options?: StatefulSetUpdateStrategyRollingUpdateOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetUpdateStrategy.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions`](#cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions)
 
 ---
 

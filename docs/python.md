@@ -5917,7 +5917,8 @@ cdk8s_plus_20.StatefulSet(
   service: Service,
   default_selector: bool = None,
   pod_management_policy: PodManagementPolicy = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: StatefulSetUpdateStrategy = None
 )
 ```
 
@@ -6088,6 +6089,15 @@ Pod management policy to use for this statefulset.
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetProps.parameter.strategy"></a>
+
+- *Type:* [`cdk8s_plus_20.StatefulSetUpdateStrategy`](#cdk8s_plus_20.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
@@ -6639,6 +6649,18 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_20.PodSecurityContext`](#cdk8s_plus_20.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_20.StatefulSet.property.strategy"></a>
+
+```python
+strategy: StatefulSetUpdateStrategy
+```
+
+- *Type:* [`cdk8s_plus_20.StatefulSetUpdateStrategy`](#cdk8s_plus_20.StatefulSetUpdateStrategy)
+
+The update startegy of this stateful set.
 
 ---
 
@@ -12135,7 +12157,8 @@ cdk8s_plus_20.StatefulSetProps(
   service: Service,
   default_selector: bool = None,
   pod_management_policy: PodManagementPolicy = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: StatefulSetUpdateStrategy = None
 )
 ```
 
@@ -12350,6 +12373,52 @@ replicas: typing.Union[int, float]
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetProps.property.strategy"></a>
+
+```python
+strategy: StatefulSetUpdateStrategy
+```
+
+- *Type:* [`cdk8s_plus_20.StatefulSetUpdateStrategy`](#cdk8s_plus_20.StatefulSetUpdateStrategy)
+- *Default:* RollingUpdate with partition set to 0
+
+Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+
+---
+
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+
+Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions(
+  partition: typing.Union[int, float] = None
+)
+```
+
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+
+```python
+partition: typing.Union[int, float]
+```
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
 
 ---
 
@@ -15003,6 +15072,48 @@ The host name to connect to on the container.
 - *Default:* defaults to `container.port`.
 
 The TCP port to connect to on the container.
+
+---
+
+
+
+### StatefulSetUpdateStrategy <a name="cdk8s_plus_20.StatefulSetUpdateStrategy"></a>
+
+StatefulSet update strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `on_delete` <a name="cdk8s_plus_20.StatefulSetUpdateStrategy.on_delete"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.StatefulSetUpdateStrategy.on_delete()
+```
+
+##### `rolling_update` <a name="cdk8s_plus_20.StatefulSetUpdateStrategy.rolling_update"></a>
+
+```python
+import cdk8s_plus_20
+
+cdk8s_plus_20.StatefulSetUpdateStrategy.rolling_update(
+  partition: typing.Union[int, float] = None
+)
+```
+
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions.parameter.partition"></a>
+
+- *Type:* `typing.Union[int, float]`
+- *Default:* 0
+
+If specified, all Pods with an ordinal that is greater than or equal to the partition will be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that is less than the partition will not be updated, and, even if they are deleted, they will be recreated at the previous version.
+
+If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+In most cases you will not need to use a partition, but they are useful if you want to stage an
+update, roll out a canary, or perform a phased roll out.
+
+> https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
 
 ---
 
