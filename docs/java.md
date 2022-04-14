@@ -780,6 +780,7 @@ import org.cdk8s.plus21.DaemonSet;
 DaemonSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -823,6 +824,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -1170,6 +1180,7 @@ import org.cdk8s.plus21.Deployment;
 Deployment.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -1213,6 +1224,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.DeploymentProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -2068,6 +2088,7 @@ import org.cdk8s.plus21.Job;
 Job.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -2112,6 +2133,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.JobProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -2923,6 +2953,7 @@ import org.cdk8s.plus21.Pod;
 Pod.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -2963,6 +2994,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -3916,6 +3956,7 @@ import org.cdk8s.plus21.StatefulSet;
 StatefulSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -3961,6 +4002,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.StatefulSetProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -5837,6 +5887,7 @@ import org.cdk8s.plus21.DaemonSetProps;
 DaemonSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -5876,6 +5927,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.DaemonSetProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6037,6 +6101,7 @@ import org.cdk8s.plus21.DeploymentProps;
 DeploymentProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -6076,6 +6141,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.DeploymentProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -7406,6 +7484,7 @@ import org.cdk8s.plus21.JobProps;
 JobProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -7446,6 +7525,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.JobProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8085,6 +8177,7 @@ import org.cdk8s.plus21.PodProps;
 PodProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -8121,6 +8214,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8345,6 +8451,7 @@ import org.cdk8s.plus21.PodSpecProps;
 
 PodSpecProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -8369,6 +8476,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodSpecProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -8490,6 +8610,7 @@ import org.cdk8s.plus21.PodTemplateProps;
 
 PodTemplateProps.builder()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -8515,6 +8636,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodTemplateProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -9441,6 +9575,7 @@ import org.cdk8s.plus21.StatefulSetProps;
 StatefulSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -9482,6 +9617,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.StatefulSetProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -10982,6 +11130,7 @@ import org.cdk8s.plus21.PodSpec;
 
 PodSpec.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -11002,6 +11151,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodSpecProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -11205,6 +11363,16 @@ Use `addVolume` to add volumes.
 
 ---
 
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodSpec.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+
+---
+
 ##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodSpec.property.restartPolicy"></a>
 
 ```java
@@ -11243,6 +11411,7 @@ import org.cdk8s.plus21.PodTemplate;
 
 PodTemplate.Builder.create()
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -11264,6 +11433,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus21.PodTemplateProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus21.DockerConfigSecret`](#org.cdk8s.plus21.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
