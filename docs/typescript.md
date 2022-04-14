@@ -2734,19 +2734,19 @@ public readonly securityContext: PodSecurityContext;
 
 ---
 
-##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.strategy"></a>
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-20.StatefulSet.property.strategy"></a>
 
 ```typescript
 public readonly strategy: StatefulSetUpdateStrategy;
 ```
 
-- *Type:* [`cdk8s-plus-22.StatefulSetUpdateStrategy`](#cdk8s-plus-22.StatefulSetUpdateStrategy)
+- *Type:* [`cdk8s-plus-20.StatefulSetUpdateStrategy`](#cdk8s-plus-20.StatefulSetUpdateStrategy)
 
 The update startegy of this stateful set.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.StatefulSet.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-20.StatefulSet.property.volumes"></a>
 
 ```typescript
 public readonly volumes: Volume[];
@@ -8061,32 +8061,32 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetProps.property.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetProps.property.strategy"></a>
 
 ```typescript
 public readonly strategy: StatefulSetUpdateStrategy;
 ```
 
-- *Type:* [`cdk8s-plus-22.StatefulSetUpdateStrategy`](#cdk8s-plus-22.StatefulSetUpdateStrategy)
+- *Type:* [`cdk8s-plus-20.StatefulSetUpdateStrategy`](#cdk8s-plus-20.StatefulSetUpdateStrategy)
 - *Default:* RollingUpdate with partition set to 0
 
 Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
-### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
 
 Options for `StatefulSetUpdateStrategy.rollingUpdate`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```typescript
-import { StatefulSetUpdateStrategyRollingUpdateOptions } from 'cdk8s-plus-22'
+import { StatefulSetUpdateStrategyRollingUpdateOptions } from 'cdk8s-plus-20'
 
 const statefulSetUpdateStrategyRollingUpdateOptions: StatefulSetUpdateStrategyRollingUpdateOptions = { ... }
 ```
 
-##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+##### `partition`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
 
 ```typescript
 public readonly partition: number;
@@ -8105,7 +8105,7 @@ update, roll out a canary, or perform a phased roll out.
 
 ---
 
-### Sysctl <a name="cdk8s-plus-22.Sysctl"></a>
+### Sysctl <a name="cdk8s-plus-20.Sysctl"></a>
 
 Sysctl defines a kernel parameter to be set.
 
@@ -9481,38 +9481,38 @@ Options.
 
 
 
-### StatefulSetUpdateStrategy <a name="cdk8s-plus-22.StatefulSetUpdateStrategy"></a>
+### StatefulSetUpdateStrategy <a name="cdk8s-plus-20.StatefulSetUpdateStrategy"></a>
 
 StatefulSet update strategies.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `onDelete` <a name="cdk8s-plus-22.StatefulSetUpdateStrategy.onDelete"></a>
+##### `onDelete` <a name="cdk8s-plus-20.StatefulSetUpdateStrategy.onDelete"></a>
 
 ```typescript
-import { StatefulSetUpdateStrategy } from 'cdk8s-plus-22'
+import { StatefulSetUpdateStrategy } from 'cdk8s-plus-20'
 
 StatefulSetUpdateStrategy.onDelete()
 ```
 
-##### `rollingUpdate` <a name="cdk8s-plus-22.StatefulSetUpdateStrategy.rollingUpdate"></a>
+##### `rollingUpdate` <a name="cdk8s-plus-20.StatefulSetUpdateStrategy.rollingUpdate"></a>
 
 ```typescript
-import { StatefulSetUpdateStrategy } from 'cdk8s-plus-22'
+import { StatefulSetUpdateStrategy } from 'cdk8s-plus-20'
 
 StatefulSetUpdateStrategy.rollingUpdate(options?: StatefulSetUpdateStrategyRollingUpdateOptions)
 ```
 
-###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.StatefulSetUpdateStrategy.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-20.StatefulSetUpdateStrategy.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions`](#cdk8s-plus-22.StatefulSetUpdateStrategyRollingUpdateOptions)
+- *Type:* [`cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions`](#cdk8s-plus-20.StatefulSetUpdateStrategyRollingUpdateOptions)
 
 ---
 
 
 
-### Volume <a name="cdk8s-plus-22.Volume"></a>
+### Volume <a name="cdk8s-plus-20.Volume"></a>
 
 - *Implements:* [`cdk8s-plus-20.IStorage`](#cdk8s-plus-20.IStorage)
 

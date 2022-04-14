@@ -6092,9 +6092,9 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetProps.parameter.strategy"></a>
 
-- *Type:* [`cdk8s_plus_22.StatefulSetUpdateStrategy`](#cdk8s_plus_22.StatefulSetUpdateStrategy)
+- *Type:* [`cdk8s_plus_20.StatefulSetUpdateStrategy`](#cdk8s_plus_20.StatefulSetUpdateStrategy)
 - *Default:* RollingUpdate with partition set to 0
 
 Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
@@ -6652,19 +6652,19 @@ security_context: PodSecurityContext
 
 ---
 
-##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.strategy"></a>
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_20.StatefulSet.property.strategy"></a>
 
 ```python
 strategy: StatefulSetUpdateStrategy
 ```
 
-- *Type:* [`cdk8s_plus_22.StatefulSetUpdateStrategy`](#cdk8s_plus_22.StatefulSetUpdateStrategy)
+- *Type:* [`cdk8s_plus_20.StatefulSetUpdateStrategy`](#cdk8s_plus_20.StatefulSetUpdateStrategy)
 
 The update startegy of this stateful set.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_20.StatefulSet.property.volumes"></a>
 
 ```python
 volumes: typing.List[Volume]
@@ -12376,34 +12376,34 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetProps.property.strategy"></a>
 
 ```python
 strategy: StatefulSetUpdateStrategy
 ```
 
-- *Type:* [`cdk8s_plus_22.StatefulSetUpdateStrategy`](#cdk8s_plus_22.StatefulSetUpdateStrategy)
+- *Type:* [`cdk8s_plus_20.StatefulSetUpdateStrategy`](#cdk8s_plus_20.StatefulSetUpdateStrategy)
 - *Default:* RollingUpdate with partition set to 0
 
 Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
 
 ---
 
-### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
+### StatefulSetUpdateStrategyRollingUpdateOptions <a name="cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions"></a>
 
 Options for `StatefulSetUpdateStrategy.rollingUpdate`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_20
 
-cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions(
+cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions(
   partition: typing.Union[int, float] = None
 )
 ```
 
-##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
+##### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions.property.partition"></a>
 
 ```python
 partition: typing.Union[int, float]
@@ -12422,7 +12422,7 @@ update, roll out a canary, or perform a phased roll out.
 
 ---
 
-### Sysctl <a name="cdk8s_plus_22.Sysctl"></a>
+### Sysctl <a name="cdk8s_plus_20.Sysctl"></a>
 
 Sysctl defines a kernel parameter to be set.
 
@@ -15077,32 +15077,32 @@ The TCP port to connect to on the container.
 
 
 
-### StatefulSetUpdateStrategy <a name="cdk8s_plus_22.StatefulSetUpdateStrategy"></a>
+### StatefulSetUpdateStrategy <a name="cdk8s_plus_20.StatefulSetUpdateStrategy"></a>
 
 StatefulSet update strategies.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `on_delete` <a name="cdk8s_plus_22.StatefulSetUpdateStrategy.on_delete"></a>
+##### `on_delete` <a name="cdk8s_plus_20.StatefulSetUpdateStrategy.on_delete"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_20
 
-cdk8s_plus_22.StatefulSetUpdateStrategy.on_delete()
+cdk8s_plus_20.StatefulSetUpdateStrategy.on_delete()
 ```
 
-##### `rolling_update` <a name="cdk8s_plus_22.StatefulSetUpdateStrategy.rolling_update"></a>
+##### `rolling_update` <a name="cdk8s_plus_20.StatefulSetUpdateStrategy.rolling_update"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_20
 
-cdk8s_plus_22.StatefulSetUpdateStrategy.rolling_update(
+cdk8s_plus_20.StatefulSetUpdateStrategy.rolling_update(
   partition: typing.Union[int, float] = None
 )
 ```
 
-###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetUpdateStrategyRollingUpdateOptions.parameter.partition"></a>
+###### `partition`<sup>Optional</sup> <a name="cdk8s_plus_20.StatefulSetUpdateStrategyRollingUpdateOptions.parameter.partition"></a>
 
 - *Type:* `typing.Union[int, float]`
 - *Default:* 0
@@ -15119,7 +15119,7 @@ update, roll out a canary, or perform a phased roll out.
 
 
 
-### Volume <a name="cdk8s_plus_22.Volume"></a>
+### Volume <a name="cdk8s_plus_20.Volume"></a>
 
 - *Implements:* [`cdk8s_plus_20.IStorage`](#cdk8s_plus_20.IStorage)
 
