@@ -913,19 +913,19 @@ public readonly securityContext: PodSecurityContext;
 
 ---
 
-##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.strategy"></a>
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-20.Deployment.property.strategy"></a>
 
 ```typescript
 public readonly strategy: DeploymentStrategy;
 ```
 
-- *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
+- *Type:* [`cdk8s-plus-20.DeploymentStrategy`](#cdk8s-plus-20.DeploymentStrategy)
 
 The upgrade strategy of this deployment.
 
 ---
 
-##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-22.Deployment.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-20.Deployment.property.volumes"></a>
 
 ```typescript
 public readonly volumes: Volume[];
@@ -4645,38 +4645,38 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentProps.property.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-20.DeploymentProps.property.strategy"></a>
 
 ```typescript
 public readonly strategy: DeploymentStrategy;
 ```
 
-- *Type:* [`cdk8s-plus-22.DeploymentStrategy`](#cdk8s-plus-22.DeploymentStrategy)
+- *Type:* [`cdk8s-plus-20.DeploymentStrategy`](#cdk8s-plus-20.DeploymentStrategy)
 - *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
 
 Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
-### DeploymentStrategyRollingUpdateOptions <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions"></a>
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s-plus-20.DeploymentStrategyRollingUpdateOptions"></a>
 
 Options for `DeploymentStrategy.rollingUpdate`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```typescript
-import { DeploymentStrategyRollingUpdateOptions } from 'cdk8s-plus-22'
+import { DeploymentStrategyRollingUpdateOptions } from 'cdk8s-plus-20'
 
 const deploymentStrategyRollingUpdateOptions: DeploymentStrategyRollingUpdateOptions = { ... }
 ```
 
-##### `maxSurge`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
+##### `maxSurge`<sup>Optional</sup> <a name="cdk8s-plus-20.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
 
 ```typescript
 public readonly maxSurge: PercentOrAbsolute;
 ```
 
-- *Type:* [`cdk8s-plus-22.PercentOrAbsolute`](#cdk8s-plus-22.PercentOrAbsolute)
+- *Type:* [`cdk8s-plus-20.PercentOrAbsolute`](#cdk8s-plus-20.PercentOrAbsolute)
 - *Default:* '25%'
 
 The maximum number of pods that can be scheduled above the desired number of pods.
@@ -4692,13 +4692,13 @@ total number of pods running at any time during the update is at most 130% of de
 
 ---
 
-##### `maxUnavailable`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
+##### `maxUnavailable`<sup>Optional</sup> <a name="cdk8s-plus-20.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
 
 ```typescript
 public readonly maxUnavailable: PercentOrAbsolute;
 ```
 
-- *Type:* [`cdk8s-plus-22.PercentOrAbsolute`](#cdk8s-plus-22.PercentOrAbsolute)
+- *Type:* [`cdk8s-plus-20.PercentOrAbsolute`](#cdk8s-plus-20.PercentOrAbsolute)
 - *Default:* '25%'
 
 The maximum number of pods that can be unavailable during the update.
@@ -4714,7 +4714,7 @@ number of pods available at all times during the update is at least 70% of desir
 
 ---
 
-### DockerConfigSecretProps <a name="cdk8s-plus-22.DockerConfigSecretProps"></a>
+### DockerConfigSecretProps <a name="cdk8s-plus-20.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
 
@@ -8702,38 +8702,38 @@ public readonly amount: string;
 ---
 
 
-### DeploymentStrategy <a name="cdk8s-plus-22.DeploymentStrategy"></a>
+### DeploymentStrategy <a name="cdk8s-plus-20.DeploymentStrategy"></a>
 
 Deployment strategies.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `recreate` <a name="cdk8s-plus-22.DeploymentStrategy.recreate"></a>
+##### `recreate` <a name="cdk8s-plus-20.DeploymentStrategy.recreate"></a>
 
 ```typescript
-import { DeploymentStrategy } from 'cdk8s-plus-22'
+import { DeploymentStrategy } from 'cdk8s-plus-20'
 
 DeploymentStrategy.recreate()
 ```
 
-##### `rollingUpdate` <a name="cdk8s-plus-22.DeploymentStrategy.rollingUpdate"></a>
+##### `rollingUpdate` <a name="cdk8s-plus-20.DeploymentStrategy.rollingUpdate"></a>
 
 ```typescript
-import { DeploymentStrategy } from 'cdk8s-plus-22'
+import { DeploymentStrategy } from 'cdk8s-plus-20'
 
 DeploymentStrategy.rollingUpdate(options?: DeploymentStrategyRollingUpdateOptions)
 ```
 
-###### `options`<sup>Optional</sup> <a name="cdk8s-plus-22.DeploymentStrategy.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-20.DeploymentStrategy.parameter.options"></a>
 
-- *Type:* [`cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions`](#cdk8s-plus-22.DeploymentStrategyRollingUpdateOptions)
+- *Type:* [`cdk8s-plus-20.DeploymentStrategyRollingUpdateOptions`](#cdk8s-plus-20.DeploymentStrategyRollingUpdateOptions)
 
 ---
 
 
 
-### EnvValue <a name="cdk8s-plus-22.EnvValue"></a>
+### EnvValue <a name="cdk8s-plus-20.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
 
@@ -9003,13 +9003,13 @@ The service object.
 
 
 
-### PercentOrAbsolute <a name="cdk8s-plus-22.PercentOrAbsolute"></a>
+### PercentOrAbsolute <a name="cdk8s-plus-20.PercentOrAbsolute"></a>
 
 Union like class repsenting either a ration in percents or an absolute number.
 
 #### Methods <a name="Methods"></a>
 
-##### `isZero` <a name="cdk8s-plus-22.PercentOrAbsolute.isZero"></a>
+##### `isZero` <a name="cdk8s-plus-20.PercentOrAbsolute.isZero"></a>
 
 ```typescript
 public isZero()
@@ -9017,29 +9017,29 @@ public isZero()
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `absolute` <a name="cdk8s-plus-22.PercentOrAbsolute.absolute"></a>
+##### `absolute` <a name="cdk8s-plus-20.PercentOrAbsolute.absolute"></a>
 
 ```typescript
-import { PercentOrAbsolute } from 'cdk8s-plus-22'
+import { PercentOrAbsolute } from 'cdk8s-plus-20'
 
 PercentOrAbsolute.absolute(num: number)
 ```
 
-###### `num`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.parameter.num"></a>
+###### `num`<sup>Required</sup> <a name="cdk8s-plus-20.PercentOrAbsolute.parameter.num"></a>
 
 - *Type:* `number`
 
 ---
 
-##### `percent` <a name="cdk8s-plus-22.PercentOrAbsolute.percent"></a>
+##### `percent` <a name="cdk8s-plus-20.PercentOrAbsolute.percent"></a>
 
 ```typescript
-import { PercentOrAbsolute } from 'cdk8s-plus-22'
+import { PercentOrAbsolute } from 'cdk8s-plus-20'
 
 PercentOrAbsolute.percent(percent: number)
 ```
 
-###### `percent`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.parameter.percent"></a>
+###### `percent`<sup>Required</sup> <a name="cdk8s-plus-20.PercentOrAbsolute.parameter.percent"></a>
 
 - *Type:* `number`
 
@@ -9047,7 +9047,7 @@ PercentOrAbsolute.percent(percent: number)
 
 #### Properties <a name="Properties"></a>
 
-##### `value`<sup>Required</sup> <a name="cdk8s-plus-22.PercentOrAbsolute.property.value"></a>
+##### `value`<sup>Required</sup> <a name="cdk8s-plus-20.PercentOrAbsolute.property.value"></a>
 
 ```typescript
 public readonly value: any;
@@ -9058,7 +9058,7 @@ public readonly value: any;
 ---
 
 
-### PodSecurityContext <a name="cdk8s-plus-22.PodSecurityContext"></a>
+### PodSecurityContext <a name="cdk8s-plus-20.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
 
