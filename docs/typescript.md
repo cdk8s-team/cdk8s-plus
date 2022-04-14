@@ -913,6 +913,18 @@ public readonly securityContext: PodSecurityContext;
 
 ---
 
+##### `strategy`<sup>Required</sup> <a name="cdk8s-plus-21.Deployment.property.strategy"></a>
+
+```typescript
+public readonly strategy: DeploymentStrategy;
+```
+
+- *Type:* [`cdk8s-plus-21.DeploymentStrategy`](#cdk8s-plus-21.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
+
+---
+
 ##### `volumes`<sup>Required</sup> <a name="cdk8s-plus-21.Deployment.property.volumes"></a>
 
 ```typescript
@@ -4630,6 +4642,75 @@ public readonly replicas: number;
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s-plus-21.DeploymentProps.property.strategy"></a>
+
+```typescript
+public readonly strategy: DeploymentStrategy;
+```
+
+- *Type:* [`cdk8s-plus-21.DeploymentStrategy`](#cdk8s-plus-21.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
+
+---
+
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s-plus-21.DeploymentStrategyRollingUpdateOptions"></a>
+
+Options for `DeploymentStrategy.rollingUpdate`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { DeploymentStrategyRollingUpdateOptions } from 'cdk8s-plus-21'
+
+const deploymentStrategyRollingUpdateOptions: DeploymentStrategyRollingUpdateOptions = { ... }
+```
+
+##### `maxSurge`<sup>Optional</sup> <a name="cdk8s-plus-21.DeploymentStrategyRollingUpdateOptions.property.maxSurge"></a>
+
+```typescript
+public readonly maxSurge: PercentOrAbsolute;
+```
+
+- *Type:* [`cdk8s-plus-21.PercentOrAbsolute`](#cdk8s-plus-21.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be scheduled above the desired number of pods.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding up.
+This can not be 0 if `maxUnavailable` is 0.
+
+Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+total number of pods running at any time during the update is at most 130% of desired pods.
+
+---
+
+##### `maxUnavailable`<sup>Optional</sup> <a name="cdk8s-plus-21.DeploymentStrategyRollingUpdateOptions.property.maxUnavailable"></a>
+
+```typescript
+public readonly maxUnavailable: PercentOrAbsolute;
+```
+
+- *Type:* [`cdk8s-plus-21.PercentOrAbsolute`](#cdk8s-plus-21.PercentOrAbsolute)
+- *Default:* '25%'
+
+The maximum number of pods that can be unavailable during the update.
+
+Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+Absolute number is calculated from percentage by rounding down.
+This can not be 0 if `maxSurge` is 0.
+
+Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+number of pods available at all times during the update is at least 70% of desired pods.
 
 ---
 
@@ -8621,6 +8702,37 @@ public readonly amount: string;
 ---
 
 
+### DeploymentStrategy <a name="cdk8s-plus-21.DeploymentStrategy"></a>
+
+Deployment strategies.
+
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `recreate` <a name="cdk8s-plus-21.DeploymentStrategy.recreate"></a>
+
+```typescript
+import { DeploymentStrategy } from 'cdk8s-plus-21'
+
+DeploymentStrategy.recreate()
+```
+
+##### `rollingUpdate` <a name="cdk8s-plus-21.DeploymentStrategy.rollingUpdate"></a>
+
+```typescript
+import { DeploymentStrategy } from 'cdk8s-plus-21'
+
+DeploymentStrategy.rollingUpdate(options?: DeploymentStrategyRollingUpdateOptions)
+```
+
+###### `options`<sup>Optional</sup> <a name="cdk8s-plus-21.DeploymentStrategy.parameter.options"></a>
+
+- *Type:* [`cdk8s-plus-21.DeploymentStrategyRollingUpdateOptions`](#cdk8s-plus-21.DeploymentStrategyRollingUpdateOptions)
+
+---
+
+
+
 ### EnvValue <a name="cdk8s-plus-21.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
@@ -8889,6 +9001,61 @@ The service object.
 
 ---
 
+
+
+### PercentOrAbsolute <a name="cdk8s-plus-21.PercentOrAbsolute"></a>
+
+Union like class repsenting either a ration in percents or an absolute number.
+
+#### Methods <a name="Methods"></a>
+
+##### `isZero` <a name="cdk8s-plus-21.PercentOrAbsolute.isZero"></a>
+
+```typescript
+public isZero()
+```
+
+#### Static Functions <a name="Static Functions"></a>
+
+##### `absolute` <a name="cdk8s-plus-21.PercentOrAbsolute.absolute"></a>
+
+```typescript
+import { PercentOrAbsolute } from 'cdk8s-plus-21'
+
+PercentOrAbsolute.absolute(num: number)
+```
+
+###### `num`<sup>Required</sup> <a name="cdk8s-plus-21.PercentOrAbsolute.parameter.num"></a>
+
+- *Type:* `number`
+
+---
+
+##### `percent` <a name="cdk8s-plus-21.PercentOrAbsolute.percent"></a>
+
+```typescript
+import { PercentOrAbsolute } from 'cdk8s-plus-21'
+
+PercentOrAbsolute.percent(percent: number)
+```
+
+###### `percent`<sup>Required</sup> <a name="cdk8s-plus-21.PercentOrAbsolute.parameter.percent"></a>
+
+- *Type:* `number`
+
+---
+
+#### Properties <a name="Properties"></a>
+
+##### `value`<sup>Required</sup> <a name="cdk8s-plus-21.PercentOrAbsolute.property.value"></a>
+
+```typescript
+public readonly value: any;
+```
+
+- *Type:* `any`
+
+---
 
 
 ### PodSecurityContext <a name="cdk8s-plus-21.PodSecurityContext"></a>
