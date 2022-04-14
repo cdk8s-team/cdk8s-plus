@@ -858,8 +858,7 @@ cdk8s_plus_21.DaemonSet(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None,
-  strategy: DeploymentStrategy = None
+  min_ready_seconds: typing.Union[int, float] = None
 )
 ```
 
@@ -1013,15 +1012,6 @@ If this is set to `false` you must define your selector through
 - *Default:* 0
 
 Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available.
-
----
-
-##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.strategy"></a>
-
-- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
-- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
-
-Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -1558,19 +1548,7 @@ security_context: PodSecurityContext
 
 ---
 
-##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.strategy"></a>
-
-```python
-strategy: DeploymentStrategy
-```
-
-- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
-
-The upgrade strategy of this deployment.
-
----
-
-##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.volumes"></a>
+##### `volumes`<sup>Required</sup> <a name="cdk8s_plus_21.DaemonSet.property.volumes"></a>
 
 ```python
 volumes: typing.List[Volume]
@@ -1656,7 +1634,8 @@ cdk8s_plus_21.Deployment(
   volumes: typing.List[Volume] = None,
   pod_metadata: ApiObjectMetadata = None,
   default_selector: bool = None,
-  replicas: typing.Union[int, float] = None
+  replicas: typing.Union[int, float] = None,
+  strategy: DeploymentStrategy = None
 )
 ```
 
@@ -1810,6 +1789,15 @@ If this is set to `false` you must define your selector through
 - *Default:* 1
 
 Number of desired pods.
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentProps.parameter.strategy"></a>
+
+- *Type:* [`cdk8s_plus_21.DeploymentStrategy`](#cdk8s_plus_21.DeploymentStrategy)
+- *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
+
+Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
@@ -2490,6 +2478,18 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_21.PodSecurityContext`](#cdk8s_plus_21.PodSecurityContext)
+
+---
+
+##### `strategy`<sup>Required</sup> <a name="cdk8s_plus_21.Deployment.property.strategy"></a>
+
+```python
+strategy: DeploymentStrategy
+```
+
+- *Type:* [`cdk8s_plus_21.DeploymentStrategy`](#cdk8s_plus_21.DeploymentStrategy)
+
+The upgrade strategy of this deployment.
 
 ---
 
@@ -8716,41 +8716,41 @@ Number of desired pods.
 
 ---
 
-##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.strategy"></a>
+##### `strategy`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentProps.property.strategy"></a>
 
 ```python
 strategy: DeploymentStrategy
 ```
 
-- *Type:* [`cdk8s_plus_22.DeploymentStrategy`](#cdk8s_plus_22.DeploymentStrategy)
+- *Type:* [`cdk8s_plus_21.DeploymentStrategy`](#cdk8s_plus_21.DeploymentStrategy)
 - *Default:* RollingUpdate with maxSurge and maxUnavailable set to 25%.
 
 Specifies the strategy used to replace old Pods by new ones.
 
 ---
 
-### DeploymentStrategyRollingUpdateOptions <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions"></a>
+### DeploymentStrategyRollingUpdateOptions <a name="cdk8s_plus_21.DeploymentStrategyRollingUpdateOptions"></a>
 
 Options for `DeploymentStrategy.rollingUpdate`.
 
 #### Initializer <a name="[object Object].Initializer"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_21
 
-cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions(
+cdk8s_plus_21.DeploymentStrategyRollingUpdateOptions(
   max_surge: PercentOrAbsolute = None,
   max_unavailable: PercentOrAbsolute = None
 )
 ```
 
-##### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_surge"></a>
+##### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentStrategyRollingUpdateOptions.property.max_surge"></a>
 
 ```python
 max_surge: PercentOrAbsolute
 ```
 
-- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Type:* [`cdk8s_plus_21.PercentOrAbsolute`](#cdk8s_plus_21.PercentOrAbsolute)
 - *Default:* '25%'
 
 The maximum number of pods that can be scheduled above the desired number of pods.
@@ -8766,13 +8766,13 @@ total number of pods running at any time during the update is at most 130% of de
 
 ---
 
-##### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.property.max_unavailable"></a>
+##### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentStrategyRollingUpdateOptions.property.max_unavailable"></a>
 
 ```python
 max_unavailable: PercentOrAbsolute
 ```
 
-- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Type:* [`cdk8s_plus_21.PercentOrAbsolute`](#cdk8s_plus_21.PercentOrAbsolute)
 - *Default:* '25%'
 
 The maximum number of pods that can be unavailable during the update.
@@ -8788,7 +8788,7 @@ number of pods available at all times during the update is at least 70% of desir
 
 ---
 
-### DockerConfigSecretProps <a name="cdk8s_plus_22.DockerConfigSecretProps"></a>
+### DockerConfigSecretProps <a name="cdk8s_plus_21.DockerConfigSecretProps"></a>
 
 Options for `DockerConfigSecret`.
 
@@ -13314,35 +13314,35 @@ amount: str
 ---
 
 
-### DeploymentStrategy <a name="cdk8s_plus_22.DeploymentStrategy"></a>
+### DeploymentStrategy <a name="cdk8s_plus_21.DeploymentStrategy"></a>
 
 Deployment strategies.
 
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `recreate` <a name="cdk8s_plus_22.DeploymentStrategy.recreate"></a>
+##### `recreate` <a name="cdk8s_plus_21.DeploymentStrategy.recreate"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_21
 
-cdk8s_plus_22.DeploymentStrategy.recreate()
+cdk8s_plus_21.DeploymentStrategy.recreate()
 ```
 
-##### `rolling_update` <a name="cdk8s_plus_22.DeploymentStrategy.rolling_update"></a>
+##### `rolling_update` <a name="cdk8s_plus_21.DeploymentStrategy.rolling_update"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_21
 
-cdk8s_plus_22.DeploymentStrategy.rolling_update(
+cdk8s_plus_21.DeploymentStrategy.rolling_update(
   max_surge: PercentOrAbsolute = None,
   max_unavailable: PercentOrAbsolute = None
 )
 ```
 
-###### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_surge"></a>
+###### `max_surge`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentStrategyRollingUpdateOptions.parameter.max_surge"></a>
 
-- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Type:* [`cdk8s_plus_21.PercentOrAbsolute`](#cdk8s_plus_21.PercentOrAbsolute)
 - *Default:* '25%'
 
 The maximum number of pods that can be scheduled above the desired number of pods.
@@ -13358,9 +13358,9 @@ total number of pods running at any time during the update is at most 130% of de
 
 ---
 
-###### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentStrategyRollingUpdateOptions.parameter.max_unavailable"></a>
+###### `max_unavailable`<sup>Optional</sup> <a name="cdk8s_plus_21.DeploymentStrategyRollingUpdateOptions.parameter.max_unavailable"></a>
 
-- *Type:* [`cdk8s_plus_22.PercentOrAbsolute`](#cdk8s_plus_22.PercentOrAbsolute)
+- *Type:* [`cdk8s_plus_21.PercentOrAbsolute`](#cdk8s_plus_21.PercentOrAbsolute)
 - *Default:* '25%'
 
 The maximum number of pods that can be unavailable during the update.
@@ -13378,7 +13378,7 @@ number of pods available at all times during the update is at least 70% of desir
 
 
 
-### EnvValue <a name="cdk8s_plus_22.EnvValue"></a>
+### EnvValue <a name="cdk8s_plus_21.EnvValue"></a>
 
 Utility class for creating reading env values from various sources.
 
@@ -13728,13 +13728,13 @@ The port to use to access the service.
 
 
 
-### PercentOrAbsolute <a name="cdk8s_plus_22.PercentOrAbsolute"></a>
+### PercentOrAbsolute <a name="cdk8s_plus_21.PercentOrAbsolute"></a>
 
 Union like class repsenting either a ration in percents or an absolute number.
 
 #### Methods <a name="Methods"></a>
 
-##### `is_zero` <a name="cdk8s_plus_22.PercentOrAbsolute.is_zero"></a>
+##### `is_zero` <a name="cdk8s_plus_21.PercentOrAbsolute.is_zero"></a>
 
 ```python
 def is_zero()
@@ -13742,33 +13742,33 @@ def is_zero()
 
 #### Static Functions <a name="Static Functions"></a>
 
-##### `absolute` <a name="cdk8s_plus_22.PercentOrAbsolute.absolute"></a>
+##### `absolute` <a name="cdk8s_plus_21.PercentOrAbsolute.absolute"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_21
 
-cdk8s_plus_22.PercentOrAbsolute.absolute(
+cdk8s_plus_21.PercentOrAbsolute.absolute(
   num: typing.Union[int, float]
 )
 ```
 
-###### `num`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.num"></a>
+###### `num`<sup>Required</sup> <a name="cdk8s_plus_21.PercentOrAbsolute.parameter.num"></a>
 
 - *Type:* `typing.Union[int, float]`
 
 ---
 
-##### `percent` <a name="cdk8s_plus_22.PercentOrAbsolute.percent"></a>
+##### `percent` <a name="cdk8s_plus_21.PercentOrAbsolute.percent"></a>
 
 ```python
-import cdk8s_plus_22
+import cdk8s_plus_21
 
-cdk8s_plus_22.PercentOrAbsolute.percent(
+cdk8s_plus_21.PercentOrAbsolute.percent(
   percent: typing.Union[int, float]
 )
 ```
 
-###### `percent`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.parameter.percent"></a>
+###### `percent`<sup>Required</sup> <a name="cdk8s_plus_21.PercentOrAbsolute.parameter.percent"></a>
 
 - *Type:* `typing.Union[int, float]`
 
@@ -13776,7 +13776,7 @@ cdk8s_plus_22.PercentOrAbsolute.percent(
 
 #### Properties <a name="Properties"></a>
 
-##### `value`<sup>Required</sup> <a name="cdk8s_plus_22.PercentOrAbsolute.property.value"></a>
+##### `value`<sup>Required</sup> <a name="cdk8s_plus_21.PercentOrAbsolute.property.value"></a>
 
 ```python
 value: typing.Any
@@ -13787,7 +13787,7 @@ value: typing.Any
 ---
 
 
-### PodSecurityContext <a name="cdk8s_plus_22.PodSecurityContext"></a>
+### PodSecurityContext <a name="cdk8s_plus_21.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
 
