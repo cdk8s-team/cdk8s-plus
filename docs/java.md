@@ -780,6 +780,7 @@ import org.cdk8s.plus20.DaemonSet;
 DaemonSet.Builder.create(Construct scope, java.lang.String id)
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -823,6 +824,15 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.DaemonSetProps.parameter.dockerRegistryAuth"></a>
+
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -1217,16 +1227,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.parameter.dockerRegistryAuth"></a>
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.parameter.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.parameter.hostAliases"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus20.HostAlias`](#org.cdk8s.plus20.HostAlias)>
 
@@ -2126,16 +2136,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.JobProps.parameter.dockerRegistryAuth"></a>
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.parameter.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.JobProps.parameter.hostAliases"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus20.HostAlias`](#org.cdk8s.plus20.HostAlias)>
 
@@ -2987,16 +2997,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodProps.parameter.dockerRegistryAuth"></a>
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.parameter.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodProps.parameter.hostAliases"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus20.HostAlias`](#org.cdk8s.plus20.HostAlias)>
 
@@ -3995,16 +4005,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.parameter.dockerRegistryAuth"></a>
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.parameter.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.parameter.hostAliases"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus20.HostAlias`](#org.cdk8s.plus20.HostAlias)>
 
@@ -5877,6 +5887,7 @@ import org.cdk8s.plus20.DaemonSetProps;
 DaemonSetProps.builder()
 //  .metadata(ApiObjectMetadata)
 //  .containers(java.util.List<ContainerProps>)
+//  .dockerRegistryAuth(DockerConfigSecret)
 //  .hostAliases(java.util.List<HostAlias>)
 //  .initContainers(java.util.List<ContainerProps>)
 //  .restartPolicy(RestartPolicy)
@@ -5916,6 +5927,19 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.DaemonSetProps.property.dockerRegistryAuth"></a>
+
+```java
+public DockerConfigSecret getDockerRegistryAuth();
+```
+
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
+- *Default:* No auth. Images are assumed to be publicly available.
+
+A secret containing docker credentials for authenticating to a registry.
 
 ---
 
@@ -6120,20 +6144,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.DeploymentProps.property.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.DeploymentProps.property.hostAliases"></a>
 
 ```java
 public java.util.List<HostAlias> getHostAliases();
@@ -7504,20 +7528,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.JobProps.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.JobProps.property.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.JobProps.property.hostAliases"></a>
 
 ```java
 public java.util.List<HostAlias> getHostAliases();
@@ -8193,20 +8217,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodProps.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodProps.property.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodProps.property.hostAliases"></a>
 
 ```java
 public java.util.List<HostAlias> getHostAliases();
@@ -8455,20 +8479,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpecProps.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.property.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpecProps.property.hostAliases"></a>
 
 ```java
 public java.util.List<HostAlias> getHostAliases();
@@ -8615,20 +8639,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodTemplateProps.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.property.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodTemplateProps.property.hostAliases"></a>
 
 ```java
 public java.util.List<HostAlias> getHostAliases();
@@ -9596,20 +9620,20 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.StatefulSetProps.property.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.StatefulSetProps.property.hostAliases"></a>
 
 ```java
 public java.util.List<HostAlias> getHostAliases();
@@ -11130,16 +11154,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpecProps.parameter.dockerRegistryAuth"></a>
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpecProps.parameter.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpecProps.parameter.hostAliases"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus20.HostAlias`](#org.cdk8s.plus20.HostAlias)>
 
@@ -11339,17 +11363,17 @@ Use `addVolume` to add volumes.
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpec.property.dockerRegistryAuth"></a>
 
 ```java
 public DockerConfigSecret getDockerRegistryAuth();
 ```
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 
 ---
 
-##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodSpec.property.restartPolicy"></a>
+##### `restartPolicy`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodSpec.property.restartPolicy"></a>
 
 ```java
 public RestartPolicy getRestartPolicy();
@@ -11412,16 +11436,16 @@ You can add additionnal containers using `podSpec.addContainer()`
 
 ---
 
-##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.dockerRegistryAuth"></a>
+##### `dockerRegistryAuth`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodTemplateProps.parameter.dockerRegistryAuth"></a>
 
-- *Type:* [`org.cdk8s.plus22.DockerConfigSecret`](#org.cdk8s.plus22.DockerConfigSecret)
+- *Type:* [`org.cdk8s.plus20.DockerConfigSecret`](#org.cdk8s.plus20.DockerConfigSecret)
 - *Default:* No auth. Images are assumed to be publicly available.
 
 A secret containing docker credentials for authenticating to a registry.
 
 ---
 
-##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus22.PodTemplateProps.parameter.hostAliases"></a>
+##### `hostAliases`<sup>Optional</sup> <a name="org.cdk8s.plus20.PodTemplateProps.parameter.hostAliases"></a>
 
 - *Type:* java.util.List<[`org.cdk8s.plus20.HostAlias`](#org.cdk8s.plus20.HostAlias)>
 
