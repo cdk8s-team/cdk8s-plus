@@ -118,14 +118,20 @@ backport.addJob('backport', {
   permissions: {
     contents: JobPermission.WRITE,
   },
-  steps: [{
-    name: 'backport',
-    uses: 'tibdex/backport@v1',
-    with: {
-      github_token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
-      title_template: '{{originalTitle}}',
+  steps: [
+    {
+      name: 'setup-hooks',
+      run: './git-hooks/setup.sh',
     },
-  }],
+    {
+      name: 'backport',
+      uses: 'tibdex/backport@v1',
+      with: {
+        github_token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+        title_template: '{{originalTitle}}',
+      },
+    },
+  ],
 });
 
 project.synth();
