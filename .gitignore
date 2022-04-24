@@ -53,5 +53,8 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
+docs/typescript.md
+docs/python.md
+docs/java.md
 !/.github/workflows/backport.yml
 !/.backportrc.json

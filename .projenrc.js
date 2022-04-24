@@ -105,9 +105,13 @@ project.compileTask.prependSpawn(importTask);
 
 const docgenTask = project.tasks.tryFind('docgen');
 docgenTask.reset();
-docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
-docgenTask.exec('jsii-docgen -l python -o docs/python.md');
-docgenTask.exec('jsii-docgen -l java -o docs/java.md');
+for (const lang of ['typescript', 'python', 'java']) {
+  const output = `docs/${lang}.md`;
+  docgenTask.exec(`jsii-docgen -l ${lang} -o ${output}`);
+  // ignoring since it creates merge conflicts in
+  // the backport PR's.
+  project.gitignore.exclude(output);
+}
 
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
   const backportTask = project.addTask(`backport:${spec}`);
