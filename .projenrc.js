@@ -109,9 +109,6 @@ docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
 docgenTask.exec('jsii-docgen -l python -o docs/python.md');
 docgenTask.exec('jsii-docgen -l java -o docs/java.md');
 
-const hooks = project.addTask('hooks');
-hooks.exec('./git-hooks/setup.sh');
-
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
   const backportTask = project.addTask(`backport:${spec}`);
   backportTask.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
@@ -129,15 +126,6 @@ backportWorkflow.addJob('backport', {
     contents: JobPermission.WRITE,
   },
   steps: [
-    {
-      name: 'checkout',
-      uses: 'actions/checkout@v2',
-    },
-    // to ensure backports are signed for DCO
-    {
-      name: hooks.name,
-      run: `npx projen ${hooks.name}`,
-    },
     {
       name: 'backport',
       uses: 'tibdex/backport@v1',
