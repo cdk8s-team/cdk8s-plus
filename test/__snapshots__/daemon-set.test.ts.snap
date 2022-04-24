@@ -37,6 +37,12 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
           "hostAliases": Array [],
           "initContainers": Array [],
           "securityContext": Object {
@@ -44,6 +50,7 @@ Array [
             "runAsNonRoot": false,
             "sysctls": Array [],
           },
+          "setHostnameAsFQDN": false,
           "volumes": Array [],
         },
       },
@@ -89,6 +96,12 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
           "hostAliases": Array [],
           "initContainers": Array [],
           "securityContext": Object {
@@ -96,6 +109,7 @@ Array [
             "runAsNonRoot": false,
             "sysctls": Array [],
           },
+          "setHostnameAsFQDN": false,
           "volumes": Array [],
         },
       },
