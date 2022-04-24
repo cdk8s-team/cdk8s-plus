@@ -15,6 +15,13 @@ Array [
           "cdk8s.deployment": "test-Deployment-c83f5e59",
         },
       },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
       "template": Object {
         "metadata": Object {
           "labels": Object {

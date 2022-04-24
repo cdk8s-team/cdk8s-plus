@@ -57,6 +57,13 @@ export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
     * @default PodManagementPolicy.ORDERED_READY
     */
   readonly podManagementPolicy?: PodManagementPolicy;
+
+  /**
+   * Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+   *
+   * @default - RollingUpdate with partition set to 0
+   */
+  readonly strategy?: StatefulSetUpdateStrategy;
 }
 
 /**
@@ -97,6 +104,11 @@ export class StatefulSet extends Resource implements IPodTemplate {
   public readonly podManagementPolicy: PodManagementPolicy;
 
   /**
+   * The update startegy of this stateful set.
+   */
+  public readonly strategy: StatefulSetUpdateStrategy;
+
+  /**
     * @see base.Resource.apiObject
     */
   protected readonly apiObject: ApiObject;
@@ -118,6 +130,7 @@ export class StatefulSet extends Resource implements IPodTemplate {
     this.apiObject.addDependency(this._service);
 
     this.replicas = props.replicas ?? 1;
+    this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this._podTemplate = new PodTemplate(props);
     this._labelSelector = {};
@@ -219,6 +232,70 @@ export class StatefulSet extends Resource implements IPodTemplate {
         matchLabels: this._labelSelector,
       },
       podManagementPolicy: this.podManagementPolicy,
+      updateStrategy: this.strategy._toKube(),
     };
   }
+}
+
+/**
+ * Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+ */
+export interface StatefulSetUpdateStrategyRollingUpdateOptions {
+
+  /**
+   * If specified, all Pods with an ordinal that is greater than or equal to the partition will
+   * be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that
+   * is less than the partition will not be updated, and, even if they are deleted, they will be
+   * recreated at the previous version.
+   *
+   * If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+   * In most cases you will not need to use a partition, but they are useful if you want to stage an
+   * update, roll out a canary, or perform a phased roll out.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
+   * @default 0
+   */
+  readonly partition?: number;
+
+}
+
+/**
+ * StatefulSet update strategies.
+ */
+export class StatefulSetUpdateStrategy {
+
+  /**
+   * The controller will not automatically update the Pods in a StatefulSet.
+   * Users must manually delete Pods to cause the controller to create new Pods
+   * that reflect modifications.
+   */
+  public static onDelete(): StatefulSetUpdateStrategy {
+    return new StatefulSetUpdateStrategy({
+      type: 'OnDelete',
+    });
+  }
+
+  /**
+   * The controller will delete and recreate each Pod in the StatefulSet.
+   * It will proceed in the same order as Pod termination (from the largest ordinal to the smallest),
+   * updating each Pod one at a time. The Kubernetes control plane waits until an updated
+   * Pod is Running and Ready prior to updating its predecessor.
+   */
+  public static rollingUpdate(options: StatefulSetUpdateStrategyRollingUpdateOptions = {}): StatefulSetUpdateStrategy {
+
+    return new StatefulSetUpdateStrategy({
+      type: 'RollingUpdate',
+      rollingUpdate: { partition: options.partition ?? 0 },
+    });
+  }
+
+  private constructor(private readonly strategy: k8s.StatefulSetUpdateStrategy) {}
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.StatefulSetUpdateStrategy {
+    return this.strategy;
+  }
+
 }

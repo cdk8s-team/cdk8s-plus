@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { ResourceProps, Resource } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
+import { DockerConfigSecret } from './secret';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
 
@@ -105,6 +106,7 @@ export class PodSpec implements IPodSpec {
   public readonly serviceAccount?: IServiceAccount;
   public readonly securityContext: PodSecurityContext;
   public readonly dns: PodDns;
+  public readonly dockerRegistryAuth?: DockerConfigSecret;
 
   private readonly _containers: Container[] = [];
   private readonly _initContainers: Container[] = [];
@@ -116,6 +118,7 @@ export class PodSpec implements IPodSpec {
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
     this.dns = new PodDns(props.dns);
+    this.dockerRegistryAuth = props.dockerRegistryAuth;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -253,6 +256,7 @@ export class PodSpec implements IPodSpec {
       hostname: dns.hostname,
       subdomain: dns.subdomain,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
+      imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
     };
 
   }
@@ -465,6 +469,13 @@ export interface PodSpecProps {
    *  hostnameAsFQDN: false
    */
   readonly dns?: PodDnsProps;
+
+  /**
+   * A secret containing docker credentials for authenticating to a registry.
+   *
+   * @default - No auth. Images are assumed to be publicly available.
+   */
+  readonly dockerRegistryAuth?: DockerConfigSecret;
 }
 
 /**
