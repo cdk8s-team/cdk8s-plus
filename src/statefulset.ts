@@ -8,7 +8,6 @@ import * as service from './service';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
 
-
 /**
  * Controls how pods are created during initial scale up, when replacing pods on nodes,
  * or when scaling down.
@@ -183,6 +182,10 @@ export class StatefulSet extends base.Resource implements pod.IPodTemplate {
 
   public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
     return this._podTemplate.serviceAccount;
+  }
+
+  public get dns(): pod.PodDns {
+    return this._podTemplate.dns;
   }
 
   /**

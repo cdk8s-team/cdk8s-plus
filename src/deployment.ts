@@ -197,6 +197,10 @@ export class Deployment extends base.Resource implements pod.IPodTemplate {
     return this._podTemplate.securityContext;
   }
 
+  public get dns(): pod.PodDns {
+    return this._podTemplate.dns;
+  }
+
   /**
    * Configure a label selector to this deployment.
    * Pods that have the label will be selected by deployments configured with this spec.

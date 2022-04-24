@@ -127,6 +127,10 @@ export class DaemonSet extends base.Resource implements pod.IPodTemplate {
     return this._podTemplate.addContainer(cont);
   }
 
+  public get dns(): pod.PodDns {
+    return this._podTemplate.dns;
+  }
+
   public addInitContainer(cont: container.ContainerProps): container.Container {
     return this._podTemplate.addInitContainer(cont);
   }

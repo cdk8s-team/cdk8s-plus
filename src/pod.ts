@@ -52,6 +52,16 @@ export interface IPodSpec {
   readonly hostAliases: HostAlias[];
 
   /**
+   * The pod's DNS settings.
+   */
+  readonly dns: PodDns;
+
+  /**
+   * The pod's security context.
+   */
+  readonly securityContext: PodSecurityContext;
+
+  /**
    * Add a container to the pod.
    *
    * @param container The container.
@@ -95,6 +105,7 @@ export class PodSpec implements IPodSpec {
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
   public readonly securityContext: PodSecurityContext;
+  public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
 
   private readonly _containers: container.Container[] = [];
@@ -106,6 +117,7 @@ export class PodSpec implements IPodSpec {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
+    this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
 
     if (props.containers) {
@@ -229,6 +241,8 @@ export class PodSpec implements IPodSpec {
       volumes.set(vol.name, vol);
     }
 
+    const dns = this.dns._toKube();
+
     return {
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
@@ -237,6 +251,11 @@ export class PodSpec implements IPodSpec {
       initContainers: initContainers,
       hostAliases: this.hostAliases,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
+      dnsPolicy: dns.policy,
+      dnsConfig: dns.config,
+      hostname: dns.hostname,
+      subdomain: dns.subdomain,
+      setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
     };
 
@@ -440,12 +459,23 @@ export interface PodSpecProps {
   readonly hostAliases?: HostAlias[];
 
   /**
+   * DNS settings for the pod.
+   *
+   * @see https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+   *
+   * @default
+   *
+   *  policy: DnsPolicy.CLUSTER_FIRST
+   *  hostnameAsFQDN: false
+   */
+  readonly dns?: PodDnsProps;
+
+  /**
    * A secret containing docker credentials for authenticating to a registry.
    *
    * @default - No auth. Images are assumed to be publicly available.
    */
   readonly dockerRegistryAuth?: secret.DockerConfigSecret;
-
 }
 
 /**
@@ -504,6 +534,10 @@ export class Pod extends base.Resource implements IPodSpec {
     return this._spec.addContainer(cont);
   }
 
+  public get dns(): PodDns {
+    return this._spec.dns;
+  }
+
   public addInitContainer(cont: container.ContainerProps): container.Container {
     return this._spec.addInitContainer(cont);
   }
@@ -514,6 +548,186 @@ export class Pod extends base.Resource implements IPodSpec {
 
   public addHostAlias(hostAlias: HostAlias): void {
     return this._spec.addHostAlias(hostAlias);
+  }
+
+}
+
+/**
+ * Properties for `PodDns`.
+ */
+export interface PodDnsProps {
+
+  /**
+   * Specifies the hostname of the Pod.
+   *
+   * @default - Set to a system-defined value.
+   */
+  readonly hostname?: string;
+
+  /**
+   * If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+   *
+   * @default - No subdomain.
+   */
+  readonly subdomain?: string;
+
+  /**
+   * If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+   * In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+   * In Windows containers, this means setting the registry value of hostname for the registry
+   * key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+   * If a pod does not have FQDN, this has no effect.
+   *
+   * @default false
+   */
+  readonly hostnameAsFQDN?: boolean;
+
+  /**
+   * Set DNS policy for the pod.
+   *
+   * If policy is set to `None`, other configuration must be supplied.
+   *
+   * @default DnsPolicy.CLUSTER_FIRST
+   */
+  readonly policy?: DnsPolicy;
+
+  /**
+   * A list of IP addresses that will be used as DNS servers for the Pod. There can be at most 3 IP addresses specified.
+   * When the policy is set to "NONE", the list must contain at least one IP address,
+   * otherwise this property is optional.
+   * The servers listed will be combined to the base nameservers generated from
+   * the specified DNS policy with duplicate addresses removed.
+   */
+  readonly nameservers?: string[];
+
+  /**
+   * A list of DNS search domains for hostname lookup in the Pod.
+   * When specified, the provided list will be merged into the base
+   * search domain names generated from the chosen DNS policy.
+   * Duplicate domain names are removed.
+   *
+   * Kubernetes allows for at most 6 search domains.
+   */
+  readonly searches?: string[];
+
+  /**
+   * List of objects where each object may have a name property (required)
+   * and a value property (optional). The contents in this property
+   * will be merged to the options generated from the specified DNS policy.
+   * Duplicate entries are removed.
+   */
+  readonly options?: DnsOption[];
+}
+
+/**
+ * Holds dns settings of the pod.
+ */
+export class PodDns {
+
+  /**
+   * The DNS policy of this pod.
+   */
+  public readonly policy: DnsPolicy;
+
+  /**
+   * The configured hostname of the pod. Undefined means its set to a system-defined value.
+   */
+  public readonly hostname?: string;
+
+  /**
+   * The configured subdomain of the pod.
+   */
+  public readonly subdomain?: string;
+
+  /**
+   * Whether or not the pods hostname is set to its FQDN.
+   */
+  public readonly hostnameAsFQDN: boolean;
+
+  private readonly _nameservers: string[];
+  private readonly _searches: string[];
+  private readonly _options: DnsOption[];
+
+  constructor(props: PodDnsProps = {}) {
+    this.hostname = props.hostname;
+    this.subdomain = props.subdomain;
+    this.policy = props.policy ?? DnsPolicy.CLUSTER_FIRST;
+    this.hostnameAsFQDN = props.hostnameAsFQDN ?? false;
+    this._nameservers = props.nameservers ?? [];
+    this._searches = props.searches ?? [];
+    this._options = props.options ?? [];
+  }
+
+  /**
+   * Nameservers defined for this pod.
+   */
+  public get nameservers(): string[] {
+    return [...this._nameservers];
+  }
+
+  /**
+   * Search domains defined for this pod.
+   */
+  public get searches(): string[] {
+    return [...this._searches];
+  }
+
+  /**
+   * Custom dns options defined for this pod.
+   */
+  public get options(): DnsOption[] {
+    return [...this._options];
+  }
+
+  /**
+   * Add a nameserver.
+   */
+  public addNameserver(...nameservers: string[]) {
+    this._nameservers.push(...nameservers);
+  }
+
+  /**
+   * Add a search domain.
+   */
+  public addSearch(...searches: string[]) {
+    this._searches.push(...searches);
+  }
+
+  /**
+   * Add a custom option.
+   */
+  public addOption(...options: DnsOption[]) {
+    this._options.push(...options);
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): { hostname?: string; subdomain?: string; hostnameAsFQDN: boolean; policy: string; config: k8s.PodDnsConfig } {
+
+    if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
+      throw new Error('When dns policy is set to NONE, at least one nameserver is required');
+    }
+
+    if (this.nameservers.length > 3) {
+      throw new Error('There can be at most 3 nameservers specified');
+    }
+
+    if (this.searches.length > 6) {
+      throw new Error('There can be at most 6 search domains specified');
+    }
+
+    return {
+      hostname: this.hostname,
+      subdomain: this.subdomain,
+      hostnameAsFQDN: this.hostnameAsFQDN,
+      policy: this.policy,
+      config: {
+        nameservers: this.nameservers,
+        searches: this.searches,
+        options: this.options,
+      },
+    };
   }
 
 }
@@ -597,6 +811,58 @@ export enum FsGroupChangePolicy {
    * Always change permission and ownership of the volume when volume is mounted.
    */
   ALWAYS = 'Always'
+}
+
+/**
+ * Custom DNS option.
+ */
+export interface DnsOption {
+
+  /**
+   * Option name.
+   */
+  readonly name: string;
+
+  /**
+   * Option value.
+   *
+   * @default - No value.
+   */
+  readonly value?: string;
+}
+
+/**
+ * Pod DNS policies.
+ */
+export enum DnsPolicy {
+
+  /**
+   * Any DNS query that does not match the configured cluster domain suffix,
+   * such as "www.kubernetes.io", is forwarded to the
+   * upstream nameserver inherited from the node.
+   * Cluster administrators may have extra stub-domain and upstream DNS servers configured.
+   */
+  CLUSTER_FIRST = 'ClusterFirst',
+
+  /**
+   * For Pods running with hostNetwork, you should
+   * explicitly set its DNS policy "ClusterFirstWithHostNet".
+   */
+  CLUSTER_FIRST_WITH_HOST_NET = 'ClusterFirstWithHostNet',
+
+  /**
+   * The Pod inherits the name resolution configuration
+   * from the node that the pods run on.
+   */
+  DEFAULT = 'Default',
+
+  /**
+   * It allows a Pod to ignore DNS settings from the Kubernetes environment.
+   * All DNS settings are supposed to be provided using the dnsConfig
+   * field in the Pod Spec.
+   */
+  NONE = 'None',
+
 }
 
 /**

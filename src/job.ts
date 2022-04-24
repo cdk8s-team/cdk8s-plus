@@ -7,7 +7,6 @@ import * as pod from './pod';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
 
-
 /**
  * Properties for initialization of `Job`.
  */
@@ -126,6 +125,10 @@ export class Job extends base.Resource implements pod.IPodTemplate {
 
   public addContainer(cont: container.ContainerProps): container.Container {
     return this._podTemplate.addContainer(cont);
+  }
+
+  public get dns(): pod.PodDns {
+    return this._podTemplate.dns;
   }
 
   public addInitContainer(cont: container.ContainerProps): container.Container {
