@@ -1,16 +1,16 @@
 import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
+import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
-import { HostAlias, IPodTemplate, PodSecurityContext, PodTemplate, PodTemplateProps, RestartPolicy } from './pod';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as pod from './pod';
+import * as serviceaccount from './service-account';
+import * as volume from './volume';
 
 /**
  * Properties for `DaemonSet`.
  */
-export interface DaemonSetProps extends ResourceProps, PodTemplateProps {
+export interface DaemonSetProps extends base.ResourceProps, pod.PodTemplateProps {
 
   /**
    * Minimum number of seconds for which a newly created pod should
@@ -48,9 +48,9 @@ export interface DaemonSetProps extends ResourceProps, PodTemplateProps {
  * A more complex setup might use multiple DaemonSets for a single type of daemon,
  * but with different flags and/or different memory and cpu requests for different hardware types.
  */
-export class DaemonSet extends Resource implements IPodTemplate {
+export class DaemonSet extends base.Resource implements pod.IPodTemplate {
 
-  private readonly _podTemplate: PodTemplate;
+  private readonly _podTemplate: pod.PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 
   /**
@@ -70,7 +70,7 @@ export class DaemonSet extends Resource implements IPodTemplate {
 
     this.minReadySeconds = props.minReadySeconds ?? 0;
 
-    this._podTemplate = new PodTemplate(props);
+    this._podTemplate = new pod.PodTemplate(props);
     this._labelSelector = {};
 
     if (props.defaultSelector ?? true) {
@@ -95,48 +95,48 @@ export class DaemonSet extends Resource implements IPodTemplate {
     return this._podTemplate.podMetadata;
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return this._podTemplate.containers;
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return this._podTemplate.initContainers;
   }
 
-  public get hostAliases(): HostAlias[] {
+  public get hostAliases(): pod.HostAlias[] {
     return this._podTemplate.hostAliases;
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return this._podTemplate.volumes;
   }
 
-  public get restartPolicy(): RestartPolicy | undefined {
+  public get restartPolicy(): pod.RestartPolicy | undefined {
     return this._podTemplate.restartPolicy;
   }
 
-  public get serviceAccount(): IServiceAccount | undefined {
+  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
     return this._podTemplate.serviceAccount;
   }
 
-  public get securityContext(): PodSecurityContext {
+  public get securityContext(): pod.PodSecurityContext {
     return this._podTemplate.securityContext;
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
+  public addContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addContainer(cont);
   }
 
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
+  public addInitContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addInitContainer(cont);
   }
 
-  public addHostAlias(hostAlias: HostAlias): void {
+  public addHostAlias(hostAlias: pod.HostAlias): void {
     return this._podTemplate.addHostAlias(hostAlias);
   }
 
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
+  public addVolume(vol: volume.Volume): void {
+    return this._podTemplate.addVolume(vol);
   }
 
   /**

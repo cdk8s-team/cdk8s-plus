@@ -1,8 +1,8 @@
 import { Size } from 'cdk8s';
-import { IConfigMap } from './config-map';
+import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
-import { IPersistentVolumeClaim } from './pvc';
-import { ISecret } from './secret';
+import * as pvc from './pvc';
+import * as secret from './secret';
 
 /**
  * Represents a piece of storage in the cluster.
@@ -126,7 +126,7 @@ export class Volume implements IStorage {
    * @param configMap The config map to use to populate the volume.
    * @param options Options
    */
-  public static fromConfigMap(configMap: IConfigMap, options: ConfigMapVolumeOptions = { }): Volume {
+  public static fromConfigMap(configMap: configmap.IConfigMap, options: ConfigMapVolumeOptions = { }): Volume {
     return new Volume(options.name ?? `configmap-${configMap.name}`, {
       configMap: {
         name: configMap.name,
@@ -172,13 +172,13 @@ export class Volume implements IStorage {
    *
    * @see https://kubernetes.io/docs/concepts/storage/volumes/#secret
    *
-   * @param secret The secret to use to populate the volume.
+   * @param secr The secret to use to populate the volume.
    * @param options Options
    */
-  public static fromSecret(secret: ISecret, options: SecretVolumeOptions = { }): Volume {
-    return new Volume(options.name ?? `secret-${secret.name}`, {
+  public static fromSecret(secr: secret.ISecret, options: SecretVolumeOptions = { }): Volume {
+    return new Volume(options.name ?? `secret-${secr.name}`, {
       secret: {
-        secretName: secret.name,
+        secretName: secr.name,
         defaultMode: options.defaultMode,
         optional: options.optional,
         items: Volume.renderItems(options.items),
@@ -193,10 +193,10 @@ export class Volume implements IStorage {
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/
    */
-  public static fromPersistentVolumeClaim(pvc: IPersistentVolumeClaim, options: PersistentVolumeClaimVolumeOptions = {}): Volume {
-    return new Volume(options.name ?? `pvc-${pvc.name}`, {
+  public static fromPersistentVolumeClaim(claim: pvc.IPersistentVolumeClaim, options: PersistentVolumeClaimVolumeOptions = {}): Volume {
+    return new Volume(options.name ?? `pvc-${claim.name}`, {
       persistentVolumeClaim: {
-        claimName: pvc.name,
+        claimName: claim.name,
         readOnly: options.readOnly ?? false,
       },
     });

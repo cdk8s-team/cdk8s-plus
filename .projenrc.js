@@ -1,5 +1,5 @@
 const path = require('path');
-const { cdk, javascript } = require('projen');
+const { cdk, javascript, JsonFile } = require('projen');
 const { JobPermission } = require('projen/lib/github/workflows-model');
 
 // the latest version of k8s we support
@@ -45,7 +45,6 @@ const project = new cdk.JsiiProject({
     'cdk8s',
     'cdk8s-cli',
     'constructs',
-    'backport',
   ],
 
   majorVersion: 1,
@@ -115,7 +114,7 @@ hooks.exec('./git-hooks/setup.sh');
 
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
   const backportTask = project.addTask(`backport:${spec}`);
-  backportTask.exec(`backport --accesstoken \${GITHUB_TOKEN} --repo cdk8s-team/cdk8s-plus --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
+  backportTask.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
 }
 
 // backport PR's to other branches
@@ -148,6 +147,16 @@ backportWorkflow.addJob('backport', {
       },
     },
   ],
+});
+
+const backportConfig = {
+  repoOwner: 'cdk8s-team',
+  repoName: 'cdk8s-plus',
+  signoff: true,
+};
+
+new JsonFile(project, '.backportrc.json', {
+  obj: backportConfig,
 });
 
 project.synth();

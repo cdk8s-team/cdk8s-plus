@@ -1,17 +1,17 @@
 import { ApiObject, ApiObjectMetadataDefinition, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
+import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplateProps, IPodTemplate, PodTemplate, PodSecurityContext, HostAlias } from './pod';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as pod from './pod';
+import * as serviceaccount from './service-account';
+import * as volume from './volume';
 
 
 /**
  * Properties for initialization of `Job`.
  */
-export interface JobProps extends ResourceProps, PodTemplateProps {
+export interface JobProps extends base.ResourceProps, pod.PodTemplateProps {
 
   /**
    * Specifies the duration the job may be active before the system tries to terminate it.
@@ -49,7 +49,7 @@ export interface JobProps extends ResourceProps, PodTemplateProps {
  * The Job object will start a new Pod if the first Pod fails or is deleted (for example due to a node hardware failure or a node reboot).
  * You can also use a Job to run multiple Pods in parallel.
  */
-export class Job extends Resource implements IPodTemplate {
+export class Job extends base.Resource implements pod.IPodTemplate {
 
   /**
    * Duration before job is terminated. If undefined, there is no deadline.
@@ -72,7 +72,7 @@ export class Job extends Resource implements IPodTemplate {
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
+  private readonly _podTemplate: pod.PodTemplate;
 
   constructor(scope: Construct, id: string, props: JobProps = {}) {
     super(scope, id);
@@ -82,9 +82,9 @@ export class Job extends Resource implements IPodTemplate {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this._podTemplate = new PodTemplate({
+    this._podTemplate = new pod.PodTemplate({
       ...props,
-      restartPolicy: props.restartPolicy ?? RestartPolicy.NEVER,
+      restartPolicy: props.restartPolicy ?? pod.RestartPolicy.NEVER,
     });
     this.activeDeadline = props.activeDeadline;
     this.backoffLimit = props.backoffLimit;
@@ -96,48 +96,48 @@ export class Job extends Resource implements IPodTemplate {
     return this._podTemplate.podMetadata;
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return this._podTemplate.containers;
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return this._podTemplate.initContainers;
   }
 
-  public get hostAliases(): HostAlias[] {
+  public get hostAliases(): pod.HostAlias[] {
     return this._podTemplate.hostAliases;
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return this._podTemplate.volumes;
   }
 
-  public get restartPolicy(): RestartPolicy | undefined {
+  public get restartPolicy(): pod.RestartPolicy | undefined {
     return this._podTemplate.restartPolicy;
   }
 
-  public get serviceAccount(): IServiceAccount | undefined {
+  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
     return this._podTemplate.serviceAccount;
   }
 
-  public get securityContext(): PodSecurityContext {
+  public get securityContext(): pod.PodSecurityContext {
     return this._podTemplate.securityContext;
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
+  public addContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addContainer(cont);
   }
 
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
+  public addInitContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addInitContainer(cont);
   }
 
-  public addHostAlias(hostAlias: HostAlias): void {
+  public addHostAlias(hostAlias: pod.HostAlias): void {
     return this._podTemplate.addHostAlias(hostAlias);
   }
 
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
+  public addVolume(vol: volume.Volume): void {
+    return this._podTemplate.addVolume(vol);
   }
 
   /**

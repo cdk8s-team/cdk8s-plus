@@ -1,12 +1,12 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy, Names, ApiObjectMetadataDefinition } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
+import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
-import { Service } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as pod from './pod';
+import * as service from './service';
+import * as serviceaccount from './service-account';
+import * as volume from './volume';
 
 
 /**
@@ -28,11 +28,11 @@ export enum PodManagementPolicy {
 /**
  * Properties for initialization of `StatefulSet`.
  */
-export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
+export interface StatefulSetProps extends base.ResourceProps, pod.PodTemplateProps {
   /**
    * Service to associate with the statefulset.
    */
-  readonly service: Service;
+  readonly service: service.Service;
 
   /**
     * Number of desired pods.
@@ -92,7 +92,7 @@ export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends Resource implements IPodTemplate {
+export class StatefulSet extends base.Resource implements pod.IPodTemplate {
   /**
     * Number of desired pods.
     */
@@ -113,10 +113,10 @@ export class StatefulSet extends Resource implements IPodTemplate {
     */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
+  private readonly _podTemplate: pod.PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 
-  private readonly _service: Service;
+  private readonly _service: service.Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
     super(scope, id);
@@ -132,7 +132,7 @@ export class StatefulSet extends Resource implements IPodTemplate {
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
-    this._podTemplate = new PodTemplate(props);
+    this._podTemplate = new pod.PodTemplate(props);
     this._labelSelector = {};
 
     if (props.defaultSelector ?? true) {
@@ -161,27 +161,27 @@ export class StatefulSet extends Resource implements IPodTemplate {
     return { ...this._labelSelector };
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return this._podTemplate.containers;
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return this._podTemplate.initContainers;
   }
 
-  public get hostAliases(): HostAlias[] {
+  public get hostAliases(): pod.HostAlias[] {
     return this._podTemplate.hostAliases;
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return this._podTemplate.volumes;
   }
 
-  public get restartPolicy(): RestartPolicy | undefined {
+  public get restartPolicy(): pod.RestartPolicy | undefined {
     return this._podTemplate.restartPolicy;
   }
 
-  public get serviceAccount(): IServiceAccount | undefined {
+  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
     return this._podTemplate.serviceAccount;
   }
 
@@ -196,23 +196,23 @@ export class StatefulSet extends Resource implements IPodTemplate {
     this._labelSelector[key] = value;
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
+  public addContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addContainer(cont);
   }
 
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
+  public addInitContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addInitContainer(cont);
   }
 
-  public addHostAlias(hostAlias: HostAlias): void {
+  public addHostAlias(hostAlias: pod.HostAlias): void {
     return this._podTemplate.addHostAlias(hostAlias);
   }
 
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
+  public addVolume(vol: volume.Volume): void {
+    return this._podTemplate.addVolume(vol);
   }
 
-  public get securityContext(): PodSecurityContext {
+  public get securityContext(): pod.PodSecurityContext {
     return this._podTemplate.securityContext;
   }
 

@@ -1,18 +1,18 @@
 import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
+import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
-import { Ingress } from './ingress';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
-import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as ingress from './ingress';
+import * as pod from './pod';
+import * as service from './service';
+import * as serviceaccount from './service-account';
+import * as volume from './volume';
 
 /**
  * Properties for initialization of `Deployment`.
  */
-export interface DeploymentProps extends ResourceProps, PodTemplateProps {
+export interface DeploymentProps extends base.ResourceProps, pod.PodTemplateProps {
 
   /**
    * Number of desired pods.
@@ -57,7 +57,7 @@ export interface ExposeDeploymentViaServiceOptions {
    *
    * @default - ClusterIP.
    */
-  readonly serviceType?: ServiceType;
+  readonly serviceType?: service.ServiceType;
 
   /**
    * The name of the service to expose.
@@ -72,7 +72,7 @@ export interface ExposeDeploymentViaServiceOptions {
    *
    * @default Protocol.TCP
    */
-  readonly protocol?: Protocol;
+  readonly protocol?: service.Protocol;
 
   /**
    * The port number the service will redirect to.
@@ -85,7 +85,7 @@ export interface ExposeDeploymentViaServiceOptions {
 /**
  * Options for exposing a deployment via an ingress.
  */
-export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, ExposeServiceViaIngressOptions {}
+export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, service.ExposeServiceViaIngressOptions {}
 
 /**
 *
@@ -115,7 +115,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends Resource implements IPodTemplate {
+export class Deployment extends base.Resource implements pod.IPodTemplate {
 
   /**
    * Number of desired pods.
@@ -132,7 +132,7 @@ export class Deployment extends Resource implements IPodTemplate {
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
+  private readonly _podTemplate: pod.PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
@@ -145,7 +145,7 @@ export class Deployment extends Resource implements IPodTemplate {
 
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
-    this._podTemplate = new PodTemplate(props);
+    this._podTemplate = new pod.PodTemplate(props);
     this._labelSelector = {};
 
     if (props.defaultSelector ?? true) {
@@ -169,31 +169,31 @@ export class Deployment extends Resource implements IPodTemplate {
     return { ...this._labelSelector };
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return this._podTemplate.containers;
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return this._podTemplate.initContainers;
   }
 
-  public get hostAliases(): HostAlias[] {
+  public get hostAliases(): pod.HostAlias[] {
     return this._podTemplate.hostAliases;
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return this._podTemplate.volumes;
   }
 
-  public get restartPolicy(): RestartPolicy | undefined {
+  public get restartPolicy(): pod.RestartPolicy | undefined {
     return this._podTemplate.restartPolicy;
   }
 
-  public get serviceAccount(): IServiceAccount | undefined {
+  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
     return this._podTemplate.serviceAccount;
   }
 
-  public get securityContext(): PodSecurityContext {
+  public get securityContext(): pod.PodSecurityContext {
     return this._podTemplate.securityContext;
   }
 
@@ -215,13 +215,13 @@ export class Deployment extends Resource implements IPodTemplate {
    *
    * @param options Options to determine details of the service and port exposed.
    */
-  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): Service {
-    const service = new Service(this, 'Service', {
+  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): service.Service {
+    const ser = new service.Service(this, 'Service', {
       metadata: options.name ? { name: options.name } : undefined,
-      type: options.serviceType ?? ServiceType.CLUSTER_IP,
+      type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
     });
-    service.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
-    return service;
+    ser.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
+    return ser;
   }
 
   /**
@@ -232,25 +232,25 @@ export class Deployment extends Resource implements IPodTemplate {
    * @param path The ingress path to register under.
    * @param options Additional options.
    */
-  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): Ingress {
-    const service = this.exposeViaService(options);
-    return service.exposeViaIngress(path, options);
+  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): ingress.Ingress {
+    const ser = this.exposeViaService(options);
+    return ser.exposeViaIngress(path, options);
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
+  public addContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addContainer(cont);
   }
 
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
+  public addInitContainer(cont: container.ContainerProps): container.Container {
+    return this._podTemplate.addInitContainer(cont);
   }
 
-  public addHostAlias(hostAlias: HostAlias): void {
+  public addHostAlias(hostAlias: pod.HostAlias): void {
     return this._podTemplate.addHostAlias(hostAlias);
   }
 
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
+  public addVolume(vol: volume.Volume): void {
+    return this._podTemplate.addVolume(vol);
   }
 
 

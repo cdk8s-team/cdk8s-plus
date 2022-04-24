@@ -1426,11 +1426,11 @@ If not specified, the container runtime's default will be used, which might be c
 
 ```python
 def add_volume(
-  volume: Volume
+  vol: Volume
 )
 ```
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.volume"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
@@ -2212,11 +2212,11 @@ If not specified, the container runtime's default will be used, which might be c
 
 ```python
 def add_volume(
-  volume: Volume
+  vol: Volume
 )
 ```
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.volume"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
@@ -3731,11 +3731,11 @@ If not specified, the container runtime's default will be used, which might be c
 
 ```python
 def add_volume(
-  volume: Volume
+  vol: Volume
 )
 ```
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Job.parameter.volume"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.Job.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
@@ -4026,11 +4026,11 @@ def as_volume()
 
 ```python
 def bind(
-  pvc: IPersistentVolumeClaim
+  claim: IPersistentVolumeClaim
 )
 ```
 
-###### `pvc`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolume.parameter.pvc"></a>
+###### `claim`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolume.parameter.claim"></a>
 
 - *Type:* [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim)
 
@@ -4273,11 +4273,11 @@ Defines what type of volume is required by the claim.
 
 ```python
 def bind(
-  pv: IPersistentVolume
+  vol: IPersistentVolume
 )
 ```
 
-###### `pv`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaim.parameter.pv"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.PersistentVolumeClaim.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.IPersistentVolume`](#cdk8s_plus_22.IPersistentVolume)
 
@@ -4935,11 +4935,11 @@ If not specified, the container runtime's default will be used, which might be c
 
 ```python
 def add_volume(
-  volume: Volume
+  vol: Volume
 )
 ```
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.parameter.volume"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
@@ -5409,7 +5409,7 @@ More info: https://kubernetes.io/docs/concepts/services-networking/service/#publ
 
 ```python
 def add_deployment(
-  deployment: Deployment,
+  depl: Deployment,
   name: str = None,
   node_port: typing.Union[int, float] = None,
   protocol: Protocol = None,
@@ -5418,7 +5418,7 @@ def add_deployment(
 )
 ```
 
-###### `deployment`<sup>Required</sup> <a name="cdk8s_plus_22.Service.parameter.deployment"></a>
+###### `depl`<sup>Required</sup> <a name="cdk8s_plus_22.Service.parameter.depl"></a>
 
 - *Type:* [`cdk8s_plus_22.Deployment`](#cdk8s_plus_22.Deployment)
 
@@ -5744,11 +5744,11 @@ List of secrets allowed to be used by pods running using this ServiceAccount.
 
 ```python
 def add_secret(
-  secret: ISecret
+  secr: ISecret
 )
 ```
 
-###### `secret`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccount.parameter.secret"></a>
+###### `secr`<sup>Required</sup> <a name="cdk8s_plus_22.ServiceAccount.parameter.secr"></a>
 
 - *Type:* [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret)
 
@@ -6564,11 +6564,11 @@ If not specified, the container runtime's default will be used, which might be c
 
 ```python
 def add_volume(
-  volume: Volume
+  vol: Volume
 )
 ```
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.parameter.volume"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
@@ -13866,16 +13866,14 @@ The backend for an ingress path.
 import cdk8s_plus_22
 
 cdk8s_plus_22.IngressBackend.from_service(
-  service: Service,
+  serv: Service,
   port: typing.Union[int, float] = None
 )
 ```
 
-###### `service`<sup>Required</sup> <a name="cdk8s_plus_22.IngressBackend.parameter.service"></a>
+###### `serv`<sup>Required</sup> <a name="cdk8s_plus_22.IngressBackend.parameter.serv"></a>
 
 - *Type:* [`cdk8s_plus_22.Service`](#cdk8s_plus_22.Service)
-
-The service object.
 
 ---
 
@@ -14638,11 +14636,11 @@ If not specified, the container runtime's default will be used, which might be c
 
 ```python
 def add_volume(
-  volume: Volume
+  vol: Volume
 )
 ```
 
-###### `volume`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.parameter.volume"></a>
+###### `vol`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.parameter.vol"></a>
 
 - *Type:* [`cdk8s_plus_22.Volume`](#cdk8s_plus_22.Volume)
 
@@ -15593,13 +15591,13 @@ Specify "true" to force and set the ReadOnly property in VolumeMounts to "true".
 import cdk8s_plus_22
 
 cdk8s_plus_22.Volume.from_persistent_volume_claim(
-  pvc: IPersistentVolumeClaim,
+  claim: IPersistentVolumeClaim,
   name: str = None,
   read_only: bool = None
 )
 ```
 
-###### `pvc`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.pvc"></a>
+###### `claim`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.claim"></a>
 
 - *Type:* [`cdk8s_plus_22.IPersistentVolumeClaim`](#cdk8s_plus_22.IPersistentVolumeClaim)
 
@@ -15629,7 +15627,7 @@ Will force the ReadOnly setting in VolumeMounts.
 import cdk8s_plus_22
 
 cdk8s_plus_22.Volume.from_secret(
-  secret: ISecret,
+  secr: ISecret,
   default_mode: typing.Union[int, float] = None,
   items: typing.Mapping[PathMapping] = None,
   name: str = None,
@@ -15637,7 +15635,7 @@ cdk8s_plus_22.Volume.from_secret(
 )
 ```
 
-###### `secret`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.secret"></a>
+###### `secr`<sup>Required</sup> <a name="cdk8s_plus_22.Volume.parameter.secr"></a>
 
 - *Type:* [`cdk8s_plus_22.ISecret`](#cdk8s_plus_22.ISecret)
 
