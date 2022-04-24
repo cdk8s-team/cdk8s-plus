@@ -132,13 +132,37 @@
       "description": "Generate API.md from .jsii manifest",
       "steps": [
         {
-          "exec": "jsii-docgen -l typescript -o docs/typescript.md"
+          "spawn": "docgen:typescript"
         },
         {
-          "exec": "jsii-docgen -l python -o docs/python.md"
+          "spawn": "docgen:python"
         },
         {
-          "exec": "jsii-docgen -l java -o docs/java.md"
+          "spawn": "docgen:java"
+        }
+      ]
+    },
+    "docgen:java": {
+      "name": "docgen:java",
+      "steps": [
+        {
+          "exec": "mkdir -p docs && jsii-docgen -l java -o docs/java.md"
+        }
+      ]
+    },
+    "docgen:python": {
+      "name": "docgen:python",
+      "steps": [
+        {
+          "exec": "mkdir -p docs && jsii-docgen -l python -o docs/python.md"
+        }
+      ]
+    },
+    "docgen:typescript": {
+      "name": "docgen:typescript",
+      "steps": [
+        {
+          "exec": "mkdir -p docs && jsii-docgen -l typescript -o docs/typescript.md"
         }
       ]
     },

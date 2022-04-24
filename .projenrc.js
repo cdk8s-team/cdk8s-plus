@@ -106,8 +106,10 @@ project.compileTask.prependSpawn(importTask);
 const docgenTask = project.tasks.tryFind('docgen');
 docgenTask.reset();
 for (const lang of ['typescript', 'python', 'java']) {
+  const genTask = project.addTask(`docgen:${lang}`);
   const output = `docs/${lang}.md`;
-  docgenTask.exec(`jsii-docgen -l ${lang} -o ${output}`);
+  genTask.exec(`mkdir -p docs && jsii-docgen -l ${lang} -o ${output}`);
+  docgenTask.spawn(genTask);
   // ignoring since it creates merge conflicts in
   // the backport PR's.
   project.gitignore.exclude(output);
