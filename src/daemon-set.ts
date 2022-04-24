@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { HostAlias, IPodTemplate, PodSecurityContext, PodTemplate, PodTemplateProps, RestartPolicy } from './pod';
+import { HostAlias, IPodTemplate, PodSecurityContext, PodTemplate, PodTemplateProps, RestartPolicy, PodDns } from './pod';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
 
@@ -121,6 +121,10 @@ export class DaemonSet extends Resource implements IPodTemplate {
 
   public get securityContext(): PodSecurityContext {
     return this._podTemplate.securityContext;
+  }
+
+  public get dns(): PodDns {
+    return this._podTemplate.dns;
   }
 
   public addContainer(container: ContainerProps): Container {

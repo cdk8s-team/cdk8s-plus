@@ -363,6 +363,117 @@ test('custom host aliases', () => {
 
 });
 
+test('default dns settings', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  expect(pod.dns.hostname).toBeUndefined();
+  expect(pod.dns.subdomain).toBeUndefined();
+  expect(pod.dns.hostnameAsFQDN).toBeFalsy();
+  expect(pod.dns.policy).toEqual(kplus.DnsPolicy.CLUSTER_FIRST);
+  expect(pod.dns.searches).toEqual([]);
+  expect(pod.dns.nameservers).toEqual([]);
+  expect(pod.dns.options).toEqual([]);
+
+  const spec = Testing.synth(chart)[0].spec;
+  expect(spec.hostname).toBeUndefined();
+  expect(spec.subdomain).toBeUndefined();
+  expect(spec.setHostnameAsFQDN).toBeFalsy();
+  expect(spec.dnsPolicy).toEqual('ClusterFirst');
+  expect(spec.dnsConfig.searches).toEqual([]);
+  expect(spec.dnsConfig.nameservers).toEqual([]);
+  expect(spec.dnsConfig.options).toEqual([]);
+
+});
+
+test('custom dns settings', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    dns: {
+      hostname: 'hostname',
+      subdomain: 'subdomain',
+      hostnameAsFQDN: true,
+      nameservers: ['n1'],
+      searches: ['s1'],
+      options: [{ name: 'opt1', value: 'opt1-value' }],
+      policy: kplus.DnsPolicy.DEFAULT,
+    },
+  });
+
+  pod.dns.addNameserver('n2');
+  pod.dns.addSearch('s2');
+  pod.dns.addOption({ name: 'opt2' });
+
+  expect(pod.dns.hostname).toEqual('hostname');
+  expect(pod.dns.subdomain).toEqual('subdomain');
+  expect(pod.dns.hostnameAsFQDN).toBeTruthy();
+  expect(pod.dns.policy).toEqual(kplus.DnsPolicy.DEFAULT);
+  expect(pod.dns.searches).toEqual(['s1', 's2']);
+  expect(pod.dns.nameservers).toEqual(['n1', 'n2']);
+  expect(pod.dns.options).toEqual([{ name: 'opt1', value: 'opt1-value' }, { name: 'opt2' }]);
+
+  const spec = Testing.synth(chart)[0].spec;
+  expect(spec.hostname).toEqual('hostname');
+  expect(spec.subdomain).toEqual('subdomain');
+  expect(spec.setHostnameAsFQDN).toBeTruthy();
+  expect(spec.dnsPolicy).toEqual(kplus.DnsPolicy.DEFAULT);
+  expect(spec.dnsConfig.searches).toEqual(['s1', 's2']);
+  expect(spec.dnsConfig.nameservers).toEqual(['n1', 'n2']);
+  expect(spec.dnsConfig.options).toEqual([{ name: 'opt1', value: 'opt1-value' }, { name: 'opt2' }]);
+
+});
+
+test('throws if more than 3 nameservers are configured', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    dns: {
+      nameservers: ['n1', 'n2', 'n3', 'n4'],
+    },
+  });
+
+  expect(() => Testing.synth(chart)).toThrow('There can be at most 3 nameservers specified');
+});
+
+test('throws if more than 6 search domains are configured', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    dns: {
+      searches: ['s1', 's2', 's3', 's4', 's5', 's6', 's7'],
+    },
+  });
+
+  expect(() => Testing.synth(chart)).toThrow('There can be at most 6 search domains specified');
+
+});
+
+test('throws if no nameservers are given when dns policy is set to NONE', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    dns: {
+      policy: kplus.DnsPolicy.NONE,
+    },
+  });
+
+  expect(() => Testing.synth(chart)).toThrow('When dns policy is set to NONE, at least one nameserver is required');
+
+});
+
 test('can configure auth to docker registry', () => {
 
   const chart = Testing.chart();
