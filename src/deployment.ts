@@ -4,7 +4,7 @@ import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
 import { Ingress } from './ingress';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
+import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias, PodDns } from './pod';
 import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
 import { IServiceAccount } from './service-account';
 import { Volume } from './volume';
@@ -195,6 +195,10 @@ export class Deployment extends Resource implements IPodTemplate {
 
   public get securityContext(): PodSecurityContext {
     return this._podTemplate.securityContext;
+  }
+
+  public get dns(): PodDns {
+    return this._podTemplate.dns;
   }
 
   /**

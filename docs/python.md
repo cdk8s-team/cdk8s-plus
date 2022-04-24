@@ -849,6 +849,7 @@ cdk8s_plus_22.DaemonSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -893,6 +894,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -1474,6 +1487,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.DaemonSet.property.host_aliases"></a>
 
 ```python
@@ -1545,6 +1570,8 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -1625,6 +1652,7 @@ cdk8s_plus_22.Deployment(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -1670,6 +1698,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -2415,6 +2455,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Deployment.property.host_aliases"></a>
 
 ```python
@@ -2488,6 +2540,8 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -3140,6 +3194,7 @@ cdk8s_plus_22.Job(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -3185,6 +3240,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -3758,6 +3825,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Job.property.host_aliases"></a>
 
 ```python
@@ -3805,6 +3884,8 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -4390,6 +4471,7 @@ cdk8s_plus_22.Pod(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -4431,6 +4513,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -4962,6 +5056,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.Pod.property.host_aliases"></a>
 
 ```python
@@ -4997,6 +5103,8 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -5958,6 +6066,7 @@ cdk8s_plus_22.StatefulSet(
   id: str,
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -6005,6 +6114,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -6616,6 +6737,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.StatefulSet.property.host_aliases"></a>
 
 ```python
@@ -6701,6 +6834,8 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -8373,6 +8508,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DaemonSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -8413,6 +8549,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.DaemonSetProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -8587,6 +8739,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.DeploymentProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -8628,6 +8781,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.DeploymentProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -8859,6 +9028,46 @@ Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% o
 pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
 be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
 number of pods available at all times during the update is at least 70% of desired pods.
+
+---
+
+### DnsOption <a name="cdk8s_plus_22.DnsOption"></a>
+
+Custom DNS option.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.DnsOption(
+  name: str,
+  value: str = None
+)
+```
+
+##### `name`<sup>Required</sup> <a name="cdk8s_plus_22.DnsOption.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* `str`
+
+Option name.
+
+---
+
+##### `value`<sup>Optional</sup> <a name="cdk8s_plus_22.DnsOption.property.value"></a>
+
+```python
+value: str
+```
+
+- *Type:* `str`
+- *Default:* No value.
+
+Option value.
 
 ---
 
@@ -10105,6 +10314,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.JobProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -10146,6 +10356,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.JobProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -10786,6 +11012,137 @@ Defines what type of volume is required by the claim.
 
 ---
 
+### PodDnsProps <a name="cdk8s_plus_22.PodDnsProps"></a>
+
+Properties for `PodDns`.
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PodDnsProps(
+  hostname: str = None,
+  hostname_as_fqd_n: bool = None,
+  nameservers: typing.List[str] = None,
+  options: typing.List[DnsOption] = None,
+  policy: DnsPolicy = None,
+  searches: typing.List[str] = None,
+  subdomain: str = None
+)
+```
+
+##### `hostname`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.hostname"></a>
+
+```python
+hostname: str
+```
+
+- *Type:* `str`
+- *Default:* Set to a system-defined value.
+
+Specifies the hostname of the Pod.
+
+---
+
+##### `hostname_as_fqd_n`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.hostname_as_fqd_n"></a>
+
+```python
+hostname_as_fqd_n: bool
+```
+
+- *Type:* `bool`
+- *Default:* false
+
+If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+
+In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+In Windows containers, this means setting the registry value of hostname for the registry
+key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+If a pod does not have FQDN, this has no effect.
+
+---
+
+##### `nameservers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.nameservers"></a>
+
+```python
+nameservers: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+A list of IP addresses that will be used as DNS servers for the Pod.
+
+There can be at most 3 IP addresses specified.
+When the policy is set to "NONE", the list must contain at least one IP address,
+otherwise this property is optional.
+The servers listed will be combined to the base nameservers generated from
+the specified DNS policy with duplicate addresses removed.
+
+---
+
+##### `options`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.options"></a>
+
+```python
+options: typing.List[DnsOption]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.DnsOption`](#cdk8s_plus_22.DnsOption)]
+
+List of objects where each object may have a name property (required) and a value property (optional).
+
+The contents in this property
+will be merged to the options generated from the specified DNS policy.
+Duplicate entries are removed.
+
+---
+
+##### `policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.policy"></a>
+
+```python
+policy: DnsPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.DnsPolicy`](#cdk8s_plus_22.DnsPolicy)
+- *Default:* DnsPolicy.CLUSTER_FIRST
+
+Set DNS policy for the pod.
+
+If policy is set to `None`, other configuration must be supplied.
+
+---
+
+##### `searches`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.searches"></a>
+
+```python
+searches: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+A list of DNS search domains for hostname lookup in the Pod.
+
+When specified, the provided list will be merged into the base
+search domain names generated from the chosen DNS policy.
+Duplicate domain names are removed.
+
+Kubernetes allows for at most 6 search domains.
+
+---
+
+##### `subdomain`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.property.subdomain"></a>
+
+```python
+subdomain: str
+```
+
+- *Type:* `str`
+- *Default:* No subdomain.
+
+If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+
+---
+
 ### PodProps <a name="cdk8s_plus_22.PodProps"></a>
 
 Properties for initialization of `Pod`.
@@ -10798,6 +11155,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.PodProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -10835,6 +11193,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.PodProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -11072,6 +11446,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpecProps(
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -11097,6 +11472,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -11231,6 +11622,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplateProps(
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -11257,6 +11649,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -12244,6 +12652,7 @@ import cdk8s_plus_22
 cdk8s_plus_22.StatefulSetProps(
   metadata: ApiObjectMetadata = None,
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -12287,6 +12696,22 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.StatefulSetProps.property.dns"></a>
+
+```python
+dns: PodDnsProps
+```
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -13954,6 +14379,255 @@ value: typing.Any
 ---
 
 
+### PodDns <a name="cdk8s_plus_22.PodDns"></a>
+
+Holds dns settings of the pod.
+
+#### Initializers <a name="cdk8s_plus_22.PodDns.Initializer"></a>
+
+```python
+import cdk8s_plus_22
+
+cdk8s_plus_22.PodDns(
+  hostname: str = None,
+  hostname_as_fqd_n: bool = None,
+  nameservers: typing.List[str] = None,
+  options: typing.List[DnsOption] = None,
+  policy: DnsPolicy = None,
+  searches: typing.List[str] = None,
+  subdomain: str = None
+)
+```
+
+##### `hostname`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.hostname"></a>
+
+- *Type:* `str`
+- *Default:* Set to a system-defined value.
+
+Specifies the hostname of the Pod.
+
+---
+
+##### `hostname_as_fqd_n`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.hostname_as_fqd_n"></a>
+
+- *Type:* `bool`
+- *Default:* false
+
+If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+
+In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+In Windows containers, this means setting the registry value of hostname for the registry
+key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+If a pod does not have FQDN, this has no effect.
+
+---
+
+##### `nameservers`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.nameservers"></a>
+
+- *Type:* typing.List[`str`]
+
+A list of IP addresses that will be used as DNS servers for the Pod.
+
+There can be at most 3 IP addresses specified.
+When the policy is set to "NONE", the list must contain at least one IP address,
+otherwise this property is optional.
+The servers listed will be combined to the base nameservers generated from
+the specified DNS policy with duplicate addresses removed.
+
+---
+
+##### `options`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.options"></a>
+
+- *Type:* typing.List[[`cdk8s_plus_22.DnsOption`](#cdk8s_plus_22.DnsOption)]
+
+List of objects where each object may have a name property (required) and a value property (optional).
+
+The contents in this property
+will be merged to the options generated from the specified DNS policy.
+Duplicate entries are removed.
+
+---
+
+##### `policy`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.policy"></a>
+
+- *Type:* [`cdk8s_plus_22.DnsPolicy`](#cdk8s_plus_22.DnsPolicy)
+- *Default:* DnsPolicy.CLUSTER_FIRST
+
+Set DNS policy for the pod.
+
+If policy is set to `None`, other configuration must be supplied.
+
+---
+
+##### `searches`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.searches"></a>
+
+- *Type:* typing.List[`str`]
+
+A list of DNS search domains for hostname lookup in the Pod.
+
+When specified, the provided list will be merged into the base
+search domain names generated from the chosen DNS policy.
+Duplicate domain names are removed.
+
+Kubernetes allows for at most 6 search domains.
+
+---
+
+##### `subdomain`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDnsProps.parameter.subdomain"></a>
+
+- *Type:* `str`
+- *Default:* No subdomain.
+
+If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+
+---
+
+#### Methods <a name="Methods"></a>
+
+##### `add_nameserver` <a name="cdk8s_plus_22.PodDns.add_nameserver"></a>
+
+```python
+def add_nameserver(
+  nameservers: str
+)
+```
+
+###### `nameservers`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.parameter.nameservers"></a>
+
+- *Type:* `str`
+
+---
+
+##### `add_option` <a name="cdk8s_plus_22.PodDns.add_option"></a>
+
+```python
+def add_option(
+  name: str,
+  value: str = None
+)
+```
+
+###### `name`<sup>Required</sup> <a name="cdk8s_plus_22.DnsOption.parameter.name"></a>
+
+- *Type:* `str`
+
+Option name.
+
+---
+
+###### `value`<sup>Optional</sup> <a name="cdk8s_plus_22.DnsOption.parameter.value"></a>
+
+- *Type:* `str`
+- *Default:* No value.
+
+Option value.
+
+---
+
+##### `add_search` <a name="cdk8s_plus_22.PodDns.add_search"></a>
+
+```python
+def add_search(
+  searches: str
+)
+```
+
+###### `searches`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.parameter.searches"></a>
+
+- *Type:* `str`
+
+---
+
+
+#### Properties <a name="Properties"></a>
+
+##### `hostname_as_fqd_n`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.property.hostname_as_fqd_n"></a>
+
+```python
+hostname_as_fqd_n: bool
+```
+
+- *Type:* `bool`
+
+Whether or not the pods hostname is set to its FQDN.
+
+---
+
+##### `nameservers`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.property.nameservers"></a>
+
+```python
+nameservers: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Nameservers defined for this pod.
+
+---
+
+##### `options`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.property.options"></a>
+
+```python
+options: typing.List[DnsOption]
+```
+
+- *Type:* typing.List[[`cdk8s_plus_22.DnsOption`](#cdk8s_plus_22.DnsOption)]
+
+Custom dns options defined for this pod.
+
+---
+
+##### `policy`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.property.policy"></a>
+
+```python
+policy: DnsPolicy
+```
+
+- *Type:* [`cdk8s_plus_22.DnsPolicy`](#cdk8s_plus_22.DnsPolicy)
+
+The DNS policy of this pod.
+
+---
+
+##### `searches`<sup>Required</sup> <a name="cdk8s_plus_22.PodDns.property.searches"></a>
+
+```python
+searches: typing.List[str]
+```
+
+- *Type:* typing.List[`str`]
+
+Search domains defined for this pod.
+
+---
+
+##### `hostname`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDns.property.hostname"></a>
+
+```python
+hostname: str
+```
+
+- *Type:* `str`
+
+The configured hostname of the pod.
+
+Undefined means its set to a system-defined value.
+
+---
+
+##### `subdomain`<sup>Optional</sup> <a name="cdk8s_plus_22.PodDns.property.subdomain"></a>
+
+```python
+subdomain: str
+```
+
+- *Type:* `str`
+
+The configured subdomain of the pod.
+
+---
+
+
 ### PodSecurityContext <a name="cdk8s_plus_22.PodSecurityContext"></a>
 
 Holds pod-level security attributes and common container settings.
@@ -14113,6 +14787,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodSpec(
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -14134,6 +14809,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.PodSpecProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -14665,6 +15352,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.PodSpec.property.host_aliases"></a>
 
 ```python
@@ -14700,6 +15399,8 @@ security_context: PodSecurityContext
 ```
 
 - *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -14765,6 +15466,7 @@ import cdk8s_plus_22
 
 cdk8s_plus_22.PodTemplate(
   containers: typing.List[ContainerProps] = None,
+  dns: PodDnsProps = None,
   docker_registry_auth: DockerConfigSecret = None,
   host_aliases: typing.List[HostAlias] = None,
   init_containers: typing.List[ContainerProps] = None,
@@ -14787,6 +15489,18 @@ Containers cannot currently be
 added or removed. There must be at least one container in a Pod.
 
 You can add additionnal containers using `podSpec.addContainer()`
+
+---
+
+##### `dns`<sup>Optional</sup> <a name="cdk8s_plus_22.PodTemplateProps.parameter.dns"></a>
+
+- *Type:* [`cdk8s_plus_22.PodDnsProps`](#cdk8s_plus_22.PodDnsProps)
+- *Default:* policy: DnsPolicy.CLUSTER_FIRST
+ hostnameAsFQDN: false
+
+DNS settings for the pod.
+
+> https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 ---
 
@@ -16200,6 +16914,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.host_aliases"></a>
 
 ```python
@@ -16225,6 +16951,18 @@ init_containers: typing.List[Container]
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.IPodSpec.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -16293,6 +17031,18 @@ Use `addContainer` to add containers.
 
 ---
 
+##### `dns`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.dns"></a>
+
+```python
+dns: PodDns
+```
+
+- *Type:* [`cdk8s_plus_22.PodDns`](#cdk8s_plus_22.PodDns)
+
+The pod's DNS settings.
+
+---
+
 ##### `host_aliases`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.host_aliases"></a>
 
 ```python
@@ -16318,6 +17068,18 @@ init_containers: typing.List[Container]
 The init containers belonging to the pod.
 
 Use `addInitContainer` to add init containers.
+
+---
+
+##### `security_context`<sup>Required</sup> <a name="cdk8s_plus_22.IPodTemplate.property.security_context"></a>
+
+```python
+security_context: PodSecurityContext
+```
+
+- *Type:* [`cdk8s_plus_22.PodSecurityContext`](#cdk8s_plus_22.PodSecurityContext)
+
+The pod's security context.
 
 ---
 
@@ -16497,6 +17259,41 @@ Single blob disk per storage account.
 #### `MANAGED` <a name="cdk8s_plus_22.AzureDiskPersistentVolumeKind.MANAGED"></a>
 
 Azure managed data disk.
+
+---
+
+
+### DnsPolicy <a name="DnsPolicy"></a>
+
+Pod DNS policies.
+
+#### `CLUSTER_FIRST` <a name="cdk8s_plus_22.DnsPolicy.CLUSTER_FIRST"></a>
+
+Any DNS query that does not match the configured cluster domain suffix, such as "www.kubernetes.io", is forwarded to the upstream nameserver inherited from the node. Cluster administrators may have extra stub-domain and upstream DNS servers configured.
+
+---
+
+
+#### `CLUSTER_FIRST_WITH_HOST_NET` <a name="cdk8s_plus_22.DnsPolicy.CLUSTER_FIRST_WITH_HOST_NET"></a>
+
+For Pods running with hostNetwork, you should explicitly set its DNS policy "ClusterFirstWithHostNet".
+
+---
+
+
+#### `DEFAULT` <a name="cdk8s_plus_22.DnsPolicy.DEFAULT"></a>
+
+The Pod inherits the name resolution configuration from the node that the pods run on.
+
+---
+
+
+#### `NONE` <a name="cdk8s_plus_22.DnsPolicy.NONE"></a>
+
+It allows a Pod to ignore DNS settings from the Kubernetes environment.
+
+All DNS settings are supposed to be provided using the dnsConfig
+field in the Pod Spec.
 
 ---
 
