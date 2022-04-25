@@ -1,5 +1,5 @@
 const path = require('path');
-const { cdk, javascript } = require('projen');
+const { cdk, javascript, JsonFile } = require('projen');
 const { JobPermission } = require('projen/lib/github/workflows-model');
 
 // the latest version of k8s we support
@@ -105,31 +105,33 @@ project.compileTask.prependSpawn(importTask);
 
 const docgenTask = project.tasks.tryFind('docgen');
 docgenTask.reset();
-docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
-docgenTask.exec('jsii-docgen -l python -o docs/python.md');
-docgenTask.exec('jsii-docgen -l java -o docs/java.md');
+for (const lang of ['typescript', 'python', 'java']) {
+  const genTask = project.addTask(`docgen:${lang}`);
+  const output = `docs/${lang}.md`;
+  genTask.exec(`mkdir -p docs && jsii-docgen -l ${lang} -o ${output}`);
+  docgenTask.spawn(genTask);
+  // ignoring since it creates merge conflicts in
+  // the backport PR's.
+  project.gitignore.exclude(output);
+}
 
-const hooks = project.addTask('hooks');
-hooks.exec('./git-hooks/setup.sh');
+for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
+  const backportTask = project.addTask(`backport:${spec}`);
+  backportTask.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
+}
 
 // backport PR's to other branches
+// this doesn't use the backport tasks because there's a dedicated
+// action for it which already invokes it.
 // see https://github.com/tibdex/backport
-const backport = project.github.addWorkflow('backport');
-backport.on({ pullRequest: { types: ['closed'] } });
-backport.addJob('backport', {
+const backportWorkflow = project.github.addWorkflow('backport');
+backportWorkflow.on({ pullRequest: { types: ['closed'] } });
+backportWorkflow.addJob('backport', {
   runsOn: 'ubuntu-18.04',
   permissions: {
     contents: JobPermission.WRITE,
   },
   steps: [
-    {
-      name: 'checkout',
-      uses: 'actions/checkout@v2',
-    },
-    {
-      name: hooks.name,
-      run: `npx projen ${hooks.name}`,
-    },
     {
       name: 'backport',
       uses: 'tibdex/backport@v1',
@@ -139,6 +141,16 @@ backport.addJob('backport', {
       },
     },
   ],
+});
+
+const backportConfig = {
+  repoOwner: 'cdk8s-team',
+  repoName: 'cdk8s-plus',
+  signoff: true,
+};
+
+new JsonFile(project, '.backportrc.json', {
+  obj: backportConfig,
 });
 
 project.synth();
