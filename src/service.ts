@@ -1,14 +1,14 @@
-import * as cdk8s from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { ResourceProps, Resource } from './base';
-import { Deployment } from './deployment';
+import * as base from './base';
+import * as deployment from './deployment';
 import * as k8s from './imports/k8s';
-import { IngressV1Beta1, IngressV1Beta1Backend } from './ingress-v1beta1';
+import * as ingress from './ingress-v1beta1';
 
 /**
  * Properties for initialization of `Service`.
  */
-export interface ServiceProps extends ResourceProps {
+export interface ServiceProps extends base.ResourceProps {
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -79,7 +79,7 @@ export interface ExposeServiceViaIngressOptions {
    *
    * @default - An ingress will be automatically created.
    */
-  readonly ingress?: IngressV1Beta1;
+  readonly ingress?: ingress.IngressV1Beta1;
 }
 
 /**
@@ -147,7 +147,7 @@ export interface AddDeploymentOptions extends ServicePortOptions {
  * that get updated whenever the set of Pods in a Service changes. For non-native applications, Kubernetes offers ways to place a network port
  * or load balancer in between your application and the backend Pods.
  */
-export class Service extends Resource {
+export class Service extends base.Resource {
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -168,7 +168,7 @@ export class Service extends Resource {
   /**
    * @see base.Resource.apiObject
    */
-  protected readonly apiObject: cdk8s.ApiObject;
+  protected readonly apiObject: ApiObject;
 
   private readonly _externalIPs: string[];
   private readonly _selector: Record<string, string>;
@@ -180,7 +180,7 @@ export class Service extends Resource {
 
     this.apiObject = new k8s.KubeService(this, 'Resource', {
       metadata: props.metadata,
-      spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
+      spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
     this.clusterIP = props.clusterIP;
@@ -211,10 +211,10 @@ export class Service extends Resource {
    *
    * @returns The `Ingress` resource that was used.
    */
-  public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): IngressV1Beta1 {
-    const ingress = options.ingress ?? new IngressV1Beta1(this, 'Ingress');
-    ingress.addRule(path, IngressV1Beta1Backend.fromService(this));
-    return ingress;
+  public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): ingress.IngressV1Beta1 {
+    const ingr = options.ingress ?? new ingress.IngressV1Beta1(this, 'Ingress');
+    ingr.addRule(path, ingress.IngressV1Beta1Backend.fromService(this));
+    return ingr;
   }
 
   /**
@@ -240,11 +240,11 @@ export class Service extends Resource {
    * to the port exposed by the first container in the deployment's pods.
    * The deployment's `labelSelector` will be used to select pods.
    *
-   * @param deployment The deployment to expose
+   * @param depl The deployment to expose
    * @param options Optional settings for the port.
    */
-  public addDeployment(deployment: Deployment, options: AddDeploymentOptions = {}) {
-    const containers = deployment.containers;
+  public addDeployment(depl: deployment.Deployment, options: AddDeploymentOptions = {}) {
+    const containers = depl.containers;
     if (containers.length === 0) {
       throw new Error('Cannot expose a deployment without containers');
     }
@@ -259,7 +259,7 @@ export class Service extends Resource {
       throw new Error('Cannot determine port. Either pass `port` in options or configure a port on the first container of the deployment');
     }
 
-    const selector = Object.entries(deployment.labelSelector);
+    const selector = Object.entries(depl.labelSelector);
     if (selector.length === 0) {
       throw new Error('deployment does not have a label selector');
     }

@@ -1,13 +1,13 @@
-import * as cdk8s from 'cdk8s';
+import { ApiObject } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IResource, Resource, ResourceProps } from './base';
+import * as base from './base';
 import * as k8s from './imports/k8s';
-import { IServiceAccount } from './service-account';
+import * as serviceaccount from './service-account';
 
 /**
  * Common properties for `Secret`.
  */
-export interface CommonSecretProps extends ResourceProps {
+export interface CommonSecretProps extends base.ResourceProps {
 
   /**
    * If set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified).
@@ -41,7 +41,7 @@ export interface SecretProps extends CommonSecretProps {
 
 }
 
-export interface ISecret extends IResource {
+export interface ISecret extends base.IResource {
 
 }
 
@@ -68,7 +68,7 @@ export interface SecretValue {
  *
  * @see https://kubernetes.io/docs/concepts/configuration/secret
  */
-export class Secret extends Resource implements ISecret {
+export class Secret extends base.Resource implements ISecret {
 
   /**
    * Imports a secret from the cluster as a reference.
@@ -81,7 +81,7 @@ export class Secret extends Resource implements ISecret {
   /**
    * @see base.Resource.apiObject
    */
-  protected readonly apiObject: cdk8s.ApiObject;
+  protected readonly apiObject: ApiObject;
 
   /**
    * Whether or not the secret is immutable.
@@ -189,7 +189,7 @@ export interface ServiceAccountTokenSecretProps extends CommonSecretProps {
   /**
    * The service account to store a secret for
    */
-  readonly serviceAccount: IServiceAccount;
+  readonly serviceAccount: serviceaccount.IServiceAccount;
 }
 
 /**

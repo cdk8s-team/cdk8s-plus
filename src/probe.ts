@@ -1,6 +1,6 @@
 import { Duration } from 'cdk8s';
-import { Action } from './_action';
-import { Container } from './container';
+import * as _action from './_action';
+import * as container from './container';
 import * as k8s from './imports/k8s';
 
 /**
@@ -138,11 +138,11 @@ export class Probe {
   /**
    * @internal
    */
-  public _toKube(container: Container): k8s.Probe {
+  public _toKube(cont: container.Container): k8s.Probe {
 
-    const exec = this.commandOptions ? Action.fromCommand(this.commandOptions.command) : undefined;
-    const httpGet = this.httpGetOptions ? Action.fromHttpGet(container, this.httpGetOptions.path, this.httpGetOptions) : undefined;
-    const tcpSocket = this.tcpSocketOptions ? Action.fromTcpSocket(container, this.tcpSocketOptions) : undefined;
+    const exec = this.commandOptions ? _action.Action.fromCommand(this.commandOptions.command) : undefined;
+    const httpGet = this.httpGetOptions ? _action.Action.fromHttpGet(cont, this.httpGetOptions.path, this.httpGetOptions) : undefined;
+    const tcpSocket = this.tcpSocketOptions ? _action.Action.fromTcpSocket(cont, this.tcpSocketOptions) : undefined;
 
     return {
       failureThreshold: this.probeOptions.failureThreshold ?? 3,
