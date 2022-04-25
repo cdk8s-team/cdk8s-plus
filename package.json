@@ -6,6 +6,9 @@
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
   },
   "scripts": {
+    "backport:20": "npx projen backport:20",
+    "backport:21": "npx projen backport:21",
+    "backport:22": "npx projen backport:22",
     "build": "npx projen build",
     "bump": "npx projen bump",
     "clobber": "npx projen clobber",
@@ -13,9 +16,11 @@
     "compile": "npx projen compile",
     "default": "npx projen default",
     "docgen": "npx projen docgen",
+    "docgen:java": "npx projen docgen:java",
+    "docgen:python": "npx projen docgen:python",
+    "docgen:typescript": "npx projen docgen:typescript",
     "eject": "npx projen eject",
     "eslint": "npx projen eslint",
-    "hooks": "npx projen hooks",
     "import": "npx projen import",
     "package": "npx projen package",
     "package-all": "npx projen package-all",

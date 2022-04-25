@@ -1,14 +1,14 @@
-import * as cdk8s from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { ResourceProps, Resource } from './base';
-import { Deployment } from './deployment';
+import * as base from './base';
+import * as deployment from './deployment';
 import * as k8s from './imports/k8s';
-import { HttpIngressPathType, Ingress, IngressBackend } from './ingress';
+import * as ingress from './ingress';
 
 /**
  * Properties for initialization of `Service`.
  */
-export interface ServiceProps extends ResourceProps {
+export interface ServiceProps extends base.ResourceProps {
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -79,14 +79,14 @@ export interface ExposeServiceViaIngressOptions {
    *
    * @default HttpIngressPathType.PREFIX
    */
-  readonly pathType?: HttpIngressPathType;
+  readonly pathType?: ingress.HttpIngressPathType;
 
   /**
    * The ingress to add rules to.
    *
    * @default - An ingress will be automatically created.
    */
-  readonly ingress?: Ingress;
+  readonly ingress?: ingress.Ingress;
 }
 
 /**
@@ -154,7 +154,7 @@ export interface AddDeploymentOptions extends ServicePortOptions {
  * that get updated whenever the set of Pods in a Service changes. For non-native applications, Kubernetes offers ways to place a network port
  * or load balancer in between your application and the backend Pods.
  */
-export class Service extends Resource {
+export class Service extends base.Resource {
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -175,7 +175,7 @@ export class Service extends Resource {
   /**
    * @see base.Resource.apiObject
    */
-  protected readonly apiObject: cdk8s.ApiObject;
+  protected readonly apiObject: ApiObject;
 
   private readonly _externalIPs: string[];
   private readonly _selector: Record<string, string>;
@@ -187,7 +187,7 @@ export class Service extends Resource {
 
     this.apiObject = new k8s.KubeService(this, 'Resource', {
       metadata: props.metadata,
-      spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
+      spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
     this.clusterIP = props.clusterIP;
@@ -218,10 +218,10 @@ export class Service extends Resource {
    *
    * @returns The `Ingress` resource that was used.
    */
-  public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): Ingress {
-    const ingress = options.ingress ?? new Ingress(this, 'Ingress');
-    ingress.addRule(path, IngressBackend.fromService(this), options.pathType);
-    return ingress;
+  public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): ingress.Ingress {
+    const ingr = options.ingress ?? new ingress.Ingress(this, 'Ingress');
+    ingr.addRule(path, ingress.IngressBackend.fromService(this), options.pathType);
+    return ingr;
   }
 
   /**
@@ -247,11 +247,11 @@ export class Service extends Resource {
    * to the port exposed by the first container in the deployment's pods.
    * The deployment's `labelSelector` will be used to select pods.
    *
-   * @param deployment The deployment to expose
+   * @param depl The deployment to expose
    * @param options Optional settings for the port.
    */
-  public addDeployment(deployment: Deployment, options: AddDeploymentOptions = {}) {
-    const containers = deployment.containers;
+  public addDeployment(depl: deployment.Deployment, options: AddDeploymentOptions = {}) {
+    const containers = depl.containers;
     if (containers.length === 0) {
       throw new Error('Cannot expose a deployment without containers');
     }
@@ -266,7 +266,7 @@ export class Service extends Resource {
       throw new Error('Cannot determine port. Either pass `port` in options or configure a port on the first container of the deployment');
     }
 
-    const selector = Object.entries(deployment.labelSelector);
+    const selector = Object.entries(depl.labelSelector);
     if (selector.length === 0) {
       throw new Error('deployment does not have a label selector');
     }

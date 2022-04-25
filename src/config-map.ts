@@ -1,16 +1,16 @@
-import * as fs from 'fs';
+import * as configmap from 'fs';
 import * as path from 'path';
-import * as cdk8s from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Minimatch } from 'minimatch';
-import { ResourceProps, Resource, IResource } from './base';
+import * as base from './base';
 import * as k8s from './imports/k8s';
 import { undefinedIfEmpty } from './utils';
 
 /**
  * Properties for initialization of `ConfigMap`.
  */
-export interface ConfigMapProps extends ResourceProps {
+export interface ConfigMapProps extends base.ResourceProps {
   /**
    * BinaryData contains the binary data.
    *
@@ -48,14 +48,14 @@ export interface ConfigMapProps extends ResourceProps {
 /**
  * Represents a config map.
  */
-export interface IConfigMap extends IResource {
+export interface IConfigMap extends base.IResource {
 
 }
 
 /**
  * ConfigMap holds configuration data for pods to consume.
  */
-export class ConfigMap extends Resource implements IConfigMap {
+export class ConfigMap extends base.Resource implements IConfigMap {
   /**
    * Represents a ConfigMap created elsewhere.
    * @param name The name of the config map to import
@@ -67,7 +67,7 @@ export class ConfigMap extends Resource implements IConfigMap {
   /**
    * @see base.Resource.apiObject
    */
-  protected readonly apiObject: cdk8s.ApiObject;
+  protected readonly apiObject: ApiObject;
 
   private readonly _binaryData: { [key: string]: string } = { };
   private readonly _data: { [key: string]: string } = { };
@@ -85,8 +85,8 @@ export class ConfigMap extends Resource implements IConfigMap {
       metadata: props.metadata,
 
       // we need lazy here because we filter empty
-      data: cdk8s.Lazy.any({ produce: () => this.synthesizeData() }),
-      binaryData: cdk8s.Lazy.any({ produce: () => this.synthesizeBinaryData() }),
+      data: Lazy.any({ produce: () => this.synthesizeData() }),
+      binaryData: Lazy.any({ produce: () => this.synthesizeBinaryData() }),
       immutable: this.immutable,
     });
 
@@ -152,7 +152,7 @@ export class ConfigMap extends Resource implements IConfigMap {
    */
   public addFile(localFile: string, key?: string) {
     key = key ?? path.basename(localFile);
-    const value = fs.readFileSync(localFile, 'utf-8');
+    const value = configmap.readFileSync(localFile, 'utf-8');
 
     this.addData(key, value);
   }
@@ -175,11 +175,11 @@ export class ConfigMap extends Resource implements IConfigMap {
     };
 
     const keyPrefix = options.keyPrefix ?? '';
-    for (const file of fs.readdirSync(localDir)) {
+    for (const file of configmap.readdirSync(localDir)) {
 
       const filePath = path.join(localDir, file);
 
-      if (fs.statSync(filePath).isDirectory()) {
+      if (configmap.statSync(filePath).isDirectory()) {
         continue;
       }
 
