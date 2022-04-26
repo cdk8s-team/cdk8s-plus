@@ -1,4 +1,4 @@
-import * as cdk8s from 'cdk8s';
+import { ApiObjectMetadata, ApiObject, ApiObjectMetadataDefinition } from 'cdk8s';
 import { Construct } from 'constructs';
 
 /**
@@ -9,7 +9,7 @@ export interface ResourceProps {
    * Metadata that all persisted resources must have, which includes all objects
    * users must create.
    */
-  readonly metadata?: cdk8s.ApiObjectMetadata;
+  readonly metadata?: ApiObjectMetadata;
 }
 
 /**
@@ -31,9 +31,9 @@ export abstract class Resource extends Construct implements IResource {
   /**
    * The underlying cdk8s API object.
    */
-  protected abstract readonly apiObject: cdk8s.ApiObject;
+  protected abstract readonly apiObject: ApiObject;
 
-  public get metadata(): cdk8s.ApiObjectMetadataDefinition {
+  public get metadata(): ApiObjectMetadataDefinition {
     return this.apiObject.metadata;
   }
 

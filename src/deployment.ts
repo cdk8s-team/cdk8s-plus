@@ -1,18 +1,14 @@
-import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { Ingress } from './ingress';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
-import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as ingress from './ingress';
+import * as service from './service';
+import * as workload from './workload';
 
 /**
- * Properties for initialization of `Deployment`.
+ * Properties for `Deployment`.
  */
-export interface DeploymentProps extends ResourceProps, PodTemplateProps {
+export interface DeploymentProps extends workload.WorkloadProps {
 
   /**
    * Number of desired pods.
@@ -22,14 +18,11 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
   readonly replicas?: number;
 
   /**
-   * Automatically allocates a pod selector for this deployment.
+   * Specifies the strategy used to replace old Pods by new ones.
    *
-   * If this is set to `false` you must define your selector through
-   * `deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
-   *
-   * @default true
+   * @default - RollingUpdate with maxSurge and maxUnavailable set to 25%.
    */
-  readonly defaultSelector?: boolean;
+  readonly strategy?: DeploymentStrategy;
 
   /**
    * Minimum duration for which a newly created pod should be ready without
@@ -74,7 +67,7 @@ export interface ExposeDeploymentViaServiceOptions {
    *
    * @default - ClusterIP.
    */
-  readonly serviceType?: ServiceType;
+  readonly serviceType?: service.ServiceType;
 
   /**
    * The name of the service to expose.
@@ -89,7 +82,7 @@ export interface ExposeDeploymentViaServiceOptions {
    *
    * @default Protocol.TCP
    */
-  readonly protocol?: Protocol;
+  readonly protocol?: service.Protocol;
 
   /**
    * The port number the service will redirect to.
@@ -102,7 +95,7 @@ export interface ExposeDeploymentViaServiceOptions {
 /**
  * Options for exposing a deployment via an ingress.
  */
-export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, ExposeServiceViaIngressOptions {}
+export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, service.ExposeServiceViaIngressOptions {}
 
 /**
 *
@@ -132,7 +125,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends Resource implements IPodTemplate {
+export class Deployment extends workload.Workload {
 
   /**
    * Number of desired pods.
@@ -150,16 +143,18 @@ export class Deployment extends Resource implements IPodTemplate {
    */
   public readonly progressDeadline: Duration;
 
+  /*
+   * The upgrade strategy of this deployment.
+   */
+  public readonly strategy: DeploymentStrategy;
+
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
-  private readonly _labelSelector: Record<string, string>;
-
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeDeployment(this, 'Resource', {
       metadata: props.metadata,
@@ -174,67 +169,7 @@ export class Deployment extends Resource implements IPodTemplate {
     }
 
     this.replicas = props.replicas ?? 1;
-    this._podTemplate = new PodTemplate(props);
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.deployment';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
-  }
-
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
-  /**
-   * The labels this deployment will match against in order to select pods.
-   *
-   * Returns a a copy. Use `selectByLabel()` to add labels.
-   */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
-  }
-
-  /**
-   * Configure a label selector to this deployment.
-   * Pods that have the label will be selected by deployments configured with this spec.
-   *
-   * @param key - The label key.
-   * @param value - The label value.
-   */
-  public selectByLabel(key: string, value: string) {
-    this._labelSelector[key] = value;
+    this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
   }
 
   /**
@@ -244,13 +179,13 @@ export class Deployment extends Resource implements IPodTemplate {
    *
    * @param options Options to determine details of the service and port exposed.
    */
-  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): Service {
-    const service = new Service(this, 'Service', {
+  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): service.Service {
+    const ser = new service.Service(this, 'Service', {
       metadata: options.name ? { name: options.name } : undefined,
-      type: options.serviceType ?? ServiceType.CLUSTER_IP,
+      type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
     });
-    service.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
-    return service;
+    ser.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
+    return ser;
   }
 
   /**
@@ -261,41 +196,135 @@ export class Deployment extends Resource implements IPodTemplate {
    * @param path The ingress path to register under.
    * @param options Additional options.
    */
-  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): Ingress {
-    const service = this.exposeViaService(options);
-    return service.exposeViaIngress(path, options);
+  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): ingress.Ingress {
+    const ser = this.exposeViaService(options);
+    return ser.exposeViaIngress(path, options);
   }
-
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
-  }
-
 
   /**
    * @internal
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
+      replicas: this.replicas,
       minReadySeconds: this.minReady.toSeconds(),
       progressDeadlineSeconds: this.progressDeadline.toSeconds(),
-      replicas: this.replicas,
-      template: this._podTemplate._toPodTemplateSpec(),
-      selector: {
-        matchLabels: this._labelSelector,
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
       },
+      selector: {
+        matchLabels: this.labelSelector,
+      },
+      strategy: this.strategy._toKube(),
     };
+  }
+
+}
+
+/**
+ * Options for `DeploymentStrategy.rollingUpdate`.
+ */
+export interface DeploymentStrategyRollingUpdateOptions {
+
+  /**
+   * The maximum number of pods that can be scheduled above the desired number of pods.
+   * Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+   * Absolute number is calculated from percentage by rounding up.
+   * This can not be 0 if `maxUnavailable` is 0.
+   *
+   * Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update
+   * starts, such that the total number of old and new pods do not exceed 130% of desired pods.
+   * Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that
+   * total number of pods running at any time during the update is at most 130% of desired pods.
+   *
+   * @default '25%'
+   */
+  readonly maxSurge?: PercentOrAbsolute;
+
+  /**
+   * The maximum number of pods that can be unavailable during the update.
+   * Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).
+   * Absolute number is calculated from percentage by rounding down.
+   * This can not be 0 if `maxSurge` is 0.
+   *
+   * Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired
+   * pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can
+   * be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total
+   * number of pods available at all times during the update is at least 70% of desired pods.
+   *
+   * @default '25%'
+   */
+  readonly maxUnavailable?: PercentOrAbsolute;
+
+}
+
+/**
+ * Union like class repsenting either a ration in
+ * percents or an absolute number.
+ */
+export class PercentOrAbsolute {
+
+  /**
+   * Percent ratio.
+   */
+  public static percent(percent: number): PercentOrAbsolute {
+    return new PercentOrAbsolute(`${percent}%`);
+  }
+
+  /**
+   * Absolute number.
+   */
+  public static absolute(num: number): PercentOrAbsolute {
+    return new PercentOrAbsolute(num);
+  }
+
+  private constructor(public readonly value: any) {}
+
+  public isZero(): boolean {
+    return this.value === PercentOrAbsolute.absolute(0).value || this.value === PercentOrAbsolute.percent(0).value;
+  }
+
+}
+
+/**
+ * Deployment strategies.
+ */
+export class DeploymentStrategy {
+
+  /**
+   * All existing Pods are killed before new ones are created.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#recreate-deployment
+   */
+  public static recreate(): DeploymentStrategy {
+    return new DeploymentStrategy({
+      type: 'Recreate',
+    });
+  }
+
+  public static rollingUpdate(options: DeploymentStrategyRollingUpdateOptions = {}): DeploymentStrategy {
+
+    const maxSurge = options.maxSurge ?? PercentOrAbsolute.percent(25);
+    const maxUnavailable = options.maxSurge ?? PercentOrAbsolute.percent(25);
+
+    if (maxSurge.isZero() && maxUnavailable.isZero()) {
+      throw new Error('\'maxSurge\' and \'maxUnavailable\' cannot be both zero');
+    }
+
+    return new DeploymentStrategy({
+      type: 'RollingUpdate',
+      rollingUpdate: { maxSurge, maxUnavailable },
+    });
+  }
+
+  private constructor(private readonly strategy: k8s.DeploymentStrategy) {}
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.DeploymentStrategy {
+    return this.strategy;
   }
 
 }

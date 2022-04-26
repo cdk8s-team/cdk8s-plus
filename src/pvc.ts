@@ -1,21 +1,20 @@
-import * as cdk8s from 'cdk8s';
-import { Size } from 'cdk8s';
+import { Size, ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IResource, Resource, ResourceProps } from './base';
+import * as base from './base';
 import * as k8s from './imports/k8s';
-import type { IPersistentVolume } from './pv';
+import * as pv from './pv';
 
 /**
  * Contract of a `PersistentVolumeClaim`.
  */
-export interface IPersistentVolumeClaim extends IResource {
+export interface IPersistentVolumeClaim extends base.IResource {
 
 }
 
 /**
  * Properties for `PersistentVolumeClaim`.
  */
-export interface PersistentVolumeClaimProps extends ResourceProps {
+export interface PersistentVolumeClaimProps extends base.ResourceProps {
 
   /**
    * Contains the access modes the volume should support.
@@ -68,7 +67,7 @@ export interface PersistentVolumeClaimProps extends ResourceProps {
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding.
    * @default - No specific volume binding.
    */
-  readonly volume?: IPersistentVolume;
+  readonly volume?: pv.IPersistentVolume;
 
 }
 
@@ -78,7 +77,7 @@ export interface PersistentVolumeClaimProps extends ResourceProps {
  * Pods can request specific levels of resources (CPU and Memory).
  * Claims can request specific size and access modes
  */
-export class PersistentVolumeClaim extends Resource implements IPersistentVolumeClaim {
+export class PersistentVolumeClaim extends base.Resource implements IPersistentVolumeClaim {
 
   /**
    * Imports a pvc from the cluster as a reference.
@@ -91,7 +90,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
   /**
    * @see base.Resource.apiObject
    */
-  protected readonly apiObject: cdk8s.ApiObject;
+  protected readonly apiObject: ApiObject;
 
   /**
    * Storage requirement of this claim.
@@ -110,7 +109,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
 
   private readonly _accessModes?: PersistentVolumeAccessMode[];
 
-  private _volume?: IPersistentVolume;
+  private _volume?: pv.IPersistentVolume;
 
   public constructor(scope: Construct, id: string, props: PersistentVolumeClaimProps = { }) {
     super(scope, id);
@@ -126,7 +125,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
 
     this.apiObject = new k8s.KubePersistentVolumeClaim(this, 'Resource', {
       metadata: props.metadata,
-      spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
+      spec: Lazy.any({ produce: () => this._toKube() }),
     });
   }
 
@@ -141,7 +140,7 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    * PV this claim is bound to. Undefined means the claim is not bound
    * to any specific volume.
    */
-  public get volume(): IPersistentVolume | undefined {
+  public get volume(): pv.IPersistentVolume | undefined {
     return this._volume;
   }
 
@@ -151,13 +150,13 @@ export class PersistentVolumeClaim extends Resource implements IPersistentVolume
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding
    *
-   * @param pv The PV to bind to.
+   * @param vol The PV to bind to.
    */
-  public bind(pv: IPersistentVolume) {
-    if (this._volume && this._volume.name !== pv.name) {
-      throw new Error(`Cannot bind claim '${this.name}' to volume '${pv.name}' since it is already bound to volume '${this._volume.name}'`);
+  public bind(vol: pv.IPersistentVolume) {
+    if (this._volume && this._volume.name !== vol.name) {
+      throw new Error(`Cannot bind claim '${this.name}' to volume '${vol.name}' since it is already bound to volume '${this._volume.name}'`);
     }
-    this._volume = pv;
+    this._volume = vol;
   }
 
   /**

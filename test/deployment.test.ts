@@ -1,6 +1,7 @@
 import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
+import { DeploymentStrategy, PercentOrAbsolute } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 test('defaultChild', () => {
@@ -200,6 +201,61 @@ test('Synthesizes spec lazily', () => {
 
   expect(container.image).toEqual('image');
   expect(container.ports[0].containerPort).toEqual(9300);
+
+});
+
+test('default deployment strategy', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment');
+  deployment.addContainer({ image: 'image' });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.strategy).toEqual(DeploymentStrategy.rollingUpdate());
+  expect(spec.strategy).toEqual({
+    type: 'RollingUpdate',
+    rollingUpdate: {
+      maxSurge: '25%',
+      maxUnavailable: '25%',
+    },
+  });
+
+});
+
+test('custom deployment strategy', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    strategy: DeploymentStrategy.recreate(),
+  });
+  deployment.addContainer({ image: 'image' });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.strategy).toEqual(DeploymentStrategy.recreate());
+  expect(spec.strategy).toEqual({ type: 'Recreate' });
+
+});
+
+test('throws is maxSurge and maxUnavailable is set to zero for rolling update', () => {
+
+  const chart = Testing.chart();
+
+  expect(() => new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    strategy: DeploymentStrategy.rollingUpdate({ maxSurge: PercentOrAbsolute.absolute(0), maxUnavailable: PercentOrAbsolute.percent(0) }),
+  })).toThrowError('\'maxSurge\' and \'maxUnavailable\' cannot be both zero');
+});
+
+test('PercentOrAbsoulte zero', () => {
+
+  expect(PercentOrAbsolute.percent(0).isZero()).toBeTruthy();
+  expect(PercentOrAbsolute.absolute(0).isZero()).toBeTruthy();
+  expect(PercentOrAbsolute.percent(1).isZero()).toBeFalsy();
+  expect(PercentOrAbsolute.absolute(1).isZero()).toBeFalsy();
 
 });
 

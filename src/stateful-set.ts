@@ -1,0 +1,205 @@
+import { ApiObject, Lazy } from 'cdk8s';
+import { Construct } from 'constructs';
+import * as k8s from './imports/k8s';
+import * as service from './service';
+import * as workload from './workload';
+
+/**
+ * Controls how pods are created during initial scale up, when replacing pods on nodes,
+ * or when scaling down.
+ *
+ * The default policy is `OrderedReady`, where pods are created in increasing order
+ * (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before
+ * continuing. When scaling down, the pods are removed in the opposite order.
+ *
+ * The alternative policy is `Parallel` which will create pods in parallel to match the
+ * desired scale without waiting, and on scale down will delete all pods at once.
+ */
+export enum PodManagementPolicy {
+  ORDERED_READY = 'OrderedReady',
+  PARALLEL = 'Parallel',
+}
+
+/**
+ * Properties for initialization of `StatefulSet`.
+ */
+export interface StatefulSetProps extends workload.WorkloadProps {
+  /**
+   * Service to associate with the statefulset.
+   */
+  readonly service: service.Service;
+
+  /**
+    * Number of desired pods.
+    *
+    * @default 1
+    */
+  readonly replicas?: number;
+
+  /**
+    * Pod management policy to use for this statefulset.
+    *
+    * @default PodManagementPolicy.ORDERED_READY
+    */
+  readonly podManagementPolicy?: PodManagementPolicy;
+
+  /**
+   * Indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
+   *
+   * @default - RollingUpdate with partition set to 0
+   */
+  readonly strategy?: StatefulSetUpdateStrategy;
+}
+
+/**
+ * StatefulSet is the workload API object used to manage stateful applications.
+ *
+ * Manages the deployment and scaling of a set of Pods, and provides guarantees
+ * about the ordering and uniqueness of these Pods.
+ *
+ * Like a Deployment, a StatefulSet manages Pods that are based on an identical
+ * container spec. Unlike a Deployment, a StatefulSet maintains a sticky identity
+ * for each of their Pods. These pods are created from the same spec, but are not
+ * interchangeable: each has a persistent identifier that it maintains across any
+ * rescheduling.
+ *
+ * If you want to use storage volumes to provide persistence for your workload, you
+ * can use a StatefulSet as part of the solution. Although individual Pods in a StatefulSet
+ * are susceptible to failure, the persistent Pod identifiers make it easier to match existing
+ * volumes to the new Pods that replace any that have failed.
+ *
+ * Using StatefulSets
+ * ------------------
+ * StatefulSets are valuable for applications that require one or more of the following.
+ *
+ * - Stable, unique network identifiers.
+ * - Stable, persistent storage.
+ * - Ordered, graceful deployment and scaling.
+ * - Ordered, automated rolling updates.
+ */
+export class StatefulSet extends workload.Workload {
+  /**
+    * Number of desired pods.
+    */
+  public readonly replicas: number;
+
+  /**
+    * Management policy to use for the set.
+    */
+  public readonly podManagementPolicy: PodManagementPolicy;
+
+  /**
+   * The update startegy of this stateful set.
+   */
+  public readonly strategy: StatefulSetUpdateStrategy;
+
+  /**
+    * @see base.Resource.apiObject
+    */
+  protected readonly apiObject: ApiObject;
+
+  private readonly _service: service.Service;
+
+  constructor(scope: Construct, id: string, props: StatefulSetProps) {
+    super(scope, id, props);
+
+    this.apiObject = new k8s.KubeStatefulSet(this, 'Resource', {
+      metadata: props.metadata,
+      spec: Lazy.any({ produce: () => this._toKube() }),
+    });
+    this._service = props.service;
+
+    this.apiObject.addDependency(this._service);
+
+    this.replicas = props.replicas ?? 1;
+    this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
+    this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
+
+    const selectors = Object.entries(this.labelSelector);
+    for (const [k, v] of selectors) {
+      this._service.addSelector(k, v);
+    }
+  }
+
+  /**
+    * @internal
+    */
+  public _toKube(): k8s.StatefulSetSpec {
+    return {
+      serviceName: this._service.name,
+      replicas: this.replicas,
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
+      },
+      selector: {
+        matchLabels: this.labelSelector,
+      },
+      podManagementPolicy: this.podManagementPolicy,
+      updateStrategy: this.strategy._toKube(),
+    };
+  }
+}
+
+/**
+ * Options for `StatefulSetUpdateStrategy.rollingUpdate`.
+ */
+export interface StatefulSetUpdateStrategyRollingUpdateOptions {
+
+  /**
+   * If specified, all Pods with an ordinal that is greater than or equal to the partition will
+   * be updated when the StatefulSet's .spec.template is updated. All Pods with an ordinal that
+   * is less than the partition will not be updated, and, even if they are deleted, they will be
+   * recreated at the previous version.
+   *
+   * If the partition is greater than replicas, updates to the pod template will not be propagated to Pods.
+   * In most cases you will not need to use a partition, but they are useful if you want to stage an
+   * update, roll out a canary, or perform a phased roll out.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
+   * @default 0
+   */
+  readonly partition?: number;
+
+}
+
+/**
+ * StatefulSet update strategies.
+ */
+export class StatefulSetUpdateStrategy {
+
+  /**
+   * The controller will not automatically update the Pods in a StatefulSet.
+   * Users must manually delete Pods to cause the controller to create new Pods
+   * that reflect modifications.
+   */
+  public static onDelete(): StatefulSetUpdateStrategy {
+    return new StatefulSetUpdateStrategy({
+      type: 'OnDelete',
+    });
+  }
+
+  /**
+   * The controller will delete and recreate each Pod in the StatefulSet.
+   * It will proceed in the same order as Pod termination (from the largest ordinal to the smallest),
+   * updating each Pod one at a time. The Kubernetes control plane waits until an updated
+   * Pod is Running and Ready prior to updating its predecessor.
+   */
+  public static rollingUpdate(options: StatefulSetUpdateStrategyRollingUpdateOptions = {}): StatefulSetUpdateStrategy {
+
+    return new StatefulSetUpdateStrategy({
+      type: 'RollingUpdate',
+      rollingUpdate: { partition: options.partition ?? 0 },
+    });
+  }
+
+  private constructor(private readonly strategy: k8s.StatefulSetUpdateStrategy) {}
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.StatefulSetUpdateStrategy {
+    return this.strategy;
+  }
+
+}

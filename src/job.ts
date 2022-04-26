@@ -1,17 +1,13 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Duration } from 'cdk8s';
+import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplateProps, IPodTemplate, PodTemplate, PodSecurityContext, HostAlias } from './pod';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
-
+import * as pod from './pod';
+import * as workload from './workload';
 
 /**
- * Properties for initialization of `Job`.
+ * Properties for `Job`.
  */
-export interface JobProps extends ResourceProps, PodTemplateProps {
+export interface JobProps extends workload.WorkloadProps {
 
   /**
    * Specifies the duration the job may be active before the system tries to terminate it.
@@ -49,7 +45,7 @@ export interface JobProps extends ResourceProps, PodTemplateProps {
  * The Job object will start a new Pod if the first Pod fails or is deleted (for example due to a node hardware failure or a node reboot).
  * You can also use a Job to run multiple Pods in parallel.
  */
-export class Job extends Resource implements IPodTemplate {
+export class Job extends workload.Workload {
 
   /**
    * Duration before job is terminated. If undefined, there is no deadline.
@@ -66,78 +62,27 @@ export class Job extends Resource implements IPodTemplate {
    */
   public readonly ttlAfterFinished?: Duration;
 
-
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: PodTemplate;
-
   constructor(scope: Construct, id: string, props: JobProps = {}) {
-    super(scope, id);
+    super(scope, id, {
+      restartPolicy: pod.RestartPolicy.NEVER,
+      defaultSelector: false,
+      ...props,
+    });
 
     this.apiObject = new k8s.KubeJob(this, 'Resource', {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this._podTemplate = new PodTemplate({
-      ...props,
-      restartPolicy: props.restartPolicy ?? RestartPolicy.NEVER,
-    });
     this.activeDeadline = props.activeDeadline;
     this.backoffLimit = props.backoffLimit;
     this.ttlAfterFinished = props.ttlAfterFinished;
 
-  }
-
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
-  }
-
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
   }
 
   /**
@@ -145,7 +90,10 @@ export class Job extends Resource implements IPodTemplate {
    */
   public _toKube(): k8s.JobSpec {
     return {
-      template: this._podTemplate._toPodTemplateSpec(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
+      },
       activeDeadlineSeconds: this.activeDeadline?.toSeconds(),
       backoffLimit: this.backoffLimit,
       ttlSecondsAfterFinished: this.ttlAfterFinished ? this.ttlAfterFinished.toSeconds() : undefined,
