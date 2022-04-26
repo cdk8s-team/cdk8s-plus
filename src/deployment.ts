@@ -1,18 +1,14 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { Ingress } from './ingress';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
-import { ExposeServiceViaIngressOptions, Protocol, Service, ServiceType } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as ingress from './ingress';
+import * as service from './service';
+import * as workload from './workload';
 
 /**
- * Properties for initialization of `Deployment`.
+ * Properties for `Deployment`.
  */
-export interface DeploymentProps extends ResourceProps, PodTemplateProps {
+export interface DeploymentProps extends workload.WorkloadProps {
 
   /**
    * Number of desired pods.
@@ -22,21 +18,35 @@ export interface DeploymentProps extends ResourceProps, PodTemplateProps {
   readonly replicas?: number;
 
   /**
-   * Automatically allocates a pod selector for this deployment.
-   *
-   * If this is set to `false` you must define your selector through
-   * `deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
-   *
-   * @default true
-   */
-  readonly defaultSelector?: boolean;
-
-  /**
    * Specifies the strategy used to replace old Pods by new ones.
    *
    * @default - RollingUpdate with maxSurge and maxUnavailable set to 25%.
    */
   readonly strategy?: DeploymentStrategy;
+
+  /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   *
+   * Zero means the pod will be considered available as soon as it is ready.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
+   * @default Duration.seconds(0)
+   */
+  readonly minReady?: Duration;
+
+  /**
+   * The maximum duration for a deployment to make progress before it
+   * is considered to be failed. The deployment controller will continue
+   * to process failed deployments and a condition with a ProgressDeadlineExceeded
+   * reason will be surfaced in the deployment status.
+   *
+   * Note that progress will not be estimated during the time a deployment is paused.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#progress-deadline-seconds
+   * @default Duration.seconds(600)
+   */
+  readonly progressDeadline?: Duration;
 
 }
 
@@ -57,7 +67,7 @@ export interface ExposeDeploymentViaServiceOptions {
    *
    * @default - ClusterIP.
    */
-  readonly serviceType?: ServiceType;
+  readonly serviceType?: service.ServiceType;
 
   /**
    * The name of the service to expose.
@@ -72,7 +82,7 @@ export interface ExposeDeploymentViaServiceOptions {
    *
    * @default Protocol.TCP
    */
-  readonly protocol?: Protocol;
+  readonly protocol?: service.Protocol;
 
   /**
    * The port number the service will redirect to.
@@ -85,7 +95,7 @@ export interface ExposeDeploymentViaServiceOptions {
 /**
  * Options for exposing a deployment via an ingress.
  */
-export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, ExposeServiceViaIngressOptions {}
+export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, service.ExposeServiceViaIngressOptions {}
 
 /**
 *
@@ -115,7 +125,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends Resource implements IPodTemplate {
+export class Deployment extends workload.Workload {
 
   /**
    * Number of desired pods.
@@ -123,6 +133,17 @@ export class Deployment extends Resource implements IPodTemplate {
   public readonly replicas: number;
 
   /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   */
+  public readonly minReady: Duration;
+
+  /**
+   * The maximum duration for a deployment to make progress before it is considered to be failed.
+   */
+  public readonly progressDeadline: Duration;
+
+  /*
    * The upgrade strategy of this deployment.
    */
   public readonly strategy: DeploymentStrategy;
@@ -134,80 +155,23 @@ export class Deployment extends Resource implements IPodTemplate {
 
   public readonly resourceType = 'deployments';
 
-  private readonly _podTemplate: PodTemplate;
-  private readonly _labelSelector: Record<string, string>;
-
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeDeployment(this, 'Resource', {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
+    this.minReady = props.minReady ?? Duration.seconds(0);
+    this.progressDeadline = props.progressDeadline ?? Duration.seconds(600);
+
+    if (this.progressDeadline.toSeconds() <= this.minReady.toSeconds()) {
+      throw new Error(`'progressDeadline' (${this.progressDeadline.toSeconds()}s) must be greater than 'minReady' (${this.minReady.toSeconds()}s)`);
+    }
+
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
-    this._podTemplate = new PodTemplate(props);
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.deployment';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
-  }
-
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
-  /**
-   * The labels this deployment will match against in order to select pods.
-   *
-   * Returns a a copy. Use `selectByLabel()` to add labels.
-   */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
-  }
-
-  /**
-   * Configure a label selector to this deployment.
-   * Pods that have the label will be selected by deployments configured with this spec.
-   *
-   * @param key - The label key.
-   * @param value - The label value.
-   */
-  public selectByLabel(key: string, value: string) {
-    this._labelSelector[key] = value;
   }
 
   /**
@@ -217,13 +181,13 @@ export class Deployment extends Resource implements IPodTemplate {
    *
    * @param options Options to determine details of the service and port exposed.
    */
-  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): Service {
-    const service = new Service(this, 'Service', {
+  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): service.Service {
+    const ser = new service.Service(this, 'Service', {
       metadata: options.name ? { name: options.name } : undefined,
-      type: options.serviceType ?? ServiceType.CLUSTER_IP,
+      type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
     });
-    service.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
-    return service;
+    ser.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
+    return ser;
   }
 
   /**
@@ -234,27 +198,10 @@ export class Deployment extends Resource implements IPodTemplate {
    * @param path The ingress path to register under.
    * @param options Additional options.
    */
-  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): Ingress {
-    const service = this.exposeViaService(options);
-    return service.exposeViaIngress(path, options);
+  public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): ingress.Ingress {
+    const ser = this.exposeViaService(options);
+    return ser.exposeViaIngress(path, options);
   }
-
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
-  }
-
 
   /**
    * @internal
@@ -262,9 +209,14 @@ export class Deployment extends Resource implements IPodTemplate {
   public _toKube(): k8s.DeploymentSpec {
     return {
       replicas: this.replicas,
-      template: this._podTemplate._toPodTemplateSpec(),
+      minReadySeconds: this.minReady.toSeconds(),
+      progressDeadlineSeconds: this.progressDeadline.toSeconds(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
+      },
       selector: {
-        matchLabels: this._labelSelector,
+        matchLabels: this.labelSelector,
       },
       strategy: this.strategy._toKube(),
     };

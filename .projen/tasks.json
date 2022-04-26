@@ -1,5 +1,29 @@
 {
   "tasks": {
+    "backport:20": {
+      "name": "backport:20",
+      "steps": [
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main --noFork --prTitle \"{commitMessages}\""
+        }
+      ]
+    },
+    "backport:21": {
+      "name": "backport:21",
+      "steps": [
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main --noFork --prTitle \"{commitMessages}\""
+        }
+      ]
+    },
+    "backport:22": {
+      "name": "backport:22",
+      "steps": [
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main --noFork --prTitle \"{commitMessages}\""
+        }
+      ]
+    },
     "build": {
       "name": "build",
       "description": "Full release build",
@@ -90,7 +114,7 @@
           "spawn": "import"
         },
         {
-          "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          "exec": "jsii --silence-warnings=reserved-word"
         }
       ]
     },
@@ -108,13 +132,37 @@
       "description": "Generate API.md from .jsii manifest",
       "steps": [
         {
-          "exec": "jsii-docgen -l typescript -o docs/typescript.md"
+          "spawn": "docgen:typescript"
         },
         {
-          "exec": "jsii-docgen -l python -o docs/python.md"
+          "spawn": "docgen:python"
         },
         {
-          "exec": "jsii-docgen -l java -o docs/java.md"
+          "spawn": "docgen:java"
+        }
+      ]
+    },
+    "docgen:java": {
+      "name": "docgen:java",
+      "steps": [
+        {
+          "exec": "mkdir -p docs && jsii-docgen -l java -o docs/java.md"
+        }
+      ]
+    },
+    "docgen:python": {
+      "name": "docgen:python",
+      "steps": [
+        {
+          "exec": "mkdir -p docs && jsii-docgen -l python -o docs/python.md"
+        }
+      ]
+    },
+    "docgen:typescript": {
+      "name": "docgen:typescript",
+      "steps": [
+        {
+          "exec": "mkdir -p docs && jsii-docgen -l typescript -o docs/typescript.md"
         }
       ]
     },
@@ -366,7 +414,7 @@
       "description": "Watch & compile in the background",
       "steps": [
         {
-          "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          "exec": "jsii -w --silence-warnings=reserved-word"
         }
       ]
     }

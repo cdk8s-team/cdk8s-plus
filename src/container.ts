@@ -1,11 +1,10 @@
-import { Size } from 'cdk8s';
-import { IConfigMap } from './config-map';
-import { Handler } from './handler';
+import { Size as container } from 'cdk8s';
+import * as configmap from './config-map';
+import * as handler from './handler';
 import * as k8s from './imports/k8s';
-import type { ResourceRequirements } from './imports/k8s';
-import { Probe } from './probe';
-import { SecretValue } from './secret';
-import { IStorage, Volume } from './volume';
+import * as probe from './probe';
+import * as secret from './secret';
+import * as volume from './volume';
 
 /**
  * Properties for `ContainerSecurityContext`
@@ -252,7 +251,7 @@ export class EnvValue {
    * @param key - The key to extract the value from.
    * @param options - Additional options.
    */
-  public static fromConfigMap(configMap: IConfigMap, key: string, options: EnvValueFromConfigMapOptions = { }): EnvValue {
+  public static fromConfigMap(configMap: configmap.IConfigMap, key: string, options: EnvValueFromConfigMapOptions = { }): EnvValue {
 
     const source: k8s.EnvVarSource = {
       configMapKeyRef: {
@@ -270,7 +269,7 @@ export class EnvValue {
    * @param secretValue The secret value (secrent + key)
    * @param options Additional options
    */
-  public static fromSecretValue(secretValue: SecretValue, options: EnvValueFromSecretOptions = {}): EnvValue {
+  public static fromSecretValue(secretValue: secret.SecretValue, options: EnvValueFromSecretOptions = {}): EnvValue {
     const source: k8s.EnvVarSource = {
       secretKeyRef: {
         name: secretValue.secret.name,
@@ -394,7 +393,7 @@ export interface ContainerLifecycle {
    *
    * @default - No post start handler.
    */
-  readonly postStart?: Handler;
+  readonly postStart?: handler.Handler;
 
   /**
    * This hook is called immediately before a container is terminated due to an API request or management
@@ -409,7 +408,7 @@ export interface ContainerLifecycle {
    *
    * @default - No pre stop handler.
    */
-  readonly preStop?: Handler;
+  readonly preStop?: handler.Handler;
 
 }
 
@@ -494,14 +493,14 @@ export interface ContainerProps {
    *
    * @default - no readiness probe is defined
    */
-  readonly readiness?: Probe;
+  readonly readiness?: probe.Probe;
 
   /**
    * Periodic probe of container liveness. Container will be restarted if the probe fails.
    *
    * @default - no liveness probe is defined
    */
-  readonly liveness?: Probe;
+  readonly liveness?: probe.Probe;
 
   /**
    * StartupProbe indicates that the Pod has successfully initialized.
@@ -509,7 +508,7 @@ export interface ContainerProps {
    *
    * @default - no startup probe is defined.
    */
-  readonly startup?: Probe;
+  readonly startup?: probe.Probe;
 
   /**
    * Describes actions that the management system should take in response to container lifecycle events.
@@ -585,9 +584,9 @@ export class Container {
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _env: { [name: string]: EnvValue };
-  private readonly _readiness?: Probe;
-  private readonly _liveness?: Probe;
-  private readonly _startup?: Probe;
+  private readonly _readiness?: probe.Probe;
+  private readonly _liveness?: probe.Probe;
+  private readonly _startup?: probe.Probe;
   private readonly _lifecycle?: ContainerLifecycle;
 
   constructor(props: ContainerProps) {
@@ -658,7 +657,7 @@ export class Container {
    * @param path - The desired path in the container.
    * @param storage - The storage to mount.
    */
-  public mount(path: string, storage: IStorage, options: MountOptions = { }) {
+  public mount(path: string, storage: volume.IStorage, options: MountOptions = { }) {
     this.mounts.push({ path, volume: storage.asVolume(), ...options });
   }
 
@@ -709,7 +708,7 @@ export class Container {
       requests.memory = k8s.Quantity.fromString(memoryRequest.toMebibytes().toString() + 'Mi');
     }
 
-    let resourceRequirements: ResourceRequirements | undefined = undefined;
+    let resourceRequirements: k8s.ResourceRequirements | undefined = undefined;
     if (Object.keys(limits).length > 0 || Object.keys(requests).length > 0) {
       resourceRequirements = {
         limits: limits,
@@ -790,7 +789,7 @@ export interface VolumeMount extends MountOptions {
   /**
    * The volume to mount.
    */
-  readonly volume: Volume;
+  readonly volume: volume.Volume;
 
   /**
    * Path within the container at which the volume should be mounted. Must not
@@ -886,8 +885,8 @@ export class Cpu {
  * Memory request and limit
  */
 export interface MemoryResources {
-  readonly request: Size;
-  readonly limit: Size;
+  readonly request: container;
+  readonly limit: container;
 }
 
 function renderEnv(env: { [name: string]: EnvValue }): k8s.EnvVar[] {

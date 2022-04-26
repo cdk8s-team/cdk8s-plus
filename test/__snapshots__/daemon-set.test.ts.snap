@@ -12,13 +12,13 @@ Array [
       "minReadySeconds": 5,
       "selector": Object {
         "matchLabels": Object {
-          "cdk8s.daemon-set": "test-DaemonSet-c8f77186",
+          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
         },
       },
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "cdk8s.daemon-set": "test-DaemonSet-c8f77186",
+            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
           },
         },
         "spec": Object {
@@ -37,6 +37,12 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
           "hostAliases": Array [],
           "initContainers": Array [],
           "securityContext": Object {
@@ -44,6 +50,7 @@ Array [
             "runAsNonRoot": false,
             "sysctls": Array [],
           },
+          "setHostnameAsFQDN": false,
           "volumes": Array [],
         },
       },
@@ -64,13 +71,13 @@ Array [
       "minReadySeconds": 0,
       "selector": Object {
         "matchLabels": Object {
-          "cdk8s.daemon-set": "test-DaemonSet-c8f77186",
+          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
         },
       },
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "cdk8s.daemon-set": "test-DaemonSet-c8f77186",
+            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
           },
         },
         "spec": Object {
@@ -89,6 +96,12 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
           "hostAliases": Array [],
           "initContainers": Array [],
           "securityContext": Object {
@@ -96,6 +109,7 @@ Array [
             "runAsNonRoot": false,
             "sysctls": Array [],
           },
+          "setHostnameAsFQDN": false,
           "volumes": Array [],
         },
       },

@@ -1,10 +1,10 @@
 import * as path from 'path';
-import { cdk, github, javascript } from 'projen';
+import { cdk, github, javascript, JsonFile } from 'projen';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = '22';
+const LATEST_SUPPORTED_K8S_VERSION = 22;
 
 // the version of k8s this branch supports
 const SPEC_VERSION = '22';
@@ -86,8 +86,8 @@ const project = new cdk.JsiiProject({
     workflowOptions: {
       branches: [
         `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`,
-        `k8s-${Number(LATEST_SUPPORTED_K8S_VERSION) - 1}/main`,
-        `k8s-${Number(LATEST_SUPPORTED_K8S_VERSION) - 2}/main`,
+        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
+        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
       ],
 
       // run upgrade-dependencies workflow at a different hour than other cdk8s
@@ -108,32 +108,57 @@ project.compileTask.prependSpawn(importTask);
 
 const docgenTask = project.tasks.tryFind('docgen')!;
 docgenTask.reset();
-docgenTask.exec('jsii-docgen -l typescript -o docs/typescript.md');
-docgenTask.exec('jsii-docgen -l python -o docs/python.md');
-docgenTask.exec('jsii-docgen -l java -o docs/java.md');
+for (const lang of ['typescript', 'python', 'java']) {
+  const genTask = project.addTask(`docgen:${lang}`);
+  const output = `docs/${lang}.md`;
+  genTask.exec(`mkdir -p docs && jsii-docgen -l ${lang} -o ${output}`);
+  docgenTask.spawn(genTask);
+  // ignoring since it creates merge conflicts in
+  // the backport PR's.
+  project.gitignore.exclude(output);
+}
+
+for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
+  const backportTask = project.addTask(`backport:${spec}`);
+  backportTask.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
+}
 
 // backport PR's to other branches
+// this doesn't use the backport tasks because there's a dedicated
+// action for it which already invokes it.
 // see https://github.com/tibdex/backport
-const backport = project.github!.addWorkflow('backport');
-backport.on({ pullRequest: { types: ['closed'] } });
-backport.addJob('backport', {
+const backportWorkflow = project.github!.addWorkflow('backport');
+backportWorkflow.on({ pullRequest: { types: ['closed'] } });
+backportWorkflow.addJob('backport', {
   runsOn: ['ubuntu-18.04'],
   permissions: {
     contents: JobPermission.WRITE,
   },
-  steps: [{
-    name: 'backport',
-    uses: 'tibdex/backport@v1',
-    with: {
-      github_token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
-      title_template: '{{originalTitle}}',
+  steps: [
+    {
+      name: 'backport',
+      uses: 'tibdex/backport@v1',
+      with: {
+        github_token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+        title_template: '{{originalTitle}}',
+      },
     },
-  }],
+  ],
+});
+
+const backportConfig = {
+  repoOwner: 'cdk8s-team',
+  repoName: 'cdk8s-plus',
+  signoff: true,
+};
+
+new JsonFile(project, '.backportrc.json', {
+  obj: backportConfig,
 });
 
 project.addTask('regenerate-api-information', {
   description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
-  exec: 'kubectl api-resources -o wide > api-resources.txt'
+  exec: 'kubectl api-resources -o wide > api-resources.txt',
 });
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 

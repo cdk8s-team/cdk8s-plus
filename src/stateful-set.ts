@@ -1,13 +1,8 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodTemplate, IPodTemplate, PodTemplateProps, PodSecurityContext, HostAlias } from './pod';
-import { Service } from './service';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
-
+import * as service from './service';
+import * as workload from './workload';
 
 /**
  * Controls how pods are created during initial scale up, when replacing pods on nodes,
@@ -28,11 +23,11 @@ export enum PodManagementPolicy {
 /**
  * Properties for initialization of `StatefulSet`.
  */
-export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
+export interface StatefulSetProps extends workload.WorkloadProps {
   /**
    * Service to associate with the statefulset.
    */
-  readonly service: Service;
+  readonly service: service.Service;
 
   /**
     * Number of desired pods.
@@ -40,16 +35,6 @@ export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
     * @default 1
     */
   readonly replicas?: number;
-
-  /**
-    * Automatically allocates a pod selector for this statefulset.
-    *
-    * If this is set to `false` you must define your selector through
-    * `statefulset.podMetadata.addLabel()` and `statefulset.selectByLabel()`.
-    *
-    * @default true
-    */
-  readonly defaultSelector?: boolean;
 
   /**
     * Pod management policy to use for this statefulset.
@@ -92,7 +77,7 @@ export interface StatefulSetProps extends ResourceProps, PodTemplateProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends Resource implements IPodTemplate {
+export class StatefulSet extends workload.Workload {
   /**
     * Number of desired pods.
     */
@@ -115,13 +100,10 @@ export class StatefulSet extends Resource implements IPodTemplate {
 
   public readonly resourceType = 'statefulsets';
 
-  private readonly _podTemplate: PodTemplate;
-  private readonly _labelSelector: Record<string, string>;
-
-  private readonly _service: Service;
+  private readonly _service: service.Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeStatefulSet(this, 'Resource', {
       metadata: props.metadata,
@@ -134,88 +116,11 @@ export class StatefulSet extends Resource implements IPodTemplate {
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
-    this._podTemplate = new PodTemplate(props);
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.statefulset';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
 
     const selectors = Object.entries(this.labelSelector);
     for (const [k, v] of selectors) {
       this._service.addSelector(k, v);
     }
-  }
-
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
-  /**
-    * The labels this statefulset will match against in order to select pods.
-    *
-    * Returns a a copy. Use `selectByLabel()` to add labels.
-    */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  /**
-    * Configure a label selector to this deployment.
-    * Pods that have the label will be selected by deployments configured with this spec.
-    *
-    * @param key - The label key.
-    * @param value - The label value.
-    */
-  public selectByLabel(key: string, value: string): void {
-    this._labelSelector[key] = value;
-  }
-
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
   }
 
   /**
@@ -225,9 +130,12 @@ export class StatefulSet extends Resource implements IPodTemplate {
     return {
       serviceName: this._service.name,
       replicas: this.replicas,
-      template: this._podTemplate._toPodTemplateSpec(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
+      },
       selector: {
-        matchLabels: this._labelSelector,
+        matchLabels: this.labelSelector,
       },
       podManagementPolicy: this.podManagementPolicy,
       updateStrategy: this.strategy._toKube(),

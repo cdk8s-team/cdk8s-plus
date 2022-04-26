@@ -20,12 +20,12 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line();
   ts.line('/**');
   ts.line(' * Represents a resource or collection of resources.');
-  ts.line(' */')
+  ts.line(' */');
   ts.open('export interface IApiResource {');
   ts.line('/**');
   ts.line(' * The group portion of the API version (e.g. `authorization.k8s.io`).');
-  ts.line(' */')
-  ts.line('readonly apiGroup: string;')
+  ts.line(' */');
+  ts.line('readonly apiGroup: string;');
   ts.line();
   ts.line('/**');
   ts.line(' * The name of a resource type as it appears in the relevant API endpoint.');
@@ -38,8 +38,8 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' * The unique, namespace-global, name of an object inside the Kubernetes cluster.');
   ts.line(' *');
   ts.line(' * If this is omitted, the ApiResource should represent all objects of the given type.');
-  ts.line(' */')
-  ts.line('readonly resourceName?: string;')
+  ts.line(' */');
+  ts.line('readonly resourceName?: string;');
   ts.close('}');
   ts.line();
   ts.line('/**');
@@ -55,7 +55,7 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' * The name of the resource type as it appears in the relevant API endpoint.');
   ts.line(' * @example - "pods" or "pods/log"');
   ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
-  ts.line(' */')
+  ts.line(' */');
   ts.line('readonly resourceType: string;');
   ts.close('}');
   ts.line();
@@ -88,21 +88,21 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
 
   ts.line('/**');
   ts.line(' * API resource information for a custom resource type.');
-  ts.line(' */')
+  ts.line(' */');
   ts.open('public static custom(options: ApiResourceOptions): ApiResource {');
   ts.line('return new ApiResource(options);');
   ts.close('};');
   ts.line();
   ts.line('/**');
   ts.line(' * The group portion of the API version (e.g. `authorization.k8s.io`).');
-  ts.line(' */')
+  ts.line(' */');
   ts.line('public readonly apiGroup: string;');
   ts.line();
   ts.line('/**');
   ts.line(' * The name of the resource type as it appears in the relevant API endpoint.');
   ts.line(' * @example - "pods" or "pods/log"');
   ts.line(' * @see https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources');
-  ts.line(' */')
+  ts.line(' */');
   ts.line('public readonly resourceType: string;');
   ts.line();
   ts.open('private constructor(options: ApiResourceOptions) {');
@@ -254,7 +254,7 @@ function calculateColumnMetadata(header: string): Array<Column> {
 /**
  * Convert all-caps acronyms (e.g. "VPC", "FooBARZooFIGoo") to pascal case
  * (e.g. "Vpc", "FooBarZooFiGoo").
- * 
+ *
  * note: code borrowed from json2jsii
  */
 function normalizeTypeName(typeName: string) {

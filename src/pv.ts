@@ -1,21 +1,20 @@
-import * as cdk8s from 'cdk8s';
-import { Size } from 'cdk8s';
+import { ApiObject, Lazy, Size } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IResource, Resource, ResourceProps } from './base';
+import * as base from './base';
 import * as k8s from './imports/k8s';
-import { IPersistentVolumeClaim, PersistentVolumeClaim, PersistentVolumeMode, PersistentVolumeAccessMode } from './pvc';
-import { IStorage, Volume, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind } from './volume';
+import * as pvc from './pvc';
+import * as volume from './volume';
 
 /**
  * Contract of a `PersistentVolumeClaim`.
  */
-export interface IPersistentVolume extends IResource {
+export interface IPersistentVolume extends base.IResource {
 }
 
 /**
  * Properties for `PersistentVolume`.
  */
-export interface PersistentVolumeProps extends ResourceProps {
+export interface PersistentVolumeProps extends base.ResourceProps {
 
   /**
    * Contains all ways the volume can be mounted.
@@ -23,7 +22,7 @@ export interface PersistentVolumeProps extends ResourceProps {
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
    * @default - No access modes.
    */
-  readonly accessModes?: PersistentVolumeAccessMode[];
+  readonly accessModes?: pvc.PersistentVolumeAccessMode[];
 
   /**
    * What is the storage capacity of this volume.
@@ -40,7 +39,7 @@ export interface PersistentVolumeProps extends ResourceProps {
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
    * @default - Not bound to a specific claim.
    */
-  readonly claim?: IPersistentVolumeClaim;
+  readonly claim?: pvc.IPersistentVolumeClaim;
 
   /**
    * A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid.
@@ -72,7 +71,7 @@ export interface PersistentVolumeProps extends ResourceProps {
    *
    * @default VolumeMode.FILE_SYSTEM
    */
-  readonly volumeMode?: PersistentVolumeMode;
+  readonly volumeMode?: pvc.PersistentVolumeMode;
 
 }
 
@@ -85,7 +84,7 @@ export interface PersistentVolumeProps extends ResourceProps {
  * implementation of the storage, be that NFS, iSCSI, or a
  * cloud-provider-specific storage system.
  */
-export class PersistentVolume extends Resource implements IPersistentVolume, IStorage {
+export class PersistentVolume extends base.Resource implements IPersistentVolume, volume.IStorage {
 
   /**
    * Imports a pv from the cluster as a reference.
@@ -102,11 +101,11 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
   /**
    * @see base.Resource.apiObject
    */
-  protected readonly apiObject: cdk8s.ApiObject;
+  protected readonly apiObject: ApiObject;
 
   public readonly resourceType = 'persistentvolumes';
 
-  private _claim?: IPersistentVolumeClaim;
+  private _claim?: pvc.IPersistentVolumeClaim;
 
   /**
    * Storage size of this volume.
@@ -116,7 +115,7 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
   /**
    * Volume mode of this volume.
    */
-  public readonly mode: PersistentVolumeMode;
+  public readonly mode: pvc.PersistentVolumeMode;
 
   /**
     * Storage class this volume belongs to.
@@ -126,7 +125,7 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
   /**
    * Access modes requirement of this claim.
    */
-  private readonly _accessModes?: PersistentVolumeAccessMode[];
+  private readonly _accessModes?: pvc.PersistentVolumeAccessMode[];
 
   /**
    * Mount options of this volume.
@@ -142,7 +141,7 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
     super(scope, id);
 
     this.storage = props.storage;
-    this.mode = props.volumeMode ?? PersistentVolumeMode.FILE_SYSTEM;
+    this.mode = props.volumeMode ?? pvc.PersistentVolumeMode.FILE_SYSTEM;
     this.storageClassName = props.storageClassName;
     this._accessModes = props.accessModes;
     this.mountOptions = props.mountOptions;
@@ -154,14 +153,14 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
 
     this.apiObject = new k8s.KubePersistentVolume(this, 'Resource', {
       metadata: props.metadata,
-      spec: cdk8s.Lazy.any({ produce: () => this._toKube() }),
+      spec: Lazy.any({ produce: () => this._toKube() }),
     });
   }
 
   /**
    * Access modes requirement of this claim.
    */
-  public get accessModes(): PersistentVolumeAccessMode[] | undefined {
+  public get accessModes(): pvc.PersistentVolumeAccessMode[] | undefined {
     return this._accessModes ? [...this._accessModes] : undefined;
   }
 
@@ -169,7 +168,7 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
    * PVC this volume is bound to. Undefined means this volume is not yet
    * claimed by any PVC.
    */
-  public get claim(): IPersistentVolumeClaim | undefined {
+  public get claim(): pvc.IPersistentVolumeClaim | undefined {
     return this._claim;
   }
 
@@ -181,8 +180,8 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
    */
-  public reserve(): PersistentVolumeClaim {
-    const claim = new PersistentVolumeClaim(this, `${this.name}PVC`, {
+  public reserve(): pvc.PersistentVolumeClaim {
+    const claim = new pvc.PersistentVolumeClaim(this, `${this.name}PVC`, {
       metadata: { name: `pvc-${this.name}`, namespace: this.metadata.namespace },
 
       // the storage classes must match, otherwise the claim
@@ -204,18 +203,18 @@ export class PersistentVolume extends Resource implements IPersistentVolume, ISt
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#binding
    *
-   * @param pvc The PVC to bind to.
+   * @param claim The PVC to bind to.
    */
-  public bind(pvc: IPersistentVolumeClaim) {
-    if (this._claim && this._claim.name !== pvc.name) {
-      throw new Error(`Cannot bind volume '${this.name}' to claim '${pvc.name}' since it is already bound to claim '${this._claim.name}'`);
+  public bind(claim: pvc.IPersistentVolumeClaim) {
+    if (this._claim && this._claim.name !== claim.name) {
+      throw new Error(`Cannot bind volume '${this.name}' to claim '${claim.name}' since it is already bound to claim '${this._claim.name}'`);
     }
-    this._claim = pvc;
+    this._claim = claim;
   }
 
-  public asVolume(): Volume {
+  public asVolume(): volume.Volume {
     const claim = this.reserve();
-    return Volume.fromPersistentVolumeClaim(claim);
+    return volume.Volume.fromPersistentVolumeClaim(claim);
   }
 
   /**
@@ -383,7 +382,7 @@ export interface AzureDiskPersistentVolumeProps extends PersistentVolumeProps {
    *
    * @default - AzureDiskPersistentVolumeCachingMode.NONE.
    */
-  readonly cachingMode?: AzureDiskPersistentVolumeCachingMode;
+  readonly cachingMode?: volume.AzureDiskPersistentVolumeCachingMode;
 
   /**
     * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
@@ -397,7 +396,7 @@ export interface AzureDiskPersistentVolumeProps extends PersistentVolumeProps {
     *
     * @default AzureDiskPersistentVolumeKind.SHARED
     */
-  readonly kind?: AzureDiskPersistentVolumeKind;
+  readonly kind?: volume.AzureDiskPersistentVolumeKind;
 
   /**
     * Force the ReadOnly setting in VolumeMounts.
@@ -431,7 +430,7 @@ export class AzureDiskPersistentVolume extends PersistentVolume {
   /**
    * Caching mode of this volume.
    */
-  public readonly cachingMode: AzureDiskPersistentVolumeCachingMode;
+  public readonly cachingMode: volume.AzureDiskPersistentVolumeCachingMode;
 
   /**
    * File system type of this volume.
@@ -441,16 +440,16 @@ export class AzureDiskPersistentVolume extends PersistentVolume {
   /**
    * Azure kind of this volume.
    */
-  public readonly azureKind: AzureDiskPersistentVolumeKind;
+  public readonly azureKind: volume.AzureDiskPersistentVolumeKind;
 
   constructor(scope: Construct, id: string, props: AzureDiskPersistentVolumeProps) {
     super(scope, id, props);
 
     this.diskName = props.diskName;
     this.diskUri = props.diskUri;
-    this.cachingMode = props.cachingMode ?? AzureDiskPersistentVolumeCachingMode.NONE;
+    this.cachingMode = props.cachingMode ?? volume.AzureDiskPersistentVolumeCachingMode.NONE;
     this.fsType = props.fsType ?? 'ext4';
-    this.azureKind = props.kind ?? AzureDiskPersistentVolumeKind.SHARED;
+    this.azureKind = props.kind ?? volume.AzureDiskPersistentVolumeKind.SHARED;
     this.readOnly = props.readOnly ?? false;
   }
 

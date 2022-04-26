@@ -1,14 +1,14 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
+import * as base from './base';
 import * as k8s from './imports/k8s';
-import { ISecret } from './secret';
-import { Service } from './service';
+import * as secret from './secret';
+import * as service from './service';
 
 /**
  * Properties for `Ingress`.
  */
-export interface IngressProps extends ResourceProps {
+export interface IngressProps extends base.ResourceProps {
   /**
    * The default backend services requests that do not match any rule.
    *
@@ -70,7 +70,7 @@ export enum HttpIngressPathType {
  * externally-reachable urls, load balance traffic, terminate SSL, offer name
  * based virtual hosting etc.
  */
-export class Ingress extends Resource {
+export class Ingress extends base.Resource {
 
   /**
    * @see base.Resource.apiObject
@@ -257,26 +257,26 @@ export interface ServiceIngressBackendOptions {
 export class IngressBackend {
   /**
    * A Kubernetes `Service` to use as the backend for this path.
-   * @param service The service object.
+   * @param serv The service object.
    */
-  public static fromService(service: Service, options: ServiceIngressBackendOptions = {}) {
-    if (service.ports.length === 0) {
+  public static fromService(serv: service.Service, options: ServiceIngressBackendOptions = {}) {
+    if (serv.ports.length === 0) {
       throw new Error('service does not expose any ports');
     }
 
     let servicePort;
-    if (service.ports.length === 1) {
-      servicePort = service.ports[0].port;
+    if (serv.ports.length === 1) {
+      servicePort = serv.ports[0].port;
     } else {
       if (options.port !== undefined) {
-        const found = service.ports.find(p => p.port === options.port);
+        const found = serv.ports.find(p => p.port === options.port);
         if (found) {
           servicePort = found.port;
         } else {
-          throw new Error(`service exposes ports ${service.ports.map(p => p.port).join(',')} but backend is defined to use port ${options.port}`);
+          throw new Error(`service exposes ports ${serv.ports.map(p => p.port).join(',')} but backend is defined to use port ${options.port}`);
         }
       } else {
-        throw new Error(`unable to determine service port since service exposes multiple ports: ${service.ports.map(x => x.port).join(',')}`);
+        throw new Error(`unable to determine service port since service exposes multiple ports: ${serv.ports.map(x => x.port).join(',')}`);
       }
     }
 
@@ -286,7 +286,7 @@ export class IngressBackend {
 
     return new IngressBackend({
       service: {
-        name: service.name,
+        name: serv.name,
         port: { number: servicePort },
       },
     });
@@ -373,7 +373,7 @@ export interface IngressTls {
    *
    * @default - If unspecified, it allows SSL routing based on SNI hostname.
    */
-  readonly secret?: ISecret;
+  readonly secret?: secret.ISecret;
 }
 
 function sortByPath(lhs: k8s.HttpIngressPath, rhs: k8s.HttpIngressPath) {

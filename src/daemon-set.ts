@@ -1,16 +1,12 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps } from './base';
-import { Container, ContainerProps } from './container';
 import * as k8s from './imports/k8s';
-import { HostAlias, IPodTemplate, PodSecurityContext, PodTemplate, PodTemplateProps, RestartPolicy } from './pod';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as workload from './workload';
 
 /**
  * Properties for `DaemonSet`.
  */
-export interface DaemonSetProps extends ResourceProps, PodTemplateProps {
+export interface DaemonSetProps extends workload.WorkloadProps {
 
   /**
    * Minimum number of seconds for which a newly created pod should
@@ -19,16 +15,6 @@ export interface DaemonSetProps extends ResourceProps, PodTemplateProps {
    * @default 0
    */
   readonly minReadySeconds?: number;
-
-  /**
-   * Automatically allocates a pod selector for this daemon set.
-   *
-   * If this is set to `false` you must define your selector through
-   * `dset.podMetadata.addLabel()` and `dset.selectByLabel()`.
-   *
-   * @default true
-   */
-  readonly defaultSelector?: boolean;
 
 }
 
@@ -48,10 +34,7 @@ export interface DaemonSetProps extends ResourceProps, PodTemplateProps {
  * A more complex setup might use multiple DaemonSets for a single type of daemon,
  * but with different flags and/or different memory and cpu requests for different hardware types.
  */
-export class DaemonSet extends Resource implements IPodTemplate {
-
-  private readonly _podTemplate: PodTemplate;
-  private readonly _labelSelector: Record<string, string>;
+export class DaemonSet extends workload.Workload {
 
   /**
    * @see base.Resource.apiObject
@@ -63,7 +46,7 @@ export class DaemonSet extends Resource implements IPodTemplate {
   public readonly minReadySeconds: number;
 
   constructor(scope: Construct, id: string, props: DaemonSetProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeDaemonSet(this, 'Resource', {
       metadata: props.metadata,
@@ -72,80 +55,6 @@ export class DaemonSet extends Resource implements IPodTemplate {
 
     this.minReadySeconds = props.minReadySeconds ?? 0;
 
-    this._podTemplate = new PodTemplate(props);
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.daemon-set';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
-
-  }
-
-  /**
-   * The labels this daemon set will match against in order to select pods.
-   *
-   * Returns a a copy. Use `selectByLabel()` to add labels.
-   */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
-  public get containers(): Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._podTemplate.securityContext;
-  }
-
-  public addContainer(container: ContainerProps): Container {
-    return this._podTemplate.addContainer(container);
-  }
-
-  public addInitContainer(container: ContainerProps): Container {
-    return this._podTemplate.addInitContainer(container);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._podTemplate.addVolume(volume);
-  }
-
-  /**
-   * Configure a label selector to this daemon set.
-   */
-  public selectByLabel(key: string, value: string) {
-    this._labelSelector[key] = value;
   }
 
   /**
@@ -154,9 +63,12 @@ export class DaemonSet extends Resource implements IPodTemplate {
   public _toKube(): k8s.DaemonSetSpec {
     return {
       minReadySeconds: this.minReadySeconds,
-      template: this._podTemplate._toPodTemplateSpec(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
+      },
       selector: {
-        matchLabels: this._labelSelector,
+        matchLabels: this.labelSelector,
       },
     };
   }

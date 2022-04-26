@@ -1,111 +1,32 @@
-import { ApiObject, ApiObjectMetadata, ApiObjectMetadataDefinition, Lazy } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { ResourceProps, Resource } from './base';
-import { Container, ContainerProps } from './container';
+import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
-import { DockerConfigSecret } from './secret';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as secret from './secret';
+import * as serviceaccount from './service-account';
+import * as volume from './volume';
 
-/**
- * Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
- *
- * Use the `PodSpec` class as an implementation helper.
- */
-export interface IPodSpec {
-
-  /**
-   * The containers belonging to the pod.
-   *
-   * Use `addContainer` to add containers.
-   */
-  readonly containers: Container[];
-
-  /**
-   * The init containers belonging to the pod.
-   *
-   * Use `addInitContainer` to add init containers.
-   */
-  readonly initContainers: Container[];
-
-  /**
-   * The volumes associated with this pod.
-   *
-   * Use `addVolume` to add volumes.
-   */
-  readonly volumes: Volume[];
-
-  /**
-   * Restart policy for all containers within the pod.
-   */
-  readonly restartPolicy?: RestartPolicy;
-
-  /**
-   * The service account used to run this pod.
-   */
-  readonly serviceAccount?: IServiceAccount;
-
-  /**
-   * An optional list of hosts and IPs that will be injected into the pod's
-   * hosts file if specified. This is only valid for non-hostNetwork pods.
-   */
-  readonly hostAliases: HostAlias[];
-
-  /**
-   * Add a container to the pod.
-   *
-   * @param container The container.
-   */
-  addContainer(container: ContainerProps): Container;
-
-  /**
-   * Add an init container to the pod.
-   *
-   * @param container The container.
-   */
-  addInitContainer(container: ContainerProps): Container;
-
-  /**
-   * Add a volume to the pod.
-   *
-   * @param volume The volume.
-   */
-  addVolume(volume: Volume): void;
-
-}
-
-/**
- * Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
- *
- * Use the `PodTemplate` class as an implementation helper.
- */
-export interface IPodTemplate extends IPodSpec {
-
-  /**
-   * Provides read/write access to the underlying pod metadata of the resource.
-   */
-  readonly podMetadata: ApiObjectMetadataDefinition;
-}
-
-/**
- * Provides read/write capabilities ontop of a `PodSpecProps`.
- */
-export class PodSpec implements IPodSpec {
+export abstract class AbstractPod extends base.Resource {
 
   public readonly restartPolicy?: RestartPolicy;
-  public readonly serviceAccount?: IServiceAccount;
+  public readonly serviceAccount?: serviceaccount.IServiceAccount;
   public readonly securityContext: PodSecurityContext;
-  public readonly dockerRegistryAuth?: DockerConfigSecret;
+  public readonly dns: PodDns;
+  public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
 
-  private readonly _containers: Container[] = [];
-  private readonly _initContainers: Container[] = [];
+  private readonly _containers: container.Container[] = [];
+  private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
-  private readonly _volumes: Map<string, Volume> = new Map();
+  private readonly _volumes: Map<string, volume.Volume> = new Map();
 
-  constructor(props: PodSpecProps = {}) {
+  constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
+    super(scope, id);
+
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
+    this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
 
     if (props.containers) {
@@ -126,15 +47,15 @@ export class PodSpec implements IPodSpec {
 
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return [...this._containers];
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return [...this._initContainers];
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return Array.from(this._volumes.values());
   }
 
@@ -142,30 +63,30 @@ export class PodSpec implements IPodSpec {
     return [...this._hostAliases];
   }
 
-  public addContainer(container: ContainerProps): Container {
-    const impl = new Container(container);
+  public addContainer(cont: container.ContainerProps): container.Container {
+    const impl = new container.Container(cont);
     this._containers.push(impl);
     return impl;
   }
 
-  public addInitContainer(container: ContainerProps): Container {
+  public addInitContainer(cont: container.ContainerProps): container.Container {
 
     // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
-    if (container.readiness) {
+    if (cont.readiness) {
       throw new Error('Init containers must not have a readiness probe');
     }
 
-    if (container.liveness) {
+    if (cont.liveness) {
       throw new Error('Init containers must not have a liveness probe');
     }
 
-    if (container.startup) {
+    if (cont.startup) {
       throw new Error('Init containers must not have a startup probe');
     }
 
-    const impl = new Container({
-      ...container,
-      name: container.name ?? `init-${this._initContainers.length}`,
+    const impl = new container.Container({
+      ...cont,
+      name: cont.name ?? `init-${this._initContainers.length}`,
     });
 
     this._initContainers.push(impl);
@@ -176,12 +97,12 @@ export class PodSpec implements IPodSpec {
     this._hostAliases.push(hostAlias);
   }
 
-  public addVolume(volume: Volume): void {
-    const existingVolume = this._volumes.get(volume.name);
+  public addVolume(vol: volume.Volume): void {
+    const existingVolume = this._volumes.get(vol.name);
     if (existingVolume) {
-      throw new Error(`Volume with name ${volume.name} already exists`);
+      throw new Error(`Volume with name ${vol.name} already exists`);
     }
-    this._volumes.set(volume.name, volume);
+    this._volumes.set(vol.name, vol);
   }
 
   /**
@@ -193,41 +114,43 @@ export class PodSpec implements IPodSpec {
       throw new Error('PodSpec must have at least 1 container');
     }
 
-    const volumes: Map<string, Volume> = new Map();
+    const volumes: Map<string, volume.Volume> = new Map();
     const containers: k8s.Container[] = [];
     const initContainers: k8s.Container[] = [];
 
-    for (const container of this.containers) {
+    for (const cont of this.containers) {
       // automatically add volume from the container mount
       // to this pod so thats its available to the container.
-      for (const mount of container.mounts) {
+      for (const mount of cont.mounts) {
         addVolume(mount.volume);
       }
-      containers.push(container._toKube());
+      containers.push(cont._toKube());
     }
 
-    for (const container of this.initContainers) {
+    for (const cont of this.initContainers) {
       // automatically add volume from the container mount
       // to this pod so thats its available to the container.
-      for (const mount of container.mounts) {
+      for (const mount of cont.mounts) {
         addVolume(mount.volume);
       }
-      initContainers.push(container._toKube());
+      initContainers.push(cont._toKube());
     }
 
-    for (const volume of this.volumes) {
-      addVolume(volume);
+    for (const vol of this.volumes) {
+      addVolume(vol);
     }
 
-    function addVolume(volume: Volume) {
-      const existingVolume = volumes.get(volume.name);
+    function addVolume(vol: volume.Volume) {
+      const existingVolume = volumes.get(vol.name);
       // its ok to call this function twice on the same volume, but its not ok to
       // call it twice on a different volume with the same name.
-      if (existingVolume && existingVolume !== volume) {
-        throw new Error(`Invalid mount configuration. At least two different volumes have the same name: ${volume.name}`);
+      if (existingVolume && existingVolume !== vol) {
+        throw new Error(`Invalid mount configuration. At least two different volumes have the same name: ${vol.name}`);
       }
-      volumes.set(volume.name, volume);
+      volumes.set(vol.name, vol);
     }
+
+    const dns = this.dns._toKube();
 
     return {
       restartPolicy: this.restartPolicy,
@@ -237,48 +160,16 @@ export class PodSpec implements IPodSpec {
       initContainers: initContainers,
       hostAliases: this.hostAliases,
       volumes: Array.from(volumes.values()).map(v => v._toKube()),
+      dnsPolicy: dns.policy,
+      dnsConfig: dns.config,
+      hostname: dns.hostname,
+      subdomain: dns.subdomain,
+      setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
     };
 
   }
 
-}
-
-/**
- * Properties of a `PodTemplate`.
- *
- * Adds metadata information on top of the spec.
- */
-export interface PodTemplateProps extends PodSpecProps {
-
-  /**
-   * The pod metadata.
-   */
-  readonly podMetadata?: ApiObjectMetadata;
-}
-
-
-/**
- * Provides read/write capabilities ontop of a `PodTemplateProps`.
- */
-export class PodTemplate extends PodSpec implements IPodTemplate {
-
-  public readonly podMetadata: ApiObjectMetadataDefinition;
-
-  constructor(props: PodTemplateProps = {}) {
-    super(props);
-    this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-  }
-
-  /**
-   * @internal
-   */
-  public _toPodTemplateSpec(): k8s.PodTemplateSpec {
-    return {
-      metadata: this.podMetadata.toJson(),
-      spec: this._toPodSpec(),
-    };
-  }
 }
 
 /**
@@ -350,14 +241,9 @@ export interface PodSecurityContextProps {
 }
 
 /**
- * Properties for initialization of `Pod`.
+ * Properties for `AbstractPod`.
  */
-export interface PodProps extends ResourceProps, PodSpecProps {}
-
-/**
- * Properties of a `PodSpec`.
- */
-export interface PodSpecProps {
+export interface AbstractPodProps extends base.ResourceProps {
 
   /**
    * List of containers belonging to the pod. Containers cannot currently be
@@ -367,7 +253,7 @@ export interface PodSpecProps {
    *
    * @default - No containers. Note that a pod spec must include at least one container.
    */
-  readonly containers?: ContainerProps[];
+  readonly containers?: container.ContainerProps[];
 
   /**
    * List of initialization containers belonging to the pod.
@@ -384,7 +270,7 @@ export interface PodSpecProps {
    * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
    * @default - No init containers.
    */
-  readonly initContainers?: ContainerProps[];
+  readonly initContainers?: container.ContainerProps[];
 
   /**
    * List of volumes that can be mounted by containers belonging to the pod.
@@ -395,7 +281,7 @@ export interface PodSpecProps {
    *
    * @default - No volumes.
    */
-  readonly volumes?: Volume[];
+  readonly volumes?: volume.Volume[];
 
   /**
    * Restart policy for all containers within the pod.
@@ -420,7 +306,7 @@ export interface PodSpecProps {
    *
    * @default - No service account.
    */
-  readonly serviceAccount?: IServiceAccount;
+  readonly serviceAccount?: serviceaccount.IServiceAccount;
 
   /**
    * SecurityContext holds pod-level security attributes and common container settings.
@@ -440,19 +326,30 @@ export interface PodSpecProps {
   readonly hostAliases?: HostAlias[];
 
   /**
+   * DNS settings for the pod.
+   *
+   * @see https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+   *
+   * @default
+   *
+   *  policy: DnsPolicy.CLUSTER_FIRST
+   *  hostnameAsFQDN: false
+   */
+  readonly dns?: PodDnsProps;
+
+  /**
    * A secret containing docker credentials for authenticating to a registry.
    *
    * @default - No auth. Images are assumed to be publicly available.
    */
-  readonly dockerRegistryAuth?: DockerConfigSecret;
-
+  readonly dockerRegistryAuth?: secret.DockerConfigSecret;
 }
 
 /**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
-export class Pod extends Resource implements IPodSpec {
+export class Pod extends AbstractPod {
 
   /**
    * @see base.Resource.apiObject
@@ -461,61 +358,201 @@ export class Pod extends Resource implements IPodSpec {
 
   public readonly resourceType = 'pods';
 
-  private readonly _spec: PodSpec;
-
   constructor(scope: Construct, id: string, props: PodProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubePod(this, 'Resource', {
       metadata: props.metadata,
-      spec: Lazy.any({ produce: () => this._spec._toPodSpec() }),
+      spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this._spec = new PodSpec(props);
   }
 
-  public get containers(): Container[] {
-    return this._spec.containers;
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.PodSpec {
+    return this._toPodSpec();
   }
 
-  public get initContainers(): Container[] {
-    return this._spec.initContainers;
+}
+
+/**
+ * Properties for `PodDns`.
+ */
+export interface PodDnsProps {
+
+  /**
+   * Specifies the hostname of the Pod.
+   *
+   * @default - Set to a system-defined value.
+   */
+  readonly hostname?: string;
+
+  /**
+   * If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>".
+   *
+   * @default - No subdomain.
+   */
+  readonly subdomain?: string;
+
+  /**
+   * If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default).
+   * In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+   * In Windows containers, this means setting the registry value of hostname for the registry
+   * key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+   * If a pod does not have FQDN, this has no effect.
+   *
+   * @default false
+   */
+  readonly hostnameAsFQDN?: boolean;
+
+  /**
+   * Set DNS policy for the pod.
+   *
+   * If policy is set to `None`, other configuration must be supplied.
+   *
+   * @default DnsPolicy.CLUSTER_FIRST
+   */
+  readonly policy?: DnsPolicy;
+
+  /**
+   * A list of IP addresses that will be used as DNS servers for the Pod. There can be at most 3 IP addresses specified.
+   * When the policy is set to "NONE", the list must contain at least one IP address,
+   * otherwise this property is optional.
+   * The servers listed will be combined to the base nameservers generated from
+   * the specified DNS policy with duplicate addresses removed.
+   */
+  readonly nameservers?: string[];
+
+  /**
+   * A list of DNS search domains for hostname lookup in the Pod.
+   * When specified, the provided list will be merged into the base
+   * search domain names generated from the chosen DNS policy.
+   * Duplicate domain names are removed.
+   *
+   * Kubernetes allows for at most 6 search domains.
+   */
+  readonly searches?: string[];
+
+  /**
+   * List of objects where each object may have a name property (required)
+   * and a value property (optional). The contents in this property
+   * will be merged to the options generated from the specified DNS policy.
+   * Duplicate entries are removed.
+   */
+  readonly options?: DnsOption[];
+}
+
+/**
+ * Holds dns settings of the pod.
+ */
+export class PodDns {
+
+  /**
+   * The DNS policy of this pod.
+   */
+  public readonly policy: DnsPolicy;
+
+  /**
+   * The configured hostname of the pod. Undefined means its set to a system-defined value.
+   */
+  public readonly hostname?: string;
+
+  /**
+   * The configured subdomain of the pod.
+   */
+  public readonly subdomain?: string;
+
+  /**
+   * Whether or not the pods hostname is set to its FQDN.
+   */
+  public readonly hostnameAsFQDN: boolean;
+
+  private readonly _nameservers: string[];
+  private readonly _searches: string[];
+  private readonly _options: DnsOption[];
+
+  constructor(props: PodDnsProps = {}) {
+    this.hostname = props.hostname;
+    this.subdomain = props.subdomain;
+    this.policy = props.policy ?? DnsPolicy.CLUSTER_FIRST;
+    this.hostnameAsFQDN = props.hostnameAsFQDN ?? false;
+    this._nameservers = props.nameservers ?? [];
+    this._searches = props.searches ?? [];
+    this._options = props.options ?? [];
   }
 
-  public get volumes(): Volume[] {
-    return this._spec.volumes;
+  /**
+   * Nameservers defined for this pod.
+   */
+  public get nameservers(): string[] {
+    return [...this._nameservers];
   }
 
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._spec.restartPolicy;
+  /**
+   * Search domains defined for this pod.
+   */
+  public get searches(): string[] {
+    return [...this._searches];
   }
 
-  public get serviceAccount(): IServiceAccount | undefined {
-    return this._spec.serviceAccount;
+  /**
+   * Custom dns options defined for this pod.
+   */
+  public get options(): DnsOption[] {
+    return [...this._options];
   }
 
-  public get securityContext(): PodSecurityContext {
-    return this._spec.securityContext;
+  /**
+   * Add a nameserver.
+   */
+  public addNameserver(...nameservers: string[]) {
+    this._nameservers.push(...nameservers);
   }
 
-  public get hostAliases(): HostAlias[] {
-    return this._spec.hostAliases;
+  /**
+   * Add a search domain.
+   */
+  public addSearch(...searches: string[]) {
+    this._searches.push(...searches);
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._spec.addContainer(container);
+  /**
+   * Add a custom option.
+   */
+  public addOption(...options: DnsOption[]) {
+    this._options.push(...options);
   }
 
-  public addInitContainer(container: ContainerProps): Container {
-    return this._spec.addInitContainer(container);
-  }
+  /**
+   * @internal
+   */
+  public _toKube(): { hostname?: string; subdomain?: string; hostnameAsFQDN: boolean; policy: string; config: k8s.PodDnsConfig } {
 
-  public addVolume(volume: Volume): void {
-    return this._spec.addVolume(volume);
-  }
+    if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
+      throw new Error('When dns policy is set to NONE, at least one nameserver is required');
+    }
 
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._spec.addHostAlias(hostAlias);
+    if (this.nameservers.length > 3) {
+      throw new Error('There can be at most 3 nameservers specified');
+    }
+
+    if (this.searches.length > 6) {
+      throw new Error('There can be at most 6 search domains specified');
+    }
+
+    return {
+      hostname: this.hostname,
+      subdomain: this.subdomain,
+      hostnameAsFQDN: this.hostnameAsFQDN,
+      policy: this.policy,
+      config: {
+        nameservers: this.nameservers,
+        searches: this.searches,
+        options: this.options,
+      },
+    };
   }
 
 }
@@ -602,6 +639,58 @@ export enum FsGroupChangePolicy {
 }
 
 /**
+ * Custom DNS option.
+ */
+export interface DnsOption {
+
+  /**
+   * Option name.
+   */
+  readonly name: string;
+
+  /**
+   * Option value.
+   *
+   * @default - No value.
+   */
+  readonly value?: string;
+}
+
+/**
+ * Pod DNS policies.
+ */
+export enum DnsPolicy {
+
+  /**
+   * Any DNS query that does not match the configured cluster domain suffix,
+   * such as "www.kubernetes.io", is forwarded to the
+   * upstream nameserver inherited from the node.
+   * Cluster administrators may have extra stub-domain and upstream DNS servers configured.
+   */
+  CLUSTER_FIRST = 'ClusterFirst',
+
+  /**
+   * For Pods running with hostNetwork, you should
+   * explicitly set its DNS policy "ClusterFirstWithHostNet".
+   */
+  CLUSTER_FIRST_WITH_HOST_NET = 'ClusterFirstWithHostNet',
+
+  /**
+   * The Pod inherits the name resolution configuration
+   * from the node that the pods run on.
+   */
+  DEFAULT = 'Default',
+
+  /**
+   * It allows a Pod to ignore DNS settings from the Kubernetes environment.
+   * All DNS settings are supposed to be provided using the dnsConfig
+   * field in the Pod Spec.
+   */
+  NONE = 'None',
+
+}
+
+/**
  * HostAlias holds the mapping between IP and hostnames that will be injected as
  * an entry in the pod's /etc/hosts file.
  */
@@ -616,3 +705,8 @@ export interface HostAlias {
    */
   readonly ip: string;
 }
+
+/**
+ * Properties for `Pod`.
+ */
+export interface PodProps extends AbstractPodProps {}
