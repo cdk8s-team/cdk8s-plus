@@ -255,7 +255,7 @@ export interface ServiceIngressBackendOptions {
 export class IngressBackend {
   /**
    * A Kubernetes `Service` to use as the backend for this path.
-   * @param service The service object.
+   * @param serv The service object.
    */
   public static fromService(serv: service.Service, options: ServiceIngressBackendOptions = {}) {
     if (serv.ports.length === 0) {

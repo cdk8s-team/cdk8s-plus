@@ -1,18 +1,14 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import * as base from './base';
-import * as container from './container';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
-import * as pod from './pod';
 import * as service from './service';
-import * as serviceaccount from './service-account';
-import * as volume from './volume';
+import * as workload from './workload';
 
 /**
- * Properties for initialization of `Deployment`.
+ * Properties for `Deployment`.
  */
-export interface DeploymentProps extends base.ResourceProps, pod.PodTemplateProps {
+export interface DeploymentProps extends workload.WorkloadProps {
 
   /**
    * Number of desired pods.
@@ -20,16 +16,6 @@ export interface DeploymentProps extends base.ResourceProps, pod.PodTemplateProp
    * @default 1
    */
   readonly replicas?: number;
-
-  /**
-   * Automatically allocates a pod selector for this deployment.
-   *
-   * If this is set to `false` you must define your selector through
-   * `deployment.podMetadata.addLabel()` and `deployment.selectByLabel()`.
-   *
-   * @default true
-   */
-  readonly defaultSelector?: boolean;
 
   /**
    * Specifies the strategy used to replace old Pods by new ones.
@@ -115,7 +101,7 @@ export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends base.Resource implements pod.IPodTemplate {
+export class Deployment extends workload.Workload {
 
   /**
    * Number of desired pods.
@@ -132,11 +118,8 @@ export class Deployment extends base.Resource implements pod.IPodTemplate {
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _podTemplate: pod.PodTemplate;
-  private readonly _labelSelector: Record<string, string>;
-
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubeDeployment(this, 'Resource', {
       metadata: props.metadata,
@@ -145,71 +128,6 @@ export class Deployment extends base.Resource implements pod.IPodTemplate {
 
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
-    this._podTemplate = new pod.PodTemplate(props);
-    this._labelSelector = {};
-
-    if (props.defaultSelector ?? true) {
-      const selector = 'cdk8s.deployment';
-      const matcher = Names.toLabelValue(this);
-      this.podMetadata.addLabel(selector, matcher);
-      this.selectByLabel(selector, matcher);
-    }
-  }
-
-  public get podMetadata(): ApiObjectMetadataDefinition {
-    return this._podTemplate.podMetadata;
-  }
-
-  /**
-   * The labels this deployment will match against in order to select pods.
-   *
-   * Returns a a copy. Use `selectByLabel()` to add labels.
-   */
-  public get labelSelector(): Record<string, string> {
-    return { ...this._labelSelector };
-  }
-
-  public get containers(): container.Container[] {
-    return this._podTemplate.containers;
-  }
-
-  public get initContainers(): container.Container[] {
-    return this._podTemplate.initContainers;
-  }
-
-  public get hostAliases(): pod.HostAlias[] {
-    return this._podTemplate.hostAliases;
-  }
-
-  public get volumes(): volume.Volume[] {
-    return this._podTemplate.volumes;
-  }
-
-  public get restartPolicy(): pod.RestartPolicy | undefined {
-    return this._podTemplate.restartPolicy;
-  }
-
-  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
-    return this._podTemplate.serviceAccount;
-  }
-
-  public get securityContext(): pod.PodSecurityContext {
-    return this._podTemplate.securityContext;
-  }
-
-  public get dns(): pod.PodDns {
-    return this._podTemplate.dns;
-  }
-
-  /**
-   * Configure a label selector to this deployment.
-   * Pods that have the label will be selected by deployments configured with this spec.
-   *
-   * @param key - The label key.
-   * @param value - The label value.
-   */
-  public selectByLabel(key: string, value: string) {
-    this._labelSelector[key] = value;
   }
 
   /**
@@ -241,32 +159,18 @@ export class Deployment extends base.Resource implements pod.IPodTemplate {
     return ser.exposeViaIngress(path, options);
   }
 
-  public addContainer(cont: container.ContainerProps): container.Container {
-    return this._podTemplate.addContainer(cont);
-  }
-
-  public addInitContainer(cont: container.ContainerProps): container.Container {
-    return this._podTemplate.addInitContainer(cont);
-  }
-
-  public addHostAlias(hostAlias: pod.HostAlias): void {
-    return this._podTemplate.addHostAlias(hostAlias);
-  }
-
-  public addVolume(vol: volume.Volume): void {
-    return this._podTemplate.addVolume(vol);
-  }
-
-
   /**
    * @internal
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
       replicas: this.replicas,
-      template: this._podTemplate._toPodTemplateSpec(),
+      template: {
+        metadata: this.podMetadata.toJson(),
+        spec: this._toPodSpec(),
+      },
       selector: {
-        matchLabels: this._labelSelector,
+        matchLabels: this.labelSelector,
       },
       strategy: this.strategy._toKube(),
     };
