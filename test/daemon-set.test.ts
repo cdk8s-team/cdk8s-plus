@@ -43,7 +43,7 @@ test('a label selector is automatically allocated', () => {
   ds.addContainer({ image: 'foobar' });
 
   const expectedValue = 'test-DaemonSet-c8f77186';
-  const expectedSelector = { 'cdk8s.daemon-set': expectedValue };
+  const expectedSelector = { 'cdk8s.daemonset': expectedValue };
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;

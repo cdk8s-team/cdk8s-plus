@@ -1,4 +1,4 @@
-import { ApiObject, ApiObjectMetadata, ApiObjectMetadataDefinition, Lazy } from 'cdk8s';
+import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
@@ -7,100 +7,7 @@ import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
 
-/**
- * Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
- *
- * Use the `PodSpec` class as an implementation helper.
- */
-export interface IPodSpec {
-
-  /**
-   * The containers belonging to the pod.
-   *
-   * Use `addContainer` to add containers.
-   */
-  readonly containers: container.Container[];
-
-  /**
-   * The init containers belonging to the pod.
-   *
-   * Use `addInitContainer` to add init containers.
-   */
-  readonly initContainers: container.Container[];
-
-  /**
-   * The volumes associated with this pod.
-   *
-   * Use `addVolume` to add volumes.
-   */
-  readonly volumes: volume.Volume[];
-
-  /**
-   * Restart policy for all containers within the pod.
-   */
-  readonly restartPolicy?: RestartPolicy;
-
-  /**
-   * The service account used to run this pod.
-   */
-  readonly serviceAccount?: serviceaccount.IServiceAccount;
-
-  /**
-   * An optional list of hosts and IPs that will be injected into the pod's
-   * hosts file if specified. This is only valid for non-hostNetwork pods.
-   */
-  readonly hostAliases: HostAlias[];
-
-  /**
-   * The pod's DNS settings.
-   */
-  readonly dns: PodDns;
-
-  /**
-   * The pod's security context.
-   */
-  readonly securityContext: PodSecurityContext;
-
-  /**
-   * Add a container to the pod.
-   *
-   * @param container The container.
-   */
-  addContainer(container: container.ContainerProps): container.Container;
-
-  /**
-   * Add an init container to the pod.
-   *
-   * @param container The container.
-   */
-  addInitContainer(container: container.ContainerProps): container.Container;
-
-  /**
-   * Add a volume to the pod.
-   *
-   * @param volume The volume.
-   */
-  addVolume(volume: volume.Volume): void;
-
-}
-
-/**
- * Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
- *
- * Use the `PodTemplate` class as an implementation helper.
- */
-export interface IPodTemplate extends IPodSpec {
-
-  /**
-   * Provides read/write access to the underlying pod metadata of the resource.
-   */
-  readonly podMetadata: ApiObjectMetadataDefinition;
-}
-
-/**
- * Provides read/write capabilities ontop of a `PodSpecProps`.
- */
-export class PodSpec implements IPodSpec {
+export abstract class AbstractPod extends base.Resource {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -113,7 +20,9 @@ export class PodSpec implements IPodSpec {
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
 
-  constructor(props: PodSpecProps = {}) {
+  constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
+    super(scope, id);
+
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
@@ -264,43 +173,6 @@ export class PodSpec implements IPodSpec {
 }
 
 /**
- * Properties of a `PodTemplate`.
- *
- * Adds metadata information on top of the spec.
- */
-export interface PodTemplateProps extends PodSpecProps {
-
-  /**
-   * The pod metadata.
-   */
-  readonly podMetadata?: ApiObjectMetadata;
-}
-
-
-/**
- * Provides read/write capabilities ontop of a `PodTemplateProps`.
- */
-export class PodTemplate extends PodSpec implements IPodTemplate {
-
-  public readonly podMetadata: ApiObjectMetadataDefinition;
-
-  constructor(props: PodTemplateProps = {}) {
-    super(props);
-    this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-  }
-
-  /**
-   * @internal
-   */
-  public _toPodTemplateSpec(): k8s.PodTemplateSpec {
-    return {
-      metadata: this.podMetadata.toJson(),
-      spec: this._toPodSpec(),
-    };
-  }
-}
-
-/**
  * Sysctl defines a kernel parameter to be set
  */
 export interface Sysctl {
@@ -369,14 +241,9 @@ export interface PodSecurityContextProps {
 }
 
 /**
- * Properties for initialization of `Pod`.
+ * Properties for `AbstractPod`.
  */
-export interface PodProps extends base.ResourceProps, PodSpecProps {}
-
-/**
- * Properties of a `PodSpec`.
- */
-export interface PodSpecProps {
+export interface AbstractPodProps extends base.ResourceProps {
 
   /**
    * List of containers belonging to the pod. Containers cannot currently be
@@ -482,72 +349,28 @@ export interface PodSpecProps {
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
-export class Pod extends base.Resource implements IPodSpec {
+export class Pod extends AbstractPod {
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _spec: PodSpec;
-
   constructor(scope: Construct, id: string, props: PodProps = {}) {
-    super(scope, id);
+    super(scope, id, props);
 
     this.apiObject = new k8s.KubePod(this, 'Resource', {
       metadata: props.metadata,
-      spec: Lazy.any({ produce: () => this._spec._toPodSpec() }),
+      spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this._spec = new PodSpec(props);
   }
 
-  public get containers(): container.Container[] {
-    return this._spec.containers;
-  }
-
-  public get initContainers(): container.Container[] {
-    return this._spec.initContainers;
-  }
-
-  public get volumes(): volume.Volume[] {
-    return this._spec.volumes;
-  }
-
-  public get restartPolicy(): RestartPolicy | undefined {
-    return this._spec.restartPolicy;
-  }
-
-  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
-    return this._spec.serviceAccount;
-  }
-
-  public get securityContext(): PodSecurityContext {
-    return this._spec.securityContext;
-  }
-
-  public get hostAliases(): HostAlias[] {
-    return this._spec.hostAliases;
-  }
-
-  public addContainer(cont: container.ContainerProps): container.Container {
-    return this._spec.addContainer(cont);
-  }
-
-  public get dns(): PodDns {
-    return this._spec.dns;
-  }
-
-  public addInitContainer(cont: container.ContainerProps): container.Container {
-    return this._spec.addInitContainer(cont);
-  }
-
-  public addVolume(vol: volume.Volume): void {
-    return this._spec.addVolume(vol);
-  }
-
-  public addHostAlias(hostAlias: HostAlias): void {
-    return this._spec.addHostAlias(hostAlias);
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.PodSpec {
+    return this._toPodSpec();
   }
 
 }
@@ -880,3 +703,8 @@ export interface HostAlias {
    */
   readonly ip: string;
 }
+
+/**
+ * Properties for `Pod`.
+ */
+export interface PodProps extends AbstractPodProps {}
