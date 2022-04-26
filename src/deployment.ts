@@ -1,4 +1,4 @@
-import { ApiObject, Lazy } from 'cdk8s';
+import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
@@ -23,6 +23,30 @@ export interface DeploymentProps extends workload.WorkloadProps {
    * @default - RollingUpdate with maxSurge and maxUnavailable set to 25%.
    */
   readonly strategy?: DeploymentStrategy;
+
+  /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   *
+   * Zero means the pod will be considered available as soon as it is ready.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
+   * @default Duration.seconds(0)
+   */
+  readonly minReady?: Duration;
+
+  /**
+   * The maximum duration for a deployment to make progress before it
+   * is considered to be failed. The deployment controller will continue
+   * to process failed deployments and a condition with a ProgressDeadlineExceeded
+   * reason will be surfaced in the deployment status.
+   *
+   * Note that progress will not be estimated during the time a deployment is paused.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#progress-deadline-seconds
+   * @default Duration.seconds(600)
+   */
+  readonly progressDeadline?: Duration;
 
 }
 
@@ -109,6 +133,17 @@ export class Deployment extends workload.Workload {
   public readonly replicas: number;
 
   /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   */
+  public readonly minReady: Duration;
+
+  /**
+   * The maximum duration for a deployment to make progress before it is considered to be failed.
+   */
+  public readonly progressDeadline: Duration;
+
+  /*
    * The upgrade strategy of this deployment.
    */
   public readonly strategy: DeploymentStrategy;
@@ -125,6 +160,13 @@ export class Deployment extends workload.Workload {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this.minReady = props.minReady ?? Duration.seconds(0);
+    this.progressDeadline = props.progressDeadline ?? Duration.seconds(600);
+
+    if (this.progressDeadline.toSeconds() <= this.minReady.toSeconds()) {
+      throw new Error(`'progressDeadline' (${this.progressDeadline.toSeconds()}s) must be greater than 'minReady' (${this.minReady.toSeconds()}s)`);
+    }
 
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
@@ -165,6 +207,8 @@ export class Deployment extends workload.Workload {
   public _toKube(): k8s.DeploymentSpec {
     return {
       replicas: this.replicas,
+      minReadySeconds: this.minReady.toSeconds(),
+      progressDeadlineSeconds: this.progressDeadline.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
         spec: this._toPodSpec(),
