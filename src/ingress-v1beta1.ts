@@ -226,7 +226,7 @@ export interface ServiceIngressV1BetaBackendOptions {
 export class IngressV1Beta1Backend {
   /**
    * A Kubernetes `Service` to use as the backend for this path.
-   * @param service The service object.
+   * @param serv The service object.
    */
   public static fromService(serv: service.Service, options: ServiceIngressV1BetaBackendOptions = {}) {
     if (serv.ports.length === 0) {
