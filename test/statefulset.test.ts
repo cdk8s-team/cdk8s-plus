@@ -1,4 +1,4 @@
-import { Testing, ApiObject } from 'cdk8s';
+import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 import { StatefulSetUpdateStrategy } from '../src';
@@ -97,10 +97,11 @@ test('StatefulSet gets defaults', () => {
   });
 
   const resources = Testing.synth(chart);
-  const setSpec = resources[1].spec;
+  const setSpec: k8s.StatefulSetSpec = resources[1].spec;
   expect(setSpec.replicas).toEqual(1);
   expect(setSpec.serviceName).toEqual(resources[0].metadata.name);
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.ORDERED_READY);
+  expect(setSpec.minReadySeconds).toEqual(0);
 });
 
 
@@ -117,6 +118,7 @@ test('StatefulSet allows overrides', () => {
     containers: [{ image: 'image' }],
     replicas: 5,
     podManagementPolicy: kplus.PodManagementPolicy.PARALLEL,
+    minReady: Duration.seconds(30),
     service,
   });
 
@@ -125,6 +127,7 @@ test('StatefulSet allows overrides', () => {
   expect(setSpec.replicas).toEqual(5);
   expect(setSpec.serviceName).toEqual('test-srv');
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.PARALLEL);
+  expect(setSpec.minReadySeconds).toEqual(0);
 });
 
 
