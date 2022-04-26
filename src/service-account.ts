@@ -1,19 +1,19 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { Resource, ResourceProps, IResource } from './base';
+import * as base from './base';
 import * as k8s from './imports/k8s';
-import { ISecret } from './secret';
+import * as secret from './secret';
 import { undefinedIfEmpty } from './utils';
 
 
 /**
  * Properties for initialization of `ServiceAccount`.
  */
-export interface ServiceAccountProps extends ResourceProps {
+export interface ServiceAccountProps extends base.ResourceProps {
 
 }
 
-export interface IServiceAccount extends IResource {
+export interface IServiceAccount extends base.IResource {
 
 }
 
@@ -27,7 +27,7 @@ export interface ServiceAccountProps {
    *
    * @see https://kubernetes.io/docs/concepts/configuration/secret
    */
-  readonly secrets?: ISecret[];
+  readonly secrets?: secret.ISecret[];
 }
 
 /**
@@ -42,7 +42,7 @@ export interface ServiceAccountProps {
  *
  * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account
  */
-export class ServiceAccount extends Resource implements IServiceAccount {
+export class ServiceAccount extends base.Resource implements IServiceAccount {
 
   /**
    * Imports a service account from the cluster as a reference.
@@ -57,7 +57,7 @@ export class ServiceAccount extends Resource implements IServiceAccount {
    */
   protected readonly apiObject: ApiObject;
 
-  private readonly _secrets: ISecret[];
+  private readonly _secrets: secret.ISecret[];
 
   constructor(scope: Construct, id: string, props: ServiceAccountProps = { }) {
     super(scope, id);
@@ -72,10 +72,10 @@ export class ServiceAccount extends Resource implements IServiceAccount {
 
   /**
    * Allow a secret to be accessed by pods using this service account.
-   * @param secret The secret
+   * @param secr The secret
    */
-  public addSecret(secret: ISecret) {
-    this._secrets.push(secret);
+  public addSecret(secr: secret.ISecret) {
+    this._secrets.push(secr);
   }
 
   /**

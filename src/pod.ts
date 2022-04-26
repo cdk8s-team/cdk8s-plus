@@ -1,11 +1,11 @@
 import { ApiObject, ApiObjectMetadata, ApiObjectMetadataDefinition, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import { ResourceProps, Resource } from './base';
-import { Container, ContainerProps } from './container';
+import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
-import { DockerConfigSecret } from './secret';
-import { IServiceAccount } from './service-account';
-import { Volume } from './volume';
+import * as secret from './secret';
+import * as serviceaccount from './service-account';
+import * as volume from './volume';
 
 /**
  * Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
@@ -19,21 +19,21 @@ export interface IPodSpec {
    *
    * Use `addContainer` to add containers.
    */
-  readonly containers: Container[];
+  readonly containers: container.Container[];
 
   /**
    * The init containers belonging to the pod.
    *
    * Use `addInitContainer` to add init containers.
    */
-  readonly initContainers: Container[];
+  readonly initContainers: container.Container[];
 
   /**
    * The volumes associated with this pod.
    *
    * Use `addVolume` to add volumes.
    */
-  readonly volumes: Volume[];
+  readonly volumes: volume.Volume[];
 
   /**
    * Restart policy for all containers within the pod.
@@ -43,7 +43,7 @@ export interface IPodSpec {
   /**
    * The service account used to run this pod.
    */
-  readonly serviceAccount?: IServiceAccount;
+  readonly serviceAccount?: serviceaccount.IServiceAccount;
 
   /**
    * An optional list of hosts and IPs that will be injected into the pod's
@@ -66,21 +66,21 @@ export interface IPodSpec {
    *
    * @param container The container.
    */
-  addContainer(container: ContainerProps): Container;
+  addContainer(container: container.ContainerProps): container.Container;
 
   /**
    * Add an init container to the pod.
    *
    * @param container The container.
    */
-  addInitContainer(container: ContainerProps): Container;
+  addInitContainer(container: container.ContainerProps): container.Container;
 
   /**
    * Add a volume to the pod.
    *
    * @param volume The volume.
    */
-  addVolume(volume: Volume): void;
+  addVolume(volume: volume.Volume): void;
 
 }
 
@@ -103,15 +103,15 @@ export interface IPodTemplate extends IPodSpec {
 export class PodSpec implements IPodSpec {
 
   public readonly restartPolicy?: RestartPolicy;
-  public readonly serviceAccount?: IServiceAccount;
+  public readonly serviceAccount?: serviceaccount.IServiceAccount;
   public readonly securityContext: PodSecurityContext;
   public readonly dns: PodDns;
-  public readonly dockerRegistryAuth?: DockerConfigSecret;
+  public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
 
-  private readonly _containers: Container[] = [];
-  private readonly _initContainers: Container[] = [];
+  private readonly _containers: container.Container[] = [];
+  private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
-  private readonly _volumes: Map<string, Volume> = new Map();
+  private readonly _volumes: Map<string, volume.Volume> = new Map();
 
   constructor(props: PodSpecProps = {}) {
     this.restartPolicy = props.restartPolicy;
@@ -138,15 +138,15 @@ export class PodSpec implements IPodSpec {
 
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return [...this._containers];
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return [...this._initContainers];
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return Array.from(this._volumes.values());
   }
 
@@ -154,30 +154,30 @@ export class PodSpec implements IPodSpec {
     return [...this._hostAliases];
   }
 
-  public addContainer(container: ContainerProps): Container {
-    const impl = new Container(container);
+  public addContainer(cont: container.ContainerProps): container.Container {
+    const impl = new container.Container(cont);
     this._containers.push(impl);
     return impl;
   }
 
-  public addInitContainer(container: ContainerProps): Container {
+  public addInitContainer(cont: container.ContainerProps): container.Container {
 
     // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
-    if (container.readiness) {
+    if (cont.readiness) {
       throw new Error('Init containers must not have a readiness probe');
     }
 
-    if (container.liveness) {
+    if (cont.liveness) {
       throw new Error('Init containers must not have a liveness probe');
     }
 
-    if (container.startup) {
+    if (cont.startup) {
       throw new Error('Init containers must not have a startup probe');
     }
 
-    const impl = new Container({
-      ...container,
-      name: container.name ?? `init-${this._initContainers.length}`,
+    const impl = new container.Container({
+      ...cont,
+      name: cont.name ?? `init-${this._initContainers.length}`,
     });
 
     this._initContainers.push(impl);
@@ -188,12 +188,12 @@ export class PodSpec implements IPodSpec {
     this._hostAliases.push(hostAlias);
   }
 
-  public addVolume(volume: Volume): void {
-    const existingVolume = this._volumes.get(volume.name);
+  public addVolume(vol: volume.Volume): void {
+    const existingVolume = this._volumes.get(vol.name);
     if (existingVolume) {
-      throw new Error(`Volume with name ${volume.name} already exists`);
+      throw new Error(`Volume with name ${vol.name} already exists`);
     }
-    this._volumes.set(volume.name, volume);
+    this._volumes.set(vol.name, vol);
   }
 
   /**
@@ -205,40 +205,40 @@ export class PodSpec implements IPodSpec {
       throw new Error('PodSpec must have at least 1 container');
     }
 
-    const volumes: Map<string, Volume> = new Map();
+    const volumes: Map<string, volume.Volume> = new Map();
     const containers: k8s.Container[] = [];
     const initContainers: k8s.Container[] = [];
 
-    for (const container of this.containers) {
+    for (const cont of this.containers) {
       // automatically add volume from the container mount
       // to this pod so thats its available to the container.
-      for (const mount of container.mounts) {
+      for (const mount of cont.mounts) {
         addVolume(mount.volume);
       }
-      containers.push(container._toKube());
+      containers.push(cont._toKube());
     }
 
-    for (const container of this.initContainers) {
+    for (const cont of this.initContainers) {
       // automatically add volume from the container mount
       // to this pod so thats its available to the container.
-      for (const mount of container.mounts) {
+      for (const mount of cont.mounts) {
         addVolume(mount.volume);
       }
-      initContainers.push(container._toKube());
+      initContainers.push(cont._toKube());
     }
 
-    for (const volume of this.volumes) {
-      addVolume(volume);
+    for (const vol of this.volumes) {
+      addVolume(vol);
     }
 
-    function addVolume(volume: Volume) {
-      const existingVolume = volumes.get(volume.name);
+    function addVolume(vol: volume.Volume) {
+      const existingVolume = volumes.get(vol.name);
       // its ok to call this function twice on the same volume, but its not ok to
       // call it twice on a different volume with the same name.
-      if (existingVolume && existingVolume !== volume) {
-        throw new Error(`Invalid mount configuration. At least two different volumes have the same name: ${volume.name}`);
+      if (existingVolume && existingVolume !== vol) {
+        throw new Error(`Invalid mount configuration. At least two different volumes have the same name: ${vol.name}`);
       }
-      volumes.set(volume.name, volume);
+      volumes.set(vol.name, vol);
     }
 
     const dns = this.dns._toKube();
@@ -371,7 +371,7 @@ export interface PodSecurityContextProps {
 /**
  * Properties for initialization of `Pod`.
  */
-export interface PodProps extends ResourceProps, PodSpecProps {}
+export interface PodProps extends base.ResourceProps, PodSpecProps {}
 
 /**
  * Properties of a `PodSpec`.
@@ -386,7 +386,7 @@ export interface PodSpecProps {
    *
    * @default - No containers. Note that a pod spec must include at least one container.
    */
-  readonly containers?: ContainerProps[];
+  readonly containers?: container.ContainerProps[];
 
   /**
    * List of initialization containers belonging to the pod.
@@ -403,7 +403,7 @@ export interface PodSpecProps {
    * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
    * @default - No init containers.
    */
-  readonly initContainers?: ContainerProps[];
+  readonly initContainers?: container.ContainerProps[];
 
   /**
    * List of volumes that can be mounted by containers belonging to the pod.
@@ -414,7 +414,7 @@ export interface PodSpecProps {
    *
    * @default - No volumes.
    */
-  readonly volumes?: Volume[];
+  readonly volumes?: volume.Volume[];
 
   /**
    * Restart policy for all containers within the pod.
@@ -439,7 +439,7 @@ export interface PodSpecProps {
    *
    * @default - No service account.
    */
-  readonly serviceAccount?: IServiceAccount;
+  readonly serviceAccount?: serviceaccount.IServiceAccount;
 
   /**
    * SecurityContext holds pod-level security attributes and common container settings.
@@ -475,14 +475,14 @@ export interface PodSpecProps {
    *
    * @default - No auth. Images are assumed to be publicly available.
    */
-  readonly dockerRegistryAuth?: DockerConfigSecret;
+  readonly dockerRegistryAuth?: secret.DockerConfigSecret;
 }
 
 /**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
-export class Pod extends Resource implements IPodSpec {
+export class Pod extends base.Resource implements IPodSpec {
 
   /**
    * @see base.Resource.apiObject
@@ -502,15 +502,15 @@ export class Pod extends Resource implements IPodSpec {
     this._spec = new PodSpec(props);
   }
 
-  public get containers(): Container[] {
+  public get containers(): container.Container[] {
     return this._spec.containers;
   }
 
-  public get initContainers(): Container[] {
+  public get initContainers(): container.Container[] {
     return this._spec.initContainers;
   }
 
-  public get volumes(): Volume[] {
+  public get volumes(): volume.Volume[] {
     return this._spec.volumes;
   }
 
@@ -518,7 +518,7 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.restartPolicy;
   }
 
-  public get serviceAccount(): IServiceAccount | undefined {
+  public get serviceAccount(): serviceaccount.IServiceAccount | undefined {
     return this._spec.serviceAccount;
   }
 
@@ -530,20 +530,20 @@ export class Pod extends Resource implements IPodSpec {
     return this._spec.hostAliases;
   }
 
+  public addContainer(cont: container.ContainerProps): container.Container {
+    return this._spec.addContainer(cont);
+  }
+
   public get dns(): PodDns {
     return this._spec.dns;
   }
 
-  public addContainer(container: ContainerProps): Container {
-    return this._spec.addContainer(container);
+  public addInitContainer(cont: container.ContainerProps): container.Container {
+    return this._spec.addInitContainer(cont);
   }
 
-  public addInitContainer(container: ContainerProps): Container {
-    return this._spec.addInitContainer(container);
-  }
-
-  public addVolume(volume: Volume): void {
-    return this._spec.addVolume(volume);
+  public addVolume(vol: volume.Volume): void {
+    return this._spec.addVolume(vol);
   }
 
   public addHostAlias(hostAlias: HostAlias): void {
