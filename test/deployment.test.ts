@@ -1,4 +1,4 @@
-import { Testing, ApiObject } from 'cdk8s';
+import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 import { DeploymentStrategy, PercentOrAbsolute } from '../src';
@@ -256,5 +256,87 @@ test('PercentOrAbsoulte zero', () => {
   expect(PercentOrAbsolute.absolute(0).isZero()).toBeTruthy();
   expect(PercentOrAbsolute.percent(1).isZero()).toBeFalsy();
   expect(PercentOrAbsolute.absolute(1).isZero()).toBeFalsy();
+
+});
+
+test('default minReadySeconds', () => {
+
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+  });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.minReady).toEqual(Duration.seconds(0));
+  expect(spec.minReadySeconds).toEqual(0);
+
+});
+
+test('default progressDeadlineSeconds', () => {
+
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+  });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.progressDeadline).toEqual(Duration.seconds(600));
+  expect(spec.progressDeadlineSeconds).toEqual(600);
+
+});
+
+test('can configure minReadySeconds', () => {
+
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    minReady: Duration.seconds(60),
+  });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.minReady).toEqual(Duration.seconds(60));
+  expect(spec.minReadySeconds).toEqual(60);
+
+});
+
+test('can configure progressDeadlineSeconds', () => {
+
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    progressDeadline: Duration.seconds(60),
+  });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.progressDeadline).toEqual(Duration.seconds(60));
+  expect(spec.progressDeadlineSeconds).toEqual(60);
+
+});
+
+test('throws if minReadySeconds > progressDeadlineSeconds', () => {
+
+  const chart = Testing.chart();
+
+  expect(() => new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    minReady: Duration.seconds(60),
+    progressDeadline: Duration.seconds(30),
+  })).toThrowError("'progressDeadline' (30s) must be greater than 'minReady' (60s)");
+
+});
+
+test('throws if minReadySeconds = progressDeadlineSeconds', () => {
+
+  const chart = Testing.chart();
+
+  expect(() => new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    minReady: Duration.seconds(60),
+    progressDeadline: Duration.seconds(60),
+  })).toThrowError("'progressDeadline' (60s) must be greater than 'minReady' (60s)");
 
 });
