@@ -492,3 +492,32 @@ test('can configure auth to docker registry', () => {
   expect(spec.imagePullSecrets).toEqual([{ name: auth.name }]);
 
 });
+
+test('auto mounting token defaults to true', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
+
+  expect(pod.token).toBeTruthy();
+  expect(spec.automountServiceAccountToken).toBeTruthy();
+
+});
+
+test('auto mounting token can be disabled', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    token: false,
+  });
+
+  const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
+
+  expect(pod.token).toBeFalsy();
+  expect(spec.automountServiceAccountToken).toBeFalsy();
+
+});
