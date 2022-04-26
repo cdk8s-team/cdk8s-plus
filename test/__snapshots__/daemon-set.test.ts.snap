@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "DaemonSet",
+    "metadata": Object {
+      "name": "test-daemonset-c8482ea2",
+    },
+    "spec": Object {
+      "minReadySeconds": 5,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+        },
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+          },
+        },
+        "spec": Object {
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "image",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`defaults 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "DaemonSet",
+    "metadata": Object {
+      "name": "test-daemonset-c8482ea2",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+        },
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+          },
+        },
+        "spec": Object {
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "image",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;

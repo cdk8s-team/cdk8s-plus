@@ -15,3 +15,4 @@ export * from './pvc';
 export * from './pv';
 export * from './handler';
 export * from './workload';
+export * from './daemon-set';

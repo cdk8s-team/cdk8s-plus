@@ -15,6 +15,13 @@ Array [
           "cdk8s.deployment": "test-Deployment-c83f5e59",
         },
       },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
       "template": Object {
         "metadata": Object {
           "labels": Object {
@@ -41,6 +48,12 @@ Array [
               "volumeMounts": Array [],
             },
           ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
           "hostAliases": Array [],
           "initContainers": Array [],
           "securityContext": Object {
@@ -48,6 +61,7 @@ Array [
             "runAsNonRoot": false,
             "sysctls": Array [],
           },
+          "setHostnameAsFQDN": false,
           "volumes": Array [],
         },
       },
