@@ -20,7 +20,7 @@ test('minimal definition', () => {
   const sa = new kplus.ServiceAccount(chart, 'my-service-account');
 
   // THEN
-  expect(sa.token).toBeTruthy();
+  expect(sa.automountToken).toBeTruthy();
   expect(Testing.synth(chart)).toMatchInlineSnapshot(`
     Array [
       Object {
@@ -58,10 +58,10 @@ test('auto mounting token can be disabled', () => {
 
   const chart = Testing.chart();
   const sa = new kplus.ServiceAccount(chart, 'my-service-account', {
-    token: false,
+    automountToken: false,
   });
 
-  expect(sa.token).toBeFalsy();
+  expect(sa.automountToken).toBeFalsy();
   expect(Testing.synth(chart)).toMatchInlineSnapshot(`
     Array [
       Object {

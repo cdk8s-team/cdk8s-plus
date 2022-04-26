@@ -14,7 +14,7 @@ export abstract class AbstractPod extends base.Resource {
   public readonly securityContext: PodSecurityContext;
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
-  public readonly token: boolean;
+  public readonly automountServiceAccountToken: boolean;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
@@ -29,7 +29,7 @@ export abstract class AbstractPod extends base.Resource {
     this.securityContext = new PodSecurityContext(props.securityContext);
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
-    this.token = props.token ?? true;
+    this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -168,7 +168,7 @@ export abstract class AbstractPod extends base.Resource {
       subdomain: dns.subdomain,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
-      automountServiceAccountToken: this.token,
+      automountServiceAccountToken: this.automountServiceAccountToken,
     };
 
   }
@@ -353,7 +353,7 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default true
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
    */
-  readonly token?: boolean;
+  readonly automountServiceAccountToken?: boolean;
 
 }
 
