@@ -116,12 +116,12 @@ for (const lang of ['typescript', 'python', 'java']) {
 }
 
 // backport task to branches based on pr labels
-const backportTask = project.addTask('backport');
+const backportTask = project.addTask('backport', { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
 backportTask.exec('npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive');
 
 // backport tasks to explicit branches based on input
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
-  const t = project.addTask(`backport:${spec}`);
+  const t = project.addTask(`backport:${spec}`, { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
   t.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main`);
 }
 
@@ -156,6 +156,7 @@ backportWorkflow.addJob('backport', {
   ],
 });
 
+// see https://github.com/sqren/backport/blob/main/docs/configuration.md
 const backportConfig = {
   repoOwner: 'cdk8s-team',
   repoName: 'cdk8s-plus',
