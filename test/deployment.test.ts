@@ -30,7 +30,7 @@ test('A label selector is automatically allocated', () => {
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
   // assert the deployment object has it.
-  expect(deployment.labelSelector).toEqual(expectedSelector);
+  expect(deployment.matchLabels).toEqual(expectedSelector);
 
 });
 
@@ -39,7 +39,7 @@ test('No selector is generated if "defaultSelector" is false', () => {
   const chart = Testing.chart();
 
   const deployment = new kplus.Deployment(chart, 'Deployment', {
-    defaultSelector: false,
+    select: false,
     containers: [{ image: 'foobar' }],
   });
 
@@ -49,7 +49,7 @@ test('No selector is generated if "defaultSelector" is false', () => {
   expect(spec.template.metadata?.labels).toEqual(undefined);
 
   // assert the deployment object doesnt have it.
-  expect(deployment.labelSelector).toEqual({});
+  expect(deployment.matchLabels).toEqual({});
 
 });
 
@@ -63,19 +63,19 @@ test('Can select by label', () => {
         image: 'image',
       },
     ],
-    defaultSelector: false,
+    select: false,
   });
 
   const expectedSelector = { foo: 'bar' };
 
-  deployment.selectByLabel('foo', expectedSelector.foo);
+  deployment.select(kplus.LabelSelector.equals('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the deployment object has it.
-  expect(deployment.labelSelector).toEqual(expectedSelector);
+  expect(deployment.matchLabels).toEqual(expectedSelector);
 
 });
 
@@ -339,4 +339,57 @@ test('throws if minReadySeconds = progressDeadlineSeconds', () => {
     progressDeadline: Duration.seconds(60),
   })).toThrowError("'progressDeadline' (60s) must be greater than 'minReady' (60s)");
 
+});
+
+test('can apply label selector to pod metadata', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    select: false,
+  });
+
+  const expectedSelector = { foo: 'bar' };
+
+  deployment.select(kplus.LabelSelector.equals('foo', expectedSelector.foo, true));
+
+  // assert the k8s spec has it.
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  expect(spec.selector.matchLabels).toEqual(expectedSelector);
+  expect(spec.template.metadata?.labels).toEqual(expectedSelector);
+
+  // assert the deployment object has it.
+  expect(deployment.matchLabels).toEqual(expectedSelector);
+  expect(deployment.podMetadata.getLabel('foo')).toEqual(expectedSelector.foo);
+
+});
+
+test('can select with expressions', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    select: false,
+  });
+
+  deployment.select(kplus.LabelSelector.in('foo', ['v1', 'v2']));
+  deployment.select(kplus.LabelSelector.notIn('foo', ['v1', 'v2']));
+  deployment.select(kplus.LabelSelector.exists('foo'));
+  deployment.select(kplus.LabelSelector.doesNotExist('foo'));
+
+  const expected: Set<k8s.LabelSelectorRequirement> = new Set([
+    { key: 'foo', operator: 'In', values: ['v1', 'v2'] },
+    { key: 'foo', operator: 'NotIn', values: ['v1', 'v2'] },
+    { key: 'foo', operator: 'Exists' },
+    { key: 'foo', operator: 'DoesNotExist' },
+  ]);
+
+  // assert the k8s spec has it.
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  expect(new Set(spec.selector.matchExpressions)).toEqual(expected);
+
+  // assert the deployment object has it.
+  expect(new Set(deployment.matchExpressions)).toEqual(expected);
 });

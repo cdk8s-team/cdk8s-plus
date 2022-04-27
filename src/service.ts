@@ -266,7 +266,7 @@ export class Service extends base.Resource {
       throw new Error('Cannot determine port. Either pass `port` in options or configure a port on the first container of the deployment');
     }
 
-    const selector = Object.entries(depl.labelSelector);
+    const selector = Object.entries(depl.matchLabels);
     if (selector.length === 0) {
       throw new Error('deployment does not have a label selector');
     }

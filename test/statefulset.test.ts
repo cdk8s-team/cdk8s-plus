@@ -33,7 +33,7 @@ test('A label selector is automatically allocated', () => {
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
   // assert the statefulset object has it.
-  expect(statefulset.labelSelector).toEqual(expectedSelector);
+  expect(statefulset.matchLabels).toEqual(expectedSelector);
 
 });
 
@@ -43,7 +43,7 @@ test('No selector is generated if "defaultSelector" is false', () => {
 
   const service = new kplus.Service(chart, 'TestService', { ports: [{ port: 80 }] });
   const statefulset = new kplus.StatefulSet(chart, 'StatefulSet', {
-    defaultSelector: false,
+    select: false,
     containers: [{ image: 'foobar' }],
     service: service,
   });
@@ -54,7 +54,7 @@ test('No selector is generated if "defaultSelector" is false', () => {
   expect(spec.template.metadata?.labels).toEqual(undefined);
 
   // assert the statefulset object doesnt have it.
-  expect(statefulset.labelSelector).toEqual({});
+  expect(statefulset.matchLabels).toEqual({});
 
 });
 
@@ -69,20 +69,20 @@ test('Can select by label', () => {
         image: 'image',
       },
     ],
-    defaultSelector: false,
+    select: false,
     service,
   });
 
   const expectedSelector = { foo: 'bar' };
 
-  statefulset.selectByLabel('foo', expectedSelector.foo);
+  statefulset.select(kplus.LabelSelector.equals('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the statefulset object has it.
-  expect(statefulset.labelSelector).toEqual(expectedSelector);
+  expect(statefulset.matchLabels).toEqual(expectedSelector);
 
 });
 

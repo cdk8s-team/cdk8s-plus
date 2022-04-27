@@ -11,6 +11,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 5,
       "selector": Object {
+        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.daemonset": "test-DaemonSet-c8f77186",
         },
@@ -70,6 +71,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "selector": Object {
+        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.daemonset": "test-DaemonSet-c8f77186",
         },

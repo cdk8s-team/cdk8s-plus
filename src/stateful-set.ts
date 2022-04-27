@@ -115,7 +115,7 @@ export class StatefulSet extends workload.Workload {
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
 
-    const selectors = Object.entries(this.labelSelector);
+    const selectors = Object.entries(this.matchLabels);
     for (const [k, v] of selectors) {
       this._service.addSelector(k, v);
     }
@@ -133,7 +133,8 @@ export class StatefulSet extends workload.Workload {
         spec: this._toPodSpec(),
       },
       selector: {
-        matchLabels: this.labelSelector,
+        matchExpressions: this.matchExpressions,
+        matchLabels: this.matchLabels,
       },
       podManagementPolicy: this.podManagementPolicy,
       updateStrategy: this.strategy._toKube(),

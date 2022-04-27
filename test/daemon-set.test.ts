@@ -51,7 +51,7 @@ test('a label selector is automatically allocated', () => {
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
   // assert the deployment object has it.
-  expect(ds.labelSelector).toEqual(expectedSelector);
+  expect(ds.matchLabels).toEqual(expectedSelector);
 
 });
 
@@ -60,7 +60,7 @@ test('no selector is generated if "defaultSelector" is false', () => {
   const chart = Testing.chart();
 
   const ds = new kplus.DaemonSet(chart, 'DaemonSet', {
-    defaultSelector: false,
+    select: false,
     containers: [{ image: 'foobar' }],
   });
 
@@ -70,7 +70,7 @@ test('no selector is generated if "defaultSelector" is false', () => {
   expect(spec.template.metadata?.labels).toEqual(undefined);
 
   // assert the deployment object doesnt have it.
-  expect(ds.labelSelector).toEqual({});
+  expect(ds.matchLabels).toEqual({});
 
 });
 
@@ -80,18 +80,18 @@ test('can select by label', () => {
 
   const ds = new kplus.DaemonSet(chart, 'DaemonSet', {
     containers: [{ image: 'image' }],
-    defaultSelector: false,
+    select: false,
   });
 
   const expectedSelector = { foo: 'bar' };
 
-  ds.selectByLabel('foo', expectedSelector.foo);
+  ds.select(kplus.LabelSelector.equals('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the deployment object has it.
-  expect(ds.labelSelector).toEqual(expectedSelector);
+  expect(ds.matchLabels).toEqual(expectedSelector);
 
 });
