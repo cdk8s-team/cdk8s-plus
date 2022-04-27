@@ -143,6 +143,7 @@ backportWorkflow.addJob('backport', {
       run: `npx projen ${backportTask.name}`,
       env: {
         GITHUB_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+        BACKPORT_PR_NUMBER: '${{ github.event.pull_request.number }}',
       },
     },
     {
