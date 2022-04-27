@@ -135,6 +135,7 @@ test('Can create a service account token secret', () => {
 Array [
   Object {
     "apiVersion": "v1",
+    "automountServiceAccountToken": true,
     "kind": "ServiceAccount",
     "metadata": Object {
       "name": "test-serviceaccount-c8f15383",

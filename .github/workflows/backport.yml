@@ -2,7 +2,7 @@
 
 name: backport
 on:
-  pull_request:
+  pull_request_target:
     types:
       - closed
 jobs:
@@ -11,8 +11,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: backport
-        uses: tibdex/backport@v1
+      - name: checkout
+        uses: actions/checkout@v3
         with:
-          github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
-          title_template: "{{originalTitle}}"
+          fetch-depth: 0
+      - name: backport
+        if: github.event.pull_request.merged == true
+        run: npx projen backport
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          BACKPORT_PR_NUMBER: ${{ github.event.pull_request.number }}

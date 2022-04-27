@@ -23,6 +23,7 @@ Array [
           },
         },
         "spec": Object {
+          "automountServiceAccountToken": true,
           "containers": Array [
             Object {
               "env": Array [],
@@ -83,6 +84,7 @@ Array [
           },
         },
         "spec": Object {
+          "automountServiceAccountToken": true,
           "containers": Array [
             Object {
               "env": Array [],
