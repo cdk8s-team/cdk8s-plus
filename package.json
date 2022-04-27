@@ -6,6 +6,7 @@
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
   },
   "scripts": {
+    "backport": "npx projen backport",
     "backport:20": "npx projen backport:20",
     "backport:21": "npx projen backport:21",
     "backport:22": "npx projen backport:22",
