@@ -127,7 +127,7 @@ test('StatefulSet allows overrides', () => {
   expect(setSpec.replicas).toEqual(5);
   expect(setSpec.serviceName).toEqual('test-srv');
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.PARALLEL);
-  expect(setSpec.minReadySeconds).toEqual(0);
+  expect(setSpec.minReadySeconds).toEqual(30);
 });
 
 
