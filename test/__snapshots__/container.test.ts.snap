@@ -9,6 +9,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
+      "automountServiceAccountToken": true,
       "containers": Array [
         Object {
           "env": Array [],
