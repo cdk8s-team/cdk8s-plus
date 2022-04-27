@@ -134,6 +134,10 @@ backportWorkflow.addJob('backport', {
   },
   steps: [
     {
+      name: 'checkout',
+      uses: 'actions/checkout@v2',
+    },
+    {
       name: 'backport',
       if: 'github.event.pull_request.merged == true',
       run: `npx projen ${backportTask.name}`,

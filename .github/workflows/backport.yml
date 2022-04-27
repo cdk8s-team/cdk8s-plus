@@ -11,6 +11,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - name: backport
         if: github.event.pull_request.merged == true
         run: npx projen backport
