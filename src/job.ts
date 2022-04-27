@@ -70,7 +70,7 @@ export class Job extends workload.Workload {
   constructor(scope: Construct, id: string, props: JobProps = {}) {
     super(scope, id, {
       restartPolicy: pod.RestartPolicy.NEVER,
-      defaultSelector: false,
+      select: false,
       ...props,
     });
 

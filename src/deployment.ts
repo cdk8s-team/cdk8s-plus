@@ -214,7 +214,8 @@ export class Deployment extends workload.Workload {
         spec: this._toPodSpec(),
       },
       selector: {
-        matchLabels: this.labelSelector,
+        matchExpressions: this.matchExpressions,
+        matchLabels: this.matchLabels,
       },
       strategy: this.strategy._toKube(),
     };

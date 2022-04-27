@@ -142,7 +142,7 @@ test('Cannot add a deployment if it does not have a label selector', () => {
 
   const service = new kplus.Service(chart, 'service');
   const deployment = new kplus.Deployment(chart, 'dep', {
-    defaultSelector: false,
+    select: false,
     containers: [{ image: 'foo' }],
   });
 
