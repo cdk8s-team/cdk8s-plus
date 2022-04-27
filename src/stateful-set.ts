@@ -1,4 +1,4 @@
-import { ApiObject, Lazy } from 'cdk8s';
+import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import * as service from './service';
@@ -49,6 +49,18 @@ export interface StatefulSetProps extends workload.WorkloadProps {
    * @default - RollingUpdate with partition set to 0
    */
   readonly strategy?: StatefulSetUpdateStrategy;
+
+  /**
+   * Minimum duration for which a newly created pod should be ready without any of its container crashing,
+   * for it to be considered available. Zero means the pod will be considered available as soon as it is ready.
+   *
+   * This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
+   * @default Duration.seconds(0)
+   */
+  readonly minReady?: Duration;
+
 }
 
 /**
@@ -94,6 +106,12 @@ export class StatefulSet extends workload.Workload {
   public readonly strategy: StatefulSetUpdateStrategy;
 
   /**
+   * Minimum duration for which a newly created pod should be ready without
+   * any of its container crashing, for it to be considered available.
+   */
+  public readonly minReady: Duration;
+
+  /**
     * @see base.Resource.apiObject
     */
   protected readonly apiObject: ApiObject;
@@ -114,6 +132,7 @@ export class StatefulSet extends workload.Workload {
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
+    this.minReady = props.minReady ?? Duration.seconds(0);
 
     const selectors = Object.entries(this.labelSelector);
     for (const [k, v] of selectors) {
@@ -128,6 +147,7 @@ export class StatefulSet extends workload.Workload {
     return {
       serviceName: this._service.name,
       replicas: this.replicas,
+      minReadySeconds: this.minReady.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
         spec: this._toPodSpec(),
