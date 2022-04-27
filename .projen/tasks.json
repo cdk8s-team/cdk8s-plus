@@ -1,10 +1,18 @@
 {
   "tasks": {
+    "backport": {
+      "name": "backport",
+      "steps": [
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive"
+        }
+      ]
+    },
     "backport:20": {
       "name": "backport:20",
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main --noFork --prTitle \"{commitMessages}\""
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main"
         }
       ]
     },
@@ -12,7 +20,7 @@
       "name": "backport:21",
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main --noFork --prTitle \"{commitMessages}\""
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main"
         }
       ]
     },
@@ -20,7 +28,7 @@
       "name": "backport:22",
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main --noFork --prTitle \"{commitMessages}\""
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main"
         }
       ]
     },

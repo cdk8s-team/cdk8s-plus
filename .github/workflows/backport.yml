@@ -2,7 +2,7 @@
 
 name: backport
 on:
-  pull_request:
+  pull_request_target:
     types:
       - closed
 jobs:
@@ -12,7 +12,10 @@ jobs:
       contents: write
     steps:
       - name: backport
-        uses: tibdex/backport@v1
-        with:
-          github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
-          title_template: "{{originalTitle}}"
+        if: github.event.pull_request.merged == true
+        run: npx projen backport
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+      - name: log
+        if: always()
+        run: cat /home/runner/.backport/backport.log
