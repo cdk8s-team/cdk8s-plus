@@ -17,13 +17,15 @@ test('minimal definition', () => {
   const chart = Testing.chart();
 
   // WHEN
-  new kplus.ServiceAccount(chart, 'my-service-account');
+  const sa = new kplus.ServiceAccount(chart, 'my-service-account');
 
   // THEN
+  expect(sa.automountToken).toBeTruthy();
   expect(Testing.synth(chart)).toMatchInlineSnapshot(`
     Array [
       Object {
         "apiVersion": "v1",
+        "automountServiceAccountToken": true,
         "kind": "ServiceAccount",
         "metadata": Object {
           "name": "test-my-service-account-c84bb46b",
@@ -50,4 +52,27 @@ test('secrets can be added to the service account', () => {
   const manifest = Testing.synth(chart);
   expect(manifest[0]?.secrets[0]).toStrictEqual({ name: 'my-secret-1' });
   expect(manifest[0]?.secrets[1]).toStrictEqual({ name: 'my-secret-2' });
+});
+
+test('auto mounting token can be disabled', () => {
+
+  const chart = Testing.chart();
+  const sa = new kplus.ServiceAccount(chart, 'my-service-account', {
+    automountToken: false,
+  });
+
+  expect(sa.automountToken).toBeFalsy();
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "apiVersion": "v1",
+        "automountServiceAccountToken": false,
+        "kind": "ServiceAccount",
+        "metadata": Object {
+          "name": "test-my-service-account-c84bb46b",
+        },
+      },
+    ]
+  `);
+
 });
