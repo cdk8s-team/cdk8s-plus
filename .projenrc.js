@@ -168,6 +168,7 @@ const backportConfig = {
   publishStatusCommentOnFailure: true,
   publishStatusCommentOnSuccess: true,
   publishStatusCommentOnAbort: true,
+  targetPRLabels: [project.autoApprove.label],
 };
 
 new JsonFile(project, '.backportrc.json', {
