@@ -1,6 +1,5 @@
 import { ApiObjectMetadata, ApiObjectMetadataDefinition, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import * as k8s from './imports/k8s';
 import { AbstractPod, AbstractPodProps } from './pod';
 
 /**
@@ -25,6 +24,55 @@ export interface WorkloadProps extends AbstractPodProps {
 }
 
 /**
+ * Possible operators.
+ */
+export enum LabelSelectorRequirementOperator {
+
+  /**
+   * In.
+   */
+  IN = 'In',
+
+  /**
+   * NotIn.
+   */
+  NOT_IN = 'NotIn',
+
+  /**
+   * Exists.
+   */
+  EXISTS = 'Exists',
+
+  /**
+   * DoesNotExist.
+   */
+  DOES_NOT_EXIST = 'DoesNotExist'
+}
+
+/**
+ * A label selector requirement is a selector that contains values, a key, and an operator that
+ * relates the key and values.
+ */
+export interface LabelSelectorRequirement {
+  /**
+   * The label key that the selector applies to.
+   */
+  readonly key: string;
+
+  /**
+   * Represents a key's relationship to a set of values.
+   */
+  readonly operator: LabelSelectorRequirementOperator;
+
+  /**
+   * An array of string values. If the operator is In or NotIn, the values array
+   * must be non-empty. If the operator is Exists or DoesNotExist,
+   * the values array must be empty. This array is replaced during a strategic merge patch.
+   */
+  readonly values?: string[];
+}
+
+/**
  * A workload is an application running on Kubernetes. Whether your workload is a single
  * component or several that work together, on Kubernetes you run it inside a set of pods.
  * In Kubernetes, a Pod represents a set of running containers on your cluster.
@@ -37,7 +85,7 @@ export abstract class Workload extends AbstractPod {
   public readonly podMetadata: ApiObjectMetadataDefinition;
 
   private readonly _matchLabels: Record<string, string> = {};
-  private readonly _matchExpressions: k8s.LabelSelectorRequirement[] = [];
+  private readonly _matchExpressions: LabelSelectorRequirement[] = [];
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
@@ -47,7 +95,7 @@ export abstract class Workload extends AbstractPod {
     if (props.select ?? true) {
       const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
       const matcher = Names.toLabelValue(this);
-      this.select(LabelSelector.equals(selector, matcher, true));
+      this.select(LabelSelector.is(selector, matcher, true));
     }
 
   }
@@ -83,7 +131,7 @@ export abstract class Workload extends AbstractPod {
    *
    * Returns a a copy. Use `select()` to add expression matchers.
    */
-  public get matchExpressions(): k8s.LabelSelectorRequirement[] {
+  public get matchExpressions(): LabelSelectorRequirement[] {
     return [...this._matchExpressions];
   }
 
@@ -100,7 +148,7 @@ export class LabelSelector {
    * Creates a `matchLabels` entry from the key and value.
    * Use `applyToTemplate` to also add this label to the pod metadata of the workload.
    */
-  public static equals(key: string, value: string, applyToTemplate?: boolean) {
+  public static is(key: string, value: string, applyToTemplate?: boolean) {
     return new LabelSelector(applyToTemplate ?? false, key, [value], undefined);
   }
 
@@ -108,34 +156,34 @@ export class LabelSelector {
    * Creates a `matchExpressions` "In" entry.
    */
   public static in(key: string, values: string[]) {
-    return new LabelSelector(false, key, values, 'In');
+    return new LabelSelector(false, key, values, LabelSelectorRequirementOperator.IN);
   }
 
   /**
    * Creates a `matchExpressions` "NotIn" entry.
    */
   public static notIn(key: string, values: string[]) {
-    return new LabelSelector(false, key, values, 'NotIn');
+    return new LabelSelector(false, key, values, LabelSelectorRequirementOperator.NOT_IN);
   }
 
   /**
    * Creates a `matchExpressions` "Exists" entry.
    */
   public static exists(key: string) {
-    return new LabelSelector(false, key, undefined, 'Exists');
+    return new LabelSelector(false, key, undefined, LabelSelectorRequirementOperator.EXISTS);
   }
 
   /**
    * Creates a `matchExpressions` "DoesNotExist" entry.
    */
   public static doesNotExist(key: string) {
-    return new LabelSelector(false, key, undefined, 'DoesNotExist');
+    return new LabelSelector(false, key, undefined, LabelSelectorRequirementOperator.DOES_NOT_EXIST);
   }
 
   private constructor(
     public readonly applyToTemplate: boolean,
     public readonly key: string,
     public readonly values?: string[],
-    public readonly operator?: string) {
+    public readonly operator?: LabelSelectorRequirementOperator) {
   }
 }

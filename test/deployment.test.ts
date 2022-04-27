@@ -68,7 +68,7 @@ test('Can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  deployment.select(kplus.LabelSelector.equals('foo', expectedSelector.foo));
+  deployment.select(kplus.LabelSelector.is('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
@@ -352,7 +352,7 @@ test('can apply label selector to pod metadata', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  deployment.select(kplus.LabelSelector.equals('foo', expectedSelector.foo, true));
+  deployment.select(kplus.LabelSelector.is('foo', expectedSelector.foo, true));
 
   // assert the k8s spec has it.
   const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
