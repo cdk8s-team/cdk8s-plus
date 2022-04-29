@@ -1,4 +1,4 @@
-import { Testing, ApiObject } from 'cdk8s';
+import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 import { StatefulSetUpdateStrategy } from '../src';
@@ -33,7 +33,7 @@ test('A label selector is automatically allocated', () => {
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
   // assert the statefulset object has it.
-  expect(statefulset.labelSelector).toEqual(expectedSelector);
+  expect(statefulset.matchLabels).toEqual(expectedSelector);
 
 });
 
@@ -43,7 +43,7 @@ test('No selector is generated if "defaultSelector" is false', () => {
 
   const service = new kplus.Service(chart, 'TestService', { ports: [{ port: 80 }] });
   const statefulset = new kplus.StatefulSet(chart, 'StatefulSet', {
-    defaultSelector: false,
+    select: false,
     containers: [{ image: 'foobar' }],
     service: service,
   });
@@ -54,7 +54,7 @@ test('No selector is generated if "defaultSelector" is false', () => {
   expect(spec.template.metadata?.labels).toEqual(undefined);
 
   // assert the statefulset object doesnt have it.
-  expect(statefulset.labelSelector).toEqual({});
+  expect(statefulset.matchLabels).toEqual({});
 
 });
 
@@ -69,20 +69,20 @@ test('Can select by label', () => {
         image: 'image',
       },
     ],
-    defaultSelector: false,
+    select: false,
     service,
   });
 
   const expectedSelector = { foo: 'bar' };
 
-  statefulset.selectByLabel('foo', expectedSelector.foo);
+  statefulset.select(kplus.LabelSelector.is('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the statefulset object has it.
-  expect(statefulset.labelSelector).toEqual(expectedSelector);
+  expect(statefulset.matchLabels).toEqual(expectedSelector);
 
 });
 
@@ -97,10 +97,11 @@ test('StatefulSet gets defaults', () => {
   });
 
   const resources = Testing.synth(chart);
-  const setSpec = resources[1].spec;
+  const setSpec: k8s.StatefulSetSpec = resources[1].spec;
   expect(setSpec.replicas).toEqual(1);
   expect(setSpec.serviceName).toEqual(resources[0].metadata.name);
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.ORDERED_READY);
+  expect(setSpec.minReadySeconds).toEqual(0);
 });
 
 
@@ -117,6 +118,7 @@ test('StatefulSet allows overrides', () => {
     containers: [{ image: 'image' }],
     replicas: 5,
     podManagementPolicy: kplus.PodManagementPolicy.PARALLEL,
+    minReady: Duration.seconds(30),
     service,
   });
 
@@ -125,6 +127,7 @@ test('StatefulSet allows overrides', () => {
   expect(setSpec.replicas).toEqual(5);
   expect(setSpec.serviceName).toEqual('test-srv');
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.PARALLEL);
+  expect(setSpec.minReadySeconds).toEqual(30);
 });
 
 

@@ -14,6 +14,7 @@ export abstract class AbstractPod extends base.Resource {
   public readonly securityContext: PodSecurityContext;
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
+  public readonly automountServiceAccountToken: boolean;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
@@ -28,6 +29,7 @@ export abstract class AbstractPod extends base.Resource {
     this.securityContext = new PodSecurityContext(props.securityContext);
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
+    this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -166,6 +168,7 @@ export abstract class AbstractPod extends base.Resource {
       subdomain: dns.subdomain,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
+      automountServiceAccountToken: this.automountServiceAccountToken,
     };
 
   }
@@ -343,7 +346,21 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default - No auth. Images are assumed to be publicly available.
    */
   readonly dockerRegistryAuth?: secret.DockerConfigSecret;
+
+  /**
+   * Indicates whether a service account token should be automatically mounted.
+   *
+   * @default true
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+   */
+  readonly automountServiceAccountToken?: boolean;
+
 }
+
+/**
+ * Properties for `Pod`.
+ */
+export interface PodProps extends AbstractPodProps {}
 
 /**
  * Pod is a collection of containers that can run on a host. This resource is
@@ -705,8 +722,3 @@ export interface HostAlias {
    */
   readonly ip: string;
 }
-
-/**
- * Properties for `Pod`.
- */
-export interface PodProps extends AbstractPodProps {}

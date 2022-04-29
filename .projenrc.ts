@@ -118,38 +118,61 @@ for (const lang of ['typescript', 'python', 'java']) {
   project.gitignore.exclude(output);
 }
 
+// backport task to branches based on pr labels
+const backportTask = project.addTask('backport', { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
+backportTask.exec('npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive');
+
+// backport tasks to explicit branches based on input
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
-  const backportTask = project.addTask(`backport:${spec}`);
-  backportTask.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main --noFork --prTitle "{commitMessages}"`);
+  const t = project.addTask(`backport:${spec}`, { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
+  t.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main`);
 }
 
-// backport PR's to other branches
-// this doesn't use the backport tasks because there's a dedicated
-// action for it which already invokes it.
-// see https://github.com/tibdex/backport
 const backportWorkflow = project.github!.addWorkflow('backport');
-backportWorkflow.on({ pullRequest: { types: ['closed'] } });
+backportWorkflow.on({ pullRequestTarget: { types: ['closed'] } });
 backportWorkflow.addJob('backport', {
   runsOn: ['ubuntu-18.04'],
   permissions: {
     contents: JobPermission.WRITE,
   },
   steps: [
+    // needed in order to run the projen task as well
+    // as use the backport configuration in the repo.
+    {
+      name: 'checkout',
+      uses: 'actions/checkout@v3',
+      with: {
+        // required because we need the full history
+        // for proper backports.
+        'fetch-depth': 0,
+      },
+    },
     {
       name: 'backport',
-      uses: 'tibdex/backport@v1',
-      with: {
-        github_token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
-        title_template: '{{originalTitle}}',
+      if: 'github.event.pull_request.merged == true',
+      run: `npx projen ${backportTask.name}`,
+      env: {
+        GITHUB_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+        BACKPORT_PR_NUMBER: '${{ github.event.pull_request.number }}',
       },
     },
   ],
 });
 
+// see https://github.com/sqren/backport/blob/main/docs/configuration.md
 const backportConfig = {
   repoOwner: 'cdk8s-team',
   repoName: 'cdk8s-plus',
   signoff: true,
+  branchLabelMapping: {
+    '^backport-to-(.+)$': '$1',
+  },
+  prTitle: '{commitMessages}',
+  fork: false,
+  publishStatusCommentOnFailure: true,
+  publishStatusCommentOnSuccess: true,
+  publishStatusCommentOnAbort: true,
+  targetPRLabels: [project.autoApprove!.label],
 };
 
 new JsonFile(project, '.backportrc.json', {
