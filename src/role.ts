@@ -64,15 +64,23 @@ export class Role extends Resource implements IRole {
 
   public readonly resourceType = 'roles';
 
-  private readonly _rules: Array<k8s.PolicyRule> = [];
+  private readonly _rules: Array<RolePolicyRule> = [];
 
   constructor(scope: Construct, id: string, props: RoleProps = {}) {
     super(scope, id);
 
     this.apiObject = new k8s.KubeRole(this, 'Resource', {
       metadata: props.metadata,
-      rules: Lazy.any({ produce: () => this._rules }),
+      rules: Lazy.any({ produce: () => this.synthesizeRules() }),
     });
+  }
+
+  /**
+   * Rules associaated with this Role.
+   * Returns a copy, use `allow` to add rules.
+   */
+  public get rules(): RolePolicyRule[] {
+    return [...this._rules];
   }
 
   /**
@@ -83,14 +91,7 @@ export class Role extends Resource implements IRole {
    * @see https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
    */
   public allow(verbs: string[], ...resources: IApiResource[]): void {
-    for (const resource of resources) {
-      this._rules.push({
-        apiGroups: [resource.apiGroup === 'core' ? '' : resource.apiGroup],
-        resources: [resource.resourceType],
-        resourceNames: resource.resourceName ? [resource.resourceName] : [],
-        verbs,
-      });
-    }
+    this._rules.push({ verbs, resources });
   }
 
   /**
@@ -189,5 +190,20 @@ export class Role extends Resource implements IRole {
     });
     binding.addSubjects(...subjects);
     return binding;
+  }
+
+  private synthesizeRules(): k8s.PolicyRule[] {
+    const rules: k8s.PolicyRule[] = [];
+    for (const rule of this._rules) {
+      for (const resource of rule.resources) {
+        rules.push({
+          verbs: rule.verbs,
+          apiGroups: [resource.apiGroup === 'core' ? '' : resource.apiGroup],
+          resourceNames: resource.resourceName ? [resource.resourceName] : undefined,
+          resources: resource.resourceType ? [resource.resourceType] : undefined,
+        });
+      }
+    }
+    return rules;
   }
 }

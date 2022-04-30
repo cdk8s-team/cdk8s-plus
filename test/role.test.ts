@@ -57,7 +57,7 @@ Array [
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
-      { apiGroups: [''], resourceNames: [], resources: ['pods'], verbs: ['get', 'watch', 'list'] },
+      { apiGroups: [''], resources: ['pods'], verbs: ['get', 'watch', 'list'] },
     ]));
 
   });
@@ -125,7 +125,6 @@ Array [
       {
         apiGroups: [''],
         resources: ['secrets'],
-        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
       {
@@ -160,7 +159,6 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods'],
-        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
@@ -190,13 +188,11 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods'],
-        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
       {
         apiGroups: [''],
         resources: ['secrets'],
-        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
@@ -218,7 +214,6 @@ Array [
       {
         apiGroups: [''],
         resources: ['pods/log'],
-        resourceNames: [],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
@@ -240,7 +235,7 @@ Array [
     const manifest = Testing.synth(chart);
     expect(manifest[1].rules).toEqual(expect.arrayContaining([
       { apiGroups: [''], resourceNames: ['test-pod-c890e1b8'], resources: ['pods'], verbs: ['get'] },
-      { apiGroups: [''], resourceNames: [], resources: ['pods'], verbs: ['get'] },
+      { apiGroups: [''], resources: ['pods'], verbs: ['get'] },
     ]));
 
   });

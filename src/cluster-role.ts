@@ -74,14 +74,14 @@ export class ClusterRole extends base.Resource implements IClusterRole, role.IRo
   public readonly resourceType = 'clusterroles';
 
   private readonly _labelSelector: Record<string, string> = {};
-  private readonly _rules: Array<k8s.PolicyRule> = [];
+  private readonly _rules: Array<ClusterRolePolicyRule> = [];
 
   constructor(scope: Construct, id: string, props: ClusterRoleProps = {}) {
     super(scope, id);
 
     this.apiObject = new k8s.KubeClusterRole(this, 'Resource', {
       metadata: props.metadata,
-      rules: Lazy.any({ produce: () => this._rules }),
+      rules: Lazy.any({ produce: () => this.synthesizeRules() }),
       aggregationRule: Lazy.any({ produce: () => this.synthesizeAggregationRules() }),
     });
 
@@ -95,6 +95,14 @@ export class ClusterRole extends base.Resource implements IClusterRole, role.IRo
   }
 
   /**
+   * Rules associaated with this Role.
+   * Returns a copy, use `allow` to add rules.
+   */
+  public get rules(): ClusterRolePolicyRule[] {
+    return [...this._rules];
+  }
+
+  /**
    * Add permission to perform a list of HTTP verbs on a collection of
    * resources.
    *
@@ -102,31 +110,7 @@ export class ClusterRole extends base.Resource implements IClusterRole, role.IRo
    * @see https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
    */
   public allow(verbs: string[], ...endpoints: IApiEndpoint[]): void {
-    for (const endpoint of endpoints) {
-
-      const resource = endpoint.asApiResource();
-      const nonResource = endpoint.asNonApiResource();
-
-      if (resource && nonResource) {
-        throw new Error('Endpoint must be either resource or non resource. not both.');
-      }
-
-      if (!resource && !nonResource) {
-        throw new Error('Endpoint must be either resource or non resource. not neither.');
-      }
-
-      if (resource) {
-        this._rules.push({
-          apiGroups: [resource.apiGroup === 'core' ? '' : resource.apiGroup],
-          resources: [resource.resourceType],
-          resourceNames: resource.resourceName ? [resource.resourceName] : [],
-          verbs,
-        });
-      }
-      if (nonResource) {
-        this._rules.push({ verbs, nonResourceUrLs: [nonResource] });
-      }
-    }
+    this._rules.push({ verbs, endpoints });
   }
 
   /**
@@ -258,6 +242,38 @@ export class ClusterRole extends base.Resource implements IClusterRole, role.IRo
     });
     binding.addSubjects(...subjects);
     return binding;
+  }
+
+  private synthesizeRules(): k8s.PolicyRule[] {
+    const rules: k8s.PolicyRule[] = [];
+    for (const rule of this._rules) {
+      for (const endpoint of rule.endpoints) {
+        const resource = endpoint.asApiResource();
+        const nonResource = endpoint.asNonApiResource();
+
+        if (resource && nonResource) {
+          throw new Error('Endpoint must be either resource or non resource. not both.');
+        }
+
+        if (!resource && !nonResource) {
+          throw new Error('Endpoint must be either resource or non resource. not neither.');
+        }
+
+        if (resource) {
+          rules.push({
+            apiGroups: [resource.apiGroup === 'core' ? '' : resource.apiGroup],
+            resources: [resource.resourceType],
+            resourceNames: resource.resourceName ? [resource.resourceName] : [],
+            verbs: rule.verbs,
+          });
+        }
+        if (nonResource) {
+          rules.push({ verbs: rule.verbs, nonResourceUrLs: [nonResource] });
+        }
+      }
+
+    }
+    return rules;
   }
 
   private synthesizeAggregationRules(): k8s.AggregationRule | undefined {
