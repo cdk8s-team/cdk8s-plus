@@ -111,50 +111,6 @@ export class RoleBinding extends Resource {
 }
 
 /**
- * Properties for `User`.
- */
-export interface UserProps {
-  /**
-   * The name of the user.
-   */
-  readonly name: string;
-}
-
-/**
- * Represents a user.
- */
-export class User implements ISubject {
-  public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
-  public readonly kind: string = 'User';
-  public readonly name: string;
-  constructor(props: UserProps) {
-    this.name = props.name;
-  }
-}
-
-/**
- * Properties for `Group`.
- */
-export interface GroupProps {
-  /**
-   * The name of the group.
-   */
-  readonly name: string;
-}
-
-/**
- * Represents a group.
- */
-export class Group implements ISubject {
-  public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
-  public readonly kind: string = 'Group';
-  public readonly name: string;
-  constructor(props: GroupProps) {
-    this.name = props.name;
-  }
-}
-
-/**
  * Properties for `ClusterRoleBinding`.
  */
 export interface ClusterRoleBindingProps extends ResourceProps {
@@ -223,5 +179,49 @@ export class ClusterRoleBinding extends Resource {
       name: subject.name,
       namespace: subject.namespace,
     }));
+  }
+}
+
+/**
+ * Properties for `User`.
+ */
+export interface UserProps {
+  /**
+   * The name of the user.
+   */
+  readonly name: string;
+}
+
+/**
+ * Represents a user.
+ */
+export class User implements ISubject {
+  public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
+  public readonly kind: string = 'User';
+  public readonly name: string;
+  constructor(props: UserProps) {
+    this.name = props.name;
+  }
+}
+
+/**
+ * Properties for `Group`.
+ */
+export interface GroupProps {
+  /**
+   * The name of the group.
+   */
+  readonly name: string;
+}
+
+/**
+ * Represents a group.
+ */
+export class Group implements ISubject {
+  public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
+  public readonly kind: string = 'Group';
+  public readonly name: string;
+  constructor(props: GroupProps) {
+    this.name = props.name;
   }
 }
