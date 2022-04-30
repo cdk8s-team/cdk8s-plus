@@ -57,7 +57,11 @@ Array [
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
-      { apiGroups: [''], resources: ['pods'], verbs: ['get', 'watch', 'list'] },
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        verbs: ['get', 'watch', 'list'],
+      },
     ]));
 
   });
@@ -320,8 +324,14 @@ Array [
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
-      { nonResourceURLs: ['/healthz'], verbs: ['get', 'post'] },
-      { nonResourceURLs: ['/healthz/*'], verbs: ['get', 'post'] },
+      {
+        nonResourceURLs: ['/healthz'],
+        verbs: ['get', 'post'],
+      },
+      {
+        nonResourceURLs: ['/healthz/*'],
+        verbs: ['get', 'post'],
+      },
     ]));
 
   });
