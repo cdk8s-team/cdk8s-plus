@@ -148,6 +148,7 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.close('}');
   ts.line('');
   ts.line('private constructor(private readonly nonResourceUrl: string) {};');
+  ts.line();
   ts.open('public asApiResource(): IApiResource | undefined {');
   ts.line('return undefined;');
   ts.close('}');

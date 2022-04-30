@@ -544,6 +544,7 @@ export class NonApiResource implements IApiEndpoint {
   }
 
   private constructor(private readonly nonResourceUrl: string) {};
+
   public asApiResource(): IApiResource | undefined {
     return undefined;
   }
