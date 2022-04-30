@@ -1,6 +1,7 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
+import { ApiResource } from '../src';
 
 describe('Role', () => {
   test('defaultChild', () => {
@@ -48,20 +49,15 @@ Array [
 
     // WHEN
     const role = new kplus.Role(chart, 'pod-reader');
-    role.addResourceRule({
-      apiGroups: [''],
-      resourceTypes: ['pods'],
-      verbs: ['get', 'watch', 'list'],
-    });
+    role.allow(['get', 'watch', 'list'], ApiResource.custom({
+      apiGroup: '',
+      resourceType: 'pods',
+    }));
 
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
-      {
-        apiGroups: [''],
-        resources: ['pods'],
-        verbs: ['get', 'watch', 'list'],
-      },
+      { apiGroups: [''], resourceNames: [], resources: ['pods'], verbs: ['get', 'watch', 'list'] },
     ]));
 
   });
@@ -229,6 +225,26 @@ Array [
 
   });
 
+  test('can be allowed access to a specific resource and a resource type', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+    // WHEN
+    const role = new kplus.Role(chart, 'pod-reader');
+    role.allow(['get'], pod, kplus.ApiResource.PODS);
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+      { apiGroups: [''], resourceNames: ['test-pod-c890e1b8'], resources: ['pods'], verbs: ['get'] },
+      { apiGroups: [''], resourceNames: [], resources: ['pods'], verbs: ['get'] },
+    ]));
+
+  });
+
 });
 
 describe('ClusterRole', () => {
@@ -279,12 +295,10 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'pod-reader');
-    role.addResourceRule({
-      apiGroups: [''],
-      resourceTypes: ['pods'],
-      resourceNames: [],
-      verbs: ['get', 'watch', 'list'],
-    });
+    role.allow(['get', 'watch', 'list'], ApiResource.custom({
+      apiGroup: '',
+      resourceType: 'pods',
+    }));
 
     // THEN
     const manifest = Testing.synth(chart);
@@ -306,18 +320,13 @@ Array [
 
     // WHEN
     const role = new kplus.ClusterRole(chart, 'pod-reader');
-    role.addNonResourceRule({
-      nonResourceUrls: ['/healthz', '/healthz/*'],
-      verbs: ['get', 'post'],
-    });
+    role.allow(['get', 'post'], kplus.NonApiResource.of('/healthz'), kplus.NonApiResource.of('/healthz/*'));
 
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest[0]?.rules).toEqual(expect.arrayContaining([
-      {
-        nonResourceURLs: ['/healthz', '/healthz/*'],
-        verbs: ['get', 'post'],
-      },
+      { nonResourceURLs: ['/healthz'], verbs: ['get', 'post'] },
+      { nonResourceURLs: ['/healthz/*'], verbs: ['get', 'post'] },
     ]));
 
   });
@@ -411,6 +420,27 @@ Array [
 
   });
 
+  test('can be allowed access to a specific resource, a resource type, and non resource endpoints', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+    // WHEN
+    const role = new kplus.ClusterRole(chart, 'pod-reader');
+    role.allow(['get'], pod, kplus.ApiResource.PODS, kplus.NonApiResource.of('/healthz'));
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+      { apiGroups: [''], resourceNames: ['test-pod-c890e1b8'], resources: ['pods'], verbs: ['get'] },
+      { apiGroups: [''], resourceNames: [], resources: ['pods'], verbs: ['get'] },
+      { nonResourceURLs: ['/healthz'], verbs: ['get'] },
+    ]));
+
+  });
+
   test('can be aggregated', () => {
 
     // GIVEN
@@ -418,18 +448,10 @@ Array [
 
     // WHEN
     const role1 = new kplus.ClusterRole(chart, 'pod-reader');
-    role1.addResourceRule({
-      apiGroups: [''],
-      resourceTypes: ['pods'],
-      verbs: ['get', 'watch', 'list'],
-    });
+    role1.allow(['get', 'watch', 'list'], ApiResource.PODS);
 
     const role2 = new kplus.ClusterRole(chart, 'secrets-reader');
-    role2.addResourceRule({
-      apiGroups: [''],
-      resourceTypes: ['secrets'],
-      verbs: ['get', 'watch', 'list'],
-    });
+    role2.allow(['get', 'watch', 'list'], ApiResource.SECRETS);
 
     const combined = new kplus.ClusterRole(chart, 'combined-role');
     combined.combine(role1);
@@ -475,11 +497,7 @@ Object {
     });
     // add these permissions to the "admin" default role
     role.aggregate('rbac.authorization.k8s.io/aggregate-to-admin', 'true');
-    role.addResourceRule({
-      apiGroups: [''],
-      resourceTypes: ['secrets'],
-      verbs: ['get', 'watch', 'list'],
-    });
+    role.allow(['get', 'watch', 'list'], ApiResource.SECRETS);
 
     // THEN
     const manifest = Testing.synth(chart);
