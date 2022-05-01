@@ -522,21 +522,23 @@ test('auto mounting token can be disabled', () => {
 
 });
 
-test('can assign a pod to a node by name', () => {
+test('affinity weight must be in range 1-100', () => {
 
   const chart = Testing.chart();
-  const pod = new kplus.Pod(chart, 'Pod', {
+
+  expect(() => new kplus.Pod(chart, 'Pod1', {
     containers: [{ image: 'image' }],
-    automountServiceAccountToken: false,
-    nodeAssignment: {
-      name: 'node1',
+    affinity: {
+      preferredNodes: [{ weight: 0, selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])] }],
     },
-  });
+  })).toThrow('Invalid affinity weight. Must be in range 1-100');
 
-  const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
-
-  expect(pod.nodeName).toEqual('node1');
-  expect(spec.nodeName).toEqual('node1');
+  expect(() => new kplus.Pod(chart, 'Pod2', {
+    containers: [{ image: 'image' }],
+    affinity: {
+      preferredNodes: [{ weight: 101, selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])] }],
+    },
+  })).toThrow('Invalid affinity weight. Must be in range 1-100');
 
 });
 
@@ -546,12 +548,9 @@ test('can assign a pod to a node by selectors at instantiation', () => {
   const chart = Testing.chart();
   new kplus.Pod(chart, 'Pod', {
     containers: [{ image: 'image' }],
-    automountServiceAccountToken: false,
-    nodeAssignment: {
-      requirements: [
-        { selectors: [kplus.NodeSelector.is('kubernetes.io/os', 'linux')] },
-        { selectors: [kplus.NodeSelector.in('another-node-label-key', ['another-node-label-value'])], weight: 1 },
-      ],
+    affinity: {
+      requiredNodes: [kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux')],
+      preferredNodes: [{ weight: 1, selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])] }],
     },
   });
 
@@ -579,11 +578,10 @@ test('can assign a pod to a node by selectors post instantiation', () => {
   const chart = Testing.chart();
   const pod = new kplus.Pod(chart, 'Pod', {
     containers: [{ image: 'image' }],
-    automountServiceAccountToken: false,
   });
 
-  pod.assignNode([kplus.NodeSelector.is('kubernetes.io/os', 'linux')]);
-  pod.assignNode([kplus.NodeSelector.in('another-node-label-key', ['another-node-label-value'])], 1);
+  pod.affinity.requireNodes(kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux'));
+  pod.affinity.preferNodes(1, kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value']));
 
   const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
 

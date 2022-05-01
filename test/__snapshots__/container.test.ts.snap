@@ -9,6 +9,18 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [
+              Object {
+                "matchExpressions": Array [],
+              },
+            ],
+          },
+        },
+      },
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {

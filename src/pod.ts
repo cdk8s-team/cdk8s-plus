@@ -15,13 +15,12 @@ export abstract class AbstractPod extends base.Resource {
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
-  public readonly nodeName?: string;
+  public readonly affinity: PodAffinity;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
-  private readonly _nodeRequirements: NodeSelectorRequirement[] = [];
 
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
@@ -29,10 +28,10 @@ export abstract class AbstractPod extends base.Resource {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
+    this.affinity = new PodAffinity(props.affinity);
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
-    this.nodeName = props.nodeAssignment?.name;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -48,10 +47,6 @@ export abstract class AbstractPod extends base.Resource {
 
     if (props.hostAliases) {
       props.hostAliases.forEach(c => this.addHostAlias(c));
-    }
-
-    if (props.nodeAssignment?.requirements) {
-      this.assignNode(...props.nodeAssignment.requirements);
     }
 
   }
@@ -114,10 +109,6 @@ export abstract class AbstractPod extends base.Resource {
     this._volumes.set(vol.name, vol);
   }
 
-  public assignNode(...requirements: NodeSelectorRequirement[]) {
-    this._nodeRequirements.push(...requirements);
-  }
-
   /**
    * @internal
    */
@@ -165,18 +156,6 @@ export abstract class AbstractPod extends base.Resource {
 
     const dns = this.dns._toKube();
 
-    const requiredTerms: k8s.NodeSelectorTerm[] = [];
-    const preferredTerms: k8s.PreferredSchedulingTerm[] = [];
-
-    for (const requirement of this._nodeRequirements) {
-      const matchExpressions = requirement.selectors.map(r => ({ key: r.key, operator: r.operator, values: r.values }));
-      if (requirement.weight) {
-        preferredTerms.push({ weight: requirement.weight, preference: { matchExpressions } });
-      } else {
-        requiredTerms.push({ matchExpressions });
-      }
-    }
-
     return {
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
@@ -192,13 +171,7 @@ export abstract class AbstractPod extends base.Resource {
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
-      nodeName: this.nodeName,
-      affinity: {
-        nodeAffinity: {
-          preferredDuringSchedulingIgnoredDuringExecution: preferredTerms,
-          requiredDuringSchedulingIgnoredDuringExecution: { nodeSelectorTerms: requiredTerms },
-        },
-      },
+      affinity: this.affinity._toKube(),
     };
 
   }
@@ -273,27 +246,122 @@ export interface PodSecurityContextProps {
   readonly sysctls?: Sysctl[];
 }
 
-export interface NodeSelectorRequirement {
+/**
+ * A list of selectors, along with a corresponding weight, that a node should match with.
+ */
+export interface PreferredNodeLabelSelector {
 
-  readonly selectors: NodeSelector[];
+  /**
+   * List of selectors the node should match with.
+   */
+  readonly selectors: NodeLabelSelector[];
 
-  readonly weight?: number;
+  /**
+   * Weight associated with matching the corresponding selectors, in the range 1-100.
+   */
+  readonly weight: number;
 
 }
 
 /**
- * Properties for assigning pods to specific nodes.
+ * Properties for `PodAffinity`.
  */
-export interface NodeAssignment {
-  /**
-   * A specific node name.
-   */
-  readonly name?: string;
+export interface PodAffinityProps {
 
   /**
-   * List of requirements to form a label query over nodes.
+   * The scheduler can't schedule the Pod unless a node matches these selectors.
+   *
+   * @default - no requirements.
    */
-  readonly requirements?: NodeSelectorRequirement[];
+  readonly requiredNodes?: NodeLabelSelector[];
+
+  /**
+   * The scheduler tries to find a node that matches these selectors. If a matching node is not available,
+   * the scheduler still schedules the Pod.
+   *
+   * @default - no preferences.
+   */
+  readonly preferredNodes?: PreferredNodeLabelSelector[];
+
+}
+
+/**
+ * Controls the pod affinity.
+ */
+export class PodAffinity {
+
+  private readonly _preferredNodes: PreferredNodeLabelSelector[] = [];
+  private readonly _requiredNodes: NodeLabelSelector[] = [];
+
+  constructor(props: PodAffinityProps = {}) {
+
+    if (props.preferredNodes) {
+      props.preferredNodes.forEach(p => this.preferNodes(p.weight, ...p.selectors));
+    }
+
+    if (props.requiredNodes) {
+      this.requireNodes(...props.requiredNodes);
+    }
+  }
+
+  /**
+   * List of preferred nodes for this pod.
+   *
+   * Retruns a copy. Use `preferNodes` to add nodes.
+   */
+  public get preferredNodes(): PreferredNodeLabelSelector[] {
+    return [...this._preferredNodes];
+  }
+
+  /**
+   * List of required nodes for this pod.
+   *
+   * Retruns a copy. Use `requireNodes` to add nodes.
+   */
+  public get requiredNodes(): NodeLabelSelector[] {
+    return [...this._requiredNodes];
+  }
+
+  /**
+   * Add a requirement for the nodes this pod can be scheduled on.
+   */
+  public requireNodes(...matches: NodeLabelSelector[]) {
+    this._requiredNodes.push(...matches);
+  }
+
+  /**
+   * Add a preference for the nodes this pod can be scheduled on.
+   */
+  public preferNodes(weight: number, ...matches: NodeLabelSelector[]) {
+    if (weight < 1 || weight > 100) {
+      // https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity-weight
+      throw new Error('Invalid affinity weight. Must be in range 1-100');
+    }
+    this._preferredNodes.push({ weight, selectors: matches });
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.Affinity {
+
+    const requiredNodes: k8s.NodeSelectorTerm[] = [{
+      matchExpressions: this._requiredNodes.map(m => ({ key: m.key, operator: m.operator, values: m.values })),
+    }];
+    const preferredNodes: k8s.PreferredSchedulingTerm[] = this._preferredNodes.map(p => ({
+      weight: p.weight,
+      preference: { matchExpressions: p.selectors.map(m => ({ key: m.key, operator: m.operator, values: m.values })) },
+    }));
+
+    return {
+      nodeAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: preferredNodes,
+        requiredDuringSchedulingIgnoredDuringExecution: {
+          nodeSelectorTerms: requiredNodes,
+        },
+      },
+    };
+  }
 }
 
 /**
@@ -409,12 +477,12 @@ export interface AbstractPodProps extends base.ResourceProps {
   readonly automountServiceAccountToken?: boolean;
 
   /**
-   * Assign the pod to be scheduled on specific nodes.
+   * The pod's scheduling constraints
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
    * @default - pods are free to scheduled on any node.
    */
-  readonly nodeAssignment?: NodeAssignment;
+  readonly affinity?: PodAffinityProps;
 }
 
 /**
@@ -784,55 +852,55 @@ export interface HostAlias {
 /**
  * Allows selecting nodes by constructing queries on labels.
  */
-export class NodeSelector {
+export class NodeLabelSelector {
 
   /**
    * Requires value of label `key` to equal `value`.
    */
   public static is(key: string, value: string) {
-    return NodeSelector.in(key, [value]);
+    return NodeLabelSelector.in(key, [value]);
   }
 
   /**
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new NodeSelector(key, 'In', values);
+    return new NodeLabelSelector(key, 'In', values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new NodeSelector(key, 'NotIn', values);
+    return new NodeLabelSelector(key, 'NotIn', values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new NodeSelector(key, 'Exists', undefined);
+    return new NodeLabelSelector(key, 'Exists', undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new NodeSelector(key, 'DoesNotExist', undefined);
+    return new NodeLabelSelector(key, 'DoesNotExist', undefined);
   }
 
   /**
    * Requires value of label `key` to greater than all elements in `values`.
    */
   public static gt(key: string, values: string[]) {
-    return new NodeSelector(key, 'Gt', values);
+    return new NodeLabelSelector(key, 'Gt', values);
   }
 
   /**
    * Requires value of label `key` to less than all elements in `values`.
    */
   public static lt(key: string, values: string[]) {
-    return new NodeSelector(key, 'Lt', values);
+    return new NodeLabelSelector(key, 'Lt', values);
   }
 
   private constructor(

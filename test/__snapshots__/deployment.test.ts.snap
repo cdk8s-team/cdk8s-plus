@@ -32,6 +32,18 @@ Array [
           },
         },
         "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [
+                  Object {
+                    "matchExpressions": Array [],
+                  },
+                ],
+              },
+            },
+          },
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
