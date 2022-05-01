@@ -69,6 +69,7 @@ test('Can select by label', () => {
   const expectedSelector = { foo: 'bar' };
 
   deployment.select(kplus.LabelSelector.is('foo', expectedSelector.foo));
+  deployment.selectNode();
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;

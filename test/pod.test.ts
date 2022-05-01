@@ -521,3 +521,84 @@ test('auto mounting token can be disabled', () => {
   expect(spec.automountServiceAccountToken).toBeFalsy();
 
 });
+
+test('can assign a pod to a node by name', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    automountServiceAccountToken: false,
+    nodeAssignment: {
+      name: 'node1',
+    },
+  });
+
+  const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
+
+  expect(pod.nodeName).toEqual('node1');
+  expect(spec.nodeName).toEqual('node1');
+
+});
+
+test('can assign a pod to a node by selectors at instantiation', () => {
+
+  // example based on https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/pod-with-node-affinity.yaml
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    automountServiceAccountToken: false,
+    nodeAssignment: {
+      requirements: [
+        { selectors: [kplus.NodeSelector.is('kubernetes.io/os', 'linux')] },
+        { selectors: [kplus.NodeSelector.in('another-node-label-key', ['another-node-label-value'])], weight: 1 },
+      ],
+    },
+  });
+
+  const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
+
+  expect(spec.affinity!.nodeAffinity).toEqual({
+    requiredDuringSchedulingIgnoredDuringExecution: {
+      nodeSelectorTerms: [
+        { matchExpressions: [{ key: 'kubernetes.io/os', operator: 'In', values: ['linux'] }] },
+      ],
+    },
+    preferredDuringSchedulingIgnoredDuringExecution: [
+      {
+        weight: 1,
+        preference: { matchExpressions: [{ key: 'another-node-label-key', operator: 'In', values: ['another-node-label-value'] }] },
+      },
+    ],
+  });
+
+});
+
+test('can assign a pod to a node by selectors post instantiation', () => {
+
+  // example based on https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/pod-with-node-affinity.yaml
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    automountServiceAccountToken: false,
+  });
+
+  pod.assignNode([kplus.NodeSelector.is('kubernetes.io/os', 'linux')]);
+  pod.assignNode([kplus.NodeSelector.in('another-node-label-key', ['another-node-label-value'])], 1);
+
+  const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
+
+  expect(spec.affinity!.nodeAffinity).toEqual({
+    requiredDuringSchedulingIgnoredDuringExecution: {
+      nodeSelectorTerms: [
+        { matchExpressions: [{ key: 'kubernetes.io/os', operator: 'In', values: ['linux'] }] },
+      ],
+    },
+    preferredDuringSchedulingIgnoredDuringExecution: [
+      {
+        weight: 1,
+        preference: { matchExpressions: [{ key: 'another-node-label-key', operator: 'In', values: ['another-node-label-value'] }] },
+      },
+    ],
+  });
+
+});
