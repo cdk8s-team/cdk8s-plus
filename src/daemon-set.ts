@@ -65,10 +65,7 @@ export class DaemonSet extends workload.Workload {
         metadata: this.podMetadata.toJson(),
         spec: this._toPodSpec(),
       },
-      selector: {
-        matchExpressions: this.matchExpressions,
-        matchLabels: this.matchLabels,
-      },
+      selector: this._toLabelSelector(),
     };
   }
 

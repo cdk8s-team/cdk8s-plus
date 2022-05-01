@@ -75,7 +75,7 @@ test('Can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  statefulset.select(kplus.LabelSelector.is('foo', expectedSelector.foo));
+  statefulset.select(kplus.PodLabelQuery.is('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[1].spec;

@@ -530,62 +530,93 @@ test('affinity weight must be in range 1-100', () => {
     containers: [{ image: 'image' }],
     affinity: {
       preferNodes: [{
-        requirement: {
-          selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+        preference: {
+          labelSelector: [kplus.NodeLabelQuery.in('another-node-label-key', ['another-node-label-value'])],
         },
         weight: 0,
       }],
     },
-  })).toThrow('Invalid affinity weight. Must be in range 1-100');
+  })).toThrow('Invalid affinity weight: 0. Must be in range 1-100');
 
   expect(() => new kplus.Pod(chart, 'Pod2', {
     containers: [{ image: 'image' }],
     affinity: {
       preferNodes: [{
-        requirement: {
-          selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+        preference: {
+          labelSelector: [kplus.NodeLabelQuery.in('another-node-label-key', ['another-node-label-value'])],
         },
         weight: 101,
       }],
     },
-  })).toThrow('Invalid affinity weight. Must be in range 1-100');
+  })).toThrow('Invalid affinity weight: 101. Must be in range 1-100');
 
 });
 
 test('can configure affinity at instantiation', () => {
 
-  // example based on https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/pod-with-node-affinity.yaml
   const chart = Testing.chart();
-  new kplus.Pod(chart, 'Pod', {
+  const pod = new kplus.Pod(chart, 'Pod', {
     containers: [{ image: 'image' }],
     affinity: {
-      requireNodes: [{
-        selectors: [kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux')],
-      }],
-      preferNodes: [{
-        requirement: {
-          selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+      requireNodes: [
+        { labelSelector: [kplus.NodeLabelQuery.is('kubernetes.io/os', 'linux')] },
+      ],
+      preferNodes: [
+        {
+          preference: { labelSelector: [kplus.NodeLabelQuery.in('another-node-label-key', ['another-node-label-value'])] },
+          weight: 1,
         },
-        weight: 1,
-      }],
+      ],
+      requirePods: [
+        {
+          topologyKey: kplus.TopologyKey.ZONE,
+          labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+          namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+          namespaces: ['n1'],
+        },
+      ],
+      preferPods: [
+        {
+          weight: 50,
+          preference: {
+            topologyKey: kplus.TopologyKey.ZONE,
+            labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+            namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+            namespaces: ['n1'],
+          },
+        },
+      ],
+      rejectPods: [
+        {
+          topologyKey: kplus.TopologyKey.ZONE,
+          labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+          namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+          namespaces: ['n1'],
+        },
+      ],
+      avoidPods: [
+        {
+          weight: 50,
+          preference: {
+            topologyKey: kplus.TopologyKey.ZONE,
+            labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+            namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+            namespaces: ['n1'],
+          },
+        },
+      ],
     },
   });
 
   const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
 
-  expect(spec.affinity!.nodeAffinity).toEqual({
-    requiredDuringSchedulingIgnoredDuringExecution: {
-      nodeSelectorTerms: [
-        { matchExpressions: [{ key: 'kubernetes.io/os', operator: 'In', values: ['linux'] }] },
-      ],
-    },
-    preferredDuringSchedulingIgnoredDuringExecution: [
-      {
-        weight: 1,
-        preference: { matchExpressions: [{ key: 'another-node-label-key', operator: 'In', values: ['another-node-label-value'] }] },
-      },
-    ],
-  });
+  expect(spec.affinity).toMatchSnapshot();
+  expect(pod.affinity.requiredNodes).toMatchSnapshot();
+  expect(pod.affinity.preferredNodes).toMatchSnapshot();
+  expect(pod.affinity.requiredPods).toMatchSnapshot();
+  expect(pod.affinity.preferredPods).toMatchSnapshot();
+  expect(pod.affinity.rejectedPods).toMatchSnapshot();
+  expect(pod.affinity.avoidedPods).toMatchSnapshot();
 
 });
 
@@ -596,58 +627,136 @@ test('can configure affinity post instantiation', () => {
     containers: [{ image: 'image' }],
   });
 
-  pod.affinity.requireNode({ selectors: [kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux')] });
+  pod.affinity.requireNode({ labelSelector: [kplus.NodeLabelQuery.is('kubernetes.io/os', 'linux')] });
   pod.affinity.preferNode({
     weight: 1,
-    requirement: {
-      selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+    preference: {
+      labelSelector: [kplus.NodeLabelQuery.in('another-node-label-key', ['another-node-label-value'])],
     },
   });
   pod.affinity.requirePod({
-    topologyKey: 'topology.kubernetes.io/zone',
-    labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
-    namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    topologyKey: kplus.TopologyKey.ZONE,
+    labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+    namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
     namespaces: ['n1'],
   });
   pod.affinity.preferPod({
     weight: 50,
-    requirement: {
-      topologyKey: 'topology.kubernetes.io/zone',
-      labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
-      namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    preference: {
+      topologyKey: kplus.TopologyKey.ZONE,
+      labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+      namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
       namespaces: ['n1'],
     },
   });
   pod.affinity.rejectPod({
-    topologyKey: 'topology.kubernetes.io/zone',
-    labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
-    namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    topologyKey: kplus.TopologyKey.ZONE,
+    labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+    namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
     namespaces: ['n1'],
   });
   pod.affinity.avoidPod({
     weight: 50,
-    requirement: {
-      topologyKey: 'topology.kubernetes.io/zone',
-      labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
-      namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    preference: {
+      topologyKey: kplus.TopologyKey.ZONE,
+      labelSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
+      namespaceSelector: [kplus.PodLabelQuery.in('key', ['val1'])],
       namespaces: ['n1'],
     },
   });
 
   const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
 
-  expect(spec.affinity!.nodeAffinity).toEqual({
-    requiredDuringSchedulingIgnoredDuringExecution: {
-      nodeSelectorTerms: [
-        { matchExpressions: [{ key: 'kubernetes.io/os', operator: 'In', values: ['linux'] }] },
-      ],
-    },
-    preferredDuringSchedulingIgnoredDuringExecution: [
-      {
-        weight: 1,
-        preference: { matchExpressions: [{ key: 'another-node-label-key', operator: 'In', values: ['another-node-label-value'] }] },
-      },
-    ],
+  expect(spec.affinity).toMatchSnapshot();
+  expect(pod.affinity.requiredNodes).toMatchSnapshot();
+  expect(pod.affinity.preferredNodes).toMatchSnapshot();
+  expect(pod.affinity.requiredPods).toMatchSnapshot();
+  expect(pod.affinity.preferredPods).toMatchSnapshot();
+  expect(pod.affinity.rejectedPods).toMatchSnapshot();
+  expect(pod.affinity.avoidedPods).toMatchSnapshot();
+
+});
+
+test('default co-location', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Pod(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
   });
+  const web = new kplus.Pod(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  redis.metadata.addLabel('app', 'store');
+
+  web.colocate(redis);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('custom co-location', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Pod(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Pod(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  redis.metadata.addLabel('app', 'store');
+
+  web.colocate(redis, {
+    labels: ['app'],
+    topologyKey: kplus.TopologyKey.ZONE,
+    weight: 1,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('default repel', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Pod(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Pod(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  redis.metadata.addLabel('app', 'store');
+
+  web.repel(redis);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('custom repel', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Pod(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Pod(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  redis.metadata.addLabel('app', 'store');
+
+  web.repel(redis, {
+    labels: ['app'],
+    topologyKey: kplus.TopologyKey.ZONE,
+    weight: 1,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
 
 });

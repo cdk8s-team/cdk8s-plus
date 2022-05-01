@@ -68,7 +68,7 @@ test('Can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  deployment.select(kplus.LabelSelector.is('foo', expectedSelector.foo));
+  deployment.select(kplus.PodLabelQuery.is('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
@@ -341,30 +341,6 @@ test('throws if minReadySeconds = progressDeadlineSeconds', () => {
 
 });
 
-test('can apply label selector to pod metadata', () => {
-
-  const chart = Testing.chart();
-
-  const deployment = new kplus.Deployment(chart, 'Deployment', {
-    containers: [{ image: 'image' }],
-    select: false,
-  });
-
-  const expectedSelector = { foo: 'bar' };
-
-  deployment.select(kplus.LabelSelector.is('foo', expectedSelector.foo, true));
-
-  // assert the k8s spec has it.
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
-  expect(spec.selector.matchLabels).toEqual(expectedSelector);
-  expect(spec.template.metadata?.labels).toEqual(expectedSelector);
-
-  // assert the deployment object has it.
-  expect(deployment.matchLabels).toEqual(expectedSelector);
-  expect(deployment.podMetadata.getLabel('foo')).toEqual(expectedSelector.foo);
-
-});
-
 test('can select with expressions', () => {
 
   const chart = Testing.chart();
@@ -374,10 +350,10 @@ test('can select with expressions', () => {
     select: false,
   });
 
-  deployment.select(kplus.LabelSelector.in('foo', ['v1', 'v2']));
-  deployment.select(kplus.LabelSelector.notIn('foo', ['v1', 'v2']));
-  deployment.select(kplus.LabelSelector.exists('foo'));
-  deployment.select(kplus.LabelSelector.doesNotExist('foo'));
+  deployment.select(kplus.PodLabelQuery.in('foo', ['v1', 'v2']));
+  deployment.select(kplus.PodLabelQuery.notIn('foo', ['v1', 'v2']));
+  deployment.select(kplus.PodLabelQuery.exists('foo'));
+  deployment.select(kplus.PodLabelQuery.doesNotExist('foo'));
 
   const expected: Set<k8s.LabelSelectorRequirement> = new Set([
     { key: 'foo', operator: 'In', values: ['v1', 'v2'] },
@@ -389,7 +365,115 @@ test('can select with expressions', () => {
   // assert the k8s spec has it.
   const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
   expect(new Set(spec.selector.matchExpressions)).toEqual(expected);
+});
 
-  // assert the deployment object has it.
-  expect(new Set(deployment.matchExpressions)).toEqual(expected);
+test('default co-location', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Deployment(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Deployment(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  web.colocate(redis);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('custom co-location', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Deployment(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Deployment(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  redis.podMetadata.addLabel('app', 'store');
+
+  web.colocate(redis, {
+    labels: ['app'],
+    spread: false,
+    topologyKey: kplus.TopologyKey.ZONE,
+    weight: 1,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('default spread', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'redis' }],
+  });
+
+  deployment.spread(kplus.TopologyKey.HOSTNAME);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('custom spread', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'redis' }],
+  });
+
+  deployment.spread(kplus.TopologyKey.HOSTNAME, {
+    weight: 1,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('default repel', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Deployment(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Deployment(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  web.repel(redis);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('custom repel', () => {
+
+  const chart = Testing.chart();
+
+  const redis = new kplus.Deployment(chart, 'Redis', {
+    containers: [{ image: 'redis' }],
+  });
+  const web = new kplus.Deployment(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  redis.podMetadata.addLabel('app', 'store');
+
+  web.repel(redis, {
+    labels: ['app'],
+    topologyKey: kplus.TopologyKey.ZONE,
+    weight: 1,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
 });

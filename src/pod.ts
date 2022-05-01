@@ -6,7 +6,6 @@ import * as k8s from './imports/k8s';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
-import { LabelSelector } from './workload';
 
 export abstract class AbstractPod extends base.Resource {
 
@@ -248,20 +247,51 @@ export interface PodSecurityContextProps {
 }
 
 /**
- * Describes a prefernce for node selection.
+ * A key for the node label that the system uses to denote the topology domain.
  */
-export interface NodePreference {
+export class TopologyKey {
 
   /**
-   * The requirement to satisfy.
+   * A hostname represents a single node in the cluster.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#kubernetesiohostname
    */
-  readonly requirement: NodeRequirement;
+  public static readonly HOSTNAME = new TopologyKey('kubernetes.io/hostname');
 
   /**
-   * Weight associated with matching the corresponding requirement, in the range 1-100.
+   * A zone represents a logical failure domain. It is common for Kubernetes clusters to
+   * span multiple zones for increased availability. While the exact definition of a zone is
+   * left to infrastructure implementations, common properties of a zone include very low
+   * network latency within a zone, no-cost network traffic within a zone, and failure
+   * independence from other zones. For example, nodes within a zone might share a network
+   * switch, but nodes in different zones should not.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone
    */
-  readonly weight: number;
+  public static readonly ZONE = new TopologyKey('topology.kubernetes.io/zone');
 
+  /**
+   * A region represents a larger domain, made up of one or more zones. It is uncommon
+   * for Kubernetes clusters to span multiple regions. While the exact definition of a
+   * zone or region is left to infrastructure implementations, common properties of a region
+   * include higher network latency between them than within them, non-zero cost for network
+   * traffic between them, and failure independence from other zones or regions.
+   *
+   * For example, nodes within a region might share power infrastructure (e.g. a UPS or generator), but
+   * nodes in different regions typically would not.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesioregion
+   */
+  public static readonly REGION = new TopologyKey('topology.kubernetes.io/region');
+
+  /**
+   * Custom topology key.
+   */
+  public static custom(key: string): TopologyKey {
+    return new TopologyKey(key);
+  }
+
+  private constructor(public readonly key: string) {};
 }
 
 /**
@@ -269,20 +299,20 @@ export interface NodePreference {
  */
 export interface NodeRequirement {
   /**
-   * List of selectors the node should match with.
+   * List of label queries that the node needs to satisfy.
    */
-  readonly selectors: NodeLabelSelector[];
+  readonly labelSelector: NodeLabelQuery[];
 }
 
 /**
- * Describes a prefernce for pod selection.
+ * Describes a prefernce for node selection.
  */
-export interface PodPreference {
+export interface NodePreference {
 
   /**
-   * The requirement to satisfy.
+   * The preference to satisfy.
    */
-  readonly requirement: PodRequirement;
+  readonly preference: NodeRequirement;
 
   /**
    * Weight associated with matching the corresponding requirement, in the range 1-100.
@@ -297,36 +327,44 @@ export interface PodPreference {
 export interface PodRequirement {
 
   /**
-   * A label query over a set of pods.
-   */
-  readonly labelSelector?: LabelSelector[];
-
-  /**
-   * A label query over the set of namespaces that the term applies to.
-   * The term is applied to the union of the namespaces selected by this field
-   * and the ones listed in the namespaces field. null selector and null
-   * or empty namespaces list means "this pod's namespace".
-   * An empty selector ({}) matches all namespaces.
-   * This field is beta-level and is only honored
-   * when PodAffinityNamespaceSelector feature is enabled.
-   */
-  readonly namespaceSelector?: LabelSelector[];
-
-  /**
-   * Static list of namespace names that the term applies to.
-   * The term is applied to the union of the namespaces listed
-   * in this field and the ones selected by namespaceSelector.
-   * null or empty namespaces list and null namespaceSelector
-   * means "this pod's namespace"
-   */
-  readonly namespaces?: string[];
-
-  /**
    * Pod co-location is defined as running on a node whose value of the
    * this label matches that of any node on which any of
    * the selected pods is running.
    */
-  readonly topologyKey: string;
+  readonly topologyKey: TopologyKey;
+
+  /**
+   * List of label queries that the node needs to satisfy.
+   */
+  readonly labelSelector?: PodLabelQuery[];
+
+  /**
+   * List of label queries that the namespace needs to satisfy.
+   */
+  readonly namespaceSelector?: PodLabelQuery[];
+
+  /**
+   * Static list of namespaces the pods can belong to.
+   */
+  readonly namespaces?: string[];
+
+}
+
+/**
+ * Describes a prefernce for pod selection.
+ */
+export interface PodPreference {
+
+  /**
+   * The preference to satisfy.
+   */
+  readonly preference: PodRequirement;
+
+  /**
+   * Weight associated with matching the corresponding requirement, in the range 1-100.
+   */
+  readonly weight: number;
+
 }
 
 /**
@@ -335,47 +373,47 @@ export interface PodRequirement {
 export interface PodAffinityProps {
 
   /**
-   * The scheduler can't schedule the Pod unless a node matches these selectors.
+   * The scheduler can't schedule the Pod unless a node matches one of these requirements.
    *
    * @default - no requirements.
    */
   readonly requireNodes?: NodeRequirement[];
 
   /**
-   * The scheduler tries to find a node that matches these selectors. If a matching node is not available,
-   * the scheduler still schedules the Pod.
+   * The scheduler tries to find a node that matches one of these prefernces.
+   * If a matching node is not available, the scheduler still schedules the Pod.
    *
    * @default - no preferences.
    */
   readonly preferNodes?: NodePreference[];
 
   /**
-   * The scheduler can't schedule the Pod unless a node contains pods which matche these selectors.
+   * The scheduler can't schedule the Pod unless a node contains pods which match one of these requirements.
    *
    * @default - no requirements.
    */
   readonly requirePods?: PodRequirement[];
 
   /**
-   * The scheduler tries to find a node that contains pods which matche these selectors. If a matching node is not available,
-   * the scheduler still schedules the Pod.
+   * The scheduler tries to find a node that contains pods which match one of these preferences.
+   * If a matching node is not available, the scheduler still schedules the Pod.
    *
    * @default - no preferences.
    */
   readonly preferPods?: PodPreference[];
 
   /**
-   * The scheduler will not schedule the Pod on a node that has pods which matche these selectors.
+   * The scheduler will not schedule the Pod on a node that has pods which match on these requirements.
    *
-   * @default - no requirements.
+   * @default - no rejections.
    */
   readonly rejectPods?: PodRequirement[];
 
   /**
-   * The scheduler will try not schedule the Pod on a node that has pods which matche these selectors. If all nodes
-   * meet these selectors, the scheduler still schedules the pod.
+   * The scheduler will try not to schedule the Pod on a node that has pods which match one of these prefernces.
+   * If all nodes meet these selectors, the scheduler still schedules the pod.
    *
-   * @default - no requirements.
+   * @default - no preferences.
    */
   readonly avoidPods?: PodPreference[];
 
@@ -550,19 +588,19 @@ export class PodAffinity {
     const avoidedPods: k8s.WeightedPodAffinityTerm[] = [];
 
     for (const rn of this._requiredNodes) {
-      requiredNodes.push({ matchExpressions: rn.selectors.map(s => ({ key: s.key, operator: s.operator, values: s.values })) });
+      requiredNodes.push({ matchExpressions: rn.labelSelector.map(s => ({ key: s.key, operator: s.operator, values: s.values })) });
     }
 
     for (const pn of this._preferredNodes) {
       preferredNodes.push({
         weight: pn.weight,
-        preference: { matchExpressions: pn.requirement.selectors.map(s => ({ key: s.key, operator: s.operator, values: s.values })) },
+        preference: { matchExpressions: pn.preference.labelSelector.map(s => ({ key: s.key, operator: s.operator, values: s.values })) },
       });
     }
 
     for (const rp of this._requiredPods) {
       requiredPods.push({
-        topologyKey: rp.topologyKey,
+        topologyKey: rp.topologyKey.key,
         namespaces: rp.namespaces,
         labelSelector: rp.labelSelector ? {
           matchExpressions: rp.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
@@ -577,13 +615,13 @@ export class PodAffinity {
       preferredPods.push({
         weight: pp.weight,
         podAffinityTerm: {
-          topologyKey: pp.requirement.topologyKey,
-          namespaces: pp.requirement.namespaces,
-          labelSelector: pp.requirement.labelSelector ? {
-            matchExpressions: pp.requirement.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          topologyKey: pp.preference.topologyKey.key,
+          namespaces: pp.preference.namespaces,
+          labelSelector: pp.preference.labelSelector ? {
+            matchExpressions: pp.preference.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
           } : undefined,
-          namespaceSelector: pp.requirement.namespaceSelector ? {
-            matchExpressions: pp.requirement.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          namespaceSelector: pp.preference.namespaceSelector ? {
+            matchExpressions: pp.preference.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
           } : undefined,
         },
       });
@@ -591,7 +629,7 @@ export class PodAffinity {
 
     for (const rp of this._rejectedPods) {
       rejectedPods.push({
-        topologyKey: rp.topologyKey,
+        topologyKey: rp.topologyKey.key,
         namespaces: rp.namespaces,
         labelSelector: rp.labelSelector ? {
           matchExpressions: rp.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
@@ -606,13 +644,13 @@ export class PodAffinity {
       avoidedPods.push({
         weight: ap.weight,
         podAffinityTerm: {
-          topologyKey: ap.requirement.topologyKey,
-          namespaces: ap.requirement.namespaces,
-          labelSelector: ap.requirement.labelSelector ? {
-            matchExpressions: ap.requirement.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          topologyKey: ap.preference.topologyKey.key,
+          namespaces: ap.preference.namespaces,
+          labelSelector: ap.preference.labelSelector ? {
+            matchExpressions: ap.preference.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
           } : undefined,
-          namespaceSelector: ap.requirement.namespaceSelector ? {
-            matchExpressions: ap.requirement.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          namespaceSelector: ap.preference.namespaceSelector ? {
+            matchExpressions: ap.preference.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
           } : undefined,
         },
       });
@@ -762,6 +800,58 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
+ * Options for `workload.coloate`.
+ */
+export interface PodColocateOptions {
+  /**
+   * Which labels to use as the label selector.
+   *
+   * @default - all labels are selected.
+   */
+  readonly labels?: string[];
+
+  /**
+   * Which topology to coloate on.
+   *
+   * @default - TopologyKey.HOSTNAME
+   */
+  readonly topologyKey?: TopologyKey;
+
+  /**
+   * Indicates the co-location is optional, with this weight score.
+   *
+   * @default - no weight. co-location is assumed to be required.
+   */
+  readonly weight?: number;
+
+}
+
+export interface PodRepelOptions {
+  /**
+   * Which labels to use as the label selector.
+   *
+   * @default - all labels are selected.
+   */
+  readonly labels?: string[];
+
+  /**
+   * Which topology to coloate on.
+   *
+   * @default - TopologyKey.HOSTNAME
+   */
+  readonly topologyKey?: TopologyKey;
+
+  /**
+   * Indicates the repel is optional, with this weight score.
+   *
+   * @default - no weight. repel is assumed to be required.
+   */
+  readonly weight?: number;
+
+}
+
+
+/**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
@@ -781,6 +871,35 @@ export class Pod extends AbstractPod {
     });
 
   }
+
+  public colocate(pod: Pod, options: PodColocateOptions = {}) {
+
+    const labels: string[] = options.labels ?? this._labels(pod);
+    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
+
+    this.affinity.requirePod({
+      topologyKey,
+      labelSelector: labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!)),
+    });
+  }
+
+  public repel(pod: Pod, options: PodRepelOptions = {}) {
+
+    const labels: string[] = options.labels ?? this._labels(pod);
+    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
+
+    this.affinity.rejectPod({
+      topologyKey,
+      labelSelector: labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!)),
+    });
+
+  }
+
+  private _labels(pod: Pod) {
+    // TODO: expose labels from metadata in cdk8s-core.
+    return Object.keys(pod.metadata.toJson().labels);
+  }
+
 
   /**
    * @internal
@@ -1121,57 +1240,104 @@ export interface HostAlias {
 }
 
 /**
- * Allows selecting nodes by constructing queries on labels.
+ * Label queries that can be perofmed against nodes.
  */
-export class NodeLabelSelector {
+export class NodeLabelQuery {
 
   /**
    * Requires value of label `key` to equal `value`.
    */
   public static is(key: string, value: string) {
-    return NodeLabelSelector.in(key, [value]);
+    return NodeLabelQuery.in(key, [value]);
   }
 
   /**
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new NodeLabelSelector(key, 'In', values);
+    return new NodeLabelQuery(key, 'In', values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new NodeLabelSelector(key, 'NotIn', values);
+    return new NodeLabelQuery(key, 'NotIn', values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new NodeLabelSelector(key, 'Exists', undefined);
+    return new NodeLabelQuery(key, 'Exists', undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new NodeLabelSelector(key, 'DoesNotExist', undefined);
+    return new NodeLabelQuery(key, 'DoesNotExist', undefined);
   }
 
   /**
    * Requires value of label `key` to greater than all elements in `values`.
    */
   public static gt(key: string, values: string[]) {
-    return new NodeLabelSelector(key, 'Gt', values);
+    return new NodeLabelQuery(key, 'Gt', values);
   }
 
   /**
    * Requires value of label `key` to less than all elements in `values`.
    */
   public static lt(key: string, values: string[]) {
-    return new NodeLabelSelector(key, 'Lt', values);
+    return new NodeLabelQuery(key, 'Lt', values);
+  }
+
+  private constructor(
+    public readonly key: string,
+    public readonly operator: string,
+    public readonly values?: string[]) {
+  }
+}
+
+/**
+ * Label queries that can be perofmed against pods.
+ */
+export class PodLabelQuery {
+
+  /**
+   * Requires value of label `key` to equal `value`.
+   */
+  public static is(key: string, value: string) {
+    return PodLabelQuery.in(key, [value]);
+  }
+
+  /**
+   * Requires value of label `key` to be one of `values`.
+   */
+  public static in(key: string, values: string[]) {
+    return new PodLabelQuery(key, 'In', values);
+  }
+
+  /**
+   * Requires value of label `key` to be none of `values`.
+   */
+  public static notIn(key: string, values: string[]) {
+    return new PodLabelQuery(key, 'NotIn', values);
+  }
+
+  /**
+   * Requires label `key` to exist.
+   */
+  public static exists(key: string) {
+    return new PodLabelQuery(key, 'Exists', undefined);
+  }
+
+  /**
+   * Requires label `key` to not exist.
+   */
+  public static doesNotExist(key: string) {
+    return new PodLabelQuery(key, 'DoesNotExist', undefined);
   }
 
   private constructor(

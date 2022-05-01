@@ -1,0 +1,1207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can configure affinity at instantiation 1`] = `
+Object {
+  "nodeAffinity": Object {
+    "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "preference": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "another-node-label-key",
+              "operator": "In",
+              "values": Array [
+                "another-node-label-value",
+              ],
+            },
+          ],
+        },
+        "weight": 1,
+      },
+    ],
+    "requiredDuringSchedulingIgnoredDuringExecution": Object {
+      "nodeSelectorTerms": Array [
+        Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "kubernetes.io/os",
+              "operator": "In",
+              "values": Array [
+                "linux",
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "podAffinity": Object {
+    "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "podAffinityTerm": Object {
+          "labelSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaceSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaces": Array [
+            "n1",
+          ],
+          "topologyKey": "topology.kubernetes.io/zone",
+        },
+        "weight": 50,
+      },
+    ],
+    "requiredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "labelSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaceSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaces": Array [
+          "n1",
+        ],
+        "topologyKey": "topology.kubernetes.io/zone",
+      },
+    ],
+  },
+  "podAntiAffinity": Object {
+    "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "podAffinityTerm": Object {
+          "labelSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaceSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaces": Array [
+            "n1",
+          ],
+          "topologyKey": "topology.kubernetes.io/zone",
+        },
+        "weight": 50,
+      },
+    ],
+    "requiredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "labelSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaceSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaces": Array [
+          "n1",
+        ],
+        "topologyKey": "topology.kubernetes.io/zone",
+      },
+    ],
+  },
+}
+`;
+
+exports[`can configure affinity at instantiation 2`] = `
+Array [
+  Object {
+    "labelSelector": Array [
+      NodeLabelQuery {
+        "key": "kubernetes.io/os",
+        "operator": "In",
+        "values": Array [
+          "linux",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`can configure affinity at instantiation 3`] = `
+Array [
+  Object {
+    "preference": Object {
+      "labelSelector": Array [
+        NodeLabelQuery {
+          "key": "another-node-label-key",
+          "operator": "In",
+          "values": Array [
+            "another-node-label-value",
+          ],
+        },
+      ],
+    },
+    "weight": 1,
+  },
+]
+`;
+
+exports[`can configure affinity at instantiation 4`] = `
+Array [
+  Object {
+    "labelSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaceSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaces": Array [
+      "n1",
+    ],
+    "topologyKey": TopologyKey {
+      "key": "topology.kubernetes.io/zone",
+    },
+  },
+]
+`;
+
+exports[`can configure affinity at instantiation 5`] = `
+Array [
+  Object {
+    "preference": Object {
+      "labelSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaceSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaces": Array [
+        "n1",
+      ],
+      "topologyKey": TopologyKey {
+        "key": "topology.kubernetes.io/zone",
+      },
+    },
+    "weight": 50,
+  },
+]
+`;
+
+exports[`can configure affinity at instantiation 6`] = `
+Array [
+  Object {
+    "labelSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaceSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaces": Array [
+      "n1",
+    ],
+    "topologyKey": TopologyKey {
+      "key": "topology.kubernetes.io/zone",
+    },
+  },
+]
+`;
+
+exports[`can configure affinity at instantiation 7`] = `
+Array [
+  Object {
+    "preference": Object {
+      "labelSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaceSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaces": Array [
+        "n1",
+      ],
+      "topologyKey": TopologyKey {
+        "key": "topology.kubernetes.io/zone",
+      },
+    },
+    "weight": 50,
+  },
+]
+`;
+
+exports[`can configure affinity post instantiation 1`] = `
+Object {
+  "nodeAffinity": Object {
+    "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "preference": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "another-node-label-key",
+              "operator": "In",
+              "values": Array [
+                "another-node-label-value",
+              ],
+            },
+          ],
+        },
+        "weight": 1,
+      },
+    ],
+    "requiredDuringSchedulingIgnoredDuringExecution": Object {
+      "nodeSelectorTerms": Array [
+        Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "kubernetes.io/os",
+              "operator": "In",
+              "values": Array [
+                "linux",
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "podAffinity": Object {
+    "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "podAffinityTerm": Object {
+          "labelSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaceSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaces": Array [
+            "n1",
+          ],
+          "topologyKey": "topology.kubernetes.io/zone",
+        },
+        "weight": 50,
+      },
+    ],
+    "requiredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "labelSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaceSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaces": Array [
+          "n1",
+        ],
+        "topologyKey": "topology.kubernetes.io/zone",
+      },
+    ],
+  },
+  "podAntiAffinity": Object {
+    "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "podAffinityTerm": Object {
+          "labelSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaceSelector": Object {
+            "matchExpressions": Array [
+              Object {
+                "key": "key",
+                "operator": "In",
+                "values": Array [
+                  "val1",
+                ],
+              },
+            ],
+          },
+          "namespaces": Array [
+            "n1",
+          ],
+          "topologyKey": "topology.kubernetes.io/zone",
+        },
+        "weight": 50,
+      },
+    ],
+    "requiredDuringSchedulingIgnoredDuringExecution": Array [
+      Object {
+        "labelSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaceSelector": Object {
+          "matchExpressions": Array [
+            Object {
+              "key": "key",
+              "operator": "In",
+              "values": Array [
+                "val1",
+              ],
+            },
+          ],
+        },
+        "namespaces": Array [
+          "n1",
+        ],
+        "topologyKey": "topology.kubernetes.io/zone",
+      },
+    ],
+  },
+}
+`;
+
+exports[`can configure affinity post instantiation 2`] = `
+Array [
+  Object {
+    "labelSelector": Array [
+      NodeLabelQuery {
+        "key": "kubernetes.io/os",
+        "operator": "In",
+        "values": Array [
+          "linux",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`can configure affinity post instantiation 3`] = `
+Array [
+  Object {
+    "preference": Object {
+      "labelSelector": Array [
+        NodeLabelQuery {
+          "key": "another-node-label-key",
+          "operator": "In",
+          "values": Array [
+            "another-node-label-value",
+          ],
+        },
+      ],
+    },
+    "weight": 1,
+  },
+]
+`;
+
+exports[`can configure affinity post instantiation 4`] = `
+Array [
+  Object {
+    "labelSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaceSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaces": Array [
+      "n1",
+    ],
+    "topologyKey": TopologyKey {
+      "key": "topology.kubernetes.io/zone",
+    },
+  },
+]
+`;
+
+exports[`can configure affinity post instantiation 5`] = `
+Array [
+  Object {
+    "preference": Object {
+      "labelSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaceSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaces": Array [
+        "n1",
+      ],
+      "topologyKey": TopologyKey {
+        "key": "topology.kubernetes.io/zone",
+      },
+    },
+    "weight": 50,
+  },
+]
+`;
+
+exports[`can configure affinity post instantiation 6`] = `
+Array [
+  Object {
+    "labelSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaceSelector": Array [
+      PodLabelQuery {
+        "key": "key",
+        "operator": "In",
+        "values": Array [
+          "val1",
+        ],
+      },
+    ],
+    "namespaces": Array [
+      "n1",
+    ],
+    "topologyKey": TopologyKey {
+      "key": "topology.kubernetes.io/zone",
+    },
+  },
+]
+`;
+
+exports[`can configure affinity post instantiation 7`] = `
+Array [
+  Object {
+    "preference": Object {
+      "labelSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaceSelector": Array [
+        PodLabelQuery {
+          "key": "key",
+          "operator": "In",
+          "values": Array [
+            "val1",
+          ],
+        },
+      ],
+      "namespaces": Array [
+        "n1",
+      ],
+      "topologyKey": TopologyKey {
+        "key": "topology.kubernetes.io/zone",
+      },
+    },
+    "weight": 50,
+  },
+]
+`;
+
+exports[`custom co-location 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "app": "store",
+      },
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [
+            Object {
+              "labelSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "app",
+                    "operator": "In",
+                    "values": Array [
+                      "store",
+                    ],
+                  },
+                ],
+              },
+              "topologyKey": "topology.kubernetes.io/zone",
+            },
+          ],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
+
+exports[`custom repel 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "app": "store",
+      },
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [
+            Object {
+              "labelSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "app",
+                    "operator": "In",
+                    "values": Array [
+                      "store",
+                    ],
+                  },
+                ],
+              },
+              "topologyKey": "topology.kubernetes.io/zone",
+            },
+          ],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
+
+exports[`default co-location 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "app": "store",
+      },
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [
+            Object {
+              "labelSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "app",
+                    "operator": "In",
+                    "values": Array [
+                      "store",
+                    ],
+                  },
+                ],
+              },
+              "topologyKey": "kubernetes.io/hostname",
+            },
+          ],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
+
+exports[`default repel 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "app": "store",
+      },
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "affinity": Object {
+        "nodeAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Object {
+            "nodeSelectorTerms": Array [],
+          },
+        },
+        "podAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+        },
+        "podAntiAffinity": Object {
+          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+          "requiredDuringSchedulingIgnoredDuringExecution": Array [
+            Object {
+              "labelSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "app",
+                    "operator": "In",
+                    "values": Array [
+                      "store",
+                    ],
+                  },
+                ],
+              },
+              "topologyKey": "kubernetes.io/hostname",
+            },
+          ],
+        },
+      },
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
