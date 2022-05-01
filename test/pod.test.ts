@@ -529,28 +529,45 @@ test('affinity weight must be in range 1-100', () => {
   expect(() => new kplus.Pod(chart, 'Pod1', {
     containers: [{ image: 'image' }],
     affinity: {
-      preferredNodes: [{ weight: 0, selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])] }],
+      preferNodes: [{
+        requirement: {
+          selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+        },
+        weight: 0,
+      }],
     },
   })).toThrow('Invalid affinity weight. Must be in range 1-100');
 
   expect(() => new kplus.Pod(chart, 'Pod2', {
     containers: [{ image: 'image' }],
     affinity: {
-      preferredNodes: [{ weight: 101, selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])] }],
+      preferNodes: [{
+        requirement: {
+          selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+        },
+        weight: 101,
+      }],
     },
   })).toThrow('Invalid affinity weight. Must be in range 1-100');
 
 });
 
-test('can assign a pod to a node by selectors at instantiation', () => {
+test('can configure affinity at instantiation', () => {
 
   // example based on https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/pod-with-node-affinity.yaml
   const chart = Testing.chart();
   new kplus.Pod(chart, 'Pod', {
     containers: [{ image: 'image' }],
     affinity: {
-      requiredNodes: [kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux')],
-      preferredNodes: [{ weight: 1, selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])] }],
+      requireNodes: [{
+        selectors: [kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux')],
+      }],
+      preferNodes: [{
+        requirement: {
+          selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+        },
+        weight: 1,
+      }],
     },
   });
 
@@ -572,16 +589,50 @@ test('can assign a pod to a node by selectors at instantiation', () => {
 
 });
 
-test('can assign a pod to a node by selectors post instantiation', () => {
+test('can configure affinity post instantiation', () => {
 
-  // example based on https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/pod-with-node-affinity.yaml
   const chart = Testing.chart();
   const pod = new kplus.Pod(chart, 'Pod', {
     containers: [{ image: 'image' }],
   });
 
-  pod.affinity.requireNodes(kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux'));
-  pod.affinity.preferNodes(1, kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value']));
+  pod.affinity.requireNode({ selectors: [kplus.NodeLabelSelector.is('kubernetes.io/os', 'linux')] });
+  pod.affinity.preferNode({
+    weight: 1,
+    requirement: {
+      selectors: [kplus.NodeLabelSelector.in('another-node-label-key', ['another-node-label-value'])],
+    },
+  });
+  pod.affinity.requirePod({
+    topologyKey: 'topology.kubernetes.io/zone',
+    labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    namespaces: ['n1'],
+  });
+  pod.affinity.preferPod({
+    weight: 50,
+    requirement: {
+      topologyKey: 'topology.kubernetes.io/zone',
+      labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
+      namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+      namespaces: ['n1'],
+    },
+  });
+  pod.affinity.rejectPod({
+    topologyKey: 'topology.kubernetes.io/zone',
+    labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+    namespaces: ['n1'],
+  });
+  pod.affinity.avoidPod({
+    weight: 50,
+    requirement: {
+      topologyKey: 'topology.kubernetes.io/zone',
+      labelSelector: [kplus.LabelSelector.in('key', ['val1'])],
+      namespaceSelector: [kplus.LabelSelector.in('key', ['val1'])],
+      namespaces: ['n1'],
+    },
+  });
 
   const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
 

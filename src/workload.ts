@@ -1,11 +1,11 @@
 import { ApiObjectMetadata, ApiObjectMetadataDefinition, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { AbstractPod, AbstractPodProps } from './pod';
+import * as pod from './pod';
 
 /**
  * Properties for `Workload`.
  */
-export interface WorkloadProps extends AbstractPodProps {
+export interface WorkloadProps extends pod.AbstractPodProps {
 
   /**
    * The pod metadata of this workload.
@@ -77,7 +77,7 @@ export interface LabelSelectorRequirement {
  * component or several that work together, on Kubernetes you run it inside a set of pods.
  * In Kubernetes, a Pod represents a set of running containers on your cluster.
  */
-export abstract class Workload extends AbstractPod {
+export abstract class Workload extends pod.AbstractPod {
 
   /**
    * The metadata of pods in this workload.

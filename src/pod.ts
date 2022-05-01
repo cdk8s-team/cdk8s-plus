@@ -6,6 +6,7 @@ import * as k8s from './imports/k8s';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
+import { LabelSelector } from './workload';
 
 export abstract class AbstractPod extends base.Resource {
 
@@ -247,20 +248,85 @@ export interface PodSecurityContextProps {
 }
 
 /**
- * A list of selectors, along with a corresponding weight, that a node should match with.
+ * Describes a prefernce for node selection.
  */
-export interface PreferredNodeLabelSelector {
+export interface NodePreference {
 
+  /**
+   * The requirement to satisfy.
+   */
+  readonly requirement: NodeRequirement;
+
+  /**
+   * Weight associated with matching the corresponding requirement, in the range 1-100.
+   */
+  readonly weight: number;
+
+}
+
+/**
+ * Describes a requirement for node selection.
+ */
+export interface NodeRequirement {
   /**
    * List of selectors the node should match with.
    */
   readonly selectors: NodeLabelSelector[];
+}
+
+/**
+ * Describes a prefernce for pod selection.
+ */
+export interface PodPreference {
 
   /**
-   * Weight associated with matching the corresponding selectors, in the range 1-100.
+   * The requirement to satisfy.
+   */
+  readonly requirement: PodRequirement;
+
+  /**
+   * Weight associated with matching the corresponding requirement, in the range 1-100.
    */
   readonly weight: number;
 
+}
+
+/**
+ * Describes a requirement for pod selection.
+ */
+export interface PodRequirement {
+
+  /**
+   * A label query over a set of pods.
+   */
+  readonly labelSelector?: LabelSelector[];
+
+  /**
+   * A label query over the set of namespaces that the term applies to.
+   * The term is applied to the union of the namespaces selected by this field
+   * and the ones listed in the namespaces field. null selector and null
+   * or empty namespaces list means "this pod's namespace".
+   * An empty selector ({}) matches all namespaces.
+   * This field is beta-level and is only honored
+   * when PodAffinityNamespaceSelector feature is enabled.
+   */
+  readonly namespaceSelector?: LabelSelector[];
+
+  /**
+   * Static list of namespace names that the term applies to.
+   * The term is applied to the union of the namespaces listed
+   * in this field and the ones selected by namespaceSelector.
+   * null or empty namespaces list and null namespaceSelector
+   * means "this pod's namespace"
+   */
+  readonly namespaces?: string[];
+
+  /**
+   * Pod co-location is defined as running on a node whose value of the
+   * this label matches that of any node on which any of
+   * the selected pods is running.
+   */
+  readonly topologyKey: string;
 }
 
 /**
@@ -273,7 +339,7 @@ export interface PodAffinityProps {
    *
    * @default - no requirements.
    */
-  readonly requiredNodes?: NodeLabelSelector[];
+  readonly requireNodes?: NodeRequirement[];
 
   /**
    * The scheduler tries to find a node that matches these selectors. If a matching node is not available,
@@ -281,7 +347,37 @@ export interface PodAffinityProps {
    *
    * @default - no preferences.
    */
-  readonly preferredNodes?: PreferredNodeLabelSelector[];
+  readonly preferNodes?: NodePreference[];
+
+  /**
+   * The scheduler can't schedule the Pod unless a node contains pods which matche these selectors.
+   *
+   * @default - no requirements.
+   */
+  readonly requirePods?: PodRequirement[];
+
+  /**
+   * The scheduler tries to find a node that contains pods which matche these selectors. If a matching node is not available,
+   * the scheduler still schedules the Pod.
+   *
+   * @default - no preferences.
+   */
+  readonly preferPods?: PodPreference[];
+
+  /**
+   * The scheduler will not schedule the Pod on a node that has pods which matche these selectors.
+   *
+   * @default - no requirements.
+   */
+  readonly rejectPods?: PodRequirement[];
+
+  /**
+   * The scheduler will try not schedule the Pod on a node that has pods which matche these selectors. If all nodes
+   * meet these selectors, the scheduler still schedules the pod.
+   *
+   * @default - no requirements.
+   */
+  readonly avoidPods?: PodPreference[];
 
 }
 
@@ -290,54 +386,155 @@ export interface PodAffinityProps {
  */
 export class PodAffinity {
 
-  private readonly _preferredNodes: PreferredNodeLabelSelector[] = [];
-  private readonly _requiredNodes: NodeLabelSelector[] = [];
+  // node affinity
+  private readonly _preferredNodes: NodePreference[] = [];
+  private readonly _requiredNodes: NodeRequirement[] = [];
+
+  // pod affinity
+  private readonly _preferredPods: PodPreference[] = [];
+  private readonly _requiredPods: PodRequirement[] = [];
+
+  // pod anit-affinity
+  private readonly _rejectedPods: PodRequirement[] = [];
+  private readonly _avoidedPods: PodPreference[] = [];
 
   constructor(props: PodAffinityProps = {}) {
 
-    if (props.preferredNodes) {
-      props.preferredNodes.forEach(p => this.preferNodes(p.weight, ...p.selectors));
+    if (props.preferNodes) {
+      props.preferNodes.forEach(n => this.preferNode(n));
     }
 
-    if (props.requiredNodes) {
-      this.requireNodes(...props.requiredNodes);
+    if (props.requireNodes) {
+      props.requireNodes.forEach(n => this.requireNode(n));
+    }
+
+    if (props.preferPods) {
+      props.preferPods.forEach(p => this.preferPod(p));
+    }
+
+    if (props.requirePods) {
+      props.requirePods?.forEach(p => this.requirePod(p));
+    }
+
+    if (props.rejectPods) {
+      props.rejectPods.forEach(p => this.rejectPod(p));
+    }
+
+    if (props.avoidPods) {
+      props.avoidPods.forEach(p => this.avoidPod(p));
     }
   }
 
   /**
    * List of preferred nodes for this pod.
    *
-   * Retruns a copy. Use `preferNodes` to add nodes.
+   * Retruns a copy. Use `preferNode` to prefer nodes.
    */
-  public get preferredNodes(): PreferredNodeLabelSelector[] {
+  public get preferredNodes(): NodePreference[] {
     return [...this._preferredNodes];
   }
 
   /**
    * List of required nodes for this pod.
    *
-   * Retruns a copy. Use `requireNodes` to add nodes.
+   * Retruns a copy. Use `requireNode` to require nodes.
    */
-  public get requiredNodes(): NodeLabelSelector[] {
+  public get requiredNodes(): NodeRequirement[] {
     return [...this._requiredNodes];
   }
 
   /**
-   * Add a requirement for the nodes this pod can be scheduled on.
+   * List of preferred pods for this pod.
+   *
+   * Retruns a copy. Use `preferPod` to prefer pods.
    */
-  public requireNodes(...matches: NodeLabelSelector[]) {
-    this._requiredNodes.push(...matches);
+  public get preferredPods(): PodPreference[] {
+    return [...this._preferredPods];
+  }
+
+  /**
+   * List of required pods for this pod.
+   *
+   * Retruns a copy. Use `requirePod` to require pods.
+   */
+  public get requiredPods(): PodRequirement[] {
+    return [...this._requiredPods];
+  }
+
+  /**
+   * List of rejected pods for this pod.
+   *
+   * Retruns a copy. Use `rejectPod` to reject pods.
+   */
+  public get rejectedPods(): PodRequirement[] {
+    return [...this._rejectedPods];
+  }
+
+  /**
+   * List of avoided pods for this pod.
+   *
+   * Retruns a copy. Use `avoidPod` to avoid pods.
+   */
+  public get avoidedPods(): PodPreference[] {
+    return [...this._avoidedPods];
+  }
+
+  /**
+   * Add a requirement for the nodes this pod can be scheduled on.
+   *
+   * Corresponds to the `requiredDuringSchedulingIgnoredDuringExecution` property of node affinity.
+   */
+  public requireNode(requirement: NodeRequirement) {
+    this._requiredNodes.push(requirement);
   }
 
   /**
    * Add a preference for the nodes this pod can be scheduled on.
+   *
+   * Corresponds to the `preferredDuringSchedulingIgnoredDuringExecution` property of node affinity.
    */
-  public preferNodes(weight: number, ...matches: NodeLabelSelector[]) {
-    if (weight < 1 || weight > 100) {
+  public preferNode(preference: NodePreference) {
+    if (preference.weight < 1 || preference.weight > 100) {
       // https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity-weight
-      throw new Error('Invalid affinity weight. Must be in range 1-100');
+      throw new Error(`Invalid affinity weight: ${preference.weight}. Must be in range 1-100`);
     }
-    this._preferredNodes.push({ weight, selectors: matches });
+    this._preferredNodes.push(preference);
+  }
+
+  /**
+   * Add a requirement for the nodes this pod can be scheduled on.
+   *
+   * Corresponds to the `requiredDuringSchedulingIgnoredDuringExecution` property of pod affinity.
+   */
+  public requirePod(requirement: PodRequirement) {
+    this._requiredPods.push(requirement);
+  }
+
+  /**
+   * Add a preference for the nodes this pod can be scheduled on.
+   *
+   * Corresponds to the `preferredDuringSchedulingIgnoredDuringExecution` property of pod affinity.
+   */
+  public preferPod(preference: PodPreference) {
+    this._preferredPods.push(preference);
+  }
+
+  /**
+   * Add a requirement for the nodes this pod can be scheduled on.
+   *
+   * Corresponds to the `requiredDuringSchedulingIgnoredDuringExecution` property of pod anti-affinity.
+   */
+  public rejectPod(requirement: PodRequirement) {
+    this._rejectedPods.push(requirement);
+  }
+
+  /**
+   * Add a preference for the nodes this pod can be scheduled on.
+   *
+   * Corresponds to the `preferredDuringSchedulingIgnoredDuringExecution` property of pod anti-affinity.
+   */
+  public avoidPod(preference: PodPreference) {
+    this._avoidedPods.push(preference);
   }
 
   /**
@@ -345,20 +542,94 @@ export class PodAffinity {
    */
   public _toKube(): k8s.Affinity {
 
-    const requiredNodes: k8s.NodeSelectorTerm[] = [{
-      matchExpressions: this._requiredNodes.map(m => ({ key: m.key, operator: m.operator, values: m.values })),
-    }];
-    const preferredNodes: k8s.PreferredSchedulingTerm[] = this._preferredNodes.map(p => ({
-      weight: p.weight,
-      preference: { matchExpressions: p.selectors.map(m => ({ key: m.key, operator: m.operator, values: m.values })) },
-    }));
+    const requiredNodes: k8s.NodeSelectorTerm[] = [];
+    const preferredNodes: k8s.PreferredSchedulingTerm[] = [];
+    const requiredPods: k8s.PodAffinityTerm[] = [];
+    const preferredPods: k8s.WeightedPodAffinityTerm[] = [];
+    const rejectedPods: k8s.PodAffinityTerm[] = [];
+    const avoidedPods: k8s.WeightedPodAffinityTerm[] = [];
+
+    for (const rn of this._requiredNodes) {
+      requiredNodes.push({ matchExpressions: rn.selectors.map(s => ({ key: s.key, operator: s.operator, values: s.values })) });
+    }
+
+    for (const pn of this._preferredNodes) {
+      preferredNodes.push({
+        weight: pn.weight,
+        preference: { matchExpressions: pn.requirement.selectors.map(s => ({ key: s.key, operator: s.operator, values: s.values })) },
+      });
+    }
+
+    for (const rp of this._requiredPods) {
+      requiredPods.push({
+        topologyKey: rp.topologyKey,
+        namespaces: rp.namespaces,
+        labelSelector: rp.labelSelector ? {
+          matchExpressions: rp.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+        } : undefined,
+        namespaceSelector: rp.namespaceSelector ? {
+          matchExpressions: rp.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+        } : undefined,
+      });
+    }
+
+    for (const pp of this._preferredPods) {
+      preferredPods.push({
+        weight: pp.weight,
+        podAffinityTerm: {
+          topologyKey: pp.requirement.topologyKey,
+          namespaces: pp.requirement.namespaces,
+          labelSelector: pp.requirement.labelSelector ? {
+            matchExpressions: pp.requirement.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          } : undefined,
+          namespaceSelector: pp.requirement.namespaceSelector ? {
+            matchExpressions: pp.requirement.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          } : undefined,
+        },
+      });
+    }
+
+    for (const rp of this._rejectedPods) {
+      rejectedPods.push({
+        topologyKey: rp.topologyKey,
+        namespaces: rp.namespaces,
+        labelSelector: rp.labelSelector ? {
+          matchExpressions: rp.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+        } : undefined,
+        namespaceSelector: rp.namespaceSelector ? {
+          matchExpressions: rp.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+        } : undefined,
+      });
+    }
+
+    for (const ap of this._avoidedPods) {
+      avoidedPods.push({
+        weight: ap.weight,
+        podAffinityTerm: {
+          topologyKey: ap.requirement.topologyKey,
+          namespaces: ap.requirement.namespaces,
+          labelSelector: ap.requirement.labelSelector ? {
+            matchExpressions: ap.requirement.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          } : undefined,
+          namespaceSelector: ap.requirement.namespaceSelector ? {
+            matchExpressions: ap.requirement.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+          } : undefined,
+        },
+      });
+    }
 
     return {
       nodeAffinity: {
         preferredDuringSchedulingIgnoredDuringExecution: preferredNodes,
-        requiredDuringSchedulingIgnoredDuringExecution: {
-          nodeSelectorTerms: requiredNodes,
-        },
+        requiredDuringSchedulingIgnoredDuringExecution: { nodeSelectorTerms: requiredNodes },
+      },
+      podAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: preferredPods,
+        requiredDuringSchedulingIgnoredDuringExecution: requiredPods,
+      },
+      podAntiAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: avoidedPods,
+        requiredDuringSchedulingIgnoredDuringExecution: rejectedPods,
       },
     };
   }
