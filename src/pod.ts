@@ -876,22 +876,31 @@ export class Pod extends AbstractPod {
 
     const labels: string[] = options.labels ?? this._labels(pod);
     const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
+    const labelSelector = labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!));
+    const namespaces = pod.metadata.namespace ? [pod.metadata.namespace] : [];
+    const requirement: PodRequirement = { topologyKey, labelSelector, namespaces };
 
-    this.affinity.requirePod({
-      topologyKey,
-      labelSelector: labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!)),
-    });
+    if (options.weight) {
+      this.affinity.preferPod({ weight: options.weight, preference: requirement });
+    } else {
+      this.affinity.requirePod(requirement);
+    }
+
   }
 
   public repel(pod: Pod, options: PodRepelOptions = {}) {
 
     const labels: string[] = options.labels ?? this._labels(pod);
     const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
+    const labelSelector = labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!));
+    const namespaces = pod.metadata.namespace ? [pod.metadata.namespace] : [];
+    const requirement: PodRequirement = { topologyKey, labelSelector, namespaces };
 
-    this.affinity.rejectPod({
-      topologyKey,
-      labelSelector: labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!)),
-    });
+    if (options.weight) {
+      this.affinity.avoidPod({ weight: options.weight, preference: requirement });
+    } else {
+      this.affinity.rejectPod(requirement);
+    }
 
   }
 

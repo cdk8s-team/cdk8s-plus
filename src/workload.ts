@@ -185,6 +185,8 @@ export abstract class Workload extends pod.AbstractPod {
     const labels: string[] = options.labels ?? this._labels(workload);
     const topologyKey = options.topologyKey ?? pod.TopologyKey.HOSTNAME;
     const labelSelector = labels.map(l => pod.PodLabelQuery.is(l, workload.podMetadata.getLabel(l)!));
+    const namespaces = workload.podMetadata.namespace ? [workload.podMetadata.namespace] : [];
+    const requirement: pod.PodRequirement = { topologyKey, labelSelector, namespaces };
 
     if (options.spread ?? true) {
       this.spread(topologyKey);
@@ -192,9 +194,9 @@ export abstract class Workload extends pod.AbstractPod {
     }
 
     if (options.weight) {
-      this.affinity.preferPod({ weight: options.weight, preference: { topologyKey, labelSelector } });
+      this.affinity.preferPod({ weight: options.weight, preference: requirement });
     } else {
-      this.affinity.requirePod({ topologyKey, labelSelector });
+      this.affinity.requirePod(requirement);
     }
   }
 
@@ -206,11 +208,13 @@ export abstract class Workload extends pod.AbstractPod {
     const labels: string[] = options.labels ?? this._labels(workload);
     const topologyKey = options.topologyKey ?? pod.TopologyKey.HOSTNAME;
     const labelSelector = labels.map(l => pod.PodLabelQuery.is(l, workload.podMetadata.getLabel(l)!));
+    const namespaces = workload.podMetadata.namespace ? [workload.podMetadata.namespace] : [];
+    const requirement: pod.PodRequirement = { topologyKey, labelSelector, namespaces };
 
     if (options.weight) {
-      this.affinity.avoidPod({ weight: options.weight, preference: { topologyKey, labelSelector } });
+      this.affinity.avoidPod({ weight: options.weight, preference: requirement });
     } else {
-      this.affinity.rejectPod({ topologyKey, labelSelector });
+      this.affinity.rejectPod(requirement);
     }
 
   }
