@@ -254,54 +254,6 @@ export interface PodSecurityContextProps {
 }
 
 /**
- * A key for the node label that the system uses to denote the topology domain.
- */
-export class TopologyKey {
-
-  /**
-   * A hostname represents a single node in the cluster.
-   *
-   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#kubernetesiohostname
-   */
-  public static readonly HOSTNAME = new TopologyKey('kubernetes.io/hostname');
-
-  /**
-   * A zone represents a logical failure domain. It is common for Kubernetes clusters to
-   * span multiple zones for increased availability. While the exact definition of a zone is
-   * left to infrastructure implementations, common properties of a zone include very low
-   * network latency within a zone, no-cost network traffic within a zone, and failure
-   * independence from other zones. For example, nodes within a zone might share a network
-   * switch, but nodes in different zones should not.
-   *
-   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone
-   */
-  public static readonly ZONE = new TopologyKey('topology.kubernetes.io/zone');
-
-  /**
-   * A region represents a larger domain, made up of one or more zones. It is uncommon
-   * for Kubernetes clusters to span multiple regions. While the exact definition of a
-   * zone or region is left to infrastructure implementations, common properties of a region
-   * include higher network latency between them than within them, non-zero cost for network
-   * traffic between them, and failure independence from other zones or regions.
-   *
-   * For example, nodes within a region might share power infrastructure (e.g. a UPS or generator), but
-   * nodes in different regions typically would not.
-   *
-   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesioregion
-   */
-  public static readonly REGION = new TopologyKey('topology.kubernetes.io/region');
-
-  /**
-   * Custom topology key.
-   */
-  public static custom(key: string): TopologyKey {
-    return new TopologyKey(key);
-  }
-
-  private constructor(public readonly key: string) {};
-}
-
-/**
  * Properties for `AbstractPod`.
  */
 export interface AbstractPodProps extends base.ResourceProps {
@@ -926,6 +878,54 @@ export class Node {
 
   public constructor(public readonly labelSelector?: NodeLabelQuery[]) {};
 
+}
+
+/**
+ * A key for the node label that the system uses to denote the topology domain.
+ */
+export class TopologyKey {
+
+  /**
+   * A hostname represents a single node in the cluster.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#kubernetesiohostname
+   */
+  public static readonly HOSTNAME = new TopologyKey('kubernetes.io/hostname');
+
+  /**
+   * A zone represents a logical failure domain. It is common for Kubernetes clusters to
+   * span multiple zones for increased availability. While the exact definition of a zone is
+   * left to infrastructure implementations, common properties of a zone include very low
+   * network latency within a zone, no-cost network traffic within a zone, and failure
+   * independence from other zones. For example, nodes within a zone might share a network
+   * switch, but nodes in different zones should not.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone
+   */
+  public static readonly ZONE = new TopologyKey('topology.kubernetes.io/zone');
+
+  /**
+   * A region represents a larger domain, made up of one or more zones. It is uncommon
+   * for Kubernetes clusters to span multiple regions. While the exact definition of a
+   * zone or region is left to infrastructure implementations, common properties of a region
+   * include higher network latency between them than within them, non-zero cost for network
+   * traffic between them, and failure independence from other zones or regions.
+   *
+   * For example, nodes within a region might share power infrastructure (e.g. a UPS or generator), but
+   * nodes in different regions typically would not.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesioregion
+   */
+  public static readonly REGION = new TopologyKey('topology.kubernetes.io/region');
+
+  /**
+   * Custom topology key.
+   */
+  public static custom(key: string): TopologyKey {
+    return new TopologyKey(key);
+  }
+
+  private constructor(public readonly key: string) {};
 }
 
 /**
