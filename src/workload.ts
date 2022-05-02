@@ -48,20 +48,6 @@ export interface LabelSelectorRequirement {
 }
 
 /**
- * Options for `workload.spread`.
- */
-export interface WorkloadSpreadOptions {
-
-  /**
-   * Indicates the spread is optional, with this weight score.
-   *
-   * @default - no weight. spread is assumed to be required.
-   */
-  readonly weight?: number;
-
-}
-
-/**
  * A workload is an application running on Kubernetes. Whether your workload is a single
  * component or several that work together, on Kubernetes you run it inside a set of pods.
  * In Kubernetes, a Pod represents a set of running containers on your cluster.
@@ -152,12 +138,26 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
 
 }
 
+/**
+ * Options for `WorkloadScheduling.spread`.
+ */
+export interface WorkloadSchedulingSpreadOptions {
+
+  /**
+   * Indicates the spread is optional, with this weight score.
+   *
+   * @default - no weight. spread is assumed to be required.
+   */
+  readonly weight?: number;
+
+}
+
 export class WorkloadScheduling extends pod.PodScheduling {
 
   /**
    * Spread the pods in this workload by the topology key.
    */
-  public spread(topologyKey: pod.TopologyKey, options: WorkloadSpreadOptions = {}) {
+  public spread(topologyKey: pod.TopologyKey, options: WorkloadSchedulingSpreadOptions = {}) {
     const labels: string[] = Object.keys(this.podMetadata.toJson().labels);
     const labelSelector = labels.map(l => pod.PodLabelQuery.is(l, this.podMetadata.getLabel(l)!));
     this.separate({ labelSelector }, { weight: options.weight, topologyKey });
