@@ -21,13 +21,6 @@ export abstract class AbstractPod extends base.Resource {
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
 
-  /**
-   * The metadata of the pod associated with this abstract pod.
-   * In case of an actual pod, this will the its metadata.
-   * In case of a workload, this will be the metadata of the pod template.
-   */
-  public abstract podMetadata: ApiObjectMetadataDefinition;
-
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
 
