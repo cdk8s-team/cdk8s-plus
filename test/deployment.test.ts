@@ -367,132 +367,217 @@ test('can select with expressions', () => {
   expect(new Set(spec.selector.matchExpressions)).toEqual(expected);
 });
 
-test('default co-location with managed deployment', () => {
+describe('scheduling', () => {
 
-  const chart = Testing.chart();
+  test('can be assigned to a node - default', () => {
 
-  const redis = new kplus.Deployment(chart, 'Redis', {
-    containers: [{ image: 'redis' }],
-  });
-  const web = new kplus.Deployment(chart, 'Web', {
-    containers: [{ image: 'web' }],
-  });
+    const chart = Testing.chart();
 
-  web.colocate(redis);
+    const redis = new kplus.Deployment(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.assign(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')));
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-});
-
-test('default co-location with external deployment', () => {
-
-  const chart = Testing.chart();
-
-  const redis = kplus.Pods.query()
-    .withLabelSelector(kplus.PodLabelQuery.is('app', 'store'))
-    .withNamespaceSelector(kplus.PodLabelQuery.is('net', '1'))
-    .withNamespaces('n1');
-
-  const web = new kplus.Deployment(chart, 'Web', {
-    containers: [{ image: 'web' }],
   });
 
-  web.colocate(redis);
+  test('can be assigned to a node - custom', () => {
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+    const chart = Testing.chart();
 
-});
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    redis.scheduling.assign(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')), {
+      weight: 1,
+    });
 
-test('custom co-location', () => {
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  const chart = Testing.chart();
-
-  const redis = new kplus.Deployment(chart, 'Redis', {
-    containers: [{ image: 'redis' }],
-  });
-  const web = new kplus.Deployment(chart, 'Web', {
-    containers: [{ image: 'web' }],
   });
 
-  redis.podMetadata.addLabel('app', 'store');
+  test('can be co-located with a managed deployment - default', () => {
 
-  web.colocate(redis, {
-    labels: ['app'],
-    spread: false,
-    topologyKey: kplus.TopologyKey.ZONE,
-    weight: 1,
+    const chart = Testing.chart();
+
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can be co-located with a managed deployment - custom', () => {
 
-});
+    const chart = Testing.chart();
 
-test('default spread', () => {
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
 
-  const chart = Testing.chart();
+    web.scheduling.colocate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
 
-  const deployment = new kplus.Deployment(chart, 'Deployment', {
-    containers: [{ image: 'redis' }],
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
   });
 
-  deployment.spread(kplus.TopologyKey.HOSTNAME);
+  test('can be co-located with an unmanaged deployment - default', () => {
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+    const chart = Testing.chart();
 
-});
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
 
-test('custom spread', () => {
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
 
-  const chart = Testing.chart();
+    web.scheduling.colocate(redis);
 
-  const deployment = new kplus.Deployment(chart, 'Deployment', {
-    containers: [{ image: 'redis' }],
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
   });
 
-  deployment.spread(kplus.TopologyKey.HOSTNAME, {
-    weight: 1,
+  test('can be co-located with an unmanaged deployment - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
+
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can be spread - default', () => {
 
-});
+    const chart = Testing.chart();
 
-test('default repel', () => {
+    const deployment = new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'redis' }],
+    });
 
-  const chart = Testing.chart();
+    deployment.scheduling.spread(kplus.TopologyKey.HOSTNAME);
 
-  const redis = new kplus.Deployment(chart, 'Redis', {
-    containers: [{ image: 'redis' }],
-  });
-  const web = new kplus.Deployment(chart, 'Web', {
-    containers: [{ image: 'web' }],
-  });
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  web.repel(redis);
-
-  expect(Testing.synth(chart)).toMatchSnapshot();
-
-});
-
-test('custom repel', () => {
-
-  const chart = Testing.chart();
-
-  const redis = new kplus.Deployment(chart, 'Redis', {
-    containers: [{ image: 'redis' }],
-  });
-  const web = new kplus.Deployment(chart, 'Web', {
-    containers: [{ image: 'web' }],
   });
 
-  redis.podMetadata.addLabel('app', 'store');
+  test('can be spread - custom', () => {
 
-  web.repel(redis, {
-    labels: ['app'],
-    topologyKey: kplus.TopologyKey.ZONE,
-    weight: 1,
+    const chart = Testing.chart();
+
+    const deployment = new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'redis' }],
+    });
+
+    deployment.scheduling.spread(kplus.TopologyKey.HOSTNAME, { weight: 1 });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can be separated from a managed deployment - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from a managed deployment - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from an unmanaged deployment - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from an unmanaged deployment - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
+
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
 
 });

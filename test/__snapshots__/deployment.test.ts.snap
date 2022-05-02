@@ -139,7 +139,7 @@ Array [
 ]
 `;
 
-exports[`custom co-location 1`] = `
+exports[`scheduling can be assigned to a node - custom 1`] = `
 Array [
   Object {
     "apiVersion": "apps/v1",
@@ -167,7 +167,205 @@ Array [
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "app": "store",
+            "cdk8s.deployment": "test-Redis-c8b1633b",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "preference": Object {
+                    "matchExpressions": Array [
+                      Object {
+                        "key": "memory",
+                        "operator": "In",
+                        "values": Array [
+                          "high",
+                        ],
+                      },
+                    ],
+                  },
+                  "weight": 1,
+                },
+              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "redis",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be assigned to a node - default 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Redis-c8b1633b",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Redis-c8b1633b",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [
+                  Object {
+                    "matchExpressions": Array [
+                      Object {
+                        "key": "memory",
+                        "operator": "In",
+                        "values": Array [
+                          "high",
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "redis",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be co-located with a managed deployment - custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Redis-c8b1633b",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
             "cdk8s.deployment": "test-Redis-c8b1633b",
           },
         },
@@ -261,300 +459,6 @@ Array [
               },
             },
             "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "podAffinityTerm": Object {
-                    "labelSelector": Object {
-                      "matchExpressions": Array [
-                        Object {
-                          "key": "app",
-                          "operator": "In",
-                          "values": Array [
-                            "store",
-                          ],
-                        },
-                      ],
-                    },
-                    "topologyKey": "topology.kubernetes.io/zone",
-                  },
-                  "weight": 1,
-                },
-              ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-          },
-          "automountServiceAccountToken": true,
-          "containers": Array [
-            Object {
-              "env": Array [],
-              "image": "web",
-              "imagePullPolicy": "Always",
-              "name": "main",
-              "ports": Array [],
-              "securityContext": Object {
-                "privileged": false,
-                "readOnlyRootFilesystem": false,
-                "runAsNonRoot": false,
-              },
-              "volumeMounts": Array [],
-            },
-          ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
-          "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
-          "securityContext": Object {
-            "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
-            "sysctls": Array [],
-          },
-          "setHostnameAsFQDN": false,
-          "volumes": Array [],
-        },
-      },
-    },
-  },
-]
-`;
-
-exports[`custom repel 1`] = `
-Array [
-  Object {
-    "apiVersion": "apps/v1",
-    "kind": "Deployment",
-    "metadata": Object {
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "minReadySeconds": 0,
-      "progressDeadlineSeconds": 600,
-      "replicas": 1,
-      "selector": Object {
-        "matchExpressions": Array [],
-        "matchLabels": Object {
-          "cdk8s.deployment": "test-Redis-c8b1633b",
-        },
-      },
-      "strategy": Object {
-        "rollingUpdate": Object {
-          "maxSurge": "25%",
-          "maxUnavailable": "25%",
-        },
-        "type": "RollingUpdate",
-      },
-      "template": Object {
-        "metadata": Object {
-          "labels": Object {
-            "app": "store",
-            "cdk8s.deployment": "test-Redis-c8b1633b",
-          },
-        },
-        "spec": Object {
-          "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-          },
-          "automountServiceAccountToken": true,
-          "containers": Array [
-            Object {
-              "env": Array [],
-              "image": "redis",
-              "imagePullPolicy": "Always",
-              "name": "main",
-              "ports": Array [],
-              "securityContext": Object {
-                "privileged": false,
-                "readOnlyRootFilesystem": false,
-                "runAsNonRoot": false,
-              },
-              "volumeMounts": Array [],
-            },
-          ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
-          "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
-          "securityContext": Object {
-            "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
-            "sysctls": Array [],
-          },
-          "setHostnameAsFQDN": false,
-          "volumes": Array [],
-        },
-      },
-    },
-  },
-  Object {
-    "apiVersion": "apps/v1",
-    "kind": "Deployment",
-    "metadata": Object {
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "minReadySeconds": 0,
-      "progressDeadlineSeconds": 600,
-      "replicas": 1,
-      "selector": Object {
-        "matchExpressions": Array [],
-        "matchLabels": Object {
-          "cdk8s.deployment": "test-Web-c8b65d84",
-        },
-      },
-      "strategy": Object {
-        "rollingUpdate": Object {
-          "maxSurge": "25%",
-          "maxUnavailable": "25%",
-        },
-        "type": "RollingUpdate",
-      },
-      "template": Object {
-        "metadata": Object {
-          "labels": Object {
-            "cdk8s.deployment": "test-Web-c8b65d84",
-          },
-        },
-        "spec": Object {
-          "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "podAffinityTerm": Object {
-                    "labelSelector": Object {
-                      "matchExpressions": Array [
-                        Object {
-                          "key": "app",
-                          "operator": "In",
-                          "values": Array [
-                            "store",
-                          ],
-                        },
-                      ],
-                    },
-                    "topologyKey": "topology.kubernetes.io/zone",
-                  },
-                  "weight": 1,
-                },
-              ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-          },
-          "automountServiceAccountToken": true,
-          "containers": Array [
-            Object {
-              "env": Array [],
-              "image": "web",
-              "imagePullPolicy": "Always",
-              "name": "main",
-              "ports": Array [],
-              "securityContext": Object {
-                "privileged": false,
-                "readOnlyRootFilesystem": false,
-                "runAsNonRoot": false,
-              },
-              "volumeMounts": Array [],
-            },
-          ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
-          "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
-          "securityContext": Object {
-            "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
-            "sysctls": Array [],
-          },
-          "setHostnameAsFQDN": false,
-          "volumes": Array [],
-        },
-      },
-    },
-  },
-]
-`;
-
-exports[`custom spread 1`] = `
-Array [
-  Object {
-    "apiVersion": "apps/v1",
-    "kind": "Deployment",
-    "metadata": Object {
-      "name": "test-deployment-c898c72d",
-    },
-    "spec": Object {
-      "minReadySeconds": 0,
-      "progressDeadlineSeconds": 600,
-      "replicas": 1,
-      "selector": Object {
-        "matchExpressions": Array [],
-        "matchLabels": Object {
-          "cdk8s.deployment": "test-Deployment-c83f5e59",
-        },
-      },
-      "strategy": Object {
-        "rollingUpdate": Object {
-          "maxSurge": "25%",
-          "maxUnavailable": "25%",
-        },
-        "type": "RollingUpdate",
-      },
-      "template": Object {
-        "metadata": Object {
-          "labels": Object {
-            "cdk8s.deployment": "test-Deployment-c83f5e59",
-          },
-        },
-        "spec": Object {
-          "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
                   "podAffinityTerm": Object {
@@ -564,16 +468,21 @@ Array [
                           "key": "cdk8s.deployment",
                           "operator": "In",
                           "values": Array [
-                            "test-Deployment-c83f5e59",
+                            "test-Redis-c8b1633b",
                           ],
                         },
                       ],
                     },
-                    "topologyKey": "kubernetes.io/hostname",
+                    "namespaces": Array [],
+                    "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
                 },
               ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
@@ -581,7 +490,7 @@ Array [
           "containers": Array [
             Object {
               "env": Array [],
-              "image": "redis",
+              "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
               "ports": Array [],
@@ -615,7 +524,7 @@ Array [
 ]
 `;
 
-exports[`default co-location 1`] = `
+exports[`scheduling can be co-located with a managed deployment - default 1`] = `
 Array [
   Object {
     "apiVersion": "apps/v1",
@@ -660,22 +569,7 @@ Array [
             },
             "podAntiAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "labelSelector": Object {
-                    "matchExpressions": Array [
-                      Object {
-                        "key": "cdk8s.deployment",
-                        "operator": "In",
-                        "values": Array [
-                          "test-Redis-c8b1633b",
-                        ],
-                      },
-                    ],
-                  },
-                  "topologyKey": "kubernetes.io/hostname",
-                },
-              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -765,28 +659,14 @@ Array [
                       },
                     ],
                   },
+                  "namespaces": Array [],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
             },
             "podAntiAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "labelSelector": Object {
-                    "matchExpressions": Array [
-                      Object {
-                        "key": "cdk8s.deployment",
-                        "operator": "In",
-                        "values": Array [
-                          "test-Web-c8b65d84",
-                        ],
-                      },
-                    ],
-                  },
-                  "topologyKey": "kubernetes.io/hostname",
-                },
-              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -827,7 +707,125 @@ Array [
 ]
 `;
 
-exports[`default co-location with external deployment 1`] = `
+exports[`scheduling can be co-located with an unmanaged deployment - custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Web-c8b65d84",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Web-c8b65d84",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "podAffinityTerm": Object {
+                    "labelSelector": Object {
+                      "matchExpressions": Array [
+                        Object {
+                          "key": "app",
+                          "operator": "In",
+                          "values": Array [
+                            "store",
+                          ],
+                        },
+                      ],
+                    },
+                    "namespaceSelector": Object {
+                      "matchExpressions": Array [
+                        Object {
+                          "key": "net",
+                          "operator": "In",
+                          "values": Array [
+                            "1",
+                          ],
+                        },
+                      ],
+                    },
+                    "namespaces": Array [
+                      "n1",
+                    ],
+                    "topologyKey": "topology.kubernetes.io/zone",
+                  },
+                  "weight": 1,
+                },
+              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "web",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be co-located with an unmanaged deployment - default 1`] = `
 Array [
   Object {
     "apiVersion": "apps/v1",
@@ -942,7 +940,193 @@ Array [
 ]
 `;
 
-exports[`default repel 1`] = `
+exports[`scheduling can be separated from a managed deployment - custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Redis-c8b1633b",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Redis-c8b1633b",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "redis",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Web-c8b65d84",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Web-c8b65d84",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "podAffinityTerm": Object {
+                    "labelSelector": Object {
+                      "matchExpressions": Array [
+                        Object {
+                          "key": "cdk8s.deployment",
+                          "operator": "In",
+                          "values": Array [
+                            "test-Redis-c8b1633b",
+                          ],
+                        },
+                      ],
+                    },
+                    "namespaces": Array [],
+                    "topologyKey": "topology.kubernetes.io/zone",
+                  },
+                  "weight": 1,
+                },
+              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "web",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be separated from a managed deployment - default 1`] = `
 Array [
   Object {
     "apiVersion": "apps/v1",
@@ -1081,6 +1265,7 @@ Array [
                       },
                     ],
                   },
+                  "namespaces": Array [],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
@@ -1124,7 +1309,412 @@ Array [
 ]
 `;
 
-exports[`default spread 1`] = `
+exports[`scheduling can be separated from an unmanaged deployment - custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Web-c8b65d84",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Web-c8b65d84",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "podAffinityTerm": Object {
+                    "labelSelector": Object {
+                      "matchExpressions": Array [
+                        Object {
+                          "key": "app",
+                          "operator": "In",
+                          "values": Array [
+                            "store",
+                          ],
+                        },
+                      ],
+                    },
+                    "namespaceSelector": Object {
+                      "matchExpressions": Array [
+                        Object {
+                          "key": "net",
+                          "operator": "In",
+                          "values": Array [
+                            "1",
+                          ],
+                        },
+                      ],
+                    },
+                    "namespaces": Array [
+                      "n1",
+                    ],
+                    "topologyKey": "topology.kubernetes.io/zone",
+                  },
+                  "weight": 1,
+                },
+              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "web",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be separated from an unmanaged deployment - default 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Redis-c8b1633b",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Redis-c8b1633b",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "redis",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Web-c8b65d84",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Web-c8b65d84",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "labelSelector": Object {
+                    "matchExpressions": Array [
+                      Object {
+                        "key": "cdk8s.deployment",
+                        "operator": "In",
+                        "values": Array [
+                          "test-Redis-c8b1633b",
+                        ],
+                      },
+                    ],
+                  },
+                  "namespaces": Array [],
+                  "topologyKey": "kubernetes.io/hostname",
+                },
+              ],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "web",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be spread - custom 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "podAffinityTerm": Object {
+                    "labelSelector": Object {
+                      "matchExpressions": Array [
+                        Object {
+                          "key": "cdk8s.deployment",
+                          "operator": "In",
+                          "values": Array [
+                            "test-Deployment-c83f5e59",
+                          ],
+                        },
+                      ],
+                    },
+                    "topologyKey": "kubernetes.io/hostname",
+                  },
+                  "weight": 1,
+                },
+              ],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "redis",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`scheduling can be spread - default 1`] = `
 Array [
   Object {
     "apiVersion": "apps/v1",

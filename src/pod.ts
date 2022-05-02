@@ -1,4 +1,4 @@
-import { ApiObject, Lazy } from 'cdk8s';
+import { ApiObject, ApiObjectMetadataDefinition, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
@@ -15,12 +15,19 @@ export abstract class AbstractPod extends base.Resource {
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
-  public readonly affinity: PodAffinity;
+  public readonly scheduling: PodScheduling;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
+
+  /**
+   * The metadata of the pod associated with this abstract pod.
+   * In case of an actual pod, this will the its metadata.
+   * In case of a workload, this will be the metadata of the pod template.
+   */
+  public abstract podMetadata: ApiObjectMetadataDefinition;
 
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
@@ -28,7 +35,7 @@ export abstract class AbstractPod extends base.Resource {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
-    this.affinity = new PodAffinity(props.affinity);
+    this.scheduling = new PodScheduling(this);
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
@@ -171,7 +178,7 @@ export abstract class AbstractPod extends base.Resource {
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
-      affinity: this.affinity._toKube(),
+      affinity: this.scheduling._toKube(),
     };
 
   }
@@ -295,385 +302,6 @@ export class TopologyKey {
 }
 
 /**
- * Describes a requirement for node selection.
- */
-export interface NodeRequirement {
-  /**
-   * List of label queries that the node needs to satisfy.
-   */
-  readonly labelSelector: NodeLabelQuery[];
-}
-
-/**
- * Describes a prefernce for node selection.
- */
-export interface NodePreference {
-
-  /**
-   * The preference to satisfy.
-   */
-  readonly preference: NodeRequirement;
-
-  /**
-   * Weight associated with matching the corresponding requirement, in the range 1-100.
-   */
-  readonly weight: number;
-
-}
-
-/**
- * Describes a requirement for pod selection.
- */
-export interface PodRequirement {
-
-  /**
-   * Pod co-location is defined as running on a node whose value of the
-   * this label matches that of any node on which any of
-   * the selected pods is running.
-   */
-  readonly topologyKey: TopologyKey;
-
-  /**
-   * List of label queries that the node needs to satisfy.
-   */
-  readonly labelSelector?: PodLabelQuery[];
-
-  /**
-   * List of label queries that the namespace needs to satisfy.
-   */
-  readonly namespaceSelector?: PodLabelQuery[];
-
-  /**
-   * Static list of namespaces the pods can belong to.
-   */
-  readonly namespaces?: string[];
-
-}
-
-/**
- * Describes a prefernce for pod selection.
- */
-export interface PodPreference {
-
-  /**
-   * The preference to satisfy.
-   */
-  readonly preference: PodRequirement;
-
-  /**
-   * Weight associated with matching the corresponding requirement, in the range 1-100.
-   */
-  readonly weight: number;
-
-}
-
-/**
- * Properties for `PodAffinity`.
- */
-export interface PodAffinityProps {
-
-  /**
-   * The scheduler can't schedule the Pod unless a node matches one of these requirements.
-   *
-   * @default - no requirements.
-   */
-  readonly requireNodes?: NodeRequirement[];
-
-  /**
-   * The scheduler tries to find a node that matches one of these prefernces.
-   * If a matching node is not available, the scheduler still schedules the Pod.
-   *
-   * @default - no preferences.
-   */
-  readonly preferNodes?: NodePreference[];
-
-  /**
-   * The scheduler can't schedule the Pod unless a node contains pods which match one of these requirements.
-   *
-   * @default - no requirements.
-   */
-  readonly requirePods?: PodRequirement[];
-
-  /**
-   * The scheduler tries to find a node that contains pods which match one of these preferences.
-   * If a matching node is not available, the scheduler still schedules the Pod.
-   *
-   * @default - no preferences.
-   */
-  readonly preferPods?: PodPreference[];
-
-  /**
-   * The scheduler will not schedule the Pod on a node that has pods which match on these requirements.
-   *
-   * @default - no rejections.
-   */
-  readonly rejectPods?: PodRequirement[];
-
-  /**
-   * The scheduler will try not to schedule the Pod on a node that has pods which match one of these prefernces.
-   * If all nodes meet these selectors, the scheduler still schedules the pod.
-   *
-   * @default - no preferences.
-   */
-  readonly avoidPods?: PodPreference[];
-
-}
-
-/**
- * Controls the pod affinity.
- */
-export class PodAffinity {
-
-  // node affinity
-  private readonly _preferredNodes: NodePreference[] = [];
-  private readonly _requiredNodes: NodeRequirement[] = [];
-
-  // pod affinity
-  private readonly _preferredPods: PodPreference[] = [];
-  private readonly _requiredPods: PodRequirement[] = [];
-
-  // pod anit-affinity
-  private readonly _rejectedPods: PodRequirement[] = [];
-  private readonly _avoidedPods: PodPreference[] = [];
-
-  constructor(props: PodAffinityProps = {}) {
-
-    if (props.preferNodes) {
-      props.preferNodes.forEach(n => this.preferNode(n));
-    }
-
-    if (props.requireNodes) {
-      props.requireNodes.forEach(n => this.requireNode(n));
-    }
-
-    if (props.preferPods) {
-      props.preferPods.forEach(p => this.preferPod(p));
-    }
-
-    if (props.requirePods) {
-      props.requirePods?.forEach(p => this.requirePod(p));
-    }
-
-    if (props.rejectPods) {
-      props.rejectPods.forEach(p => this.rejectPod(p));
-    }
-
-    if (props.avoidPods) {
-      props.avoidPods.forEach(p => this.avoidPod(p));
-    }
-  }
-
-  /**
-   * List of preferred nodes for this pod.
-   *
-   * Retruns a copy. Use `preferNode` to prefer nodes.
-   */
-  public get preferredNodes(): NodePreference[] {
-    return [...this._preferredNodes];
-  }
-
-  /**
-   * List of required nodes for this pod.
-   *
-   * Retruns a copy. Use `requireNode` to require nodes.
-   */
-  public get requiredNodes(): NodeRequirement[] {
-    return [...this._requiredNodes];
-  }
-
-  /**
-   * List of preferred pods for this pod.
-   *
-   * Retruns a copy. Use `preferPod` to prefer pods.
-   */
-  public get preferredPods(): PodPreference[] {
-    return [...this._preferredPods];
-  }
-
-  /**
-   * List of required pods for this pod.
-   *
-   * Retruns a copy. Use `requirePod` to require pods.
-   */
-  public get requiredPods(): PodRequirement[] {
-    return [...this._requiredPods];
-  }
-
-  /**
-   * List of rejected pods for this pod.
-   *
-   * Retruns a copy. Use `rejectPod` to reject pods.
-   */
-  public get rejectedPods(): PodRequirement[] {
-    return [...this._rejectedPods];
-  }
-
-  /**
-   * List of avoided pods for this pod.
-   *
-   * Retruns a copy. Use `avoidPod` to avoid pods.
-   */
-  public get avoidedPods(): PodPreference[] {
-    return [...this._avoidedPods];
-  }
-
-  /**
-   * Add a requirement for the nodes this pod can be scheduled on.
-   *
-   * Corresponds to the `requiredDuringSchedulingIgnoredDuringExecution` property of node affinity.
-   */
-  public requireNode(requirement: NodeRequirement) {
-    this._requiredNodes.push(requirement);
-  }
-
-  /**
-   * Add a preference for the nodes this pod can be scheduled on.
-   *
-   * Corresponds to the `preferredDuringSchedulingIgnoredDuringExecution` property of node affinity.
-   */
-  public preferNode(preference: NodePreference) {
-    if (preference.weight < 1 || preference.weight > 100) {
-      // https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity-weight
-      throw new Error(`Invalid affinity weight: ${preference.weight}. Must be in range 1-100`);
-    }
-    this._preferredNodes.push(preference);
-  }
-
-  /**
-   * Add a requirement for the nodes this pod can be scheduled on.
-   *
-   * Corresponds to the `requiredDuringSchedulingIgnoredDuringExecution` property of pod affinity.
-   */
-  public requirePod(requirement: PodRequirement) {
-    this._requiredPods.push(requirement);
-  }
-
-  /**
-   * Add a preference for the nodes this pod can be scheduled on.
-   *
-   * Corresponds to the `preferredDuringSchedulingIgnoredDuringExecution` property of pod affinity.
-   */
-  public preferPod(preference: PodPreference) {
-    this._preferredPods.push(preference);
-  }
-
-  /**
-   * Add a requirement for the nodes this pod can be scheduled on.
-   *
-   * Corresponds to the `requiredDuringSchedulingIgnoredDuringExecution` property of pod anti-affinity.
-   */
-  public rejectPod(requirement: PodRequirement) {
-    this._rejectedPods.push(requirement);
-  }
-
-  /**
-   * Add a preference for the nodes this pod can be scheduled on.
-   *
-   * Corresponds to the `preferredDuringSchedulingIgnoredDuringExecution` property of pod anti-affinity.
-   */
-  public avoidPod(preference: PodPreference) {
-    this._avoidedPods.push(preference);
-  }
-
-  /**
-   * @internal
-   */
-  public _toKube(): k8s.Affinity {
-
-    const requiredNodes: k8s.NodeSelectorTerm[] = [];
-    const preferredNodes: k8s.PreferredSchedulingTerm[] = [];
-    const requiredPods: k8s.PodAffinityTerm[] = [];
-    const preferredPods: k8s.WeightedPodAffinityTerm[] = [];
-    const rejectedPods: k8s.PodAffinityTerm[] = [];
-    const avoidedPods: k8s.WeightedPodAffinityTerm[] = [];
-
-    for (const rn of this._requiredNodes) {
-      requiredNodes.push({ matchExpressions: rn.labelSelector.map(s => ({ key: s.key, operator: s.operator, values: s.values })) });
-    }
-
-    for (const pn of this._preferredNodes) {
-      preferredNodes.push({
-        weight: pn.weight,
-        preference: { matchExpressions: pn.preference.labelSelector.map(s => ({ key: s.key, operator: s.operator, values: s.values })) },
-      });
-    }
-
-    for (const rp of this._requiredPods) {
-      requiredPods.push({
-        topologyKey: rp.topologyKey.key,
-        namespaces: rp.namespaces,
-        labelSelector: rp.labelSelector ? {
-          matchExpressions: rp.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-        } : undefined,
-        namespaceSelector: rp.namespaceSelector ? {
-          matchExpressions: rp.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-        } : undefined,
-      });
-    }
-
-    for (const pp of this._preferredPods) {
-      preferredPods.push({
-        weight: pp.weight,
-        podAffinityTerm: {
-          topologyKey: pp.preference.topologyKey.key,
-          namespaces: pp.preference.namespaces,
-          labelSelector: pp.preference.labelSelector ? {
-            matchExpressions: pp.preference.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-          } : undefined,
-          namespaceSelector: pp.preference.namespaceSelector ? {
-            matchExpressions: pp.preference.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-          } : undefined,
-        },
-      });
-    }
-
-    for (const rp of this._rejectedPods) {
-      rejectedPods.push({
-        topologyKey: rp.topologyKey.key,
-        namespaces: rp.namespaces,
-        labelSelector: rp.labelSelector ? {
-          matchExpressions: rp.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-        } : undefined,
-        namespaceSelector: rp.namespaceSelector ? {
-          matchExpressions: rp.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-        } : undefined,
-      });
-    }
-
-    for (const ap of this._avoidedPods) {
-      avoidedPods.push({
-        weight: ap.weight,
-        podAffinityTerm: {
-          topologyKey: ap.preference.topologyKey.key,
-          namespaces: ap.preference.namespaces,
-          labelSelector: ap.preference.labelSelector ? {
-            matchExpressions: ap.preference.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-          } : undefined,
-          namespaceSelector: ap.preference.namespaceSelector ? {
-            matchExpressions: ap.preference.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-          } : undefined,
-        },
-      });
-    }
-
-    return {
-      nodeAffinity: {
-        preferredDuringSchedulingIgnoredDuringExecution: preferredNodes,
-        requiredDuringSchedulingIgnoredDuringExecution: { nodeSelectorTerms: requiredNodes },
-      },
-      podAffinity: {
-        preferredDuringSchedulingIgnoredDuringExecution: preferredPods,
-        requiredDuringSchedulingIgnoredDuringExecution: requiredPods,
-      },
-      podAntiAffinity: {
-        preferredDuringSchedulingIgnoredDuringExecution: avoidedPods,
-        requiredDuringSchedulingIgnoredDuringExecution: rejectedPods,
-      },
-    };
-  }
-}
-
-/**
  * Properties for `AbstractPod`.
  */
 export interface AbstractPodProps extends base.ResourceProps {
@@ -784,14 +412,6 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
    */
   readonly automountServiceAccountToken?: boolean;
-
-  /**
-   * The pod's scheduling constraints
-   *
-   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-   * @default - pods are free to scheduled on any node.
-   */
-  readonly affinity?: PodAffinityProps;
 }
 
 /**
@@ -826,36 +446,21 @@ export interface PodColocateOptions {
 
 }
 
-export interface PodRepelOptions {
-  /**
-   * Which labels to use as the label selector.
-   *
-   * @default - all labels are selected.
-   */
-  readonly labels?: string[];
-
-  /**
-   * Which topology to coloate on.
-   *
-   * @default - TopologyKey.HOSTNAME
-   */
-  readonly topologyKey?: TopologyKey;
-
-  /**
-   * Indicates the repel is optional, with this weight score.
-   *
-   * @default - no weight. repel is assumed to be required.
-   */
-  readonly weight?: number;
-
-}
-
 
 /**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
-export class Pod extends AbstractPod {
+export class Pod extends AbstractPod implements IPodSchedulingSelection {
+
+  /**
+   * Create a selector for selecting pods by queries.
+   */
+  public static select(selection: IPodSchedulingSelection): IPodSchedulingSelection {
+    // this seems strange, I know.
+    // it's like this solely for API consistency with `Node.select`.
+    return selection;
+  }
 
   /**
    * @see base.Resource.apiObject
@@ -872,41 +477,20 @@ export class Pod extends AbstractPod {
 
   }
 
-  public colocate(pod: Pod, options: PodColocateOptions = {}) {
-
-    const labels: string[] = options.labels ?? this._labels(pod);
-    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
-    const labelSelector = labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!));
-    const namespaces = pod.metadata.namespace ? [pod.metadata.namespace] : [];
-    const requirement: PodRequirement = { topologyKey, labelSelector, namespaces };
-
-    if (options.weight) {
-      this.affinity.preferPod({ weight: options.weight, preference: requirement });
-    } else {
-      this.affinity.requirePod(requirement);
-    }
-
+  public get podMetadata(): ApiObjectMetadataDefinition {
+    return this.metadata;
   }
 
-  public repel(pod: Pod, options: PodRepelOptions = {}) {
-
-    const labels: string[] = options.labels ?? this._labels(pod);
-    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
-    const labelSelector = labels.map(l => PodLabelQuery.is(l, pod.metadata.getLabel(l)!));
-    const namespaces = pod.metadata.namespace ? [pod.metadata.namespace] : [];
-    const requirement: PodRequirement = { topologyKey, labelSelector, namespaces };
-
-    if (options.weight) {
-      this.affinity.avoidPod({ weight: options.weight, preference: requirement });
-    } else {
-      this.affinity.rejectPod(requirement);
-    }
-
+  public get namespaces(): string[] | undefined {
+    return this.metadata.namespace ? [this.metadata.namespace] : [];
   }
 
-  private _labels(pod: Pod) {
-    // TODO: expose labels from metadata in cdk8s-core.
-    return Object.keys(pod.metadata.toJson().labels);
+  public get namespaceSelector(): PodLabelQuery[] | undefined {
+    return undefined;
+  }
+
+  public get labelSelector(): PodLabelQuery[] | undefined {
+    return Object.keys(this.metadata.toJson().labels).map(l => PodLabelQuery.is(l, this.metadata.getLabel(l)!));
   }
 
 
@@ -1353,5 +937,242 @@ export class PodLabelQuery {
     public readonly key: string,
     public readonly operator: string,
     public readonly values?: string[]) {
+  }
+}
+
+/**
+ * Represents a node in the cluster.
+ */
+export class Node {
+
+  /**
+   * Select a node based on node label queries.
+   */
+  public static select(...labelSelector: NodeLabelQuery[]): Node {
+    return new Node(labelSelector);
+  }
+
+  public constructor(public readonly labelSelector?: NodeLabelQuery[]) {};
+
+}
+
+/**
+ * Options for `PodScheduling.coloate`.
+ */
+export interface PodSchedulingColocateOptions {
+  /**
+   * Which topology to coloate on.
+   *
+   * @default - TopologyKey.HOSTNAME
+   */
+  readonly topologyKey?: TopologyKey;
+
+  /**
+   * Indicates the co-location is optional, with this weight score.
+   *
+   * @default - no weight. co-location is assumed to be required.
+   */
+  readonly weight?: number;
+}
+
+/**
+ * Options for `PodScheduling.separate`.
+ */
+export interface PodSchedulingSeparateOptions {
+  /**
+   * Which topology to coloate on.
+   *
+   * @default - TopologyKey.HOSTNAME
+   */
+  readonly topologyKey?: TopologyKey;
+
+  /**
+   * Indicates the separation is optional, with this weight score.
+   *
+   * @default - no weight. separation is assumed to be required.
+   */
+  readonly weight?: number;
+}
+
+/**
+ * Options for `PodScheduling.assign`.
+ */
+export interface PodSchedulingAssignOptions {
+  /**
+   * Indicates the assignment is optional, with this weight score.
+   *
+   * @default - no weight. assignment is assumed to be required.
+   */
+  readonly weight?: number;
+}
+
+/**
+ * Represents a pod that can be selected during scheduling.
+ */
+export interface IPodSchedulingSelection {
+  /**
+   * List of label queries that the pod labels need to satisfy.
+   */
+  readonly labelSelector?: PodLabelQuery[];
+
+  /**
+   * List of label queries that the pod namespace needs to satisfy.
+   */
+  readonly namespaceSelector?: PodLabelQuery[];
+
+  /**
+   * Static list of namespaces the pods can belong to.
+   */
+  readonly namespaces?: string[];
+}
+
+/**
+ * Controls the pod scheduling strategy.
+ */
+export class PodScheduling {
+
+  private readonly _affinity: k8s.Affinity;
+  private readonly _ap: AbstractPod;
+
+  constructor(ap: AbstractPod) {
+    this._ap = ap;
+    this._affinity = {
+      nodeAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: [],
+        requiredDuringSchedulingIgnoredDuringExecution: {
+          nodeSelectorTerms: [],
+        },
+      },
+      podAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: [],
+        requiredDuringSchedulingIgnoredDuringExecution: [],
+      },
+      podAntiAffinity: {
+        preferredDuringSchedulingIgnoredDuringExecution: [],
+        requiredDuringSchedulingIgnoredDuringExecution: [],
+      },
+    };
+  }
+
+  /**
+   * Assign this pod to a specific node.
+   * You can Select a node by using `Node.select()`.
+   *
+   * Assigning to multiple nodes (i.e invoking this method multiple times) acts as
+   * an OR condition, meaning the pod will be assigned to either one of the nodes.
+   *
+   * Under the hood, this method utilizes the `nodeAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+   */
+  public assign(node: Node, options: PodSchedulingAssignOptions = {}) {
+
+    const term = this.createNodeAffinityTerm(node);
+
+    if (options.weight) {
+      this.validateWeight(options.weight);
+      this._affinity.nodeAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, preference: term });
+    } else {
+      this._affinity.nodeAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.nodeSelectorTerms.push(term);
+    }
+  }
+
+  /**
+   * Co-locate this pod with a scheduling selection.
+   *
+   * A selection can be one of:
+   *
+   * - An instance of a `Pod`.
+   * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
+   * - An un-managed pod that can be selected via `Pod.select()`.
+   *
+   * Co-locating with multiple selections acts as an AND condition. meaning the pod
+   * will be assigned to a node that satisfies all selections (i.e runs at least one pod that satisifies each selection).
+   *
+   * Under the hood, this method utilizes the `podAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+   */
+  public colocate(selection: IPodSchedulingSelection, options: PodSchedulingColocateOptions = {}) {
+
+    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
+    const term = this.createPodAffinityTerm(topologyKey, selection);
+
+    if (options.weight) {
+      this.validateWeight(options.weight);
+      this._affinity.podAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
+    } else {
+      this._affinity.podAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
+    }
+  }
+
+  /**
+   * Seperate this pod from a scheduling selection.
+   *
+   * A selection can be one of:
+   *
+   * - An instance of a `Pod`.
+   * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
+   * - An un-managed pod that can be selected via `Pod.select()`.
+   *
+   * Seperating from multiple selections acts as an AND condition. meaning the pod
+   * will not be assigned to a node that satisfies all selections (i.e runs at least one pod that satisifies each selection).
+   *
+   * Under the hood, this method utilizes the `podAntiAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+   */
+  public separate(selectable: IPodSchedulingSelection, options: PodSchedulingSeparateOptions = {}) {
+
+    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
+    const term = this.createPodAffinityTerm(topologyKey, selectable);
+
+    if (options.weight) {
+      this.validateWeight(options.weight);
+      this._affinity.podAntiAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
+    } else {
+      this._affinity.podAntiAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
+    }
+
+  }
+
+  // this has to be a getter because the pod metadata is not available
+  // at construction time.
+  protected get podMetadata(): ApiObjectMetadataDefinition {
+    return this._ap.podMetadata;
+  }
+
+  private createPodAffinityTerm(topologyKey: TopologyKey, selectable: IPodSchedulingSelection): k8s.PodAffinityTerm {
+    return {
+      topologyKey: topologyKey.key,
+      namespaces: selectable.namespaces,
+      labelSelector: selectable.labelSelector ? {
+        matchExpressions: selectable.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      } : undefined,
+      namespaceSelector: selectable.namespaceSelector ? {
+        matchExpressions: selectable.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      } : undefined,
+    };
+  }
+
+  private createNodeAffinityTerm(node: Node): k8s.NodeSelectorTerm {
+    return {
+      matchExpressions: node.labelSelector ?
+        node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) : undefined,
+    };
+  }
+
+  private validateWeight(weight: number) {
+    if (weight < 1 || weight > 100) {
+      // https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity-weight
+      throw new Error(`Invalid affinity weight: ${weight}. Must be in range 1-100`);
+    }
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.Affinity {
+    return this._affinity;
   }
 }
