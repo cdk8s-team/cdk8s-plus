@@ -76,7 +76,7 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
   public readonly scheduling: WorkloadScheduling;
 
   private readonly _matchLabels: Record<string, string> = {};
-  private readonly _matchExpressions: k8s.LabelSelectorRequirement[] = [];
+  private readonly _matchExpressions: LabelSelectorRequirement[] = [];
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
