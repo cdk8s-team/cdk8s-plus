@@ -420,34 +420,6 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
- * Options for `workload.coloate`.
- */
-export interface PodColocateOptions {
-  /**
-   * Which labels to use as the label selector.
-   *
-   * @default - all labels are selected.
-   */
-  readonly labels?: string[];
-
-  /**
-   * Which topology to coloate on.
-   *
-   * @default - TopologyKey.HOSTNAME
-   */
-  readonly topologyKey?: TopologyKey;
-
-  /**
-   * Indicates the co-location is optional, with this weight score.
-   *
-   * @default - no weight. co-location is assumed to be required.
-   */
-  readonly weight?: number;
-
-}
-
-
-/**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */

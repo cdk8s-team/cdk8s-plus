@@ -75,8 +75,8 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
 
   public readonly scheduling: WorkloadScheduling;
 
-  private readonly _matchExpressions: k8s.LabelSelectorRequirement[] = [];
   private readonly _matchLabels: Record<string, string> = {};
+  private readonly _matchExpressions: k8s.LabelSelectorRequirement[] = [];
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
@@ -124,7 +124,7 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
    * Returns a a copy. Use `select()` to add label matchers.
    */
   public get matchLabels(): Record<string, string> {
-    return this._matchLabels;
+    return { ...this._matchLabels };
   }
 
   /**
