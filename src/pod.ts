@@ -15,7 +15,6 @@ export abstract class AbstractPod extends base.Resource {
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
-  public readonly scheduling: PodScheduling;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
@@ -35,7 +34,6 @@ export abstract class AbstractPod extends base.Resource {
     this.restartPolicy = props.restartPolicy;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
-    this.scheduling = new PodScheduling(this);
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
@@ -178,7 +176,6 @@ export abstract class AbstractPod extends base.Resource {
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
-      affinity: this.scheduling._toKube(),
     };
 
   }
@@ -412,6 +409,8 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly scheduling: PodScheduling;
+
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
 
@@ -419,6 +418,8 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this.scheduling = new PodScheduling(this.metadata);
 
   }
 
@@ -443,7 +444,7 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
    * @internal
    */
   public _toKube(): k8s.PodSpec {
-    return this._toPodSpec();
+    return { ...this._toPodSpec(), affinity: this.scheduling._toKube() };
   }
 
 }
@@ -1005,10 +1006,8 @@ export interface PodSchedulingAssignOptions {
 export class PodScheduling {
 
   private readonly _affinity: k8s.Affinity;
-  private readonly _ap: AbstractPod;
 
-  constructor(ap: AbstractPod) {
-    this._ap = ap;
+  constructor(protected readonly podMetadata: ApiObjectMetadataDefinition) {
     this._affinity = {
       nodeAffinity: {
         preferredDuringSchedulingIgnoredDuringExecution: [],
@@ -1107,12 +1106,6 @@ export class PodScheduling {
       this._affinity.podAntiAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
     }
 
-  }
-
-  // this has to be a getter because the pod metadata is not available
-  // at construction time.
-  protected get podMetadata(): ApiObjectMetadataDefinition {
-    return this._ap.podMetadata;
   }
 
   private createPodAffinityTerm(topologyKey: TopologyKey, selectable: IPodSchedulingSelection): k8s.PodAffinityTerm {

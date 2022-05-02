@@ -544,9 +544,12 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = new kplus.Deployment(chart, 'Redis', {
-      containers: [{ image: 'redis' }],
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
     });
+
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
     });

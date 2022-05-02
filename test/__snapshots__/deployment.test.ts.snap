@@ -1433,87 +1433,6 @@ Array [
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "minReadySeconds": 0,
-      "progressDeadlineSeconds": 600,
-      "replicas": 1,
-      "selector": Object {
-        "matchExpressions": Array [],
-        "matchLabels": Object {
-          "cdk8s.deployment": "test-Redis-c8b1633b",
-        },
-      },
-      "strategy": Object {
-        "rollingUpdate": Object {
-          "maxSurge": "25%",
-          "maxUnavailable": "25%",
-        },
-        "type": "RollingUpdate",
-      },
-      "template": Object {
-        "metadata": Object {
-          "labels": Object {
-            "cdk8s.deployment": "test-Redis-c8b1633b",
-          },
-        },
-        "spec": Object {
-          "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-          },
-          "automountServiceAccountToken": true,
-          "containers": Array [
-            Object {
-              "env": Array [],
-              "image": "redis",
-              "imagePullPolicy": "Always",
-              "name": "main",
-              "ports": Array [],
-              "securityContext": Object {
-                "privileged": false,
-                "readOnlyRootFilesystem": false,
-                "runAsNonRoot": false,
-              },
-              "volumeMounts": Array [],
-            },
-          ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
-          "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
-          "securityContext": Object {
-            "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
-            "sysctls": Array [],
-          },
-          "setHostnameAsFQDN": false,
-          "volumes": Array [],
-        },
-      },
-    },
-  },
-  Object {
-    "apiVersion": "apps/v1",
-    "kind": "Deployment",
-    "metadata": Object {
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -1558,15 +1477,28 @@ Array [
                   "labelSelector": Object {
                     "matchExpressions": Array [
                       Object {
-                        "key": "cdk8s.deployment",
+                        "key": "app",
                         "operator": "In",
                         "values": Array [
-                          "test-Redis-c8b1633b",
+                          "store",
                         ],
                       },
                     ],
                   },
-                  "namespaces": Array [],
+                  "namespaceSelector": Object {
+                    "matchExpressions": Array [
+                      Object {
+                        "key": "net",
+                        "operator": "In",
+                        "values": Array [
+                          "1",
+                        ],
+                      },
+                    ],
+                  },
+                  "namespaces": Array [
+                    "n1",
+                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],

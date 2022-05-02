@@ -82,7 +82,7 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-    this.scheduling = new WorkloadScheduling(this);
+    this.scheduling = new WorkloadScheduling(this.podMetadata);
 
     if (props.select ?? true) {
       const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
@@ -141,6 +141,13 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
    */
   public _toLabelSelector(): k8s.LabelSelector {
     return { matchExpressions: this._matchExpressions, matchLabels: this._matchLabels };
+  }
+
+  /**
+   * @internal
+   */
+  public _toPodSpec(): k8s.PodSpec {
+    return { ...super._toPodSpec(), affinity: this.scheduling._toKube() } ;
   }
 
 }

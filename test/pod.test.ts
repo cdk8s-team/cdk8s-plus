@@ -521,3 +521,201 @@ test('auto mounting token can be disabled', () => {
   expect(spec.automountServiceAccountToken).toBeFalsy();
 
 });
+
+describe('scheduling', () => {
+
+  test('can be assigned to a node - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.assign(kplus.Node.select(kplus.PodLabelQuery.is('memory', 'high')));
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be assigned to a node - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    redis.scheduling.assign(kplus.Node.select(kplus.PodLabelQuery.is('memory', 'high')), {
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with a managed pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    redis.metadata.addLabel('app', 'store');
+
+    web.scheduling.colocate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with a managed pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    redis.metadata.addLabel('app', 'store');
+
+    web.scheduling.colocate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with an unmanaged pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with an unmanaged pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from a managed pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    redis.metadata.addLabel('app', 'store');
+
+    web.scheduling.separate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from a managed pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    redis.metadata.addLabel('app', 'store');
+
+    web.scheduling.separate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from an unmanaged pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from an unmanaged pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pod.select({
+      labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
+      namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
+      namespaces: ['n1'],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis, {
+      topologyKey: kplus.TopologyKey.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+});
