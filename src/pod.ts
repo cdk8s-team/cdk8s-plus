@@ -373,6 +373,26 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
+ * Represents a pod that can be selected during scheduling.
+ */
+export interface IPodSchedulingSelection {
+  /**
+   * List of label queries that the pod labels need to satisfy.
+   */
+  readonly labelSelector?: PodLabelQuery[];
+
+  /**
+   * List of label queries that the pod namespace needs to satisfy.
+   */
+  readonly namespaceSelector?: PodLabelQuery[];
+
+  /**
+   * Static list of namespaces the pods can belong to.
+   */
+  readonly namespaces?: string[];
+}
+
+/**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
@@ -877,7 +897,7 @@ export class Node {
     return new Node(labelSelector);
   }
 
-  public constructor(public readonly labelSelector?: NodeLabelQuery[]) {};
+  private constructor(public readonly labelSelector?: NodeLabelQuery[]) {};
 
 }
 
@@ -977,26 +997,6 @@ export interface PodSchedulingAssignOptions {
    * @default - no weight. assignment is assumed to be required.
    */
   readonly weight?: number;
-}
-
-/**
- * Represents a pod that can be selected during scheduling.
- */
-export interface IPodSchedulingSelection {
-  /**
-   * List of label queries that the pod labels need to satisfy.
-   */
-  readonly labelSelector?: PodLabelQuery[];
-
-  /**
-   * List of label queries that the pod namespace needs to satisfy.
-   */
-  readonly namespaceSelector?: PodLabelQuery[];
-
-  /**
-   * Static list of namespaces the pods can belong to.
-   */
-  readonly namespaces?: string[];
 }
 
 /**
