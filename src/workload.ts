@@ -119,13 +119,35 @@ export interface WorkloadRepelOptions {
 
 }
 
+/**
+ *
+ */
+export interface ISelectable {
+
+  /**
+   * List of label queries that the node needs to satisfy.
+   */
+  readonly labelSelector?: pod.PodLabelQuery[];
+
+  /**
+   * List of label queries that the namespace needs to satisfy.
+   */
+  readonly namespaceSelector?: pod.PodLabelQuery[];
+
+  /**
+   * Static list of namespaces the pods can belong to.
+   */
+  readonly namespaces?: string[];
+
+}
+
 
 /**
  * A workload is an application running on Kubernetes. Whether your workload is a single
  * component or several that work together, on Kubernetes you run it inside a set of pods.
  * In Kubernetes, a Pod represents a set of running containers on your cluster.
  */
-export abstract class Workload extends pod.AbstractPod {
+export abstract class Workload extends pod.AbstractPod implements ISelectable {
 
   /**
    * The metadata of pods in this workload.
@@ -147,6 +169,18 @@ export abstract class Workload extends pod.AbstractPod {
       this.podMetadata.addLabel(selector, matcher);
     }
 
+  }
+
+  public get namespaces(): string[] | undefined {
+    return this.podMetadata.namespace ? [this.podMetadata.namespace] : [];
+  }
+
+  public get namespaceSelector(): pod.PodLabelQuery[] | undefined {
+    return undefined;
+  }
+
+  public get labelSelector(): pod.PodLabelQuery[] | undefined {
+    return this._labels(this).map(l => pod.PodLabelQuery.is(l, this.podMetadata.getLabel(l)!));
   }
 
   /**
@@ -180,18 +214,15 @@ export abstract class Workload extends pod.AbstractPod {
   /**
    * Co-locate this workload with another one.
    */
-  public colocate(workload: Workload, options: WorkloadColocateOptions = {}) {
+  public colocate(selectable: ISelectable, options: WorkloadColocateOptions = {}) {
 
-    const labels: string[] = options.labels ?? this._labels(workload);
     const topologyKey = options.topologyKey ?? pod.TopologyKey.HOSTNAME;
-    const labelSelector = labels.map(l => pod.PodLabelQuery.is(l, workload.podMetadata.getLabel(l)!));
-    const namespaces = workload.podMetadata.namespace ? [workload.podMetadata.namespace] : [];
-    const requirement: pod.PodRequirement = { topologyKey, labelSelector, namespaces };
-
-    if (options.spread ?? true) {
-      this.spread(topologyKey);
-      workload.spread(topologyKey);
-    }
+    const requirement: pod.PodRequirement = {
+      topologyKey,
+      labelSelector: selectable.labelSelector,
+      namespaces: selectable.namespaces,
+      namespaceSelector: selectable.namespaceSelector,
+    };
 
     if (options.weight) {
       this.affinity.preferPod({ weight: options.weight, preference: requirement });
@@ -247,6 +278,32 @@ export abstract class Workload extends pod.AbstractPod {
    */
   public _toLabelSelector(): k8s.LabelSelector {
     return { matchExpressions: this._matchExpressions, matchLabels: this._matchLabels };
+  }
+
+}
+
+export class Pods implements ISelectable {
+
+  public static query(): Pods {
+    return new Pods();
+  }
+
+  private constructor(
+    public readonly labelSelector?: pod.PodLabelQuery[],
+    public readonly namespaceSelector?: pod.PodLabelQuery[],
+    public readonly namespaces?: string[],
+  ) {};
+
+  public withLabelSelector(...labelSelector: pod.PodLabelQuery[]): Pods {
+    return new Pods(labelSelector);
+  }
+
+  public withNamespaceSelector(...namespaceSelector: pod.PodLabelQuery[]): Pods {
+    return new Pods(this.labelSelector, namespaceSelector);
+  }
+
+  public withNamespaces(...namespaces: string[]): Pods {
+    return new Pods(this.labelSelector, this.namespaceSelector, namespaces);
   }
 
 }

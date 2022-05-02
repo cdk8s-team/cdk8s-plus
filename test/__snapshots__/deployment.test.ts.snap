@@ -827,6 +827,121 @@ Array [
 ]
 `;
 
+exports[`default co-location with external deployment 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 1,
+      "selector": Object {
+        "matchExpressions": Array [],
+        "matchLabels": Object {
+          "cdk8s.deployment": "test-Web-c8b65d84",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.deployment": "test-Web-c8b65d84",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "nodeAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Object {
+                "nodeSelectorTerms": Array [],
+              },
+            },
+            "podAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "labelSelector": Object {
+                    "matchExpressions": Array [
+                      Object {
+                        "key": "app",
+                        "operator": "In",
+                        "values": Array [
+                          "store",
+                        ],
+                      },
+                    ],
+                  },
+                  "namespaceSelector": Object {
+                    "matchExpressions": Array [
+                      Object {
+                        "key": "net",
+                        "operator": "In",
+                        "values": Array [
+                          "1",
+                        ],
+                      },
+                    ],
+                  },
+                  "namespaces": Array [
+                    "n1",
+                  ],
+                  "topologyKey": "kubernetes.io/hostname",
+                },
+              ],
+            },
+            "podAntiAffinity": Object {
+              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
+            },
+          },
+          "automountServiceAccountToken": true,
+          "containers": Array [
+            Object {
+              "env": Array [],
+              "image": "web",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [],
+              "securityContext": Object {
+                "privileged": false,
+                "readOnlyRootFilesystem": false,
+                "runAsNonRoot": false,
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "dnsConfig": Object {
+            "nameservers": Array [],
+            "options": Array [],
+            "searches": Array [],
+          },
+          "dnsPolicy": "ClusterFirst",
+          "hostAliases": Array [],
+          "initContainers": Array [],
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": false,
+            "sysctls": Array [],
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;
+
 exports[`default repel 1`] = `
 Array [
   Object {

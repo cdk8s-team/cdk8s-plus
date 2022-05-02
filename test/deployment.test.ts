@@ -367,13 +367,32 @@ test('can select with expressions', () => {
   expect(new Set(spec.selector.matchExpressions)).toEqual(expected);
 });
 
-test('default co-location', () => {
+test('default co-location with managed deployment', () => {
 
   const chart = Testing.chart();
 
   const redis = new kplus.Deployment(chart, 'Redis', {
     containers: [{ image: 'redis' }],
   });
+  const web = new kplus.Deployment(chart, 'Web', {
+    containers: [{ image: 'web' }],
+  });
+
+  web.colocate(redis);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('default co-location with external deployment', () => {
+
+  const chart = Testing.chart();
+
+  const redis = kplus.Pods.query()
+    .withLabelSelector(kplus.PodLabelQuery.is('app', 'store'))
+    .withNamespaceSelector(kplus.PodLabelQuery.is('net', '1'))
+    .withNamespaces('n1');
+
   const web = new kplus.Deployment(chart, 'Web', {
     containers: [{ image: 'web' }],
   });
