@@ -1,6 +1,6 @@
 import { ApiObjectMetadata, ApiObject, ApiObjectMetadataDefinition } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IApiResource } from './api-resource.generated';
+import { IApiResource, IApiEndpoint } from './api-resource.generated';
 
 /**
  * Initialization properties for resources.
@@ -42,7 +42,7 @@ export interface IResource {
  * Base class for all Kubernetes objects in stdk8s. Represents a single
  * resource.
  */
-export abstract class Resource extends Construct implements IResource, IApiResource {
+export abstract class Resource extends Construct implements IResource, IApiResource, IApiEndpoint {
 
   /**
    * The underlying cdk8s API object.
@@ -86,4 +86,13 @@ export abstract class Resource extends Construct implements IResource, IApiResou
   }
 
   public readonly abstract resourceType: string;
+
+  public asApiResource(): IApiResource | undefined {
+    return this;
+  }
+
+  public asNonApiResource(): string | undefined {
+    return undefined;
+  }
+
 }

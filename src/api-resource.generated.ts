@@ -23,6 +23,23 @@ export interface IApiResource {
    */
   readonly resourceName?: string;
 }
+/**
+ * An API Endpoint can either be a resource descriptor (e.g /pods)
+ * or a non resource url (e.g /healthz). It must be one or the other, and not both.
+ */
+export interface IApiEndpoint {
+
+  /**
+   * Return the IApiResource this object represents.
+   */
+  asApiResource(): IApiResource | undefined;
+
+  /**
+   * Return the non resource url this object represents.
+   */
+  asNonApiResource(): string | undefined;
+
+}
 
 /**
  * Options for `ApiResource`.
@@ -44,7 +61,7 @@ export interface ApiResourceOptions {
 /**
  * Represents information about an API resource type.
  */
-export class ApiResource implements IApiResource {
+export class ApiResource implements IApiResource, IApiEndpoint {
   /**
    * API resource information for Binding.
    */
@@ -504,8 +521,36 @@ export class ApiResource implements IApiResource {
    */
   public readonly resourceType: string;
 
+  public asApiResource(): IApiResource | undefined {
+    return this;
+  }
+
+  public asNonApiResource(): string | undefined {
+    return undefined;
+  }
   private constructor(options: ApiResourceOptions) {
     this.apiGroup = options.apiGroup;
     this.resourceType = options.resourceType;
+  }
+}
+
+/**
+ * Factory for creating non api resources.
+ */
+export class NonApiResource implements IApiEndpoint {
+
+  public static of(url: string): NonApiResource {
+    return new NonApiResource(url);
+  }
+
+  private constructor(private readonly nonResourceUrl: string) {};
+
+  public asApiResource(): IApiResource | undefined {
+    return undefined;
+  }
+
+  public asNonApiResource(): string | undefined {
+
+    return this.nonResourceUrl;
   }
 }

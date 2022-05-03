@@ -2,7 +2,7 @@ import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
-import { IClusterRole, IRole } from './role';
+import * as role from './role';
 import { filterUndefined } from './utils';
 
 /**
@@ -45,7 +45,7 @@ export interface RoleBindingProps extends ResourceProps {
   /**
    * The role to bind to. A RoleBinding can reference a Role or a ClusterRole.
    */
-  readonly role: IRole;
+  readonly role: role.IRole;
 }
 
 /**
@@ -60,7 +60,7 @@ export class RoleBinding extends Resource {
 
   public readonly resourceType = 'rolebindings';
 
-  public readonly role: IRole;
+  public readonly role: role.IRole;
 
   private readonly _subjects: Array<ISubject>;
 
@@ -117,7 +117,7 @@ export interface ClusterRoleBindingProps extends ResourceProps {
   /**
    * The role to bind to.
    */
-  readonly role: IClusterRole;
+  readonly role: role.IClusterRole;
 }
 
 /**
@@ -132,7 +132,7 @@ export class ClusterRoleBinding extends Resource {
 
   public readonly resourceType = 'clusterrolebindings';
 
-  public readonly role: IRole;
+  public readonly role: role.IClusterRole;
 
   private readonly _subjects: Array<ISubject>;
 

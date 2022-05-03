@@ -41,6 +41,25 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' */');
   ts.line('readonly resourceName?: string;');
   ts.close('}');
+
+  ts.line('/**');
+  ts.line(' * An API Endpoint can either be a resource descriptor (e.g /pods)');
+  ts.line(' * or a non resource url (e.g /healthz). It must be one or the other, and not both.');
+  ts.line(' */');
+  ts.open('export interface IApiEndpoint {');
+  ts.line('');
+  ts.line('/**');
+  ts.line(' * Return the IApiResource this object represents.');
+  ts.line(' */');
+  ts.line('asApiResource(): IApiResource | undefined;');
+  ts.line('');
+  ts.line('/**');
+  ts.line(' * Return the non resource url this object represents.');
+  ts.line(' */');
+  ts.line('asNonApiResource(): string | undefined;');
+  ts.line('');
+  ts.close('}');
+
   ts.line();
   ts.line('/**');
   ts.line(' * Options for `ApiResource`.');
@@ -62,7 +81,7 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line('/**');
   ts.line(' * Represents information about an API resource type.');
   ts.line(' */');
-  ts.open('export class ApiResource implements IApiResource {');
+  ts.open('export class ApiResource implements IApiResource, IApiEndpoint {');
 
   for (const resource of resourceTypes) {
     const typeName = normalizeTypeName(resource.kind);
@@ -105,12 +124,41 @@ export function generateApiResources(project: Project, sourcePath: string, outpu
   ts.line(' */');
   ts.line('public readonly resourceType: string;');
   ts.line();
+  ts.open('public asApiResource(): IApiResource | undefined {');
+  ts.line('return this;');
+  ts.close('}');
+  ts.line('');
+  ts.open('public asNonApiResource(): string | undefined {');
+  ts.line('return undefined;');
+  ts.close('}');
   ts.open('private constructor(options: ApiResourceOptions) {');
   ts.line('this.apiGroup = options.apiGroup;');
   ts.line('this.resourceType = options.resourceType;');
   ts.close('}');
   ts.close('}');
   ts.line();
+
+  ts.line('/**');
+  ts.line(' * Factory for creating non api resources.');
+  ts.line(' */');
+  ts.open('export class NonApiResource implements IApiEndpoint {');
+  ts.line('');
+  ts.open('public static of(url: string): NonApiResource {');
+  ts.line('return new NonApiResource(url);');
+  ts.close('}');
+  ts.line('');
+  ts.line('private constructor(private readonly nonResourceUrl: string) {};');
+  ts.line();
+  ts.open('public asApiResource(): IApiResource | undefined {');
+  ts.line('return undefined;');
+  ts.close('}');
+  ts.line('');
+  ts.open('public asNonApiResource(): string | undefined {');
+  ts.line();
+  ts.line('return this.nonResourceUrl;');
+  ts.close('}');
+  ts.close('}');
+
 }
 
 /**
