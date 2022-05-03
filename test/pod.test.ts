@@ -524,25 +524,36 @@ test('auto mounting token can be disabled', () => {
 
 describe('scheduling', () => {
 
-  test('can be assigned to a node - default', () => {
+  test('can be assigned to a node by name', () => {
 
     const chart = Testing.chart();
 
     const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
-    redis.scheduling.assign(kplus.Node.select(kplus.PodLabelQuery.is('memory', 'high')));
+    redis.scheduling.assign(kplus.Node.named('node1'));
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('can be assigned to a node - custom', () => {
+  test('can be assigned to a node by selector - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.assign(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')));
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be assigned to a node by selector - custom', () => {
 
     const chart = Testing.chart();
 
     const redis = new kplus.Pod(chart, 'Redis', {
       containers: [{ image: 'redis' }],
     });
-    redis.scheduling.assign(kplus.Node.select(kplus.PodLabelQuery.is('memory', 'high')), {
+    redis.scheduling.assign(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')), {
       weight: 1,
     });
 

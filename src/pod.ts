@@ -437,7 +437,12 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
    * @internal
    */
   public _toKube(): k8s.PodSpec {
-    return { ...this._toPodSpec(), affinity: this.scheduling._toKube() };
+    const scheduling = this.scheduling._toKube();
+    return {
+      ...this._toPodSpec(),
+      affinity: scheduling.affinity,
+      nodeName: scheduling.nodeName,
+    };
   }
 
 }
@@ -891,7 +896,17 @@ export class Node {
     return new Node(labelSelector);
   }
 
-  private constructor(public readonly labelSelector?: NodeLabelQuery[]) {};
+  /**
+   * Select a node based on the node name.
+   */
+  public static named(nodeName: string): Node {
+    return new Node(undefined, nodeName);
+  }
+
+  private constructor(
+    public readonly labelSelector?: NodeLabelQuery[],
+    public readonly name?: string,
+  ) {};
 
 }
 
@@ -987,6 +1002,7 @@ export interface PodSchedulingSeparateOptions {
 export interface PodSchedulingAssignOptions {
   /**
    * Indicates the assignment is optional, with this weight score.
+   * Does not have any affect if the node is statically selected by name.
    *
    * @default - no weight. assignment is assumed to be required.
    */
@@ -998,7 +1014,8 @@ export interface PodSchedulingAssignOptions {
  */
 export class PodScheduling {
 
-  private readonly _affinity: k8s.Affinity;
+  private _affinity?: k8s.Affinity;
+  private _nodeName?: string;
 
   constructor(protected readonly podMetadata: ApiObjectMetadataDefinition) {
     this._affinity = {
@@ -1019,6 +1036,28 @@ export class PodScheduling {
     };
   }
 
+  private get affinity(): k8s.Affinity {
+    if (!this._affinity) {
+      this._affinity = {
+        nodeAffinity: {
+          preferredDuringSchedulingIgnoredDuringExecution: [],
+          requiredDuringSchedulingIgnoredDuringExecution: {
+            nodeSelectorTerms: [],
+          },
+        },
+        podAffinity: {
+          preferredDuringSchedulingIgnoredDuringExecution: [],
+          requiredDuringSchedulingIgnoredDuringExecution: [],
+        },
+        podAntiAffinity: {
+          preferredDuringSchedulingIgnoredDuringExecution: [],
+          requiredDuringSchedulingIgnoredDuringExecution: [],
+        },
+      };
+    }
+    return this._affinity;
+  }
+
   /**
    * Assign this pod to a specific node.
    * You can Select a node by using `Node.select()`.
@@ -1032,13 +1071,21 @@ export class PodScheduling {
    */
   public assign(node: Node, options: PodSchedulingAssignOptions = {}) {
 
+    if (node.name && this._nodeName) {
+      if (this._nodeName) {
+        // disallow overriding an static node assignment
+        throw new Error(`Cannot assign ${this.podMetadata.name} to node ${node.name}. It is already assigned to node ${this._nodeName}`);
+      }
+      this._nodeName = node.name;
+    }
+
     const term = this.createNodeAffinityTerm(node);
 
     if (options.weight) {
       this.validateWeight(options.weight);
-      this._affinity.nodeAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, preference: term });
+      this.affinity.nodeAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, preference: term });
     } else {
-      this._affinity.nodeAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.nodeSelectorTerms.push(term);
+      this.affinity.nodeAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.nodeSelectorTerms.push(term);
     }
   }
 
@@ -1065,9 +1112,9 @@ export class PodScheduling {
 
     if (options.weight) {
       this.validateWeight(options.weight);
-      this._affinity.podAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
+      this.affinity.podAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
     } else {
-      this._affinity.podAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
+      this.affinity.podAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
     }
   }
 
@@ -1094,9 +1141,9 @@ export class PodScheduling {
 
     if (options.weight) {
       this.validateWeight(options.weight);
-      this._affinity.podAntiAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
+      this.affinity.podAntiAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
     } else {
-      this._affinity.podAntiAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
+      this.affinity.podAntiAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
     }
 
   }
@@ -1131,7 +1178,7 @@ export class PodScheduling {
   /**
    * @internal
    */
-  public _toKube(): k8s.Affinity {
-    return this._affinity;
+  public _toKube(): { affinity?: k8s.Affinity; nodeName?: string } {
+    return { affinity: this._affinity, nodeName: this._nodeName };
   }
 }

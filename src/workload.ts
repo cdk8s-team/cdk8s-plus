@@ -133,7 +133,12 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
    * @internal
    */
   public _toPodSpec(): k8s.PodSpec {
-    return { ...super._toPodSpec(), affinity: this.scheduling._toKube() } ;
+    const scheduling = this.scheduling._toKube();
+    return {
+      ...super._toPodSpec(),
+      affinity: scheduling.affinity,
+      nodeName: scheduling.nodeName,
+    } ;
   }
 
 }
