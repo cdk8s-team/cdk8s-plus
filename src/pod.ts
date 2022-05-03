@@ -892,22 +892,34 @@ export class Node {
   /**
    * Select a node based on node label queries.
    */
-  public static select(...labelSelector: NodeLabelQuery[]): Node {
-    return new Node(labelSelector);
+  public static select(...labelSelector: NodeLabelQuery[]): SelectedNode {
+    return new SelectedNode(labelSelector);
   }
 
   /**
    * Select a node based on the node name.
    */
-  public static named(nodeName: string): Node {
-    return new Node(undefined, nodeName);
+  public static named(nodeName: string): NamedNode {
+    return new NamedNode(nodeName);
   }
 
-  private constructor(
-    public readonly labelSelector?: NodeLabelQuery[],
-    public readonly name?: string,
-  ) {};
+}
 
+/**
+ * A node that is matched by selectors.
+ */
+export class SelectedNode {
+
+  public constructor(public readonly labelSelector: NodeLabelQuery[]) {};
+
+}
+
+/**
+ * A specific node matched by name.
+ */
+export class NamedNode {
+
+  public constructor(public readonly name: string) {};
 }
 
 /**
@@ -970,9 +982,9 @@ export interface PodSchedulingColocateOptions {
   readonly topologyKey?: TopologyKey;
 
   /**
-   * Indicates the co-location is optional, with this weight score.
+   * Indicates the co-location is optional (soft), with this weight score.
    *
-   * @default - no weight. co-location is assumed to be required.
+   * @default - no weight. co-location is assumed to be required (hard).
    */
   readonly weight?: number;
 }
@@ -989,22 +1001,21 @@ export interface PodSchedulingSeparateOptions {
   readonly topologyKey?: TopologyKey;
 
   /**
-   * Indicates the separation is optional, with this weight score.
+   * Indicates the separation is optional (soft), with this weight score.
    *
-   * @default - no weight. separation is assumed to be required.
+   * @default - no weight. separation is assumed to be required (hard).
    */
   readonly weight?: number;
 }
 
 /**
- * Options for `PodScheduling.assign`.
+ * Options for `PodScheduling.attract`.
  */
-export interface PodSchedulingAssignOptions {
+export interface PodSchedulingAttractOptions {
   /**
-   * Indicates the assignment is optional, with this weight score.
-   * Does not have any affect if the node is statically selected by name.
+   * Indicates the attraction is optional (soft), with this weight score.
    *
-   * @default - no weight. assignment is assumed to be required.
+   * @default - no weight. assignment is assumed to be required (hard).
    */
   readonly weight?: number;
 }
@@ -1059,17 +1070,11 @@ export class PodScheduling {
   }
 
   /**
-   * Assign this pod to a specific node.
-   * You can Select a node by using `Node.select()`.
+   * Assign this pod a specific node by name.
    *
-   * Assigning to multiple nodes (i.e invoking this method multiple times) acts as
-   * an OR condition, meaning the pod will be assigned to either one of the nodes.
-   *
-   * Under the hood, this method utilizes the `nodeAffinity` property.
-   *
-   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+   * Under the hood, this method utilizes the `nodeName` property.
    */
-  public assign(node: Node, options: PodSchedulingAssignOptions = {}) {
+  public assign(node: NamedNode) {
 
     if (node.name && this._nodeName) {
       if (this._nodeName) {
@@ -1078,6 +1083,20 @@ export class PodScheduling {
       }
       this._nodeName = node.name;
     }
+  }
+
+  /**
+   * Attract this pod to a node matched by selectors.
+   * You can select a node by using `Node.select()`.
+   *
+   * Attracting to multiple nodes (i.e invoking this method multiple times) acts as
+   * an OR condition, meaning the pod will be assigned to either one of the nodes.
+   *
+   * Under the hood, this method utilizes the `nodeAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+   */
+  public attract(node: SelectedNode, options: PodSchedulingAttractOptions = {}) {
 
     const term = this.createNodeAffinityTerm(node);
 
@@ -1161,11 +1180,8 @@ export class PodScheduling {
     };
   }
 
-  private createNodeAffinityTerm(node: Node): k8s.NodeSelectorTerm {
-    return {
-      matchExpressions: node.labelSelector ?
-        node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) : undefined,
-    };
+  private createNodeAffinityTerm(node: SelectedNode): k8s.NodeSelectorTerm {
+    return { matchExpressions: node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) };
   }
 
   private validateWeight(weight: number) {

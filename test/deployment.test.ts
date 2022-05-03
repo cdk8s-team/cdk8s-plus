@@ -380,25 +380,25 @@ describe('scheduling', () => {
 
   });
 
-  test('can be assigned to a node by selector - default', () => {
+  test('can be attracted to a node by selector - default', () => {
 
     const chart = Testing.chart();
 
     const redis = new kplus.Deployment(chart, 'Redis', { containers: [{ image: 'redis' }] });
-    redis.scheduling.assign(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')));
+    redis.scheduling.attract(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')));
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('can be assigned to a node by selector - custom', () => {
+  test('can be attracted to a node by selector - custom', () => {
 
     const chart = Testing.chart();
 
     const redis = new kplus.Deployment(chart, 'Redis', {
       containers: [{ image: 'redis' }],
     });
-    redis.scheduling.assign(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')), {
+    redis.scheduling.attract(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')), {
       weight: 1,
     });
 
