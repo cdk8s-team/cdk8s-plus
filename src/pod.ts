@@ -5,6 +5,7 @@ import * as container from './container';
 import * as k8s from './imports/k8s';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
+import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
 export abstract class AbstractPod extends base.Resource implements IPodSchedulingSelection {
@@ -67,16 +68,11 @@ export abstract class AbstractPod extends base.Resource implements IPodSchedulin
     return [...this._hostAliases];
   }
 
-  public get namespaces(): string[] | undefined {
-    return this.podMetadata.namespace ? [this.podMetadata.namespace] : [];
-  }
-
-  public get namespaceSelector(): PodLabelQuery[] | undefined {
-    return undefined;
-  }
-
-  public get labelSelector(): PodLabelQuery[] | undefined {
-    return Object.keys(this.podMetadata.toJson().labels).map(l => PodLabelQuery.is(l, this.podMetadata.getLabel(l)!));
+  public podSelector(): PodSelector {
+    return {
+      labelSelector: Object.keys(this.podMetadata.toJson().labels).map(l => PodLabelQuery.is(l, this.podMetadata.getLabel(l)!)),
+      namespaces: this.podMetadata.namespace ? [this.podMetadata.namespace] : undefined,
+    };
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {
@@ -377,38 +373,50 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
- * Represents a pod that can be selected during scheduling.
+ * Pod selector defines queries with which kubernetes can select pods during scheduling.
  */
-export interface IPodSchedulingSelection {
+export interface PodSelector {
   /**
    * List of label queries that the pod labels need to satisfy.
    */
   readonly labelSelector?: PodLabelQuery[];
 
   /**
-   * List of label queries that the pod namespace needs to satisfy.
-   */
+    * List of label queries that the pod namespace needs to satisfy.
+    */
   readonly namespaceSelector?: PodLabelQuery[];
 
   /**
-   * Static list of namespaces the pods can belong to.
-   */
+    * Static list of namespaces the pods can belong to.
+    */
   readonly namespaces?: string[];
+}
+
+/**
+ * Represents a pod that can be selected during scheduling.
+ */
+export interface IPodSchedulingSelection {
+
+  /**
+   * Return the selector that can be used to select the pod during scheduling.
+   */
+  podSelector(): PodSelector;
+
 }
 
 /**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
-export class Pod extends AbstractPod implements IPodSchedulingSelection {
+export class Pod extends AbstractPod {
 
   /**
    * Create a selector for selecting pods by queries.
    */
-  public static select(selection: IPodSchedulingSelection): IPodSchedulingSelection {
+  public static select(selector: PodSelector): IPodSchedulingSelection {
     // this seems strange, I know.
     // it's like this solely for API consistency with `Node.select`.
-    return selection;
+    return { podSelector: () => selector };
   }
 
   /**
@@ -426,7 +434,7 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this.scheduling = new PodScheduling(this.metadata);
+    this.scheduling = new PodScheduling(this.podMetadata, this.podSelector);
 
   }
 
@@ -1072,41 +1080,31 @@ export interface PodSchedulingAttractOptions {
 /**
  * Controls the pod scheduling strategy.
  */
-export class PodScheduling {
+export class PodScheduling implements IPodSchedulingSelection {
 
-  private _affinity?: k8s.Affinity;
+  private _nodeAffinityPreferred: k8s.PreferredSchedulingTerm[] = [];
+  private _nodeAffinityRequired: k8s.NodeSelectorTerm[] = [];
+  private _podAffinityPreferred: k8s.WeightedPodAffinityTerm[] = [];
+  private _podAffinityRequired: k8s.PodAffinityTerm[] = [];
+  private _podAntiAffinityPreferred: k8s.WeightedPodAffinityTerm[] = [];
+  private _podAntiAffinityRequired: k8s.PodAffinityTerm[] = [];
+  private _tolerations: k8s.Toleration[] = [];
   private _nodeName?: string;
-  private _tolerations?: k8s.Toleration[];
 
-  constructor(protected readonly podMetadata: ApiObjectMetadataDefinition) {}
+  /**
+   * The metadata of the pod this scheduling startegy belongs to.
+   */
+  public readonly podMetadata: ApiObjectMetadataDefinition;
 
-  private get tolerations(): k8s.Toleration[] {
-    if (!this._tolerations) {
-      this._tolerations = [];
-    }
-    return this._tolerations;
+  private readonly _podSelectorProvider: () => PodSelector;
+
+  constructor(podMetadata: ApiObjectMetadataDefinition, podSelectorProvider: () => PodSelector) {
+    this.podMetadata = podMetadata;
+    this._podSelectorProvider = podSelectorProvider;
   }
 
-  private get affinity(): k8s.Affinity {
-    if (!this._affinity) {
-      this._affinity = {
-        nodeAffinity: {
-          preferredDuringSchedulingIgnoredDuringExecution: [],
-          requiredDuringSchedulingIgnoredDuringExecution: {
-            nodeSelectorTerms: [],
-          },
-        },
-        podAffinity: {
-          preferredDuringSchedulingIgnoredDuringExecution: [],
-          requiredDuringSchedulingIgnoredDuringExecution: [],
-        },
-        podAntiAffinity: {
-          preferredDuringSchedulingIgnoredDuringExecution: [],
-          requiredDuringSchedulingIgnoredDuringExecution: [],
-        },
-      };
-    }
-    return this._affinity;
+  public podSelector(): PodSelector {
+    return this._podSelectorProvider();
   }
 
   /**
@@ -1152,7 +1150,7 @@ export class PodScheduling {
         throw new Error(`Toleration without a key must not have a value (found value '${toleration.value}')`);
       }
 
-      this.tolerations.push({
+      this._tolerations.push({
         key: toleration.key,
         value: toleration.value,
         effect: toleration.effect,
@@ -1179,9 +1177,9 @@ export class PodScheduling {
 
     if (options.weight) {
       this.validateWeight(options.weight);
-      this.affinity.nodeAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, preference: term });
+      this._nodeAffinityPreferred.push({ weight: options.weight, preference: term });
     } else {
-      this.affinity.nodeAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.nodeSelectorTerms.push(term);
+      this._nodeAffinityRequired.push(term);
     }
   }
 
@@ -1209,9 +1207,9 @@ export class PodScheduling {
 
     if (options.weight) {
       this.validateWeight(options.weight);
-      this.affinity.podAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
+      this._podAffinityPreferred.push({ weight: options.weight, podAffinityTerm: term });
     } else {
-      this.affinity.podAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
+      this._podAffinityRequired.push(term);
     }
   }
 
@@ -1238,22 +1236,23 @@ export class PodScheduling {
 
     if (options.weight) {
       this.validateWeight(options.weight);
-      this.affinity.podAntiAffinity?.preferredDuringSchedulingIgnoredDuringExecution?.push({ weight: options.weight, podAffinityTerm: term });
+      this._podAntiAffinityPreferred.push({ weight: options.weight, podAffinityTerm: term });
     } else {
-      this.affinity.podAntiAffinity?.requiredDuringSchedulingIgnoredDuringExecution?.push(term);
+      this._podAntiAffinityRequired.push(term);
     }
 
   }
 
   private createPodAffinityTerm(topologyKey: TopologyKey, selection: IPodSchedulingSelection): k8s.PodAffinityTerm {
+    const selector = selection.podSelector();
     return {
       topologyKey: topologyKey.key,
-      namespaces: selection.namespaces,
-      labelSelector: selection.labelSelector ? {
-        matchExpressions: selection.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      namespaces: selector.namespaces,
+      labelSelector: selector.labelSelector ? {
+        matchExpressions: selector.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
       } : undefined,
-      namespaceSelector: selection.namespaceSelector ? {
-        matchExpressions: selection.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      namespaceSelector: selector.namespaceSelector ? {
+        matchExpressions: selector.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
       } : undefined,
     };
   }
@@ -1273,6 +1272,35 @@ export class PodScheduling {
    * @internal
    */
   public _toKube(): { affinity?: k8s.Affinity; nodeName?: string; tolerations?: k8s.Toleration[] } {
-    return { affinity: this._affinity, nodeName: this._nodeName, tolerations: this._tolerations };
+
+    const atLeastOne = (...arrays: Array<any>[]) => {
+      return [...arrays].map(a => a.length).reduce((a, b) => a + b) > 0;
+    };
+
+    const hasNodeAffinity = atLeastOne(this._nodeAffinityPreferred, this._nodeAffinityRequired);
+    const hasPodAffinity = atLeastOne(this._podAffinityPreferred, this._podAffinityRequired);
+    const hasPodAntiAffinty = atLeastOne(this._podAntiAffinityPreferred, this._podAntiAffinityRequired);
+    const hasAffinity = hasNodeAffinity || hasPodAffinity || hasPodAntiAffinty;
+
+    return {
+      affinity: hasAffinity ? {
+        nodeAffinity: hasNodeAffinity ? {
+          preferredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._nodeAffinityPreferred),
+          requiredDuringSchedulingIgnoredDuringExecution: this._nodeAffinityRequired.length > 0 ? {
+            nodeSelectorTerms: this._nodeAffinityRequired,
+          } : undefined,
+        } : undefined,
+        podAffinity: hasPodAffinity ? {
+          preferredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAffinityPreferred),
+          requiredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAffinityRequired),
+        } : undefined,
+        podAntiAffinity: hasPodAntiAffinty ? {
+          preferredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAntiAffinityPreferred),
+          requiredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAntiAffinityRequired),
+        } : undefined,
+      } : undefined,
+      nodeName: this._nodeName,
+      tolerations: undefinedIfEmpty(this._tolerations),
+    };
   }
 }

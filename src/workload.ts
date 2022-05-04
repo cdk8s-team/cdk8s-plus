@@ -68,7 +68,7 @@ export abstract class Workload extends pod.AbstractPod {
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-    this.scheduling = new WorkloadScheduling(this.podMetadata);
+    this.scheduling = new WorkloadScheduling(this.podMetadata, this.podSelector);
 
     if (props.select ?? true) {
       const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
@@ -117,9 +117,6 @@ export abstract class Workload extends pod.AbstractPod {
     return { matchExpressions: this._matchExpressions, matchLabels: this._matchLabels };
   }
 
-  /**
-   * @internal
-   */
   public _toPodSpec(): k8s.PodSpec {
     const scheduling = this.scheduling._toKube();
     return {
@@ -127,9 +124,8 @@ export abstract class Workload extends pod.AbstractPod {
       affinity: scheduling.affinity,
       nodeName: scheduling.nodeName,
       tolerations: scheduling.tolerations,
-    } ;
+    };
   }
-
 }
 
 /**
@@ -152,9 +148,8 @@ export class WorkloadScheduling extends pod.PodScheduling {
    * Spread the pods in this workload by the topology key.
    */
   public spread(topologyKey: pod.TopologyKey, options: WorkloadSchedulingSpreadOptions = {}) {
-    const labels: string[] = Object.keys(this.podMetadata.toJson().labels);
-    const labelSelector = labels.map(l => pod.PodLabelQuery.is(l, this.podMetadata.getLabel(l)!));
-    this.separate({ labelSelector }, { weight: options.weight, topologyKey });
+    // a spread is a separation of the pod from itself
+    this.separate(this, { weight: options.weight, topologyKey });
   }
 
 }

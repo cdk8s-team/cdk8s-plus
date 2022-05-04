@@ -243,17 +243,6 @@ Array [
                   "weight": 1,
                 },
               ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -328,7 +317,6 @@ Array [
         "spec": Object {
           "affinity": Object {
             "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Object {
                 "nodeSelectorTerms": Array [
                   Object {
@@ -344,14 +332,6 @@ Array [
                   },
                 ],
               },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -490,12 +470,6 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
             "podAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
@@ -511,17 +485,11 @@ Array [
                         },
                       ],
                     },
-                    "namespaces": Array [],
                     "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
                 },
               ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -660,14 +628,7 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
             "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
                   "labelSelector": Object {
@@ -681,14 +642,9 @@ Array [
                       },
                     ],
                   },
-                  "namespaces": Array [],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -762,12 +718,6 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
             "podAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
@@ -802,11 +752,6 @@ Array [
                   "weight": 1,
                 },
               ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -880,14 +825,7 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
             "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
                   "labelSelector": Object {
@@ -918,10 +856,6 @@ Array [
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -1060,16 +994,6 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
             "podAntiAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
@@ -1085,13 +1009,11 @@ Array [
                         },
                       ],
                     },
-                    "namespaces": Array [],
                     "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
                 },
               ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -1230,18 +1152,7 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
             "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
                   "labelSelector": Object {
@@ -1255,7 +1166,6 @@ Array [
                       },
                     ],
                   },
-                  "namespaces": Array [],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
@@ -1332,16 +1242,6 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
             "podAntiAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
@@ -1376,7 +1276,6 @@ Array [
                   "weight": 1,
                 },
               ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -1450,18 +1349,7 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
             "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
                   "labelSelector": Object {
@@ -1565,16 +1453,6 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
             "podAntiAffinity": Object {
               "preferredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
@@ -1595,7 +1473,6 @@ Array [
                   "weight": 1,
                 },
               ],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
             },
           },
           "automountServiceAccountToken": true,
@@ -1669,18 +1546,7 @@ Array [
         },
         "spec": Object {
           "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
             "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
               "requiredDuringSchedulingIgnoredDuringExecution": Array [
                 Object {
                   "labelSelector": Object {
