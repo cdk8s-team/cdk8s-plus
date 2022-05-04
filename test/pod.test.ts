@@ -1,4 +1,4 @@
-import { Testing, ApiObject } from 'cdk8s';
+import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 import { DockerConfigSecret, FsGroupChangePolicy, Probe } from '../src';
@@ -523,6 +523,32 @@ test('auto mounting token can be disabled', () => {
 });
 
 describe('scheduling', () => {
+
+  test('throws if key is empty but value isnt', () => {
+
+    const chart = Testing.chart();
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+
+    expect(() => redis.scheduling.tolerate(kplus.Toleration.noSchedule(undefined, 'value'))).toThrow('Toleration without a key must not have a value (found value \'value\')');
+
+  });
+
+  test('can tolerate taints', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.tolerate(
+      kplus.Toleration.noSchedule('key1', 'value1'),
+      kplus.Toleration.noSchedule('key1', undefined),
+      kplus.Toleration.noSchedule(undefined, undefined),
+      kplus.Toleration.noExecute('key1', 'value1', Duration.days(1)),
+      kplus.Toleration.any('key1', 'value1', Duration.days(1)),
+    );
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
 
   test('can be assigned to a node by name', () => {
 

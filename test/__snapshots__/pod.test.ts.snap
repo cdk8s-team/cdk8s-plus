@@ -1,6 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`scheduling can be assigned to a node - custom 1`] = `
+exports[`scheduling can be assigned to a node by name 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
+
+exports[`scheduling can be attracted to a node by selector - custom 1`] = `
 Array [
   Object {
     "apiVersion": "v1",
@@ -76,7 +121,7 @@ Array [
 ]
 `;
 
-exports[`scheduling can be assigned to a node - default 1`] = `
+exports[`scheduling can be attracted to a node by selector - default 1`] = `
 Array [
   Object {
     "apiVersion": "v1",
@@ -149,69 +194,6 @@ Array [
 ]
 `;
 
-exports[`scheduling can be assigned to a node by name 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Object {
-            "nodeSelectorTerms": Array [
-              Object {},
-            ],
-          },
-        },
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
 exports[`scheduling can be co-located with a managed pod - custom 1`] = `
 Array [
   Object {
@@ -224,22 +206,6 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Object {
-            "nodeSelectorTerms": Array [],
-          },
-        },
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-      },
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
@@ -363,22 +329,6 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Object {
-            "nodeSelectorTerms": Array [],
-          },
-        },
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-      },
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
@@ -682,22 +632,6 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Object {
-            "nodeSelectorTerms": Array [],
-          },
-        },
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-      },
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
@@ -821,22 +755,6 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Object {
-            "nodeSelectorTerms": Array [],
-          },
-        },
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-        },
-      },
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
@@ -1122,6 +1040,81 @@ Array [
         "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
+
+exports[`scheduling can tolerate taints 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "tolerations": Array [
+        Object {
+          "effect": "NoSchedule",
+          "key": "key1",
+          "operator": "Equal",
+          "value": "value1",
+        },
+        Object {
+          "effect": "NoSchedule",
+          "key": "key1",
+          "operator": "Exists",
+        },
+        Object {
+          "effect": "NoSchedule",
+          "operator": "Exists",
+        },
+        Object {
+          "effect": "NoExecute",
+          "key": "key1",
+          "operator": "Equal",
+          "tolerationSeconds": 86400,
+          "value": "value1",
+        },
+        Object {
+          "key": "key1",
+          "operator": "Equal",
+          "tolerationSeconds": 86400,
+          "value": "value1",
+        },
+      ],
       "volumes": Array [],
     },
   },

@@ -52,7 +52,7 @@ export interface LabelSelectorRequirement {
  * component or several that work together, on Kubernetes you run it inside a set of pods.
  * In Kubernetes, a Pod represents a set of running containers on your cluster.
  */
-export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedulingSelection {
+export abstract class Workload extends pod.AbstractPod {
 
   /**
    * The metadata of pods in this workload.
@@ -77,18 +77,6 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
       this.podMetadata.addLabel(selector, matcher);
     }
 
-  }
-
-  public get namespaces(): string[] | undefined {
-    return this.podMetadata.namespace ? [this.podMetadata.namespace] : [];
-  }
-
-  public get namespaceSelector(): pod.PodLabelQuery[] | undefined {
-    return undefined;
-  }
-
-  public get labelSelector(): pod.PodLabelQuery[] | undefined {
-    return Object.keys(this.podMetadata.toJson().labels).map(l => pod.PodLabelQuery.is(l, this.podMetadata.getLabel(l)!));
   }
 
   /**
@@ -138,6 +126,7 @@ export abstract class Workload extends pod.AbstractPod implements pod.IPodSchedu
       ...super._toPodSpec(),
       affinity: scheduling.affinity,
       nodeName: scheduling.nodeName,
+      tolerations: scheduling.tolerations,
     } ;
   }
 

@@ -23,22 +23,6 @@ Array [
           },
         },
         "spec": Object {
-          "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-          },
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
@@ -100,22 +84,6 @@ Array [
           },
         },
         "spec": Object {
-          "affinity": Object {
-            "nodeAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Object {
-                "nodeSelectorTerms": Array [],
-              },
-            },
-            "podAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-            "podAntiAffinity": Object {
-              "preferredDuringSchedulingIgnoredDuringExecution": Array [],
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [],
-            },
-          },
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {

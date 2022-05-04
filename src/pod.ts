@@ -1,4 +1,4 @@
-import { ApiObject, ApiObjectMetadataDefinition, Lazy } from 'cdk8s';
+import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
@@ -7,7 +7,7 @@ import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
 
-export abstract class AbstractPod extends base.Resource {
+export abstract class AbstractPod extends base.Resource implements IPodSchedulingSelection {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -20,6 +20,8 @@ export abstract class AbstractPod extends base.Resource {
   private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
+
+  public abstract readonly podMetadata: ApiObjectMetadataDefinition;
 
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
@@ -63,6 +65,18 @@ export abstract class AbstractPod extends base.Resource {
 
   public get hostAliases(): HostAlias[] {
     return [...this._hostAliases];
+  }
+
+  public get namespaces(): string[] | undefined {
+    return this.podMetadata.namespace ? [this.podMetadata.namespace] : [];
+  }
+
+  public get namespaceSelector(): PodLabelQuery[] | undefined {
+    return undefined;
+  }
+
+  public get labelSelector(): PodLabelQuery[] | undefined {
+    return Object.keys(this.podMetadata.toJson().labels).map(l => PodLabelQuery.is(l, this.podMetadata.getLabel(l)!));
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {
@@ -420,19 +434,6 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
     return this.metadata;
   }
 
-  public get namespaces(): string[] | undefined {
-    return this.metadata.namespace ? [this.metadata.namespace] : [];
-  }
-
-  public get namespaceSelector(): PodLabelQuery[] | undefined {
-    return undefined;
-  }
-
-  public get labelSelector(): PodLabelQuery[] | undefined {
-    return Object.keys(this.metadata.toJson().labels).map(l => PodLabelQuery.is(l, this.metadata.getLabel(l)!));
-  }
-
-
   /**
    * @internal
    */
@@ -442,6 +443,7 @@ export class Pod extends AbstractPod implements IPodSchedulingSelection {
       ...this._toPodSpec(),
       affinity: scheduling.affinity,
       nodeName: scheduling.nodeName,
+      tolerations: scheduling.tolerations,
     };
   }
 
@@ -885,24 +887,50 @@ export class PodLabelQuery {
 }
 
 /**
- * Represents a node in the cluster.
+ * Tolerations are applied to pods, and allow (but do not require) the
+ * pods to schedule onto nodes with matching taints.
+ *
+ * Tolerations take the form of a key value pair, both can be empty.
+ *
+ * - If the key is empty, all taints are matched, meaning the pod will tolerate everything.
+ * - If the value is empty, taints are matched by the existence of the key.
  */
-export class Node {
+export class Toleration {
 
   /**
-   * Select a node based on node label queries.
+   * Create a `NoSchedule` effect toleration.
    */
-  public static select(...labelSelector: NodeLabelQuery[]): SelectedNode {
-    return new SelectedNode(labelSelector);
+  public static noSchedule(key?: string, value?: string): Toleration {
+    return new Toleration(key, 'NoSchedule', value);
   }
 
   /**
-   * Select a node based on the node name.
+   * Create a `PreferNoSchedule` effect toleration.
    */
-  public static named(nodeName: string): NamedNode {
-    return new NamedNode(nodeName);
+  public static preferNoSchedule(key?: string, value?: string): Toleration {
+    return new Toleration(key, 'PreferNoSchedule', value);
   }
 
+  /**
+   * Create a `NoExecute` effect toleration.
+   */
+  public static noExecute(key?: string, value?: string, noEviction?: Duration): Toleration {
+    return new Toleration(key, 'NoExecute', value, noEviction);
+  }
+
+  /**
+   * Create an any effect toleration. (matches all affects)
+   */
+  public static any(key?: string, value?: string, noEviction?: Duration) {
+    return new Toleration(key, undefined, value, noEviction);
+  }
+
+  private constructor(
+    public readonly key?: string,
+    public readonly effect?: string,
+    public readonly value?: string,
+    public readonly noEviction?: Duration,
+  ) {}
 }
 
 /**
@@ -920,6 +948,27 @@ export class SelectedNode {
 export class NamedNode {
 
   public constructor(public readonly name: string) {};
+}
+
+/**
+ * Represents a node in the cluster.
+ */
+export class Node {
+
+  /**
+   * Refer to a node based on node label queries.
+   */
+  public static select(...labelSelector: NodeLabelQuery[]): SelectedNode {
+    return new SelectedNode(labelSelector);
+  }
+
+  /**
+   * Refer a node based on the node name.
+   */
+  public static named(nodeName: string): NamedNode {
+    return new NamedNode(nodeName);
+  }
+
 }
 
 /**
@@ -1027,24 +1076,15 @@ export class PodScheduling {
 
   private _affinity?: k8s.Affinity;
   private _nodeName?: string;
+  private _tolerations?: k8s.Toleration[];
 
-  constructor(protected readonly podMetadata: ApiObjectMetadataDefinition) {
-    this._affinity = {
-      nodeAffinity: {
-        preferredDuringSchedulingIgnoredDuringExecution: [],
-        requiredDuringSchedulingIgnoredDuringExecution: {
-          nodeSelectorTerms: [],
-        },
-      },
-      podAffinity: {
-        preferredDuringSchedulingIgnoredDuringExecution: [],
-        requiredDuringSchedulingIgnoredDuringExecution: [],
-      },
-      podAntiAffinity: {
-        preferredDuringSchedulingIgnoredDuringExecution: [],
-        requiredDuringSchedulingIgnoredDuringExecution: [],
-      },
-    };
+  constructor(protected readonly podMetadata: ApiObjectMetadataDefinition) {}
+
+  private get tolerations(): k8s.Toleration[] {
+    if (!this._tolerations) {
+      this._tolerations = [];
+    }
+    return this._tolerations;
   }
 
   private get affinity(): k8s.Affinity {
@@ -1086,6 +1126,43 @@ export class PodScheduling {
   }
 
   /**
+   * Allow this pod to tolerate taints matching these tolerations.
+   *
+   * You can put multiple taints on the same node and multiple tolerations on the same pod.
+   * The way Kubernetes processes multiple taints and tolerations is like a filter: start with
+   * all of a node's taints, then ignore the ones for which the pod has a matching toleration;
+   * the remaining un-ignored taints have the indicated effects on the pod. In particular:
+   *
+   * - if there is at least one un-ignored taint with effect NoSchedule then Kubernetes will
+   *   not schedule the pod onto that node
+   * - if there is no un-ignored taint with effect NoSchedule but there is at least one un-ignored
+   *   taint with effect PreferNoSchedule then Kubernetes will try to not schedule the pod onto the node
+   * - if there is at least one un-ignored taint with effect NoExecute then the pod will be evicted from
+   *   the node (if it is already running on the node), and will not be scheduled onto the node (if it is
+   *   not yet running on the node).
+   *
+   * Under the hood, this method utilizes the `tolerations` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+   */
+  public tolerate(...tolerations: Toleration[]) {
+    for (const toleration of tolerations) {
+
+      if (!toleration.key && toleration.value) {
+        throw new Error(`Toleration without a key must not have a value (found value '${toleration.value}')`);
+      }
+
+      this.tolerations.push({
+        key: toleration.key,
+        value: toleration.value,
+        effect: toleration.effect,
+        operator: toleration.key ? (toleration.value ? 'Equal' : 'Exists') : 'Exists',
+        tolerationSeconds: toleration.noEviction?.toSeconds(),
+      });
+    }
+  }
+
+  /**
    * Attract this pod to a node matched by selectors.
    * You can select a node by using `Node.select()`.
    *
@@ -1117,8 +1194,9 @@ export class PodScheduling {
    * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
    * - An un-managed pod that can be selected via `Pod.select()`.
    *
-   * Co-locating with multiple selections acts as an AND condition. meaning the pod
-   * will be assigned to a node that satisfies all selections (i.e runs at least one pod that satisifies each selection).
+   * Co-locating with multiple selections ((i.e invoking this method multiple times)) acts as
+   * an AND condition. meaning the pod will be assigned to a node that satisfies all
+   * selections (i.e runs at least one pod that satisifies each selection).
    *
    * Under the hood, this method utilizes the `podAffinity` property.
    *
@@ -1167,15 +1245,15 @@ export class PodScheduling {
 
   }
 
-  private createPodAffinityTerm(topologyKey: TopologyKey, selectable: IPodSchedulingSelection): k8s.PodAffinityTerm {
+  private createPodAffinityTerm(topologyKey: TopologyKey, selection: IPodSchedulingSelection): k8s.PodAffinityTerm {
     return {
       topologyKey: topologyKey.key,
-      namespaces: selectable.namespaces,
-      labelSelector: selectable.labelSelector ? {
-        matchExpressions: selectable.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      namespaces: selection.namespaces,
+      labelSelector: selection.labelSelector ? {
+        matchExpressions: selection.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
       } : undefined,
-      namespaceSelector: selectable.namespaceSelector ? {
-        matchExpressions: selectable.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      namespaceSelector: selection.namespaceSelector ? {
+        matchExpressions: selection.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
       } : undefined,
     };
   }
@@ -1194,7 +1272,7 @@ export class PodScheduling {
   /**
    * @internal
    */
-  public _toKube(): { affinity?: k8s.Affinity; nodeName?: string } {
-    return { affinity: this._affinity, nodeName: this._nodeName };
+  public _toKube(): { affinity?: k8s.Affinity; nodeName?: string; tolerations?: k8s.Toleration[] } {
+    return { affinity: this._affinity, nodeName: this._nodeName, tolerations: this._tolerations };
   }
 }
