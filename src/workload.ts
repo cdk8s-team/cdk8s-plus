@@ -68,7 +68,7 @@ export abstract class Workload extends pod.AbstractPod {
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-    this.scheduling = new WorkloadScheduling(this.podMetadata, this.podSelector);
+    this.scheduling = new WorkloadScheduling(this.podMetadata, () => this.podSelector);
 
     if (props.select ?? true) {
       const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;

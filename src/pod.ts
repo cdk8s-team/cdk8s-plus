@@ -68,7 +68,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSchedulin
     return [...this._hostAliases];
   }
 
-  public podSelector(): PodSelector {
+  public get podSelector(): PodSelector {
     return {
       labelSelector: Object.keys(this.podMetadata.toJson().labels).map(l => PodLabelQuery.is(l, this.podMetadata.getLabel(l)!)),
       namespaces: this.podMetadata.namespace ? [this.podMetadata.namespace] : undefined,
@@ -400,7 +400,7 @@ export interface IPodSchedulingSelection {
   /**
    * Return the selector that can be used to select the pod during scheduling.
    */
-  podSelector(): PodSelector;
+  readonly podSelector: PodSelector;
 
 }
 
@@ -416,7 +416,7 @@ export class Pod extends AbstractPod {
   public static select(selector: PodSelector): IPodSchedulingSelection {
     // this seems strange, I know.
     // it's like this solely for API consistency with `Node.select`.
-    return { podSelector: () => selector };
+    return { podSelector: selector };
   }
 
   /**
@@ -434,7 +434,7 @@ export class Pod extends AbstractPod {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this.scheduling = new PodScheduling(this.podMetadata, this.podSelector);
+    this.scheduling = new PodScheduling(this.podMetadata, () => this.podSelector);
 
   }
 
@@ -1051,7 +1051,7 @@ export interface PodSchedulingColocateOptions {
  */
 export interface PodSchedulingSeparateOptions {
   /**
-   * Which topology to coloate on.
+   * Which topology to separate on.
    *
    * @default - TopologyKey.HOSTNAME
    */
@@ -1091,24 +1091,37 @@ export class PodScheduling implements IPodSchedulingSelection {
   private _tolerations: k8s.Toleration[] = [];
   private _nodeName?: string;
 
-  /**
-   * The metadata of the pod this scheduling startegy belongs to.
-   */
-  public readonly podMetadata: ApiObjectMetadataDefinition;
+  constructor(
+    /**
+     * The metadata of the pod this scheduling startegy belongs to.
+     */
+    public readonly podMetadata: ApiObjectMetadataDefinition,
 
-  private readonly _podSelectorProvider: () => PodSelector;
+    /**
+     * Function to provide the pod selector of the pod this scheduling strategy belongs to,
+     * This has to be lazy because the selector itself is not always available during instatiation.
+     */
+    private readonly podSelectorProvider: () => PodSelector) {}
 
-  constructor(podMetadata: ApiObjectMetadataDefinition, podSelectorProvider: () => PodSelector) {
-    this.podMetadata = podMetadata;
-    this._podSelectorProvider = podSelectorProvider;
-  }
-
-  public podSelector(): PodSelector {
-    return this._podSelectorProvider();
+  public get podSelector(): PodSelector {
+    return this.podSelectorProvider();
   }
 
   /**
    * Assign this pod a specific node by name.
+   *
+   * The scheduler ignores the Pod, and the kubelet on the named node
+   * tries to place the Pod on that node. Overrules any affinity rules of the pod.
+   *
+   * Some limitations of static assignment are:
+   *
+   * - If the named node does not exist, the Pod will not run, and in some
+   *   cases may be automatically deleted.
+   * - If the named node does not have the resources to accommodate the Pod,
+   *   the Pod will fail and its reason will indicate why, for example OutOfmemory or OutOfcpu.
+   * - Node names in cloud environments are not always predictable or stable.
+   *
+   * Will throw is the pod is already assigned to named node.
    *
    * Under the hood, this method utilizes the `nodeName` property.
    */
@@ -1244,7 +1257,7 @@ export class PodScheduling implements IPodSchedulingSelection {
   }
 
   private createPodAffinityTerm(topologyKey: TopologyKey, selection: IPodSchedulingSelection): k8s.PodAffinityTerm {
-    const selector = selection.podSelector();
+    const selector = selection.podSelector;
     return {
       topologyKey: topologyKey.key,
       namespaces: selector.namespaces,
