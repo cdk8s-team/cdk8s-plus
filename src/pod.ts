@@ -1101,10 +1101,10 @@ export class PodScheduling implements IPodSchedulingSelection {
      * Function to provide the pod selector of the pod this scheduling strategy belongs to,
      * This has to be lazy because the selector itself is not always available during instatiation.
      */
-    private readonly podSelectorProvider: () => PodSelector) {}
+    private readonly _podSelectorProvider: () => PodSelector) {}
 
   public get podSelector(): PodSelector {
-    return this.podSelectorProvider();
+    return this._podSelectorProvider();
   }
 
   /**
