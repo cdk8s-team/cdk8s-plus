@@ -4,6 +4,7 @@ import * as handler from './handler';
 import * as k8s from './imports/k8s';
 import * as probe from './probe';
 import * as secret from './secret';
+import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
 /**
@@ -482,6 +483,8 @@ export interface ContainerProps {
    * When a key exists in multiple sources, the value associated with
    * the last source will take precedence. Values defined by the `envVariables` property
    * with a duplicate key will take precedence.
+   *
+   * @default - No sources.
    */
   readonly envFrom?: EnvFrom[];
 
@@ -990,10 +993,10 @@ export class Env {
   /**
    * @internal
    */
-  public _toKube(): { variables: k8s.EnvVar[]; from: k8s.EnvFromSource[] } {
+  public _toKube(): { variables?: k8s.EnvVar[]; from?: k8s.EnvFromSource[] } {
     return {
-      from: this._sources.map(s => s._toKube()),
-      variables: this.renderEnv(this._variables),
+      from: undefinedIfEmpty(this._sources.map(s => s._toKube())),
+      variables: undefinedIfEmpty(this.renderEnv(this._variables)),
     };
   }
 }
