@@ -934,7 +934,7 @@ Array [
 ]
 `;
 
-exports[`scheduling can tolerate taints 1`] = `
+exports[`scheduling can tolerate tainted nodes 1`] = `
 Array [
   Object {
     "apiVersion": "v1",
@@ -975,32 +975,34 @@ Array [
       "setHostnameAsFQDN": false,
       "tolerations": Array [
         Object {
-          "effect": "NoSchedule",
           "key": "key1",
           "operator": "Equal",
           "value": "value1",
         },
         Object {
-          "effect": "NoSchedule",
-          "key": "key1",
+          "effect": "PreferNoSchedule",
+          "key": "key2",
+          "operator": "Equal",
+          "value": "value2",
+        },
+        Object {
+          "key": "key3",
           "operator": "Exists",
         },
         Object {
           "effect": "NoSchedule",
+          "key": "key4",
           "operator": "Exists",
         },
         Object {
           "effect": "NoExecute",
-          "key": "key1",
+          "key": "key5",
           "operator": "Equal",
-          "tolerationSeconds": 86400,
-          "value": "value1",
+          "tolerationSeconds": 3600,
+          "value": "value5",
         },
         Object {
-          "key": "key1",
-          "operator": "Equal",
-          "tolerationSeconds": 86400,
-          "value": "value1",
+          "operator": "Exists",
         },
       ],
       "volumes": Array [],

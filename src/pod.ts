@@ -895,66 +895,110 @@ export class PodLabelQuery {
 }
 
 /**
- * Tolerations are applied to pods, and allow (but do not require) the
- * pods to schedule onto nodes with matching taints.
- *
- * Tolerations take the form of a key value pair, both can be empty.
- *
- * - If the key is empty, all taints are matched, meaning the pod will tolerate everything.
- * - If the value is empty, taints are matched by the existence of the key.
+ * Taint effects.
  */
-export class Toleration {
+export enum TainEffect {
+  /**
+   * This means that no pod will be able to schedule
+   * onto the node unless it has a matching toleration.
+   */
+  NO_SCHEDULE = 'NoSchedule',
 
   /**
-   * Create a `NoSchedule` effect toleration.
+   * This is a "preference" or "soft" version of `NO_SCHEDULE` -- the system
+   * will try to avoid placing a pod that does not tolerate the taint on the node,
+   * but it is not required
    */
-  public static noSchedule(key?: string, value?: string): Toleration {
-    return new Toleration(key, 'NoSchedule', value);
+  PREFER_NO_SCHEDULE = 'PreferNoSchedule',
+
+  /**
+   * This affects pods that are already running on the node as follows:
+   *
+   * - Pods that do not tolerate the taint are evicted immediately.
+   * - Pods that tolerate the taint without specifying `duration` remain bound forever.
+   * - Pods that tolerate the taint with a specified `duration` remain bound for
+   *   the specified amount of time.
+   */
+  NO_EXECUTE = 'NoExecute',
+}
+
+/**
+ * Options for `NodeTaintQuery`.
+ */
+export interface NodeTaintQueryOptions {
+  /**
+   * The taint effect to match.
+   *
+   * @default - all effects are matched.
+   */
+  readonly effect?: TainEffect;
+
+  /**
+   * How much time should a pod that tolerates the `NO_EXECUTE` effect
+   * be bound to the node. Only applies for the `NO_EXECUTE` effect.
+   *
+   * @default - bound forever.
+   */
+  readonly evictAfter?: Duration;
+}
+
+/**
+ * Taint queries that can be perfomed against nodes.
+ */
+export class NodeTaintQuery {
+
+  /**
+   * Matches a taint with a specific key and value.
+   */
+  public static is(key: string, value: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
+    return new NodeTaintQuery('Equal', key, value, options.effect, options.evictAfter);
   }
 
   /**
-   * Create a `PreferNoSchedule` effect toleration.
+   * Matches a tain with any value of a specific key.
    */
-  public static preferNoSchedule(key?: string, value?: string): Toleration {
-    return new Toleration(key, 'PreferNoSchedule', value);
+  public static exists(key: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
+    return new NodeTaintQuery('Exists', key, undefined, options.effect, options.evictAfter);
   }
 
   /**
-   * Create a `NoExecute` effect toleration.
+   * Matches any taint.
    */
-  public static noExecute(key?: string, value?: string, noEviction?: Duration): Toleration {
-    return new Toleration(key, 'NoExecute', value, noEviction);
-  }
-
-  /**
-   * Create an any effect toleration. (matches all affects)
-   */
-  public static any(key?: string, value?: string, noEviction?: Duration) {
-    return new Toleration(key, undefined, value, noEviction);
+  public static any(): NodeTaintQuery {
+    return new NodeTaintQuery('Exists');
   }
 
   private constructor(
+    public readonly operator: string,
     public readonly key?: string,
-    public readonly effect?: string,
     public readonly value?: string,
-    public readonly noEviction?: Duration,
-  ) {}
+    public readonly effect?: string,
+    public readonly evictAfter?: Duration,
+  ) {
+    if (evictAfter && effect !== TainEffect.NO_EXECUTE) {
+      throw new Error('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
+    }
+  }
 }
 
 /**
- * A node that is matched by selectors.
+ * A node that is matched by label selectors.
  */
 export class SelectedNode {
-
   public constructor(public readonly labelSelector: NodeLabelQuery[]) {};
-
 }
 
 /**
- * A specific node matched by name.
+ * A node that is matched by taint selectors.
+ */
+export class TaintedNode {
+  public constructor(public readonly taintSelector: NodeTaintQuery[]) {};
+}
+
+/**
+ * A node that is matched by its name.
  */
 export class NamedNode {
-
   public constructor(public readonly name: string) {};
 }
 
@@ -964,17 +1008,24 @@ export class NamedNode {
 export class Node {
 
   /**
-   * Refer to a node based on node label queries.
+   * Match a node by its labels.
    */
-  public static select(...labelSelector: NodeLabelQuery[]): SelectedNode {
+  public static labeled(...labelSelector: NodeLabelQuery[]): SelectedNode {
     return new SelectedNode(labelSelector);
   }
 
   /**
-   * Refer a node based on the node name.
+   * Match a node by its name.
    */
   public static named(nodeName: string): NamedNode {
     return new NamedNode(nodeName);
+  }
+
+  /**
+   * Match a node by its taints.
+   */
+  public static tainted(...taintSelector: NodeTaintQuery[]): TaintedNode {
+    return new TaintedNode(taintSelector);
   }
 
 }
@@ -1156,19 +1207,15 @@ export class PodScheduling implements IPodSchedulingSelection {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
    */
-  public tolerate(...tolerations: Toleration[]) {
-    for (const toleration of tolerations) {
-
-      if (!toleration.key && toleration.value) {
-        throw new Error(`Toleration without a key must not have a value (found value '${toleration.value}')`);
-      }
+  public tolerate(node: TaintedNode) {
+    for (const query of node.taintSelector) {
 
       this._tolerations.push({
-        key: toleration.key,
-        value: toleration.value,
-        effect: toleration.effect,
-        operator: toleration.key ? (toleration.value ? 'Equal' : 'Exists') : 'Exists',
-        tolerationSeconds: toleration.noEviction?.toSeconds(),
+        key: query.key,
+        value: query.value,
+        effect: query.effect,
+        operator: query.operator,
+        tolerationSeconds: query.evictAfter?.toSeconds(),
       });
     }
   }

@@ -524,27 +524,32 @@ test('auto mounting token can be disabled', () => {
 
 describe('scheduling', () => {
 
-  test('throws if key is empty but value isnt', () => {
+  test('only NO_EXECUTE taint queries can specify eviction', () => {
 
-    const chart = Testing.chart();
-    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
-
-    expect(() => redis.scheduling.tolerate(kplus.Toleration.noSchedule(undefined, 'value'))).toThrow('Toleration without a key must not have a value (found value \'value\')');
+    expect(() => kplus.NodeTaintQuery.is('key', 'value', {
+      effect: kplus.TainEffect.NO_SCHEDULE,
+      evictAfter: Duration.hours(1),
+    })).toThrow('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
 
   });
 
-  test('can tolerate taints', () => {
+  test('can tolerate tainted nodes', () => {
 
     const chart = Testing.chart();
 
-    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
-    redis.scheduling.tolerate(
-      kplus.Toleration.noSchedule('key1', 'value1'),
-      kplus.Toleration.noSchedule('key1', undefined),
-      kplus.Toleration.noSchedule(undefined, undefined),
-      kplus.Toleration.noExecute('key1', 'value1', Duration.days(1)),
-      kplus.Toleration.any('key1', 'value1', Duration.days(1)),
+    const devNodes = kplus.Node.tainted(
+      kplus.NodeTaintQuery.is('key1', 'value1'),
+      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TainEffect.PREFER_NO_SCHEDULE }),
+      kplus.NodeTaintQuery.exists('key3'),
+      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TainEffect.NO_SCHEDULE }),
+      kplus.NodeTaintQuery.is('key5', 'value5', {
+        effect: kplus.TainEffect.NO_EXECUTE,
+        evictAfter: Duration.hours(1),
+      }),
+      kplus.NodeTaintQuery.any(),
     );
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.tolerate(devNodes);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -566,7 +571,7 @@ describe('scheduling', () => {
     const chart = Testing.chart();
 
     const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
-    redis.scheduling.attract(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')));
+    redis.scheduling.attract(kplus.Node.labeled(kplus.NodeLabelQuery.is('memory', 'high')));
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -579,7 +584,7 @@ describe('scheduling', () => {
     const redis = new kplus.Pod(chart, 'Redis', {
       containers: [{ image: 'redis' }],
     });
-    redis.scheduling.attract(kplus.Node.select(kplus.NodeLabelQuery.is('memory', 'high')), {
+    redis.scheduling.attract(kplus.Node.labeled(kplus.NodeLabelQuery.is('memory', 'high')), {
       weight: 1,
     });
 
