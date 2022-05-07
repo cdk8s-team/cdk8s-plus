@@ -471,11 +471,19 @@ export interface ContainerProps {
   readonly workingDir?: string;
 
   /**
-   * List of environment variables to set in the container. Cannot be updated.
+   * Environment variables to set in the container.
    *
    * @default - No environment variables.
    */
-  readonly env?: { [name: string]: EnvValue };
+  readonly envVariables?: { [name: string]: EnvValue };
+
+  /**
+   * List of sources to populate environment variables in the container.
+   * When a key exists in multiple sources, the value associated with
+   * the last source will take precedence. Values defined by the `envVariables` property
+   * with a duplicate key will take precedence.
+   */
+  readonly envFrom?: EnvFrom[];
 
   /**
    * Pod volumes to mount into the container's filesystem. Cannot be updated.
@@ -581,9 +589,13 @@ export class Container {
    */
   public readonly securityContext: ContainerSecurityContext;
 
+  /**
+   * The environment of the container.
+   */
+  public readonly env: Env;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
-  private readonly _env: { [name: string]: EnvValue };
   private readonly _readiness?: probe.Probe;
   private readonly _liveness?: probe.Probe;
   private readonly _startup?: probe.Probe;
@@ -599,7 +611,6 @@ export class Container {
     this.port = props.port;
     this._command = props.command;
     this._args = props.args;
-    this._env = props.env ?? { };
     this._readiness = props.readiness;
     this._liveness = props.liveness;
     this._startup = props.startup;
@@ -609,6 +620,7 @@ export class Container {
     this.mounts = props.volumeMounts ?? [];
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
     this.securityContext = new ContainerSecurityContext(props.securityContext);
+    this.env = new Env(props.envFrom ?? [], props.envVariables ?? {});
   }
 
   /**
@@ -626,28 +638,6 @@ export class Container {
    */
   public get args(): string[] | undefined {
     return this._args ? [...this._args] : undefined;
-  }
-
-  /**
-   * Add an environment value to the container. The variable value can come
-   * from various dynamic sources such a secrets of config maps.
-   *
-   * @see EnvValue.fromXXX
-   *
-   * @param name - The variable name.
-   * @param value - The variable value.
-   */
-  public addEnv(name: string, value: EnvValue) {
-    this._env[name] = value;
-  }
-
-  /**
-   * The environment variables for this container.
-   *
-   * Returns a copy. To add environment variables use `addEnv()`.
-   */
-  public get env(): Record<string, EnvValue> {
-    return { ...this._env };
   }
 
   /**
@@ -716,6 +706,8 @@ export class Container {
       };
     }
 
+    const env = this.env._toKube();
+
     return {
       name: this.name,
       image: this.image,
@@ -725,7 +717,8 @@ export class Container {
       command: this.command,
       args: this.args,
       workingDir: this.workingDir,
-      env: renderEnv(this._env),
+      env: env.variables,
+      envFrom: env.from,
       readinessProbe: this._readiness?._toKube(this),
       livenessProbe: this._liveness?._toKube(this),
       startupProbe: this._startup?._toKube(this),
@@ -889,14 +882,118 @@ export interface MemoryResources {
   readonly limit: container;
 }
 
-function renderEnv(env: { [name: string]: EnvValue }): k8s.EnvVar[] {
-  const result = new Array<k8s.EnvVar>();
-  for (const [name, v] of Object.entries(env)) {
-    result.push({
-      name,
-      value: v.value,
-      valueFrom: v.valueFrom,
-    });
+/**
+ * A collection of env variables defined in other resources.
+ */
+export class EnvFrom {
+
+  constructor(
+    private readonly configMap?: configmap.IConfigMap,
+    private readonly prefix?: string,
+    private readonly sec?: secret.ISecret) {};
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.EnvFromSource {
+    return {
+      configMapRef: this.configMap ? {
+        name: this.configMap.name,
+      } : undefined,
+      secretRef: this.sec ? {
+        name: this.sec.name,
+      } : undefined,
+      prefix: this.prefix,
+    };
   }
-  return result;
+
+}
+
+/**
+ * Container environment.
+ */
+export class Env {
+
+  /**
+   * Selects a ConfigMap to populate the environment variables with.
+   * The contents of the target ConfigMap's Data field will represent
+   * the key-value pairs as environment variables.
+   */
+  public static fromConfigMap(configMap: configmap.IConfigMap, prefix?: string): EnvFrom {
+    return new EnvFrom(configMap, prefix, undefined);
+  }
+
+  /**
+   * Selects a Secret to populate the environment variables with.
+   * The contents of the target Secret's Data field will represent
+   * the key-value pairs as environment variables.
+   */
+  public static fromSecret(secr: secret.ISecret): EnvFrom {
+    return new EnvFrom(undefined, undefined, secr);
+  }
+
+  private readonly _sources: EnvFrom[];
+  private readonly _variables: { [key: string]: EnvValue };
+
+  public constructor(sources: EnvFrom[], variables: { [name: string]: EnvValue }) {
+    this._sources = sources;
+    this._variables = variables;
+  }
+
+  /**
+   * Add a single variable by name and value.
+   * The variable value can come from various dynamic sources such a secrets of config maps.
+   * Use `EnvValue.fromXXX` to select sources.
+   */
+  public addVariable(name: string, value: EnvValue) {
+    this._variables[name] = value;
+  }
+
+  /**
+   * The environment variables for this container.
+   * Returns a copy. To add environment variables use `container.env.addVariable()`.
+   */
+  public get variables(): { [name: string]: EnvValue } {
+    return { ...this._variables };
+  }
+
+  /**
+   * Add a collection of variables by copying from another source.
+   * Use `Env.fromXXX` functions to select sources.
+   */
+  public copyFrom(from: EnvFrom) {
+    this._sources.push(from);
+  }
+
+  /**
+   * The list of sources used to populate the container environment,
+   * in addition to the `variables`.
+   *
+   * Returns a copy. To add a source use `container.env.copyFrom()`.
+   */
+  public get sources(): EnvFrom[] {
+    return [...this._sources];
+  }
+
+  private renderEnv(env: { [name: string]: EnvValue }): k8s.EnvVar[] {
+    const result = new Array<k8s.EnvVar>();
+    for (const [name, v] of Object.entries(env)) {
+      result.push({
+        name,
+        value: v.value,
+        valueFrom: v.valueFrom,
+      });
+    }
+    return result;
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): { variables: k8s.EnvVar[]; from: k8s.EnvFromSource[] } {
+    return {
+      from: this._sources.map(s => s._toKube()),
+      variables: this.renderEnv(this._variables),
+    };
+  }
 }
