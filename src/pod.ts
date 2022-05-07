@@ -373,6 +373,8 @@ export class Pod extends AbstractPod {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'pods';
+
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
 
