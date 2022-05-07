@@ -147,9 +147,9 @@ export class WorkloadScheduling extends pod.PodScheduling {
   /**
    * Spread the pods in this workload by the topology key.
    */
-  public spread(topologyKey: pod.TopologyKey, options: WorkloadSchedulingSpreadOptions = {}) {
+  public spread(topologyKey: pod.Topology, options: WorkloadSchedulingSpreadOptions = {}) {
     // a spread is a separation of the pod from itself
-    this.separate(this, { weight: options.weight, topologyKey });
+    this.separate(this, { weight: options.weight, topology: topologyKey });
   }
 
 }

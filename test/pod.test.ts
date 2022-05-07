@@ -625,7 +625,7 @@ describe('scheduling', () => {
     redis.metadata.addLabel('app', 'store');
 
     web.scheduling.colocate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 
@@ -668,7 +668,7 @@ describe('scheduling', () => {
     });
 
     web.scheduling.colocate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 
@@ -709,7 +709,7 @@ describe('scheduling', () => {
     redis.metadata.addLabel('app', 'store');
 
     web.scheduling.separate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 
@@ -752,7 +752,7 @@ describe('scheduling', () => {
     });
 
     web.scheduling.separate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 

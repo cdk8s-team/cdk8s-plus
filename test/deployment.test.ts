@@ -457,7 +457,7 @@ describe('scheduling', () => {
     });
 
     web.scheduling.colocate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 
@@ -500,7 +500,7 @@ describe('scheduling', () => {
     });
 
     web.scheduling.colocate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 
@@ -516,7 +516,7 @@ describe('scheduling', () => {
       containers: [{ image: 'redis' }],
     });
 
-    deployment.scheduling.spread(kplus.TopologyKey.HOSTNAME);
+    deployment.scheduling.spread(kplus.Topology.HOSTNAME);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -530,7 +530,7 @@ describe('scheduling', () => {
       containers: [{ image: 'redis' }],
     });
 
-    deployment.scheduling.spread(kplus.TopologyKey.HOSTNAME, { weight: 1 });
+    deployment.scheduling.spread(kplus.Topology.HOSTNAME, { weight: 1 });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -565,7 +565,7 @@ describe('scheduling', () => {
     });
 
     web.scheduling.separate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 
@@ -608,7 +608,7 @@ describe('scheduling', () => {
     });
 
     web.scheduling.separate(redis, {
-      topologyKey: kplus.TopologyKey.ZONE,
+      topology: kplus.Topology.ZONE,
       weight: 1,
     });
 

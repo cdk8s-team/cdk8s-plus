@@ -1031,16 +1031,16 @@ export class Node {
 }
 
 /**
- * A key for the node label that the system uses to denote the topology domain.
+ * Available topology domains.
  */
-export class TopologyKey {
+export class Topology {
 
   /**
    * A hostname represents a single node in the cluster.
    *
    * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#kubernetesiohostname
    */
-  public static readonly HOSTNAME = new TopologyKey('kubernetes.io/hostname');
+  public static readonly HOSTNAME = new Topology('kubernetes.io/hostname');
 
   /**
    * A zone represents a logical failure domain. It is common for Kubernetes clusters to
@@ -1052,7 +1052,7 @@ export class TopologyKey {
    *
    * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone
    */
-  public static readonly ZONE = new TopologyKey('topology.kubernetes.io/zone');
+  public static readonly ZONE = new Topology('topology.kubernetes.io/zone');
 
   /**
    * A region represents a larger domain, made up of one or more zones. It is uncommon
@@ -1066,13 +1066,13 @@ export class TopologyKey {
    *
    * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesioregion
    */
-  public static readonly REGION = new TopologyKey('topology.kubernetes.io/region');
+  public static readonly REGION = new Topology('topology.kubernetes.io/region');
 
   /**
-   * Custom topology key.
+   * Custom key for the node label that the system uses to denote the topology domain.
    */
-  public static custom(key: string): TopologyKey {
-    return new TopologyKey(key);
+  public static custom(key: string): Topology {
+    return new Topology(key);
   }
 
   private constructor(public readonly key: string) {};
@@ -1085,9 +1085,9 @@ export interface PodSchedulingColocateOptions {
   /**
    * Which topology to coloate on.
    *
-   * @default - TopologyKey.HOSTNAME
+   * @default - Topology.HOSTNAME
    */
-  readonly topologyKey?: TopologyKey;
+  readonly topology?: Topology;
 
   /**
    * Indicates the co-location is optional (soft), with this weight score.
@@ -1104,9 +1104,9 @@ export interface PodSchedulingSeparateOptions {
   /**
    * Which topology to separate on.
    *
-   * @default - TopologyKey.HOSTNAME
+   * @default - Topology.HOSTNAME
    */
-  readonly topologyKey?: TopologyKey;
+  readonly topology?: Topology;
 
   /**
    * Indicates the separation is optional (soft), with this weight score.
@@ -1262,8 +1262,8 @@ export class PodScheduling implements IPodSchedulingSelection {
    */
   public colocate(selection: IPodSchedulingSelection, options: PodSchedulingColocateOptions = {}) {
 
-    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
-    const term = this.createPodAffinityTerm(topologyKey, selection);
+    const topology = options.topology ?? Topology.HOSTNAME;
+    const term = this.createPodAffinityTerm(topology, selection);
 
     if (options.weight) {
       this.validateWeight(options.weight);
@@ -1291,8 +1291,8 @@ export class PodScheduling implements IPodSchedulingSelection {
    */
   public separate(selectable: IPodSchedulingSelection, options: PodSchedulingSeparateOptions = {}) {
 
-    const topologyKey = options.topologyKey ?? TopologyKey.HOSTNAME;
-    const term = this.createPodAffinityTerm(topologyKey, selectable);
+    const topology = options.topology ?? Topology.HOSTNAME;
+    const term = this.createPodAffinityTerm(topology, selectable);
 
     if (options.weight) {
       this.validateWeight(options.weight);
@@ -1303,10 +1303,10 @@ export class PodScheduling implements IPodSchedulingSelection {
 
   }
 
-  private createPodAffinityTerm(topologyKey: TopologyKey, selection: IPodSchedulingSelection): k8s.PodAffinityTerm {
+  private createPodAffinityTerm(topology: Topology, selection: IPodSchedulingSelection): k8s.PodAffinityTerm {
     const selector = selection.podSelector;
     return {
-      topologyKey: topologyKey.key,
+      topologyKey: topology.key,
       namespaces: selector.namespaces,
       labelSelector: selector.labelSelector ? {
         matchExpressions: selector.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
