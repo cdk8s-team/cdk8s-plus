@@ -91,13 +91,19 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    * @param volumeName The name of the pv to reference.
    */
   public static fromPersistentVolumeName(volumeName: string): IPersistentVolume {
-    return { name: volumeName };
+    return {
+      apiGroup: '',
+      name: volumeName,
+      ...k8s.KubePersistentVolume.GVK,
+    };
   }
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'persistentvolumes';
 
   private _claim?: pvc.IPersistentVolumeClaim;
 
@@ -434,7 +440,7 @@ export class AzureDiskPersistentVolume extends PersistentVolume {
   /**
    * Azure kind of this volume.
    */
-  public readonly kind: volume.AzureDiskPersistentVolumeKind;
+  public readonly azureKind: volume.AzureDiskPersistentVolumeKind;
 
   constructor(scope: Construct, id: string, props: AzureDiskPersistentVolumeProps) {
     super(scope, id, props);
@@ -443,7 +449,7 @@ export class AzureDiskPersistentVolume extends PersistentVolume {
     this.diskUri = props.diskUri;
     this.cachingMode = props.cachingMode ?? volume.AzureDiskPersistentVolumeCachingMode.NONE;
     this.fsType = props.fsType ?? 'ext4';
-    this.kind = props.kind ?? volume.AzureDiskPersistentVolumeKind.SHARED;
+    this.azureKind = props.kind ?? volume.AzureDiskPersistentVolumeKind.SHARED;
     this.readOnly = props.readOnly ?? false;
   }
 
@@ -461,7 +467,7 @@ export class AzureDiskPersistentVolume extends PersistentVolume {
         diskUri: this.diskUri,
         cachingMode: this.cachingMode,
         fsType: this.fsType,
-        kind: this.kind,
+        kind: this.azureKind,
         readOnly: this.readOnly,
       },
     };

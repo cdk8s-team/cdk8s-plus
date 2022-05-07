@@ -16,3 +16,7 @@ export * from './pv';
 export * from './handler';
 export * from './workload';
 export * from './daemon-set';
+export * from './role';
+export * from './role-binding';
+
+export * from './api-resource.generated';

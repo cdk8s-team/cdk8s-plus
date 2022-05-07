@@ -61,13 +61,19 @@ export class ConfigMap extends base.Resource implements IConfigMap {
    * @param name The name of the config map to import
    */
   public static fromConfigMapName(name: string): IConfigMap {
-    return { name };
+    return {
+      apiGroup: '',
+      name,
+      ...k8s.KubeConfigMap.GVK,
+    };
   }
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'configmaps';
 
   private readonly _binaryData: { [key: string]: string } = { };
   private readonly _data: { [key: string]: string } = { };

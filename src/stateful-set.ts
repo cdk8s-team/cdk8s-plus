@@ -116,6 +116,8 @@ export class StatefulSet extends workload.Workload {
     */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'statefulsets';
+
   private readonly _service: service.Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {

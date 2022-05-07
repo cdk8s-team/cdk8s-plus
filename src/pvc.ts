@@ -84,13 +84,19 @@ export class PersistentVolumeClaim extends base.Resource implements IPersistentV
    * @param claimName The name of the pvc to reference.
    */
   public static fromClaimName(claimName: string): IPersistentVolumeClaim {
-    return { name: claimName };
+    return {
+      apiGroup: '',
+      name: claimName,
+      ...k8s.KubePersistentVolumeClaim.GVK,
+    };
   }
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'persistentvolumeclaims';
 
   /**
    * Storage requirement of this claim.
