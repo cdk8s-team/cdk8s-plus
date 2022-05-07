@@ -179,9 +179,6 @@ new JsonFile(project, '.backportrc.json', {
   obj: backportConfig,
 });
 
-<<<<<<< HEAD:.projenrc.js
-project.synth();
-=======
 project.addTask('regenerate-api-information', {
   description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
   exec: 'kubectl api-resources -o wide > api-resources.txt',
@@ -189,4 +186,3 @@ project.addTask('regenerate-api-information', {
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
 project.synth();
->>>>>>> aeaba6e (feat: `Role`, `ClusterRole`, `RoleBinding`, `ClusterRoleBinding` L2s (#432)):.projenrc.ts
