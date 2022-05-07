@@ -1,9 +1,10 @@
-const path = require('path');
-const { cdk, javascript, JsonFile } = require('projen');
-const { JobPermission } = require('projen/lib/github/workflows-model');
+import * as path from 'path';
+import { cdk, github, javascript, JsonFile } from 'projen';
+import { JobPermission } from 'projen/lib/github/workflows-model';
+import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = '22';
+const LATEST_SUPPORTED_K8S_VERSION = 22;
 
 // the version of k8s this branch supports
 const SPEC_VERSION = '21';
@@ -12,10 +13,11 @@ const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 const project = new cdk.JsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
   description: `cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-${SPEC_VERSION} synthesizes Kubernetes manifests for Kubernetes ${K8S_VERSION}`,
+  projenrcTs: true,
 
   repositoryUrl: 'https://github.com/cdk8s-team/cdk8s-plus.git',
-  authorName: 'Amazon Web Services',
-  authorUrl: 'https://aws.amazon.com',
+  author: 'Amazon Web Services',
+  authorAddress: 'https://aws.amazon.com',
   keywords: [
     'cdk',
     'kubernetes',
@@ -26,7 +28,7 @@ const project = new cdk.JsiiProject({
     'microservices',
   ],
 
-  projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+  projenCredentials: github.GithubCredentials.fromPersonalAccessToken(),
   prerelease: 'beta',
 
   peerDeps: [
@@ -45,6 +47,7 @@ const project = new cdk.JsiiProject({
     'cdk8s',
     'cdk8s-cli',
     'constructs',
+    'snake-case',
   ],
 
   majorVersion: 1,
@@ -103,7 +106,7 @@ const importTask = project.addTask('import', {
 });
 project.compileTask.prependSpawn(importTask);
 
-const docgenTask = project.tasks.tryFind('docgen');
+const docgenTask = project.tasks.tryFind('docgen')!;
 docgenTask.reset();
 for (const lang of ['typescript', 'python', 'java']) {
   const genTask = project.addTask(`docgen:${lang}`);
@@ -125,10 +128,10 @@ for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION -
   t.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main`);
 }
 
-const backportWorkflow = project.github.addWorkflow('backport');
+const backportWorkflow = project.github!.addWorkflow('backport');
 backportWorkflow.on({ pullRequestTarget: { types: ['closed'] } });
 backportWorkflow.addJob('backport', {
-  runsOn: 'ubuntu-18.04',
+  runsOn: ['ubuntu-18.04'],
   permissions: {
     contents: JobPermission.WRITE,
   },
@@ -169,11 +172,17 @@ const backportConfig = {
   publishStatusCommentOnFailure: true,
   publishStatusCommentOnSuccess: true,
   publishStatusCommentOnAbort: true,
-  targetPRLabels: [project.autoApprove.label],
+  targetPRLabels: [project.autoApprove!.label],
 };
 
 new JsonFile(project, '.backportrc.json', {
   obj: backportConfig,
 });
+
+project.addTask('regenerate-api-information', {
+  description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
+  exec: 'kubectl api-resources -o wide > api-resources.txt',
+});
+generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
 project.synth();

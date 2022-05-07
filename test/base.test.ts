@@ -13,6 +13,8 @@ test('Can mutate metadata', () => {
 
     public readonly apiObject: ApiObject;
 
+    public readonly resourceType = 'configmaps';
+
     constructor(scope: Construct, id: string, props: CustomProps) {
       super(scope, id);
 

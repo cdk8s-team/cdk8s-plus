@@ -519,7 +519,7 @@ export interface ContainerProps {
    * Compute resources (CPU and memory requests and limits) required by the container
    * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
    */
-  readonly resources?: Resources;
+  readonly resources?: ContainerResources;
 
   /**
    * SecurityContext defines the security options the container should be run with.
@@ -574,7 +574,7 @@ export class Container {
    * Compute resources (CPU and memory requests and limits) required by the container
    * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
    */
-  public readonly resources?: Resources;
+  public readonly resources?: ContainerResources;
 
   /**
    * The security context of the container.
@@ -851,7 +851,7 @@ export enum MountPropagation {
 /**
  * CPU and memory compute resources
  */
-export interface Resources {
+export interface ContainerResources {
   readonly cpu: CpuResources;
   readonly memory: MemoryResources;
 }
