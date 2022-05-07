@@ -59,6 +59,8 @@ export class IngressV1Beta1 extends base.Resource {
   private _defaultBackend?: IngressV1Beta1Backend;
   private readonly _tlsConfig: IngressV1Beta1Tls[] = [];
 
+  public readonly resourceType = 'ingresses';
+
   constructor(scope: Construct, id: string, props: IngressV1Beta1Props = {}) {
     super(scope, id);
 

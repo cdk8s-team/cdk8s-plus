@@ -41,6 +41,8 @@ export class DaemonSet extends workload.Workload {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'daemonsets';
+
   public readonly minReadySeconds: number;
 
   constructor(scope: Construct, id: string, props: DaemonSetProps = {}) {

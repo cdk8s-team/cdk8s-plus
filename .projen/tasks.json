@@ -147,7 +147,7 @@
       "description": "Synthesize project files",
       "steps": [
         {
-          "exec": "node .projenrc.js"
+          "exec": "ts-node --project tsconfig.dev.json .projenrc.ts"
         }
       ]
     },
@@ -311,6 +311,15 @@
     "pre-compile": {
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
+    },
+    "regenerate-api-information": {
+      "name": "regenerate-api-information",
+      "description": "Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.",
+      "steps": [
+        {
+          "exec": "kubectl api-resources -o wide > api-resources.txt"
+        }
+      ]
     },
     "release:k8s-21/main": {
       "name": "release:k8s-21/main",
