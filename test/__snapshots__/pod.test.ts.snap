@@ -429,9 +429,6 @@ Array [
                     },
                   ],
                 },
-                "namespaces": Array [
-                  "n1",
-                ],
                 "topologyKey": "topology.kubernetes.io/zone",
               },
               "weight": 1,
@@ -510,9 +507,6 @@ Array [
                   },
                 ],
               },
-              "namespaces": Array [
-                "n1",
-              ],
               "topologyKey": "kubernetes.io/hostname",
             },
           ],
@@ -809,9 +803,6 @@ Array [
                     },
                   ],
                 },
-                "namespaces": Array [
-                  "n1",
-                ],
                 "topologyKey": "topology.kubernetes.io/zone",
               },
               "weight": 1,
@@ -890,9 +881,6 @@ Array [
                   },
                 ],
               },
-              "namespaces": Array [
-                "n1",
-              ],
               "topologyKey": "kubernetes.io/hostname",
             },
           ],
