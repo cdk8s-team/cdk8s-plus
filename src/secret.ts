@@ -75,13 +75,19 @@ export class Secret extends base.Resource implements ISecret {
    * @param name The name of the secret to reference.
    */
   public static fromSecretName(name: string): ISecret {
-    return { name };
+    return {
+      apiGroup: '',
+      name,
+      ...k8s.KubeSecret.GVK,
+    };
   }
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'secrets';
 
   /**
    * Whether or not the secret is immutable.

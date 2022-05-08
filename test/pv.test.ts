@@ -247,7 +247,7 @@ describe('AzureDiskPersistentVolume', () => {
     expect(vol.cachingMode).toEqual(kplus.AzureDiskPersistentVolumeCachingMode.NONE);
     expect(vol.readOnly).toBeFalsy();
     expect(vol.fsType).toEqual('ext4');
-    expect(vol.kind).toEqual(kplus.AzureDiskPersistentVolumeKind.SHARED);
+    expect(vol.azureKind).toEqual(kplus.AzureDiskPersistentVolumeKind.SHARED);
 
     const resources = cdk8s.Testing.synth(chart);
     expect(resources).toMatchSnapshot();
@@ -271,7 +271,7 @@ describe('AzureDiskPersistentVolume', () => {
     expect(vol.cachingMode).toEqual(kplus.AzureDiskPersistentVolumeCachingMode.READ_ONLY);
     expect(vol.readOnly).toBeTruthy();
     expect(vol.fsType).toEqual('ntfs');
-    expect(vol.kind).toEqual(kplus.AzureDiskPersistentVolumeKind.DEDICATED);
+    expect(vol.azureKind).toEqual(kplus.AzureDiskPersistentVolumeKind.DEDICATED);
 
     const resources = cdk8s.Testing.synth(chart);
     expect(resources).toMatchSnapshot();

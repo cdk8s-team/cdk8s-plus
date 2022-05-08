@@ -426,6 +426,8 @@ export class Pod extends AbstractPod {
 
   public readonly scheduling: PodScheduling;
 
+  public readonly resourceType = 'pods';
+
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
 

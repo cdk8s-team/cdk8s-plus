@@ -2,16 +2,10 @@ import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
+import * as rb from './role-binding';
 import * as secret from './secret';
 import { undefinedIfEmpty } from './utils';
 
-
-/**
- * Properties for initialization of `ServiceAccount`.
- */
-export interface ServiceAccountProps extends base.ResourceProps {
-
-}
 
 export interface IServiceAccount extends base.IResource {
 
@@ -20,7 +14,7 @@ export interface IServiceAccount extends base.IResource {
 /**
  * Properties for initialization of `ServiceAccount`.
  */
-export interface ServiceAccountProps {
+export interface ServiceAccountProps extends base.ResourceProps {
   /**
    * List of secrets allowed to be used by pods running using this
    * ServiceAccount.
@@ -51,20 +45,26 @@ export interface ServiceAccountProps {
  *
  * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account
  */
-export class ServiceAccount extends base.Resource implements IServiceAccount {
+export class ServiceAccount extends base.Resource implements IServiceAccount, rb.ISubject {
 
   /**
    * Imports a service account from the cluster as a reference.
    * @param name The name of the service account resource.
    */
   public static fromServiceAccountName(name: string): IServiceAccount {
-    return { name: name };
+    return {
+      apiGroup: '',
+      name,
+      ...k8s.KubeServiceAccount.GVK,
+    };
   }
 
   /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
+
+  public readonly resourceType = 'serviceaccounts';
 
   private readonly _secrets: secret.ISecret[];
 

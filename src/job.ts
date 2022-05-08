@@ -67,6 +67,8 @@ export class Job extends workload.Workload {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'jobs';
+
   constructor(scope: Construct, id: string, props: JobProps = {}) {
     super(scope, id, {
       restartPolicy: pod.RestartPolicy.NEVER,
