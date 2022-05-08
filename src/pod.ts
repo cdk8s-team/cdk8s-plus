@@ -71,7 +71,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSchedulin
   public get podSelector(): PodSelector {
     return {
       labelSelector: Object.keys(this.podMetadata.toJson().labels).map(l => PodLabelQuery.is(l, this.podMetadata.getLabel(l)!)),
-      namespaces: this.podMetadata.namespace ? [this.podMetadata.namespace] : undefined,
+      namespaceSelector: this.metadata.namespace ? [PodLabelQuery.is('kubernetes.io/metadata.name', this.metadata.namespace)] : undefined,
     };
   }
 
@@ -385,11 +385,6 @@ export interface PodSelector {
     * List of label queries that the pod namespace needs to satisfy.
     */
   readonly namespaceSelector?: PodLabelQuery[];
-
-  /**
-    * Static list of namespaces the pods can belong to.
-    */
-  readonly namespaces?: string[];
 }
 
 /**
@@ -425,6 +420,8 @@ export class Pod extends AbstractPod {
   protected readonly apiObject: ApiObject;
 
   public readonly scheduling: PodScheduling;
+
+  public readonly resourceType = 'pods';
 
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
@@ -1307,7 +1304,6 @@ export class PodScheduling implements IPodSchedulingSelection {
     const selector = selection.podSelector;
     return {
       topologyKey: topology.key,
-      namespaces: selector.namespaces,
       labelSelector: selector.labelSelector ? {
         matchExpressions: selector.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
       } : undefined,

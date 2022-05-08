@@ -33,6 +33,7 @@
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
+    "regenerate-api-information": "npx projen regenerate-api-information",
     "release:k8s-22/main": "npx projen release:k8s-22/main",
     "test": "npx projen test",
     "test:update": "npx projen test:update",
@@ -53,9 +54,9 @@
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdk8s": "1.5.85",
-    "cdk8s-cli": "^1.0.162",
-    "constructs": "3.3.282",
+    "cdk8s": "1.5.86",
+    "cdk8s-cli": "^1.0.163",
+    "constructs": "3.3.283",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -68,14 +69,16 @@
     "jsii-pacmak": "^1.57.0",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^12",
-    "projen": "^0.54.57",
+    "projen": "^0.54.58",
+    "snake-case": "^3.0.4",
     "standard-version": "^9",
     "ts-jest": "^27",
+    "ts-node": "^9",
     "typescript": "^4.6.4"
   },
   "peerDependencies": {
-    "cdk8s": "^1.5.85",
-    "constructs": "^3.3.282"
+    "cdk8s": "^1.5.86",
+    "constructs": "^3.3.283"
   },
   "dependencies": {
     "minimatch": "^3.1.2"

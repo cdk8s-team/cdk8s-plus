@@ -640,7 +640,6 @@ describe('scheduling', () => {
     const redis = kplus.Pod.select({
       labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
       namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
-      namespaces: ['n1'],
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -660,7 +659,6 @@ describe('scheduling', () => {
     const redis = kplus.Pod.select({
       labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
       namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
-      namespaces: ['n1'],
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -724,7 +722,6 @@ describe('scheduling', () => {
     const redis = kplus.Pod.select({
       labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
       namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
-      namespaces: ['n1'],
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -744,7 +741,6 @@ describe('scheduling', () => {
     const redis = kplus.Pod.select({
       labelSelector: [kplus.PodLabelQuery.is('app', 'store')],
       namespaceSelector: [kplus.PodLabelQuery.is('net', '1')],
-      namespaces: ['n1'],
     });
 
     const web = new kplus.Pod(chart, 'Web', {

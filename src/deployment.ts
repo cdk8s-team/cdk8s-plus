@@ -153,6 +153,8 @@ export class Deployment extends workload.Workload {
    */
   protected readonly apiObject: ApiObject;
 
+  public readonly resourceType = 'deployments';
+
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
     super(scope, id, props);
 
