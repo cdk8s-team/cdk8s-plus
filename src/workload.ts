@@ -70,11 +70,11 @@ export abstract class Workload extends pod.AbstractPod {
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
     this.scheduling = new WorkloadScheduling(this.podMetadata, () => this.podSelector, () => this.namespaceSelector);
 
+    const matcher = Names.toLabelValue(this);
+    this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
+
     if (props.select ?? true) {
-      const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
-      const matcher = Names.toLabelValue(this);
-      this.select(pod.LabelQuery.is(selector, matcher));
-      this.podMetadata.addLabel(selector, matcher);
+      this.select(pod.LabelQuery.is(pod.Pod.ADDRESS_LABEL, matcher));
     }
 
   }

@@ -1,29 +1,37 @@
 import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
-test('can add ingress rules for a managed pod', () => {
+test('can create a policy for a managed pod', () => {
 
   const chart = Testing.chart();
-
   const web = new kplus.Pod(chart, 'Web', {
     containers: [{ image: 'web' }],
   });
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', {
-    selector: web,
-  });
+  new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
 
 });
 
 
-test('can add ingress rules for an unmanaged pod', () => {
+test('can create a policy for a labeled pod', () => {
 
   const chart = Testing.chart();
-
   const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', {
-    selector: web,
-  });
+  new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
+  expect(Testing.synth(chart)).toMatchSnapshot();
+});
+
+
+test('can create a policy for all pods', () => {
+
+  const chart = Testing.chart();
+  const web = kplus.Pod.all();
+
+  new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
 });

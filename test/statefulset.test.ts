@@ -25,7 +25,7 @@ test('A label selector is automatically allocated', () => {
   statefulset.addContainer({ image: 'foobar' });
 
   const expectedValue = 'test-StatefulSet-c809b559';
-  const expectedSelector = { 'cdk8s.statefulset': expectedValue };
+  const expectedSelector = { 'cdk8s.io/metadata.addr': expectedValue };
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[1].spec;
@@ -37,7 +37,7 @@ test('A label selector is automatically allocated', () => {
 
 });
 
-test('No selector is generated if "defaultSelector" is false', () => {
+test('No selector is generated if "select" is false', () => {
 
   const chart = Testing.chart();
 
@@ -51,7 +51,6 @@ test('No selector is generated if "defaultSelector" is false', () => {
   // assert the k8s spec doesnt have it.
   const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual({});
-  expect(spec.template.metadata?.labels).toEqual(undefined);
 
   // assert the statefulset object doesnt have it.
   expect(statefulset.matchLabels).toEqual({});
@@ -75,7 +74,7 @@ test('Can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  statefulset.select(kplus.PodLabelQuery.is('foo', expectedSelector.foo));
+  statefulset.select(kplus.LabelQuery.is('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[1].spec;

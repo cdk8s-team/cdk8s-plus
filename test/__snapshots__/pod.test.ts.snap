@@ -6,6 +6,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
@@ -51,6 +54,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
@@ -116,6 +122,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
@@ -182,6 +191,7 @@ Array [
     "metadata": Object {
       "labels": Object {
         "app": "store",
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
     },
@@ -223,6 +233,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -234,10 +247,21 @@ Array [
                 "labelSelector": Object {
                   "matchExpressions": Array [
                     Object {
-                      "key": "app",
+                      "key": "cdk8s.io/metadata.addr",
                       "operator": "In",
                       "values": Array [
-                        "store",
+                        "test-Redis-c8b1633b",
+                      ],
+                    },
+                  ],
+                },
+                "namespaceSelector": Object {
+                  "matchExpressions": Array [
+                    Object {
+                      "key": "kubernetes.io/metadata.name",
+                      "operator": "In",
+                      "values": Array [
+                        "default",
                       ],
                     },
                   ],
@@ -293,6 +317,7 @@ Array [
     "metadata": Object {
       "labels": Object {
         "app": "store",
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
     },
@@ -334,6 +359,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -344,10 +372,21 @@ Array [
               "labelSelector": Object {
                 "matchExpressions": Array [
                   Object {
-                    "key": "app",
+                    "key": "cdk8s.io/metadata.addr",
                     "operator": "In",
                     "values": Array [
-                      "store",
+                      "test-Redis-c8b1633b",
+                    ],
+                  },
+                ],
+              },
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
                     ],
                   },
                 ],
@@ -399,6 +438,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -414,17 +456,6 @@ Array [
                       "operator": "In",
                       "values": Array [
                         "store",
-                      ],
-                    },
-                  ],
-                },
-                "namespaceSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "net",
-                      "operator": "In",
-                      "values": Array [
-                        "1",
                       ],
                     },
                   ],
@@ -478,6 +509,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -496,17 +530,7 @@ Array [
                   },
                 ],
               },
-              "namespaceSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "net",
-                    "operator": "In",
-                    "values": Array [
-                      "1",
-                    ],
-                  },
-                ],
-              },
+              "namespaceSelector": Object {},
               "topologyKey": "kubernetes.io/hostname",
             },
           ],
@@ -556,6 +580,7 @@ Array [
     "metadata": Object {
       "labels": Object {
         "app": "store",
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
     },
@@ -597,6 +622,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -608,10 +636,21 @@ Array [
                 "labelSelector": Object {
                   "matchExpressions": Array [
                     Object {
-                      "key": "app",
+                      "key": "cdk8s.io/metadata.addr",
                       "operator": "In",
                       "values": Array [
-                        "store",
+                        "test-Redis-c8b1633b",
+                      ],
+                    },
+                  ],
+                },
+                "namespaceSelector": Object {
+                  "matchExpressions": Array [
+                    Object {
+                      "key": "kubernetes.io/metadata.name",
+                      "operator": "In",
+                      "values": Array [
+                        "default",
                       ],
                     },
                   ],
@@ -667,6 +706,7 @@ Array [
     "metadata": Object {
       "labels": Object {
         "app": "store",
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
     },
@@ -708,6 +748,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -718,10 +761,21 @@ Array [
               "labelSelector": Object {
                 "matchExpressions": Array [
                   Object {
-                    "key": "app",
+                    "key": "cdk8s.io/metadata.addr",
                     "operator": "In",
                     "values": Array [
-                      "store",
+                      "test-Redis-c8b1633b",
+                    ],
+                  },
+                ],
+              },
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
                     ],
                   },
                 ],
@@ -773,6 +827,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -788,17 +845,6 @@ Array [
                       "operator": "In",
                       "values": Array [
                         "store",
-                      ],
-                    },
-                  ],
-                },
-                "namespaceSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "net",
-                      "operator": "In",
-                      "values": Array [
-                        "1",
                       ],
                     },
                   ],
@@ -852,6 +898,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
       "name": "test-web-c854d28f",
     },
     "spec": Object {
@@ -928,6 +977,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {

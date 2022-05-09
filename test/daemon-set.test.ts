@@ -43,7 +43,7 @@ test('a label selector is automatically allocated', () => {
   ds.addContainer({ image: 'foobar' });
 
   const expectedValue = 'test-DaemonSet-c8f77186';
-  const expectedSelector = { 'cdk8s.daemonset': expectedValue };
+  const expectedSelector = { 'cdk8s.io/metadata.addr': expectedValue };
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
@@ -67,7 +67,6 @@ test('no selector is generated if "defaultSelector" is false', () => {
   // assert the k8s spec doesnt have it.
   const spec = Testing.synth(chart)[0].spec;
   expect(spec.selector.matchLabels).toEqual({});
-  expect(spec.template.metadata?.labels).toEqual(undefined);
 
   // assert the deployment object doesnt have it.
   expect(ds.matchLabels).toEqual({});
@@ -85,7 +84,7 @@ test('can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  ds.select(kplus.PodLabelQuery.is('foo', expectedSelector.foo));
+  ds.select(kplus.LabelQuery.is('foo', expectedSelector.foo));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;

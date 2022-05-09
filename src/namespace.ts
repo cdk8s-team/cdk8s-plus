@@ -44,6 +44,13 @@ export class Namespace extends base.Resource implements INamespaceSelector {
   }
 
   /**
+   * Match all namespaces.
+   */
+  public static all(): LabeledNamespace {
+    return Namespace.labeled();
+  }
+
+  /**
    * @see base.Resource.apiObject
    */
   protected apiObject: ApiObject;

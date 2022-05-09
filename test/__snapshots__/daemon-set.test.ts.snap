@@ -13,13 +13,13 @@ Array [
       "selector": Object {
         "matchExpressions": Array [],
         "matchLabels": Object {
-          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+          "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
         },
       },
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+            "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
           },
         },
         "spec": Object {
@@ -74,13 +74,13 @@ Array [
       "selector": Object {
         "matchExpressions": Array [],
         "matchLabels": Object {
-          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+          "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
         },
       },
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+            "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
           },
         },
         "spec": Object {

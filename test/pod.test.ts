@@ -638,7 +638,7 @@ describe('scheduling', () => {
     const chart = Testing.chart();
 
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('net', '1')));
+      .namespaced(kplus.Namespace.all());
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -654,8 +654,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('net', '1')));
+    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -732,8 +731,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('net', '1')));
+    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],

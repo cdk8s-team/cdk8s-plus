@@ -6,6 +6,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
