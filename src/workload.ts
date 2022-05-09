@@ -68,12 +68,12 @@ export abstract class Workload extends pod.AbstractPod {
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-    this.scheduling = new WorkloadScheduling(this.podMetadata, () => this.podSelector);
+    this.scheduling = new WorkloadScheduling(this.podMetadata, () => this.podSelector, () => this.namespaceSelector);
 
     if (props.select ?? true) {
       const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
       const matcher = Names.toLabelValue(this);
-      this.select(pod.PodLabelQuery.is(selector, matcher));
+      this.select(pod.LabelQuery.is(selector, matcher));
       this.podMetadata.addLabel(selector, matcher);
     }
 
@@ -82,7 +82,7 @@ export abstract class Workload extends pod.AbstractPod {
   /**
    * Configure selectors for this workload.
    */
-  public select(...selectors: pod.PodLabelQuery[]) {
+  public select(...selectors: pod.LabelQuery[]) {
     for (const selector of selectors) {
       if (selector.operator === 'In' && selector.values?.length === 1) {
         this._matchLabels[selector.key] = selector.values[0];

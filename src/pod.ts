@@ -3,12 +3,13 @@ import { Construct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
 import * as k8s from './imports/k8s';
+import * as namespace from './namespace';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
-export abstract class AbstractPod extends base.Resource implements IPodSchedulingSelection {
+export abstract class AbstractPod extends base.Resource implements IPodSelector, INamespacedPodSelector {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -68,11 +69,16 @@ export abstract class AbstractPod extends base.Resource implements IPodSchedulin
     return [...this._hostAliases];
   }
 
-  public get podSelector(): PodSelector {
-    return {
-      labelSelector: Object.keys(this.podMetadata.toJson().labels).map(l => PodLabelQuery.is(l, this.podMetadata.getLabel(l)!)),
-      namespaceSelector: this.metadata.namespace ? [PodLabelQuery.is('kubernetes.io/metadata.name', this.metadata.namespace)] : undefined,
-    };
+  public get podLabelSelector(): LabelSelector {
+    return { queries: Object.keys(this.podMetadata.toJson().labels).map(l => LabelQuery.is(l, this.podMetadata.getLabel(l)!)) };
+  }
+
+  public get podSelector(): IPodSelector {
+    return Pod.labeled(...this.podLabelSelector.queries);
+  }
+
+  public get namespaceSelector(): namespace.INamespaceSelector {
+    return namespace.Namespace.named(this.podMetadata.namespace ?? 'default');
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {
@@ -373,30 +379,39 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
- * Pod selector defines queries with which kubernetes can select pods during scheduling.
+ * Match a resource by labels.
  */
-export interface PodSelector {
+export interface LabelSelector {
   /**
-   * List of label queries that the pod labels need to satisfy.
+   * List of label queries to match resources against.
    */
-  readonly labelSelector?: PodLabelQuery[];
-
-  /**
-    * List of label queries that the pod namespace needs to satisfy.
-    */
-  readonly namespaceSelector?: PodLabelQuery[];
+  readonly queries: LabelQuery[];
 }
 
 /**
- * Represents a pod that can be selected during scheduling.
+ * An object that can select pods by labels.
  */
-export interface IPodSchedulingSelection {
+export interface IPodSelector {
+  /**
+   * Label selector that selects the pods.
+   */
+  readonly podLabelSelector: LabelSelector;
+}
+
+/**
+ * An object that can select pods by labels in particular namespaces.
+ */
+export interface INamespacedPodSelector {
 
   /**
-   * Return the selector that can be used to select the pod during scheduling.
+   * Selector that selects the pods.
    */
-  readonly podSelector: PodSelector;
+  readonly podSelector: IPodSelector;
 
+  /**
+   * Selector that selects the namespaces.
+   */
+  readonly namespaceSelector: namespace.INamespaceSelector;
 }
 
 /**
@@ -406,12 +421,20 @@ export interface IPodSchedulingSelection {
 export class Pod extends AbstractPod {
 
   /**
-   * Create a selector for selecting pods by queries.
+   * Match a pod by its labels. To scope the pod down to particular
+   * namespaces, use `.namespaced` on the return value.
+   *
+   * @example
+   *
+   * // match a pod with label 'app=store'
+   * Pod.labeled(PodLabelQuery.is('app', 'store'))
+   *
+   * // match a pod with label 'app=store' in the 'web' namespace
+   * Pod.labeled(PodLabelQuery.is('app', 'store'))
+   *    .namespaced(PodLabelQuery.is('', 'web'))
    */
-  public static select(selector: PodSelector): IPodSchedulingSelection {
-    // this seems strange, I know.
-    // it's like this solely for API consistency with `Node.select`.
-    return { podSelector: selector };
+  public static labeled(...selectors: LabelQuery[]): LabeledPod {
+    return new LabeledPod(selectors);
   }
 
   /**
@@ -431,7 +454,7 @@ export class Pod extends AbstractPod {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this.scheduling = new PodScheduling(this.podMetadata, () => this.podSelector);
+    this.scheduling = new PodScheduling(this.podMetadata, () => this.podSelector, () => this.namespaceSelector);
 
   }
 
@@ -845,43 +868,43 @@ export class NodeLabelQuery {
 }
 
 /**
- * Label queries that can be perofmed against pods.
+ * Label queries that can be perofmed against resources.
  */
-export class PodLabelQuery {
+export class LabelQuery {
 
   /**
    * Requires value of label `key` to equal `value`.
    */
   public static is(key: string, value: string) {
-    return PodLabelQuery.in(key, [value]);
+    return LabelQuery.in(key, [value]);
   }
 
   /**
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new PodLabelQuery(key, 'In', values);
+    return new LabelQuery(key, 'In', values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new PodLabelQuery(key, 'NotIn', values);
+    return new LabelQuery(key, 'NotIn', values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new PodLabelQuery(key, 'Exists', undefined);
+    return new LabelQuery(key, 'Exists', undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new PodLabelQuery(key, 'DoesNotExist', undefined);
+    return new LabelQuery(key, 'DoesNotExist', undefined);
   }
 
   private constructor(
@@ -978,10 +1001,37 @@ export class NodeTaintQuery {
   }
 }
 
+export class LabeledPod implements IPodSelector {
+
+  public constructor(private readonly queries: LabelQuery[]) {};
+
+  public get podLabelSelector(): LabelSelector {
+    return { queries: this.queries };
+  }
+
+  public namespaced(selector: namespace.INamespaceSelector) {
+    return new NamespacedLabeledPod(this, selector);
+  }
+}
+
+export class NamespacedLabeledPod implements INamespacedPodSelector {
+
+  public constructor(private readonly labeledPod: LabeledPod, private readonly selector: namespace.INamespaceSelector) {};
+
+  public get podSelector(): IPodSelector {
+    return this.labeledPod;
+  }
+
+  public get namespaceSelector(): namespace.INamespaceSelector {
+    return this.selector;
+  }
+
+}
+
 /**
  * A node that is matched by label selectors.
  */
-export class SelectedNode {
+export class LabeledNode {
   public constructor(public readonly labelSelector: NodeLabelQuery[]) {};
 }
 
@@ -1007,8 +1057,8 @@ export class Node {
   /**
    * Match a node by its labels.
    */
-  public static labeled(...labelSelector: NodeLabelQuery[]): SelectedNode {
-    return new SelectedNode(labelSelector);
+  public static labeled(...labelSelector: NodeLabelQuery[]): LabeledNode {
+    return new LabeledNode(labelSelector);
   }
 
   /**
@@ -1128,7 +1178,7 @@ export interface PodSchedulingAttractOptions {
 /**
  * Controls the pod scheduling strategy.
  */
-export class PodScheduling implements IPodSchedulingSelection {
+export class PodScheduling implements INamespacedPodSelector {
 
   private _nodeAffinityPreferred: k8s.PreferredSchedulingTerm[] = [];
   private _nodeAffinityRequired: k8s.NodeSelectorTerm[] = [];
@@ -1149,10 +1199,20 @@ export class PodScheduling implements IPodSchedulingSelection {
      * Function to provide the pod selector of the pod this scheduling strategy belongs to,
      * This has to be lazy because the selector itself is not always available during instatiation.
      */
-    private readonly _podSelectorProvider: () => PodSelector) {}
+    private readonly _podSelectorProvider: () => IPodSelector,
 
-  public get podSelector(): PodSelector {
+    /**
+     * Function to provide the namespace selector of the pod this scheduling strategy belongs to,
+     * This has to be lazy because the selector itself is not always available during instatiation.
+     */
+    private readonly _namespaceSelectorProvider: () => namespace.INamespaceSelector) {}
+
+  public get podSelector(): IPodSelector {
     return this._podSelectorProvider();
+  }
+
+  public get namespaceSelector(): namespace.INamespaceSelector {
+    return this._namespaceSelectorProvider();
   }
 
   /**
@@ -1228,7 +1288,7 @@ export class PodScheduling implements IPodSchedulingSelection {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
    */
-  public attract(node: SelectedNode, options: PodSchedulingAttractOptions = {}) {
+  public attract(node: LabeledNode, options: PodSchedulingAttractOptions = {}) {
 
     const term = this.createNodeAffinityTerm(node);
 
@@ -1257,10 +1317,10 @@ export class PodScheduling implements IPodSchedulingSelection {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
    */
-  public colocate(selection: IPodSchedulingSelection, options: PodSchedulingColocateOptions = {}) {
+  public colocate(selector: INamespacedPodSelector, options: PodSchedulingColocateOptions = {}) {
 
     const topology = options.topology ?? Topology.HOSTNAME;
-    const term = this.createPodAffinityTerm(topology, selection);
+    const term = this.createPodAffinityTerm(topology, selector);
 
     if (options.weight) {
       this.validateWeight(options.weight);
@@ -1286,10 +1346,10 @@ export class PodScheduling implements IPodSchedulingSelection {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
    */
-  public separate(selectable: IPodSchedulingSelection, options: PodSchedulingSeparateOptions = {}) {
+  public separate(selector: INamespacedPodSelector, options: PodSchedulingSeparateOptions = {}) {
 
     const topology = options.topology ?? Topology.HOSTNAME;
-    const term = this.createPodAffinityTerm(topology, selectable);
+    const term = this.createPodAffinityTerm(topology, selector);
 
     if (options.weight) {
       this.validateWeight(options.weight);
@@ -1300,20 +1360,19 @@ export class PodScheduling implements IPodSchedulingSelection {
 
   }
 
-  private createPodAffinityTerm(topology: Topology, selection: IPodSchedulingSelection): k8s.PodAffinityTerm {
-    const selector = selection.podSelector;
+  private createPodAffinityTerm(topology: Topology, selector: INamespacedPodSelector): k8s.PodAffinityTerm {
     return {
       topologyKey: topology.key,
-      labelSelector: selector.labelSelector ? {
-        matchExpressions: selector.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-      } : undefined,
-      namespaceSelector: selector.namespaceSelector ? {
-        matchExpressions: selector.namespaceSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
-      } : undefined,
+      labelSelector: {
+        matchExpressions: selector.podSelector.podLabelSelector.queries.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      },
+      namespaceSelector: {
+        matchExpressions: selector.namespaceSelector.namespaceSelector.queries.map(s => ({ key: s.key, operator: s.operator!, values: s.values })),
+      },
     };
   }
 
-  private createNodeAffinityTerm(node: SelectedNode): k8s.NodeSelectorTerm {
+  private createNodeAffinityTerm(node: LabeledNode): k8s.NodeSelectorTerm {
     return { matchExpressions: node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) };
   }
 

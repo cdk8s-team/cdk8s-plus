@@ -13,10 +13,8 @@ export interface NetworkPolicyProps extends base.ResourceProps {
    * via the `Pod.select` function. The array of ingress rules is applied to any
    * pods selected by this field. Multiple network policies can select the same
    * set of pods. In this case, the ingress rules for each are combined additively.
-   *
-   * @default - applies to all pods in this namespace
    */
-  readonly select?: pod.IPod;
+  readonly selector: pod.IPodSelector;
 }
 
 export class NetworkPolicy extends base.Resource {
@@ -26,9 +24,11 @@ export class NetworkPolicy extends base.Resource {
    */
   protected apiObject: ApiObject;
 
-  private readonly _podLabelQueries?: pod.PodLabelQuery[];
+  public readonly resourceType: string = 'networkpolicies';
 
-  public constructor(scope: Construct, id: string, props: NetworkPolicyProps = {}) {
+  private readonly _podSelector?: pod.IPodSelector;
+
+  public constructor(scope: Construct, id: string, props: NetworkPolicyProps) {
     super(scope, id);
 
     this.apiObject = new k8s.KubeNetworkPolicy(this, 'Resource', {
@@ -36,7 +36,7 @@ export class NetworkPolicy extends base.Resource {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    this._podLabelQueries = props.select?.labelSelector?.queries;
+    this._podSelector = props.selector;
   }
 
   /**
@@ -44,9 +44,9 @@ export class NetworkPolicy extends base.Resource {
    */
   public _toKube(): k8s.NetworkPolicySpec {
     return {
-      podSelector: this._podLabelQueries ? {
-        matchExpressions: this._podLabelQueries.map(q => ({ key: q.key, operator: q.operator, values: q.values })),
-      } : {},
+      podSelector: {
+        matchExpressions: this._podSelector?.podLabelSelector.queries.map(q => ({ key: q.key, operator: q.operator, values: q.values })),
+      },
     };
   }
 

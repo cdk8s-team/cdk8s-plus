@@ -18,5 +18,7 @@ export * from './workload';
 export * from './daemon-set';
 export * from './role';
 export * from './role-binding';
+export * from './network-policy';
+export * from './namespace';
 
 export * from './api-resource.generated';
