@@ -110,6 +110,23 @@ describe('IngressBackend', () => {
       expect(() => IngressV1Beta1Backend.fromService(service, { port: 1234 })).toThrow(/service exposes ports 6011,1111 but backend is defined to use port 1234/);
     });
   });
+
+  test('fromResource', () => {
+
+    const chart = Testing.chart();
+    const service = new Service(chart, 'my-service');
+
+    // THEN
+    expect(IngressV1Beta1Backend.fromResource(service)._toKube()).toEqual({
+      resource: {
+        apiGroup: 'core',
+        kind: 'Service',
+        name: 'test-my-service-c8493104',
+      },
+    });
+
+  });
+
 });
 
 describe('Ingress', () => {
