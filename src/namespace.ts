@@ -11,7 +11,7 @@ export interface INamespaceSelector {
   /**
    * Return the label selector that selects the namespaces.
    */
-  asNamespaceLabelSelector(): pod.LabelSelector;
+  asNamespaceLabelSelector(): pod.LabelSelector | undefined;
 }
 
 /**
@@ -56,7 +56,7 @@ export class Namespace extends base.Resource implements INamespaceSelector {
   /**
    * @see base.Resource.apiObject
    */
-  protected apiObject: ApiObject;
+  protected readonly apiObject: ApiObject;
 
   public readonly resourceType: string = 'namespaces';
 
@@ -72,7 +72,7 @@ export class Namespace extends base.Resource implements INamespaceSelector {
   /**
    * @see INamespaceSelector.asNamespaceLabelSelector
    */
-  public asNamespaceLabelSelector(): pod.LabelSelector {
+  public asNamespaceLabelSelector(): pod.LabelSelector | undefined {
     return Namespace.named(this.name ?? 'default').asNamespaceLabelSelector();
   }
 
@@ -92,11 +92,8 @@ export class LabeledNamespace implements INamespaceSelector {
 
   public constructor(private readonly queries: pod.LabelQuery[]) {};
 
-  /**
-   * @see INamespaceSelector.asNamespaceLabelSelector
-   */
-  public asNamespaceLabelSelector(): pod.LabelSelector {
-    return { queries: this.queries };
+  public asNamespaceLabelSelector(): pod.LabelSelector | undefined {
+    return pod.LabelSelector.of(...this.queries);
   }
 }
 
@@ -107,10 +104,7 @@ export class NamedNamespace implements INamespaceSelector {
 
   public constructor(private readonly name: string) {};
 
-  /**
-   * @see INamespaceSelector.asNamespaceLabelSelector
-   */
-  public asNamespaceLabelSelector(): pod.LabelSelector {
+  public asNamespaceLabelSelector(): pod.LabelSelector | undefined {
     return Namespace.labeled(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).asNamespaceLabelSelector();
   }
 

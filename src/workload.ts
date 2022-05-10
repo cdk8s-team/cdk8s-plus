@@ -59,16 +59,18 @@ export abstract class Workload extends pod.AbstractPod {
    */
   public readonly podMetadata: ApiObjectMetadataDefinition;
 
-  public readonly scheduling: WorkloadScheduling;
-
   private readonly _matchLabels: Record<string, string> = {};
   private readonly _matchExpressions: LabelSelectorRequirement[] = [];
+
+  private readonly _connections: pod.PodConnections;
+  private readonly _scheduling: WorkloadScheduling;
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-    this.scheduling = new WorkloadScheduling(() => this);
+    this._scheduling = new WorkloadScheduling(this);
+    this._connections = new pod.PodConnections(this);
 
     const matcher = Names.toLabelValue(this);
     this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
@@ -77,6 +79,14 @@ export abstract class Workload extends pod.AbstractPod {
       this.select(pod.LabelQuery.is(pod.Pod.ADDRESS_LABEL, matcher));
     }
 
+  }
+
+  public get scheduling(): pod.PodScheduling {
+    return this._scheduling;
+  }
+
+  public get connections(): pod.PodConnections {
+    return this._connections;
   }
 
   /**
@@ -117,6 +127,9 @@ export abstract class Workload extends pod.AbstractPod {
     return { matchExpressions: this._matchExpressions, matchLabels: this._matchLabels };
   }
 
+  /**
+   * @internal
+   */
   public _toPodSpec(): k8s.PodSpec {
     const scheduling = this.scheduling._toKube();
     return {
