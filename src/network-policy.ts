@@ -98,22 +98,11 @@ export class Port {
  * Describes a peer to allow traffic to/from.
  * A peer can either by an ip block, or a selection of pods, not both.
  */
-export interface IPeer {
+export interface IPeer extends pod.INamespacedPodSelector {
   /**
    * Returns the ip block this peer represents.
    */
   asIpBlock(): IpBlock | undefined;
-
-  /**
-   * Return the label selector that selects the pods.
-   */
-  asPodLabelSelector(): pod.LabelSelector | undefined;
-
-  /**
-    * Return the label selector that selects the namespaces.
-    */
-  asNamespaceLabelSelector(): pod.LabelSelector | undefined;
-
 }
 
 /**

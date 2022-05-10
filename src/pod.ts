@@ -425,17 +425,7 @@ export interface IPodSelector {
 /**
  * Represents an object that can select pods in particular namespaces.
  */
-export interface INamespacedPodSelector {
-  /**
-   * Return the label selector that selects the pods.
-   */
-  asPodLabelSelector(): LabelSelector | undefined;
-
-  /**
-   * Return the label selector that selects the namespaces.
-   */
-  asNamespaceLabelSelector(): LabelSelector | undefined;
-}
+export interface INamespacedPodSelector extends namespace.INamespaceSelector, IPodSelector {}
 
 /**
  * Pod is a collection of containers that can run on a host. This resource is
