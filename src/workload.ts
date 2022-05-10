@@ -68,7 +68,7 @@ export abstract class Workload extends pod.AbstractPod {
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
-    this.scheduling = new WorkloadScheduling(this.podMetadata, () => this.podSelector, () => this.namespaceSelector);
+    this.scheduling = new WorkloadScheduling(() => this);
 
     const matcher = Names.toLabelValue(this);
     this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
@@ -146,10 +146,11 @@ export class WorkloadScheduling extends pod.PodScheduling {
 
   /**
    * Spread the pods in this workload by the topology key.
+   * A spread is a separation of the pod from itself and is used to
+   * balance out pod replicas across a given topology.
    */
   public spread(topologyKey: pod.Topology, options: WorkloadSchedulingSpreadOptions = {}) {
-    // a spread is a separation of the pod from itself
-    this.separate(this, { weight: options.weight, topology: topologyKey });
+    this.separate(this.instance, { weight: options.weight, topology: topologyKey });
   }
 
 }

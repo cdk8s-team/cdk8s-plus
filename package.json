@@ -81,10 +81,12 @@
     "constructs": "^3.3.283"
   },
   "dependencies": {
-    "minimatch": "^3.1.2"
+    "minimatch": "^3.1.2",
+    "safe-stable-stringify": "*"
   },
   "bundledDependencies": [
-    "minimatch"
+    "minimatch",
+    "safe-stable-stringify"
   ],
   "keywords": [
     "cdk",

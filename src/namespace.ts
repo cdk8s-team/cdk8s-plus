@@ -5,16 +5,19 @@ import * as k8s from './imports/k8s';
 import * as pod from './pod';
 
 /**
+ * Represents an object that can select namespaces.
+ */
+export interface INamespaceSelector {
+  /**
+   * Return the label selector that selects the namespaces.
+   */
+  asNamespaceLabelSelector(): pod.LabelSelector;
+}
+
+/**
  * Properties for `Namespace`.
  */
 export interface NamespaceProps extends base.ResourceProps {}
-
-export interface INamespaceSelector {
-  /**
-   * Selector that selects the namespaces.
-   */
-  readonly namespaceSelector: pod.LabelSelector;
-}
 
 /**
  * In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster.
@@ -67,10 +70,10 @@ export class Namespace extends base.Resource implements INamespaceSelector {
   }
 
   /**
-   * @see INamespaceSelector.namespaceSelector
+   * @see INamespaceSelector.asNamespaceLabelSelector
    */
-  public get namespaceSelector(): pod.LabelSelector {
-    return Namespace.named(this.name ?? 'default').namespaceSelector;
+  public asNamespaceLabelSelector(): pod.LabelSelector {
+    return Namespace.named(this.name ?? 'default').asNamespaceLabelSelector();
   }
 
   /**
@@ -90,9 +93,9 @@ export class LabeledNamespace implements INamespaceSelector {
   public constructor(private readonly queries: pod.LabelQuery[]) {};
 
   /**
-   * @see INamespaceSelector.namespaceSelector
+   * @see INamespaceSelector.asNamespaceLabelSelector
    */
-  public get namespaceSelector(): pod.LabelSelector {
+  public asNamespaceLabelSelector(): pod.LabelSelector {
     return { queries: this.queries };
   }
 }
@@ -105,10 +108,10 @@ export class NamedNamespace implements INamespaceSelector {
   public constructor(private readonly name: string) {};
 
   /**
-   * @see INamespaceSelector.namespaceSelector
+   * @see INamespaceSelector.asNamespaceLabelSelector
    */
-  public get namespaceSelector(): pod.LabelSelector {
-    return Namespace.labeled(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).namespaceSelector;
+  public asNamespaceLabelSelector(): pod.LabelSelector {
+    return Namespace.labeled(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).asNamespaceLabelSelector();
   }
 
 }

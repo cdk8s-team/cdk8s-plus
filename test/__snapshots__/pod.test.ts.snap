@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`scheduling can be assigned to a node by name 1`] = `
+exports[`connections can allow to labeled pod 1`] = `
 Array [
   Object {
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
       "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
       },
-      "name": "test-redis-c870fe8d",
+      "name": "test-web-c854d28f",
     },
     "spec": Object {
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
           "env": Array [],
-          "image": "redis",
+          "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
           "ports": Array [],
@@ -45,341 +45,66 @@ Array [
       "volumes": Array [],
     },
   },
-]
-`;
-
-exports[`scheduling can be attracted to a node by selector - custom 1`] = `
-Array [
   Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
     "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
+      "name": "w-allowegresse1b559efc15e370e296b1eec877ea965-c8af7ba0",
     },
     "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      "egress": Array [
+        Object {
+          "ports": Array [
             Object {
-              "preference": Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "podSelector": Object {
                 "matchExpressions": Array [
                   Object {
-                    "key": "memory",
+                    "key": "app",
                     "operator": "In",
                     "values": Array [
-                      "high",
+                      "store",
                     ],
                   },
                 ],
               },
-              "weight": 1,
             },
           ],
         },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be attracted to a node by selector - default 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "nodeAffinity": Object {
-          "requiredDuringSchedulingIgnoredDuringExecution": Object {
-            "nodeSelectorTerms": Array [
-              Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "memory",
-                    "operator": "In",
-                    "values": Array [
-                      "high",
-                    ],
-                  },
-                ],
-              },
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
             ],
           },
-        },
+        ],
       },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
+      "policyTypes": Array [
+        "Egress",
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be co-located with a managed pod - custom 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "app": "store",
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
   Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
     "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
+      "name": "allowingress44106220b88e79cd5b333de4cc528e1a-c8dc0e96",
     },
     "spec": Object {
-      "affinity": Object {
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [
+      "ingress": Array [
+        Object {
+          "from": Array [
             Object {
-              "podAffinityTerm": Object {
-                "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "cdk8s.io/metadata.addr",
-                      "operator": "In",
-                      "values": Array [
-                        "test-Redis-c8b1633b",
-                      ],
-                    },
-                  ],
-                },
-                "namespaceSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "kubernetes.io/metadata.name",
-                      "operator": "In",
-                      "values": Array [
-                        "default",
-                      ],
-                    },
-                  ],
-                },
-                "topologyKey": "topology.kubernetes.io/zone",
-              },
-              "weight": 1,
-            },
-          ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be co-located with a managed pod - default 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "app": "store",
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAffinity": Object {
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [
-            Object {
-              "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "cdk8s.io/metadata.addr",
-                    "operator": "In",
-                    "values": Array [
-                      "test-Redis-c8b1633b",
-                    ],
-                  },
-                ],
-              },
               "namespaceSelector": Object {
                 "matchExpressions": Array [
                   Object {
@@ -391,661 +116,42 @@ Array [
                   },
                 ],
               },
-              "topologyKey": "kubernetes.io/hostname",
-            },
-          ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be co-located with an unmanaged pod - custom 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [
-            Object {
-              "podAffinityTerm": Object {
-                "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "app",
-                      "operator": "In",
-                      "values": Array [
-                        "store",
-                      ],
-                    },
-                  ],
-                },
-                "topologyKey": "topology.kubernetes.io/zone",
-              },
-              "weight": 1,
-            },
-          ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be co-located with an unmanaged pod - default 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAffinity": Object {
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [
-            Object {
-              "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "app",
-                    "operator": "In",
-                    "values": Array [
-                      "store",
-                    ],
-                  },
-                ],
-              },
-              "namespaceSelector": Object {},
-              "topologyKey": "kubernetes.io/hostname",
-            },
-          ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be separated from a managed pod - custom 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "app": "store",
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [
-            Object {
-              "podAffinityTerm": Object {
-                "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "cdk8s.io/metadata.addr",
-                      "operator": "In",
-                      "values": Array [
-                        "test-Redis-c8b1633b",
-                      ],
-                    },
-                  ],
-                },
-                "namespaceSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "kubernetes.io/metadata.name",
-                      "operator": "In",
-                      "values": Array [
-                        "default",
-                      ],
-                    },
-                  ],
-                },
-                "topologyKey": "topology.kubernetes.io/zone",
-              },
-              "weight": 1,
-            },
-          ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be separated from a managed pod - default 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "app": "store",
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAntiAffinity": Object {
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [
-            Object {
-              "labelSelector": Object {
+              "podSelector": Object {
                 "matchExpressions": Array [
                   Object {
                     "key": "cdk8s.io/metadata.addr",
                     "operator": "In",
                     "values": Array [
-                      "test-Redis-c8b1633b",
+                      "test-Web-c8b65d84",
                     ],
                   },
                 ],
               },
-              "namespaceSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "kubernetes.io/metadata.name",
-                    "operator": "In",
-                    "values": Array [
-                      "default",
-                    ],
-                  },
-                ],
-              },
-              "topologyKey": "kubernetes.io/hostname",
             },
           ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be separated from an unmanaged pod - custom 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAntiAffinity": Object {
-          "preferredDuringSchedulingIgnoredDuringExecution": Array [
+          "ports": Array [
             Object {
-              "podAffinityTerm": Object {
-                "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "app",
-                      "operator": "In",
-                      "values": Array [
-                        "store",
-                      ],
-                    },
-                  ],
-                },
-                "topologyKey": "topology.kubernetes.io/zone",
-              },
-              "weight": 1,
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
             },
           ],
         },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "app",
+            "operator": "In",
+            "values": Array [
+              "store",
+            ],
           },
-          "volumeMounts": Array [],
-        },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can be separated from an unmanaged pod - default 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
-      },
-      "name": "test-web-c854d28f",
-    },
-    "spec": Object {
-      "affinity": Object {
-        "podAntiAffinity": Object {
-          "requiredDuringSchedulingIgnoredDuringExecution": Array [
-            Object {
-              "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "app",
-                    "operator": "In",
-                    "values": Array [
-                      "store",
-                    ],
-                  },
-                ],
-              },
-              "namespaceSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "net",
-                    "operator": "In",
-                    "values": Array [
-                      "1",
-                    ],
-                  },
-                ],
-              },
-              "topologyKey": "kubernetes.io/hostname",
-            },
-          ],
-        },
-      },
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "web",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "volumes": Array [],
-    },
-  },
-]
-`;
-
-exports[`scheduling can tolerate tainted nodes 1`] = `
-Array [
-  Object {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": Object {
-      "labels": Object {
-        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
-      },
-      "name": "test-redis-c870fe8d",
-    },
-    "spec": Object {
-      "automountServiceAccountToken": true,
-      "containers": Array [
-        Object {
-          "env": Array [],
-          "image": "redis",
-          "imagePullPolicy": "Always",
-          "name": "main",
-          "ports": Array [],
-          "securityContext": Object {
-            "privileged": false,
-            "readOnlyRootFilesystem": false,
-            "runAsNonRoot": false,
-          },
-          "volumeMounts": Array [],
-        },
-      ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
-      "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
-      "securityContext": Object {
-        "fsGroupChangePolicy": "Always",
-        "runAsNonRoot": false,
-        "sysctls": Array [],
-      },
-      "setHostnameAsFQDN": false,
-      "tolerations": Array [
-        Object {
-          "key": "key1",
-          "operator": "Equal",
-          "value": "value1",
-        },
-        Object {
-          "effect": "PreferNoSchedule",
-          "key": "key2",
-          "operator": "Equal",
-          "value": "value2",
-        },
-        Object {
-          "key": "key3",
-          "operator": "Exists",
-        },
-        Object {
-          "effect": "NoSchedule",
-          "key": "key4",
-          "operator": "Exists",
-        },
-        Object {
-          "effect": "NoExecute",
-          "key": "key5",
-          "operator": "Equal",
-          "tolerationSeconds": 3600,
-          "value": "value5",
-        },
-        Object {
-          "operator": "Exists",
-        },
-      ],
-      "volumes": Array [],
     },
   },
 ]

@@ -747,3 +747,35 @@ describe('scheduling', () => {
   });
 
 });
+
+describe('connections', () => {
+
+  test('can allow to ip block', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.connections.allowTo(kplus.Port.allTcp(), kplus.IpBlock.anyIpv4());
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to labeled pod', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+
+    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to namespaced labeled pod', () => {});
+
+});
