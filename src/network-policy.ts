@@ -429,18 +429,22 @@ export class NetworkPolicy extends base.Resource {
     this.configureDefaultBehavior('Ingress', props.ingress?.default);
 
     for (const rule of props.egress?.rules ?? []) {
-      this.addEgressRule(rule.peer, rule);
+      this.allowTo(rule.peer, rule);
     }
 
     for (const rule of props.ingress?.rules ?? []) {
-      this.addIngressRule(rule.peer, rule);
+      this.allowFrom(rule.peer, rule);
     }
   }
 
   /**
-   * Allow outgoing traffic to the specified port on the peers.
+   * Allow outgoing traffic to the peer.
+   *
+   * If the peer represents a managed pod, its container ports will be used
+   * as the target ports. Otherwise, all ports will be allowed.
+   * Use `options.ports` to explicitly specify ports.
    */
-  public addEgressRule(peer: IPeer, options: NetworkPolicyAddEgressRuleOptions = {}) {
+  public allowTo(peer: IPeer, options: NetworkPolicyAddEgressRuleOptions = {}) {
 
     const podSelector = peer.asNamespacedPodSelectorPeer()?.toPodSelector();
 
@@ -450,9 +454,13 @@ export class NetworkPolicy extends base.Resource {
   }
 
   /**
-   * Allow incoming traffic on the specified port from the peers.
+   * Allow incoming traffic from the peer.
+   *
+   * If the policy selects a managed pod, its container ports will be used
+   * as the target ports. Otherwise, all ports will be allowed.
+   * Use `options.ports` to explicitly specify ports.
    */
-  public addIngressRule(peer: IPeer, options: NetworkPolicyAddIngressRuleOptions = {}) {
+  public allowFrom(peer: IPeer, options: NetworkPolicyAddIngressRuleOptions = {}) {
     const ports = options.ports ?? this.extractPorts(this._podSelector);
     this._policyTypes.add('Ingress');
     this._ingressRules.push({ ports: ports.map(p => p._toKube()), from: [this.createNetworkPolicyPeer(peer)] });

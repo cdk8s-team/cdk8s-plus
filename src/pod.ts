@@ -1654,9 +1654,11 @@ export class PodConnections {
 
   private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.IPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
 
+    const peerAddress = this.peerAddress(peer);
+
     if (!options.isolation || options.isolation === PodConnectionsIsolation.POD) {
 
-      const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${this.peerAddress(peer)}`, {
+      const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${peerAddress}`, {
         selector: this.instance,
         // the policy must be defined in the namespace of the pod
         // so it can select it.
@@ -1665,10 +1667,10 @@ export class PodConnections {
 
       switch (direction) {
         case 'Egress':
-          src.addEgressRule(peer, options);
+          src.allowTo(peer, options);
           break;
         case 'Ingress':
-          src.addIngressRule(peer, options);
+          src.allowFrom(peer, options);
       }
 
     }
@@ -1699,21 +1701,22 @@ export class PodConnections {
         throw new Error(`Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name: ${json.stringify(namespaceSelector?.toNamespaceLabelSelector()?._toKube())}`);
       }
 
-      const dst = new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${this.peerAddress(peer)}`, {
-        selector: podSelector,
-        metadata: { namespace: namespaceName },
-      });
-
       switch (direction) {
         case 'Egress':
-          dst.addIngressRule(this.instance, options);
+          new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${peerAddress}`, {
+            selector: podSelector,
+            metadata: { namespace: namespaceName },
+            ingress: { rules: [{ peer: this.instance }] },
+          });
           break;
         case 'Ingress':
-          dst.addEgressRule(this.instance, options);
+          new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${peerAddress}`, {
+            selector: podSelector,
+            metadata: { namespace: namespaceName },
+            egress: { rules: [{ peer: this.instance }] },
+          });
       }
-
     }
-
   }
 
   private peerAddress(peer: networkpolicy.IPeer): string {

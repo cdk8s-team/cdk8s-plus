@@ -108,7 +108,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(ipBlock, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(ipBlock, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -122,7 +122,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(web, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(web, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -137,7 +137,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(frontend, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(frontend, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -153,7 +153,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(frontend, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(frontend, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -168,7 +168,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(all, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(all, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -183,7 +183,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -198,7 +198,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -213,7 +213,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -228,7 +228,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(namespaces, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowFrom(namespaces, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -243,7 +243,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(ipBlock, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(ipBlock, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -257,7 +257,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
-    policy.addEgressRule(db, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(db, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -272,7 +272,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
-    policy.addEgressRule(db, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(db, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -288,7 +288,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
-    policy.addEgressRule(db, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(db, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -303,7 +303,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(all, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(all, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -318,7 +318,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -333,7 +333,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -348,7 +348,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -363,7 +363,45 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(namespaces, { ports: [kplus.Port.tcp(6379)] });
+    policy.allowTo(namespaces, { ports: [kplus.Port.tcp(6379)] });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('ports default to pod container ports on ingress', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis', port: 6379 }],
+    });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: redis });
+
+    policy.allowFrom(web);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('ports default to peer container ports on egress', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis', port: 6379 }],
+    });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+
+    policy.allowTo(redis);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
