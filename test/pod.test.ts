@@ -762,6 +762,22 @@ describe('connections', () => {
 
   });
 
+  test('can allow to managed pod', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+
+    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
   test('can allow to labeled pod', () => {
 
     const chart = Testing.chart();
@@ -776,6 +792,107 @@ describe('connections', () => {
 
   });
 
-  test('can allow to namespaced labeled pod', () => {});
+  test('can allow to namespaced labeled pod', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
+      .namespaced(kplus.Namespace.named('web'));
+
+    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to all pods', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const all = kplus.Pod.all();
+
+    web.connections.allowTo(kplus.Port.allTcp(), all);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to managed namespace', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const namespace = new kplus.Namespace(chart, 'Namespace');
+
+    web.connections.allowTo(kplus.Port.allTcp(), namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to labeled namespace', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const namespace = kplus.Namespace.labeled(kplus.LabelQuery.is('app', 'web'));
+
+    web.connections.allowTo(kplus.Port.allTcp(), namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to named namespace', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const namespace = kplus.Namespace.named('web');
+
+    web.connections.allowTo(kplus.Port.allTcp(), namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to all namespaces', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const namespace = kplus.Namespace.all();
+
+    web.connections.allowTo(kplus.Port.allTcp(), namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to peer across namespaces', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+      metadata: { namespace: 'n2' },
+    });
+
+    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
 
 });

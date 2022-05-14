@@ -1,191 +1,222 @@
 import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
-test('can create a policy for a managed pod', () => {
+describe('NeworkPolicy |', () => {
 
-  const chart = Testing.chart();
-  const web = new kplus.Pod(chart, 'Web', {
-    containers: [{ image: 'web' }],
+  test('can create a policy for a managed pod', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
   });
 
-  new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+  test('can create a policy for a managed workload resource', () => {
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+    const chart = Testing.chart();
+    const web = new kplus.Deployment(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
 
-});
+    new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-test('can create a policy for a labeled pod', () => {
-
-  const chart = Testing.chart();
-  const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
-
-  new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
-
-  expect(Testing.synth(chart)).toMatchSnapshot();
-});
-
-
-test('can create a policy for all pods', () => {
-
-  const chart = Testing.chart();
-  const web = kplus.Pod.all();
-
-  new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
-
-  expect(Testing.synth(chart)).toMatchSnapshot();
-});
-
-test('can create a policy that allows all ingress by default', () => {
-
-  const chart = Testing.chart();
-  const web = kplus.Pod.all();
-
-  new kplus.NetworkPolicy(chart, 'Policy', {
-    selector: web,
-    ingress: {
-      default: kplus.NetworkPolicyTrafficDefault.ALLOW,
-    },
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
 
-});
+  test('can create a policy for a labeled pod', () => {
 
-test('can create a policy that denies all ingress by default', () => {
+    const chart = Testing.chart();
+    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
 
-  const chart = Testing.chart();
-  const web = kplus.Pod.all();
+    new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
-  new kplus.NetworkPolicy(chart, 'Policy', {
-    selector: web,
-    ingress: {
-      default: kplus.NetworkPolicyTrafficDefault.DENY,
-    },
+    expect(Testing.synth(chart)).toMatchSnapshot();
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
 
-});
+  test('can create a policy for all pods', () => {
 
-test('can create a policy that allows all egress by default', () => {
+    const chart = Testing.chart();
 
-  const chart = Testing.chart();
-  const web = kplus.Pod.all();
+    new kplus.NetworkPolicy(chart, 'Policy1');
+    new kplus.NetworkPolicy(chart, 'Policy2', { selector: kplus.Pod.all() });
 
-  new kplus.NetworkPolicy(chart, 'Policy', {
-    selector: web,
-    egress: {
-      default: kplus.NetworkPolicyTrafficDefault.ALLOW,
-    },
+    expect(Testing.synth(chart)).toMatchSnapshot();
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can create a policy that allows all ingress by default', () => {
 
-});
+    const chart = Testing.chart();
 
-test('can create a policy that denies all egress by default', () => {
+    new kplus.NetworkPolicy(chart, 'Policy', {
+      ingress: { default: kplus.NetworkPolicyTrafficDefault.ALLOW },
+    });
 
-  const chart = Testing.chart();
-  const web = kplus.Pod.all();
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  new kplus.NetworkPolicy(chart, 'Policy', {
-    selector: web,
-    egress: {
-      default: kplus.NetworkPolicyTrafficDefault.DENY,
-    },
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can create a policy that denies all ingress by default', () => {
 
-});
+    const chart = Testing.chart();
 
-test('can allow ingress from an ip block', () => {
+    new kplus.NetworkPolicy(chart, 'Policy', {
+      ingress: { default: kplus.NetworkPolicyTrafficDefault.DENY },
+    });
 
-  const chart = Testing.chart();
-  const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  const ipBlock = kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+  });
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+  test('can create a policy that allows all egress by default', () => {
 
-  policy.addIngressRule(kplus.Port.tcp(6379), ipBlock);
+    const chart = Testing.chart();
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+    new kplus.NetworkPolicy(chart, 'Policy', {
+      egress: { default: kplus.NetworkPolicyTrafficDefault.ALLOW },
+    });
 
-});
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-test('can allow ingress from a labeled pod', () => {
+  });
 
-  const chart = Testing.chart();
-  const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+  test('can create a policy that denies all egress by default', () => {
 
-  const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+    const chart = Testing.chart();
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    new kplus.NetworkPolicy(chart, 'Policy', {
+      egress: { default: kplus.NetworkPolicyTrafficDefault.DENY },
+    });
 
-  policy.addIngressRule(kplus.Port.tcp(6379), frontend);
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  });
 
-});
+  test('can allow ingress from an ip block', () => {
 
-test('can allow ingress from a namespaced labeled pod', () => {
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
 
-  const chart = Testing.chart();
-  const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const ipBlock = kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
-  const myproject = kplus.Pod.all().namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('project', 'myproject')));
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    policy.addIngressRule(kplus.Port.tcp(6379), ipBlock);
 
-  policy.addIngressRule(kplus.Port.tcp(6379), myproject);
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  });
 
-});
+  test('can allow ingress from a managed pod', () => {
 
-test('can allow egress from an ip block', () => {
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'webs' }] });
 
-  const chart = Testing.chart();
-  const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-  const ipBlock = kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+    policy.addIngressRule(kplus.Port.tcp(6379), web);
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  policy.addEgressRule(kplus.Port.tcp(6379), ipBlock);
+  });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can allow ingress from a labeled pod', () => {
 
-});
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
 
-test('can allow egress from a labeled pod', () => {
+    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
 
-  const chart = Testing.chart();
-  const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-  const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+    policy.addIngressRule(kplus.Port.tcp(6379), frontend);
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  policy.addEgressRule(kplus.Port.tcp(6379), frontend);
+  });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can allow ingress from a namespaced labeled pod', () => {
 
-});
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
 
-test('can allow egress from a namespaced labeled pod', () => {
+    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'web'))
+      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('project', 'myproject')));
 
-  const chart = Testing.chart();
-  const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-  const myproject = kplus.Pod.all().namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('project', 'myproject')));
+    policy.addIngressRule(kplus.Port.tcp(6379), frontend);
 
-  const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
-  policy.addEgressRule(kplus.Port.tcp(6379), myproject);
+  });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  test('can allow egress to an ip block', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const ipBlock = kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), ipBlock);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to a managed pod', () => {
+
+    const chart = Testing.chart();
+    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
+    const db = new kplus.Pod(chart, 'db', { containers: [{ image: 'db' }] });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), db);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to a labeled pod', () => {
+
+    const chart = Testing.chart();
+    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), db);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to a namespaced labeled pod', () => {
+
+    const chart = Testing.chart();
+    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'))
+      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('project', 'myproject')));
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), db);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
 
 });

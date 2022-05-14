@@ -1,5 +1,518 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`connections can allow to all namespaces 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegress914424c73194e7673b60bdbedf228a65-c8a4376c",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {},
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingress23d40d63ee91563715f3d29022af7ab1-c8eafad9",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to all pods 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegress914424c73194e7673b60bdbedf228a65-c8a4376c",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {},
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingress23d40d63ee91563715f3d29022af7ab1-c8eafad9",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to ip block 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegress00c2d0f4e7e026bb4b505d03fbbca4f3-c85dd92a",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "ipBlock": Object {
+                "cidr": "0.0.0.0/0",
+              },
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to labeled namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegressbecfe78d2be3f4570669568c18f7d99a-c8a10df8",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "app",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingressd58fcea27a8054ffbea5105f8d055efe-c8027cc9",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
 exports[`connections can allow to labeled pod 1`] = `
 Array [
   Object {
@@ -49,7 +562,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "w-allowegresse1b559efc15e370e296b1eec877ea965-c8af7ba0",
+      "name": "w-allowegress3360b7c1b4a37e8dbb159eedff0d9601-c85f2bad",
     },
     "spec": Object {
       "egress": Array [
@@ -63,6 +576,7 @@ Array [
           ],
           "to": Array [
             Object {
+              "namespaceSelector": Object {},
               "podSelector": Object {
                 "matchExpressions": Array [
                   Object {
@@ -98,7 +612,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress44106220b88e79cd5b333de4cc528e1a-c8dc0e96",
+      "name": "allowingressb589587e9ddbdfe943dd6cf12f3c796f-c80da987",
     },
     "spec": Object {
       "ingress": Array [
@@ -152,6 +666,907 @@ Array [
       "policyTypes": Array [
         "Ingress",
       ],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to managed namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegress054939c434de18eabf0d77c629b51bd0-c804a0a1",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "test-namespace-c83f04e1",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingressecb2f6a445451471b3cc6cabdafe1d36-c8d170c0",
+      "namespace": "test-namespace-c83f04e1",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "name": "test-namespace-c83f04e1",
+    },
+    "spec": Object {},
+  },
+]
+`;
+
+exports[`connections can allow to managed pod 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegress81c92c64c47a682acfd9c7b01b033b14-c8cbda66",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Redis-c8b1633b",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingressb1d0d36122e5276aad8685fb535eaff7-c852d494",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Redis-c8b1633b",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to named namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegress3c51ba9c59238f8f83e6908f0fab2d77-c8053300",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingress893086ca12f4b1f8834ce70a6f82baab-c8282449",
+      "namespace": "web",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to namespaced labeled pod 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegressc2d48cb9ed3d5362560612139f18926d-c8d2d1ef",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "app",
+                    "operator": "In",
+                    "values": Array [
+                      "store",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingress199599725d3b3bbfb7b15cc265f8bd78-c86163e2",
+      "namespace": "web",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "default",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "app",
+            "operator": "In",
+            "values": Array [
+              "store",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`connections can allow to peer across namespaces 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
+      },
+      "name": "test-web-c854d28f",
+      "namespace": "n1",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "web",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "w-allowegressa4660429a214300075b40f41534bb185-c801f5ca",
+      "namespace": "n1",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "n2",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Redis-c8b1633b",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Web-c8b65d84",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "allowingress7b3a2e9c497b6342286b00e5a395acaa-c8034346",
+      "namespace": "n2",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "n1",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "cdk8s.io/metadata.addr",
+                    "operator": "In",
+                    "values": Array [
+                      "test-Web-c8b65d84",
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "endPort": 65535,
+              "port": 0,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "cdk8s.io/metadata.addr",
+            "operator": "In",
+            "values": Array [
+              "test-Redis-c8b1633b",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
+      "name": "test-redis-c870fe8d",
+      "namespace": "n2",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "env": Array [],
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "ports": Array [],
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "volumeMounts": Array [],
+        },
+      ],
+      "dnsConfig": Object {
+        "nameservers": Array [],
+        "options": Array [],
+        "searches": Array [],
+      },
+      "dnsPolicy": "ClusterFirst",
+      "hostAliases": Array [],
+      "initContainers": Array [],
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+        "sysctls": Array [],
+      },
+      "setHostnameAsFQDN": false,
+      "volumes": Array [],
     },
   },
 ]
