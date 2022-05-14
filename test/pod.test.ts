@@ -757,7 +757,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    web.connections.allowTo(kplus.Port.allTcp(), kplus.IpBlock.anyIpv4());
+    web.connections.allowTo(kplus.IpBlock.anyIpv4(), { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -773,7 +773,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -789,7 +789,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -803,7 +803,7 @@ describe('connections |', () => {
 
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
 
-    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -818,7 +818,7 @@ describe('connections |', () => {
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
       .namespaced(kplus.Namespace.named('web'));
 
-    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -832,7 +832,7 @@ describe('connections |', () => {
 
     const all = kplus.Pod.all();
 
-    web.connections.allowTo(kplus.Port.allTcp(), all);
+    web.connections.allowTo(all, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -846,7 +846,7 @@ describe('connections |', () => {
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
-    web.connections.allowTo(kplus.Port.allTcp(), namespace);
+    web.connections.allowTo(namespace, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -860,7 +860,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespace.named('web');
 
-    web.connections.allowTo(kplus.Port.allTcp(), namespace);
+    web.connections.allowTo(namespace, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -878,7 +878,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n2' },
     });
 
-    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -893,7 +893,7 @@ describe('connections |', () => {
 
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'));
 
-    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -909,7 +909,7 @@ describe('connections |', () => {
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'))
       .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
 
-    expect(() => web.connections.allowTo(kplus.Port.allTcp(), redis)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
+    expect(() => web.connections.allowTo(redis)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
 
   });
 

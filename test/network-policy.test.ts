@@ -108,7 +108,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), ipBlock);
+    policy.addIngressRule(ipBlock, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -122,7 +122,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), web);
+    policy.addIngressRule(web, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -137,7 +137,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), frontend);
+    policy.addIngressRule(frontend, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -153,7 +153,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), frontend);
+    policy.addIngressRule(frontend, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -168,7 +168,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), all);
+    policy.addIngressRule(all, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -183,7 +183,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), namespace);
+    policy.addIngressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -198,7 +198,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), namespace);
+    policy.addIngressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -213,7 +213,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), namespace);
+    policy.addIngressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -228,7 +228,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addIngressRule(kplus.Port.tcp(6379), namespaces);
+    policy.addIngressRule(namespaces, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -243,7 +243,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), ipBlock);
+    policy.addEgressRule(ipBlock, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -257,7 +257,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), db);
+    policy.addEgressRule(db, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -272,7 +272,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), db);
+    policy.addEgressRule(db, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -288,7 +288,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), db);
+    policy.addEgressRule(db, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -303,7 +303,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), all);
+    policy.addEgressRule(all, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -318,7 +318,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), namespace);
+    policy.addEgressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -333,7 +333,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), namespace);
+    policy.addEgressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -348,7 +348,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), namespace);
+    policy.addEgressRule(namespace, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -363,7 +363,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.addEgressRule(kplus.Port.tcp(6379), namespaces);
+    policy.addEgressRule(namespaces, { ports: [kplus.Port.tcp(6379)] });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 

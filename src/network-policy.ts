@@ -1,6 +1,7 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
+import { Container } from './container';
 import * as k8s from './imports/k8s';
 import * as pod from './pod';
 import { undefinedIfEmpty } from './utils';
@@ -11,12 +12,12 @@ import { undefinedIfEmpty } from './utils';
 export interface PortProps {
 
   /**
-   * Distinct port numbers.
+   * Specific port number.
    */
-  readonly ports?: number[];
+  readonly port?: number;
 
   /**
-   * End port. Only applies if `ports` has a single value.
+   * End port (relative to `port`). Only applies if `port` is defined.
    */
   readonly endPort?: number;
 
@@ -36,68 +37,62 @@ export class Port {
   /**
    * Distinct TCP ports
    */
-  public static tcp(...ports: number[]): Port {
-    return new Port(ports.map(p => k8s.IntOrString.fromNumber(p)), undefined, NetworkProtocol.TCP);
+  public static tcp(port: number): Port {
+    return new Port(k8s.IntOrString.fromNumber(port), undefined, NetworkProtocol.TCP);
   }
 
   /**
    * A TCP port range
    */
   public static tcpRange(startPort: number, endPort: number) {
-    return new Port([k8s.IntOrString.fromNumber(startPort)], endPort, NetworkProtocol.TCP);
+    return new Port(k8s.IntOrString.fromNumber(startPort), endPort, NetworkProtocol.TCP);
   }
 
   /**
    * Any TCP traffic
    */
   public static allTcp() {
-    return new Port([k8s.IntOrString.fromNumber(0)], 65535, NetworkProtocol.TCP);
+    return new Port(k8s.IntOrString.fromNumber(0), 65535, NetworkProtocol.TCP);
   }
 
   /**
    * Distinct UDP ports
    */
-  public static udp(...ports: number[]): Port {
-    return new Port(ports.map(p => k8s.IntOrString.fromNumber(p)), undefined, NetworkProtocol.UDP);
+  public static udp(port: number): Port {
+    return new Port(k8s.IntOrString.fromNumber(port), undefined, NetworkProtocol.UDP);
   }
 
   /**
    * A UDP port range
    */
   public static udpRange(startPort: number, endPort: number) {
-    return new Port([k8s.IntOrString.fromNumber(startPort)], endPort, NetworkProtocol.UDP);
+    return new Port(k8s.IntOrString.fromNumber(startPort), endPort, NetworkProtocol.UDP);
   }
 
   /**
    * Any UDP traffic
    */
   public static allUdp() {
-    return new Port([k8s.IntOrString.fromNumber(0)], 65535, NetworkProtocol.UDP);
+    return new Port(k8s.IntOrString.fromNumber(0), 65535, NetworkProtocol.UDP);
   }
 
   /**
    * Custom port configuration.
    */
   public static of(props: PortProps): Port {
-    return new Port(props.ports ? props.ports.map(p => k8s.IntOrString.fromNumber(p)) : undefined, props.endPort, props.protocol);
+    return new Port(props.port ? k8s.IntOrString.fromNumber(props.port) : undefined, props.endPort, props.protocol);
   }
 
   private constructor(
-    private readonly ports?: k8s.IntOrString[],
+    private readonly port?: k8s.IntOrString,
     private readonly endPort?: number,
     private readonly protocol?: NetworkProtocol) {}
 
   /**
    * @internal
    */
-  public _toKube(): k8s.NetworkPolicyPort[] {
-    if (!this.ports) {
-      return [{ endPort: this.endPort, protocol: this.protocol }];
-    }
-    if (this.ports.length === 1) {
-      return [{ endPort: this.endPort, port: this.ports[0], protocol: this.protocol }];
-    }
-    return this.ports.map(p => ({ port: p, protocol: this.protocol }));
+  public _toKube(): k8s.NetworkPolicyPort {
+    return { port: this.port, endPort: this.endPort, protocol: this.protocol };
   }
 
 }
@@ -123,20 +118,26 @@ export interface IPeer {
 }
 
 /**
- * Describes a particular set of traffic that is allowed for pods
- * matched by a network policy selector.
+ * Describes a rule allowing ougoing traffic from pods matched by a network policy selector.
  */
-export interface NetworkPolicyRule {
+export interface NetworkPolicyEgressRule extends NetworkPolicyAddEgressRuleOptions {
 
   /**
-   * A connection port.
+   * Peer this rule interacts with.
    */
-  readonly port: Port;
+  readonly peer: IPeer;
+
+}
+
+/**
+ * Describes a rule allowing incoming traffic to pods matched by a network policy selector.
+ */
+export interface NetworkPolicyIngressRule extends NetworkPolicyAddIngressRuleOptions {
 
   /**
-   * Peers this rule interacts with.
+   * Peer this rule interacts with.
    */
-  readonly peers: IPeer[];
+  readonly peer: IPeer;
 
 }
 
@@ -267,14 +268,13 @@ export enum NetworkPolicyTrafficDefault {
 }
 
 /**
- * Describes how the network policy should configure
- * either ingress or egress traffic.
+ * Describes how the network policy should configure egress traffic.
  */
-export interface NetworkPolicyTraffic {
+export interface NetworkPolicyEgressTraffic {
 
   /**
    * Specifies the default behavior of the policy when
-   * no rules are defined for a direction.
+   * no egress rules are defined.
    *
    * @default - unset, the policy does not change the behavior.
    */
@@ -282,13 +282,63 @@ export interface NetworkPolicyTraffic {
 
   /**
    * List of rules to be applied to the selected pods.
-   * If empty, the behavior of the policy with respect
-   * to the traffic direction is dictated by the `default` property.
+   * If empty, the behavior of the policy is dictated by the `default` property.
    *
    * @default - no egress rules
    */
-  readonly rules?: NetworkPolicyRule[];
+  readonly rules?: NetworkPolicyEgressRule[];
 }
+
+/**
+ * Describes how the network policy should configure ingress traffic.
+ */
+export interface NetworkPolicyIngressTraffic {
+
+  /**
+   * Specifies the default behavior of the policy when
+   * no ingress rules are defined.
+   *
+   * @default - unset, the policy does not change the behavior.
+   */
+  readonly default?: NetworkPolicyTrafficDefault;
+
+  /**
+   * List of rules to be applied to the selected pods.
+   * If empty, the behavior of the policy is dictated by the `default` property.
+   *
+   * @default - no ingress rules
+   */
+  readonly rules?: NetworkPolicyIngressRule[];
+}
+
+/**
+ * Options for `NetworkPolicy.addIngressRule`.
+ */
+export interface NetworkPolicyAddIngressRuleOptions {
+
+  /**
+   * Ports the rule should allow incoming traffic to.
+   *
+   * @default - If the policy selects a managed pod, take its ports. Otherwise, all ports are allowed.
+   */
+  readonly ports?: Port[];
+
+}
+
+/**
+ * Options for `NetworkPolicy.addEgressRule`.
+ */
+export interface NetworkPolicyAddEgressRuleOptions {
+
+  /**
+   * Ports the rule should allow outgoing traffic to.
+   *
+   * @default - If the peer is a managed pod, take its ports. Otherwise, all ports are allowed.
+   */
+  readonly ports?: Port[];
+
+}
+
 
 /**
  * Properties for `NetworkPolicy`.
@@ -312,14 +362,14 @@ export interface NetworkPolicyProps extends base.ResourceProps {
    *
    * @default - the policy doesn't change egress behavior of the pods it selects.
    */
-  readonly egress?: NetworkPolicyTraffic;
+  readonly egress?: NetworkPolicyEgressTraffic;
 
   /**
    * Ingress traffic configuration.
    *
    * @default - the policy doesn't change ingress behavior of the pods it selects.
    */
-  readonly ingress?: NetworkPolicyTraffic;
+  readonly ingress?: NetworkPolicyIngressTraffic;
 }
 
 /**
@@ -360,7 +410,7 @@ export class NetworkPolicy extends base.Resource {
 
   public readonly resourceType: string = 'networkpolicies';
 
-  private readonly _podLabelSelector: k8s.LabelSelector;
+  private readonly _podSelector: pod.IPodSelector;
   private readonly _egressRules: k8s.NetworkPolicyEgressRule[] = [];
   private readonly _ingressRules: k8s.NetworkPolicyIngressRule[] = [];
   private readonly _policyTypes: Set<string> = new Set();
@@ -373,80 +423,86 @@ export class NetworkPolicy extends base.Resource {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    const allPodsSelector = pod.Pod.all().toPodLabelSelector();
+    this._podSelector = props.selector ?? pod.Pod.all();
 
-    if (!allPodsSelector) {
-      // this shouldn't happen - it means something is very wrong
-      // with the implementation of `Pod.all()`.
-      // its also a bit of a code smell but going to leave it
-      // for now :\
-      throw new Error('Pod.all() returned an undefined pod selector');
-    }
-
-    this._podLabelSelector = (props.selector?.toPodLabelSelector() ?? allPodsSelector)._toKube();
-
-    this.configureDefaultBehavior('Egress', props.egress);
-    this.configureDefaultBehavior('Ingress', props.ingress);
+    this.configureDefaultBehavior('Egress', props.egress?.default);
+    this.configureDefaultBehavior('Ingress', props.ingress?.default);
 
     for (const rule of props.egress?.rules ?? []) {
-      this.addEgressRule(rule.port, ...rule.peers);
+      this.addEgressRule(rule.peer, rule);
     }
 
     for (const rule of props.ingress?.rules ?? []) {
-      this.addIngressRule(rule.port, ...rule.peers);
+      this.addIngressRule(rule.peer, rule);
     }
   }
 
   /**
    * Allow outgoing traffic to the specified port on the peers.
    */
-  public addEgressRule(port: Port, ...peers: IPeer[]) {
+  public addEgressRule(peer: IPeer, options: NetworkPolicyAddEgressRuleOptions = {}) {
+
+    const podSelector = peer.asNamespacedPodSelectorPeer()?.toPodSelector();
+
+    const ports = options.ports ?? this.extractPorts(podSelector);
     this._policyTypes.add('Egress');
-    this._egressRules.push({ ports: port._toKube(), to: this.createNetworkPolicyPeers(...peers) });
+    this._egressRules.push({ ports: ports.map(p => p._toKube()), to: [this.createNetworkPolicyPeer(peer)] });
   }
 
   /**
    * Allow incoming traffic on the specified port from the peers.
    */
-  public addIngressRule(port: Port, ...peers: IPeer[]) {
+  public addIngressRule(peer: IPeer, options: NetworkPolicyAddIngressRuleOptions = {}) {
+    const ports = options.ports ?? this.extractPorts(this._podSelector);
     this._policyTypes.add('Ingress');
-    this._ingressRules.push({ ports: port._toKube(), from: this.createNetworkPolicyPeers(...peers) });
+    this._ingressRules.push({ ports: ports.map(p => p._toKube()), from: [this.createNetworkPolicyPeer(peer)] });
   }
 
-  private createNetworkPolicyPeers(...peers: IPeer[]): k8s.NetworkPolicyPeer[] {
+  private extractPorts(selector?: pod.IPodSelector): Port[] {
 
-    const networkPolicyPeers: k8s.NetworkPolicyPeer[] = [];
+    // empty means all ports
+    if (!selector) { return []; }
 
-    for (const peer of peers) {
+    const ports = [];
 
-      const ipBlock = peer.asIpBlockPeer();
+    // we don't use instanceof intentionally since it can create
+    // cyclic import problems.
+    const containers: Container[] = (selector as any).containers;
 
-      if (ipBlock) {
-        networkPolicyPeers.push({ ipBlock: ipBlock._toKube() });
-      } else {
-
-        // TODO validate this is actually defined.
-        const namespacedPod = peer.asNamespacedPodSelectorPeer()!;
-
-        networkPolicyPeers.push({
-          namespaceSelector: namespacedPod.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
-          podSelector: namespacedPod.toPodSelector().toPodLabelSelector()._toKube(),
-        });
+    for (const container of containers ?? []) {
+      if (container.port) {
+        ports.push(Port.tcp(container.port));
       }
     }
-    return networkPolicyPeers;
+
+    return ports;
   }
 
-  private configureDefaultBehavior(direction: 'Ingress' | 'Egress', traffic?: NetworkPolicyTraffic) {
+  private createNetworkPolicyPeer(peer: IPeer): k8s.NetworkPolicyPeer {
+    const ipBlock = peer.asIpBlockPeer();
+    if (ipBlock) {
+      return { ipBlock: ipBlock._toKube() };
+    } else {
 
-    if (!traffic) { return;}
+      // TODO validate this is actually defined.
+      const namespacedPod = peer.asNamespacedPodSelectorPeer()!;
+      return {
+        namespaceSelector: namespacedPod.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
+        podSelector: namespacedPod.toPodSelector().toPodLabelSelector()._toKube(),
+      };
+    }
+  }
 
-    if (traffic.default === NetworkPolicyTrafficDefault.DENY) {
+  private configureDefaultBehavior(direction: 'Ingress' | 'Egress', _default?: NetworkPolicyTrafficDefault) {
+
+    if (!_default) { return;}
+
+    if (_default === NetworkPolicyTrafficDefault.DENY) {
       // https://kubernetes.io/docs/concepts/services-networking/network-policies/#default-deny-all-egress-traffic
       this._policyTypes.add(direction);
     }
 
-    if (traffic.default === NetworkPolicyTrafficDefault.ALLOW) {
+    if (_default === NetworkPolicyTrafficDefault.ALLOW) {
       // https://kubernetes.io/docs/concepts/services-networking/network-policies/#allow-all-egress-traffic
       this._policyTypes.add(direction);
       if (direction === 'Egress') {
@@ -462,7 +518,7 @@ export class NetworkPolicy extends base.Resource {
    */
   public _toKube(): k8s.NetworkPolicySpec {
     return {
-      podSelector: this._podLabelSelector,
+      podSelector: this._podSelector.toPodLabelSelector()._toKube(),
       egress: undefinedIfEmpty(this._egressRules),
       ingress: undefinedIfEmpty(this._ingressRules),
       policyTypes: undefinedIfEmpty(Array.from(this._policyTypes)),

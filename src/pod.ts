@@ -1541,49 +1541,144 @@ export class PodScheduling {
   }
 }
 
-export interface PodConnectionsAllowOptions {
+/**
+ * Isolation determines which policies are created
+ * when allowing connections from a pod to peers.
+ */
+export enum PodConnectionsIsolation {
 
-  readonly bidirectional?: boolean;
+  /**
+   * Only creates network policies that select the pod.
+   */
+  POD = 'POD',
 
-  readonly port?: networkpolicy.Port;
+  /**
+   * Only creates network policies that select the peer.
+   */
+  PEER = 'PEER',
 
 }
 
+/**
+ * Options for `PodConnections.allowTo`.
+ */
+export interface PodConnectionsAllowToOptions {
+
+  /**
+   * Which isolation should be applied to establish the connection.
+   *
+   * @default - unset, isolates both the pod and the peer.
+   */
+  readonly isolation?: PodConnectionsIsolation;
+
+  /**
+   * Ports to allow outgoing traffic to.
+   *
+   * @default - If the peer is a managed pod, take its ports. Otherwise, all ports are allowed.
+   */
+  readonly ports?: networkpolicy.Port[];
+
+}
+
+/**
+ * Options for `PodConnections.allowFrom`.
+ */
+export interface PodConnectionsAllowFromOptions {
+
+  /**
+   * Which isolation should be applied to establish the connection.
+   *
+   * @default - unset, isolates both the pod and the peer.
+   */
+  readonly isolation?: PodConnectionsIsolation;
+
+  /**
+   * Ports to allow incoming traffic to.
+   *
+   * @default - The pod ports.
+   */
+  readonly ports?: networkpolicy.Port[];
+
+}
+
+/**
+ * Controls network isolation rules for inter-pod communication.
+ */
 export class PodConnections {
 
   constructor(protected readonly instance: AbstractPod) {}
 
-  public allowTo(port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]) {
-    return this.allow('Egress', port, ...peers);
+  /**
+   * Allow network traffic from this pod to the peer.
+   *
+   * By default, this will create an egress network policy for this pod, and an ingress
+   * network policy for the peer. This is required if both sides are already isolated.
+   * Use `options.isolation` to control this behavior.
+   *
+   * @example
+   *
+   * // create only an egress policy that selects the 'web' pod to allow outgoing traffic
+   * // to the 'redis' pod. this requires the 'redis' pod to not be isolated for ingress.
+   * web.connections.allowTo(redis, { isolation: Isolation.POD })
+   *
+   * // create only an ingress policy that selects the 'redis' peer to allow incoming traffic
+   * // from the 'web' pod. this requires the 'web' pod to not be isolated for egress.
+   * web.connections.allowTo(redis, { isolation: Isolation.PEER })
+   *
+   */
+  public allowTo(peer: networkpolicy.IPeer, options: PodConnectionsAllowToOptions = {}) {
+    return this.allow('Egress', peer, options);
   }
 
-  public allowFrom(port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]) {
-    return this.allow('Ingress', port, ...peers);
+  /**
+   * Allow network traffic from the peer to this pod.
+   *
+   * By default, this will create an ingress network policy for this pod, and an egress
+   * network policy for the peer. This is required if both sides are already isolated.
+   * Use `options.isolation` to control this behavior.
+   *
+   * @example
+   *
+   * // create only an egress policy that selects the 'web' pod to allow outgoing traffic
+   * // to the 'redis' pod. this requires the 'redis' pod to not be isolated for ingress.
+   * redis.connections.allowFrom(web, { isolation: Isolation.PEER })
+   *
+   * // create only an ingress policy that selects the 'redis' peer to allow incoming traffic
+   * // from the 'web' pod. this requires the 'web' pod to not be isolated for egress.
+   * redis.connections.allowFrom(web, { isolation: Isolation.POD })
+   *
+   */
+  public allowFrom(peer: networkpolicy.IPeer, options: PodConnectionsAllowFromOptions = {}) {
+    return this.allow('Ingress', peer, options);
   }
 
-  private allow(direction: 'Ingress' | 'Egress', port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]) {
+  private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.IPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
 
-    const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${this.peersAddress(...peers)}`, {
-      selector: this.instance,
-      // the policy must be defined in the namespace of the pod
-      // so it can select it.
-      metadata: { namespace: this.instance.metadata.namespace },
-    });
+    if (!options.isolation || options.isolation === PodConnectionsIsolation.POD) {
 
-    switch (direction) {
-      case 'Egress':
-        src.addEgressRule(port, ...peers);
-        break;
-      case 'Ingress':
-        src.addIngressRule(port, ...peers);
+      const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${this.peerAddress(peer)}`, {
+        selector: this.instance,
+        // the policy must be defined in the namespace of the pod
+        // so it can select it.
+        metadata: { namespace: this.instance.metadata.namespace },
+      });
+
+      switch (direction) {
+        case 'Egress':
+          src.addEgressRule(peer, options);
+          break;
+        case 'Ingress':
+          src.addIngressRule(peer, options);
+      }
+
     }
 
-    for (const peer of peers) {
+    if (!options.isolation || options.isolation === PodConnectionsIsolation.PEER) {
 
       const ipBlock = peer.asIpBlockPeer();
       if (ipBlock) {
         // for an ip block we don't need to create the opposite policies
-        continue;
+        return;
       }
 
       // for pods, we need to configure policies that allow the opposite direction.
@@ -1595,7 +1690,7 @@ export class PodConnections {
       // the namespace of the dest policy follows this heuristic:
       // - If a namespace selector is not defined, the peer selects pods in the namespace of the source policy
       // - If a namespace selector is defined, it needs to provide the namespace name.
-      const namespaceName = namespaceSelector ? namespaceSelector.toNamespaceName() : src.metadata.namespace ?? 'default';
+      const namespaceName = namespaceSelector ? namespaceSelector.toNamespaceName() : this.instance.metadata.namespace ?? 'default';
 
       if (!namespaceName) {
         // if even after applying defaults, we still don't know the namespace name,
@@ -1611,20 +1706,14 @@ export class PodConnections {
 
       switch (direction) {
         case 'Egress':
-          dst.addIngressRule(port, this.instance);
+          dst.addIngressRule(this.instance, options);
           break;
         case 'Ingress':
-          dst.addEgressRule(port, this.instance);
+          dst.addEgressRule(this.instance, options);
       }
+
     }
 
-  }
-
-  private peersAddress(...peers: networkpolicy.IPeer[]): string {
-    const md5 = crypto.createHash('md5');
-    const data = json.stringify(peers.map(p => this.peerAddress(p)));
-    md5.update(data);
-    return md5.digest('hex');
   }
 
   private peerAddress(peer: networkpolicy.IPeer): string {
