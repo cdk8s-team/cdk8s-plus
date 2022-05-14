@@ -1541,6 +1541,14 @@ export class PodScheduling {
   }
 }
 
+export interface PodConnectionsAllowOptions {
+
+  readonly bidirectional?: boolean;
+
+  readonly port?: networkpolicy.Port;
+
+}
+
 export class PodConnections {
 
   constructor(protected readonly instance: AbstractPod) {}
