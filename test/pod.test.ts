@@ -748,7 +748,7 @@ describe('scheduling', () => {
 
 });
 
-describe('connections', () => {
+describe('connections |', () => {
 
   test('can allow to ip block', () => {
 
@@ -851,20 +851,6 @@ describe('connections', () => {
 
   });
 
-  test('can allow to labeled namespace', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-    });
-
-    const namespace = kplus.Namespace.labeled(kplus.LabelQuery.is('app', 'web'));
-
-    web.connections.allowTo(kplus.Port.allTcp(), namespace);
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
   test('can allow to named namespace', () => {
 
     const chart = Testing.chart();
@@ -873,20 +859,6 @@ describe('connections', () => {
     });
 
     const namespace = kplus.Namespace.named('web');
-
-    web.connections.allowTo(kplus.Port.allTcp(), namespace);
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
-  test('can allow to all namespaces', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-    });
-
-    const namespace = kplus.Namespace.all();
 
     web.connections.allowTo(kplus.Port.allTcp(), namespace);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -908,6 +880,36 @@ describe('connections', () => {
 
     web.connections.allowTo(kplus.Port.allTcp(), redis);
     expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('defaults to source namespace when peer doesnt define a namespace selector', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'));
+
+    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('throws when peer namespace selector doesnt define a namespace name ', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'))
+      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
+
+    expect(() => web.connections.allowTo(kplus.Port.allTcp(), redis)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
 
   });
 

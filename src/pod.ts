@@ -60,6 +60,10 @@ export abstract class AbstractPod extends base.Resource implements
 
   }
 
+  private get _namespaceName(): string {
+    return this.podMetadata.namespace ?? 'default';
+  }
+
   public get containers(): container.Container[] {
     return [...this._containers];
   }
@@ -92,18 +96,14 @@ export abstract class AbstractPod extends base.Resource implements
    * @see INamespaceSelector.toNamespaceLabelSelector()
    */
   public toNamespaceLabelSelector(): LabelSelector | undefined {
-    const namespaceName = this.toNamespaceName();
-    if (!namespaceName) {
-      return undefined;
-    }
-    return namespace.Namespace.named(namespaceName).toNamespaceLabelSelector();
+    return namespace.Namespace.named(this._namespaceName).toNamespaceLabelSelector();
   }
 
   /**
    * @see INamespaceSelector.toNamespaceName()
    */
   public toNamespaceName(): string | undefined {
-    return this.podMetadata.namespace;
+    return this._namespaceName;
   }
 
   /**
@@ -1541,81 +1541,33 @@ export class PodScheduling {
   }
 }
 
-export interface IConnection {
-
-  readonly ingress: networkpolicy.NetworkPolicy[];
-
-  readonly egress: networkpolicy.NetworkPolicy[];
-}
-
 export class PodConnections {
 
   constructor(protected readonly instance: AbstractPod) {}
 
-  public allowToAll(): networkpolicy.NetworkPolicy {
-    return new networkpolicy.NetworkPolicy(this.instance, 'AllowAllEgress', {
-      selector: this.instance,
-      egress: {
-        default: networkpolicy.NetworkPolicyTrafficDefault.ALLOW,
-      },
-    });
-  }
-
-  public allowFromAll(): networkpolicy.NetworkPolicy {
-    return new networkpolicy.NetworkPolicy(this.instance, 'AllowAllIngress', {
-      selector: this.instance,
-      ingress: {
-        default: networkpolicy.NetworkPolicyTrafficDefault.ALLOW,
-      },
-    });
-  }
-
-  public denyToAll(): networkpolicy.NetworkPolicy {
-    return new networkpolicy.NetworkPolicy(this.instance, 'DenyAllEgress', {
-      selector: this.instance,
-      egress: {
-        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
-      },
-    });
-  }
-
-  public denyFromAll(): networkpolicy.NetworkPolicy {
-    return new networkpolicy.NetworkPolicy(this.instance, 'DenyAllIngress', {
-      selector: this.instance,
-      ingress: {
-        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
-      },
-    });
-  }
-
-  public allowTo(port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]): IConnection {
+  public allowTo(port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]) {
     return this.allow('Egress', port, ...peers);
   }
 
-  public allowFrom(port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]): IConnection {
+  public allowFrom(port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]) {
     return this.allow('Ingress', port, ...peers);
   }
 
-  private allow(direction: 'Ingress' | 'Egress', port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]): IConnection {
+  private allow(direction: 'Ingress' | 'Egress', port: networkpolicy.Port, ...peers: networkpolicy.IPeer[]) {
 
     const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${this.peersAddress(...peers)}`, {
       selector: this.instance,
       // the policy must be defined in the namespace of the pod
-      // so it select it.
+      // so it can select it.
       metadata: { namespace: this.instance.metadata.namespace },
     });
-
-    const egress = [];
-    const ingress = [];
 
     switch (direction) {
       case 'Egress':
         src.addEgressRule(port, ...peers);
-        egress.push(src);
         break;
       case 'Ingress':
         src.addIngressRule(port, ...peers);
-        ingress.push(src);
     }
 
     for (const peer of peers) {
@@ -1639,9 +1591,9 @@ export class PodConnections {
 
       if (!namespaceName) {
         // if even after applying defaults, we still don't know the namespace name,
-        // we cannot create the dest policy. this means the connection is not fully established,
-        // and the dest policies might need to be manually created.
-        continue;
+        // we cannot create the dest policy. we throw because this means the connection is not
+        // fully established, and might not actually work.
+        throw new Error(`Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name: ${json.stringify(namespaceSelector?.toNamespaceLabelSelector()?._toKube())}`);
       }
 
       const dst = new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${this.peerAddress(peer)}`, {
@@ -1652,15 +1604,11 @@ export class PodConnections {
       switch (direction) {
         case 'Egress':
           dst.addIngressRule(port, this.instance);
-          ingress.push(src);
           break;
         case 'Ingress':
           dst.addEgressRule(port, this.instance);
-          egress.push(src);
       }
     }
-
-    return { egress, ingress };
 
   }
 
