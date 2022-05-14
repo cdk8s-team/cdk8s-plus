@@ -913,6 +913,39 @@ describe('connections |', () => {
 
   });
 
+  test('allowTo with peer isolation creates only ingress policy on peer', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.connections.allowTo(redis, { isolation: kplus.PodConnectionsIsolation.PEER });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allowTo with pod isolation creates only egress policy on pod', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.connections.allowTo(redis, { isolation: kplus.PodConnectionsIsolation.POD });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
 
   test('can allow from ip block', () => {
 
@@ -1074,6 +1107,40 @@ describe('connections |', () => {
       .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
 
     expect(() => redis.connections.allowFrom(web)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
+
+  });
+
+  test('allowFrom with peer isolation creates only egress policy on peer', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    redis.connections.allowFrom(web, { isolation: kplus.PodConnectionsIsolation.PEER });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allowFrom with pod isolation creates only ingress policy on pod', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    redis.connections.allowFrom(web, { isolation: kplus.PodConnectionsIsolation.POD });
+    expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 });
