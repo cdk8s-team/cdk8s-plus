@@ -145,6 +145,10 @@ export interface WorkloadSchedulingSpreadOptions {
 
 }
 
+/**
+ * Controls the pod scheduling strategy of this workload.
+ * It offers some additional API's on top of the core pod scheduling.
+ */
 export class WorkloadScheduling extends pod.PodScheduling {
 
   /**
