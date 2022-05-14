@@ -2,7 +2,6 @@ import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
-import * as networkpolicy from './network-policy';
 import * as pod from './pod';
 
 /**
@@ -31,7 +30,7 @@ export interface NamespaceProps extends base.ResourceProps {}
  * Namespace-based scoping is applicable only for namespaced objects (e.g. Deployments, Services, etc) and
  * not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc).
  */
-export class Namespace extends base.Resource implements INamespaceSelector, networkpolicy.IPeer {
+export class Namespace extends base.Resource implements INamespaceSelector {
 
   /**
    * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#automatic-labelling
@@ -90,13 +89,6 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
   }
 
   /**
-   * @see IPeer.toIpBlock()
-   */
-  public toIpBlock(): networkpolicy.IpBlock | undefined {
-    return undefined;
-  }
-
-  /**
    * @see IPeer.toNamespacedPodSelector()
    */
   public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
@@ -115,7 +107,7 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
 /**
  * Namespace(s) identified by labels.
  */
-export class LabeledNamespace implements INamespaceSelector, networkpolicy.IPeer {
+export class LabeledNamespace implements INamespaceSelector {
 
   public constructor(private readonly queries: pod.LabelQuery[]) {};
 
@@ -161,13 +153,6 @@ export class LabeledNamespace implements INamespaceSelector, networkpolicy.IPeer
   }
 
   /**
-   * @see IPeer.toIpBlock();
-   */
-  public toIpBlock(): networkpolicy.IpBlock | undefined {
-    return undefined;
-  }
-
-  /**
    * @see IPeer.toNamespacedPodSelector()
    */
   public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
@@ -179,7 +164,7 @@ export class LabeledNamespace implements INamespaceSelector, networkpolicy.IPeer
 /**
  * Namespace identified by a name.
  */
-export class NamedNamespace implements INamespaceSelector, networkpolicy.IPeer {
+export class NamedNamespace implements INamespaceSelector {
 
   public constructor(private readonly name: string) {};
 
@@ -195,13 +180,6 @@ export class NamedNamespace implements INamespaceSelector, networkpolicy.IPeer {
    */
   public toNamespaceName(): string | undefined {
     return this.name;
-  }
-
-  /**
-   * @see IPeer.toIpBlock();
-   */
-  public toIpBlock(): networkpolicy.IpBlock | undefined {
-    return undefined;
   }
 
   /**
