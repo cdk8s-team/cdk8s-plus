@@ -1,5 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`can select a pod with label queries 1`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "app",
+      "operator": "In",
+      "values": Array [
+        "store",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`can select a pod with labels in a particular namespace 1`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "app",
+      "operator": "In",
+      "values": Array [
+        "store",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`can select a pod with labels in a particular namespace 2`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "kubernetes.io/metadata.name",
+      "operator": "In",
+      "values": Array [
+        "n1",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`can select a pod with no label queries 1`] = `Object {}`;
+
+exports[`can select all pods 1`] = `Object {}`;
+
+exports[`can select all pods in a particular namespace 1`] = `Object {}`;
+
+exports[`can select all pods in a particular namespace 2`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "kubernetes.io/metadata.name",
+      "operator": "In",
+      "values": Array [
+        "n1",
+      ],
+    },
+  ],
+}
+`;
+
 exports[`connections | allowFrom defaults to source namespace when peer doesnt define a namespace selector 1`] = `
 Array [
   Object {

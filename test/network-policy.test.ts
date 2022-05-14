@@ -1,6 +1,66 @@
 import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
+describe('IpBlock |', () => {
+
+  test('ipv4', () => {
+    expect(kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24'])._toKube()).toMatchSnapshot();
+  });
+
+  test('throws on invalid ipv4 cidr', () => {
+    expect(() => kplus.IpBlock.ipv4('1234')).toThrow(/Invalid IPv4 CIDR:/);
+  });
+
+  test('ipv6', () => {
+    expect(kplus.IpBlock.ipv6('2002::1234:abcd:ffff:c0a8:101/64', ['2002::1234:abcd:ffff:c0a8:101/24'])._toKube()).toMatchSnapshot();
+  });
+
+  test('throws on invalid ipv6 cidr', () => {
+    expect(() => kplus.IpBlock.ipv6('1234')).toThrow(/Invalid IPv6 CIDR:/);
+  });
+
+  test('anyIpv4', () => {
+    expect(kplus.IpBlock.anyIpv4()._toKube()).toMatchSnapshot();
+  });
+
+  test('anyIpv6', () => {
+    expect(kplus.IpBlock.anyIpv6()._toKube()).toMatchSnapshot();
+  });
+
+});
+
+describe('Port |', () => {
+
+  test('tcp', () => {
+    expect(kplus.Port.tcp(8080)._toKube()).toMatchSnapshot();
+  });
+
+  test('tcpRange', () => {
+    expect(kplus.Port.tcpRange(8080, 8085)._toKube()).toMatchSnapshot();
+  });
+
+  test('allTcp', () => {
+    expect(kplus.Port.allTcp()._toKube()).toMatchSnapshot();
+  });
+
+  test('udp', () => {
+    expect(kplus.Port.udp(8080)._toKube()).toMatchSnapshot();
+  });
+
+  test('udpRange', () => {
+    expect(kplus.Port.udpRange(8080, 8085)._toKube()).toMatchSnapshot();
+  });
+
+  test('allUcp', () => {
+    expect(kplus.Port.allUdp()._toKube()).toMatchSnapshot();
+  });
+
+  test('of', () => {
+    expect(kplus.Port.of({ port: 5050, endPort: 5500, protocol: kplus.NetworkProtocol.SCTP }));
+  });
+
+});
+
 describe('NeworkPolicy |', () => {
 
   test('can create a policy for a managed pod', () => {

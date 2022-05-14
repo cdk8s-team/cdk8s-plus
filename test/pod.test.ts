@@ -1144,3 +1144,28 @@ describe('connections |', () => {
 
   });
 });
+
+test('can select a pod with no label queries', () => {
+  expect(kplus.Pod.labeled().toPodLabelSelector()._toKube()).toMatchSnapshot();
+});
+
+test('can select a pod with label queries', () => {
+  expect(kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store')).toPodLabelSelector()._toKube()).toMatchSnapshot();
+});
+
+test('can select all pods', () => {
+  expect(kplus.Pod.all().toPodLabelSelector()._toKube()).toMatchSnapshot();
+});
+
+test('can select all pods in a particular namespace', () => {
+  const selection = kplus.Pod.all().namespaced(kplus.Namespace.named('n1'));
+  expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
+  expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+});
+
+test('can select a pod with labels in a particular namespace', () => {
+  const selection = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
+    .namespaced(kplus.Namespace.named('n1'));
+  expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
+  expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+});

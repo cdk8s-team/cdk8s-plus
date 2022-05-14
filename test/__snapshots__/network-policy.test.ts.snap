@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`IpBlock | anyIpv4 1`] = `
+Object {
+  "cidr": "0.0.0.0/0",
+  "except": undefined,
+}
+`;
+
+exports[`IpBlock | anyIpv6 1`] = `
+Object {
+  "cidr": "::/0",
+  "except": undefined,
+}
+`;
+
+exports[`IpBlock | ipv4 1`] = `
+Object {
+  "cidr": "172.17.0.0/16",
+  "except": Array [
+    "172.17.1.0/24",
+  ],
+}
+`;
+
+exports[`IpBlock | ipv6 1`] = `
+Object {
+  "cidr": "2002::1234:abcd:ffff:c0a8:101/64",
+  "except": Array [
+    "2002::1234:abcd:ffff:c0a8:101/24",
+  ],
+}
+`;
+
 exports[`NeworkPolicy | can allow egress to a labeled pod 1`] = `
 Array [
   Object {
@@ -1650,4 +1682,64 @@ Array [
     },
   },
 ]
+`;
+
+exports[`Port | allTcp 1`] = `
+Object {
+  "endPort": 65535,
+  "port": IntOrString {
+    "value": 0,
+  },
+  "protocol": "TCP",
+}
+`;
+
+exports[`Port | allUcp 1`] = `
+Object {
+  "endPort": 65535,
+  "port": IntOrString {
+    "value": 0,
+  },
+  "protocol": "UDP",
+}
+`;
+
+exports[`Port | tcp 1`] = `
+Object {
+  "endPort": undefined,
+  "port": IntOrString {
+    "value": 8080,
+  },
+  "protocol": "TCP",
+}
+`;
+
+exports[`Port | tcpRange 1`] = `
+Object {
+  "endPort": 8085,
+  "port": IntOrString {
+    "value": 8080,
+  },
+  "protocol": "TCP",
+}
+`;
+
+exports[`Port | udp 1`] = `
+Object {
+  "endPort": undefined,
+  "port": IntOrString {
+    "value": 8080,
+  },
+  "protocol": "UDP",
+}
+`;
+
+exports[`Port | udpRange 1`] = `
+Object {
+  "endPort": 8085,
+  "port": IntOrString {
+    "value": 8080,
+  },
+  "protocol": "UDP",
+}
 `;

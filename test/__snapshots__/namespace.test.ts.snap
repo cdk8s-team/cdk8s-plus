@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can select a namespace by labels 1`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "role",
+      "operator": "Exists",
+      "values": undefined,
+    },
+  ],
+}
+`;
+
+exports[`can select a namespace by name 1`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "kubernetes.io/metadata.name",
+      "operator": "In",
+      "values": Array [
+        "web",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`can select all namespaces 1`] = `Object {}`;

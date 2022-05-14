@@ -1171,6 +1171,9 @@ export class NamespacedLabeledPod implements INamespacedPodSelector, networkpoli
     return undefined;
   }
 
+  /**
+   * @see IPeer.asNamespacedPodSelectorPeer();
+   */
   public asNamespacedPodSelectorPeer(): INamespacedPodSelector | undefined {
     return this.labeledPod.namespaced(this.selector);
   }
