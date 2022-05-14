@@ -292,6 +292,22 @@ export class IngressBackend {
     });
   }
 
+  /**
+   * A Resource backend is an ObjectRef to another Kubernetes resource
+   * within the same namespace as the Ingress object.
+   * A common usage for a Resource backend is to ingress data to an object
+   * storage backend with static assets.
+   */
+  public static fromResource(resource: base.IResource) {
+    return new IngressBackend({
+      resource: {
+        kind: resource.kind,
+        name: resource.name,
+        apiGroup: resource.apiGroup,
+      },
+    });
+  }
+
   private constructor(private readonly backend: k8s.IngressBackend) {
 
   }
