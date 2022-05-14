@@ -179,6 +179,7 @@ Array [
           "dnsPolicy": "ClusterFirst",
           "hostAliases": Array [],
           "initContainers": Array [],
+          "nodeName": "node1",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,

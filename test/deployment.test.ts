@@ -374,11 +374,11 @@ describe('scheduling', () => {
 
     const devNodes = kplus.Node.tainted(
       kplus.NodeTaintQuery.is('key1', 'value1'),
-      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TainEffect.PREFER_NO_SCHEDULE }),
+      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TaintEffect.PREFER_NO_SCHEDULE }),
       kplus.NodeTaintQuery.exists('key3'),
-      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TainEffect.NO_SCHEDULE }),
+      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TaintEffect.NO_SCHEDULE }),
       kplus.NodeTaintQuery.is('key5', 'value5', {
-        effect: kplus.TainEffect.NO_EXECUTE,
+        effect: kplus.TaintEffect.NO_EXECUTE,
         evictAfter: Duration.hours(1),
       }),
       kplus.NodeTaintQuery.any(),

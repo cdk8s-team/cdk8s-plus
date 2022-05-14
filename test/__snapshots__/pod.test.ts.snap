@@ -98,6 +98,7 @@ Array [
       "dnsPolicy": "ClusterFirst",
       "hostAliases": Array [],
       "initContainers": Array [],
+      "nodeName": "node1",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -252,7 +253,6 @@ Array [
     "kind": "Pod",
     "metadata": Object {
       "labels": Object {
-        "app": "store",
         "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
@@ -378,7 +378,6 @@ Array [
     "kind": "Pod",
     "metadata": Object {
       "labels": Object {
-        "app": "store",
         "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
@@ -641,7 +640,6 @@ Array [
     "kind": "Pod",
     "metadata": Object {
       "labels": Object {
-        "app": "store",
         "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",
@@ -767,7 +765,6 @@ Array [
     "kind": "Pod",
     "metadata": Object {
       "labels": Object {
-        "app": "store",
         "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
       },
       "name": "test-redis-c870fe8d",

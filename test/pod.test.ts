@@ -527,7 +527,7 @@ describe('scheduling', () => {
   test('only NO_EXECUTE taint queries can specify eviction', () => {
 
     expect(() => kplus.NodeTaintQuery.is('key', 'value', {
-      effect: kplus.TainEffect.NO_SCHEDULE,
+      effect: kplus.TaintEffect.NO_SCHEDULE,
       evictAfter: Duration.hours(1),
     })).toThrow('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
 
@@ -539,11 +539,11 @@ describe('scheduling', () => {
 
     const devNodes = kplus.Node.tainted(
       kplus.NodeTaintQuery.is('key1', 'value1'),
-      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TainEffect.PREFER_NO_SCHEDULE }),
+      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TaintEffect.PREFER_NO_SCHEDULE }),
       kplus.NodeTaintQuery.exists('key3'),
-      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TainEffect.NO_SCHEDULE }),
+      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TaintEffect.NO_SCHEDULE }),
       kplus.NodeTaintQuery.is('key5', 'value5', {
-        effect: kplus.TainEffect.NO_EXECUTE,
+        effect: kplus.TaintEffect.NO_EXECUTE,
         evictAfter: Duration.hours(1),
       }),
       kplus.NodeTaintQuery.any(),
@@ -603,8 +603,6 @@ describe('scheduling', () => {
       containers: [{ image: 'web' }],
     });
 
-    redis.metadata.addLabel('app', 'store');
-
     web.scheduling.colocate(redis);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -621,8 +619,6 @@ describe('scheduling', () => {
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
     });
-
-    redis.metadata.addLabel('app', 'store');
 
     web.scheduling.colocate(redis, {
       topology: kplus.Topology.ZONE,
@@ -680,8 +676,6 @@ describe('scheduling', () => {
       containers: [{ image: 'web' }],
     });
 
-    redis.metadata.addLabel('app', 'store');
-
     web.scheduling.separate(redis);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -698,8 +692,6 @@ describe('scheduling', () => {
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
     });
-
-    redis.metadata.addLabel('app', 'store');
 
     web.scheduling.separate(redis, {
       topology: kplus.Topology.ZONE,

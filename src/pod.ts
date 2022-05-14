@@ -893,7 +893,7 @@ export interface HostAlias {
 }
 
 /**
- * Label queries that can be perofmed against nodes.
+ * Represents a query that can be performed against nodes with labels.
  */
 export class NodeLabelQuery {
 
@@ -954,7 +954,7 @@ export class NodeLabelQuery {
 }
 
 /**
- * Label queries that can be perofmed against resources.
+ * Represents a query that can be performed against resources with labels.
  */
 export class LabelQuery {
 
@@ -1004,7 +1004,7 @@ export class LabelQuery {
 /**
  * Taint effects.
  */
-export enum TainEffect {
+export enum TaintEffect {
   /**
    * This means that no pod will be able to schedule
    * onto the node unless it has a matching toleration.
@@ -1038,7 +1038,7 @@ export interface NodeTaintQueryOptions {
    *
    * @default - all effects are matched.
    */
-  readonly effect?: TainEffect;
+  readonly effect?: TaintEffect;
 
   /**
    * How much time should a pod that tolerates the `NO_EXECUTE` effect
@@ -1082,7 +1082,7 @@ export class NodeTaintQuery {
     public readonly effect?: string,
     public readonly evictAfter?: Duration,
   ) {
-    if (evictAfter && effect !== TainEffect.NO_EXECUTE) {
+    if (evictAfter && effect !== TaintEffect.NO_EXECUTE) {
       throw new Error('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
     }
   }
@@ -1251,7 +1251,7 @@ export class Topology {
 }
 
 /**
- * Options for `PodScheduling.coloate`.
+ * Options for `PodScheduling.colocate`.
  */
 export interface PodSchedulingColocateOptions {
   /**
@@ -1336,11 +1336,10 @@ export class PodScheduling {
    */
   public assign(node: NamedNode) {
 
-    if (node.name && this._nodeName) {
-      if (this._nodeName) {
-        // disallow overriding an static node assignment
-        throw new Error(`Cannot assign ${this.instance.podMetadata.name} to node ${node.name}. It is already assigned to node ${this._nodeName}`);
-      }
+    if (this._nodeName) {
+      // disallow overriding an static node assignment
+      throw new Error(`Cannot assign ${this.instance.podMetadata.name} to node ${node.name}. It is already assigned to node ${this._nodeName}`);
+    } else {
       this._nodeName = node.name;
     }
   }
@@ -1486,7 +1485,7 @@ export class PodScheduling {
   public _toKube(): { affinity?: k8s.Affinity; nodeName?: string; tolerations?: k8s.Toleration[] } {
 
     const atLeastOne = (...arrays: Array<any>[]) => {
-      return [...arrays].map(a => a.length).reduce((a, b) => a + b) > 0;
+      return arrays.flat().length > 0;
     };
 
     const hasNodeAffinity = atLeastOne(this._nodeAffinityPreferred, this._nodeAffinityRequired);
