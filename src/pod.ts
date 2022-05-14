@@ -121,16 +121,16 @@ export abstract class AbstractPod extends base.Resource implements
   }
 
   /**
-   * @see IPeer.asIpBlockPeer()
+   * @see IPeer.toIpBlock()
    */
-  public asIpBlockPeer(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.IpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer()
+   * @see IPeer.toNamespacedPodSelector()
    */
-  public asNamespacedPodSelectorPeer(): INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this;
   }
 
@@ -1127,16 +1127,16 @@ export class LabeledPod implements IPodSelector, INamespacedPodSelector, network
   }
 
   /**
-   * @see IPeer.asIpBlockPeer();
+   * @see IPeer.toIpBlock();
    */
-  public asIpBlockPeer(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.IpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer();
+   * @see IPeer.toNamespacedPodSelector();
    */
-  public asNamespacedPodSelectorPeer(): INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this;
   }
 
@@ -1165,16 +1165,16 @@ export class NamespacedLabeledPod implements INamespacedPodSelector, networkpoli
   }
 
   /**
-   * @see IPeer.asIpBlockPeer();
+   * @see IPeer.toIpBlock();
    */
-  public asIpBlockPeer(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.IpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer();
+   * @see IPeer.toNamespacedPodSelector();
    */
-  public asNamespacedPodSelectorPeer(): INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this.labeledPod.namespaced(this.selector);
   }
 
@@ -1680,7 +1680,7 @@ export class PodConnections {
 
     if (!options.isolation || options.isolation === PodConnectionsIsolation.PEER) {
 
-      const ipBlock = peer.asIpBlockPeer();
+      const ipBlock = peer.toIpBlock();
       if (ipBlock) {
         // for an ip block we don't need to create the opposite policies
         return;
@@ -1688,7 +1688,7 @@ export class PodConnections {
 
       // for pods, we need to configure policies that allow the opposite direction.
       // TODO validate peer
-      const namespacedPod = peer.asNamespacedPodSelectorPeer()!;
+      const namespacedPod = peer.toNamespacedPodSelector()!;
       const podSelector = namespacedPod.toPodSelector();
       const namespaceSelector = namespacedPod.toNamespaceSelector();
 
@@ -1724,9 +1724,9 @@ export class PodConnections {
 
   private peerAddress(peer: networkpolicy.IPeer): string {
     const md5 = crypto.createHash('md5');
-    const ipBlock = peer.asIpBlockPeer();
+    const ipBlock = peer.toIpBlock();
     // TODO validate peer
-    const data = ipBlock ? this.stringifyIpBlock(ipBlock) : this.stringifyNamespacedPodSelector(peer.asNamespacedPodSelectorPeer()!);
+    const data = ipBlock ? this.stringifyIpBlock(ipBlock) : this.stringifyNamespacedPodSelector(peer.toNamespacedPodSelector()!);
     md5.update(data);
     return md5.digest('hex');
   }

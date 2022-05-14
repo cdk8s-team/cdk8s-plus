@@ -107,14 +107,14 @@ export interface IPeer {
    *
    * - Implementors should return `undefined` if the peer doesn't represent an ip block.
    */
-  asIpBlockPeer(): IpBlock | undefined;
+  toIpBlock(): IpBlock | undefined;
 
   /**
    * Returns the namespaced pod this peer represents.
    *
    * - Implementors should return `undefined` if the peer doesn't represent a namespaced pod.
    */
-  asNamespacedPodSelectorPeer(): pod.INamespacedPodSelector | undefined;
+  toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined;
 }
 
 /**
@@ -209,16 +209,16 @@ export class IpBlock implements IPeer {
     public readonly except?: string[]) {}
 
   /**
-   * @see IPeer.asIpBlockPeer()
+   * @see IPeer.toIpBlock()
    */
-  public asIpBlockPeer(): IpBlock | undefined {
+  public toIpBlock(): IpBlock | undefined {
     return this;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer()
+   * @see IPeer.toNamespacedPodSelector()
    */
-  public asNamespacedPodSelectorPeer(): pod.INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
     return undefined;
   }
 
@@ -446,7 +446,7 @@ export class NetworkPolicy extends base.Resource {
    */
   public allowTo(peer: IPeer, options: NetworkPolicyAddEgressRuleOptions = {}) {
 
-    const podSelector = peer.asNamespacedPodSelectorPeer()?.toPodSelector();
+    const podSelector = peer.toNamespacedPodSelector()?.toPodSelector();
 
     const ports = options.ports ?? this.extractPorts(podSelector);
     this._policyTypes.add('Egress');
@@ -487,13 +487,13 @@ export class NetworkPolicy extends base.Resource {
   }
 
   private createNetworkPolicyPeer(peer: IPeer): k8s.NetworkPolicyPeer {
-    const ipBlock = peer.asIpBlockPeer();
+    const ipBlock = peer.toIpBlock();
     if (ipBlock) {
       return { ipBlock: ipBlock._toKube() };
     } else {
 
       // TODO validate this is actually defined.
-      const namespacedPod = peer.asNamespacedPodSelectorPeer()!;
+      const namespacedPod = peer.toNamespacedPodSelector()!;
       return {
         namespaceSelector: namespacedPod.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
         podSelector: namespacedPod.toPodSelector().toPodLabelSelector()._toKube(),

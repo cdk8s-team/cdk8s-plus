@@ -90,16 +90,16 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
   }
 
   /**
-   * @see IPeer.asIpBlockPeer()
+   * @see IPeer.toIpBlock()
    */
-  public asIpBlockPeer(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.IpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer()
+   * @see IPeer.toNamespacedPodSelector()
    */
-  public asNamespacedPodSelectorPeer(): pod.INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
     return pod.Pod.all().namespaced(this);
   }
 
@@ -161,16 +161,16 @@ export class LabeledNamespace implements INamespaceSelector, networkpolicy.IPeer
   }
 
   /**
-   * @see IPeer.asIpBlockPeer();
+   * @see IPeer.toIpBlock();
    */
-  public asIpBlockPeer(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.IpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer()
+   * @see IPeer.toNamespacedPodSelector()
    */
-  public asNamespacedPodSelectorPeer(): pod.INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
     return pod.Pod.all().namespaced(this);
   }
 
@@ -198,16 +198,16 @@ export class NamedNamespace implements INamespaceSelector, networkpolicy.IPeer {
   }
 
   /**
-   * @see IPeer.asIpBlockPeer();
+   * @see IPeer.toIpBlock();
    */
-  public asIpBlockPeer(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.IpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.asNamespacedPodSelectorPeer()
+   * @see IPeer.toNamespacedPodSelector()
    */
-  public asNamespacedPodSelectorPeer(): pod.INamespacedPodSelector | undefined {
+  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
     return pod.Pod.all().namespaced(this);
   }
 
