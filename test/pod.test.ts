@@ -778,6 +778,22 @@ describe('connections', () => {
 
   });
 
+  test('can allow to managed workload resource', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = new kplus.Deployment(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+
+    web.connections.allowTo(kplus.Port.allTcp(), redis);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
   test('can allow to labeled pod', () => {
 
     const chart = Testing.chart();

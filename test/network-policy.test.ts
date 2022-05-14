@@ -159,6 +159,81 @@ describe('NeworkPolicy |', () => {
 
   });
 
+  test('can allow ingress from all pods', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const all = kplus.Pod.all();
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addIngressRule(kplus.Port.tcp(6379), all);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow ingress from managed namespace', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespace = new kplus.Namespace(chart, 'Namespace');
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addIngressRule(kplus.Port.tcp(6379), namespace);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow ingress from labeled namespace', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespace = kplus.Namespace.labeled(kplus.LabelQuery.is('role', 'web'));
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addIngressRule(kplus.Port.tcp(6379), namespace);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow ingress from named namespace', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespace = kplus.Namespace.named('web');
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addIngressRule(kplus.Port.tcp(6379), namespace);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow ingress from all namespaces', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespaces = kplus.Namespace.all();
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addIngressRule(kplus.Port.tcp(6379), namespaces);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
   test('can allow egress to an ip block', () => {
 
     const chart = Testing.chart();
@@ -214,6 +289,81 @@ describe('NeworkPolicy |', () => {
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
     policy.addEgressRule(kplus.Port.tcp(6379), db);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to all pods', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const all = kplus.Pod.all();
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), all);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to managed namespace', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespace = new kplus.Namespace(chart, 'Namespace');
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), namespace);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to labeled namespace', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespace = kplus.Namespace.labeled(kplus.LabelQuery.is('role', 'web'));
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), namespace);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to named namespace', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespace = kplus.Namespace.named('web');
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), namespace);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow egress to all namespaces', () => {
+
+    const chart = Testing.chart();
+    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+
+    const namespaces = kplus.Namespace.all();
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+
+    policy.addEgressRule(kplus.Port.tcp(6379), namespaces);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 

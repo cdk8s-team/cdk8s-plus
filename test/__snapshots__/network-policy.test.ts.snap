@@ -213,6 +213,93 @@ Array [
 ]
 `;
 
+exports[`NeworkPolicy | can allow egress to all namespaces 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {},
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow egress to all pods 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+]
+`;
+
 exports[`NeworkPolicy | can allow egress to an ip block 1`] = `
 Array [
   Object {
@@ -238,6 +325,176 @@ Array [
                   "172.17.1.0/24",
                 ],
               },
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow egress to labeled namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "role",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow egress to managed namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "name": "test-namespace-c83f04e1",
+    },
+    "spec": Object {},
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "test-namespace-c83f04e1",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Egress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow egress to named namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "egress": Array [
+        Object {
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+          "to": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
             },
           ],
         },
@@ -474,6 +731,93 @@ Array [
 ]
 `;
 
+exports[`NeworkPolicy | can allow ingress from all namespaces 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {},
+              "podSelector": Object {},
+            },
+          ],
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow ingress from all pods 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "podSelector": Object {},
+            },
+          ],
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
 exports[`NeworkPolicy | can allow ingress from an ip block 1`] = `
 Array [
   Object {
@@ -493,6 +837,176 @@ Array [
                   "172.17.1.0/24",
                 ],
               },
+            },
+          ],
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow ingress from labeled namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "role",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow ingress from managed namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "name": "test-namespace-c83f04e1",
+    },
+    "spec": Object {},
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "test-namespace-c83f04e1",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
+            },
+          ],
+          "ports": Array [
+            Object {
+              "port": 6379,
+              "protocol": "TCP",
+            },
+          ],
+        },
+      ],
+      "podSelector": Object {
+        "matchExpressions": Array [
+          Object {
+            "key": "role",
+            "operator": "In",
+            "values": Array [
+              "db",
+            ],
+          },
+        ],
+      },
+      "policyTypes": Array [
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
+exports[`NeworkPolicy | can allow ingress from named namespace 1`] = `
+Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-policy-c89ef47f",
+    },
+    "spec": Object {
+      "ingress": Array [
+        Object {
+          "from": Array [
+            Object {
+              "namespaceSelector": Object {
+                "matchExpressions": Array [
+                  Object {
+                    "key": "kubernetes.io/metadata.name",
+                    "operator": "In",
+                    "values": Array [
+                      "web",
+                    ],
+                  },
+                ],
+              },
+              "podSelector": Object {},
             },
           ],
           "ports": Array [
