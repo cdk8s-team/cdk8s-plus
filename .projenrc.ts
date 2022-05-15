@@ -118,13 +118,22 @@ for (const lang of ['typescript', 'python', 'java']) {
   project.gitignore.exclude(output);
 }
 
+// this is the directory to clone the repo to
+// when running the backport tasks.
+// this needs to be purged before backporting since if it exists,
+// the branches are not updated.
+// see https://github.com/sqren/backport/blob/075c44ef575b8d551b9465641d8899d6f0716c34/src/lib/setupRepo.ts#L26
+const backportDir = '/tmp/.backport/repositories/cdk8s-team/cdk8s-plus';
+
 // backport task to branches based on pr labels
 const backportTask = project.addTask('backport', { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
+backportTask.exec(`rm -rf ${backportDir}`);
 backportTask.exec('npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive');
 
 // backport tasks to explicit branches based on input
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
   const t = project.addTask(`backport:${spec}`, { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
+  t.exec(`rm -rf ${backportDir}`);
   t.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main`);
 }
 
@@ -173,6 +182,7 @@ const backportConfig = {
   publishStatusCommentOnSuccess: true,
   publishStatusCommentOnAbort: true,
   targetPRLabels: [project.autoApprove!.label],
+  dir: backportDir,
 };
 
 new JsonFile(project, '.backportrc.json', {
