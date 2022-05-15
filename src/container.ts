@@ -913,7 +913,7 @@ export class EnvFrom {
 }
 
 /**
- * Container environment.
+ * Container environment variables.
  */
 export class Env {
 
