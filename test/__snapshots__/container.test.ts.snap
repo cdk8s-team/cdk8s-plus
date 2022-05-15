@@ -12,7 +12,6 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
