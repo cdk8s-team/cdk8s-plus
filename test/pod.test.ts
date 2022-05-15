@@ -4,6 +4,17 @@ import * as kplus from '../src';
 import { DockerConfigSecret, FsGroupChangePolicy, Probe } from '../src';
 import * as k8s from '../src/imports/k8s';
 
+test('deafults', () => {
+
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
 test('fails with two volumes with the same name', () => {
 
   const chart = Testing.chart();
@@ -314,7 +325,6 @@ test('default security context', () => {
     // undefined values are ommitted at synth
     fsGroupChangePolicy: pod.securityContext.fsGroupChangePolicy.toString(),
     runAsNonRoot: pod.securityContext.ensureNonRoot,
-    sysctls: pod.securityContext.sysctls,
   });
 
 });
@@ -384,9 +394,7 @@ test('default dns settings', () => {
   expect(spec.subdomain).toBeUndefined();
   expect(spec.setHostnameAsFQDN).toBeFalsy();
   expect(spec.dnsPolicy).toEqual('ClusterFirst');
-  expect(spec.dnsConfig.searches).toEqual([]);
-  expect(spec.dnsConfig.nameservers).toEqual([]);
-  expect(spec.dnsConfig.options).toEqual([]);
+  expect(spec.dnsConfig).toBeUndefined();
 
 });
 

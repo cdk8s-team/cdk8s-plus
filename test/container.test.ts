@@ -177,9 +177,7 @@ describe('Container', () => {
       env: [{
         name: 'key',
         value: 'value',
-        valueFrom: undefined,
       }],
-      volumeMounts: [],
       securityContext: {
         privileged: false,
         readOnlyRootFilesystem: false,
