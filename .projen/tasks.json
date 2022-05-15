@@ -8,10 +8,17 @@
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/repositories/cdk8s-team/cdk8s-plus"
+          "exec": "rm -rf /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive"
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -23,10 +30,17 @@
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/repositories/cdk8s-team/cdk8s-plus"
+          "exec": "rm -rf /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main"
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -38,10 +52,17 @@
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/repositories/cdk8s-team/cdk8s-plus"
+          "exec": "rm -rf /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main"
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -53,10 +74,17 @@
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/repositories/cdk8s-team/cdk8s-plus"
+          "exec": "rm -rf /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main"
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
