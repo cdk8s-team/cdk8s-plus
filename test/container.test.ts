@@ -158,7 +158,7 @@ describe('Container', () => {
       workingDir: 'workingDir',
       port: 9000,
       command: ['command'],
-      env: {
+      envVariables: {
         key: kplus.EnvValue.fromValue('value'),
       },
     });
@@ -208,7 +208,7 @@ describe('Container', () => {
       image: 'image',
     });
 
-    container.addEnv('key', kplus.EnvValue.fromValue('value'));
+    container.env.addVariable('key', kplus.EnvValue.fromValue('value'));
 
     const actual: k8s.EnvVar[] = container._toKube().env!;
     const expected: k8s.EnvVar[] = [{
@@ -220,6 +220,35 @@ describe('Container', () => {
     expect(actual).toEqual(expected);
 
   });
+
+  test('can add environment variables from a source', () => {
+
+    const chart = Testing.chart();
+
+    const cm = new kplus.ConfigMap(chart, 'ConfigMap');
+    const secret = new kplus.Secret(chart, 'Secret');
+
+    const cmSource = kplus.Env.fromConfigMap(cm, 'pref');
+    const secretSource = kplus.Env.fromSecret(secret);
+
+    const container = new kplus.Container({
+      image: 'image',
+      envFrom: [cmSource],
+    });
+
+    container.env.copyFrom(secretSource);
+
+    const spec: k8s.Container = container._toKube();
+
+    expect(spec.envFrom).toEqual([
+      { configMapRef: { name: cm.name }, prefix: 'pref' },
+      { secretRef: { name: secret.name } },
+    ]);
+
+    expect(container.env.sources).toEqual([cmSource, secretSource]);
+  });
+
+  test('can add environment variables from a secret', () => {});
 
   test('Can mount container to volume', () => {
 
