@@ -39,9 +39,9 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
   public static readonly NAME_LABEL = 'kubernetes.io/metadata.name';
 
   /**
-   * Match a namespace by its labels.
+   * Match a namespace by label queries.
    */
-  public static labeled(...queries: pod.LabelQuery[]): LabeledNamespace {
+  public static queried(...queries: pod.LabelQuery[]): LabeledNamespace {
     return new LabeledNamespace(queries);
   }
 
@@ -56,7 +56,7 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
    * Match all namespaces.
    */
   public static all(): LabeledNamespace {
-    return Namespace.labeled();
+    return Namespace.queried();
   }
 
   /**
@@ -187,7 +187,7 @@ export class NamedNamespace implements INamespaceSelector, networkpolicy.INetwor
    * @see INamespaceSelector.toNamespaceLabelSelector()
    */
   public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return Namespace.labeled(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).toNamespaceLabelSelector();
+    return Namespace.queried(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).toNamespaceLabelSelector();
   }
 
   /**

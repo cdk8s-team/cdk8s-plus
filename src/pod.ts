@@ -8,6 +8,7 @@ import * as k8s from './imports/k8s';
 import * as namespace from './namespace';
 import * as networkpolicy from './network-policy';
 import * as secret from './secret';
+import * as service from './service';
 import * as serviceaccount from './service-account';
 import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
@@ -16,7 +17,8 @@ export abstract class AbstractPod extends base.Resource implements
   IPodSelector,
   namespace.INamespaceSelector,
   INamespacedPodSelector,
-  networkpolicy.INetworkPolicyPeer {
+  networkpolicy.INetworkPolicyPeer,
+  service.IServicePodSelector {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -81,15 +83,26 @@ export abstract class AbstractPod extends base.Resource implements
   }
 
   /**
-   * @see IPodSelector.toPodLabelSelector()
+   * @see IServicePodSelector.toPodLabels()
    */
-  public toPodLabelSelector(): LabelSelector {
+  public toPodLabels(): { [key: string]: string } {
     const podAddress = this.podMetadata.getLabel(Pod.ADDRESS_LABEL);
     if (!podAddress) {
       // shouldn't happen because we add this label automatically in both pods and workloads.
       throw new Error(`Unable to create a label selector since ${Pod.ADDRESS_LABEL} label is missing`);
     }
-    return LabelSelector.of(LabelQuery.is(Pod.ADDRESS_LABEL, podAddress));
+    return { [Pod.ADDRESS_LABEL]: podAddress };
+  }
+
+  /**
+   * @see IPodSelector.toPodLabelSelector()
+   */
+  public toPodLabelSelector(): LabelSelector {
+    const quries = [];
+    for (const [key, value] of Object.entries(this.toPodLabels())) {
+      quries.push(LabelQuery.is(key, value));
+    }
+    return LabelSelector.of(...quries);
   }
 
   /**
@@ -504,14 +517,32 @@ export class Pod extends AbstractPod {
    * @example
    *
    * // match a pod with label 'app=store' in "this" namespace.
-   * Pod.labeled(PodLabelQuery.is('app', 'store'));
+   * Pod.matchLabels({ app: 'store' });
    *
    * // match a pod with label 'app=store' in the 'web' namespace
-   * Pod.labeled(PodLabelQuery.is('app', 'store'))
+   * Pod.matchLabels({ app: 'store' }).namespaced(Namespace.named('web'));
+   */
+  public static labeled(labels: { [key: string]: string }): LabeledPod {
+    return new LabeledPod(labels);
+  }
+
+  /**
+   * Match a pod by label queries. This provides a more advanced mechanism over `Pod.labeled`,
+   * allowing label expressions, and not only exact matches. By default, matches only to pods
+   * belonging to the namespace of the resource it is defined in. To scope the pod down to other
+   * particular namespaces, use `.namespaced` on the return value.
+   *
+   * @example
+   *
+   * // match a pod with label 'app=store' in "this" namespace.
+   * Pod.queried(PodLabelQuery.is('app', 'store'));
+   *
+   * // match a pod with label 'app=store' in the 'web' namespace
+   * Pod.queried(PodLabelQuery.is('app', 'store'))
    *    .namespaced(Namespace.named('web'));
    */
-  public static labeled(...selectors: LabelQuery[]): LabeledPod {
-    return new LabeledPod(selectors);
+  public static queried(...selectors: LabelQuery[]): QueriedPod {
+    return new QueriedPod(selectors);
   }
 
   /**
@@ -528,8 +559,8 @@ export class Pod extends AbstractPod {
    * Pod.all().namespaced(Namespace.named('web'));
    *
    */
-  public static all(): LabeledPod {
-    return Pod.labeled();
+  public static all(): QueriedPod {
+    return Pod.queried();
   }
 
   /**
@@ -1101,7 +1132,10 @@ export class NodeTaintQuery {
   }
 }
 
-export class LabeledPod implements IPodSelector, INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
+/**
+ * A pod that is matched by a list of label queries.
+ */
+export class QueriedPod implements IPodSelector, INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
 
   public constructor(private readonly queries: LabelQuery[]) {};
 
@@ -1146,9 +1180,27 @@ export class LabeledPod implements IPodSelector, INamespacedPodSelector, network
 
 }
 
+/**
+ * A pod that is matched by exact labels.
+ */
+export class LabeledPod extends QueriedPod implements service.IServicePodSelector {
+
+  constructor(private readonly labels: { [key: string]: string }) {
+    const queries = [];
+    for (const [key, value] of Object.entries(labels)) {
+      queries.push(LabelQuery.is(key, value));
+    }
+    super(queries);
+  }
+
+  public toPodLabels(): { [key: string]: string } {
+    return this.labels;
+  }
+}
+
 export class NamespacedLabeledPod implements INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
 
-  public constructor(private readonly labeledPod: LabeledPod, private readonly selector: namespace.INamespaceSelector) {};
+  public constructor(private readonly labeledPod: QueriedPod, private readonly selector: namespace.INamespaceSelector) {};
 
   /**
    * @see INamespacedPodSelector.toNamespaceSelector();
@@ -1724,23 +1776,7 @@ export class PodConnections {
   }
 
   private extractPorts(selector?: IPodSelector): networkpolicy.NetworkPolicyPort[] {
-
-    // empty means all ports
-    if (!selector) { return []; }
-
-    const ports = [];
-
-    // we don't use instanceof intentionally since it can create
-    // cyclic import problems.
-    const containers: container.Container[] = (selector as any).containers;
-
-    for (const con of containers ?? []) {
-      if (con.port) {
-        ports.push(networkpolicy.NetworkPolicyPort.tcp(con.port));
-      }
-    }
-
-    return ports;
+    return container.extractContainerPorts(selector).map(p => networkpolicy.NetworkPolicyPort.tcp(p));
   }
 
   private peerAddress(peer: networkpolicy.INetworkPolicyPeer): string {

@@ -20,7 +20,7 @@ describe('IngressBackend', () => {
       const service = new Service(chart, 'my-service');
 
       // WHEN
-      service.serve(8899);
+      service.bind(8899);
 
       // THEN
       expect(IngressBackend.fromService(service)._toKube()).toEqual({
@@ -47,7 +47,7 @@ describe('IngressBackend', () => {
       const service = new Service(chart, 'my-service');
 
       // WHEN
-      service.serve(6011);
+      service.bind(6011);
 
       // THEN
       expect(() => IngressBackend.fromService(service, { port: 7766 })).toThrow(/backend defines port 7766 but service exposes port 6011/);
@@ -59,7 +59,7 @@ describe('IngressBackend', () => {
       const service = new Service(chart, 'my-service');
 
       // WHEN
-      service.serve(6011);
+      service.bind(6011);
 
       // THEN
       expect(IngressBackend.fromService(service, { port: 6011 })._toKube()).toEqual({
@@ -76,9 +76,9 @@ describe('IngressBackend', () => {
       const service = new Service(chart, 'my-service');
 
       // WHEN
-      service.serve(6011);
-      service.serve(8899);
-      service.serve(1011);
+      service.bind(6011);
+      service.bind(8899);
+      service.bind(1011);
 
       // THEN
       expect(IngressBackend.fromService(service, { port: 8899 })._toKube()).toEqual({
@@ -95,8 +95,8 @@ describe('IngressBackend', () => {
       const service = new Service(chart, 'my-service');
 
       // WHEN
-      service.serve(6011);
-      service.serve(1111);
+      service.bind(6011);
+      service.bind(1111);
 
       // THEN
       expect(() => IngressBackend.fromService(service)).toThrow(/unable to determine service port since service exposes multiple ports/);
@@ -108,8 +108,8 @@ describe('IngressBackend', () => {
       const service = new Service(chart, 'my-service');
 
       // WHEN
-      service.serve(6011);
-      service.serve(1111);
+      service.bind(6011);
+      service.bind(1111);
 
       // THEN
       expect(() => IngressBackend.fromService(service, { port: 1234 })).toThrow(/service exposes ports 6011,1111 but backend is defined to use port 1234/);
@@ -339,7 +339,7 @@ describe('Ingress', () => {
     // GIVEN
     const chart = Testing.chart();
     const service = new Service(chart, 'my-service');
-    service.serve(4000);
+    service.bind(4000);
 
     // WHEN
     new Ingress(chart, 'my-ingress', {
@@ -400,7 +400,7 @@ describe('Ingress', () => {
       // GIVEN
       const chart = Testing.chart();
       const service = new Service(chart, 'my-service');
-      service.serve(4000);
+      service.bind(4000);
 
       // WHEN
       const ingress = new Ingress(chart, 'ingress', {
@@ -416,7 +416,7 @@ describe('Ingress', () => {
       // GIVEN
       const chart = Testing.chart();
       const service = new Service(chart, 'my-service');
-      service.serve(4000);
+      service.bind(4000);
 
       // THEN
       expect(() => new Ingress(chart, 'ingress', {
@@ -429,7 +429,7 @@ describe('Ingress', () => {
       // GIVEN
       const chart = Testing.chart();
       const service = new Service(chart, 'my-service');
-      service.serve(4000);
+      service.bind(4000);
       const ingress = new Ingress(chart, 'ingress');
 
       // WHEN
@@ -441,7 +441,7 @@ describe('Ingress', () => {
       // GIVEN
       const chart = Testing.chart();
       const service = new Service(chart, 'my-service');
-      service.serve(4000);
+      service.bind(4000);
       const ingress = new Ingress(chart, 'ingress');
 
       // WHEN
@@ -454,7 +454,7 @@ describe('Ingress', () => {
     // GIVEN
     const chart = Testing.chart();
     const service = new Service(chart, 'my-service');
-    service.serve(4000);
+    service.bind(4000);
     const ingress = new Ingress(chart, 'ingress');
 
     // THEN
@@ -465,7 +465,7 @@ describe('Ingress', () => {
     // GIVEN
     const chart = Testing.chart();
     const service = new Service(chart, 'my-service');
-    service.serve(4000);
+    service.bind(4000);
     new Ingress(chart, 'ingress');
 
     // THEN

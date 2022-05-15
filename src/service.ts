@@ -1,14 +1,46 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
-import * as deployment from './deployment';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
 
 /**
- * Properties for initialization of `Service`.
+ * Represents an object that can be used as a pod selector for a `Service`.
+ */
+export interface IServicePodSelector {
+  /**
+   * Return labels that identify the pods of this object.
+   */
+  toPodLabels(): { [key: string]: string };
+}
+
+/**
+ * Properties for `Service`.
  */
 export interface ServiceProps extends base.ResourceProps {
+  /**
+   * Which pods should the service select and route to.
+   *
+   * You can pass one of the following:
+   *
+   * - An instance of `Pod` or any workload resource (e.g `Deployment`, `StatefulSet`, ...)
+   * - A pod(s) selected by the `Pod.matchLabels` function.
+   * - A custom implementation of `IServicePodSelector`.
+   *
+   * @default - unset, the service is assumed to have an external process managing
+   * its endpoints, which Kubernetes will not modify.
+   *
+   * @example
+   *
+   * // select the pods of a specific deployment
+   * const backend = new kplus.Deployment(this, 'Backend', ...);
+   * new kplus.Service(this, 'Service', { selector: backend });
+   *
+   * // select all pods labeled with the `tier=backend` label
+   * const backend = kplus.Pod.labeled({ tier: 'backend' });
+   * new kplus.Service(this, 'Service', { selector: backend });
+   */
+  readonly selector?: IServicePodSelector;
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -46,9 +78,13 @@ export interface ServiceProps extends base.ResourceProps {
   readonly type?: ServiceType;
 
   /**
-   * The port exposed by this service.
+   * The ports this service binds to.
    *
-   * More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+   * If the selector of the service is a managed pod / workload,
+   * its ports will are automatically extracted and used as the default value.
+   * Otherwise, no ports are bound.
+   *
+   * @default - either the selector ports, or none.
    */
   readonly ports?: ServicePort[];
 
@@ -131,7 +167,7 @@ export enum ServiceType {
 /**
  * Options to add a deployment to a service.
  */
-export interface AddDeploymentOptions extends ServicePortOptions {
+export interface AddDeploymentOptions extends ServiceBindOptions {
   /**
    * The port number the service will bind to.
    *
@@ -206,10 +242,13 @@ export class Service extends base.Resource {
     this._selector = { };
     this._loadBalancerSourceRanges = props.loadBalancerSourceRanges;
 
-    for (const portAndOptions of props.ports ?? []) {
-      this.serve(portAndOptions.port, portAndOptions);
+    if (props.selector) {
+      this.select(props.selector);
     }
 
+    for (const port of props.ports ?? []) {
+      this.bind(port.port, port);
+    }
   }
 
   /**
@@ -227,71 +266,12 @@ export class Service extends base.Resource {
   }
 
   /**
-   * Returns the labels which are used to select pods for this service.
-   */
-  public get selector() {
-    return this._selector;
-  }
-
-  /**
    * Ports for this service.
    *
-   * Use `serve()` to expose additional service ports.
+   * Use `bind()` to bind additional service ports.
    */
   public get ports() {
     return [...this._ports];
-  }
-
-  /**
-   * Associate a deployment to this service.
-   *
-   * If not targetPort is specific in the portOptions, then requests will be routed
-   * to the port exposed by the first container in the deployment's pods.
-   * The deployment's `labelSelector` will be used to select pods.
-   *
-   * @param depl The deployment to expose
-   * @param options Optional settings for the port.
-   */
-  public addDeployment(depl: deployment.Deployment, options: AddDeploymentOptions = {}) {
-    const containers = depl.containers;
-    if (containers.length === 0) {
-      throw new Error('Cannot expose a deployment without containers');
-    }
-
-    // just a PoC, we assume the first container is the main one.
-    // TODO: figure out what the correct thing to do here.
-    const container = containers[0];
-    const port = options.port ?? container.port;
-    const targetPort = options.targetPort ?? containers[0].port;
-
-    if (!port) {
-      throw new Error('Cannot determine port. Either pass `port` in options or configure a port on the first container of the deployment');
-    }
-
-    const selector = Object.entries(depl.matchLabels);
-    if (selector.length === 0) {
-      throw new Error('deployment does not have a label selector');
-    }
-
-    if (Object.keys(this.selector).length > 0) {
-      throw new Error('a selector is already defined for this service. cannot add a deployment');
-    }
-
-    for (const [k, v] of selector) {
-      this.addSelector(k, v);
-    }
-
-    this.serve(port, { ...options, targetPort });
-  }
-
-  /**
-   * Services defined using this spec will select pods according the provided label.
-   *
-   * @param label The label key.
-   * @param value The label value.
-   */
-  public addSelector(label: string, value: string) {
-    this._selector[label] = value;
   }
 
   /**
@@ -300,8 +280,20 @@ export class Service extends base.Resource {
    *
    * @param port The port definition.
    */
-  public serve(port: number, options: ServicePortOptions = { }) {
+  public bind(port: number, options: ServiceBindOptions = { }) {
     this._ports.push({ ...options, port });
+  }
+
+  /**
+   * Require this service to select pods matching the selector.
+   *
+   * Note that invoking this method multiple times acts as an AND operator
+   * on the resulting labels.
+   */
+  public select(selector: IServicePodSelector) {
+    for (const [key, value] of Object.entries(selector.toPodLabels())) {
+      this._selector[key] = value;
+    }
   }
 
   /**
@@ -349,7 +341,10 @@ export enum Protocol {
   SCTP = 'SCTP'
 }
 
-export interface ServicePortOptions {
+/**
+ * Options for `Service.bind`.
+ */
+export interface ServiceBindOptions {
   /**
    * The name of this port within the service. This must be a DNS_LABEL. All
    * ports within a ServiceSpec must have unique names. This maps to the 'Name'
@@ -389,7 +384,7 @@ export interface ServicePortOptions {
 /**
  * Definition of a service port.
  */
-export interface ServicePort extends ServicePortOptions {
+export interface ServicePort extends ServiceBindOptions {
 
   /**
    * The port number the service will bind to.

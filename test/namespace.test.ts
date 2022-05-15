@@ -18,7 +18,7 @@ test('can select a namespace by name', () => {
 });
 
 test('can select a namespace by labels', () => {
-  expect(kplus.Namespace.labeled(kplus.LabelQuery.exists('role')).toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+  expect(kplus.Namespace.queried(kplus.LabelQuery.exists('role')).toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
 });
 
 test('can select all namespaces', () => {

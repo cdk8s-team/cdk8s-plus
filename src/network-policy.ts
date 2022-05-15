@@ -94,6 +94,16 @@ export class NetworkPolicyPort {
     return { port: this.port, endPort: this.endPort, protocol: this.protocol };
   }
 
+  /**
+   * @internal
+   */
+  public _toServicePort(): k8s.ServicePort {
+    if (!this.port) {
+      throw new Error(`Unabel to convert network policy port ${JSON.stringify(this._toKube())} to service port: port is not defined`);
+    }
+    return { port: this.port.value };
+  }
+
 }
 
 /**
@@ -307,7 +317,7 @@ export interface NetworkPolicyProps extends base.ResourceProps {
    * Which pods does this policy object applies to.
    *
    * This can either be a single pod / workload, or a grouping of pods selected
-   * via the `Pod.labeled` function. The array of ingress rules is applied to any
+   * via the `Pod.queried` function. The array of ingress rules is applied to any
    * pods selected by this field. Multiple network policies can select the same
    * set of pods. In this case, the ingress rules for each are combined additively.
    *

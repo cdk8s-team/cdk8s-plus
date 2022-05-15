@@ -900,3 +900,22 @@ function renderEnv(env: { [name: string]: EnvValue }): k8s.EnvVar[] {
   }
   return result;
 }
+
+export function extractContainerPorts(selector?: any): number[] {
+
+  if (!selector) { return []; }
+
+  const ports = [];
+
+  // we don't use instanceof intentionally since it can create
+  // cyclic import problems.
+  const containers: Container[] = (selector as any).containers;
+
+  for (const con of containers ?? []) {
+    if (con.port) {
+      ports.push(con.port);
+    }
+  }
+
+  return ports;
+}

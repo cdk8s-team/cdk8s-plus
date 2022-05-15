@@ -93,7 +93,7 @@ describe('NeworkPolicy |', () => {
   test('can create a policy for a labeled pod', () => {
 
     const chart = Testing.chart();
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
+    const web = kplus.Pod.queried(kplus.LabelQuery.is('app', 'web'));
 
     new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
@@ -162,7 +162,7 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from an ip block', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
@@ -177,7 +177,7 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from a managed pod', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
     const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'webs' }] });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
@@ -191,9 +191,9 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from a labeled pod', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
-    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+    const frontend = kplus.Pod.queried(kplus.LabelQuery.is('role', 'frontend'));
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
@@ -206,10 +206,10 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from a namespaced labeled pod', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
-    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'web'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('project', 'myproject')));
+    const frontend = kplus.Pod.queried(kplus.LabelQuery.is('role', 'web'))
+      .namespaced(kplus.Namespace.queried(kplus.LabelQuery.is('project', 'myproject')));
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
@@ -222,7 +222,7 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from all pods', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const all = kplus.Pod.all();
 
@@ -237,7 +237,7 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from managed namespace', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
@@ -252,9 +252,9 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from labeled namespace', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
-    const namespace = kplus.Namespace.labeled(kplus.LabelQuery.is('role', 'web'));
+    const namespace = kplus.Namespace.queried(kplus.LabelQuery.is('role', 'web'));
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
@@ -267,7 +267,7 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from named namespace', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const namespace = kplus.Namespace.named('web');
 
@@ -282,7 +282,7 @@ describe('NeworkPolicy |', () => {
   test('can allow ingress from all namespaces', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const namespaces = kplus.Namespace.all();
 
@@ -297,7 +297,7 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to an ip block', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
@@ -312,7 +312,7 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to a managed pod', () => {
 
     const chart = Testing.chart();
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
+    const web = kplus.Pod.queried(kplus.LabelQuery.is('app', 'web'));
     const db = new kplus.Pod(chart, 'db', { containers: [{ image: 'db' }] });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
@@ -326,9 +326,9 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to a labeled pod', () => {
 
     const chart = Testing.chart();
-    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+    const frontend = kplus.Pod.queried(kplus.LabelQuery.is('role', 'frontend'));
 
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
@@ -341,10 +341,10 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to a namespaced labeled pod', () => {
 
     const chart = Testing.chart();
-    const frontend = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'frontend'));
+    const frontend = kplus.Pod.queried(kplus.LabelQuery.is('role', 'frontend'));
 
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('project', 'myproject')));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'))
+      .namespaced(kplus.Namespace.queried(kplus.LabelQuery.is('project', 'myproject')));
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
@@ -357,7 +357,7 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to all pods', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const all = kplus.Pod.all();
 
@@ -372,7 +372,7 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to managed namespace', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
@@ -387,9 +387,9 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to labeled namespace', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
-    const namespace = kplus.Namespace.labeled(kplus.LabelQuery.is('role', 'web'));
+    const namespace = kplus.Namespace.queried(kplus.LabelQuery.is('role', 'web'));
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
@@ -402,7 +402,7 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to named namespace', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const namespace = kplus.Namespace.named('web');
 
@@ -417,7 +417,7 @@ describe('NeworkPolicy |', () => {
   test('can allow egress to all namespaces', () => {
 
     const chart = Testing.chart();
-    const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
+    const db = kplus.Pod.queried(kplus.LabelQuery.is('role', 'db'));
 
     const namespaces = kplus.Namespace.all();
 

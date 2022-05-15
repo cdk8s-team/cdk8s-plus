@@ -637,7 +637,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'))
       .namespaced(kplus.Namespace.all());
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -654,7 +654,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'));
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -714,8 +714,8 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('net', '1')));
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'))
+      .namespaced(kplus.Namespace.queried(kplus.LabelQuery.is('net', '1')));
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -731,7 +731,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'));
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -801,7 +801,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'));
 
     web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -815,7 +815,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'))
       .namespaced(kplus.Namespace.named('web'));
 
     web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
@@ -891,7 +891,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'));
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('role', 'redis'));
 
     web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -906,8 +906,8 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
+    const redis = kplus.Pod.queried(kplus.LabelQuery.is('role', 'redis'))
+      .namespaced(kplus.Namespace.queried(kplus.LabelQuery.is('proj', 'myproj')));
 
     expect(() => web.connections.allowTo(redis)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
 
@@ -998,7 +998,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
+    const web = kplus.Pod.queried(kplus.LabelQuery.is('app', 'web'));
 
     redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1012,7 +1012,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'))
+    const web = kplus.Pod.queried(kplus.LabelQuery.is('app', 'web'))
       .namespaced(kplus.Namespace.named('web'));
 
     redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
@@ -1088,7 +1088,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
+    const web = kplus.Pod.queried(kplus.LabelQuery.is('app', 'web'));
 
     redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1103,8 +1103,8 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
+    const web = kplus.Pod.queried(kplus.LabelQuery.is('app', 'web'))
+      .namespaced(kplus.Namespace.queried(kplus.LabelQuery.is('proj', 'myproj')));
 
     expect(() => redis.connections.allowFrom(web)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
 
@@ -1181,11 +1181,11 @@ describe('connections |', () => {
 });
 
 test('can select a pod with no label queries', () => {
-  expect(kplus.Pod.labeled().toPodLabelSelector()._toKube()).toMatchSnapshot();
+  expect(kplus.Pod.queried().toPodLabelSelector()._toKube()).toMatchSnapshot();
 });
 
 test('can select a pod with label queries', () => {
-  expect(kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store')).toPodLabelSelector()._toKube()).toMatchSnapshot();
+  expect(kplus.Pod.queried(kplus.LabelQuery.is('app', 'store')).toPodLabelSelector()._toKube()).toMatchSnapshot();
 });
 
 test('can select all pods', () => {
@@ -1199,7 +1199,7 @@ test('can select all pods in a particular namespace', () => {
 });
 
 test('can select a pod with labels in a particular namespace', () => {
-  const selection = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
+  const selection = kplus.Pod.queried(kplus.LabelQuery.is('app', 'store'))
     .namespaced(kplus.Namespace.named('n1'));
   expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
   expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
