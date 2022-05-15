@@ -16,7 +16,7 @@ export abstract class AbstractPod extends base.Resource implements
   IPodSelector,
   namespace.INamespaceSelector,
   INamespacedPodSelector,
-  networkpolicy.IPeer {
+  networkpolicy.INetworkPolicyPeer {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -121,14 +121,14 @@ export abstract class AbstractPod extends base.Resource implements
   }
 
   /**
-   * @see IPeer.toIpBlock()
+   * @see INetworkPolicyPeer.toIpBlock()
    */
-  public toIpBlock(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.toNamespacedPodSelector()
+   * @see INetworkPolicyPeer.toNamespacedPodSelector()
    */
   public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this;
@@ -1101,7 +1101,7 @@ export class NodeTaintQuery {
   }
 }
 
-export class LabeledPod implements IPodSelector, INamespacedPodSelector, networkpolicy.IPeer {
+export class LabeledPod implements IPodSelector, INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
 
   public constructor(private readonly queries: LabelQuery[]) {};
 
@@ -1127,14 +1127,14 @@ export class LabeledPod implements IPodSelector, INamespacedPodSelector, network
   }
 
   /**
-   * @see IPeer.toIpBlock();
+   * @see INetworkPolicyPeer.toIpBlock();
    */
-  public toIpBlock(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.toNamespacedPodSelector();
+   * @see INetworkPolicyPeer.toNamespacedPodSelector();
    */
   public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this;
@@ -1146,7 +1146,7 @@ export class LabeledPod implements IPodSelector, INamespacedPodSelector, network
 
 }
 
-export class NamespacedLabeledPod implements INamespacedPodSelector, networkpolicy.IPeer {
+export class NamespacedLabeledPod implements INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
 
   public constructor(private readonly labeledPod: LabeledPod, private readonly selector: namespace.INamespaceSelector) {};
 
@@ -1165,14 +1165,14 @@ export class NamespacedLabeledPod implements INamespacedPodSelector, networkpoli
   }
 
   /**
-   * @see IPeer.toIpBlock();
+   * @see INetworkPolicyPeer.toIpBlock();
    */
-  public toIpBlock(): networkpolicy.IpBlock | undefined {
+  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
     return undefined;
   }
 
   /**
-   * @see IPeer.toNamespacedPodSelector();
+   * @see INetworkPolicyPeer.toNamespacedPodSelector();
    */
   public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this.labeledPod.namespaced(this.selector);
@@ -1579,7 +1579,7 @@ export interface PodConnectionsAllowToOptions {
    *
    * @default - If the peer is a managed pod, take its ports. Otherwise, all ports are allowed.
    */
-  readonly ports?: networkpolicy.Port[];
+  readonly ports?: networkpolicy.NetworkPolicyPort[];
 
 }
 
@@ -1600,7 +1600,7 @@ export interface PodConnectionsAllowFromOptions {
    *
    * @default - The pod ports.
    */
-  readonly ports?: networkpolicy.Port[];
+  readonly ports?: networkpolicy.NetworkPolicyPort[];
 
 }
 
@@ -1629,8 +1629,9 @@ export class PodConnections {
    * web.connections.allowTo(redis, { isolation: Isolation.PEER })
    *
    */
-  public allowTo(peer: networkpolicy.IPeer, options: PodConnectionsAllowToOptions = {}) {
-    return this.allow('Egress', peer, options);
+  public allowTo(peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowToOptions = {}) {
+    const podSelector: IPodSelector | undefined = peer.toNamespacedPodSelector()?.toPodSelector();
+    return this.allow('Egress', peer, { ports: this.extractPorts(podSelector), ...options });
   }
 
   /**
@@ -1651,11 +1652,12 @@ export class PodConnections {
    * redis.connections.allowFrom(web, { isolation: Isolation.POD })
    *
    */
-  public allowFrom(peer: networkpolicy.IPeer, options: PodConnectionsAllowFromOptions = {}) {
-    return this.allow('Ingress', peer, options);
+  public allowFrom(peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowFromOptions = {}) {
+    const podSelector: IPodSelector | undefined = this.instance;
+    return this.allow('Ingress', peer, { ports: this.extractPorts(podSelector), ...options });
   }
 
-  private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.IPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
+  private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
 
     const peerAddress = this.peerAddress(peer);
 
@@ -1670,10 +1672,10 @@ export class PodConnections {
 
       switch (direction) {
         case 'Egress':
-          src.allowTo(peer, options);
+          src.addEgressRule(peer, options.ports);
           break;
         case 'Ingress':
-          src.allowFrom(peer, options);
+          src.addIngressRule(peer, options.ports);
       }
 
     }
@@ -1687,8 +1689,7 @@ export class PodConnections {
       }
 
       // for pods, we need to configure policies that allow the opposite direction.
-      // TODO validate peer
-      const namespacedPod = peer.toNamespacedPodSelector()!;
+      const namespacedPod = networkpolicy.peerToNamespacedPodSelector(peer);
       const podSelector = namespacedPod.toPodSelector();
       const namespaceSelector = namespacedPod.toNamespaceSelector();
 
@@ -1709,29 +1710,48 @@ export class PodConnections {
           new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${peerAddress}`, {
             selector: podSelector,
             metadata: { namespace: namespaceName },
-            ingress: { rules: [{ peer: this.instance }] },
+            ingress: { rules: [{ peer: this.instance, ports: options.ports }] },
           });
           break;
         case 'Ingress':
           new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${peerAddress}`, {
             selector: podSelector,
             metadata: { namespace: namespaceName },
-            egress: { rules: [{ peer: this.instance }] },
+            egress: { rules: [{ peer: this.instance, ports: options.ports }] },
           });
       }
     }
   }
 
-  private peerAddress(peer: networkpolicy.IPeer): string {
+  private extractPorts(selector?: IPodSelector): networkpolicy.NetworkPolicyPort[] {
+
+    // empty means all ports
+    if (!selector) { return []; }
+
+    const ports = [];
+
+    // we don't use instanceof intentionally since it can create
+    // cyclic import problems.
+    const containers: container.Container[] = (selector as any).containers;
+
+    for (const con of containers ?? []) {
+      if (con.port) {
+        ports.push(networkpolicy.NetworkPolicyPort.tcp(con.port));
+      }
+    }
+
+    return ports;
+  }
+
+  private peerAddress(peer: networkpolicy.INetworkPolicyPeer): string {
     const md5 = crypto.createHash('md5');
     const ipBlock = peer.toIpBlock();
-    // TODO validate peer
-    const data = ipBlock ? this.stringifyIpBlock(ipBlock) : this.stringifyNamespacedPodSelector(peer.toNamespacedPodSelector()!);
+    const data = ipBlock ? this.stringifyIpBlock(ipBlock) : this.stringifyNamespacedPodSelector(networkpolicy.peerToNamespacedPodSelector(peer));
     md5.update(data);
     return md5.digest('hex');
   }
 
-  private stringifyIpBlock(ipBlock: networkpolicy.IpBlock) {
+  private stringifyIpBlock(ipBlock: networkpolicy.NetworkPolicyIpBlock) {
     return json.stringify(ipBlock._toKube());
   }
 

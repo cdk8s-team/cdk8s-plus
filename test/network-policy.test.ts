@@ -4,59 +4,59 @@ import * as kplus from '../src';
 describe('IpBlock |', () => {
 
   test('ipv4', () => {
-    expect(kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24'])._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24'])._toKube()).toMatchSnapshot();
   });
 
   test('throws on invalid ipv4 cidr', () => {
-    expect(() => kplus.IpBlock.ipv4('1234')).toThrow(/Invalid IPv4 CIDR:/);
+    expect(() => kplus.NetworkPolicyIpBlock.ipv4('1234')).toThrow(/Invalid IPv4 CIDR:/);
   });
 
   test('ipv6', () => {
-    expect(kplus.IpBlock.ipv6('2002::1234:abcd:ffff:c0a8:101/64', ['2002::1234:abcd:ffff:c0a8:101/24'])._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyIpBlock.ipv6('2002::1234:abcd:ffff:c0a8:101/64', ['2002::1234:abcd:ffff:c0a8:101/24'])._toKube()).toMatchSnapshot();
   });
 
   test('throws on invalid ipv6 cidr', () => {
-    expect(() => kplus.IpBlock.ipv6('1234')).toThrow(/Invalid IPv6 CIDR:/);
+    expect(() => kplus.NetworkPolicyIpBlock.ipv6('1234')).toThrow(/Invalid IPv6 CIDR:/);
   });
 
   test('anyIpv4', () => {
-    expect(kplus.IpBlock.anyIpv4()._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyIpBlock.anyIpv4()._toKube()).toMatchSnapshot();
   });
 
   test('anyIpv6', () => {
-    expect(kplus.IpBlock.anyIpv6()._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyIpBlock.anyIpv6()._toKube()).toMatchSnapshot();
   });
 
 });
 
-describe('Port |', () => {
+describe('NetworkPolicyPort |', () => {
 
   test('tcp', () => {
-    expect(kplus.Port.tcp(8080)._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyPort.tcp(8080)._toKube()).toMatchSnapshot();
   });
 
   test('tcpRange', () => {
-    expect(kplus.Port.tcpRange(8080, 8085)._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyPort.tcpRange(8080, 8085)._toKube()).toMatchSnapshot();
   });
 
   test('allTcp', () => {
-    expect(kplus.Port.allTcp()._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyPort.allTcp()._toKube()).toMatchSnapshot();
   });
 
   test('udp', () => {
-    expect(kplus.Port.udp(8080)._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyPort.udp(8080)._toKube()).toMatchSnapshot();
   });
 
   test('udpRange', () => {
-    expect(kplus.Port.udpRange(8080, 8085)._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyPort.udpRange(8080, 8085)._toKube()).toMatchSnapshot();
   });
 
   test('allUcp', () => {
-    expect(kplus.Port.allUdp()._toKube()).toMatchSnapshot();
+    expect(kplus.NetworkPolicyPort.allUdp()._toKube()).toMatchSnapshot();
   });
 
   test('of', () => {
-    expect(kplus.Port.of({ port: 5050, endPort: 5500, protocol: kplus.NetworkProtocol.SCTP }));
+    expect(kplus.NetworkPolicyPort.of({ port: 5050, endPort: 5500, protocol: kplus.NetworkProtocol.SCTP }));
   });
 
 });
@@ -164,11 +164,11 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
 
-    const ipBlock = kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+    const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(ipBlock, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(ipBlock, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -182,7 +182,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(web, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(web, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -197,7 +197,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(frontend, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(frontend, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -213,7 +213,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(frontend, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(frontend, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -228,7 +228,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(all, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(all, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -243,7 +243,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -258,7 +258,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -273,7 +273,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -288,7 +288,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowFrom(namespaces, { ports: [kplus.Port.tcp(6379)] });
+    policy.addIngressRule(namespaces, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -299,11 +299,11 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const db = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'db'));
 
-    const ipBlock = kplus.IpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+    const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowTo(ipBlock, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(ipBlock, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -317,7 +317,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
-    policy.allowTo(db, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(db, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -332,7 +332,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
-    policy.allowTo(db, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(db, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -348,7 +348,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: frontend });
 
-    policy.allowTo(db, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(db, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -363,7 +363,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowTo(all, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(all, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -378,7 +378,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowTo(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -393,7 +393,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowTo(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -408,7 +408,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowTo(namespace, { ports: [kplus.Port.tcp(6379)] });
+    policy.addEgressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -423,45 +423,7 @@ describe('NeworkPolicy |', () => {
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
 
-    policy.allowTo(namespaces, { ports: [kplus.Port.tcp(6379)] });
-
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
-  test('ports default to pod container ports on ingress', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-    });
-
-    const redis = new kplus.Pod(chart, 'Redis', {
-      containers: [{ image: 'redis', port: 6379 }],
-    });
-
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: redis });
-
-    policy.allowFrom(web);
-
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
-  test('ports default to peer container ports on egress', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-    });
-
-    const redis = new kplus.Pod(chart, 'Redis', {
-      containers: [{ image: 'redis', port: 6379 }],
-    });
-
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
-
-    policy.allowTo(redis);
+    policy.addEgressRule(namespaces, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 

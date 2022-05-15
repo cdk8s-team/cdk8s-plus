@@ -757,7 +757,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    web.connections.allowTo(kplus.IpBlock.anyIpv4(), { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4(), { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -773,7 +773,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -789,7 +789,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -803,7 +803,7 @@ describe('connections |', () => {
 
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
 
-    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -818,7 +818,7 @@ describe('connections |', () => {
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
       .namespaced(kplus.Namespace.named('web'));
 
-    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -832,7 +832,7 @@ describe('connections |', () => {
 
     const all = kplus.Pod.all();
 
-    web.connections.allowTo(all, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(all, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -846,7 +846,7 @@ describe('connections |', () => {
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
-    web.connections.allowTo(namespace, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -860,7 +860,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespace.named('web');
 
-    web.connections.allowTo(namespace, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -878,7 +878,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n2' },
     });
 
-    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -893,7 +893,7 @@ describe('connections |', () => {
 
     const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'));
 
-    web.connections.allowTo(redis, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -954,7 +954,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    web.connections.allowFrom(kplus.IpBlock.anyIpv4(), { ports: [kplus.Port.allTcp()] });
+    web.connections.allowFrom(kplus.NetworkPolicyIpBlock.anyIpv4(), { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -970,7 +970,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    redis.connections.allowFrom(web, { ports: [kplus.Port.allTcp()] });
+    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -986,7 +986,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    redis.connections.allowFrom(web, { ports: [kplus.Port.allTcp()] });
+    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1000,7 +1000,7 @@ describe('connections |', () => {
 
     const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
 
-    redis.connections.allowFrom(web, { ports: [kplus.Port.allTcp()] });
+    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1015,7 +1015,7 @@ describe('connections |', () => {
     const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'))
       .namespaced(kplus.Namespace.named('web'));
 
-    redis.connections.allowFrom(web, { ports: [kplus.Port.allTcp()] });
+    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1029,7 +1029,7 @@ describe('connections |', () => {
 
     const all = kplus.Pod.all();
 
-    web.connections.allowFrom(all, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowFrom(all, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1043,7 +1043,7 @@ describe('connections |', () => {
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
-    web.connections.allowFrom(namespace, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowFrom(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1057,7 +1057,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespace.named('web');
 
-    web.connections.allowFrom(namespace, { ports: [kplus.Port.allTcp()] });
+    web.connections.allowFrom(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1075,7 +1075,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n2' },
     });
 
-    redis.connections.allowFrom(web, { ports: [kplus.Port.allTcp()] });
+    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1090,7 +1090,7 @@ describe('connections |', () => {
 
     const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
 
-    redis.connections.allowFrom(web, { ports: [kplus.Port.allTcp()] });
+    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1143,6 +1143,41 @@ describe('connections |', () => {
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
+
+  test('allowFrom defaults to pod container ports', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis', port: 6379 }],
+    });
+
+    redis.connections.allowFrom(web);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allowTo defaults to peer container ports', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis', port: 6379 }],
+    });
+
+    web.connections.allowTo(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
 });
 
 test('can select a pod with no label queries', () => {
