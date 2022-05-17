@@ -824,6 +824,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.50.tgz#14ba5198f1754ffd0472a2f84ab433b45ee0b65e"
   integrity sha512-+9axpWx2b2JCVovr7Ilgt96uc6C1zBKOQMpGtRbWT9IoR/8ue32GGMfGA4woP8QyP2gBs6GQWEVM3tCybGCxDA==
 
+"@types/node@^14":
+  version "14.18.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.18.tgz#5c9503030df484ccffcbb935ea9a9e1d6fad1a20"
+  integrity sha512-B9EoJFjhqcQ9OmQrNorItO+OwEOORNn3S31WuiHvZY/dm9ajkB7AKD/8toessEtHHNL+58jofbq7hMMY9v4yig==
+
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
@@ -1415,7 +1420,16 @@ cdk8s-plus-22@^1.0.0-beta.216:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@1.5.86, cdk8s@^1.5.85:
+cdk8s@2.2.85:
+  version "2.2.85"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.2.85.tgz#fff95213d2ee3b690a4a026f2b7d6cdeb2ad1e63"
+  integrity sha512-nZg+p44hqVT8MViNl7Ny/qwmys/BCkZbOifXSaKuIOLclXDLAak24sy2l1NsO4ugf9pn0hEqMQ9eLR41c+M/iQ==
+  dependencies:
+    fast-json-patch "^2.2.1"
+    follow-redirects "^1.14.9"
+    yaml "2.0.0-7"
+
+cdk8s@^1.5.85:
   version "1.5.86"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.5.86.tgz#f695b699a55193c9925b5175c051515039b7e5d4"
   integrity sha512-5brCXdY69cJYff1njLMhbpj2lO5EAeeXbaR4l7m+vb/BIN/WpgiV9QatNgcxLqalcILnzGyDzlMB+TaCp//Rqw==
@@ -1638,7 +1652,12 @@ console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-constructs@3.3.283, constructs@^3.3.282:
+constructs@10.1.7:
+  version "10.1.7"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.7.tgz#d96fbeedb8d091720f4d3347c955bd42593abaa2"
+  integrity sha512-U4zMM7Iqa81hzLSfof9IW9R7kUWSMdhzV2JS8lXGISRFXljZrd4qwzYxhSO/VMB+CS24Tt0/YYLyNxET+6/3Mg==
+
+constructs@^3.3.282:
   version "3.3.283"
   resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.283.tgz#de79629ea9442d8711b04b3472799e7fc5697171"
   integrity sha512-0LbWDLDPE6sa19F87kTg/a+7ZhO6YXaGs3JYPYcYcd1vzastOUbJQ+GY9O7BweDMLj0Hcw4WP33qV0SFmGnipQ==

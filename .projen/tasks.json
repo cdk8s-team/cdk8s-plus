@@ -366,7 +366,7 @@
       "description": "Prepare a release from \"k8s-22/main\" branch",
       "env": {
         "RELEASE": "true",
-        "MAJOR": "1",
+        "MAJOR": "2",
         "PRERELEASE": "beta",
         "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
       },
@@ -393,7 +393,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --updateSnapshot"
+          "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8"
         },
         {
           "spawn": "eslint"
