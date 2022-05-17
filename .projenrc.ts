@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { cdk, github, javascript, JsonFile } from 'projen';
+import { cdk, github, javascript, JsonFile, Task } from 'projen';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
@@ -117,14 +117,34 @@ for (const lang of ['typescript', 'python', 'java']) {
   project.gitignore.exclude(output);
 }
 
+// run backport in clean directories every time.
+const backportHome = '/tmp/.backport/';
+const backportDir = `${backportHome}/repositories/cdk8s-team/cdk8s-plus`;
+const backportConfig = new JsonFile(project, '.backportrc.json', {
+  // see https://github.com/sqren/backport/blob/main/docs/config-file-options.md
+  obj: {
+    repoOwner: 'cdk8s-team',
+    repoName: 'cdk8s-plus',
+    signoff: true,
+    branchLabelMapping: {
+      '^backport-to-(.+)$': '$1',
+    },
+    prTitle: '{commitMessages}',
+    fork: false,
+    publishStatusCommentOnFailure: true,
+    publishStatusCommentOnSuccess: true,
+    publishStatusCommentOnAbort: true,
+    targetPRLabels: [project.autoApprove!.label],
+    dir: backportDir,
+  },
+});
+
 // backport task to branches based on pr labels
-const backportTask = project.addTask('backport', { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
-backportTask.exec('npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive');
+const backportTask = createBackportTask();
 
 // backport tasks to explicit branches based on input
 for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
-  const t = project.addTask(`backport:${spec}`, { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
-  t.exec(`npx backport --accesstoken \${GITHUB_TOKEN} --pr \${BACKPORT_PR_NUMBER} --branch k8s-${spec}/main`);
+  createBackportTask(spec);
 }
 
 const backportWorkflow = project.github!.addWorkflow('backport');
@@ -158,26 +178,6 @@ backportWorkflow.addJob('backport', {
   ],
 });
 
-// see https://github.com/sqren/backport/blob/main/docs/configuration.md
-const backportConfig = {
-  repoOwner: 'cdk8s-team',
-  repoName: 'cdk8s-plus',
-  signoff: true,
-  branchLabelMapping: {
-    '^backport-to-(.+)$': '$1',
-  },
-  prTitle: '{commitMessages}',
-  fork: false,
-  publishStatusCommentOnFailure: true,
-  publishStatusCommentOnSuccess: true,
-  publishStatusCommentOnAbort: true,
-  targetPRLabels: [project.autoApprove!.label],
-};
-
-new JsonFile(project, '.backportrc.json', {
-  obj: backportConfig,
-});
-
 project.addTask('regenerate-api-information', {
   description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
   exec: 'kubectl api-resources -o wide > api-resources.txt',
@@ -185,3 +185,20 @@ project.addTask('regenerate-api-information', {
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
 project.synth();
+
+function createBackportTask(branch?: Number): Task {
+  const name = branch ? `backport:${branch}` : 'backport';
+  const task = project.addTask(name, { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
+  task.exec(`rm -rf ${backportHome}`);
+  task.exec(`mkdir -p ${backportHome}`);
+  task.exec(`cp ${backportConfig.path} ${backportHome}`);
+
+  const command = ['npx', 'backport', '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
+  if (branch) {
+    command.push(...['--branch', `k8s-${branch}/main`]);
+  } else {
+    command.push('--non-interactive');
+  }
+  task.exec(command.join(' '), { cwd: backportHome });
+  return task;
+}
