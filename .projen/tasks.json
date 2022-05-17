@@ -326,7 +326,7 @@
       "description": "Prepare a release from \"k8s-22/main\" branch",
       "env": {
         "RELEASE": "true",
-        "MAJOR": "1",
+        "MAJOR": "2",
         "PRERELEASE": "beta",
         "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
       },
