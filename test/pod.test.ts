@@ -4,7 +4,7 @@ import * as kplus from '../src';
 import { DockerConfigSecret, FsGroupChangePolicy, Probe } from '../src';
 import * as k8s from '../src/imports/k8s';
 
-test('deafults', () => {
+test('defaults', () => {
 
   const chart = Testing.chart();
   new kplus.Pod(chart, 'Pod', {
