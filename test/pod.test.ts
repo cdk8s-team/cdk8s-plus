@@ -521,3 +521,53 @@ test('auto mounting token can be disabled', () => {
   expect(spec.automountServiceAccountToken).toBeFalsy();
 
 });
+
+test('can grant read permissions to a user', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  pod.grantRead(new kplus.User({ name: 'bob' }));
+
+});
+
+test('can grant read permissions to a group', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  pod.grantRead(new kplus.Group({ name: 'manager' }));
+
+});
+
+test('can grant read permissions to a service account', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  const sa = new kplus.ServiceAccount(chart, 'ServiceAccount');
+
+  pod.grantRead(new kplus.Group({ name: 'manager' }));
+
+});
+
+test('can grant read permissions to another pod', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  const scraper = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'scraper' }],
+  });
+
+  pod.grantRead(scraper);
+
+});

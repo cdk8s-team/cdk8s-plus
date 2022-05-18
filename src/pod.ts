@@ -3,11 +3,12 @@ import { Construct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
 import * as k8s from './imports/k8s';
+import * as rb from './role-binding';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import * as volume from './volume';
 
-export abstract class AbstractPod extends base.Resource {
+export abstract class AbstractPod extends base.Resource implements rb.ISubject {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -105,6 +106,27 @@ export abstract class AbstractPod extends base.Resource {
       throw new Error(`Volume with name ${vol.name} already exists`);
     }
     this._volumes.set(vol.name, vol);
+  }
+
+  /**
+   * @see ISubect.toSubjectConfiguration()
+   */
+  public toSubjectConfiguration(): rb.SubjectConfiguration {
+
+    if (!this.serviceAccount && !this.automountServiceAccountToken) {
+      throw new Error(`${this.name} cannot be converted to a role binding subject:`
+        + ' You must either assign a service account to it, or use \'automountServiceAccountToken: true\'');
+    }
+
+    // 'default' is assumed to be the name of the default service account
+    // in the cluster.
+    const serviceAccountName = this.serviceAccount?.name ?? 'default';
+
+    return {
+      kind: 'ServiceAccount',
+      name: serviceAccountName,
+      apiGroup: '',
+    };
   }
 
   /**

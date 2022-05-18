@@ -1,6 +1,8 @@
 import { ApiObjectMetadata, ApiObject, ApiObjectMetadataDefinition } from 'cdk8s';
 import { Construct } from 'constructs';
 import { IApiResource, IApiEndpoint } from './api-resource.generated';
+import * as r from './role';
+import * as rb from './role-binding';
 
 /**
  * Initialization properties for resources.
@@ -93,6 +95,28 @@ export abstract class Resource extends Construct implements IResource, IApiResou
 
   public asNonApiResource(): string | undefined {
     return undefined;
+  }
+
+  /**
+   * Grants the list of subjects permissions to read this resource.
+   */
+  public grantRead(...subjects: rb.ISubject[]): rb.RoleBinding {
+    const role = new r.Role(this, 'Role', {
+      metadata: { namespace: this.metadata.namespace },
+    });
+    role.allowRead(this);
+    return role.bind(...subjects);
+  }
+
+  /**
+   * Grants the list of subjects permissions to read and write this resource.
+   */
+  public grantReadWrite(...subjects: rb.ISubject[]): rb.RoleBinding {
+    const role = new r.Role(this, 'Role', {
+      metadata: { namespace: this.metadata.namespace },
+    });
+    role.allowReadWrite(this);
+    return role.bind(...subjects);
   }
 
 }
