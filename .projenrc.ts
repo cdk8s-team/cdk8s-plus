@@ -192,15 +192,16 @@ function createBackportTask(branch?: Number): Task {
   task.exec(`rm -rf ${backportHome}`);
   task.exec(`mkdir -p ${backportHome}`);
   task.exec(`cp ${backportConfig.path} ${backportHome}`);
-  task.exec('git config user.name "github-actions"');
-  task.exec('git config user.email "github-actions@github.com"');
 
-  const command = ['npx', 'backport', '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
+  const backport = ['npx', 'backport', '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
   if (branch) {
-    command.push(...['--branch', `k8s-${branch}/main`]);
+    backport.push(...['--branch', `k8s-${branch}/main`]);
   } else {
-    command.push('--non-interactive');
+    backport.push('--non-interactive');
   }
-  task.exec(command.join(' '), { cwd: backportHome });
+  task.exec('git init', { cwd: backportHome });
+  task.exec('git config user.name "github-actions"', { cwd: backportHome });
+  task.exec('git config user.email "github-actions@github.com"', { cwd: backportHome });
+  task.exec(backport.join(' '), { cwd: backportHome });
   return task;
 }
