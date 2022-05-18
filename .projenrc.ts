@@ -192,6 +192,8 @@ function createBackportTask(branch?: Number): Task {
   task.exec(`rm -rf ${backportHome}`);
   task.exec(`mkdir -p ${backportHome}`);
   task.exec(`cp ${backportConfig.path} ${backportHome}`);
+  task.exec('git config user.name "github-actions"');
+  task.exec('git config user.email "github-actions@github.com"');
 
   const command = ['npx', 'backport', '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
   if (branch) {
