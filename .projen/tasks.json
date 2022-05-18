@@ -17,10 +17,16 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "git config user.name \"github-actions\""
+          "exec": "git init",
+          "cwd": "/tmp/.backport/"
         },
         {
-          "exec": "git config user.email \"github-actions@github.com\""
+          "exec": "git config user.name \"github-actions\"",
+          "cwd": "/tmp/.backport/"
+        },
+        {
+          "exec": "git config user.email \"github-actions@github.com\"",
+          "cwd": "/tmp/.backport/"
         },
         {
           "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
@@ -45,10 +51,16 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "git config user.name \"github-actions\""
+          "exec": "git init",
+          "cwd": "/tmp/.backport/"
         },
         {
-          "exec": "git config user.email \"github-actions@github.com\""
+          "exec": "git config user.name \"github-actions\"",
+          "cwd": "/tmp/.backport/"
+        },
+        {
+          "exec": "git config user.email \"github-actions@github.com\"",
+          "cwd": "/tmp/.backport/"
         },
         {
           "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main",
@@ -73,10 +85,16 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "git config user.name \"github-actions\""
+          "exec": "git init",
+          "cwd": "/tmp/.backport/"
         },
         {
-          "exec": "git config user.email \"github-actions@github.com\""
+          "exec": "git config user.name \"github-actions\"",
+          "cwd": "/tmp/.backport/"
+        },
+        {
+          "exec": "git config user.email \"github-actions@github.com\"",
+          "cwd": "/tmp/.backport/"
         },
         {
           "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main",
@@ -101,10 +119,16 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "git config user.name \"github-actions\""
+          "exec": "git init",
+          "cwd": "/tmp/.backport/"
         },
         {
-          "exec": "git config user.email \"github-actions@github.com\""
+          "exec": "git config user.name \"github-actions\"",
+          "cwd": "/tmp/.backport/"
+        },
+        {
+          "exec": "git config user.email \"github-actions@github.com\"",
+          "cwd": "/tmp/.backport/"
         },
         {
           "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
