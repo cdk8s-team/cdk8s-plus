@@ -50,7 +50,7 @@ const project = new cdk.JsiiProject({
     'snake-case',
   ],
 
-  majorVersion: 1,
+  majorVersion: 2,
   releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
