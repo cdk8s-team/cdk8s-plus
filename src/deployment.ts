@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress-v1beta1';
 import * as service from './service';
+import { undefinedIfEmpty } from './utils';
 import * as workload from './workload';
 
 /**
@@ -216,8 +217,8 @@ export class Deployment extends workload.Workload {
         spec: this._toPodSpec(),
       },
       selector: {
-        matchExpressions: this.matchExpressions,
-        matchLabels: this.matchLabels,
+        matchExpressions: undefinedIfEmpty(this.matchExpressions),
+        matchLabels: undefinedIfEmpty(this.matchLabels),
       },
       strategy: this.strategy._toKube(),
     };
