@@ -216,12 +216,12 @@ export abstract class AbstractPod extends base.Resource implements
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
-      securityContext: this.securityContext._toKube(),
-      initContainers: initContainers,
-      hostAliases: this.hostAliases,
-      volumes: Array.from(volumes.values()).map(v => v._toKube()),
+      securityContext: undefinedIfEmpty(this.securityContext._toKube()),
+      initContainers: undefinedIfEmpty(initContainers),
+      hostAliases: undefinedIfEmpty(this.hostAliases),
+      volumes: undefinedIfEmpty(Array.from(volumes.values()).map(v => v._toKube())),
       dnsPolicy: dns.policy,
-      dnsConfig: dns.config,
+      dnsConfig: undefinedIfEmpty(dns.config),
       hostname: dns.hostname,
       subdomain: dns.subdomain,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
@@ -734,9 +734,9 @@ export class PodDns {
       hostnameAsFQDN: this.hostnameAsFQDN,
       policy: this.policy,
       config: {
-        nameservers: this.nameservers,
-        searches: this.searches,
-        options: this.options,
+        nameservers: undefinedIfEmpty(this.nameservers),
+        searches: undefinedIfEmpty(this.searches),
+        options: undefinedIfEmpty(this.options),
       },
     };
   }
@@ -783,7 +783,7 @@ export class PodSecurityContext {
       fsGroup: this.fsGroup,
       runAsNonRoot: this.ensureNonRoot,
       fsGroupChangePolicy: this.fsGroupChangePolicy,
-      sysctls: this._sysctls,
+      sysctls: undefinedIfEmpty(this._sysctls),
     };
   }
 

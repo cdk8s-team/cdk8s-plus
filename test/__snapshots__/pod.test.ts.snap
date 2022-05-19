@@ -62,6 +62,42 @@ Object {
 }
 `;
 
+exports[`defaults 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "image": "image",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`scheduling can be assigned to a node by name 1`] = `
 Array [
   Object {
@@ -77,35 +113,23 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "nodeName": "node1",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -146,34 +170,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -213,34 +225,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -261,34 +261,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
   Object {
@@ -338,34 +326,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -386,34 +362,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
   Object {
@@ -460,34 +424,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -531,34 +483,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -600,34 +540,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -648,34 +576,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
   Object {
@@ -725,34 +641,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -773,34 +677,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
   Object {
@@ -847,34 +739,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -918,34 +798,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -997,34 +865,22 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
-      "volumes": Array [],
     },
   },
 ]
@@ -1045,31 +901,20 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
       "tolerations": Array [
@@ -1104,7 +949,6 @@ Array [
           "operator": "Exists",
         },
       ],
-      "volumes": Array [],
     },
   },
 ]

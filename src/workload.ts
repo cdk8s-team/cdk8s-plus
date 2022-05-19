@@ -2,6 +2,7 @@ import { ApiObjectMetadata, ApiObjectMetadataDefinition, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import * as pod from './pod';
+import { undefinedIfEmpty } from './utils';
 
 /**
  * Properties for `Workload`.
@@ -114,7 +115,10 @@ export abstract class Workload extends pod.AbstractPod {
    * @internal
    */
   public _toLabelSelector(): k8s.LabelSelector {
-    return { matchExpressions: this._matchExpressions, matchLabels: this._matchLabels };
+    return {
+      matchExpressions: undefinedIfEmpty(this._matchExpressions),
+      matchLabels: undefinedIfEmpty(this._matchLabels),
+    };
   }
 
   /**

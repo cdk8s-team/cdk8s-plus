@@ -45,7 +45,7 @@ test('No selector is generated if "select" is false', () => {
 
   // assert the k8s spec doesnt have it.
   const spec = Testing.synth(chart)[0].spec;
-  expect(spec.selector.matchLabels).toEqual({});
+  expect(spec.selector.matchLabels).toBeUndefined();
 
   // assert the deployment object doesnt have it.
   expect(deployment.matchLabels).toEqual({});

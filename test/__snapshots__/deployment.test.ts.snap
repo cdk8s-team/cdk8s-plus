@@ -13,7 +13,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
         },
@@ -35,7 +34,6 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "image",
               "imagePullPolicy": "Always",
               "name": "main",
@@ -49,24 +47,14 @@ Array [
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -136,7 +124,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -158,35 +145,23 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "nodeName": "node1",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -207,7 +182,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -249,34 +223,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -297,7 +259,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -338,34 +299,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -386,7 +335,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -408,34 +356,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -451,7 +387,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -507,34 +442,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -555,7 +478,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -577,34 +499,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -620,7 +530,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -673,34 +582,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -721,7 +618,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -777,34 +673,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -825,7 +709,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -878,34 +761,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -926,7 +797,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -948,34 +818,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -991,7 +849,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -1047,34 +904,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1095,7 +940,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
         },
@@ -1117,34 +961,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1160,7 +992,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -1213,34 +1044,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1261,7 +1080,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -1317,34 +1135,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1365,7 +1171,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
         },
@@ -1418,34 +1223,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "web",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1466,7 +1259,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
         },
@@ -1522,34 +1314,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1570,7 +1350,6 @@ Array [
       "progressDeadlineSeconds": 600,
       "replicas": 1,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
         },
@@ -1623,34 +1402,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "redis",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -1673,31 +1440,20 @@ Array [
       "automountServiceAccountToken": true,
       "containers": Array [
         Object {
-          "env": Array [],
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
             "runAsNonRoot": false,
           },
-          "volumeMounts": Array [],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
       "tolerations": Array [
@@ -1732,7 +1488,6 @@ Array [
           "operator": "Exists",
         },
       ],
-      "volumes": Array [],
     },
   },
 ]

@@ -104,9 +104,11 @@ export class Ingress extends base.Resource {
     if (props.tls) {
       this.addTls(props.tls);
     }
+
+    this.node.addValidation({ validate: () => this._validate() });
   }
 
-  protected onValidate() {
+  private _validate() {
     if (!this._defaultBackend && Object.keys(this._rulesPerHost).length === 0) {
       return ['ingress with no rules or default backend'];
     }

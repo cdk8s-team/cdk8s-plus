@@ -8,7 +8,17 @@
       ],
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive"
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -20,7 +30,17 @@
       ],
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main"
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -32,7 +52,17 @@
       ],
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main"
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -44,7 +74,17 @@
       ],
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main"
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -207,7 +247,7 @@
       "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.ts"
         }
       ]
     },
@@ -326,7 +366,7 @@
       "description": "Prepare a release from \"k8s-22/main\" branch",
       "env": {
         "RELEASE": "true",
-        "MAJOR": "1",
+        "MAJOR": "2",
         "PRERELEASE": "beta",
         "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
       },
@@ -353,7 +393,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --updateSnapshot"
+          "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8"
         },
         {
           "spawn": "eslint"
