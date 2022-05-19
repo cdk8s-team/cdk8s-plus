@@ -167,6 +167,10 @@ backportWorkflow.addJob('backport', {
       },
     },
     {
+      name: 'Set Git Identity',
+      run: 'git config --global user.name "github-actions" && git config --global user.email "github-actions@github.com"',
+    },
+    {
       name: 'backport',
       if: 'github.event.pull_request.merged == true',
       run: `npx projen ${backportTask.name}`,
@@ -199,9 +203,6 @@ function createBackportTask(branch?: Number): Task {
   } else {
     backport.push('--non-interactive');
   }
-  task.exec('git init', { cwd: backportHome });
-  task.exec('git config user.name "github-actions"', { cwd: backportHome });
-  task.exec('git config user.email "github-actions@github.com"', { cwd: backportHome });
   task.exec(backport.join(' '), { cwd: backportHome });
   return task;
 }
