@@ -16,7 +16,7 @@ export interface INamespaceSelector {
   /**
    * Return the namespace name (if known).
    */
-  toNamespaceName(): string | undefined;
+  toNamespaceNames(): string[] | undefined;
 }
 
 /**
@@ -38,27 +38,6 @@ export class Namespace extends base.Resource implements INamespaceSelector {
   public static readonly NAME_LABEL = 'kubernetes.io/metadata.name';
 
   /**
-   * Match a namespace by its labels.
-   */
-  public static labeled(...queries: pod.LabelQuery[]): LabeledNamespace {
-    return new LabeledNamespace(queries);
-  }
-
-  /**
-   * Match a namespace by its name.
-   */
-  public static named(name: string): NamedNamespace {
-    return new NamedNamespace(name);
-  }
-
-  /**
-   * Match all namespaces.
-   */
-  public static all(): LabeledNamespace {
-    return Namespace.labeled();
-  }
-
-  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
@@ -78,21 +57,14 @@ export class Namespace extends base.Resource implements INamespaceSelector {
    * @see INamespaceSelector.toNamespaceLabelSelector()
    */
   public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return Namespace.named(this.name).toNamespaceLabelSelector();
+    return Namespaces.select({ names: [this.name] }).toNamespaceLabelSelector();
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceName()
+   * @see INamespaceSelector.toNamespaceNames()
    */
-  public toNamespaceName(): string | undefined {
-    return this.name;
-  }
-
-  /**
-   * @see IPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return pod.Pod.all().namespaced(this);
+  public toNamespaceNames(): string[] | undefined {
+    return [this.name];
   }
 
   /**
@@ -104,12 +76,41 @@ export class Namespace extends base.Resource implements INamespaceSelector {
 
 }
 
-/**
- * Namespace(s) identified by labels.
- */
-export class LabeledNamespace implements INamespaceSelector {
+export interface NamespacesSelectOptions {
 
-  public constructor(private readonly queries: pod.LabelQuery[]) {};
+  readonly labels?: { [key: string]: string };
+  readonly selectors?: pod.LabelQuery[];
+  readonly names?: string[];
+
+}
+
+/**
+ * Represents a group of namespaces.
+ */
+export class Namespaces implements INamespaceSelector {
+
+  /**
+   * Select specific namespaces.
+   */
+  public static select(options: NamespacesSelectOptions): Namespaces {
+
+    const selectors = options.selectors ?? [];
+
+    for (const [key, value] of Object.entries(options.labels ?? {})) {
+      selectors.push(pod.LabelQuery.is(key, value));
+    }
+
+    return new Namespaces(selectors, options.names);
+  }
+
+  /**
+   * Select all namespaces.
+   */
+  public static all(): Namespaces {
+    return Namespaces.select({});
+  }
+
+  constructor(public readonly queries: pod.LabelQuery[], public readonly names?: string[]) { }
 
   /**
    * @see INamespaceSelector.toNamespaceLabelSelector()
@@ -119,74 +120,10 @@ export class LabeledNamespace implements INamespaceSelector {
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceName()
+   * @see INamespaceSelector.toNamespaceNames()
    */
-  public toNamespaceName(): string | undefined {
-
-    // a named namespace also uses label queries by specifying a magic label.
-    // this means that if the appropriate query exists, we can use it to detect the namespace name.
-
-    const namespaceNameQuery = this.queries.filter(q => q.key === Namespace.NAME_LABEL && q.operator === 'In');
-
-    if (namespaceNameQuery.length === 0) {
-      // the magic query doesn't exist, we cant know
-      // the namesapce name.
-      return undefined;
-    }
-
-    // make sure only one such magic query exists.
-    if (namespaceNameQuery.length > 1) {
-      throw new Error(`Error extracting namespace name: Found multiple 'In' queries with key '${Namespace.NAME_LABEL}'`);
-    }
-
-    // a single magic query exists, make sure its valid.
-    const values = namespaceNameQuery[0].values;
-    if (!values) {
-      throw new Error(`Error extracting namespace name: Found multiple values for 'In' query with key '${Namespace.NAME_LABEL}': ${values}`);
-    }
-    if (values.length === 0) {
-      throw new Error(`Error extracting namespace name: No values found for 'In' query with key ${Namespace.NAME_LABEL}`);
-    }
-
-    // the single value in the query is the namespace name.
-    return values[0];
-  }
-
-  /**
-   * @see IPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return pod.Pod.all().namespaced(this);
-  }
-
-}
-
-/**
- * Namespace identified by a name.
- */
-export class NamedNamespace implements INamespaceSelector {
-
-  public constructor(private readonly name: string) {};
-
-  /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
-   */
-  public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return Namespace.labeled(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).toNamespaceLabelSelector();
-  }
-
-  /**
-   * @see INamespaceSelector.toNamespaceName()
-   */
-  public toNamespaceName(): string | undefined {
-    return this.name;
-  }
-
-  /**
-   * @see IPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return pod.Pod.all().namespaced(this);
+  public toNamespaceNames(): string[] | undefined {
+    return this.names;
   }
 
 }

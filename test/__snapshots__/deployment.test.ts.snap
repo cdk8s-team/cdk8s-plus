@@ -421,17 +421,10 @@ Array [
                         },
                       ],
                     },
-                    "namespaceSelector": Object {
-                      "matchExpressions": Array [
-                        Object {
-                          "key": "kubernetes.io/metadata.name",
-                          "operator": "In",
-                          "values": Array [
-                            "default",
-                          ],
-                        },
-                      ],
-                    },
+                    "namespaceSelector": Object {},
+                    "namespaces": Array [
+                      "default",
+                    ],
                     "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
@@ -563,17 +556,10 @@ Array [
                       },
                     ],
                   },
-                  "namespaceSelector": Object {
-                    "matchExpressions": Array [
-                      Object {
-                        "key": "kubernetes.io/metadata.name",
-                        "operator": "In",
-                        "values": Array [
-                          "default",
-                        ],
-                      },
-                    ],
-                  },
+                  "namespaceSelector": Object {},
+                  "namespaces": Array [
+                    "default",
+                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
@@ -883,17 +869,10 @@ Array [
                         },
                       ],
                     },
-                    "namespaceSelector": Object {
-                      "matchExpressions": Array [
-                        Object {
-                          "key": "kubernetes.io/metadata.name",
-                          "operator": "In",
-                          "values": Array [
-                            "default",
-                          ],
-                        },
-                      ],
-                    },
+                    "namespaceSelector": Object {},
+                    "namespaces": Array [
+                      "default",
+                    ],
                     "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
@@ -1025,17 +1004,10 @@ Array [
                       },
                     ],
                   },
-                  "namespaceSelector": Object {
-                    "matchExpressions": Array [
-                      Object {
-                        "key": "kubernetes.io/metadata.name",
-                        "operator": "In",
-                        "values": Array [
-                          "default",
-                        ],
-                      },
-                    ],
-                  },
+                  "namespaceSelector": Object {},
+                  "namespaces": Array [
+                    "default",
+                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
@@ -1293,17 +1265,10 @@ Array [
                         },
                       ],
                     },
-                    "namespaceSelector": Object {
-                      "matchExpressions": Array [
-                        Object {
-                          "key": "kubernetes.io/metadata.name",
-                          "operator": "In",
-                          "values": Array [
-                            "default",
-                          ],
-                        },
-                      ],
-                    },
+                    "namespaceSelector": Object {},
+                    "namespaces": Array [
+                      "default",
+                    ],
                     "topologyKey": "kubernetes.io/hostname",
                   },
                   "weight": 1,
@@ -1383,17 +1348,10 @@ Array [
                       },
                     ],
                   },
-                  "namespaceSelector": Object {
-                    "matchExpressions": Array [
-                      Object {
-                        "key": "kubernetes.io/metadata.name",
-                        "operator": "In",
-                        "values": Array [
-                          "default",
-                        ],
-                      },
-                    ],
-                  },
+                  "namespaceSelector": Object {},
+                  "namespaces": Array [
+                    "default",
+                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],

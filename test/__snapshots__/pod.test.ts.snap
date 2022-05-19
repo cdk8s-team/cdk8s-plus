@@ -28,19 +28,7 @@ Object {
 }
 `;
 
-exports[`can select a pod with labels in a particular namespace 2`] = `
-Object {
-  "matchExpressions": Array [
-    Object {
-      "key": "kubernetes.io/metadata.name",
-      "operator": "In",
-      "values": Array [
-        "n1",
-      ],
-    },
-  ],
-}
-`;
+exports[`can select a pod with labels in a particular namespace 2`] = `Object {}`;
 
 exports[`can select a pod with no label queries 1`] = `Object {}`;
 
@@ -48,19 +36,7 @@ exports[`can select all pods 1`] = `Object {}`;
 
 exports[`can select all pods in a particular namespace 1`] = `Object {}`;
 
-exports[`can select all pods in a particular namespace 2`] = `
-Object {
-  "matchExpressions": Array [
-    Object {
-      "key": "kubernetes.io/metadata.name",
-      "operator": "In",
-      "values": Array [
-        "n1",
-      ],
-    },
-  ],
-}
-`;
+exports[`can select all pods in a particular namespace 2`] = `Object {}`;
 
 exports[`defaults 1`] = `
 Array [
@@ -305,17 +281,10 @@ Array [
                     },
                   ],
                 },
-                "namespaceSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "kubernetes.io/metadata.name",
-                      "operator": "In",
-                      "values": Array [
-                        "default",
-                      ],
-                    },
-                  ],
-                },
+                "namespaceSelector": Object {},
+                "namespaces": Array [
+                  "default",
+                ],
                 "topologyKey": "topology.kubernetes.io/zone",
               },
               "weight": 1,
@@ -405,17 +374,10 @@ Array [
                   },
                 ],
               },
-              "namespaceSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "kubernetes.io/metadata.name",
-                    "operator": "In",
-                    "values": Array [
-                      "default",
-                    ],
-                  },
-                ],
-              },
+              "namespaceSelector": Object {},
+              "namespaces": Array [
+                "default",
+              ],
               "topologyKey": "kubernetes.io/hostname",
             },
           ],
@@ -620,17 +582,10 @@ Array [
                     },
                   ],
                 },
-                "namespaceSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "kubernetes.io/metadata.name",
-                      "operator": "In",
-                      "values": Array [
-                        "default",
-                      ],
-                    },
-                  ],
-                },
+                "namespaceSelector": Object {},
+                "namespaces": Array [
+                  "default",
+                ],
                 "topologyKey": "topology.kubernetes.io/zone",
               },
               "weight": 1,
@@ -720,17 +675,10 @@ Array [
                   },
                 ],
               },
-              "namespaceSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "kubernetes.io/metadata.name",
-                    "operator": "In",
-                    "values": Array [
-                      "default",
-                    ],
-                  },
-                ],
-              },
+              "namespaceSelector": Object {},
+              "namespaces": Array [
+                "default",
+              ],
               "topologyKey": "kubernetes.io/hostname",
             },
           ],
@@ -857,6 +805,9 @@ Array [
                   },
                 ],
               },
+              "namespaces": Array [
+                "web",
+              ],
               "topologyKey": "kubernetes.io/hostname",
             },
           ],

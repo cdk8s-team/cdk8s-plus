@@ -92,14 +92,14 @@ export abstract class AbstractPod extends base.Resource implements
    * @see INamespaceSelector.toNamespaceLabelSelector()
    */
   public toNamespaceLabelSelector(): LabelSelector | undefined {
-    return namespace.Namespace.named(this._namespaceName).toNamespaceLabelSelector();
+    return namespace.Namespaces.select({ names: [this._namespaceName] }).toNamespaceLabelSelector();
   }
 
   /**
    * @see INamespaceSelector.toNamespaceName()
    */
-  public toNamespaceName(): string | undefined {
-    return this._namespaceName;
+  public toNamespaceNames(): string[] | undefined {
+    return [this._namespaceName];
   }
 
   /**
@@ -113,13 +113,6 @@ export abstract class AbstractPod extends base.Resource implements
    * @see INamespacedPodSelector.toNamespaceSelector()
    */
   public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return this;
-  }
-
-  /**
-   * @see IPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
     return this;
   }
 
@@ -1113,13 +1106,6 @@ export class LabeledPod implements IPodSelector, INamespacedPodSelector {
     return this;
   }
 
-  /**
-   * @see IPeer.toNamespacedPodSelector();
-   */
-  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
-    return this;
-  }
-
   public namespaced(selector: namespace.INamespaceSelector): NamespacedLabeledPod {
     return new NamespacedLabeledPod(this, selector);
   }
@@ -1142,13 +1128,6 @@ export class NamespacedLabeledPod implements INamespacedPodSelector {
    */
   public toPodSelector(): IPodSelector {
     return this.labeledPod;
-  }
-
-  /**
-   * @see IPeer.toNamespacedPodSelector();
-   */
-  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
-    return this.labeledPod.namespaced(this.selector);
   }
 
 }
@@ -1379,7 +1358,7 @@ export class PodScheduling {
 
   /**
    * Attract this pod to a node matched by selectors.
-   * You can select a node by using `Node.select()`.
+   * You can select a node by using `Node.labeled()`.
    *
    * Attracting to multiple nodes (i.e invoking this method multiple times) acts as
    * an OR condition, meaning the pod will be assigned to either one of the nodes.
@@ -1465,6 +1444,7 @@ export class PodScheduling {
       topologyKey: topology.key,
       labelSelector: selector.toPodSelector().toPodLabelSelector()._toKube(),
       namespaceSelector: selector.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
+      namespaces: selector.toNamespaceSelector()?.toNamespaceNames(),
     };
   }
 
