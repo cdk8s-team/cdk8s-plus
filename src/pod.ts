@@ -388,11 +388,27 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
+ * Options for `LabelSelector.of`.
+ */
+export class LabelSelectorOptions {
+
+  /**
+   * Strict label matchers.
+   */
+  readonly labels?: { [key: string]: string };
+
+  /**
+   * Expression based label matchers.
+   */
+  readonly expressions?: LabelExpression[];
+}
+
+/**
  * Match a resource by labels.
  */
 export class LabelSelector {
 
-  public static of(options: { expressions?: LabelExpression[]; labels?: { [key: string]: string } }) {
+  public static of(options: LabelSelectorOptions = {}) {
     return new LabelSelector(options.expressions ?? [], options.labels ?? {});
   }
 
