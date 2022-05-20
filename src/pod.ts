@@ -414,10 +414,19 @@ export class LabelSelector {
   }
 }
 
+/**
+ * Configuration for selecting pods, optionally in particular namespaces.
+ */
 export interface PodSelectorConfig {
 
+  /**
+   * A selector to select pods by labels.
+   */
   readonly labelSelector: LabelSelector;
 
+  /**
+   * Configuration for selecting which namepsaces are the pods allowed to be in.
+   */
   readonly namespaces?: namespace.NamespaceSelectorConfig;
 
 }

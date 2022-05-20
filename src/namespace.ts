@@ -4,10 +4,19 @@ import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as pod from './pod';
 
+/**
+ * Configuration for selecting namespaces.
+ */
 export interface NamespaceSelectorConfig {
 
+  /**
+   * A selector to select namespaces by labels.
+   */
   readonly labelSelector?: pod.LabelSelector;
 
+  /**
+   * A list of names to select namespaces by names.
+   */
   readonly names?: string[];
 }
 
