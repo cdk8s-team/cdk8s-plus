@@ -9,10 +9,7 @@ import * as serviceaccount from './service-account';
 import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
-export abstract class AbstractPod extends base.Resource implements
-  IPodSelector,
-  namespace.INamespaceSelector,
-  INamespacedPodSelector {
+export abstract class AbstractPod extends base.Resource implements IPodSelector {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -77,43 +74,22 @@ export abstract class AbstractPod extends base.Resource implements
   }
 
   /**
-   * @see IPodSelector.toPodLabelSelector()
+   * @see IPodSelector.toPodSelectorConfig()
    */
-  public toPodLabelSelector(): LabelSelector {
+  public toPodSelectorConfig(): PodSelectorConfig {
     const podAddress = this.podMetadata.getLabel(Pod.ADDRESS_LABEL);
     if (!podAddress) {
       // shouldn't happen because we add this label automatically in both pods and workloads.
       throw new Error(`Unable to create a label selector since ${Pod.ADDRESS_LABEL} label is missing`);
     }
-    return LabelSelector.of(LabelQuery.is(Pod.ADDRESS_LABEL, podAddress));
+    return { labelSelector: LabelSelector.of({ labels: { [Pod.ADDRESS_LABEL]: podAddress } }) };
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * @see IPodSelector.toNamespaceSelectorConfig()
    */
-  public toNamespaceLabelSelector(): LabelSelector | undefined {
-    return namespace.Namespaces.select({ names: [this._namespaceName] }).toNamespaceLabelSelector();
-  }
-
-  /**
-   * @see INamespaceSelector.toNamespaceName()
-   */
-  public toNamespaceNames(): string[] | undefined {
-    return [this._namespaceName];
-  }
-
-  /**
-   * @see INamespacedPodSelector.toPodSelector()
-   */
-  public toPodSelector(): IPodSelector {
-    return this;
-  }
-
-  /**
-   * @see INamespacedPodSelector.toNamespaceSelector()
-   */
-  public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return this;
+  public toNamespaceSelectorConfig(): namespace.NamespaceSelectorConfig {
+    return { names: [this._namespaceName] };
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {
@@ -418,22 +394,34 @@ export interface PodProps extends AbstractPodProps {}
  */
 export class LabelSelector {
 
-  /**
-   * Create a selector from label queries.
-   */
-  public static of(...queries: LabelQuery[]): LabelSelector {
-    return new LabelSelector(queries);
+  public static of(options: { expressions?: LabelExpression[]; labels?: { [key: string]: string } }) {
+    return new LabelSelector(options.expressions ?? [], options.labels ?? {});
   }
 
-  private constructor(public readonly queries: LabelQuery[]) {}
+  private constructor(
+    private readonly expressions: LabelExpression[],
+    private readonly labels: { [key: string]: string }) {}
 
   /**
    * @internal
    */
   public _toKube(): k8s.LabelSelector {
-    if (this.queries.length === 0) return {};
-    return { matchExpressions: this.queries.map(q => ({ key: q.key, operator: q.operator, values: q.values })) };
+    if (this.expressions.length === 0 && Object.keys(this.labels).length === 0) {
+      return {};
+    }
+    return {
+      matchExpressions: undefinedIfEmpty(this.expressions.map(q => ({ key: q.key, operator: q.operator, values: q.values }))),
+      matchLabels: undefinedIfEmpty(this.labels),
+    };
   }
+}
+
+export interface PodSelectorConfig {
+
+  readonly labelSelector: LabelSelector;
+
+  readonly namespaces?: namespace.NamespaceSelectorConfig;
+
 }
 
 /**
@@ -441,29 +429,9 @@ export class LabelSelector {
  */
 export interface IPodSelector {
   /**
-   * Return the label selector that selects the pods.
-   *
-   * - Implementors should return `Pod.all()` to select all pods.
+   * Return the configuration of this selector.
    */
-  toPodLabelSelector(): LabelSelector;
-}
-
-/**
- * Represents an object that can select pods in particular namespaces.
- */
-export interface INamespacedPodSelector {
-  /**
-   * Return the pod selector that selects the pods.
-   */
-  toPodSelector(): IPodSelector;
-
-  /**
-   * Return the label selector that selects the namespaces.
-   *
-   * - Implementors should return `undefined` to select "this" namespace (i.e the namespace of the selected pod).
-   * - Implementors should return `Namespace.all()` to select all namespaces.
-   */
-  toNamespaceSelector(): namespace.INamespaceSelector | undefined;
+  toPodSelectorConfig(): PodSelectorConfig;
 }
 
 /**
@@ -477,42 +445,6 @@ export class Pod extends AbstractPod {
    * a unique and stable identifier for the pod.
    */
   public static readonly ADDRESS_LABEL = 'cdk8s.io/metadata.addr';
-
-  /**
-   * Match a pod by its labels. By default, matches only to pods belonging to the
-   * namespace of the resource it is defined in. To scope the pod down to other
-   * particular namespaces, use `.namespaced` on the return value.
-   *
-   * @example
-   *
-   * // match a pod with label 'app=store' in "this" namespace.
-   * Pod.labeled(PodLabelQuery.is('app', 'store'));
-   *
-   * // match a pod with label 'app=store' in the 'web' namespace
-   * Pod.labeled(PodLabelQuery.is('app', 'store'))
-   *    .namespaced(Namespace.named('web'));
-   */
-  public static labeled(...selectors: LabelQuery[]): LabeledPod {
-    return new LabeledPod(selectors);
-  }
-
-  /**
-   * Match all pods. By default, matches only to pods belonging to the
-   * namespace of the resource it is defined in. To scope the pod down to other
-   * particular namespaces, use `.namespaced` on the return value.
-   *
-   * @example
-   *
-   * // match all pods in "this" namespace.
-   * Pod.all();
-   *
-   * // match all pods in the 'web' namespace
-   * Pod.all().namespaced(Namespace.named('web'));
-   *
-   */
-  public static all(): LabeledPod {
-    return Pod.labeled();
-  }
 
   /**
    * @see base.Resource.apiObject
@@ -949,41 +881,34 @@ export class NodeLabelQuery {
 /**
  * Represents a query that can be performed against resources with labels.
  */
-export class LabelQuery {
-
-  /**
-   * Requires value of label `key` to equal `value`.
-   */
-  public static is(key: string, value: string) {
-    return LabelQuery.in(key, [value]);
-  }
+export class LabelExpression {
 
   /**
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new LabelQuery(key, 'In', values);
+    return new LabelExpression(key, 'In', values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new LabelQuery(key, 'NotIn', values);
+    return new LabelExpression(key, 'NotIn', values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new LabelQuery(key, 'Exists', undefined);
+    return new LabelExpression(key, 'Exists', undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new LabelQuery(key, 'DoesNotExist', undefined);
+    return new LabelExpression(key, 'DoesNotExist', undefined);
   }
 
   private constructor(
@@ -1081,55 +1006,58 @@ export class NodeTaintQuery {
   }
 }
 
-export class LabeledPod implements IPodSelector, INamespacedPodSelector {
-
-  public constructor(private readonly queries: LabelQuery[]) {};
-
-  /**
-   * @see IPodSelector.toPodLabelSelector()
-   */
-  public toPodLabelSelector(): LabelSelector {
-    return LabelSelector.of(...this.queries);
-  }
+/**
+ * Options for `Pods.select`.
+ */
+export interface PodSelectOptions {
 
   /**
-   * @see INamespacedPodSelector.toNamespaceSelector()
+   * Labels the pods must have.
+   *
+   * @default - no strict labels requirements.
    */
-  public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return undefined;
-  }
+  readonly labels?: { [key: string]: string };
 
   /**
-   * @see INamespacedPodSelector.toPodSelector()
-   */
-  public toPodSelector(): IPodSelector {
-    return this;
-  }
+    * Expressions the pods must satisify.
+    *
+    * @default - no expressions requirements.
+    */
+  readonly expressions?: LabelExpression[];
 
-  public namespaced(selector: namespace.INamespaceSelector): NamespacedLabeledPod {
-    return new NamespacedLabeledPod(this, selector);
-  }
+  /**
+   * Namespaces the pods are allowed to be in.
+   * Use `Namespaces.all()` to allow all namespaces.
+   *
+   * @default - unset, implies the namespace of the resource this selection is used in.
+   */
+  readonly namespaces?: namespace.Namespaces;
 
 }
 
-export class NamespacedLabeledPod implements INamespacedPodSelector {
-
-  public constructor(private readonly labeledPod: LabeledPod, private readonly selector: namespace.INamespaceSelector) {};
-
-  /**
-   * @see INamespacedPodSelector.toNamespaceSelector();
-   */
-  public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return this.selector;
-  }
+/**
+ * Represents a group of pods.
+ */
+export class Pods implements IPodSelector {
 
   /**
-   * @see INamespacedPodSelector.toPodSelector();
+   * Select pods in the cluster with various selectors.
    */
-  public toPodSelector(): IPodSelector {
-    return this.labeledPod;
+  public static select(options: PodSelectOptions): Pods {
+    return new Pods(options.expressions, options.labels, options.namespaces);
   }
 
+  constructor(
+    private readonly expressions?: LabelExpression[],
+    private readonly labels?: { [key: string]: string },
+    private readonly namespaces?: namespace.INamespaceSelector) { }
+
+  public toPodSelectorConfig(): PodSelectorConfig {
+    return {
+      labelSelector: LabelSelector.of({ expressions: this.expressions, labels: this.labels }),
+      namespaces: this.namespaces?.toNamespaceSelectorConfig(),
+    };
+  }
 }
 
 /**
@@ -1396,7 +1324,7 @@ export class PodScheduling {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
    */
-  public colocate(selector: INamespacedPodSelector, options: PodSchedulingColocateOptions = {}) {
+  public colocate(selector: IPodSelector, options: PodSchedulingColocateOptions = {}) {
 
     const topology = options.topology ?? Topology.HOSTNAME;
     const term = this.createPodAffinityTerm(topology, selector);
@@ -1425,7 +1353,7 @@ export class PodScheduling {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
    */
-  public separate(selector: INamespacedPodSelector, options: PodSchedulingSeparateOptions = {}) {
+  public separate(selector: IPodSelector, options: PodSchedulingSeparateOptions = {}) {
 
     const topology = options.topology ?? Topology.HOSTNAME;
     const term = this.createPodAffinityTerm(topology, selector);
@@ -1439,12 +1367,13 @@ export class PodScheduling {
 
   }
 
-  private createPodAffinityTerm(topology: Topology, selector: INamespacedPodSelector): k8s.PodAffinityTerm {
+  private createPodAffinityTerm(topology: Topology, selector: IPodSelector): k8s.PodAffinityTerm {
+    const config = selector.toPodSelectorConfig();
     return {
       topologyKey: topology.key,
-      labelSelector: selector.toPodSelector().toPodLabelSelector()._toKube(),
-      namespaceSelector: selector.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
-      namespaces: selector.toNamespaceSelector()?.toNamespaceNames(),
+      labelSelector: config.labelSelector._toKube(),
+      namespaceSelector: config.namespaces?.labelSelector?._toKube(),
+      namespaces: config.namespaces?.names,
     };
   }
 

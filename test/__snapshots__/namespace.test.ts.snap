@@ -2,45 +2,20 @@
 
 exports[`can select all namespaces 1`] = `Object {}`;
 
-exports[`can select namespaces by labels and selectors 1`] = `
+exports[`can select namespaces 1`] = `
 Object {
   "matchExpressions": Array [
     Object {
-      "key": "role",
+      "key": "web",
       "operator": "Exists",
       "values": undefined,
     },
-    Object {
-      "key": "team",
-      "operator": "In",
-      "values": Array [
-        "backoffice",
-      ],
-    },
   ],
+  "matchLabels": Object {
+    "foo": "bar",
+  },
 }
 `;
-
-exports[`can select namespaces by labels and selectors and names 1`] = `
-Object {
-  "matchExpressions": Array [
-    Object {
-      "key": "role",
-      "operator": "Exists",
-      "values": undefined,
-    },
-    Object {
-      "key": "team",
-      "operator": "In",
-      "values": Array [
-        "backoffice",
-      ],
-    },
-  ],
-}
-`;
-
-exports[`can select namespaces by name 1`] = `Object {}`;
 
 exports[`defaults 1`] = `
 Array [

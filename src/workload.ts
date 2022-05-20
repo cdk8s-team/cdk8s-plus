@@ -62,8 +62,7 @@ export abstract class Workload extends pod.AbstractPod {
 
   public readonly scheduling: WorkloadScheduling;
 
-  private readonly _matchLabels: Record<string, string> = {};
-  private readonly _matchExpressions: LabelSelectorRequirement[] = [];
+  private readonly _selectors: k8s.LabelSelector[] = [];
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
@@ -75,7 +74,7 @@ export abstract class Workload extends pod.AbstractPod {
     this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
 
     if (props.select ?? true) {
-      this.select(pod.LabelQuery.is(pod.Pod.ADDRESS_LABEL, matcher));
+      this.select(pod.LabelSelector.of({ labels: { [pod.Pod.ADDRESS_LABEL]: matcher } }));
     }
 
   }
@@ -83,14 +82,8 @@ export abstract class Workload extends pod.AbstractPod {
   /**
    * Configure selectors for this workload.
    */
-  public select(...selectors: pod.LabelQuery[]) {
-    for (const selector of selectors) {
-      if (selector.operator === 'In' && selector.values?.length === 1) {
-        this._matchLabels[selector.key] = selector.values[0];
-      } else {
-        this._matchExpressions.push({ key: selector.key, values: selector.values, operator: selector.operator });
-      }
-    }
+  public select(...selectors: pod.LabelSelector[]) {
+    this._selectors.push(...selectors.map(s => s._toKube()));
   }
 
   /**
@@ -99,7 +92,13 @@ export abstract class Workload extends pod.AbstractPod {
    * Returns a a copy. Use `select()` to add label matchers.
    */
   public get matchLabels(): Record<string, string> {
-    return { ...this._matchLabels };
+    const labels: any = {};
+    for (const selector of this._selectors) {
+      for (const [key, value] of Object.entries(selector.matchLabels ?? {})) {
+        labels[key] = value;
+      }
+    }
+    return labels;
   }
 
   /**
@@ -108,7 +107,14 @@ export abstract class Workload extends pod.AbstractPod {
    * Returns a a copy. Use `select()` to add expression matchers.
    */
   public get matchExpressions(): LabelSelectorRequirement[] {
-    return [...this._matchExpressions];
+    const expressions: LabelSelectorRequirement[] = [];
+    for (const selector of this._selectors) {
+      for (const expression of selector.matchExpressions ?? []) {
+        expressions.push(expression);
+      }
+    }
+
+    return expressions;
   }
 
   /**
@@ -116,8 +122,8 @@ export abstract class Workload extends pod.AbstractPod {
    */
   public _toLabelSelector(): k8s.LabelSelector {
     return {
-      matchExpressions: undefinedIfEmpty(this._matchExpressions),
-      matchLabels: undefinedIfEmpty(this._matchLabels),
+      matchExpressions: undefinedIfEmpty(this.matchExpressions),
+      matchLabels: undefinedIfEmpty(this.matchLabels),
     };
   }
 
@@ -147,6 +153,13 @@ export interface WorkloadSchedulingSpreadOptions {
    */
   readonly weight?: number;
 
+  /**
+   * Which topology to spread on.
+   *
+   * @default - Topology.HOSTNAME
+   */
+  readonly topology?: pod.Topology;
+
 }
 
 /**
@@ -160,8 +173,8 @@ export class WorkloadScheduling extends pod.PodScheduling {
    * A spread is a separation of the pod from itself and is used to
    * balance out pod replicas across a given topology.
    */
-  public spread(topologyKey: pod.Topology, options: WorkloadSchedulingSpreadOptions = {}) {
-    this.separate(this.instance, { weight: options.weight, topology: topologyKey });
+  public spread(options: WorkloadSchedulingSpreadOptions = {}) {
+    this.separate(this.instance, { weight: options.weight, topology: options.topology ?? pod.Topology.HOSTNAME });
   }
 
 }

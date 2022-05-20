@@ -67,7 +67,7 @@ test('Can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  deployment.select(kplus.LabelQuery.is('foo', expectedSelector.foo));
+  deployment.select(kplus.LabelSelector.of({ labels: { foo: expectedSelector.foo } }));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
@@ -349,10 +349,16 @@ test('can select with expressions', () => {
     select: false,
   });
 
-  deployment.select(kplus.LabelQuery.in('foo', ['v1', 'v2']));
-  deployment.select(kplus.LabelQuery.notIn('foo', ['v1', 'v2']));
-  deployment.select(kplus.LabelQuery.exists('foo'));
-  deployment.select(kplus.LabelQuery.doesNotExist('foo'));
+  const selector = kplus.LabelSelector.of({
+    expressions: [
+      kplus.LabelExpression.in('foo', ['v1', 'v2']),
+      kplus.LabelExpression.notIn('foo', ['v1', 'v2']),
+      kplus.LabelExpression.exists('foo'),
+      kplus.LabelExpression.doesNotExist('foo'),
+    ],
+  });
+
+  deployment.select(selector);
 
   const expected: Set<k8s.LabelSelectorRequirement> = new Set([
     { key: 'foo', operator: 'In', values: ['v1', 'v2'] },
@@ -468,8 +474,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespaces.select({ labels: { net: '1' } }));
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+    });
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -485,8 +493,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespaces.select({ labels: { net: '1' } }));
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+    });
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -509,7 +519,7 @@ describe('scheduling', () => {
       containers: [{ image: 'redis' }],
     });
 
-    deployment.scheduling.spread(kplus.Topology.HOSTNAME);
+    deployment.scheduling.spread();
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -523,7 +533,7 @@ describe('scheduling', () => {
       containers: [{ image: 'redis' }],
     });
 
-    deployment.scheduling.spread(kplus.Topology.HOSTNAME, { weight: 1 });
+    deployment.scheduling.spread({ weight: 1 });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -570,8 +580,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespaces.select({ labels: { net: '1' } }));
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+    });
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -587,8 +599,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespaces.select({ labels: { net: '1' } }));
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+    });
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],

@@ -641,8 +641,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespaces.all());
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.all(),
+    });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -658,7 +660,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -714,8 +716,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespaces.select({ labels: { net: '1' }, names: ['web'] }));
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' }, names: ['web'] } ),
+    });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -731,7 +735,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -748,29 +752,13 @@ describe('scheduling', () => {
 
 });
 
-test('can select a pod with no label queries', () => {
-  expect(kplus.Pod.labeled().toPodLabelSelector()._toKube()).toMatchSnapshot();
-});
-
-test('can select a pod with label queries', () => {
-  expect(kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store')).toPodLabelSelector()._toKube()).toMatchSnapshot();
-});
-
-test('can select all pods', () => {
-  expect(kplus.Pod.all().toPodLabelSelector()._toKube()).toMatchSnapshot();
-});
-
-test('can select all pods in a particular namespace', () => {
-  const selection = kplus.Pod.all().namespaced(kplus.Namespaces.select({ names: ['n1'] }));
-  expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
-  expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
-  expect(selection.toNamespaceSelector()?.toNamespaceNames()).toEqual(['n1']);
-});
-
-test('can select a pod with labels in a particular namespace', () => {
-  const selection = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-    .namespaced(kplus.Namespaces.select({ names: ['n1'] }));
-  expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
-  expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
-  expect(selection.toNamespaceSelector()?.toNamespaceNames()).toEqual(['n1']);
+test('can select pods', () => {
+  const pods = kplus.Pods.select({
+    labels: { foo: 'bar' },
+    expressions: [kplus.LabelExpression.exists('key')],
+    namespaces: kplus.Namespaces.select({ labels: { foo: 'bar' } }),
+  });
+  expect(pods.toPodSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
+  expect(pods.toPodSelectorConfig().namespaces.names).toBeUndefined();
+  expect(pods.toPodSelectorConfig().namespaces.labelSelector?._toKube()).toMatchSnapshot();
 });

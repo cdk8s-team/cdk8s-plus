@@ -22,33 +22,18 @@ test('defaults', () => {
   expect(Testing.synth(chart)).toMatchSnapshot();
 });
 
-test('can select namespaces by name', () => {
-  const namespaces = kplus.Namespaces.select({ names: ['web'] });
-  expect(namespaces.toNamespaceNames()).toEqual(['web']);
-  expect(namespaces.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
-});
-
-test('can select namespaces by labels and selectors', () => {
+test('can select namespaces', () => {
   const namespaces = kplus.Namespaces.select({
-    labels: { team: 'backoffice' },
-    selectors: [kplus.LabelQuery.exists('role')],
-  });
-  expect(namespaces.toNamespaceNames()).toBeUndefined();
-  expect(namespaces.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
-});
-
-test('can select namespaces by labels and selectors and names', () => {
-  const namespaces = kplus.Namespaces.select({
-    labels: { team: 'backoffice' },
-    selectors: [kplus.LabelQuery.exists('role')],
+    labels: { foo: 'bar' },
+    expressions: [kplus.LabelExpression.exists('web')],
     names: ['web'],
   });
-  expect(namespaces.toNamespaceNames()).toEqual(['web']);
-  expect(namespaces.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+  expect(namespaces.toNamespaceSelectorConfig().names).toEqual(['web']);
+  expect(namespaces.toNamespaceSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
 });
 
 test('can select all namespaces', () => {
   const namespaces = kplus.Namespaces.all();
-  expect(namespaces.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
-  expect(namespaces.toNamespaceNames()).toBeUndefined();
+  expect(namespaces.toNamespaceSelectorConfig().names).toBeUndefined();
+  expect(namespaces.toNamespaceSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
 });

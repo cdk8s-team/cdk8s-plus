@@ -4,19 +4,21 @@ import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as pod from './pod';
 
+export interface NamespaceSelectorConfig {
+
+  readonly labelSelector?: pod.LabelSelector;
+
+  readonly names?: string[];
+}
+
 /**
  * Represents an object that can select namespaces.
  */
 export interface INamespaceSelector {
   /**
-   * Return the label selector that selects the namespaces.
+   * Return the configuration of this selector.
    */
-  toNamespaceLabelSelector(): pod.LabelSelector | undefined;
-
-  /**
-   * Return the namespace name (if known).
-   */
-  toNamespaceNames(): string[] | undefined;
+  toNamespaceSelectorConfig(): NamespaceSelectorConfig;
 }
 
 /**
@@ -54,17 +56,10 @@ export class Namespace extends base.Resource implements INamespaceSelector {
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * @see INamespaceSelector.toNamespaceSelectorConfig()
    */
-  public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return Namespaces.select({ names: [this.name] }).toNamespaceLabelSelector();
-  }
-
-  /**
-   * @see INamespaceSelector.toNamespaceNames()
-   */
-  public toNamespaceNames(): string[] | undefined {
-    return [this.name];
+  public toNamespaceSelectorConfig(): NamespaceSelectorConfig {
+    return { names: [this.name] };
   }
 
   /**
@@ -76,10 +71,33 @@ export class Namespace extends base.Resource implements INamespaceSelector {
 
 }
 
+/**
+ * Options for `Namespaces.select`.
+ */
 export interface NamespacesSelectOptions {
 
+  /**
+   * Labels the namespaces must have.
+   * This is equivalent to using an 'Is' selector.
+   *
+   * @default - no strict labels requirements.
+   */
   readonly labels?: { [key: string]: string };
-  readonly selectors?: pod.LabelQuery[];
+
+  /**
+   * Namespaces must satisfy these selectors.
+   * The selectors query labels, just like the `labels` property, but they
+   * provide a more advanced matching mechanism.
+   *
+   * @default - no selector requirements.
+   */
+  readonly expressions?: pod.LabelExpression[];
+
+  /**
+   * Namespaces names must be one of these.
+   *
+   * @default - no name requirements.
+   */
   readonly names?: string[];
 
 }
@@ -93,37 +111,29 @@ export class Namespaces implements INamespaceSelector {
    * Select specific namespaces.
    */
   public static select(options: NamespacesSelectOptions): Namespaces {
-
-    const selectors = options.selectors ?? [];
-
-    for (const [key, value] of Object.entries(options.labels ?? {})) {
-      selectors.push(pod.LabelQuery.is(key, value));
-    }
-
-    return new Namespaces(selectors, options.names);
+    return new Namespaces(options.expressions, options.names, options.labels);
   }
 
   /**
    * Select all namespaces.
    */
   public static all(): Namespaces {
-    return Namespaces.select({});
+    return Namespaces.select({ expressions: [], labels: {} });
   }
 
-  constructor(public readonly queries: pod.LabelQuery[], public readonly names?: string[]) { }
+  constructor(
+    private readonly expressions?: pod.LabelExpression[],
+    private readonly names?: string[],
+    private readonly labels?: { [key: string]: string }) { }
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * @see INamespaceSelector.toNamespaceSelectorConfig()
    */
-  public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return pod.LabelSelector.of(...this.queries);
-  }
-
-  /**
-   * @see INamespaceSelector.toNamespaceNames()
-   */
-  public toNamespaceNames(): string[] | undefined {
-    return this.names;
+  public toNamespaceSelectorConfig(): NamespaceSelectorConfig {
+    return {
+      labelSelector: pod.LabelSelector.of({ expressions: this.expressions, labels: this.labels } ),
+      names: this.names,
+    };
   }
 
 }

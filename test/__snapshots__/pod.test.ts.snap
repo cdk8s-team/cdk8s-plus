@@ -1,42 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`can select a pod with label queries 1`] = `
+exports[`can select pods 1`] = `
 Object {
   "matchExpressions": Array [
     Object {
-      "key": "app",
-      "operator": "In",
-      "values": Array [
-        "store",
-      ],
+      "key": "key",
+      "operator": "Exists",
+      "values": undefined,
     },
   ],
+  "matchLabels": Object {
+    "foo": "bar",
+  },
 }
 `;
 
-exports[`can select a pod with labels in a particular namespace 1`] = `
+exports[`can select pods 2`] = `
 Object {
-  "matchExpressions": Array [
-    Object {
-      "key": "app",
-      "operator": "In",
-      "values": Array [
-        "store",
-      ],
-    },
-  ],
+  "matchExpressions": undefined,
+  "matchLabels": Object {
+    "foo": "bar",
+  },
 }
 `;
-
-exports[`can select a pod with labels in a particular namespace 2`] = `Object {}`;
-
-exports[`can select a pod with no label queries 1`] = `Object {}`;
-
-exports[`can select all pods 1`] = `Object {}`;
-
-exports[`can select all pods in a particular namespace 1`] = `Object {}`;
-
-exports[`can select all pods in a particular namespace 2`] = `Object {}`;
 
 exports[`defaults 1`] = `
 Array [
@@ -271,17 +257,10 @@ Array [
             Object {
               "podAffinityTerm": Object {
                 "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "cdk8s.io/metadata.addr",
-                      "operator": "In",
-                      "values": Array [
-                        "test-Redis-c8b1633b",
-                      ],
-                    },
-                  ],
+                  "matchLabels": Object {
+                    "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+                  },
                 },
-                "namespaceSelector": Object {},
                 "namespaces": Array [
                   "default",
                 ],
@@ -364,17 +343,10 @@ Array [
           "requiredDuringSchedulingIgnoredDuringExecution": Array [
             Object {
               "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "cdk8s.io/metadata.addr",
-                    "operator": "In",
-                    "values": Array [
-                      "test-Redis-c8b1633b",
-                    ],
-                  },
-                ],
+                "matchLabels": Object {
+                  "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+                },
               },
-              "namespaceSelector": Object {},
               "namespaces": Array [
                 "default",
               ],
@@ -425,15 +397,9 @@ Array [
             Object {
               "podAffinityTerm": Object {
                 "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "app",
-                      "operator": "In",
-                      "values": Array [
-                        "store",
-                      ],
-                    },
-                  ],
+                  "matchLabels": Object {
+                    "app": "store",
+                  },
                 },
                 "topologyKey": "topology.kubernetes.io/zone",
               },
@@ -483,15 +449,9 @@ Array [
           "requiredDuringSchedulingIgnoredDuringExecution": Array [
             Object {
               "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "app",
-                    "operator": "In",
-                    "values": Array [
-                      "store",
-                    ],
-                  },
-                ],
+                "matchLabels": Object {
+                  "app": "store",
+                },
               },
               "namespaceSelector": Object {},
               "topologyKey": "kubernetes.io/hostname",
@@ -572,17 +532,10 @@ Array [
             Object {
               "podAffinityTerm": Object {
                 "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "cdk8s.io/metadata.addr",
-                      "operator": "In",
-                      "values": Array [
-                        "test-Redis-c8b1633b",
-                      ],
-                    },
-                  ],
+                  "matchLabels": Object {
+                    "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+                  },
                 },
-                "namespaceSelector": Object {},
                 "namespaces": Array [
                   "default",
                 ],
@@ -665,17 +618,10 @@ Array [
           "requiredDuringSchedulingIgnoredDuringExecution": Array [
             Object {
               "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "cdk8s.io/metadata.addr",
-                    "operator": "In",
-                    "values": Array [
-                      "test-Redis-c8b1633b",
-                    ],
-                  },
-                ],
+                "matchLabels": Object {
+                  "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+                },
               },
-              "namespaceSelector": Object {},
               "namespaces": Array [
                 "default",
               ],
@@ -726,15 +672,9 @@ Array [
             Object {
               "podAffinityTerm": Object {
                 "labelSelector": Object {
-                  "matchExpressions": Array [
-                    Object {
-                      "key": "app",
-                      "operator": "In",
-                      "values": Array [
-                        "store",
-                      ],
-                    },
-                  ],
+                  "matchLabels": Object {
+                    "app": "store",
+                  },
                 },
                 "topologyKey": "topology.kubernetes.io/zone",
               },
@@ -784,26 +724,14 @@ Array [
           "requiredDuringSchedulingIgnoredDuringExecution": Array [
             Object {
               "labelSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "app",
-                    "operator": "In",
-                    "values": Array [
-                      "store",
-                    ],
-                  },
-                ],
+                "matchLabels": Object {
+                  "app": "store",
+                },
               },
               "namespaceSelector": Object {
-                "matchExpressions": Array [
-                  Object {
-                    "key": "net",
-                    "operator": "In",
-                    "values": Array [
-                      "1",
-                    ],
-                  },
-                ],
+                "matchLabels": Object {
+                  "net": "1",
+                },
               },
               "namespaces": Array [
                 "web",
