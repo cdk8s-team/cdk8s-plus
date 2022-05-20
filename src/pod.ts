@@ -82,14 +82,12 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector 
       // shouldn't happen because we add this label automatically in both pods and workloads.
       throw new Error(`Unable to create a label selector since ${Pod.ADDRESS_LABEL} label is missing`);
     }
-    return { labelSelector: LabelSelector.of({ labels: { [Pod.ADDRESS_LABEL]: podAddress } }) };
-  }
-
-  /**
-   * @see IPodSelector.toNamespaceSelectorConfig()
-   */
-  public toNamespaceSelectorConfig(): namespace.NamespaceSelectorConfig {
-    return { names: [this._namespaceName] };
+    return {
+      labelSelector: LabelSelector.of({ labels: { [Pod.ADDRESS_LABEL]: podAddress } }),
+      namespaces: {
+        names: [this._namespaceName],
+      },
+    };
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {

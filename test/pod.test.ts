@@ -759,6 +759,6 @@ test('can select pods', () => {
     namespaces: kplus.Namespaces.select({ labels: { foo: 'bar' } }),
   });
   expect(pods.toPodSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
-  expect(pods.toPodSelectorConfig().namespaces.names).toBeUndefined();
-  expect(pods.toPodSelectorConfig().namespaces.labelSelector?._toKube()).toMatchSnapshot();
+  expect(pods.toPodSelectorConfig().namespaces?.names).toBeUndefined();
+  expect(pods.toPodSelectorConfig().namespaces?.labelSelector?._toKube()).toMatchSnapshot();
 });

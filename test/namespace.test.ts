@@ -29,11 +29,11 @@ test('can select namespaces', () => {
     names: ['web'],
   });
   expect(namespaces.toNamespaceSelectorConfig().names).toEqual(['web']);
-  expect(namespaces.toNamespaceSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
+  expect(namespaces.toNamespaceSelectorConfig()?.labelSelector?._toKube()).toMatchSnapshot();
 });
 
 test('can select all namespaces', () => {
   const namespaces = kplus.Namespaces.all();
   expect(namespaces.toNamespaceSelectorConfig().names).toBeUndefined();
-  expect(namespaces.toNamespaceSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
+  expect(namespaces.toNamespaceSelectorConfig()?.labelSelector?._toKube()).toMatchSnapshot();
 });
