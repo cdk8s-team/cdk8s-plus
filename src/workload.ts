@@ -1,11 +1,13 @@
 import { ApiObjectMetadata, ApiObjectMetadataDefinition, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { AbstractPod, AbstractPodProps } from './pod';
+import * as k8s from './imports/k8s';
+import * as pod from './pod';
+import { undefinedIfEmpty } from './utils';
 
 /**
  * Properties for `Workload`.
  */
-export interface WorkloadProps extends AbstractPodProps {
+export interface WorkloadProps extends pod.AbstractPodProps {
 
   /**
    * The pod metadata of this workload.
@@ -24,32 +26,6 @@ export interface WorkloadProps extends AbstractPodProps {
 }
 
 /**
- * Possible operators.
- */
-export enum LabelSelectorRequirementOperator {
-
-  /**
-   * In.
-   */
-  IN = 'In',
-
-  /**
-   * NotIn.
-   */
-  NOT_IN = 'NotIn',
-
-  /**
-   * Exists.
-   */
-  EXISTS = 'Exists',
-
-  /**
-   * DoesNotExist.
-   */
-  DOES_NOT_EXIST = 'DoesNotExist'
-}
-
-/**
  * A label selector requirement is a selector that contains values, a key, and an operator that
  * relates the key and values.
  */
@@ -62,7 +38,7 @@ export interface LabelSelectorRequirement {
   /**
    * Represents a key's relationship to a set of values.
    */
-  readonly operator: LabelSelectorRequirementOperator;
+  readonly operator: string;
 
   /**
    * An array of string values. If the operator is In or NotIn, the values array
@@ -77,25 +53,28 @@ export interface LabelSelectorRequirement {
  * component or several that work together, on Kubernetes you run it inside a set of pods.
  * In Kubernetes, a Pod represents a set of running containers on your cluster.
  */
-export abstract class Workload extends AbstractPod {
+export abstract class Workload extends pod.AbstractPod {
 
   /**
    * The metadata of pods in this workload.
    */
   public readonly podMetadata: ApiObjectMetadataDefinition;
 
-  private readonly _matchLabels: Record<string, string> = {};
-  private readonly _matchExpressions: LabelSelectorRequirement[] = [];
+  public readonly scheduling: WorkloadScheduling;
+
+  private readonly _selectors: k8s.LabelSelector[] = [];
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
+    this.scheduling = new WorkloadScheduling(this);
+
+    const matcher = Names.toLabelValue(this);
+    this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
 
     if (props.select ?? true) {
-      const selector = `cdk8s.${this.constructor.name.toLowerCase()}`;
-      const matcher = Names.toLabelValue(this);
-      this.select(LabelSelector.is(selector, matcher, true));
+      this.select(pod.LabelSelector.of({ labels: { [pod.Pod.ADDRESS_LABEL]: matcher } }));
     }
 
   }
@@ -103,18 +82,8 @@ export abstract class Workload extends AbstractPod {
   /**
    * Configure selectors for this workload.
    */
-  public select(...selectors: LabelSelector[]) {
-    for (const selector of selectors) {
-      if (selector.operator) {
-        this._matchExpressions.push({ key: selector.key, values: selector.values, operator: selector.operator });
-      } else {
-        const value = selector.values![0];
-        this._matchLabels[selector.key] = value;
-        if (selector.applyToTemplate) {
-          this.podMetadata.addLabel(selector.key, value);
-        }
-      }
-    }
+  public select(...selectors: pod.LabelSelector[]) {
+    this._selectors.push(...selectors.map(s => s._toKube()));
   }
 
   /**
@@ -123,7 +92,13 @@ export abstract class Workload extends AbstractPod {
    * Returns a a copy. Use `select()` to add label matchers.
    */
   public get matchLabels(): Record<string, string> {
-    return { ...this._matchLabels };
+    const labels: any = {};
+    for (const selector of this._selectors) {
+      for (const [key, value] of Object.entries(selector.matchLabels ?? {})) {
+        labels[key] = value;
+      }
+    }
+    return labels;
   }
 
   /**
@@ -132,58 +107,74 @@ export abstract class Workload extends AbstractPod {
    * Returns a a copy. Use `select()` to add expression matchers.
    */
   public get matchExpressions(): LabelSelectorRequirement[] {
-    return [...this._matchExpressions];
+    const expressions: LabelSelectorRequirement[] = [];
+    for (const selector of this._selectors) {
+      for (const expression of selector.matchExpressions ?? []) {
+        expressions.push(expression);
+      }
+    }
+
+    return expressions;
   }
+
+  /**
+   * @internal
+   */
+  public _toLabelSelector(): k8s.LabelSelector {
+    return {
+      matchExpressions: undefinedIfEmpty(this.matchExpressions),
+      matchLabels: undefinedIfEmpty(this.matchLabels),
+    };
+  }
+
+  /**
+   * @internal
+   */
+  public _toPodSpec(): k8s.PodSpec {
+    const scheduling = this.scheduling._toKube();
+    return {
+      ...super._toPodSpec(),
+      affinity: scheduling.affinity,
+      nodeName: scheduling.nodeName,
+      tolerations: scheduling.tolerations,
+    };
+  }
+}
+
+/**
+ * Options for `WorkloadScheduling.spread`.
+ */
+export interface WorkloadSchedulingSpreadOptions {
+
+  /**
+   * Indicates the spread is optional, with this weight score.
+   *
+   * @default - no weight. spread is assumed to be required.
+   */
+  readonly weight?: number;
+
+  /**
+   * Which topology to spread on.
+   *
+   * @default - Topology.HOSTNAME
+   */
+  readonly topology?: pod.Topology;
 
 }
 
 /**
- * A label selector is a label query over a set of resources.
- *
- * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
+ * Controls the pod scheduling strategy of this workload.
+ * It offers some additional API's on top of the core pod scheduling.
  */
-export class LabelSelector {
+export class WorkloadScheduling extends pod.PodScheduling {
 
   /**
-   * Creates a `matchLabels` entry from the key and value.
-   * Use `applyToTemplate` to also add this label to the pod metadata of the workload.
+   * Spread the pods in this workload by the topology key.
+   * A spread is a separation of the pod from itself and is used to
+   * balance out pod replicas across a given topology.
    */
-  public static is(key: string, value: string, applyToTemplate?: boolean) {
-    return new LabelSelector(applyToTemplate ?? false, key, [value], undefined);
+  public spread(options: WorkloadSchedulingSpreadOptions = {}) {
+    this.separate(this.instance, { weight: options.weight, topology: options.topology ?? pod.Topology.HOSTNAME });
   }
 
-  /**
-   * Creates a `matchExpressions` "In" entry.
-   */
-  public static in(key: string, values: string[]) {
-    return new LabelSelector(false, key, values, LabelSelectorRequirementOperator.IN);
-  }
-
-  /**
-   * Creates a `matchExpressions` "NotIn" entry.
-   */
-  public static notIn(key: string, values: string[]) {
-    return new LabelSelector(false, key, values, LabelSelectorRequirementOperator.NOT_IN);
-  }
-
-  /**
-   * Creates a `matchExpressions` "Exists" entry.
-   */
-  public static exists(key: string) {
-    return new LabelSelector(false, key, undefined, LabelSelectorRequirementOperator.EXISTS);
-  }
-
-  /**
-   * Creates a `matchExpressions` "DoesNotExist" entry.
-   */
-  public static doesNotExist(key: string) {
-    return new LabelSelector(false, key, undefined, LabelSelectorRequirementOperator.DOES_NOT_EXIST);
-  }
-
-  private constructor(
-    public readonly applyToTemplate: boolean,
-    public readonly key: string,
-    public readonly values?: string[],
-    public readonly operator?: LabelSelectorRequirementOperator) {
-  }
 }

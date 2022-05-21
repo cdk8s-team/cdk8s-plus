@@ -11,15 +11,14 @@ Array [
     "spec": Object {
       "minReadySeconds": 5,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
-          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+          "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
         },
       },
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+            "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
           },
         },
         "spec": Object {
@@ -60,15 +59,14 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
-          "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+          "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
         },
       },
       "template": Object {
         "metadata": Object {
           "labels": Object {
-            "cdk8s.daemonset": "test-DaemonSet-c8f77186",
+            "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
           },
         },
         "spec": Object {

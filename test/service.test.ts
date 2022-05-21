@@ -124,7 +124,7 @@ test('Can associate a deployment with an existing service', () => {
 
   service.addDeployment(deployment);
 
-  const expectedSelector = { 'cdk8s.deployment': 'test-dep-c8cc9f8f' };
+  const expectedSelector = { 'cdk8s.io/metadata.addr': 'test-dep-c8cc9f8f' };
 
   const deploymentSpec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
   const serviceSpec: k8s.ServiceSpec = Testing.synth(chart)[0].spec;

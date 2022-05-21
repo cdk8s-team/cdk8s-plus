@@ -18,5 +18,6 @@ export * from './workload';
 export * from './daemon-set';
 export * from './role';
 export * from './role-binding';
+export * from './namespace';
 
 export * from './api-resource.generated';
