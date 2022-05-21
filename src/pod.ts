@@ -1,14 +1,15 @@
-import { ApiObject, Lazy } from 'cdk8s';
+import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
 import * as k8s from './imports/k8s';
+import * as namespace from './namespace';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
 import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
-export abstract class AbstractPod extends base.Resource {
+export abstract class AbstractPod extends base.Resource implements IPodSelector {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -21,6 +22,8 @@ export abstract class AbstractPod extends base.Resource {
   private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
+
+  public abstract readonly podMetadata: ApiObjectMetadataDefinition;
 
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
@@ -50,6 +53,10 @@ export abstract class AbstractPod extends base.Resource {
 
   }
 
+  private get _namespaceName(): string {
+    return this.podMetadata.namespace ?? 'default';
+  }
+
   public get containers(): container.Container[] {
     return [...this._containers];
   }
@@ -64,6 +71,23 @@ export abstract class AbstractPod extends base.Resource {
 
   public get hostAliases(): HostAlias[] {
     return [...this._hostAliases];
+  }
+
+  /**
+   * @see IPodSelector.toPodSelectorConfig()
+   */
+  public toPodSelectorConfig(): PodSelectorConfig {
+    const podAddress = this.podMetadata.getLabel(Pod.ADDRESS_LABEL);
+    if (!podAddress) {
+      // shouldn't happen because we add this label automatically in both pods and workloads.
+      throw new Error(`Unable to create a label selector since ${Pod.ADDRESS_LABEL} label is missing`);
+    }
+    return {
+      labelSelector: LabelSelector.of({ labels: { [Pod.ADDRESS_LABEL]: podAddress } }),
+      namespaces: {
+        names: [this._namespaceName],
+      },
+    };
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {
@@ -364,10 +388,86 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
+ * Options for `LabelSelector.of`.
+ */
+export class LabelSelectorOptions {
+
+  /**
+   * Strict label matchers.
+   */
+  readonly labels?: { [key: string]: string };
+
+  /**
+   * Expression based label matchers.
+   */
+  readonly expressions?: LabelExpression[];
+}
+
+/**
+ * Match a resource by labels.
+ */
+export class LabelSelector {
+
+  public static of(options: LabelSelectorOptions = {}) {
+    return new LabelSelector(options.expressions ?? [], options.labels ?? {});
+  }
+
+  private constructor(
+    private readonly expressions: LabelExpression[],
+    private readonly labels: { [key: string]: string }) {}
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.LabelSelector {
+    if (this.expressions.length === 0 && Object.keys(this.labels).length === 0) {
+      return {};
+    }
+    return {
+      matchExpressions: undefinedIfEmpty(this.expressions.map(q => ({ key: q.key, operator: q.operator, values: q.values }))),
+      matchLabels: undefinedIfEmpty(this.labels),
+    };
+  }
+}
+
+/**
+ * Configuration for selecting pods, optionally in particular namespaces.
+ */
+export interface PodSelectorConfig {
+
+  /**
+   * A selector to select pods by labels.
+   */
+  readonly labelSelector: LabelSelector;
+
+  /**
+   * Configuration for selecting which namepsaces are the pods allowed to be in.
+   */
+  readonly namespaces?: namespace.NamespaceSelectorConfig;
+
+}
+
+/**
+ * Represents an object that can select pods.
+ */
+export interface IPodSelector {
+  /**
+   * Return the configuration of this selector.
+   */
+  toPodSelectorConfig(): PodSelectorConfig;
+}
+
+/**
  * Pod is a collection of containers that can run on a host. This resource is
  * created by clients and scheduled onto hosts.
  */
 export class Pod extends AbstractPod {
+
+  /**
+   * This label is autoamtically added by cdk8s to any pod. It provides
+   * a unique and stable identifier for the pod.
+   */
+  public static readonly ADDRESS_LABEL = 'cdk8s.io/metadata.addr';
 
   /**
    * @see base.Resource.apiObject
@@ -375,6 +475,8 @@ export class Pod extends AbstractPod {
   protected readonly apiObject: ApiObject;
 
   public readonly resourceType = 'pods';
+
+  public readonly scheduling: PodScheduling;
 
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
@@ -384,13 +486,27 @@ export class Pod extends AbstractPod {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
+    this.metadata.addLabel(Pod.ADDRESS_LABEL, Names.toLabelValue(this));
+
+    this.scheduling = new PodScheduling(this);
+
+  }
+
+  public get podMetadata(): ApiObjectMetadataDefinition {
+    return this.metadata;
   }
 
   /**
    * @internal
    */
   public _toKube(): k8s.PodSpec {
-    return this._toPodSpec();
+    const scheduling = this.scheduling._toKube();
+    return {
+      ...this._toPodSpec(),
+      affinity: scheduling.affinity,
+      nodeName: scheduling.nodeName,
+      tolerations: scheduling.tolerations,
+    };
   }
 
 }
@@ -722,4 +838,612 @@ export interface HostAlias {
    * IP address of the host file entry.
    */
   readonly ip: string;
+}
+
+/**
+ * Represents a query that can be performed against nodes with labels.
+ */
+export class NodeLabelQuery {
+
+  /**
+   * Requires value of label `key` to equal `value`.
+   */
+  public static is(key: string, value: string) {
+    return NodeLabelQuery.in(key, [value]);
+  }
+
+  /**
+   * Requires value of label `key` to be one of `values`.
+   */
+  public static in(key: string, values: string[]) {
+    return new NodeLabelQuery(key, 'In', values);
+  }
+
+  /**
+   * Requires value of label `key` to be none of `values`.
+   */
+  public static notIn(key: string, values: string[]) {
+    return new NodeLabelQuery(key, 'NotIn', values);
+  }
+
+  /**
+   * Requires label `key` to exist.
+   */
+  public static exists(key: string) {
+    return new NodeLabelQuery(key, 'Exists', undefined);
+  }
+
+  /**
+   * Requires label `key` to not exist.
+   */
+  public static doesNotExist(key: string) {
+    return new NodeLabelQuery(key, 'DoesNotExist', undefined);
+  }
+
+  /**
+   * Requires value of label `key` to greater than all elements in `values`.
+   */
+  public static gt(key: string, values: string[]) {
+    return new NodeLabelQuery(key, 'Gt', values);
+  }
+
+  /**
+   * Requires value of label `key` to less than all elements in `values`.
+   */
+  public static lt(key: string, values: string[]) {
+    return new NodeLabelQuery(key, 'Lt', values);
+  }
+
+  private constructor(
+    public readonly key: string,
+    public readonly operator: string,
+    public readonly values?: string[]) {
+  }
+}
+
+/**
+ * Represents a query that can be performed against resources with labels.
+ */
+export class LabelExpression {
+
+  /**
+   * Requires value of label `key` to be one of `values`.
+   */
+  public static in(key: string, values: string[]) {
+    return new LabelExpression(key, 'In', values);
+  }
+
+  /**
+   * Requires value of label `key` to be none of `values`.
+   */
+  public static notIn(key: string, values: string[]) {
+    return new LabelExpression(key, 'NotIn', values);
+  }
+
+  /**
+   * Requires label `key` to exist.
+   */
+  public static exists(key: string) {
+    return new LabelExpression(key, 'Exists', undefined);
+  }
+
+  /**
+   * Requires label `key` to not exist.
+   */
+  public static doesNotExist(key: string) {
+    return new LabelExpression(key, 'DoesNotExist', undefined);
+  }
+
+  private constructor(
+    public readonly key: string,
+    public readonly operator: string,
+    public readonly values?: string[]) {
+  }
+
+}
+
+/**
+ * Taint effects.
+ */
+export enum TaintEffect {
+  /**
+   * This means that no pod will be able to schedule
+   * onto the node unless it has a matching toleration.
+   */
+  NO_SCHEDULE = 'NoSchedule',
+
+  /**
+   * This is a "preference" or "soft" version of `NO_SCHEDULE` -- the system
+   * will try to avoid placing a pod that does not tolerate the taint on the node,
+   * but it is not required
+   */
+  PREFER_NO_SCHEDULE = 'PreferNoSchedule',
+
+  /**
+   * This affects pods that are already running on the node as follows:
+   *
+   * - Pods that do not tolerate the taint are evicted immediately.
+   * - Pods that tolerate the taint without specifying `duration` remain bound forever.
+   * - Pods that tolerate the taint with a specified `duration` remain bound for
+   *   the specified amount of time.
+   */
+  NO_EXECUTE = 'NoExecute',
+}
+
+/**
+ * Options for `NodeTaintQuery`.
+ */
+export interface NodeTaintQueryOptions {
+  /**
+   * The taint effect to match.
+   *
+   * @default - all effects are matched.
+   */
+  readonly effect?: TaintEffect;
+
+  /**
+   * How much time should a pod that tolerates the `NO_EXECUTE` effect
+   * be bound to the node. Only applies for the `NO_EXECUTE` effect.
+   *
+   * @default - bound forever.
+   */
+  readonly evictAfter?: Duration;
+}
+
+/**
+ * Taint queries that can be perfomed against nodes.
+ */
+export class NodeTaintQuery {
+
+  /**
+   * Matches a taint with a specific key and value.
+   */
+  public static is(key: string, value: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
+    return new NodeTaintQuery('Equal', key, value, options.effect, options.evictAfter);
+  }
+
+  /**
+   * Matches a tain with any value of a specific key.
+   */
+  public static exists(key: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
+    return new NodeTaintQuery('Exists', key, undefined, options.effect, options.evictAfter);
+  }
+
+  /**
+   * Matches any taint.
+   */
+  public static any(): NodeTaintQuery {
+    return new NodeTaintQuery('Exists');
+  }
+
+  private constructor(
+    public readonly operator: string,
+    public readonly key?: string,
+    public readonly value?: string,
+    public readonly effect?: string,
+    public readonly evictAfter?: Duration,
+  ) {
+    if (evictAfter && effect !== TaintEffect.NO_EXECUTE) {
+      throw new Error('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
+    }
+  }
+}
+
+/**
+ * Options for `Pods.select`.
+ */
+export interface PodSelectOptions {
+
+  /**
+   * Labels the pods must have.
+   *
+   * @default - no strict labels requirements.
+   */
+  readonly labels?: { [key: string]: string };
+
+  /**
+    * Expressions the pods must satisify.
+    *
+    * @default - no expressions requirements.
+    */
+  readonly expressions?: LabelExpression[];
+
+  /**
+   * Namespaces the pods are allowed to be in.
+   * Use `Namespaces.all()` to allow all namespaces.
+   *
+   * @default - unset, implies the namespace of the resource this selection is used in.
+   */
+  readonly namespaces?: namespace.Namespaces;
+
+}
+
+/**
+ * Represents a group of pods.
+ */
+export class Pods implements IPodSelector {
+
+  /**
+   * Select pods in the cluster with various selectors.
+   */
+  public static select(options: PodSelectOptions): Pods {
+    return new Pods(options.expressions, options.labels, options.namespaces);
+  }
+
+  constructor(
+    private readonly expressions?: LabelExpression[],
+    private readonly labels?: { [key: string]: string },
+    private readonly namespaces?: namespace.INamespaceSelector) { }
+
+  public toPodSelectorConfig(): PodSelectorConfig {
+    return {
+      labelSelector: LabelSelector.of({ expressions: this.expressions, labels: this.labels }),
+      namespaces: this.namespaces?.toNamespaceSelectorConfig(),
+    };
+  }
+}
+
+/**
+ * A node that is matched by label selectors.
+ */
+export class LabeledNode {
+  public constructor(public readonly labelSelector: NodeLabelQuery[]) {};
+}
+
+/**
+ * A node that is matched by taint selectors.
+ */
+export class TaintedNode {
+  public constructor(public readonly taintSelector: NodeTaintQuery[]) {};
+}
+
+/**
+ * A node that is matched by its name.
+ */
+export class NamedNode {
+  public constructor(public readonly name: string) {};
+}
+
+/**
+ * Represents a node in the cluster.
+ */
+export class Node {
+
+  /**
+   * Match a node by its labels.
+   */
+  public static labeled(...labelSelector: NodeLabelQuery[]): LabeledNode {
+    return new LabeledNode(labelSelector);
+  }
+
+  /**
+   * Match a node by its name.
+   */
+  public static named(nodeName: string): NamedNode {
+    return new NamedNode(nodeName);
+  }
+
+  /**
+   * Match a node by its taints.
+   */
+  public static tainted(...taintSelector: NodeTaintQuery[]): TaintedNode {
+    return new TaintedNode(taintSelector);
+  }
+
+}
+
+/**
+ * Available topology domains.
+ */
+export class Topology {
+
+  /**
+   * A hostname represents a single node in the cluster.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#kubernetesiohostname
+   */
+  public static readonly HOSTNAME = new Topology('kubernetes.io/hostname');
+
+  /**
+   * A zone represents a logical failure domain. It is common for Kubernetes clusters to
+   * span multiple zones for increased availability. While the exact definition of a zone is
+   * left to infrastructure implementations, common properties of a zone include very low
+   * network latency within a zone, no-cost network traffic within a zone, and failure
+   * independence from other zones. For example, nodes within a zone might share a network
+   * switch, but nodes in different zones should not.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone
+   */
+  public static readonly ZONE = new Topology('topology.kubernetes.io/zone');
+
+  /**
+   * A region represents a larger domain, made up of one or more zones. It is uncommon
+   * for Kubernetes clusters to span multiple regions. While the exact definition of a
+   * zone or region is left to infrastructure implementations, common properties of a region
+   * include higher network latency between them than within them, non-zero cost for network
+   * traffic between them, and failure independence from other zones or regions.
+   *
+   * For example, nodes within a region might share power infrastructure (e.g. a UPS or generator), but
+   * nodes in different regions typically would not.
+   *
+   * @see https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesioregion
+   */
+  public static readonly REGION = new Topology('topology.kubernetes.io/region');
+
+  /**
+   * Custom key for the node label that the system uses to denote the topology domain.
+   */
+  public static custom(key: string): Topology {
+    return new Topology(key);
+  }
+
+  private constructor(public readonly key: string) {};
+}
+
+/**
+ * Options for `PodScheduling.colocate`.
+ */
+export interface PodSchedulingColocateOptions {
+  /**
+   * Which topology to coloate on.
+   *
+   * @default - Topology.HOSTNAME
+   */
+  readonly topology?: Topology;
+
+  /**
+   * Indicates the co-location is optional (soft), with this weight score.
+   *
+   * @default - no weight. co-location is assumed to be required (hard).
+   */
+  readonly weight?: number;
+}
+
+/**
+ * Options for `PodScheduling.separate`.
+ */
+export interface PodSchedulingSeparateOptions {
+  /**
+   * Which topology to separate on.
+   *
+   * @default - Topology.HOSTNAME
+   */
+  readonly topology?: Topology;
+
+  /**
+   * Indicates the separation is optional (soft), with this weight score.
+   *
+   * @default - no weight. separation is assumed to be required (hard).
+   */
+  readonly weight?: number;
+}
+
+/**
+ * Options for `PodScheduling.attract`.
+ */
+export interface PodSchedulingAttractOptions {
+  /**
+   * Indicates the attraction is optional (soft), with this weight score.
+   *
+   * @default - no weight. assignment is assumed to be required (hard).
+   */
+  readonly weight?: number;
+}
+
+/**
+ * Controls the pod scheduling strategy.
+ */
+export class PodScheduling {
+
+  private _nodeAffinityPreferred: k8s.PreferredSchedulingTerm[] = [];
+  private _nodeAffinityRequired: k8s.NodeSelectorTerm[] = [];
+  private _podAffinityPreferred: k8s.WeightedPodAffinityTerm[] = [];
+  private _podAffinityRequired: k8s.PodAffinityTerm[] = [];
+  private _podAntiAffinityPreferred: k8s.WeightedPodAffinityTerm[] = [];
+  private _podAntiAffinityRequired: k8s.PodAffinityTerm[] = [];
+  private _tolerations: k8s.Toleration[] = [];
+  private _nodeName?: string;
+
+  constructor(protected readonly instance: AbstractPod) {}
+
+  /**
+   * Assign this pod a specific node by name.
+   *
+   * The scheduler ignores the Pod, and the kubelet on the named node
+   * tries to place the Pod on that node. Overrules any affinity rules of the pod.
+   *
+   * Some limitations of static assignment are:
+   *
+   * - If the named node does not exist, the Pod will not run, and in some
+   *   cases may be automatically deleted.
+   * - If the named node does not have the resources to accommodate the Pod,
+   *   the Pod will fail and its reason will indicate why, for example OutOfmemory or OutOfcpu.
+   * - Node names in cloud environments are not always predictable or stable.
+   *
+   * Will throw is the pod is already assigned to named node.
+   *
+   * Under the hood, this method utilizes the `nodeName` property.
+   */
+  public assign(node: NamedNode) {
+
+    if (this._nodeName) {
+      // disallow overriding an static node assignment
+      throw new Error(`Cannot assign ${this.instance.podMetadata.name} to node ${node.name}. It is already assigned to node ${this._nodeName}`);
+    } else {
+      this._nodeName = node.name;
+    }
+  }
+
+  /**
+   * Allow this pod to tolerate taints matching these tolerations.
+   *
+   * You can put multiple taints on the same node and multiple tolerations on the same pod.
+   * The way Kubernetes processes multiple taints and tolerations is like a filter: start with
+   * all of a node's taints, then ignore the ones for which the pod has a matching toleration;
+   * the remaining un-ignored taints have the indicated effects on the pod. In particular:
+   *
+   * - if there is at least one un-ignored taint with effect NoSchedule then Kubernetes will
+   *   not schedule the pod onto that node
+   * - if there is no un-ignored taint with effect NoSchedule but there is at least one un-ignored
+   *   taint with effect PreferNoSchedule then Kubernetes will try to not schedule the pod onto the node
+   * - if there is at least one un-ignored taint with effect NoExecute then the pod will be evicted from
+   *   the node (if it is already running on the node), and will not be scheduled onto the node (if it is
+   *   not yet running on the node).
+   *
+   * Under the hood, this method utilizes the `tolerations` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+   */
+  public tolerate(node: TaintedNode) {
+    for (const query of node.taintSelector) {
+
+      this._tolerations.push({
+        key: query.key,
+        value: query.value,
+        effect: query.effect,
+        operator: query.operator,
+        tolerationSeconds: query.evictAfter?.toSeconds(),
+      });
+    }
+  }
+
+  /**
+   * Attract this pod to a node matched by selectors.
+   * You can select a node by using `Node.labeled()`.
+   *
+   * Attracting to multiple nodes (i.e invoking this method multiple times) acts as
+   * an OR condition, meaning the pod will be assigned to either one of the nodes.
+   *
+   * Under the hood, this method utilizes the `nodeAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+   */
+  public attract(node: LabeledNode, options: PodSchedulingAttractOptions = {}) {
+
+    const term = this.createNodeAffinityTerm(node);
+
+    if (options.weight) {
+      this.validateWeight(options.weight);
+      this._nodeAffinityPreferred.push({ weight: options.weight, preference: term });
+    } else {
+      this._nodeAffinityRequired.push(term);
+    }
+  }
+
+  /**
+   * Co-locate this pod with a scheduling selection.
+   *
+   * A selection can be one of:
+   *
+   * - An instance of a `Pod`.
+   * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
+   * - An un-managed pod that can be selected via `Pod.select()`.
+   *
+   * Co-locating with multiple selections ((i.e invoking this method multiple times)) acts as
+   * an AND condition. meaning the pod will be assigned to a node that satisfies all
+   * selections (i.e runs at least one pod that satisifies each selection).
+   *
+   * Under the hood, this method utilizes the `podAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+   */
+  public colocate(selector: IPodSelector, options: PodSchedulingColocateOptions = {}) {
+
+    const topology = options.topology ?? Topology.HOSTNAME;
+    const term = this.createPodAffinityTerm(topology, selector);
+
+    if (options.weight) {
+      this.validateWeight(options.weight);
+      this._podAffinityPreferred.push({ weight: options.weight, podAffinityTerm: term });
+    } else {
+      this._podAffinityRequired.push(term);
+    }
+  }
+
+  /**
+   * Seperate this pod from a scheduling selection.
+   *
+   * A selection can be one of:
+   *
+   * - An instance of a `Pod`.
+   * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
+   * - An un-managed pod that can be selected via `Pod.select()`.
+   *
+   * Seperating from multiple selections acts as an AND condition. meaning the pod
+   * will not be assigned to a node that satisfies all selections (i.e runs at least one pod that satisifies each selection).
+   *
+   * Under the hood, this method utilizes the `podAntiAffinity` property.
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+   */
+  public separate(selector: IPodSelector, options: PodSchedulingSeparateOptions = {}) {
+
+    const topology = options.topology ?? Topology.HOSTNAME;
+    const term = this.createPodAffinityTerm(topology, selector);
+
+    if (options.weight) {
+      this.validateWeight(options.weight);
+      this._podAntiAffinityPreferred.push({ weight: options.weight, podAffinityTerm: term });
+    } else {
+      this._podAntiAffinityRequired.push(term);
+    }
+
+  }
+
+  private createPodAffinityTerm(topology: Topology, selector: IPodSelector): k8s.PodAffinityTerm {
+    const config = selector.toPodSelectorConfig();
+    return {
+      topologyKey: topology.key,
+      labelSelector: config.labelSelector._toKube(),
+      namespaceSelector: config.namespaces?.labelSelector?._toKube(),
+      namespaces: config.namespaces?.names,
+    };
+  }
+
+  private createNodeAffinityTerm(node: LabeledNode): k8s.NodeSelectorTerm {
+    return { matchExpressions: node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) };
+  }
+
+  private validateWeight(weight: number) {
+    if (weight < 1 || weight > 100) {
+      // https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity-weight
+      throw new Error(`Invalid affinity weight: ${weight}. Must be in range 1-100`);
+    }
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): { affinity?: k8s.Affinity; nodeName?: string; tolerations?: k8s.Toleration[] } {
+
+    const atLeastOne = (...arrays: Array<any>[]) => {
+      return arrays.flat().length > 0;
+    };
+
+    const hasNodeAffinity = atLeastOne(this._nodeAffinityPreferred, this._nodeAffinityRequired);
+    const hasPodAffinity = atLeastOne(this._podAffinityPreferred, this._podAffinityRequired);
+    const hasPodAntiAffinty = atLeastOne(this._podAntiAffinityPreferred, this._podAntiAffinityRequired);
+    const hasAffinity = hasNodeAffinity || hasPodAffinity || hasPodAntiAffinty;
+
+    return {
+      affinity: hasAffinity ? {
+        nodeAffinity: hasNodeAffinity ? {
+          preferredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._nodeAffinityPreferred),
+          requiredDuringSchedulingIgnoredDuringExecution: this._nodeAffinityRequired.length > 0 ? {
+            nodeSelectorTerms: this._nodeAffinityRequired,
+          } : undefined,
+        } : undefined,
+        podAffinity: hasPodAffinity ? {
+          preferredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAffinityPreferred),
+          requiredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAffinityRequired),
+        } : undefined,
+        podAntiAffinity: hasPodAntiAffinty ? {
+          preferredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAntiAffinityPreferred),
+          requiredDuringSchedulingIgnoredDuringExecution: undefinedIfEmpty(this._podAntiAffinityRequired),
+        } : undefined,
+      } : undefined,
+      nodeName: this._nodeName,
+      tolerations: undefinedIfEmpty(this._tolerations),
+    };
+  }
 }
