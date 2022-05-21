@@ -240,6 +240,29 @@ test('custom deployment strategy', () => {
 
 });
 
+test('rolling update deployment strategy with a custom maxSurge and maxUnavailable', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    strategy: DeploymentStrategy.rollingUpdate({
+      maxSurge: PercentOrAbsolute.percent(50),
+      maxUnavailable: PercentOrAbsolute.absolute(1),
+    }),
+  });
+  deployment.addContainer({ image: 'image' });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(spec.strategy).toEqual({
+    type: 'RollingUpdate',
+    rollingUpdate: {
+      maxSurge: '50%',
+      maxUnavailable: 1,
+    },
+  });
+});
+
 test('throws is maxSurge and maxUnavailable is set to zero for rolling update', () => {
 
   const chart = Testing.chart();
