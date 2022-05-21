@@ -1,4 +1,4 @@
-import { Testing, ApiObject } from 'cdk8s';
+import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 import { DockerConfigSecret, FsGroupChangePolicy, Probe } from '../src';
@@ -528,4 +528,237 @@ test('auto mounting token can be disabled', () => {
   expect(pod.automountServiceAccountToken).toBeFalsy();
   expect(spec.automountServiceAccountToken).toBeFalsy();
 
+});
+
+describe('scheduling', () => {
+
+  test('only NO_EXECUTE taint queries can specify eviction', () => {
+
+    expect(() => kplus.NodeTaintQuery.is('key', 'value', {
+      effect: kplus.TaintEffect.NO_SCHEDULE,
+      evictAfter: Duration.hours(1),
+    })).toThrow('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
+
+  });
+
+  test('can tolerate tainted nodes', () => {
+
+    const chart = Testing.chart();
+
+    const devNodes = kplus.Node.tainted(
+      kplus.NodeTaintQuery.is('key1', 'value1'),
+      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TaintEffect.PREFER_NO_SCHEDULE }),
+      kplus.NodeTaintQuery.exists('key3'),
+      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TaintEffect.NO_SCHEDULE }),
+      kplus.NodeTaintQuery.is('key5', 'value5', {
+        effect: kplus.TaintEffect.NO_EXECUTE,
+        evictAfter: Duration.hours(1),
+      }),
+      kplus.NodeTaintQuery.any(),
+    );
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.tolerate(devNodes);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be assigned to a node by name', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.assign(kplus.Node.named('node1'));
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be attracted to a node by selector - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', { containers: [{ image: 'redis' }] });
+    redis.scheduling.attract(kplus.Node.labeled(kplus.NodeLabelQuery.is('memory', 'high')));
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be attracted to a node by selector - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    redis.scheduling.attract(kplus.Node.labeled(kplus.NodeLabelQuery.is('memory', 'high')), {
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with a managed pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with a managed pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis, {
+      topology: kplus.Topology.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with an unmanaged pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.all(),
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be co-located with an unmanaged pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.colocate(redis, {
+      topology: kplus.Topology.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from a managed pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from a managed pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = new kplus.Pod(chart, 'Redis', {
+      containers: [{ image: 'redis' }],
+    });
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis, {
+      topology: kplus.Topology.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from an unmanaged pod - default', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' }, names: ['web'] } ),
+    });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can be separated from an unmanaged pod - custom', () => {
+
+    const chart = Testing.chart();
+
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
+
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    web.scheduling.separate(redis, {
+      topology: kplus.Topology.ZONE,
+      weight: 1,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+});
+
+test('can select pods', () => {
+  const pods = kplus.Pods.select({
+    labels: { foo: 'bar' },
+    expressions: [kplus.LabelExpression.exists('key')],
+    namespaces: kplus.Namespaces.select({ labels: { foo: 'bar' } }),
+  });
+  expect(pods.toPodSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
+  expect(pods.toPodSelectorConfig().namespaces?.names).toBeUndefined();
+  expect(pods.toPodSelectorConfig().namespaces?.labelSelector?._toKube()).toMatchSnapshot();
 });
