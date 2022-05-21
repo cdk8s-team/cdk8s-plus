@@ -37,9 +37,11 @@ const project = new cdk.JsiiProject({
   ],
   deps: [
     'minimatch',
+    'safe-stable-stringify',
   ],
   bundledDeps: [
     'minimatch',
+    'safe-stable-stringify',
   ],
   devDeps: [
     'constructs',
