@@ -22,50 +22,6 @@
         }
       ]
     },
-    "backport:20": {
-      "name": "backport:20",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
-    "backport:21": {
-      "name": "backport:21",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
     "backport:22": {
       "name": "backport:22",
       "requiredEnv": [
@@ -84,6 +40,50 @@
         },
         {
           "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
+          "cwd": "/tmp/.backport/"
+        }
+      ]
+    },
+    "backport:23": {
+      "name": "backport:23",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
+          "cwd": "/tmp/.backport/"
+        }
+      ]
+    },
+    "backport:24": {
+      "name": "backport:24",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
           "cwd": "/tmp/.backport/"
         }
       ]
