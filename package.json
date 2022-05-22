@@ -7,9 +7,9 @@
   },
   "scripts": {
     "backport": "npx projen backport",
-    "backport:21": "npx projen backport:21",
     "backport:22": "npx projen backport:22",
     "backport:23": "npx projen backport:23",
+    "backport:24": "npx projen backport:24",
     "build": "npx projen build",
     "bump": "npx projen bump",
     "clobber": "npx projen clobber",
