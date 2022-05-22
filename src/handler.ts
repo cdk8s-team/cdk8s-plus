@@ -77,7 +77,7 @@ export class Handler {
   /**
    * @internal
    */
-  public _toKube(cont: container.Container): k8s.Handler {
+  public _toKube(cont: container.Container): k8s.LifecycleHandler {
 
     const exec = this.commandOptions ? _action.Action.fromCommand(this.commandOptions.command) : undefined;
     const httpGet = this.httpGetOptions ? _action.Action.fromHttpGet(cont, this.httpGetOptions.path, this.httpGetOptions) : undefined;

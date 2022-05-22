@@ -167,7 +167,7 @@ describe('Container', () => {
 
     const expected: k8s.Container = {
       name: 'name',
-      imagePullPolicy: kplus.ImagePullPolicy.NEVER,
+      imagePullPolicy: 'Never',
       image: 'image',
       workingDir: 'workingDir',
       ports: [{

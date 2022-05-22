@@ -673,7 +673,12 @@ export class PodDns {
   /**
    * @internal
    */
-  public _toKube(): { hostname?: string; subdomain?: string; hostnameAsFQDN: boolean; policy: string; config: k8s.PodDnsConfig } {
+  public _toKube(): {
+    hostname?: string;
+    subdomain?: string;
+    hostnameAsFQDN: boolean;
+    policy: string;
+    config: k8s.PodDnsConfig; } {
 
     if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
       throw new Error('When dns policy is set to NONE, at least one nameserver is required');
@@ -906,9 +911,20 @@ export class NodeLabelQuery {
   }
 
   private constructor(
-    public readonly key: string,
-    public readonly operator: string,
-    public readonly values?: string[]) {
+    private readonly key: string,
+    private readonly operator: string,
+    private readonly values?: string[]) {
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.NodeSelectorRequirement {
+    return {
+      key: this.key,
+      operator: this.operator,
+      values: this.values,
+    };
   }
 }
 
@@ -1028,16 +1044,31 @@ export class NodeTaintQuery {
   }
 
   private constructor(
-    public readonly operator: string,
-    public readonly key?: string,
-    public readonly value?: string,
-    public readonly effect?: string,
-    public readonly evictAfter?: Duration,
+    private readonly operator: string,
+    private readonly key?: string,
+    private readonly value?: string,
+    private readonly effect?: TaintEffect,
+    private readonly evictAfter?: Duration,
   ) {
     if (evictAfter && effect !== TaintEffect.NO_EXECUTE) {
       throw new Error('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
     }
   }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.Toleration {
+
+    return {
+      effect: this.effect,
+      key: this.key,
+      operator: this.operator,
+      tolerationSeconds: this.evictAfter?.toSeconds(),
+      value: this.value,
+    };
+  }
+
 }
 
 /**
@@ -1052,7 +1083,6 @@ export interface PodsAllOptions {
    * @default - unset, implies the namespace of the resource this selection is used in.
    */
   readonly namespaces?: namespace.Namespaces;
-
 }
 
 /**
@@ -1339,14 +1369,7 @@ export class PodScheduling {
    */
   public tolerate(node: TaintedNode) {
     for (const query of node.taintSelector) {
-
-      this._tolerations.push({
-        key: query.key,
-        value: query.value,
-        effect: query.effect,
-        operator: query.operator,
-        tolerationSeconds: query.evictAfter?.toSeconds(),
-      });
+      this._tolerations.push(query._toKube());
     }
   }
 
@@ -1444,7 +1467,7 @@ export class PodScheduling {
   }
 
   private createNodeAffinityTerm(node: LabeledNode): k8s.NodeSelectorTerm {
-    return { matchExpressions: node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) };
+    return { matchExpressions: node.labelSelector.map(s => s._toKube()) };
   }
 
   private validateWeight(weight: number) {

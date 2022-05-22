@@ -146,6 +146,7 @@ export class StatefulSet extends workload.Workload {
     * @internal
     */
   public _toKube(): k8s.StatefulSetSpec {
+
     return {
       serviceName: this._service.name,
       replicas: this.replicas,
