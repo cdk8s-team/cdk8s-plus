@@ -383,20 +383,22 @@ export class NetworkPolicy extends base.Resource {
 
     this._podSelectorConfig = (props.selector ?? pod.Pods.all()).toPodSelectorConfig();
 
-    if (this._podSelectorConfig.namespaces?.labelSelector && !this._podSelectorConfig.namespaces?.labelSelector.isEmpty()) {
-      throw new Error('Unable to create a network policy for a selector that selects pods in namespaces based on labes');
-    }
+    let ns;
 
-    if (this._podSelectorConfig.namespaces?.names && this._podSelectorConfig.namespaces.names.length > 1) {
-      throw new Error('Unable to create a network policy for a selector that selects pods in multiple namespace');
-    }
+    if (!props.metadata?.namespace) {
 
-    const selectorNamespace = this._podSelectorConfig.namespaces?.names ? this._podSelectorConfig.namespaces?.names[0] : undefined;
+      if (this._podSelectorConfig.namespaces?.labelSelector && !this._podSelectorConfig.namespaces?.labelSelector.isEmpty()) {
+        throw new Error('Unable to create a network policy for a selector that selects pods in namespaces based on labes');
+      }
 
-    const ns = props.metadata?.namespace ?? selectorNamespace;
+      if (this._podSelectorConfig.namespaces?.names && this._podSelectorConfig.namespaces.names.length > 1) {
+        throw new Error('Unable to create a network policy for a selector that selects pods in multiple namespace');
+      }
 
-    if (selectorNamespace && ns !== selectorNamespace) {
-      throw new Error(`Unable to create a network policy in namespace '${ns}' for a selector that selects pods in namespace '${selectorNamespace}'`);
+      ns = this._podSelectorConfig.namespaces?.names ? this._podSelectorConfig.namespaces?.names[0] : undefined;
+
+    } else {
+      ns = props.metadata.namespace;
     }
 
     this.apiObject = new k8s.KubeNetworkPolicy(this, 'Resource', {

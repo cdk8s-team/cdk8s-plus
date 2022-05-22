@@ -1662,10 +1662,10 @@ export class PodConnections {
         return;
       }
 
-      const podSelector = config.podSelector!;
+      const podSelectorConfig = config.podSelector!;
       let namespaces: string[];
 
-      if (!podSelector.namespaces) {
+      if (!podSelectorConfig.namespaces) {
 
         // if the peer doesn't specify namespaces, we assume the same namespace.
         namespaces = [this.instance.metadata.namespace ?? 'default'];
@@ -1674,30 +1674,30 @@ export class PodConnections {
 
         // a peer cannot specify namespaces by labels because
         // we won't be able to extract the names of those namespaces.
-        if (podSelector.namespaces.labelSelector) {
+        if (podSelectorConfig.namespaces.labelSelector && !podSelectorConfig.namespaces.labelSelector.isEmpty()) {
           throw new Error('Unable to create peer policy. Peer must specify namespaces only by name');
         }
 
         // a peer must specify namespaces by name.
-        if (!podSelector.namespaces.names) {
+        if (!podSelectorConfig.namespaces.names) {
           throw new Error('Unable to create peer policy. Peer must specify namespace names');
         }
 
-        namespaces = podSelector.namespaces.names;
+        namespaces = podSelectorConfig.namespaces.names;
       }
 
       for (const name of namespaces) {
         switch (direction) {
           case 'Egress':
-            new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${namespace}${peerAddress}`, {
-              selector: { toPodSelectorConfig: () => podSelector },
+            new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${name}${peerAddress}`, {
+              selector: { toPodSelectorConfig: () => podSelectorConfig },
               metadata: { namespace: name },
               ingress: { rules: [{ peer: this.instance, ports: options.ports }] },
             });
             break;
           case 'Ingress':
-            new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${namespace}${peerAddress}`, {
-              selector: { toPodSelectorConfig: () => podSelector },
+            new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${name}${peerAddress}`, {
+              selector: { toPodSelectorConfig: () => podSelectorConfig },
               metadata: { namespace: name },
               egress: { rules: [{ peer: this.instance, ports: options.ports }] },
             });

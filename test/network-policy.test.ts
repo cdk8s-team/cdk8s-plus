@@ -157,21 +157,6 @@ describe('NeworkPolicy |', () => {
 
   });
 
-  test('cannot create a policy for a selector that selects pods in a different namespace', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-      metadata: { namespace: 'n1' },
-    });
-
-    expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
-      selector: web,
-      metadata: { namespace: 'n2' },
-    })).toThrow(/Unable to create a network policy in namespace 'n2' for a selector that selects pods in namespace 'n1'/);
-
-  });
-
   test('cannot create a policy for a selector that selects pods in multiple namespaces', () => {
 
     const chart = Testing.chart();
@@ -183,7 +168,6 @@ describe('NeworkPolicy |', () => {
 
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
-      metadata: { namespace: 'n2' },
     })).toThrow(/Unable to create a network policy for a selector that selects pods in multiple namespace/);
 
   });
@@ -200,7 +184,6 @@ describe('NeworkPolicy |', () => {
 
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
-      metadata: { namespace: 'n2' },
     })).toThrow(/Unable to create a network policy for a selector that selects pods in namespaces based on labes/);
 
   });
