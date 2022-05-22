@@ -222,15 +222,27 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    */
   public _toKube(): k8s.PersistentVolumeSpec {
     const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes() + 'Gi') : undefined;
+
     return {
       claimRef: this._claim ? { name: this._claim?.name } : undefined,
       accessModes: this.accessModes?.map(a => a.toString()),
       capacity: storage ? { storage } : undefined,
       mountOptions: this.mountOptions?.map(o => o),
       storageClassName: this.storageClassName,
-      persistentVolumeReclaimPolicy: this.reclaimPolicy,
+      persistentVolumeReclaimPolicy: this._reclaimPolicyToKube(this.reclaimPolicy),
       volumeMode: this.mode,
     };
+  }
+
+  private _reclaimPolicyToKube(reclaimPolicy: PersistentVolumeReclaimPolicy): k8s.IoK8SApiCoreV1PersistentVolumeSpecPersistentVolumeReclaimPolicy {
+    switch (reclaimPolicy) {
+      case PersistentVolumeReclaimPolicy.DELETE:
+        return k8s.IoK8SApiCoreV1PersistentVolumeSpecPersistentVolumeReclaimPolicy.DELETE;
+      case PersistentVolumeReclaimPolicy.RETAIN:
+        return k8s.IoK8SApiCoreV1PersistentVolumeSpecPersistentVolumeReclaimPolicy.RETAIN;
+      default:
+        throw new Error(`Unsupported reclaim policy: ${reclaimPolicy}`);
+    }
   }
 }
 

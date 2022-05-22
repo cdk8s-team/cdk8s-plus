@@ -299,7 +299,7 @@ export class DeploymentStrategy {
    */
   public static recreate(): DeploymentStrategy {
     return new DeploymentStrategy({
-      type: 'Recreate',
+      type: k8s.IoK8SApiAppsV1DeploymentStrategyType.RECREATE,
     });
   }
 
@@ -313,7 +313,7 @@ export class DeploymentStrategy {
     }
 
     return new DeploymentStrategy({
-      type: 'RollingUpdate',
+      type: k8s.IoK8SApiAppsV1DeploymentStrategyType.ROLLING_UPDATE,
       rollingUpdate: { maxSurge, maxUnavailable },
     });
   }

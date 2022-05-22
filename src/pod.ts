@@ -180,7 +180,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector 
     const dns = this.dns._toKube();
 
     return {
-      restartPolicy: this.restartPolicy,
+      restartPolicy: this.restartPolicy ? this._restartPolicyToKube(this.restartPolicy) : undefined,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
       securityContext: undefinedIfEmpty(this.securityContext._toKube()),
@@ -196,6 +196,19 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector 
       automountServiceAccountToken: this.automountServiceAccountToken,
     };
 
+  }
+
+  private _restartPolicyToKube(restartPolicy: RestartPolicy): k8s.IoK8SApiCoreV1PodSpecRestartPolicy {
+    switch (restartPolicy) {
+      case RestartPolicy.ALWAYS:
+        return k8s.IoK8SApiCoreV1PodSpecRestartPolicy.ALWAYS;
+      case RestartPolicy.NEVER:
+        return k8s.IoK8SApiCoreV1PodSpecRestartPolicy.NEVER;
+      case RestartPolicy.ON_FAILURE:
+        return k8s.IoK8SApiCoreV1PodSpecRestartPolicy.ON_FAILURE;
+      default:
+        throw new Error(`Unsupported restart policy: ${restartPolicy}`);
+    }
   }
 
 }
@@ -662,7 +675,12 @@ export class PodDns {
   /**
    * @internal
    */
-  public _toKube(): { hostname?: string; subdomain?: string; hostnameAsFQDN: boolean; policy: string; config: k8s.PodDnsConfig } {
+  public _toKube(): {
+    hostname?: string;
+    subdomain?: string;
+    hostnameAsFQDN: boolean;
+    policy: k8s.IoK8SApiCoreV1PodSpecDnsPolicy;
+    config: k8s.PodDnsConfig; } {
 
     if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
       throw new Error('When dns policy is set to NONE, at least one nameserver is required');
@@ -680,13 +698,28 @@ export class PodDns {
       hostname: this.hostname,
       subdomain: this.subdomain,
       hostnameAsFQDN: this.hostnameAsFQDN,
-      policy: this.policy,
+      policy: this._dnsPolicyToKube(this.policy),
       config: {
         nameservers: undefinedIfEmpty(this.nameservers),
         searches: undefinedIfEmpty(this.searches),
         options: undefinedIfEmpty(this.options),
       },
     };
+  }
+
+  private _dnsPolicyToKube(dnsPolicy: DnsPolicy): k8s.IoK8SApiCoreV1PodSpecDnsPolicy {
+    switch (dnsPolicy) {
+      case DnsPolicy.CLUSTER_FIRST:
+        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.CLUSTER_FIRST;
+      case DnsPolicy.CLUSTER_FIRST_WITH_HOST_NET:
+        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.CLUSTER_FIRST_WITH_HOST_NET;
+      case DnsPolicy.DEFAULT:
+        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.DEFAULT;
+      case DnsPolicy.NONE:
+        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.NONE;
+      default:
+        throw new Error(`Unsupported dns policy: ${dnsPolicy}`);
+    }
   }
 
 }
@@ -856,48 +889,59 @@ export class NodeLabelQuery {
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new NodeLabelQuery(key, 'In', values);
+    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.IN, values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new NodeLabelQuery(key, 'NotIn', values);
+    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.NOT_IN, values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new NodeLabelQuery(key, 'Exists', undefined);
+    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.EXISTS, undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new NodeLabelQuery(key, 'DoesNotExist', undefined);
+    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.DOES_NOT_EXIST, undefined);
   }
 
   /**
    * Requires value of label `key` to greater than all elements in `values`.
    */
   public static gt(key: string, values: string[]) {
-    return new NodeLabelQuery(key, 'Gt', values);
+    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.GT, values);
   }
 
   /**
    * Requires value of label `key` to less than all elements in `values`.
    */
   public static lt(key: string, values: string[]) {
-    return new NodeLabelQuery(key, 'Lt', values);
+    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.LT, values);
   }
 
   private constructor(
-    public readonly key: string,
-    public readonly operator: string,
-    public readonly values?: string[]) {
+    private readonly key: string,
+    private readonly operator: k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator,
+    private readonly values?: string[]) {
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.NodeSelectorRequirement {
+    return {
+      key: this.key,
+      operator: this.operator,
+      values: this.values,
+    };
   }
 }
 
@@ -999,32 +1043,59 @@ export class NodeTaintQuery {
    * Matches a taint with a specific key and value.
    */
   public static is(key: string, value: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
-    return new NodeTaintQuery('Equal', key, value, options.effect, options.evictAfter);
+    return new NodeTaintQuery(k8s.IoK8SApiCoreV1TolerationOperator.EQUAL, key, value, options.effect, options.evictAfter);
   }
 
   /**
    * Matches a tain with any value of a specific key.
    */
   public static exists(key: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
-    return new NodeTaintQuery('Exists', key, undefined, options.effect, options.evictAfter);
+    return new NodeTaintQuery(k8s.IoK8SApiCoreV1TolerationOperator.EXISTS, key, undefined, options.effect, options.evictAfter);
   }
 
   /**
    * Matches any taint.
    */
   public static any(): NodeTaintQuery {
-    return new NodeTaintQuery('Exists');
+    return new NodeTaintQuery(k8s.IoK8SApiCoreV1TolerationOperator.EXISTS);
   }
 
   private constructor(
-    public readonly operator: string,
-    public readonly key?: string,
-    public readonly value?: string,
-    public readonly effect?: string,
-    public readonly evictAfter?: Duration,
+    private readonly operator: k8s.IoK8SApiCoreV1TolerationOperator,
+    private readonly key?: string,
+    private readonly value?: string,
+    private readonly effect?: TaintEffect,
+    private readonly evictAfter?: Duration,
   ) {
     if (evictAfter && effect !== TaintEffect.NO_EXECUTE) {
       throw new Error('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
+    }
+  }
+
+  /**
+   * @internal
+   */
+  public _toKube(): k8s.Toleration {
+
+    return {
+      effect: this.effect ? this._taintEffectToKube(this.effect) : undefined,
+      key: this.key,
+      operator: this.operator,
+      tolerationSeconds: this.evictAfter?.toSeconds(),
+      value: this.value,
+    };
+  }
+
+  private _taintEffectToKube(taintEffect: TaintEffect): k8s.IoK8SApiCoreV1TolerationEffect {
+    switch (taintEffect) {
+      case TaintEffect.NO_EXECUTE:
+        return k8s.IoK8SApiCoreV1TolerationEffect.NO_EXECUTE;
+      case TaintEffect.NO_SCHEDULE:
+        return k8s.IoK8SApiCoreV1TolerationEffect.NO_SCHEDULE;
+      case TaintEffect.PREFER_NO_SCHEDULE:
+        return k8s.IoK8SApiCoreV1TolerationEffect.PREFER_NO_SCHEDULE;
+      default:
+        throw new Error(`Unsupported taint effect: ${taintEffect}`);
     }
   }
 }
@@ -1296,14 +1367,7 @@ export class PodScheduling {
    */
   public tolerate(node: TaintedNode) {
     for (const query of node.taintSelector) {
-
-      this._tolerations.push({
-        key: query.key,
-        value: query.value,
-        effect: query.effect,
-        operator: query.operator,
-        tolerationSeconds: query.evictAfter?.toSeconds(),
-      });
+      this._tolerations.push(query._toKube());
     }
   }
 
@@ -1401,7 +1465,7 @@ export class PodScheduling {
   }
 
   private createNodeAffinityTerm(node: LabeledNode): k8s.NodeSelectorTerm {
-    return { matchExpressions: node.labelSelector.map(s => ({ key: s.key, operator: s.operator!, values: s.values })) };
+    return { matchExpressions: node.labelSelector.map(s => s._toKube()) };
   }
 
   private validateWeight(weight: number) {

@@ -4,10 +4,10 @@ import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 22;
+const LATEST_SUPPORTED_K8S_VERSION = 23;
 
 // the version of k8s this branch supports
-const SPEC_VERSION = '22';
+const SPEC_VERSION = '23';
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 const project = new cdk.JsiiProject({

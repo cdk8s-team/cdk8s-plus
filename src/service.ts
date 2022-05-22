@@ -324,22 +324,51 @@ export class Service extends base.Resource {
         port: port.port,
         targetPort: port.targetPort ? k8s.IntOrString.fromNumber(port.targetPort) : undefined,
         nodePort: port.nodePort,
-        protocol: port.protocol,
+        protocol: port.protocol ? this._portProtocolToKube(port.protocol) : undefined,
       });
     }
 
+    const serviceType = this._serviceTypeToKube(this.type);
     return this.type !== ServiceType.EXTERNAL_NAME ? {
       clusterIp: this.clusterIP,
       externalIPs: this._externalIPs,
       externalName: this.externalName,
-      type: this.type,
+      type: serviceType,
       selector: this._selector,
       ports: ports,
       loadBalancerSourceRanges: this._loadBalancerSourceRanges,
     } : {
-      type: this.type,
+      type: serviceType,
       externalName: this.externalName,
     };
+  }
+
+  private _portProtocolToKube(protocol: Protocol): k8s.IoK8SApiCoreV1ServicePortProtocol {
+    switch (protocol) {
+      case Protocol.SCTP:
+        return k8s.IoK8SApiCoreV1ServicePortProtocol.SCTP;
+      case Protocol.TCP:
+        return k8s.IoK8SApiCoreV1ServicePortProtocol.TCP;
+      case Protocol.UDP:
+        return k8s.IoK8SApiCoreV1ServicePortProtocol.UDP;
+      default:
+        throw new Error(`Unsupported port protocol: ${protocol}`);
+    }
+  }
+
+  private _serviceTypeToKube(serviceType: ServiceType): k8s.IoK8SApiCoreV1ServiceSpecType {
+    switch (serviceType) {
+      case ServiceType.CLUSTER_IP:
+        return k8s.IoK8SApiCoreV1ServiceSpecType.CLUSTER_IP;
+      case ServiceType.EXTERNAL_NAME:
+        return k8s.IoK8SApiCoreV1ServiceSpecType.EXTERNAL_NAME;
+      case ServiceType.LOAD_BALANCER:
+        return k8s.IoK8SApiCoreV1ServiceSpecType.LOAD_BALANCER;
+      case ServiceType.NODE_PORT:
+        return k8s.IoK8SApiCoreV1ServiceSpecType.NODE_PORT;
+      default:
+        throw new Error(`Unsupported service type: ${serviceType}`);
+    }
   }
 }
 
