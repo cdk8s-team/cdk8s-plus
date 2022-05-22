@@ -1,15 +1,15 @@
 {
-  "name": "cdk8s-plus-23",
-  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-23 synthesizes Kubernetes manifests for Kubernetes 1.23.0",
+  "name": "cdk8s-plus-24",
+  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-24 synthesizes Kubernetes manifests for Kubernetes 1.24.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
   },
   "scripts": {
     "backport": "npx projen backport",
-    "backport:21": "npx projen backport:21",
     "backport:22": "npx projen backport:22",
     "backport:23": "npx projen backport:23",
+    "backport:24": "npx projen backport:24",
     "build": "npx projen build",
     "bump": "npx projen bump",
     "clobber": "npx projen clobber",
@@ -34,7 +34,7 @@
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
     "regenerate-api-information": "npx projen regenerate-api-information",
-    "release:k8s-23/main": "npx projen release:k8s-23/main",
+    "release:k8s-24/main": "npx projen release:k8s-24/main",
     "test": "npx projen test",
     "test:update": "npx projen test:update",
     "test:watch": "npx projen test:watch",
@@ -149,19 +149,19 @@
     "outdir": "dist",
     "targets": {
       "java": {
-        "package": "org.cdk8s.plus23",
+        "package": "org.cdk8s.plus24",
         "maven": {
           "groupId": "org.cdk8s",
-          "artifactId": "cdk8s-plus-23"
+          "artifactId": "cdk8s-plus-24"
         }
       },
       "python": {
-        "distName": "cdk8s-plus-23",
-        "module": "cdk8s_plus_23"
+        "distName": "cdk8s-plus-24",
+        "module": "cdk8s_plus_24"
       },
       "dotnet": {
-        "namespace": "Org.Cdk8s.Plus23",
-        "packageId": "Org.Cdk8s.Plus23"
+        "namespace": "Org.Cdk8s.Plus24",
+        "packageId": "Org.Cdk8s.Plus24"
       },
       "go": {
         "moduleName": "github.com/cdk8s-team/cdk8s-plus-go"

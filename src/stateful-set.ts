@@ -156,20 +156,9 @@ export class StatefulSet extends workload.Workload {
         spec: this._toPodSpec(),
       },
       selector: this._toLabelSelector(),
-      podManagementPolicy: this._podManagementPolicyToKube(this.podManagementPolicy),
+      podManagementPolicy: this.podManagementPolicy,
       updateStrategy: this.strategy._toKube(),
     };
-  }
-
-  private _podManagementPolicyToKube(podManagementPolicy: PodManagementPolicy): k8s.IoK8SApiAppsV1StatefulSetSpecPodManagementPolicy {
-    switch (podManagementPolicy) {
-      case PodManagementPolicy.ORDERED_READY:
-        return k8s.IoK8SApiAppsV1StatefulSetSpecPodManagementPolicy.ORDERED_READY;
-      case PodManagementPolicy.PARALLEL:
-        return k8s.IoK8SApiAppsV1StatefulSetSpecPodManagementPolicy.PARALLEL;
-      default:
-        throw new Error(`Unsupported pod management policy: ${podManagementPolicy}`);
-    }
   }
 }
 
@@ -207,7 +196,7 @@ export class StatefulSetUpdateStrategy {
    */
   public static onDelete(): StatefulSetUpdateStrategy {
     return new StatefulSetUpdateStrategy({
-      type: k8s.IoK8SApiAppsV1StatefulSetUpdateStrategyType.ON_DELETE,
+      type: 'OnDelete',
     });
   }
 
@@ -220,7 +209,7 @@ export class StatefulSetUpdateStrategy {
   public static rollingUpdate(options: StatefulSetUpdateStrategyRollingUpdateOptions = {}): StatefulSetUpdateStrategy {
 
     return new StatefulSetUpdateStrategy({
-      type: k8s.IoK8SApiAppsV1StatefulSetUpdateStrategyType.ROLLING_UPDATE,
+      type: 'RollingUpdate',
       rollingUpdate: { partition: options.partition ?? 0 },
     });
   }

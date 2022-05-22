@@ -714,7 +714,7 @@ export class Container {
     return {
       name: this.name,
       image: this.image,
-      imagePullPolicy: this._imagePullPolicyToKube(this.imagePullPolicy),
+      imagePullPolicy: this.imagePullPolicy,
       ports: undefinedIfEmpty(ports),
       volumeMounts: undefinedIfEmpty(volumeMounts),
       command: this.command,
@@ -732,19 +732,6 @@ export class Container {
       resources: resourceRequirements,
       securityContext: this.securityContext._toKube(),
     };
-  }
-
-  private _imagePullPolicyToKube(imagePullPolicy: ImagePullPolicy): k8s.IoK8SApiCoreV1ContainerImagePullPolicy {
-    switch (imagePullPolicy) {
-      case ImagePullPolicy.ALWAYS:
-        return k8s.IoK8SApiCoreV1ContainerImagePullPolicy.ALWAYS;
-      case ImagePullPolicy.IF_NOT_PRESENT:
-        return k8s.IoK8SApiCoreV1ContainerImagePullPolicy.IF_NOT_PRESENT;
-      case ImagePullPolicy.NEVER:
-        return k8s.IoK8SApiCoreV1ContainerImagePullPolicy.NEVER;
-      default:
-        throw new Error(`Unsupported image pull policy: ${imagePullPolicy}`);
-    }
   }
 }
 

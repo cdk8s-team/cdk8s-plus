@@ -180,7 +180,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector 
     const dns = this.dns._toKube();
 
     return {
-      restartPolicy: this.restartPolicy ? this._restartPolicyToKube(this.restartPolicy) : undefined,
+      restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
       securityContext: undefinedIfEmpty(this.securityContext._toKube()),
@@ -196,19 +196,6 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector 
       automountServiceAccountToken: this.automountServiceAccountToken,
     };
 
-  }
-
-  private _restartPolicyToKube(restartPolicy: RestartPolicy): k8s.IoK8SApiCoreV1PodSpecRestartPolicy {
-    switch (restartPolicy) {
-      case RestartPolicy.ALWAYS:
-        return k8s.IoK8SApiCoreV1PodSpecRestartPolicy.ALWAYS;
-      case RestartPolicy.NEVER:
-        return k8s.IoK8SApiCoreV1PodSpecRestartPolicy.NEVER;
-      case RestartPolicy.ON_FAILURE:
-        return k8s.IoK8SApiCoreV1PodSpecRestartPolicy.ON_FAILURE;
-      default:
-        throw new Error(`Unsupported restart policy: ${restartPolicy}`);
-    }
   }
 
 }
@@ -679,7 +666,7 @@ export class PodDns {
     hostname?: string;
     subdomain?: string;
     hostnameAsFQDN: boolean;
-    policy: k8s.IoK8SApiCoreV1PodSpecDnsPolicy;
+    policy: string;
     config: k8s.PodDnsConfig; } {
 
     if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
@@ -698,28 +685,13 @@ export class PodDns {
       hostname: this.hostname,
       subdomain: this.subdomain,
       hostnameAsFQDN: this.hostnameAsFQDN,
-      policy: this._dnsPolicyToKube(this.policy),
+      policy: this.policy,
       config: {
         nameservers: undefinedIfEmpty(this.nameservers),
         searches: undefinedIfEmpty(this.searches),
         options: undefinedIfEmpty(this.options),
       },
     };
-  }
-
-  private _dnsPolicyToKube(dnsPolicy: DnsPolicy): k8s.IoK8SApiCoreV1PodSpecDnsPolicy {
-    switch (dnsPolicy) {
-      case DnsPolicy.CLUSTER_FIRST:
-        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.CLUSTER_FIRST;
-      case DnsPolicy.CLUSTER_FIRST_WITH_HOST_NET:
-        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.CLUSTER_FIRST_WITH_HOST_NET;
-      case DnsPolicy.DEFAULT:
-        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.DEFAULT;
-      case DnsPolicy.NONE:
-        return k8s.IoK8SApiCoreV1PodSpecDnsPolicy.NONE;
-      default:
-        throw new Error(`Unsupported dns policy: ${dnsPolicy}`);
-    }
   }
 
 }
@@ -889,47 +861,47 @@ export class NodeLabelQuery {
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.IN, values);
+    return new NodeLabelQuery(key, 'In', values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.NOT_IN, values);
+    return new NodeLabelQuery(key, 'NotIn', values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.EXISTS, undefined);
+    return new NodeLabelQuery(key, 'Exists', undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.DOES_NOT_EXIST, undefined);
+    return new NodeLabelQuery(key, 'DoesNotExist', undefined);
   }
 
   /**
    * Requires value of label `key` to greater than all elements in `values`.
    */
   public static gt(key: string, values: string[]) {
-    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.GT, values);
+    return new NodeLabelQuery(key, 'Gt', values);
   }
 
   /**
    * Requires value of label `key` to less than all elements in `values`.
    */
   public static lt(key: string, values: string[]) {
-    return new NodeLabelQuery(key, k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator.LT, values);
+    return new NodeLabelQuery(key, 'Lt', values);
   }
 
   private constructor(
     private readonly key: string,
-    private readonly operator: k8s.IoK8SApiCoreV1NodeSelectorRequirementOperator,
+    private readonly operator: string,
     private readonly values?: string[]) {
   }
 
@@ -1043,25 +1015,25 @@ export class NodeTaintQuery {
    * Matches a taint with a specific key and value.
    */
   public static is(key: string, value: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
-    return new NodeTaintQuery(k8s.IoK8SApiCoreV1TolerationOperator.EQUAL, key, value, options.effect, options.evictAfter);
+    return new NodeTaintQuery('Equal', key, value, options.effect, options.evictAfter);
   }
 
   /**
    * Matches a tain with any value of a specific key.
    */
   public static exists(key: string, options: NodeTaintQueryOptions = {}): NodeTaintQuery {
-    return new NodeTaintQuery(k8s.IoK8SApiCoreV1TolerationOperator.EXISTS, key, undefined, options.effect, options.evictAfter);
+    return new NodeTaintQuery('Exists', key, undefined, options.effect, options.evictAfter);
   }
 
   /**
    * Matches any taint.
    */
   public static any(): NodeTaintQuery {
-    return new NodeTaintQuery(k8s.IoK8SApiCoreV1TolerationOperator.EXISTS);
+    return new NodeTaintQuery('Exists');
   }
 
   private constructor(
-    private readonly operator: k8s.IoK8SApiCoreV1TolerationOperator,
+    private readonly operator: string,
     private readonly key?: string,
     private readonly value?: string,
     private readonly effect?: TaintEffect,
@@ -1078,7 +1050,7 @@ export class NodeTaintQuery {
   public _toKube(): k8s.Toleration {
 
     return {
-      effect: this.effect ? this._taintEffectToKube(this.effect) : undefined,
+      effect: this.effect,
       key: this.key,
       operator: this.operator,
       tolerationSeconds: this.evictAfter?.toSeconds(),
@@ -1086,18 +1058,6 @@ export class NodeTaintQuery {
     };
   }
 
-  private _taintEffectToKube(taintEffect: TaintEffect): k8s.IoK8SApiCoreV1TolerationEffect {
-    switch (taintEffect) {
-      case TaintEffect.NO_EXECUTE:
-        return k8s.IoK8SApiCoreV1TolerationEffect.NO_EXECUTE;
-      case TaintEffect.NO_SCHEDULE:
-        return k8s.IoK8SApiCoreV1TolerationEffect.NO_SCHEDULE;
-      case TaintEffect.PREFER_NO_SCHEDULE:
-        return k8s.IoK8SApiCoreV1TolerationEffect.PREFER_NO_SCHEDULE;
-      default:
-        throw new Error(`Unsupported taint effect: ${taintEffect}`);
-    }
-  }
 }
 
 /**
