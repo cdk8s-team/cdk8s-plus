@@ -104,9 +104,11 @@ export class Ingress extends base.Resource {
     if (props.tls) {
       this.addTls(props.tls);
     }
+
+    this.node.addValidation({ validate: () => this._validate() });
   }
 
-  protected onValidate() {
+  private _validate() {
     if (!this._defaultBackend && Object.keys(this._rulesPerHost).length === 0) {
       return ['ingress with no rules or default backend'];
     }
@@ -288,6 +290,22 @@ export class IngressBackend {
       service: {
         name: serv.name,
         port: { number: servicePort },
+      },
+    });
+  }
+
+  /**
+   * A Resource backend is an ObjectRef to another Kubernetes resource
+   * within the same namespace as the Ingress object.
+   * A common usage for a Resource backend is to ingress data to an object
+   * storage backend with static assets.
+   */
+  public static fromResource(resource: base.IResource) {
+    return new IngressBackend({
+      resource: {
+        kind: resource.kind,
+        name: resource.name,
+        apiGroup: resource.apiGroup,
       },
     });
   }

@@ -12,11 +12,7 @@ import * as serviceaccount from './service-account';
 import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
-export abstract class AbstractPod extends base.Resource implements
-  IPodSelector,
-  namespace.INamespaceSelector,
-  INamespacedPodSelector,
-  networkpolicy.INetworkPolicyPeer {
+export abstract class AbstractPod extends base.Resource implements IPodSelector, networkpolicy.INetworkPolicyPeer {
 
   public readonly restartPolicy?: RestartPolicy;
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
@@ -81,57 +77,27 @@ export abstract class AbstractPod extends base.Resource implements
   }
 
   /**
-   * @see IPodSelector.toPodLabelSelector()
+   * @see IPodSelector.toPodSelectorConfig()
    */
-  public toPodLabelSelector(): LabelSelector {
+  public toPodSelectorConfig(): PodSelectorConfig {
     const podAddress = this.podMetadata.getLabel(Pod.ADDRESS_LABEL);
     if (!podAddress) {
       // shouldn't happen because we add this label automatically in both pods and workloads.
       throw new Error(`Unable to create a label selector since ${Pod.ADDRESS_LABEL} label is missing`);
     }
-    return LabelSelector.of(LabelQuery.is(Pod.ADDRESS_LABEL, podAddress));
+    return {
+      labelSelector: LabelSelector.of({ labels: { [Pod.ADDRESS_LABEL]: podAddress } }),
+      namespaces: {
+        names: [this._namespaceName],
+      },
+    };
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
-  public toNamespaceLabelSelector(): LabelSelector | undefined {
-    return namespace.Namespace.named(this._namespaceName).toNamespaceLabelSelector();
-  }
-
-  /**
-   * @see INamespaceSelector.toNamespaceName()
-   */
-  public toNamespaceName(): string | undefined {
-    return this._namespaceName;
-  }
-
-  /**
-   * @see INamespacedPodSelector.toPodSelector()
-   */
-  public toPodSelector(): IPodSelector {
-    return this;
-  }
-
-  /**
-   * @see INamespacedPodSelector.toNamespaceSelector()
-   */
-  public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return this;
-  }
-
-  /**
-   * @see INetworkPolicyPeer.toIpBlock()
-   */
-  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
-    return undefined;
-  }
-
-  /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
-    return this;
+  public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
+    return { podSelector: this.toPodSelectorConfig() };
   }
 
   public addContainer(cont: container.ContainerProps): container.Container {
@@ -227,12 +193,12 @@ export abstract class AbstractPod extends base.Resource implements
       restartPolicy: this.restartPolicy,
       serviceAccountName: this.serviceAccount?.name,
       containers: containers,
-      securityContext: this.securityContext._toKube(),
-      initContainers: initContainers,
-      hostAliases: this.hostAliases,
-      volumes: Array.from(volumes.values()).map(v => v._toKube()),
+      securityContext: undefinedIfEmpty(this.securityContext._toKube()),
+      initContainers: undefinedIfEmpty(initContainers),
+      hostAliases: undefinedIfEmpty(this.hostAliases),
+      volumes: undefinedIfEmpty(Array.from(volumes.values()).map(v => v._toKube())),
       dnsPolicy: dns.policy,
-      dnsConfig: dns.config,
+      dnsConfig: undefinedIfEmpty(dns.config),
       hostname: dns.hostname,
       subdomain: dns.subdomain,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
@@ -432,26 +398,63 @@ export interface AbstractPodProps extends base.ResourceProps {
 export interface PodProps extends AbstractPodProps {}
 
 /**
+ * Options for `LabelSelector.of`.
+ */
+export class LabelSelectorOptions {
+
+  /**
+   * Strict label matchers.
+   */
+  readonly labels?: { [key: string]: string };
+
+  /**
+   * Expression based label matchers.
+   */
+  readonly expressions?: LabelExpression[];
+}
+
+/**
  * Match a resource by labels.
  */
 export class LabelSelector {
 
-  /**
-   * Create a selector from label queries.
-   */
-  public static of(...queries: LabelQuery[]): LabelSelector {
-    return new LabelSelector(queries);
+  public static of(options: LabelSelectorOptions = {}) {
+    return new LabelSelector(options.expressions ?? [], options.labels ?? {});
   }
 
-  private constructor(public readonly queries: LabelQuery[]) {}
+  private constructor(
+    private readonly expressions: LabelExpression[],
+    private readonly labels: { [key: string]: string }) {}
 
   /**
    * @internal
    */
   public _toKube(): k8s.LabelSelector {
-    if (this.queries.length === 0) return {};
-    return { matchExpressions: this.queries.map(q => ({ key: q.key, operator: q.operator, values: q.values })) };
+    if (this.expressions.length === 0 && Object.keys(this.labels).length === 0) {
+      return {};
+    }
+    return {
+      matchExpressions: undefinedIfEmpty(this.expressions.map(q => ({ key: q.key, operator: q.operator, values: q.values }))),
+      matchLabels: undefinedIfEmpty(this.labels),
+    };
   }
+}
+
+/**
+ * Configuration for selecting pods, optionally in particular namespaces.
+ */
+export interface PodSelectorConfig {
+
+  /**
+   * A selector to select pods by labels.
+   */
+  readonly labelSelector: LabelSelector;
+
+  /**
+   * Configuration for selecting which namepsaces are the pods allowed to be in.
+   */
+  readonly namespaces?: namespace.NamespaceSelectorConfig;
+
 }
 
 /**
@@ -459,29 +462,9 @@ export class LabelSelector {
  */
 export interface IPodSelector {
   /**
-   * Return the label selector that selects the pods.
-   *
-   * - Implementors should return `Pod.all()` to select all pods.
+   * Return the configuration of this selector.
    */
-  toPodLabelSelector(): LabelSelector;
-}
-
-/**
- * Represents an object that can select pods in particular namespaces.
- */
-export interface INamespacedPodSelector {
-  /**
-   * Return the pod selector that selects the pods.
-   */
-  toPodSelector(): IPodSelector;
-
-  /**
-   * Return the label selector that selects the namespaces.
-   *
-   * - Implementors should return `undefined` to select "this" namespace (i.e the namespace of the selected pod).
-   * - Implementors should return `Namespace.all()` to select all namespaces.
-   */
-  toNamespaceSelector(): namespace.INamespaceSelector | undefined;
+  toPodSelectorConfig(): PodSelectorConfig;
 }
 
 /**
@@ -497,50 +480,14 @@ export class Pod extends AbstractPod {
   public static readonly ADDRESS_LABEL = 'cdk8s.io/metadata.addr';
 
   /**
-   * Match a pod by its labels. By default, matches only to pods belonging to the
-   * namespace of the resource it is defined in. To scope the pod down to other
-   * particular namespaces, use `.namespaced` on the return value.
-   *
-   * @example
-   *
-   * // match a pod with label 'app=store' in "this" namespace.
-   * Pod.labeled(PodLabelQuery.is('app', 'store'));
-   *
-   * // match a pod with label 'app=store' in the 'web' namespace
-   * Pod.labeled(PodLabelQuery.is('app', 'store'))
-   *    .namespaced(Namespace.named('web'));
-   */
-  public static labeled(...selectors: LabelQuery[]): LabeledPod {
-    return new LabeledPod(selectors);
-  }
-
-  /**
-   * Match all pods. By default, matches only to pods belonging to the
-   * namespace of the resource it is defined in. To scope the pod down to other
-   * particular namespaces, use `.namespaced` on the return value.
-   *
-   * @example
-   *
-   * // match all pods in "this" namespace.
-   * Pod.all();
-   *
-   * // match all pods in the 'web' namespace
-   * Pod.all().namespaced(Namespace.named('web'));
-   *
-   */
-  public static all(): LabeledPod {
-    return Pod.labeled();
-  }
-
-  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
   public readonly resourceType = 'pods';
 
-  public readonly connections: PodConnections;
   public readonly scheduling: PodScheduling;
+  public readonly connections: PodConnections;
 
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
@@ -554,7 +501,6 @@ export class Pod extends AbstractPod {
 
     this.scheduling = new PodScheduling(this);
     this.connections = new PodConnections(this);
-
   }
 
   public get podMetadata(): ApiObjectMetadataDefinition {
@@ -747,9 +693,9 @@ export class PodDns {
       hostnameAsFQDN: this.hostnameAsFQDN,
       policy: this.policy,
       config: {
-        nameservers: this.nameservers,
-        searches: this.searches,
-        options: this.options,
+        nameservers: undefinedIfEmpty(this.nameservers),
+        searches: undefinedIfEmpty(this.searches),
+        options: undefinedIfEmpty(this.options),
       },
     };
   }
@@ -796,7 +742,7 @@ export class PodSecurityContext {
       fsGroup: this.fsGroup,
       runAsNonRoot: this.ensureNonRoot,
       fsGroupChangePolicy: this.fsGroupChangePolicy,
-      sysctls: this._sysctls,
+      sysctls: undefinedIfEmpty(this._sysctls),
     };
   }
 
@@ -906,7 +852,7 @@ export interface HostAlias {
 }
 
 /**
- * Label queries that can be perofmed against nodes.
+ * Represents a query that can be performed against nodes with labels.
  */
 export class NodeLabelQuery {
 
@@ -967,43 +913,36 @@ export class NodeLabelQuery {
 }
 
 /**
- * Label queries that can be perofmed against resources.
+ * Represents a query that can be performed against resources with labels.
  */
-export class LabelQuery {
-
-  /**
-   * Requires value of label `key` to equal `value`.
-   */
-  public static is(key: string, value: string) {
-    return LabelQuery.in(key, [value]);
-  }
+export class LabelExpression {
 
   /**
    * Requires value of label `key` to be one of `values`.
    */
   public static in(key: string, values: string[]) {
-    return new LabelQuery(key, 'In', values);
+    return new LabelExpression(key, 'In', values);
   }
 
   /**
    * Requires value of label `key` to be none of `values`.
    */
   public static notIn(key: string, values: string[]) {
-    return new LabelQuery(key, 'NotIn', values);
+    return new LabelExpression(key, 'NotIn', values);
   }
 
   /**
    * Requires label `key` to exist.
    */
   public static exists(key: string) {
-    return new LabelQuery(key, 'Exists', undefined);
+    return new LabelExpression(key, 'Exists', undefined);
   }
 
   /**
    * Requires label `key` to not exist.
    */
   public static doesNotExist(key: string) {
-    return new LabelQuery(key, 'DoesNotExist', undefined);
+    return new LabelExpression(key, 'DoesNotExist', undefined);
   }
 
   private constructor(
@@ -1017,7 +956,7 @@ export class LabelQuery {
 /**
  * Taint effects.
  */
-export enum TainEffect {
+export enum TaintEffect {
   /**
    * This means that no pod will be able to schedule
    * onto the node unless it has a matching toleration.
@@ -1051,7 +990,7 @@ export interface NodeTaintQueryOptions {
    *
    * @default - all effects are matched.
    */
-  readonly effect?: TainEffect;
+  readonly effect?: TaintEffect;
 
   /**
    * How much time should a pod that tolerates the `NO_EXECUTE` effect
@@ -1095,89 +1034,96 @@ export class NodeTaintQuery {
     public readonly effect?: string,
     public readonly evictAfter?: Duration,
   ) {
-    if (evictAfter && effect !== TainEffect.NO_EXECUTE) {
+    if (evictAfter && effect !== TaintEffect.NO_EXECUTE) {
       throw new Error('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
     }
   }
 }
 
-export class LabeledPod implements IPodSelector, INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
-
-  public constructor(private readonly queries: LabelQuery[]) {};
-
-  /**
-   * @see IPodSelector.toPodLabelSelector()
-   */
-  public toPodLabelSelector(): LabelSelector {
-    return LabelSelector.of(...this.queries);
-  }
+/**
+ * Options for `Pods.all`.
+ */
+export interface PodsAllOptions {
 
   /**
-   * @see INamespacedPodSelector.toNamespaceSelector()
+   * Namespaces the pods are allowed to be in.
+   * Use `Namespaces.all()` to allow all namespaces.
+   *
+   * @default - unset, implies the namespace of the resource this selection is used in.
    */
-  public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return undefined;
-  }
-
-  /**
-   * @see INamespacedPodSelector.toPodSelector()
-   */
-  public toPodSelector(): IPodSelector {
-    return this;
-  }
-
-  /**
-   * @see INetworkPolicyPeer.toIpBlock();
-   */
-  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
-    return undefined;
-  }
-
-  /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector();
-   */
-  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
-    return this;
-  }
-
-  public namespaced(selector: namespace.INamespaceSelector): NamespacedLabeledPod {
-    return new NamespacedLabeledPod(this, selector);
-  }
+  readonly namespaces?: namespace.Namespaces;
 
 }
 
-export class NamespacedLabeledPod implements INamespacedPodSelector, networkpolicy.INetworkPolicyPeer {
-
-  public constructor(private readonly labeledPod: LabeledPod, private readonly selector: namespace.INamespaceSelector) {};
+/**
+ * Options for `Pods.select`.
+ */
+export interface PodsSelectOptions {
 
   /**
-   * @see INamespacedPodSelector.toNamespaceSelector();
+   * Labels the pods must have.
+   *
+   * @default - no strict labels requirements.
    */
-  public toNamespaceSelector(): namespace.INamespaceSelector | undefined {
-    return this.selector;
+  readonly labels?: { [key: string]: string };
+
+  /**
+    * Expressions the pods must satisify.
+    *
+    * @default - no expressions requirements.
+    */
+  readonly expressions?: LabelExpression[];
+
+  /**
+   * Namespaces the pods are allowed to be in.
+   * Use `Namespaces.all()` to allow all namespaces.
+   *
+   * @default - unset, implies the namespace of the resource this selection is used in.
+   */
+  readonly namespaces?: namespace.Namespaces;
+
+}
+
+/**
+ * Represents a group of pods.
+ */
+export class Pods implements IPodSelector, networkpolicy.INetworkPolicyPeer {
+
+  /**
+   * Select pods in the cluster with various selectors.
+   */
+  public static select(options: PodsSelectOptions): Pods {
+    return new Pods(options.expressions, options.labels, options.namespaces);
   }
 
   /**
-   * @see INamespacedPodSelector.toPodSelector();
+   * Select all pods.
    */
-  public toPodSelector(): IPodSelector {
-    return this.labeledPod;
+  public static all(options: PodsAllOptions = {}) {
+    return Pods.select({ namespaces: options.namespaces });
+  }
+
+  constructor(
+    private readonly expressions?: LabelExpression[],
+    private readonly labels?: { [key: string]: string },
+    private readonly namespaces?: namespace.INamespaceSelector) { }
+
+  /**
+   * @see IPodSelector.toPodSelectorConfig()
+   */
+  public toPodSelectorConfig(): PodSelectorConfig {
+    return {
+      labelSelector: LabelSelector.of({ expressions: this.expressions, labels: this.labels }),
+      namespaces: this.namespaces?.toNamespaceSelectorConfig(),
+    };
   }
 
   /**
-   * @see INetworkPolicyPeer.toIpBlock();
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
-  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
-    return undefined;
+  public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
+    return { podSelector: this.toPodSelectorConfig() };
   }
-
-  /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector();
-   */
-  public toNamespacedPodSelector(): INamespacedPodSelector | undefined {
-    return this.labeledPod.namespaced(this.selector);
-  }
-
 }
 
 /**
@@ -1278,7 +1224,7 @@ export class Topology {
 }
 
 /**
- * Options for `PodScheduling.coloate`.
+ * Options for `PodScheduling.colocate`.
  */
 export interface PodSchedulingColocateOptions {
   /**
@@ -1363,11 +1309,10 @@ export class PodScheduling {
    */
   public assign(node: NamedNode) {
 
-    if (node.name && this._nodeName) {
-      if (this._nodeName) {
-        // disallow overriding an static node assignment
-        throw new Error(`Cannot assign ${this.instance.podMetadata.name} to node ${node.name}. It is already assigned to node ${this._nodeName}`);
-      }
+    if (this._nodeName) {
+      // disallow overriding an static node assignment
+      throw new Error(`Cannot assign ${this.instance.podMetadata.name} to node ${node.name}. It is already assigned to node ${this._nodeName}`);
+    } else {
       this._nodeName = node.name;
     }
   }
@@ -1407,7 +1352,7 @@ export class PodScheduling {
 
   /**
    * Attract this pod to a node matched by selectors.
-   * You can select a node by using `Node.select()`.
+   * You can select a node by using `Node.labeled()`.
    *
    * Attracting to multiple nodes (i.e invoking this method multiple times) acts as
    * an OR condition, meaning the pod will be assigned to either one of the nodes.
@@ -1445,7 +1390,7 @@ export class PodScheduling {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
    */
-  public colocate(selector: INamespacedPodSelector, options: PodSchedulingColocateOptions = {}) {
+  public colocate(selector: IPodSelector, options: PodSchedulingColocateOptions = {}) {
 
     const topology = options.topology ?? Topology.HOSTNAME;
     const term = this.createPodAffinityTerm(topology, selector);
@@ -1474,7 +1419,7 @@ export class PodScheduling {
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
    */
-  public separate(selector: INamespacedPodSelector, options: PodSchedulingSeparateOptions = {}) {
+  public separate(selector: IPodSelector, options: PodSchedulingSeparateOptions = {}) {
 
     const topology = options.topology ?? Topology.HOSTNAME;
     const term = this.createPodAffinityTerm(topology, selector);
@@ -1488,11 +1433,13 @@ export class PodScheduling {
 
   }
 
-  private createPodAffinityTerm(topology: Topology, selector: INamespacedPodSelector): k8s.PodAffinityTerm {
+  private createPodAffinityTerm(topology: Topology, selector: IPodSelector): k8s.PodAffinityTerm {
+    const config = selector.toPodSelectorConfig();
     return {
       topologyKey: topology.key,
-      labelSelector: selector.toPodSelector().toPodLabelSelector()._toKube(),
-      namespaceSelector: selector.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
+      labelSelector: config.labelSelector._toKube(),
+      namespaceSelector: config.namespaces?.labelSelector?._toKube(),
+      namespaces: config.namespaces?.names,
     };
   }
 
@@ -1513,7 +1460,7 @@ export class PodScheduling {
   public _toKube(): { affinity?: k8s.Affinity; nodeName?: string; tolerations?: k8s.Toleration[] } {
 
     const atLeastOne = (...arrays: Array<any>[]) => {
-      return [...arrays].map(a => a.length).reduce((a, b) => a + b) > 0;
+      return arrays.flat().length > 0;
     };
 
     const hasNodeAffinity = atLeastOne(this._nodeAffinityPreferred, this._nodeAffinityRequired);
@@ -1630,8 +1577,7 @@ export class PodConnections {
    *
    */
   public allowTo(peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowToOptions = {}) {
-    const podSelector: IPodSelector | undefined = peer.toNamespacedPodSelector()?.toPodSelector();
-    return this.allow('Egress', peer, { ports: this.extractPorts(podSelector), ...options });
+    return this.allow('Egress', peer, { ports: this.extractPorts(peer), ...options });
   }
 
   /**
@@ -1653,13 +1599,15 @@ export class PodConnections {
    *
    */
   public allowFrom(peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowFromOptions = {}) {
-    const podSelector: IPodSelector | undefined = this.instance;
-    return this.allow('Ingress', peer, { ports: this.extractPorts(podSelector), ...options });
+    return this.allow('Ingress', peer, { ports: this.extractPorts(this.instance), ...options });
   }
 
   private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
 
-    const peerAddress = this.peerAddress(peer);
+    const config = peer.toNetworkPolicyPeerConfig();
+    networkpolicy.validatePeerConfig(config);
+
+    const peerAddress = this.peerAddress(config);
 
     if (!options.isolation || options.isolation === PodConnectionsIsolation.POD) {
 
@@ -1682,48 +1630,57 @@ export class PodConnections {
 
     if (!options.isolation || options.isolation === PodConnectionsIsolation.PEER) {
 
-      const ipBlock = peer.toIpBlock();
-      if (ipBlock) {
+      if (config.ipBlock) {
         // for an ip block we don't need to create the opposite policies
         return;
       }
 
-      // for pods, we need to configure policies that allow the opposite direction.
-      const namespacedPod = networkpolicy.peerToNamespacedPodSelector(peer);
-      const podSelector = namespacedPod.toPodSelector();
-      const namespaceSelector = namespacedPod.toNamespaceSelector();
+      const podSelector = config.podSelector!;
+      let namespaces: string[];
 
-      // the namespace of the dest policy follows this heuristic:
-      // - If a namespace selector is not defined, the peer selects pods in the namespace of the source policy
-      // - If a namespace selector is defined, it needs to provide the namespace name.
-      const namespaceName = namespaceSelector ? namespaceSelector.toNamespaceName() : this.instance.metadata.namespace ?? 'default';
+      if (!podSelector.namespaces) {
 
-      if (!namespaceName) {
-        // if even after applying defaults, we still don't know the namespace name,
-        // we cannot create the dest policy. we throw because this means the connection is not
-        // fully established, and might not actually work.
-        throw new Error(`Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name: ${json.stringify(namespaceSelector?.toNamespaceLabelSelector()?._toKube())}`);
+        // if the peer doesn't specify namespaces, we assume the same namespace.
+        namespaces = [this.instance.metadata.namespace ?? 'default'];
+
+      } else {
+
+        // a peer cannot specify namespaces by labels because
+        // we won't be able to extract the names of those namespaces.
+        if (podSelector.namespaces.labelSelector) {
+          throw new Error('Unable to create peer policy. Peer must specify namespaces only by name');
+        }
+
+        // a peer must specify namespaces by name.
+        if (!podSelector.namespaces.names) {
+          throw new Error('Unable to create peer policy. Peer must specify namespace names');
+        }
+
+        namespaces = podSelector.namespaces.names;
       }
 
-      switch (direction) {
-        case 'Egress':
-          new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${peerAddress}`, {
-            selector: podSelector,
-            metadata: { namespace: namespaceName },
-            ingress: { rules: [{ peer: this.instance, ports: options.ports }] },
-          });
-          break;
-        case 'Ingress':
-          new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${peerAddress}`, {
-            selector: podSelector,
-            metadata: { namespace: namespaceName },
-            egress: { rules: [{ peer: this.instance, ports: options.ports }] },
-          });
+      for (const name of namespaces) {
+        switch (direction) {
+          case 'Egress':
+            new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${namespace}${peerAddress}`, {
+              selector: { toPodSelectorConfig: () => podSelector },
+              metadata: { namespace: name },
+              ingress: { rules: [{ peer: this.instance, ports: options.ports }] },
+            });
+            break;
+          case 'Ingress':
+            new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${namespace}${peerAddress}`, {
+              selector: { toPodSelectorConfig: () => podSelector },
+              metadata: { namespace: name },
+              egress: { rules: [{ peer: this.instance, ports: options.ports }] },
+            });
+        }
       }
+
     }
   }
 
-  private extractPorts(selector?: IPodSelector): networkpolicy.NetworkPolicyPort[] {
+  private extractPorts(selector?: networkpolicy.INetworkPolicyPeer): networkpolicy.NetworkPolicyPort[] {
 
     // empty means all ports
     if (!selector) { return []; }
@@ -1743,10 +1700,9 @@ export class PodConnections {
     return ports;
   }
 
-  private peerAddress(peer: networkpolicy.INetworkPolicyPeer): string {
+  private peerAddress(config: networkpolicy.NetworkPolicyPeerConfig): string {
     const md5 = crypto.createHash('md5');
-    const ipBlock = peer.toIpBlock();
-    const data = ipBlock ? this.stringifyIpBlock(ipBlock) : this.stringifyNamespacedPodSelector(networkpolicy.peerToNamespacedPodSelector(peer));
+    const data = config.ipBlock ? this.stringifyIpBlock(config.ipBlock) : this.stringifyPodSelector(config.podSelector!);
     md5.update(data);
     return md5.digest('hex');
   }
@@ -1755,10 +1711,11 @@ export class PodConnections {
     return json.stringify(ipBlock._toKube());
   }
 
-  private stringifyNamespacedPodSelector(selector: INamespacedPodSelector) {
+  private stringifyPodSelector(selector: PodSelectorConfig) {
     return json.stringify({
-      podLabelSelector: selector.toPodSelector().toPodLabelSelector()._toKube(),
-      namespaceLabelSelector: selector.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
+      podLabelSelector: selector.labelSelector._toKube(),
+      namespaceLabelSelector: selector.namespaces?.labelSelector?._toKube(),
+      namespaceNames: selector.namespaces?.names,
     });
   }
 

@@ -11,7 +11,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 5,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
         },
@@ -26,34 +25,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "image",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },
@@ -72,7 +59,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "selector": Object {
-        "matchExpressions": Array [],
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
         },
@@ -87,34 +73,22 @@ Array [
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {
-              "env": Array [],
               "image": "image",
               "imagePullPolicy": "Always",
               "name": "main",
-              "ports": Array [],
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsNonRoot": false,
               },
-              "volumeMounts": Array [],
             },
           ],
-          "dnsConfig": Object {
-            "nameservers": Array [],
-            "options": Array [],
-            "searches": Array [],
-          },
           "dnsPolicy": "ClusterFirst",
-          "hostAliases": Array [],
-          "initContainers": Array [],
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
-            "sysctls": Array [],
           },
           "setHostnameAsFQDN": false,
-          "volumes": Array [],
         },
       },
     },

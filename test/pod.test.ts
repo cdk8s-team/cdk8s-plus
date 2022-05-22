@@ -4,6 +4,17 @@ import * as kplus from '../src';
 import { DockerConfigSecret, FsGroupChangePolicy, Probe } from '../src';
 import * as k8s from '../src/imports/k8s';
 
+test('defaults', () => {
+
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
 test('fails with two volumes with the same name', () => {
 
   const chart = Testing.chart();
@@ -314,7 +325,6 @@ test('default security context', () => {
     // undefined values are ommitted at synth
     fsGroupChangePolicy: pod.securityContext.fsGroupChangePolicy.toString(),
     runAsNonRoot: pod.securityContext.ensureNonRoot,
-    sysctls: pod.securityContext.sysctls,
   });
 
 });
@@ -384,9 +394,7 @@ test('default dns settings', () => {
   expect(spec.subdomain).toBeUndefined();
   expect(spec.setHostnameAsFQDN).toBeFalsy();
   expect(spec.dnsPolicy).toEqual('ClusterFirst');
-  expect(spec.dnsConfig.searches).toEqual([]);
-  expect(spec.dnsConfig.nameservers).toEqual([]);
-  expect(spec.dnsConfig.options).toEqual([]);
+  expect(spec.dnsConfig).toBeUndefined();
 
 });
 
@@ -527,7 +535,7 @@ describe('scheduling', () => {
   test('only NO_EXECUTE taint queries can specify eviction', () => {
 
     expect(() => kplus.NodeTaintQuery.is('key', 'value', {
-      effect: kplus.TainEffect.NO_SCHEDULE,
+      effect: kplus.TaintEffect.NO_SCHEDULE,
       evictAfter: Duration.hours(1),
     })).toThrow('Only \'NO_EXECUTE\' effects can specify \'evictAfter\'');
 
@@ -539,11 +547,11 @@ describe('scheduling', () => {
 
     const devNodes = kplus.Node.tainted(
       kplus.NodeTaintQuery.is('key1', 'value1'),
-      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TainEffect.PREFER_NO_SCHEDULE }),
+      kplus.NodeTaintQuery.is('key2', 'value2', { effect: kplus.TaintEffect.PREFER_NO_SCHEDULE }),
       kplus.NodeTaintQuery.exists('key3'),
-      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TainEffect.NO_SCHEDULE }),
+      kplus.NodeTaintQuery.exists('key4', { effect: kplus.TaintEffect.NO_SCHEDULE }),
       kplus.NodeTaintQuery.is('key5', 'value5', {
-        effect: kplus.TainEffect.NO_EXECUTE,
+        effect: kplus.TaintEffect.NO_EXECUTE,
         evictAfter: Duration.hours(1),
       }),
       kplus.NodeTaintQuery.any(),
@@ -603,8 +611,6 @@ describe('scheduling', () => {
       containers: [{ image: 'web' }],
     });
 
-    redis.metadata.addLabel('app', 'store');
-
     web.scheduling.colocate(redis);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -622,8 +628,6 @@ describe('scheduling', () => {
       containers: [{ image: 'web' }],
     });
 
-    redis.metadata.addLabel('app', 'store');
-
     web.scheduling.colocate(redis, {
       topology: kplus.Topology.ZONE,
       weight: 1,
@@ -637,8 +641,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.all());
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.all(),
+    });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -654,7 +660,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -680,8 +686,6 @@ describe('scheduling', () => {
       containers: [{ image: 'web' }],
     });
 
-    redis.metadata.addLabel('app', 'store');
-
     web.scheduling.separate(redis);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -699,8 +703,6 @@ describe('scheduling', () => {
       containers: [{ image: 'web' }],
     });
 
-    redis.metadata.addLabel('app', 'store');
-
     web.scheduling.separate(redis, {
       topology: kplus.Topology.ZONE,
       weight: 1,
@@ -714,8 +716,10 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('net', '1')));
+    const redis = kplus.Pods.select({
+      labels: { app: 'store' },
+      namespaces: kplus.Namespaces.select({ labels: { net: '1' }, names: ['web'] } ),
+    });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -731,7 +735,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -748,6 +752,17 @@ describe('scheduling', () => {
 
 });
 
+test('can select pods', () => {
+  const pods = kplus.Pods.select({
+    labels: { foo: 'bar' },
+    expressions: [kplus.LabelExpression.exists('key')],
+    namespaces: kplus.Namespaces.select({ labels: { foo: 'bar' } }),
+  });
+  expect(pods.toPodSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
+  expect(pods.toPodSelectorConfig().namespaces?.names).toBeUndefined();
+  expect(pods.toPodSelectorConfig().namespaces?.labelSelector?._toKube()).toMatchSnapshot();
+});
+
 describe('connections |', () => {
 
   test('can allow to ip block', () => {
@@ -757,7 +772,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    web.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4(), { ports: [kplus.NetworkPolicyPort.allTcp()] });
+    web.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4());
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -773,7 +788,7 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
+    web.connections.allowTo(redis);
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -789,36 +804,21 @@ describe('connections |', () => {
       containers: [{ image: 'redis' }],
     });
 
-    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
+    web.connections.allowTo(redis);
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('can allow to labeled pod', () => {
+  test('can allow to selected pods', () => {
 
     const chart = Testing.chart();
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
     });
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'));
+    const redis = kplus.Pods.select({ labels: { app: 'store' } });
 
-    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
-  test('can allow to namespaced labeled pod', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-    });
-
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-      .namespaced(kplus.Namespace.named('web'));
-
-    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
+    web.connections.allowTo(redis);
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -830,7 +830,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    const all = kplus.Pod.all();
+    const all = kplus.Pods.all();
 
     web.connections.allowTo(all, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -846,22 +846,38 @@ describe('connections |', () => {
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
-    web.connections.allowTo(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
+    web.connections.allowTo(namespace);
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('can allow to named namespace', () => {
+  test('can allow to namespaces selected by name', () => {
 
     const chart = Testing.chart();
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
     });
 
-    const namespace = kplus.Namespace.named('web');
+    const namespace = kplus.Namespaces.select({ names: ['n1'] });
 
     web.connections.allowTo(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow to namespaces selected by labels', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = kplus.Pods.select({
+      labels: { role: 'redis' },
+      namespaces: kplus.Namespaces.select({ labels: { project: 'my-project' } }),
+    });
+
+    expect(() => web.connections.allowTo(redis)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
 
   });
 
@@ -878,12 +894,12 @@ describe('connections |', () => {
       metadata: { namespace: 'n2' },
     });
 
-    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
+    web.connections.allowTo(redis);
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('defaults to source namespace when peer doesnt define a namespace selector', () => {
+  test('allowTo create ingress policy in source namespace when peer doesnt define namespaces', () => {
 
     const chart = Testing.chart();
     const web = new kplus.Pod(chart, 'Web', {
@@ -891,25 +907,14 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'));
+    const redis = kplus.Pods.select({ labels: { role: 'redis' } });
 
-    web.connections.allowTo(redis, { ports: [kplus.NetworkPolicyPort.allTcp()] });
-    expect(Testing.synth(chart)).toMatchSnapshot();
+    web.connections.allowTo(redis);
 
-  });
+    const manifest = Testing.synth(chart);
 
-  test('throws when peer namespace selector doesnt define a namespace name ', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', {
-      containers: [{ image: 'web' }],
-      metadata: { namespace: 'n1' },
-    });
-
-    const redis = kplus.Pod.labeled(kplus.LabelQuery.is('role', 'redis'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
-
-    expect(() => web.connections.allowTo(redis)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
+    const ingressPolicyMetadata = manifest[2].metadata;
+    expect(ingressPolicyMetadata.namespace).toEqual('n1');
 
   });
 
@@ -991,29 +996,14 @@ describe('connections |', () => {
 
   });
 
-  test('can allow from labeled pod', () => {
+  test('can allow from selected pods', () => {
 
     const chart = Testing.chart();
     const redis = new kplus.Pod(chart, 'Redis', {
       containers: [{ image: 'redis' }],
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
-
-    redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
-  test('can allow from namespaced labeled pod', () => {
-
-    const chart = Testing.chart();
-    const redis = new kplus.Pod(chart, 'Redis', {
-      containers: [{ image: 'redis' }],
-    });
-
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'))
-      .namespaced(kplus.Namespace.named('web'));
+    const web = kplus.Pods.select({ labels: { app: 'web' } });
 
     redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1027,7 +1017,7 @@ describe('connections |', () => {
       containers: [{ image: 'web' }],
     });
 
-    const all = kplus.Pod.all();
+    const all = kplus.Pods.all();
 
     web.connections.allowFrom(all, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1048,17 +1038,33 @@ describe('connections |', () => {
 
   });
 
-  test('can allow from named namespace', () => {
+  test('can allow from namespaces selected by name', () => {
 
     const chart = Testing.chart();
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
     });
 
-    const namespace = kplus.Namespace.named('web');
+    const namespace = kplus.Namespaces.select({ names: ['web'] });
 
     web.connections.allowFrom(namespace, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow from namespaces selected by labels', () => {
+
+    const chart = Testing.chart();
+    const web = new kplus.Pod(chart, 'Web', {
+      containers: [{ image: 'web' }],
+    });
+
+    const redis = kplus.Pods.select({
+      labels: { role: 'redis' },
+      namespaces: kplus.Namespaces.select({ labels: { project: 'my-project' } }),
+    });
+
+    expect(() => web.connections.allowTo(redis)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
 
   });
 
@@ -1088,7 +1094,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'));
+    const web = kplus.Pods.select({ labels: { app: 'web' } });
 
     redis.connections.allowFrom(web, { ports: [kplus.NetworkPolicyPort.allTcp()] });
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1103,8 +1109,10 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const web = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'web'))
-      .namespaced(kplus.Namespace.labeled(kplus.LabelQuery.is('proj', 'myproj')));
+    const web = kplus.Pods.select({
+      labels: { app: 'web' },
+      namespaces: kplus.Namespaces.select({ labels: { project: 'my-project' } }),
+    });
 
     expect(() => redis.connections.allowFrom(web)).toThrow(/Unable to create a policy for a peer that specifies a namespace selector, but doesnt specify a namespace name/);
 
@@ -1178,29 +1186,4 @@ describe('connections |', () => {
 
   });
 
-});
-
-test('can select a pod with no label queries', () => {
-  expect(kplus.Pod.labeled().toPodLabelSelector()._toKube()).toMatchSnapshot();
-});
-
-test('can select a pod with label queries', () => {
-  expect(kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store')).toPodLabelSelector()._toKube()).toMatchSnapshot();
-});
-
-test('can select all pods', () => {
-  expect(kplus.Pod.all().toPodLabelSelector()._toKube()).toMatchSnapshot();
-});
-
-test('can select all pods in a particular namespace', () => {
-  const selection = kplus.Pod.all().namespaced(kplus.Namespace.named('n1'));
-  expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
-  expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
-});
-
-test('can select a pod with labels in a particular namespace', () => {
-  const selection = kplus.Pod.labeled(kplus.LabelQuery.is('app', 'store'))
-    .namespaced(kplus.Namespace.named('n1'));
-  expect(selection.toPodSelector().toPodLabelSelector()._toKube()).toMatchSnapshot();
-  expect(selection.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
 });

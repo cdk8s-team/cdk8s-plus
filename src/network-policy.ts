@@ -2,6 +2,7 @@ import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
+import * as namespace from './namespace';
 import * as pod from './pod';
 import { undefinedIfEmpty } from './utils';
 
@@ -97,23 +98,31 @@ export class NetworkPolicyPort {
 }
 
 /**
- * Describes a peer to allow traffic to/from.
+ * Configuration for network peers.
  * A peer can either by an ip block, or a selection of pods, not both.
+ */
+export interface NetworkPolicyPeerConfig {
+
+  /**
+   * The ip block this peer represents.
+   */
+  readonly ipBlock?: NetworkPolicyIpBlock;
+
+  /**
+   * The pod selector this peer represents.
+   */
+  readonly podSelector?: pod.PodSelectorConfig;
+
+}
+
+/**
+ * Describes a peer to allow traffic to/from.
  */
 export interface INetworkPolicyPeer {
   /**
-   * Returns the ip block this peer represents.
-   *
-   * - Implementors should return `undefined` if the peer doesn't represent an ip block.
+   * Return the configuration of this peer.
    */
-  toIpBlock(): NetworkPolicyIpBlock | undefined;
-
-  /**
-   * Returns the namespaced pod this peer represents.
-   *
-   * - Implementors should return `undefined` if the peer doesn't represent a namespaced pod.
-   */
-  toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined;
+  toNetworkPolicyPeerConfig(): NetworkPolicyPeerConfig;
 }
 
 /**
@@ -202,18 +211,12 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
      */
     public readonly except?: string[]) {}
 
-  /**
-   * @see INetworkPolicyPeer.toIpBlock()
-   */
-  public toIpBlock(): NetworkPolicyIpBlock | undefined {
-    return this;
-  }
 
   /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector()
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return undefined;
+  public toNetworkPolicyPeerConfig(): NetworkPolicyPeerConfig {
+    return { ipBlock: this };
   }
 
   /**
@@ -307,9 +310,11 @@ export interface NetworkPolicyProps extends base.ResourceProps {
    * Which pods does this policy object applies to.
    *
    * This can either be a single pod / workload, or a grouping of pods selected
-   * via the `Pod.labeled` function. The array of ingress rules is applied to any
-   * pods selected by this field. Multiple network policies can select the same
-   * set of pods. In this case, the ingress rules for each are combined additively.
+   * via the `Pod.select` function. Rules is applied to any pods selected by this property.
+   * Multiple network policies can select the same set of pods.
+   * In this case, the rules for each are combined additively.
+   *
+   * Note that
    *
    * @default - will select all pods in the namespace of the policy.
    */
@@ -368,7 +373,7 @@ export class NetworkPolicy extends base.Resource {
 
   public readonly resourceType: string = 'networkpolicies';
 
-  private readonly _podSelector: pod.IPodSelector;
+  private readonly _podSelectorConfig: pod.PodSelectorConfig;
   private readonly _egressRules: k8s.NetworkPolicyEgressRule[] = [];
   private readonly _ingressRules: k8s.NetworkPolicyIngressRule[] = [];
   private readonly _policyTypes: Set<string> = new Set();
@@ -376,12 +381,19 @@ export class NetworkPolicy extends base.Resource {
   public constructor(scope: Construct, id: string, props: NetworkPolicyProps = {}) {
     super(scope, id);
 
+    this._podSelectorConfig = (props.selector ?? pod.Pods.all()).toPodSelectorConfig();
+
+    const selectorNamespace = this.extractNamespace(this._podSelectorConfig);
+    const ns = props.metadata?.namespace ?? selectorNamespace;
+
+    if (selectorNamespace && ns !== selectorNamespace) {
+      throw new Error(`Unable to create a policy in namespace '${ns}' for a selector in namespace '${selectorNamespace}'`);
+    }
+
     this.apiObject = new k8s.KubeNetworkPolicy(this, 'Resource', {
-      metadata: props.metadata,
+      metadata: { ...props.metadata, namespace: ns },
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
-
-    this._podSelector = props.selector ?? pod.Pod.all();
 
     this.configureDefaultBehavior('Egress', props.egress?.default);
     this.configureDefaultBehavior('Ingress', props.ingress?.default);
@@ -402,7 +414,7 @@ export class NetworkPolicy extends base.Resource {
    */
   public addEgressRule(peer: INetworkPolicyPeer, ports?: NetworkPolicyPort[]) {
     this._policyTypes.add('Egress');
-    this._egressRules.push({ ports: (ports ?? []).map(p => p._toKube()), to: [this.createNetworkPolicyPeer(peer)] });
+    this._egressRules.push({ ports: (ports ?? []).map(p => p._toKube()), to: this.createNetworkPolicyPeers(peer) });
   }
 
   /**
@@ -412,20 +424,64 @@ export class NetworkPolicy extends base.Resource {
    */
   public addIngressRule(peer: INetworkPolicyPeer, ports?: NetworkPolicyPort[]) {
     this._policyTypes.add('Ingress');
-    this._ingressRules.push({ ports: (ports ?? []).map(p => p._toKube()), from: [this.createNetworkPolicyPeer(peer)] });
+    this._ingressRules.push({ ports: (ports ?? []).map(p => p._toKube()), from: this.createNetworkPolicyPeers(peer) });
   }
 
-  private createNetworkPolicyPeer(peer: INetworkPolicyPeer): k8s.NetworkPolicyPeer {
-    const ipBlock = peer.toIpBlock();
-    if (ipBlock) {
-      return { ipBlock: ipBlock._toKube() };
-    } else {
-      const namespacedPod = peerToNamespacedPodSelector(peer);
-      return {
-        namespaceSelector: namespacedPod.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
-        podSelector: namespacedPod.toPodSelector().toPodLabelSelector()._toKube(),
-      };
+  private extractNamespace(config: pod.PodSelectorConfig): string | undefined {
+
+    if (!config.namespaces) {
+      return undefined;
     }
+
+    if (config.namespaces.labelSelector) {
+      throw new Error('Unable to extract namespace: Namespaces cannot be specified with labels');
+    }
+
+    if (!config.namespaces.names) {
+      throw new Error('Unable to extract namespace: Namespaces must specify names');
+    }
+
+    if (config.namespaces.names.length === 0 || config.namespaces.names.length > 1) {
+      throw new Error('Unable to extract namespace: Namespaces must specify exactly one namespace name');
+    }
+
+    return config.namespaces.names[0];
+
+  }
+
+  private createNetworkPolicyPeers(peer: INetworkPolicyPeer): k8s.NetworkPolicyPeer[] {
+
+    const config = peer.toNetworkPolicyPeerConfig();
+
+    validatePeerConfig(config);
+
+    if (config.ipBlock) {
+      // ip block is a single peer.
+      return [{ ipBlock: config.ipBlock._toKube() }];
+    }
+
+    if (!config.podSelector!.namespaces?.names) {
+      // when no explicit namespaces are defined we can just use
+      // the selector as is
+      return [{
+        namespaceSelector: config.podSelector!.namespaces?.labelSelector?._toKube(),
+        podSelector: config.podSelector!.labelSelector._toKube(),
+      }];
+    }
+
+    // when explicit namespaces are defined, we need to create a separate
+    // peer for each, since a label selector cannot have multiple name labels. (they will conflict)
+    const namespaceSelector = config.podSelector?.namespaces?.labelSelector?._toKube() ?? {};
+    return config.podSelector!.namespaces.names!.map(n => ({
+      podSelector: config.podSelector!.labelSelector._toKube(),
+      namespaceSelector: {
+        matchExpressions: namespaceSelector.matchExpressions,
+        matchLabels: {
+          ...namespaceSelector.matchLabels,
+          [namespace.Namespace.NAME_LABEL]: n,
+        },
+      },
+    }));
   }
 
   private configureDefaultBehavior(direction: 'Ingress' | 'Egress', _default?: NetworkPolicyTrafficDefault) {
@@ -453,7 +509,7 @@ export class NetworkPolicy extends base.Resource {
    */
   public _toKube(): k8s.NetworkPolicySpec {
     return {
-      podSelector: this._podSelector.toPodLabelSelector()._toKube(),
+      podSelector: this._podSelectorConfig.labelSelector._toKube(),
       egress: undefinedIfEmpty(this._egressRules),
       ingress: undefinedIfEmpty(this._ingressRules),
       policyTypes: undefinedIfEmpty(Array.from(this._policyTypes)),
@@ -462,10 +518,11 @@ export class NetworkPolicy extends base.Resource {
 
 }
 
-export function peerToNamespacedPodSelector(peer: INetworkPolicyPeer): pod.INamespacedPodSelector {
-  const namespacedPodSelector = peer.toNamespacedPodSelector();
-  if (!namespacedPodSelector) {
+export function validatePeerConfig(peerConfig: NetworkPolicyPeerConfig) {
+  if (!peerConfig.ipBlock && !peerConfig.podSelector) {
     throw new Error('Inavlid peer: toNamespacedPodSelector() must return a value');
   }
-  return namespacedPodSelector;
+  if (peerConfig.ipBlock && peerConfig.podSelector) {
+    throw new Error('Inavlid peer: toNamespacedPodSelector() must return a value');
+  }
 }
