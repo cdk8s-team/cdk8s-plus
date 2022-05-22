@@ -426,11 +426,15 @@ export class LabelSelector {
     private readonly expressions: LabelExpression[],
     private readonly labels: { [key: string]: string }) {}
 
+  public isEmpty() {
+    return this.expressions.length === 0 && Object.keys(this.labels).length === 0;
+  }
+
   /**
    * @internal
    */
   public _toKube(): k8s.LabelSelector {
-    if (this.expressions.length === 0 && Object.keys(this.labels).length === 0) {
+    if (this.isEmpty()) {
       return {};
     }
     return {

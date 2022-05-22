@@ -383,11 +383,20 @@ export class NetworkPolicy extends base.Resource {
 
     this._podSelectorConfig = (props.selector ?? pod.Pods.all()).toPodSelectorConfig();
 
-    const selectorNamespace = this.extractNamespace(this._podSelectorConfig);
+    if (this._podSelectorConfig.namespaces?.labelSelector && !this._podSelectorConfig.namespaces?.labelSelector.isEmpty()) {
+      throw new Error('Unable to create a network policy for a selector that selects pods in namespaces based on labes');
+    }
+
+    if (this._podSelectorConfig.namespaces?.names && this._podSelectorConfig.namespaces.names.length > 1) {
+      throw new Error('Unable to create a network policy for a selector that selects pods in multiple namespace');
+    }
+
+    const selectorNamespace = this._podSelectorConfig.namespaces?.names ? this._podSelectorConfig.namespaces?.names[0] : undefined;
+
     const ns = props.metadata?.namespace ?? selectorNamespace;
 
     if (selectorNamespace && ns !== selectorNamespace) {
-      throw new Error(`Unable to create a policy in namespace '${ns}' for a selector in namespace '${selectorNamespace}'`);
+      throw new Error(`Unable to create a network policy in namespace '${ns}' for a selector that selects pods in namespace '${selectorNamespace}'`);
     }
 
     this.apiObject = new k8s.KubeNetworkPolicy(this, 'Resource', {
@@ -425,28 +434,6 @@ export class NetworkPolicy extends base.Resource {
   public addIngressRule(peer: INetworkPolicyPeer, ports?: NetworkPolicyPort[]) {
     this._policyTypes.add('Ingress');
     this._ingressRules.push({ ports: (ports ?? []).map(p => p._toKube()), from: this.createNetworkPolicyPeers(peer) });
-  }
-
-  private extractNamespace(config: pod.PodSelectorConfig): string | undefined {
-
-    if (!config.namespaces) {
-      return undefined;
-    }
-
-    if (config.namespaces.labelSelector) {
-      throw new Error('Unable to extract namespace: Namespaces cannot be specified with labels');
-    }
-
-    if (!config.namespaces.names) {
-      throw new Error('Unable to extract namespace: Namespaces must specify names');
-    }
-
-    if (config.namespaces.names.length === 0 || config.namespaces.names.length > 1) {
-      throw new Error('Unable to extract namespace: Namespaces must specify exactly one namespace name');
-    }
-
-    return config.namespaces.names[0];
-
   }
 
   private createNetworkPolicyPeers(peer: INetworkPolicyPeer): k8s.NetworkPolicyPeer[] {
@@ -520,9 +507,9 @@ export class NetworkPolicy extends base.Resource {
 
 export function validatePeerConfig(peerConfig: NetworkPolicyPeerConfig) {
   if (!peerConfig.ipBlock && !peerConfig.podSelector) {
-    throw new Error('Inavlid peer: toNamespacedPodSelector() must return a value');
+    throw new Error('Inavlid peer: either \'ipBlock\' or \'podSelector\' must be defined');
   }
   if (peerConfig.ipBlock && peerConfig.podSelector) {
-    throw new Error('Inavlid peer: toNamespacedPodSelector() must return a value');
+    throw new Error('Inavlid peer: only one of \'ipBlock\' and \'podSelector\' must be defined');
   }
 }

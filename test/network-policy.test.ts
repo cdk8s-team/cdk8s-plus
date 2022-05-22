@@ -157,7 +157,7 @@ describe('NeworkPolicy |', () => {
 
   });
 
-  test('cannot create a policy for a selector in a different namespace', () => {
+  test('cannot create a policy for a selector that selects pods in a different namespace', () => {
 
     const chart = Testing.chart();
     const web = new kplus.Pod(chart, 'Web', {
@@ -168,15 +168,14 @@ describe('NeworkPolicy |', () => {
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
       metadata: { namespace: 'n2' },
-    })).toThrow(/Unable to create a policy in namespace 'n2' for a selector in namespace 'n1'/);
+    })).toThrow(/Unable to create a network policy in namespace 'n2' for a selector that selects pods in namespace 'n1'/);
 
   });
 
-  test('cannot create a policy for a selector in multiple namespaces', () => {
+  test('cannot create a policy for a selector that selects pods in multiple namespaces', () => {
 
     const chart = Testing.chart();
     const web = kplus.Pods.select({
-      labels: { app: 'web' },
       namespaces: kplus.Namespaces.select({
         names: ['n1', 'n2'],
       }),
@@ -185,11 +184,11 @@ describe('NeworkPolicy |', () => {
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
       metadata: { namespace: 'n2' },
-    })).toThrow(/Unable to create a policy for a selector with multiple namespaces/);
+    })).toThrow(/Unable to create a network policy for a selector that selects pods in multiple namespace/);
 
   });
 
-  test('cannot create a policy for a selector that selects namespaces by labels', () => {
+  test('cannot create a policy for a selector that selects pods in namespaces based on labels', () => {
 
     const chart = Testing.chart();
     const web = kplus.Pods.select({
@@ -202,7 +201,7 @@ describe('NeworkPolicy |', () => {
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
       metadata: { namespace: 'n2' },
-    })).toThrow(/Unable to create a policy for a selector that selects namespaces by labels/);
+    })).toThrow(/Unable to create a network policy for a selector that selects pods in namespaces based on labes/);
 
   });
 
@@ -223,11 +222,11 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from an ip block', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addIngressRule(ipBlock, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -238,12 +237,12 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from a managed pod', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
-    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'webs' }] });
+    const pod1 = new kplus.Pod(chart, 'Pod1', { containers: [{ image: 'pod' }] });
+    const pod2 = new kplus.Pod(chart, 'Pod2', { containers: [{ image: 'pod' }] });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod1 });
 
-    policy.addIngressRule(web, [kplus.NetworkPolicyPort.tcp(6379)]);
+    policy.addIngressRule(pod2, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -252,27 +251,66 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from a managed workload resource', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
-    const web = new kplus.Deployment(chart, 'Web', { containers: [{ image: 'webs' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+    const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
-    policy.addIngressRule(web, [kplus.NetworkPolicyPort.tcp(6379)]);
+    policy.addIngressRule(deployment, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('can add ingress from selected pods', () => {
+  test('can add ingress from pods selected without namespaces', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const frontend = kplus.Pods.select({ labels: { tier: 'frontend' } });
+    const selected = kplus.Pods.select({ labels: { type: 'selected' } });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
-    policy.addIngressRule(frontend, [kplus.NetworkPolicyPort.tcp(6379)]);
+    policy.addIngressRule(selected, [kplus.NetworkPolicyPort.tcp(6379)]);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can add ingress from pods selected with namespaces selected by labes', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+
+    const selected = kplus.Pods.select({
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select({ labels: { type: 'selected' } }),
+    });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
+
+    policy.addIngressRule(selected, [kplus.NetworkPolicyPort.tcp(6379)]);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can add ingress from pods selected with namespaces selected by names', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+
+    const selected = kplus.Pods.select({
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select({
+        labels: { type: 'selected' },
+        names: ['selected1', 'selected2'],
+      }),
+    });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
+
+    policy.addIngressRule(selected, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -281,11 +319,11 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from all pods', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const all = kplus.Pods.all();
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addIngressRule(all, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -296,11 +334,11 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from managed namespace', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addIngressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -311,11 +349,11 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from selected namespaces', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const namespace = kplus.Namespaces.select({ labels: { tier: 'web' } });
+    const namespace = kplus.Namespaces.select({ labels: { type: 'selected' } });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addIngressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -326,11 +364,11 @@ describe('NeworkPolicy |', () => {
   test('can add ingress from all namespaces', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const namespaces = kplus.Namespaces.all();
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addIngressRule(namespaces, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -338,32 +376,15 @@ describe('NeworkPolicy |', () => {
 
   });
 
-  test('can add ingress from a peer with namespaces selected by name', () => {
-
-    const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
-
-    const peer = kplus.Pods.select({
-      labels: { app: 'web' },
-      namespaces: kplus.Namespaces.select({ names: ['n1', 'n2'] }),
-    });
-
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
-
-    policy.addIngressRule(peer, [kplus.NetworkPolicyPort.tcp(6379)]);
-
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
 
   test('can add egress to an ip block', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addEgressRule(ipBlock, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -374,41 +395,80 @@ describe('NeworkPolicy |', () => {
   test('can add egress to a managed pod', () => {
 
     const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'web' }] });
-    const db = new kplus.Pod(chart, 'db', { containers: [{ image: 'db' }] });
+    const pod1 = new kplus.Pod(chart, 'Pod1', { containers: [{ image: 'pod' }] });
+    const pod2 = new kplus.Pod(chart, 'Pod2', { containers: [{ image: 'pod' }] });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod1 });
 
-    policy.addEgressRule(db, [kplus.NetworkPolicyPort.tcp(6379)]);
-
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
-
-  test('can add egress to a managed workload pod', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'web' }] });
-    const db = new kplus.Deployment(chart, 'db', { containers: [{ image: 'db' }] });
-
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
-
-    policy.addEgressRule(db, [kplus.NetworkPolicyPort.tcp(6379)]);
+    policy.addEgressRule(pod2, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
 
-  test('can add egress to selected pods', () => {
+  test('can add egress to a managed workload resource', () => {
 
     const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'web' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+    const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
 
-    const db = kplus.Pods.select({ labels: { tier: 'db' } });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+    policy.addEgressRule(deployment, [kplus.NetworkPolicyPort.tcp(6379)]);
 
-    policy.addEgressRule(db, [kplus.NetworkPolicyPort.tcp(6379)]);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can add egress to pods selected without namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+
+    const selected = kplus.Pods.select({ labels: { type: 'selected' } });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
+
+    policy.addEgressRule(selected, [kplus.NetworkPolicyPort.tcp(6379)]);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can add egress to pods selected with namespaces selected by labes', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+
+    const selected = kplus.Pods.select({
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select({ labels: { type: 'selected' } }),
+    });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
+
+    policy.addEgressRule(selected, [kplus.NetworkPolicyPort.tcp(6379)]);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can add egress to pods selected with namespaces selected by names', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
+
+    const selected = kplus.Pods.select({
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select({
+        labels: { type: 'selected' },
+        names: ['selected1', 'selected2'],
+      }),
+    });
+
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
+
+    policy.addEgressRule(selected, [kplus.NetworkPolicyPort.tcp(6379)]);
 
     expect(Testing.synth(chart)).toMatchSnapshot();
 
@@ -417,11 +477,11 @@ describe('NeworkPolicy |', () => {
   test('can add egress to all pods', () => {
 
     const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'web' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const all = kplus.Pods.all();
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addEgressRule(all, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -432,11 +492,11 @@ describe('NeworkPolicy |', () => {
   test('can add egress to managed namespace', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const namespace = new kplus.Namespace(chart, 'Namespace');
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addEgressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -447,11 +507,11 @@ describe('NeworkPolicy |', () => {
   test('can add egress to selected namespaces', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const namespace = kplus.Namespaces.select({ labels: { tier: 'web' } });
+    const namespace = kplus.Namespaces.select({ labels: { type: 'selected' } });
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addEgressRule(namespace, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -462,11 +522,11 @@ describe('NeworkPolicy |', () => {
   test('can add egress to all namespaces', () => {
 
     const chart = Testing.chart();
-    const db = new kplus.Pod(chart, 'DB', { containers: [{ image: 'db' }] });
+    const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
     const namespaces = kplus.Namespaces.all();
 
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: db });
+    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
     policy.addEgressRule(namespaces, [kplus.NetworkPolicyPort.tcp(6379)]);
 
@@ -474,22 +534,5 @@ describe('NeworkPolicy |', () => {
 
   });
 
-  test('can add egress to a peer with namespaces selected by name', () => {
-
-    const chart = Testing.chart();
-    const web = new kplus.Pod(chart, 'Web', { containers: [{ image: 'web' }] });
-
-    const peer = kplus.Pods.select({
-      labels: { app: 'db' },
-      namespaces: kplus.Namespaces.select({ names: ['n1', 'n2'] }),
-    });
-
-    const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
-
-    policy.addEgressRule(peer, [kplus.NetworkPolicyPort.tcp(6379)]);
-
-    expect(Testing.synth(chart)).toMatchSnapshot();
-
-  });
 
 });
