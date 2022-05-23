@@ -395,6 +395,90 @@ describe('Container', () => {
 
 });
 
+test('Can add only resource requests', () => {
+  const container = new kplus.Container({
+    resources: {
+      cpu: {
+        request: Cpu.millis(300),
+      },
+      memory: {
+        request: Size.mebibytes(128),
+      },
+    },
+    image: 'image',
+  });
+
+  expect(container._toKube().resources).toEqual({
+    requests: {
+      cpu: k8s.Quantity.fromString('300m'),
+      memory: k8s.Quantity.fromString('128Mi'),
+    },
+  });
+});
+
+test('Can add only resource limits', () => {
+  const container = new kplus.Container({
+    resources: {
+      cpu: {
+        limit: Cpu.millis(500),
+      },
+      memory: {
+        limit: Size.mebibytes(1024),
+      },
+    },
+    image: 'image',
+  });
+
+  expect(container._toKube().resources).toEqual({
+    limits: {
+      cpu: k8s.Quantity.fromString('500m'),
+      memory: k8s.Quantity.fromString('1024Mi'),
+    },
+  });
+});
+
+test('Can add only limits and requests on memory', () => {
+  const container = new kplus.Container({
+    resources: {
+      memory: {
+        limit: Size.mebibytes(1024),
+        request: Size.mebibytes(512),
+      },
+    },
+    image: 'image',
+  });
+
+  expect(container._toKube().resources).toEqual({
+    limits: {
+      memory: k8s.Quantity.fromString('1024Mi'),
+    },
+    requests: {
+      memory: k8s.Quantity.fromString('512Mi'),
+    },
+  });
+});
+
+test('Can add only limits and requests on cpu', () => {
+  const container = new kplus.Container({
+    resources: {
+      cpu: {
+        limit: Cpu.units(1),
+        request: Cpu.millis(250),
+      },
+    },
+    image: 'image',
+  });
+
+  expect(container._toKube().resources).toEqual({
+    limits: {
+      cpu: k8s.Quantity.fromString('1'),
+    },
+    requests: {
+      cpu: k8s.Quantity.fromString('250m'),
+    },
+  });
+});
+
 test('default security context', () => {
 
   const container = new Container({ image: 'image' });
