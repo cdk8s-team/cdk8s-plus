@@ -215,10 +215,7 @@ export class Deployment extends workload.Workload {
         metadata: this.podMetadata.toJson(),
         spec: this._toPodSpec(),
       },
-      selector: {
-        matchExpressions: this.matchExpressions,
-        matchLabels: this.matchLabels,
-      },
+      selector: this._toLabelSelector(),
       strategy: this.strategy._toKube(),
     };
   }
@@ -309,7 +306,7 @@ export class DeploymentStrategy {
   public static rollingUpdate(options: DeploymentStrategyRollingUpdateOptions = {}): DeploymentStrategy {
 
     const maxSurge = options.maxSurge ?? PercentOrAbsolute.percent(25);
-    const maxUnavailable = options.maxSurge ?? PercentOrAbsolute.percent(25);
+    const maxUnavailable = options.maxUnavailable ?? PercentOrAbsolute.percent(25);
 
     if (maxSurge.isZero() && maxUnavailable.isZero()) {
       throw new Error('\'maxSurge\' and \'maxUnavailable\' cannot be both zero');

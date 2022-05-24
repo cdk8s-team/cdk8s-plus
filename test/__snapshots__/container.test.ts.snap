@@ -6,6 +6,9 @@ Array [
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
@@ -15,7 +18,6 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
-          "ports": Array [],
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
@@ -29,18 +31,10 @@ Array [
           ],
         },
       ],
-      "dnsConfig": Object {
-        "nameservers": Array [],
-        "options": Array [],
-        "searches": Array [],
-      },
       "dnsPolicy": "ClusterFirst",
-      "hostAliases": Array [],
-      "initContainers": Array [],
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
-        "sysctls": Array [],
       },
       "setHostnameAsFQDN": false,
       "volumes": Array [

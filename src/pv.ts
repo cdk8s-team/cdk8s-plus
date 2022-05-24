@@ -222,6 +222,7 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    */
   public _toKube(): k8s.PersistentVolumeSpec {
     const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes() + 'Gi') : undefined;
+
     return {
       claimRef: this._claim ? { name: this._claim?.name } : undefined,
       accessModes: this.accessModes?.map(a => a.toString()),
@@ -232,6 +233,7 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
       volumeMode: this.mode,
     };
   }
+
 }
 
 /**

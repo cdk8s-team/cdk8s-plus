@@ -167,7 +167,7 @@ describe('Container', () => {
 
     const expected: k8s.Container = {
       name: 'name',
-      imagePullPolicy: kplus.ImagePullPolicy.NEVER,
+      imagePullPolicy: 'Never',
       image: 'image',
       workingDir: 'workingDir',
       ports: [{
@@ -177,9 +177,7 @@ describe('Container', () => {
       env: [{
         name: 'key',
         value: 'value',
-        valueFrom: undefined,
       }],
-      volumeMounts: [],
       securityContext: {
         privileged: false,
         readOnlyRootFilesystem: false,

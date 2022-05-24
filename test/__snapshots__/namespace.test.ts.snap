@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can select all namespaces 1`] = `Object {}`;
+
+exports[`can select namespaces 1`] = `
+Object {
+  "matchExpressions": Array [
+    Object {
+      "key": "web",
+      "operator": "Exists",
+      "values": undefined,
+    },
+  ],
+  "matchLabels": Object {
+    "foo": "bar",
+  },
+}
+`;
+
+exports[`defaults 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "name": "test-namespace-c83f04e1",
+    },
+    "spec": Object {},
+  },
+]
+`;
