@@ -1,5 +1,5 @@
 import { ApiObject, Lazy } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import * as k8s from './imports/k8s';
 import * as role from './role';
@@ -43,7 +43,7 @@ export interface SubjectConfiguration {
 /**
  * Represents an object that can be used as a role binding subject.
  */
-export interface ISubject {
+export interface ISubject extends IConstruct {
 
   /**
    * Return the subject configuration.
@@ -209,12 +209,22 @@ export interface UserProps {
 /**
  * Represents a user.
  */
-export class User implements ISubject {
+export class User extends Construct implements ISubject {
+
+  /**
+   * Reference a user by name.
+   */
+  public static fromName(scope: Construct, id: string, name: string) {
+    return new User(scope, id, name);
+  }
+
   public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
   public readonly kind: string = 'User';
   public readonly name: string;
-  constructor(props: UserProps) {
-    this.name = props.name;
+
+  private constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this.name = name;
   }
 
   /**
@@ -230,24 +240,24 @@ export class User implements ISubject {
 }
 
 /**
- * Properties for `Group`.
- */
-export interface GroupProps {
-  /**
-   * The name of the group.
-   */
-  readonly name: string;
-}
-
-/**
  * Represents a group.
  */
-export class Group implements ISubject {
+export class Group extends Construct implements ISubject {
+
+  /**
+   * Reference a group by name.
+   */
+  public static fromName(scope: Construct, id: string, name: string) {
+    return new Group(scope, id, name);
+  }
+
   public readonly apiGroup: string | undefined = 'rbac.authorization.k8s.io';
   public readonly kind: string = 'Group';
   public readonly name: string;
-  constructor(props: GroupProps) {
-    this.name = props.name;
+
+  private constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this.name = name;
   }
 
   /**

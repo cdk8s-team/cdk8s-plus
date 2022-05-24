@@ -4,6 +4,7 @@ import { IApiResource, IApiEndpoint } from './api-resource.generated';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as rb from './role-binding';
+import { address } from './utils';
 
 /**
  * A reference to any Role or ClusterRole.
@@ -184,7 +185,8 @@ export class Role extends base.Resource implements IRole {
    * @param subjects a list of subjects to bind to
    */
   public bind(...subjects: rb.ISubject[]): rb.RoleBinding {
-    const binding = new rb.RoleBinding(this, 'RoleBinding', {
+    const subjectsAddress = address(...subjects);
+    const binding = new rb.RoleBinding(this, `RoleBinding${subjectsAddress}`, {
       metadata: {
         namespace: this.metadata.namespace,
       },
