@@ -788,7 +788,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    pod1.connections.allowTo(pod2);
+    pod1.connections.allowTo(pod2, { ports: [kplus.NetworkPolicyPort.tcp(4444)] });
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });

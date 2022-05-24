@@ -13,11 +13,16 @@ export interface NetworkPolicyPortProps {
 
   /**
    * Specific port number.
+   *
+   * @default - all ports are allowed.
    */
   readonly port?: number;
 
   /**
    * End port (relative to `port`). Only applies if `port` is defined.
+   * Use this to specify a port range, rather that a specific one.
+   *
+   * @default - not a port range.
    */
   readonly endPort?: number;
 
