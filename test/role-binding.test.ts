@@ -27,7 +27,7 @@ Object {
   "apiVersion": "rbac.authorization.k8s.io/v1",
   "kind": "RoleBinding",
   "metadata": Object {
-    "name": "test-pod-reader-rolebinding-c893c967",
+    "name": "rolebindingc850676183b774e3b4bf085b318fcda29c-c8d9451a",
   },
   "roleRef": Object {
     "apiGroup": "rbac.authorization.k8s.io",
