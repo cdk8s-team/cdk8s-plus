@@ -288,6 +288,16 @@ export class Service extends base.Resource {
   }
 
   /**
+   * Require this service to select pods with this label.
+   *
+   * Note that invoking this method multiple times acts as an AND operator
+   * on the resulting labels.
+   */
+  public selectLabel(key: string, value: string) {
+    this._selector[key] = value;
+  }
+
+  /**
    * @internal
    */
   public _toKube(): k8s.ServiceSpec {

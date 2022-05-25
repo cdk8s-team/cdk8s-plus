@@ -49,6 +49,23 @@ test('Can provide cluster IP', () => {
   });
 });
 
+test('can select a deployment', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+  });
+
+  new kplus.Service(chart, 'service', {
+    ports: [{ port: 9000 }],
+    selector: deployment,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
 test('Can select by label', () => {
 
   const chart = Testing.chart();
@@ -57,7 +74,7 @@ test('Can select by label', () => {
     ports: [{ port: 9000 }],
   });
 
-  service.select(kplus.Pods.select(chart, 'Pods', { labels: { key: 'value' } }));
+  service.selectLabel('key', 'value');
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;
