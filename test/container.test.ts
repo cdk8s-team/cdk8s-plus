@@ -17,7 +17,8 @@ describe('EnvValue', () => {
 
   test('Can be created from config map name', () => {
 
-    const actual = kplus.EnvValue.fromConfigMap(kplus.ConfigMap.fromConfigMapName('ConfigMap'), 'key');
+    const chart = Testing.chart();
+    const actual = kplus.EnvValue.fromConfigMap(kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'), 'key');
 
     expect(actual.value).toBeUndefined();
     expect(actual.valueFrom).toEqual({
@@ -30,8 +31,9 @@ describe('EnvValue', () => {
   });
 
   test('Can be created from secret value', () => {
+    const chart = Testing.chart();
     const secretValue = {
-      secret: kplus.Secret.fromSecretName('Secret'),
+      secret: kplus.Secret.fromSecretName(chart, 'Secret', 'Secret'),
       key: 'my-key',
     };
 
@@ -254,7 +256,8 @@ describe('Container', () => {
       image: 'image',
     });
 
-    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName('ConfigMap'));
+    const chart = Testing.chart();
+    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
 
     container.mount('/path/to/mount', volume);
 
@@ -285,7 +288,8 @@ describe('Container', () => {
       image: 'image',
     });
 
-    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName('ConfigMap'));
+    const chart = Testing.chart();
+    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
 
     container.mount('/path/to/mount', volume, {
       propagation: kplus.MountPropagation.BIDIRECTIONAL,

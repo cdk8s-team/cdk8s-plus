@@ -278,7 +278,9 @@ describe('fromPersistentVolumeClaim', () => {
 
   test('defaults', () => {
 
-    const pvc = PersistentVolumeClaim.fromClaimName('claim');
+    const chart = Testing.chart();
+
+    const pvc = PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
     const volume = Volume.fromPersistentVolumeClaim(pvc);
 
     expect(volume.name).toEqual('pvc-claim');
@@ -293,7 +295,9 @@ describe('fromPersistentVolumeClaim', () => {
 
   test('custom', () => {
 
-    const pvc = PersistentVolumeClaim.fromClaimName('claim');
+    const chart = Testing.chart();
+
+    const pvc = PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
     const volume = Volume.fromPersistentVolumeClaim(pvc, {
       name: 'custom',
       readOnly: true,

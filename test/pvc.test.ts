@@ -1,4 +1,5 @@
 import * as cdk8s from 'cdk8s';
+import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
 test('defaults', () => {
@@ -38,7 +39,8 @@ test('custom', () => {
 
 test('can be imported', () => {
 
-  const claim = kplus.PersistentVolumeClaim.fromClaimName('claim');
+  const chart = Testing.chart();
+  const claim = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
   expect(claim.name).toEqual('claim');
 
 });
@@ -46,7 +48,7 @@ test('can be imported', () => {
 test('can be bounded to a volume at instantiation', () => {
 
   const chart = cdk8s.Testing.chart();
-  const vol = kplus.PersistentVolume.fromPersistentVolumeName('vol');
+  const vol = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vol', 'vol');
   const pvc = new kplus.PersistentVolumeClaim(chart, 'PersistentVolumeClaim', {
     volume: vol,
   });
@@ -61,7 +63,7 @@ test('can be bounded to a volume at instantiation', () => {
 test('can be bounded to a volume post instantiation', () => {
 
   const chart = cdk8s.Testing.chart();
-  const vol = kplus.PersistentVolume.fromPersistentVolumeName('vol');
+  const vol = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vol', 'vol');
   const pvc = new kplus.PersistentVolumeClaim(chart, 'PersistentVolumeClaim');
 
   pvc.bind(vol);
@@ -76,7 +78,7 @@ test('can be bounded to a volume post instantiation', () => {
 test('no-ops if bounded twice to the same volume', () => {
 
   const chart = cdk8s.Testing.chart();
-  const vol = kplus.PersistentVolume.fromPersistentVolumeName('vol');
+  const vol = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vole', 'vol');
   const pvc = new kplus.PersistentVolumeClaim(chart, 'PersistentVolumeClaim');
 
   pvc.bind(vol);
@@ -89,8 +91,8 @@ test('no-ops if bounded twice to the same volume', () => {
 test('throws if bounded twice to different volumes', () => {
 
   const chart = cdk8s.Testing.chart();
-  const vol1 = kplus.PersistentVolume.fromPersistentVolumeName('vol1');
-  const vol2 = kplus.PersistentVolume.fromPersistentVolumeName('vol2');
+  const vol1 = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vol1', 'vol1');
+  const vol2 = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vol2', 'vol2');
   const pvc = new kplus.PersistentVolumeClaim(chart, 'PersistentVolumeClaim');
 
   pvc.bind(vol1);

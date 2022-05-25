@@ -75,6 +75,33 @@ export interface PersistentVolumeProps extends base.ResourceProps {
 
 }
 
+class ImportedPersistentVolume extends Construct implements IPersistentVolume {
+
+  private readonly _name: string;
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubePersistentVolume.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubePersistentVolume.GVK.kind;
+  }
+
+}
+
 /**
  * A PersistentVolume (PV) is a piece of storage in the cluster that has been
  * provisioned by an administrator or dynamically provisioned using Storage Classes.
@@ -88,14 +115,9 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
 
   /**
    * Imports a pv from the cluster as a reference.
-   * @param volumeName The name of the pv to reference.
    */
-  public static fromPersistentVolumeName(volumeName: string): IPersistentVolume {
-    return {
-      apiGroup: '',
-      name: volumeName,
-      ...k8s.KubePersistentVolume.GVK,
-    };
+  public static fromPersistentVolumeName(scope: Construct, id: string, volumeName: string): IPersistentVolume {
+    return new ImportedPersistentVolume(scope, id, volumeName);
   }
 
   /**
