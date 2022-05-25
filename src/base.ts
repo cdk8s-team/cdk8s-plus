@@ -1,5 +1,5 @@
 import { ApiObjectMetadata, ApiObject, ApiObjectMetadataDefinition } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import { IApiResource, IApiEndpoint } from './api-resource.generated';
 
 /**
@@ -16,7 +16,7 @@ export interface ResourceProps {
 /**
  * Represents a resource.
  */
-export interface IResource {
+export interface IResource extends IConstruct {
   /**
    * The Kubernetes name of this resource.
    */

@@ -1,7 +1,8 @@
 import { ApiObject, Lazy } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
+import * as networkpolicy from './network-policy';
 import * as pod from './pod';
 
 /**
@@ -23,7 +24,7 @@ export interface NamespaceSelectorConfig {
 /**
  * Represents an object that can select namespaces.
  */
-export interface INamespaceSelector {
+export interface INamespaceSelector extends IConstruct {
   /**
    * Return the configuration of this selector.
    */
@@ -41,7 +42,7 @@ export interface NamespaceProps extends base.ResourceProps {}
  * Namespace-based scoping is applicable only for namespaced objects (e.g. Deployments, Services, etc) and
  * not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc).
  */
-export class Namespace extends base.Resource implements INamespaceSelector {
+export class Namespace extends base.Resource implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
 
   /**
    * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#automatic-labelling
@@ -55,6 +56,8 @@ export class Namespace extends base.Resource implements INamespaceSelector {
 
   public readonly resourceType: string = 'namespaces';
 
+  private readonly _pods: pod.Pods;
+
   public constructor(scope: Construct, id: string, props: NamespaceProps = {}) {
     super(scope, id);
 
@@ -62,6 +65,11 @@ export class Namespace extends base.Resource implements INamespaceSelector {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this._pods = pod.Pods.all(this, 'Pods', {
+      namespaces: Namespaces.select(this, 'Namespaces', { names: [this.name] }),
+    });
+
   }
 
   /**
@@ -69,6 +77,20 @@ export class Namespace extends base.Resource implements INamespaceSelector {
    */
   public toNamespaceSelectorConfig(): NamespaceSelectorConfig {
     return { names: [this.name] };
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
+   */
+  public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
+    return this._pods.toNetworkPolicyPeerConfig();
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return this._pods.toPodSelector();
   }
 
   /**
@@ -114,26 +136,32 @@ export interface NamespacesSelectOptions {
 /**
  * Represents a group of namespaces.
  */
-export class Namespaces implements INamespaceSelector {
+export class Namespaces extends Construct implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
 
   /**
    * Select specific namespaces.
    */
-  public static select(options: NamespacesSelectOptions): Namespaces {
-    return new Namespaces(options.expressions, options.names, options.labels);
+  public static select(scope: Construct, id: string, options: NamespacesSelectOptions): Namespaces {
+    return new Namespaces(scope, id, options.expressions, options.names, options.labels);
   }
 
   /**
    * Select all namespaces.
    */
-  public static all(): Namespaces {
-    return Namespaces.select({ expressions: [], labels: {} });
+  public static all(scope: Construct, id: string): Namespaces {
+    return Namespaces.select(scope, id, { expressions: [], labels: {} });
   }
 
-  constructor(
+  private readonly _pods: pod.Pods;
+
+  constructor(scope: Construct, id: string,
     private readonly expressions?: pod.LabelExpression[],
     private readonly names?: string[],
-    private readonly labels?: { [key: string]: string }) { }
+    private readonly labels?: { [key: string]: string }) {
+    super(scope, id);
+
+    this._pods = pod.Pods.all(this, 'Pods', { namespaces: this });
+  }
 
   /**
    * @see INamespaceSelector.toNamespaceSelectorConfig()
@@ -143,6 +171,20 @@ export class Namespaces implements INamespaceSelector {
       labelSelector: pod.LabelSelector.of({ expressions: this.expressions, labels: this.labels } ),
       names: this.names,
     };
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
+   */
+  public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
+    return this._pods.toNetworkPolicyPeerConfig();
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return this._pods.toPodSelector();
   }
 
 }

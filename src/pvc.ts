@@ -71,6 +71,33 @@ export interface PersistentVolumeClaimProps extends base.ResourceProps {
 
 }
 
+class ImportedPersistentVolumeClaim extends Construct implements IPersistentVolumeClaim {
+
+  private readonly _name: string;
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubePersistentVolumeClaim.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubePersistentVolumeClaim.GVK.kind;
+  }
+
+}
+
 /**
  * A PersistentVolumeClaim (PVC) is a request for storage by a user.
  * It is similar to a Pod. Pods consume node resources and PVCs consume PV resources.
@@ -81,14 +108,9 @@ export class PersistentVolumeClaim extends base.Resource implements IPersistentV
 
   /**
    * Imports a pvc from the cluster as a reference.
-   * @param claimName The name of the pvc to reference.
    */
-  public static fromClaimName(claimName: string): IPersistentVolumeClaim {
-    return {
-      apiGroup: '',
-      name: claimName,
-      ...k8s.KubePersistentVolumeClaim.GVK,
-    };
+  public static fromClaimName(scope: Construct, id: string, claimName: string): IPersistentVolumeClaim {
+    return new ImportedPersistentVolumeClaim(scope, id, claimName);
   }
 
   /**

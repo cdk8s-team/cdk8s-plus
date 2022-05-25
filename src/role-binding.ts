@@ -197,22 +197,12 @@ export class ClusterRoleBinding extends Resource {
 }
 
 /**
- * Properties for `User`.
- */
-export interface UserProps {
-  /**
-   * The name of the user.
-   */
-  readonly name: string;
-}
-
-/**
  * Represents a user.
  */
 export class User extends Construct implements ISubject {
 
   /**
-   * Reference a user by name.
+   * Reference a user in the cluster by name.
    */
   public static fromName(scope: Construct, id: string, name: string) {
     return new User(scope, id, name);

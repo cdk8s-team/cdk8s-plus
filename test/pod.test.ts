@@ -22,8 +22,8 @@ test('fails with two volumes with the same name', () => {
   const cm1 = new kplus.ConfigMap(chart, 'cm1', { data: { f1: 'f1-content' } });
   const cm2 = new kplus.ConfigMap(chart, 'cm2', { data: { f2: 'f2-content' } });
 
-  const v1 = kplus.Volume.fromConfigMap(cm1, { name: 'v' });
-  const v2 = kplus.Volume.fromConfigMap(cm2, { name: 'v' });
+  const v1 = kplus.Volume.fromConfigMap(chart, 'Volume1', cm1, { name: 'v' });
+  const v2 = kplus.Volume.fromConfigMap(chart, 'Volume2', cm2, { name: 'v' });
 
   expect(() => new kplus.Pod(chart, 'Pod', { volumes: [v1, v2] })).toThrow('Volume with name v already exists');
 
@@ -36,8 +36,8 @@ test('fails adding a volume with the same name', () => {
   const cm1 = new kplus.ConfigMap(chart, 'cm1', { data: { f1: 'f1-content' } });
   const cm2 = new kplus.ConfigMap(chart, 'cm2', { data: { f2: 'f2-content' } });
 
-  const v1 = kplus.Volume.fromConfigMap(cm1, { name: 'v' });
-  const v2 = kplus.Volume.fromConfigMap(cm2, { name: 'v' });
+  const v1 = kplus.Volume.fromConfigMap(chart, 'Volume1', cm1, { name: 'v' });
+  const v2 = kplus.Volume.fromConfigMap(chart, 'Volume2', cm2, { name: 'v' });
 
   const pod = new kplus.Pod(chart, 'Pod');
   pod.addVolume(v1);
@@ -53,8 +53,8 @@ test('fails with a container that has mounts with different volumes of the same 
   const cm1 = new kplus.ConfigMap(chart, 'cm1', { data: { f1: 'f1-content' } });
   const cm2 = new kplus.ConfigMap(chart, 'cm2', { data: { f2: 'f2-content' } });
 
-  const v1 = kplus.Volume.fromConfigMap(cm1, { name: 'v' });
-  const v2 = kplus.Volume.fromConfigMap(cm2, { name: 'v' });
+  const v1 = kplus.Volume.fromConfigMap(chart, 'Volume1', cm1, { name: 'v' });
+  const v2 = kplus.Volume.fromConfigMap(chart, 'Volume2', cm2, { name: 'v' });
 
   new kplus.Pod(chart, 'Pod', {
     containers: [{
@@ -89,7 +89,7 @@ test('can configure multiple mounts with the same volume', () => {
     },
   });
 
-  const volume = kplus.Volume.fromConfigMap(configMap);
+  const volume = kplus.Volume.fromConfigMap(chart, 'Volume', configMap);
 
   new kplus.Pod(chart, 'Pod', {
     containers: [
@@ -167,7 +167,7 @@ test('Can add volume post instantiation', () => {
     ],
   });
 
-  const volume = kplus.Volume.fromEmptyDir('volume');
+  const volume = kplus.Volume.fromEmptyDir(chart, 'Volume', 'volume');
   pod.addVolume(volume);
 
   const spec = Testing.synth(chart)[0].spec;
@@ -182,7 +182,7 @@ test('Automatically adds volumes from container mounts', () => {
 
   const pod = new kplus.Pod(chart, 'Pod');
 
-  const volume = kplus.Volume.fromEmptyDir('volume');
+  const volume = kplus.Volume.fromEmptyDir(chart, 'Volume', 'volume');
 
   const container = pod.addContainer({ image: 'image' });
   container.mount('/path/to/mount', volume);
@@ -291,7 +291,7 @@ test('automatically adds volumes from init container mounts', () => {
     containers: [{ image: 'image' }],
   });
 
-  const volume = kplus.Volume.fromEmptyDir('volume');
+  const volume = kplus.Volume.fromEmptyDir(chart, 'Volume', 'volume');
 
   const container = pod.addInitContainer({ image: 'image' });
   container.mount('/path/to/mount', volume);
@@ -641,9 +641,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.all(),
+      namespaces: kplus.Namespaces.all(chart, 'All'),
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -660,7 +660,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({ labels: { app: 'store' } });
+    const redis = kplus.Pods.select(chart, 'Redis', { labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -716,9 +716,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.select({ labels: { net: '1' }, names: ['web'] } ),
+      namespaces: kplus.Namespaces.select(chart, 'WebNamespace', { labels: { net: '1' }, names: ['web'] } ),
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -735,7 +735,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({ labels: { app: 'store' } });
+    const redis = kplus.Pods.select(chart, 'Redis', { labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -753,14 +753,594 @@ describe('scheduling', () => {
 });
 
 test('can select pods', () => {
-  const pods = kplus.Pods.select({
+  const chart = Testing.chart();
+  const pods = kplus.Pods.select(chart, 'Selected', {
     labels: { foo: 'bar' },
     expressions: [kplus.LabelExpression.exists('key')],
-    namespaces: kplus.Namespaces.select({ labels: { foo: 'bar' } }),
+    namespaces: kplus.Namespaces.select(chart, 'Bar', { labels: { foo: 'bar' } }),
   });
   expect(pods.toPodSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
   expect(pods.toPodSelectorConfig().namespaces?.names).toBeUndefined();
   expect(pods.toPodSelectorConfig().namespaces?.labelSelector?._toKube()).toMatchSnapshot();
+});
+
+describe('connections |', () => {
+
+  test('can allow to ip block', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'AnyIpv4'));
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to managed pod', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2, { ports: [kplus.NetworkPolicyPort.tcp(4444)] });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to managed workload resource', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const deployment = new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod.connections.allowTo(deployment);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to pods selected without namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', { labels: { type: 'selected' } });
+
+    pod.connections.allowTo(selected);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to pods selected with namespaces selected by names', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', {
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { names: ['selected1', 'selected2'] }),
+    });
+
+    pod.connections.allowTo(selected);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow to pods selected with namespaces selected by labels', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', {
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
+    });
+
+    expect(() => pod.connections.allowTo(selected)).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+
+  });
+
+  test('cannot allow to pods selected in all namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', {
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
+    });
+
+    expect(() => pod.connections.allowTo(selected)).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
+
+  });
+
+  test('can allow to all pods', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const all = kplus.Pods.all(chart, 'AllPods');
+
+    pod.connections.allowTo(all);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to managed namespace', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const namespace = new kplus.Namespace(chart, 'Namespace');
+
+    pod.connections.allowTo(namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to namespaces selected by name', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { names: ['n1'] });
+
+    pod.connections.allowTo(namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow to namespaces selected by labels', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
+
+    expect(() => pod.connections.allowTo(namespace)).toThrow('Unable to create an Ingress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+
+  });
+
+  test('can allow to peer across namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+      metadata: { namespace: 'n2' },
+    });
+
+    pod1.connections.allowTo(pod2);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to multiple peers', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod3 = new kplus.Pod(chart, 'Pod3', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2);
+    pod1.connections.allowTo(pod3);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow to the same peer twice', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2);
+    expect(() => pod1.connections.allowTo(pod2)).toThrow(/There is already a Construct with name/);
+
+  });
+
+  test('allow to create an ingress policy in source namespace when peer doesnt define namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const redis = kplus.Pods.select(chart, 'Pods', { labels: { role: 'redis' } });
+
+    pod.connections.allowTo(redis);
+
+    const manifest = Testing.synth(chart);
+
+    const ingressPolicyMetadata = manifest[2].metadata;
+    expect(ingressPolicyMetadata.namespace).toEqual('n1');
+
+  });
+
+  test('allow to with peer isolation creates only ingress policy on peer', () => {
+
+    const chart = Testing.chart();
+
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2, { isolation: kplus.PodConnectionsIsolation.PEER });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allow to with pod isolation creates only egress policy on pod', () => {
+
+    const chart = Testing.chart();
+
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2, { isolation: kplus.PodConnectionsIsolation.POD });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allow to defaults to peer container ports', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod', port: 6739 }],
+    });
+
+    pod1.connections.allowTo(pod2);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from ip block', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod.connections.allowFrom(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'AnyIpv4'));
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from managed pod', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from managed workload resource', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const deployment = new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod.connections.allowFrom(deployment);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from pods selected without namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', { labels: { type: 'selected' } });
+
+    pod.connections.allowFrom(selected);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from pods selected with namespaces selected by names', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', {
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { names: ['selected1', 'selected2'] }),
+    });
+
+    pod.connections.allowFrom(selected);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow from pods selected with namespaces selected by labels', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', {
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
+    });
+
+    expect(() => pod.connections.allowFrom(selected)).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+
+  });
+
+  test('cannot allow from pods selected in all namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const selected = kplus.Pods.select(chart, 'Pods', {
+      labels: { type: 'selected' },
+      namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
+    });
+
+    expect(() => pod.connections.allowFrom(selected)).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
+
+  });
+
+  test('can allow from all pods', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const all = kplus.Pods.all(chart, 'AllPods');
+
+    pod.connections.allowFrom(all);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from managed namespace', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const namespace = new kplus.Namespace(chart, 'Namespace');
+
+    pod.connections.allowFrom(namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from namespaces selected by name', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { names: ['n1'] });
+
+    pod.connections.allowFrom(namespace);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow from namespaces selected by labels', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
+
+    expect(() => pod.connections.allowFrom(namespace)).toThrow('Unable to create an Egress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+
+  });
+
+  test('can allow from peer across namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+      metadata: { namespace: 'n2' },
+    });
+
+    pod1.connections.allowFrom(pod2);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from multiple peers', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod3 = new kplus.Pod(chart, 'Pod3', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2);
+    pod1.connections.allowFrom(pod3);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow from the same peer twice', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2);
+    expect(() => pod1.connections.allowFrom(pod2)).toThrow(/There is already a Construct with name/);
+
+  });
+
+  test('allow from create an ingress policy in source namespace when peer doesnt define namespaces', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+      metadata: { namespace: 'n1' },
+    });
+
+    const redis = kplus.Pods.select(chart, 'Pods', { labels: { role: 'redis' } });
+
+    pod.connections.allowFrom(redis);
+
+    const manifest = Testing.synth(chart);
+
+    const ingressPolicyMetadata = manifest[2].metadata;
+    expect(ingressPolicyMetadata.namespace).toEqual('n1');
+
+  });
+
+  test('allow from with peer isolation creates only ingress policy on peer', () => {
+
+    const chart = Testing.chart();
+
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2, { isolation: kplus.PodConnectionsIsolation.PEER });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allow from with pod isolation creates only egress policy on pod', () => {
+
+    const chart = Testing.chart();
+
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2, { isolation: kplus.PodConnectionsIsolation.POD });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('allow from defaults to peer container ports', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod', port: 6739 }],
+    });
+
+    pod1.connections.allowFrom(pod2);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+
 });
 
 describe('permissions', () => {
