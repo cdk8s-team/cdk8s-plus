@@ -53,6 +53,7 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
+.vscode/
 docs/typescript.md
 docs/python.md
 docs/java.md
