@@ -61,6 +61,7 @@ export abstract class Workload extends pod.AbstractPod {
   public readonly podMetadata: ApiObjectMetadataDefinition;
 
   public readonly scheduling: WorkloadScheduling;
+  public readonly connections: pod.PodConnections;
 
   private readonly _selectors: k8s.LabelSelector[] = [];
 
@@ -69,6 +70,7 @@ export abstract class Workload extends pod.AbstractPod {
 
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
     this.scheduling = new WorkloadScheduling(this);
+    this.connections = new pod.PodConnections(this);
 
     const matcher = Names.toLabelValue(this);
     this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
