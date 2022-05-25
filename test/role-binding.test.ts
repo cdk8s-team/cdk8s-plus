@@ -9,8 +9,8 @@ test('can create a RoleBinding from a Role', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user = new kplus.User({ name: 'alice@example.com' });
-  const group = new kplus.Group({ name: 'frontend-admins' });
+  const user = kplus.User.fromName(chart, 'Alice', 'alice@example.com');
+  const group = kplus.Group.fromName(chart, 'FrontendAdmins', 'frontend-admins');
   const binding = role.bind(user, group);
 
   // THEN
@@ -58,8 +58,8 @@ test('can create a RoleBinding from a ClusterRole', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user = new kplus.User({ name: 'alice@example.com' });
-  const group = new kplus.Group({ name: 'frontend-admins' });
+  const user = kplus.User.fromName(chart, 'Alice', 'alice@example.com');
+  const group = kplus.Group.fromName(chart, 'FrontendAdmins', 'frontend-admins');
   const binding = role.bindInNamespace('development', user, group);
 
   // THEN
@@ -109,8 +109,8 @@ test('can call bindInNamespace multiple times', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user1 = new kplus.User({ name: 'alice@example.com' });
-  const user2 = new kplus.User({ name: 'bob@example.com' });
+  const user1 = kplus.User.fromName(chart, 'Alice', 'alice@example.com');
+  const user2 = kplus.User.fromName(chart, 'Bob', 'bob@example.com');
   const binding1 = role.bindInNamespace('staging', user1);
   const binding2 = role.bindInNamespace('development', user2);
 
@@ -143,8 +143,8 @@ test('can create a ClusterRoleBinding from a ClusterRole', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user = new kplus.User({ name: 'alice@example.com' });
-  const group = new kplus.Group({ name: 'frontend-admins' });
+  const user = kplus.User.fromName(chart, 'Alice', 'alice@example.com');
+  const group = kplus.Group.fromName(chart, 'FrontendAdmins', 'frontend-admins');
   const binding = role.bind(user, group);
 
   // THEN
@@ -219,8 +219,8 @@ test('can add subjects to a RoleBinding after creating it', () => {
   role.allowRead(kplus.ApiResource.PODS);
 
   // WHEN
-  const user = new kplus.User({ name: 'alice@example.com' });
-  const group = new kplus.Group({ name: 'frontend-admins' });
+  const user = kplus.User.fromName(chart, 'Alice', 'alice@example.com');
+  const group = kplus.Group.fromName(chart, 'FrontendAdmins', 'frontend-admins');
   const binding = role.bind();
   binding.addSubjects(user, group);
 

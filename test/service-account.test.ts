@@ -38,8 +38,8 @@ test('minimal definition', () => {
 test('secrets can be added to the service account', () => {
   // GIVEN
   const chart = Testing.chart();
-  const secret1 = kplus.Secret.fromSecretName('my-secret-1');
-  const secret2 = kplus.Secret.fromSecretName('my-secret-2');
+  const secret1 = kplus.Secret.fromSecretName(chart, 'Secret1', 'my-secret-1');
+  const secret2 = kplus.Secret.fromSecretName(chart, 'Secret2', 'my-secret-2');
 
   // WHEN
   const sa = new kplus.ServiceAccount(chart, 'my-service-account', {

@@ -52,20 +52,43 @@ export interface IConfigMap extends base.IResource {
 
 }
 
+class ImportedConfigMap extends Construct implements IConfigMap {
+
+  private readonly _name: string;
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeConfigMap.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubeConfigMap.GVK.kind;
+  }
+
+}
+
 /**
  * ConfigMap holds configuration data for pods to consume.
  */
 export class ConfigMap extends base.Resource implements IConfigMap {
+
   /**
    * Represents a ConfigMap created elsewhere.
-   * @param name The name of the config map to import
    */
-  public static fromConfigMapName(name: string): IConfigMap {
-    return {
-      apiGroup: '',
-      name,
-      ...k8s.KubeConfigMap.GVK,
-    };
+  public static fromConfigMapName(scope: Construct, id: string, name: string): IConfigMap {
+    return new ImportedConfigMap(scope, id, name);
   }
 
   /**

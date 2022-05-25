@@ -1,4 +1,5 @@
 import * as cdk8s from 'cdk8s';
+import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
 describe('PersistentVolume', () => {
@@ -50,7 +51,8 @@ describe('PersistentVolume', () => {
 
   test('can be imported', () => {
 
-    const pv = kplus.PersistentVolume.fromPersistentVolumeName('vol');
+    const chart = Testing.chart();
+    const pv = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vol', 'vol');
     expect(pv.name).toEqual('vol');
 
   });
@@ -129,7 +131,7 @@ describe('PersistentVolume', () => {
   test('can be bound to a claim at instantiation', () => {
 
     const chart = cdk8s.Testing.chart();
-    const pvc = kplus.PersistentVolumeClaim.fromClaimName('claim');
+    const pvc = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
     const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
       claim: pvc,
@@ -145,7 +147,7 @@ describe('PersistentVolume', () => {
   test('can be bound to a claim post instantiation', () => {
 
     const chart = cdk8s.Testing.chart();
-    const pvc = kplus.PersistentVolumeClaim.fromClaimName('claim');
+    const pvc = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
     const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
@@ -162,7 +164,7 @@ describe('PersistentVolume', () => {
   test('no-ops if bounded twice to the same claim', () => {
 
     const chart = cdk8s.Testing.chart();
-    const pvc = kplus.PersistentVolumeClaim.fromClaimName('claim');
+    const pvc = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
     const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
@@ -177,8 +179,8 @@ describe('PersistentVolume', () => {
   test('throws if bounded twice to different claims', () => {
 
     const chart = cdk8s.Testing.chart();
-    const pvc1 = kplus.PersistentVolumeClaim.fromClaimName('claim1');
-    const pvc2 = kplus.PersistentVolumeClaim.fromClaimName('claim2');
+    const pvc1 = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim1', 'claim1');
+    const pvc2 = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim2', 'claim2');
     const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
       volumeId: 'vol1',
     });
