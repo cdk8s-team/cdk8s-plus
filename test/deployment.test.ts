@@ -497,9 +497,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+      namespaces: kplus.Namespaces.select(chart, 'Net', { labels: { net: '1' } } ),
     });
 
     const web = new kplus.Deployment(chart, 'Web', {
@@ -516,9 +516,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+      namespaces: kplus.Namespaces.select(chart, 'Net', { labels: { net: '1' } } ),
     });
 
     const web = new kplus.Deployment(chart, 'Web', {
@@ -603,9 +603,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+      namespaces: kplus.Namespaces.select(chart, 'Net', { labels: { net: '1' } } ),
     });
 
     const web = new kplus.Deployment(chart, 'Web', {
@@ -622,9 +622,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.select({ labels: { net: '1' } } ),
+      namespaces: kplus.Namespaces.select(chart, 'Net', { labels: { net: '1' } } ),
     });
 
     const web = new kplus.Deployment(chart, 'Web', {
