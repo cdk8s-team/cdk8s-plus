@@ -127,4 +127,16 @@ export class ServiceAccount extends base.Resource implements IServiceAccount, rb
   public get secrets() {
     return [...this._secrets];
   }
+
+  /**
+   * @see ISubect.toSubjectConfiguration()
+   */
+  public toSubjectConfiguration(): rb.SubjectConfiguration {
+    return {
+      kind: this.kind,
+      name: this.name,
+      apiGroup: this.apiGroup,
+    };
+  }
+
 }
