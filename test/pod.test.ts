@@ -853,7 +853,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
-    expect(() => pod.connections.allowTo(selected)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
+    expect(() => pod.connections.allowTo(selected)).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -869,7 +869,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
     });
 
-    expect(() => pod.connections.allowTo(selected)).toThrow(/Unable to create peer policy. Peer must specify namespace names/);
+    expect(() => pod.connections.allowTo(selected)).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
 
   });
 
@@ -924,7 +924,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
-    expect(() => pod.connections.allowTo(namespace)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
+    expect(() => pod.connections.allowTo(namespace)).toThrow('Unable to create an Ingress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -943,6 +943,43 @@ describe('connections |', () => {
 
     pod1.connections.allowTo(pod2);
     expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow to multiple peers', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod3 = new kplus.Pod(chart, 'Pod3', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2);
+    pod1.connections.allowTo(pod3);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow to the same peer twice', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowTo(pod2);
+    expect(() => pod1.connections.allowTo(pod2)).toThrow(/There is already a Construct with name/);
 
   });
 
@@ -1103,7 +1140,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
-    expect(() => pod.connections.allowFrom(selected)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
+    expect(() => pod.connections.allowFrom(selected)).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -1119,7 +1156,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
     });
 
-    expect(() => pod.connections.allowFrom(selected)).toThrow(/Unable to create peer policy. Peer must specify namespace names/);
+    expect(() => pod.connections.allowFrom(selected)).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
 
   });
 
@@ -1174,7 +1211,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
-    expect(() => pod.connections.allowFrom(namespace)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
+    expect(() => pod.connections.allowFrom(namespace)).toThrow('Unable to create an Egress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -1193,6 +1230,43 @@ describe('connections |', () => {
 
     pod1.connections.allowFrom(pod2);
     expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can allow from multiple peers', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod3 = new kplus.Pod(chart, 'Pod3', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2);
+    pod1.connections.allowFrom(pod3);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot allow from the same peer twice', () => {
+
+    const chart = Testing.chart();
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    pod1.connections.allowFrom(pod2);
+    expect(() => pod1.connections.allowFrom(pod2)).toThrow(/There is already a Construct with name/);
 
   });
 

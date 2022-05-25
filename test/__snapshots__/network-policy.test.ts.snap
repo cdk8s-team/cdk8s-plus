@@ -161,7 +161,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -174,11 +173,6 @@ Array [
           ],
           "to": Array [
             Object {
-              "namespaceSelector": Object {
-                "matchLabels": Object {
-                  "kubernetes.io/metadata.name": "default",
-                },
-              },
               "podSelector": Object {
                 "matchLabels": Object {
                   "cdk8s.io/metadata.addr": "test-Pod2-c82dc44e",
@@ -291,7 +285,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -304,11 +297,6 @@ Array [
           ],
           "to": Array [
             Object {
-              "namespaceSelector": Object {
-                "matchLabels": Object {
-                  "kubernetes.io/metadata.name": "default",
-                },
-              },
               "podSelector": Object {
                 "matchLabels": Object {
                   "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -369,7 +357,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -439,7 +426,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -508,7 +494,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -590,7 +575,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -664,7 +648,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -742,7 +725,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -834,7 +816,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -907,7 +888,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "egress": Array [
@@ -1012,18 +992,12 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
         Object {
           "from": Array [
             Object {
-              "namespaceSelector": Object {
-                "matchLabels": Object {
-                  "kubernetes.io/metadata.name": "default",
-                },
-              },
               "podSelector": Object {
                 "matchLabels": Object {
                   "cdk8s.io/metadata.addr": "test-Pod2-c82dc44e",
@@ -1142,18 +1116,12 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
         Object {
           "from": Array [
             Object {
-              "namespaceSelector": Object {
-                "matchLabels": Object {
-                  "kubernetes.io/metadata.name": "default",
-                },
-              },
               "podSelector": Object {
                 "matchLabels": Object {
                   "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1220,7 +1188,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1290,7 +1257,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1359,7 +1325,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1441,7 +1406,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1515,7 +1479,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1593,7 +1556,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1685,7 +1647,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1758,7 +1719,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "ingress": Array [
@@ -1832,7 +1792,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "podSelector": Object {
@@ -1904,7 +1863,6 @@ Array [
     "kind": "NetworkPolicy",
     "metadata": Object {
       "name": "test-policy-c89ef47f",
-      "namespace": "default",
     },
     "spec": Object {
       "podSelector": Object {

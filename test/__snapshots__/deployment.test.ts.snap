@@ -415,9 +415,6 @@ Array [
                         "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
                       },
                     },
-                    "namespaces": Array [
-                      "default",
-                    ],
                     "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
@@ -543,9 +540,6 @@ Array [
                       "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
                     },
                   },
-                  "namespaces": Array [
-                    "default",
-                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
@@ -825,9 +819,6 @@ Array [
                         "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
                       },
                     },
-                    "namespaces": Array [
-                      "default",
-                    ],
                     "topologyKey": "topology.kubernetes.io/zone",
                   },
                   "weight": 1,
@@ -953,9 +944,6 @@ Array [
                       "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
                     },
                   },
-                  "namespaces": Array [
-                    "default",
-                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],
@@ -1183,9 +1171,6 @@ Array [
                         "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
                       },
                     },
-                    "namespaces": Array [
-                      "default",
-                    ],
                     "topologyKey": "kubernetes.io/hostname",
                   },
                   "weight": 1,
@@ -1259,9 +1244,6 @@ Array [
                       "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
                     },
                   },
-                  "namespaces": Array [
-                    "default",
-                  ],
                   "topologyKey": "kubernetes.io/hostname",
                 },
               ],

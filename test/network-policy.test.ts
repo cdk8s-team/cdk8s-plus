@@ -174,7 +174,7 @@ describe('NeworkPolicy |', () => {
 
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
-    })).toThrow(/Unable to create a network policy for a selector that selects pods in multiple namespace/);
+    })).toThrow('Unable to create a network policy for a selector (test/Pods) that selects pods in multiple namespaces');
 
   });
 
@@ -190,7 +190,7 @@ describe('NeworkPolicy |', () => {
 
     expect(() => new kplus.NetworkPolicy(chart, 'Policy', {
       selector: web,
-    })).toThrow(/Unable to create a network policy for a selector that selects pods in namespaces based on labes/);
+    })).toThrow('Unable to create a network policy for a selector (test/Pods) that selects pods in namespaces based on labels');
 
   });
 

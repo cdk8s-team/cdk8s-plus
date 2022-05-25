@@ -275,7 +275,7 @@ export enum NetworkPolicyTrafficDefault {
    */
   DENY = 'DENY',
   /**
-   * The policy denies all traffic (either ingress or egress).
+   * The policy allows all traffic (either ingress or egress).
    * Since rules are additive, no additional rule or policies can
    * subsequently deny the traffic.
    */
@@ -289,7 +289,7 @@ export interface NetworkPolicyTraffic {
 
   /**
    * Specifies the default behavior of the policy when
-   * no egress rules are defined.
+   * no rules are defined.
    *
    * @default - unset, the policy does not change the behavior.
    */
@@ -328,7 +328,7 @@ export interface NetworkPolicyProps extends base.ResourceProps {
    * Which pods does this policy object applies to.
    *
    * This can either be a single pod / workload, or a grouping of pods selected
-   * via the `Pod.select` function. Rules is applied to any pods selected by this property.
+   * via the `Pods.select` function. Rules is applied to any pods selected by this property.
    * Multiple network policies can select the same set of pods.
    * In this case, the rules for each are combined additively.
    *
@@ -399,18 +399,19 @@ export class NetworkPolicy extends base.Resource {
   public constructor(scope: Construct, id: string, props: NetworkPolicyProps = {}) {
     super(scope, id);
 
-    this._podSelectorConfig = (props.selector ?? pod.Pods.all(this, 'AllPods')).toPodSelectorConfig();
+    const podSelector = props.selector ?? pod.Pods.all(this, 'AllPods');
+    this._podSelectorConfig = podSelector.toPodSelectorConfig();
 
     let ns;
 
     if (!props.metadata?.namespace) {
 
       if (this._podSelectorConfig.namespaces?.labelSelector && !this._podSelectorConfig.namespaces?.labelSelector.isEmpty()) {
-        throw new Error('Unable to create a network policy for a selector that selects pods in namespaces based on labes');
+        throw new Error(`Unable to create a network policy for a selector (${podSelector.node.path}) that selects pods in namespaces based on labels`);
       }
 
       if (this._podSelectorConfig.namespaces?.names && this._podSelectorConfig.namespaces.names.length > 1) {
-        throw new Error('Unable to create a network policy for a selector that selects pods in multiple namespace');
+        throw new Error(`Unable to create a network policy for a selector (${podSelector.node.path}) that selects pods in multiple namespaces`);
       }
 
       ns = this._podSelectorConfig.namespaces?.names ? this._podSelectorConfig.namespaces?.names[0] : undefined;

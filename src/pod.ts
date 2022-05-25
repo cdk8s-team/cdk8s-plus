@@ -54,10 +54,6 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
 
   }
 
-  private get _namespaceName(): string {
-    return this.podMetadata.namespace ?? 'default';
-  }
-
   public get containers(): container.Container[] {
     return [...this._containers];
   }
@@ -85,9 +81,9 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     }
     return {
       labelSelector: LabelSelector.of({ labels: { [Pod.ADDRESS_LABEL]: podAddress } }),
-      namespaces: {
-        names: [this._namespaceName],
-      },
+      namespaces: this.metadata.namespace ? {
+        names: [this.metadata.namespace],
+      } : undefined,
     };
   }
 
@@ -1422,7 +1418,7 @@ export class PodScheduling {
    *
    * - An instance of a `Pod`.
    * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
-   * - An un-managed pod that can be selected via `Pod.select()`.
+   * - An un-managed pod that can be selected via `Pods.select()`.
    *
    * Co-locating with multiple selections ((i.e invoking this method multiple times)) acts as
    * an AND condition. meaning the pod will be assigned to a node that satisfies all
@@ -1452,7 +1448,7 @@ export class PodScheduling {
    *
    * - An instance of a `Pod`.
    * - An instance of a `Workload` (e.g `Deployment`, `StatefulSet`).
-   * - An un-managed pod that can be selected via `Pod.select()`.
+   * - An un-managed pod that can be selected via `Pods.select()`.
    *
    * Seperating from multiple selections acts as an AND condition. meaning the pod
    * will not be assigned to a node that satisfies all selections (i.e runs at least one pod that satisifies each selection).
@@ -1535,7 +1531,7 @@ export class PodScheduling {
 
 /**
  * Isolation determines which policies are created
- * when allowing connections from a pod to peers.
+ * when allowing connections from a a pod / workload to peers.
  */
 export enum PodConnectionsIsolation {
 
@@ -1682,25 +1678,27 @@ export class PodConnections {
         throw new Error(`Unable to create policies for peer '${peer.node.addr}' since its not a pod selector`);
       }
 
+      const oppositeDirection = direction === 'Egress' ? 'Ingress' : 'Egress';
+
       const podSelectorConfig = podSelector.toPodSelectorConfig();
-      let namespaces: string[];
+      let namespaces: (string | undefined)[];
 
       if (!podSelectorConfig.namespaces) {
 
         // if the peer doesn't specify namespaces, we assume the same namespace.
-        namespaces = [this.instance.metadata.namespace ?? 'default'];
+        namespaces = [this.instance.metadata.namespace];
 
       } else {
 
         // a peer cannot specify namespaces by labels because
         // we won't be able to extract the names of those namespaces.
         if (podSelectorConfig.namespaces.labelSelector && !podSelectorConfig.namespaces.labelSelector.isEmpty()) {
-          throw new Error('Unable to create peer policy. Peer must specify namespaces only by name');
+          throw new Error(`Unable to create an ${oppositeDirection} policy for peer '${peer.node.path}' (pod=${this.instance.name}). Peer must specify namespaces only by name`);
         }
 
         // a peer must specify namespaces by name.
         if (!podSelectorConfig.namespaces.names) {
-          throw new Error('Unable to create peer policy. Peer must specify namespace names');
+          throw new Error(`Unable to create an ${oppositeDirection} policy for peer '${peer.node.path}' (pod=${this.instance.name}). Peer must specify namespace names`);
         }
 
         namespaces = podSelectorConfig.namespaces.names;
@@ -1721,6 +1719,9 @@ export class PodConnections {
               metadata: { namespace: name },
               egress: { rules: [{ peer: this.instance, ports: options.ports }] },
             });
+            break;
+          default:
+            throw new Error(`Unsupported direction: ${direction}`);
         }
       }
 
