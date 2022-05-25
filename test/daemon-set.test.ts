@@ -55,7 +55,7 @@ test('a label selector is automatically allocated', () => {
 
 });
 
-test('no selector is generated if "defaultSelector" is false', () => {
+test('no selector is generated if "select" is false', () => {
 
   const chart = Testing.chart();
 
@@ -66,7 +66,7 @@ test('no selector is generated if "defaultSelector" is false', () => {
 
   // assert the k8s spec doesnt have it.
   const spec = Testing.synth(chart)[0].spec;
-  expect(spec.selector.matchLabels).toEqual({});
+  expect(spec.selector.matchLabels).toBeUndefined();
 
   // assert the deployment object doesnt have it.
   expect(ds.matchLabels).toEqual({});
@@ -84,7 +84,7 @@ test('can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  ds.select(kplus.LabelQuery.is('foo', expectedSelector.foo));
+  ds.select(kplus.LabelSelector.of({ labels: { foo: expectedSelector.foo } }));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[0].spec;

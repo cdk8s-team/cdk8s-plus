@@ -50,7 +50,7 @@ test('No selector is generated if "select" is false', () => {
 
   // assert the k8s spec doesnt have it.
   const spec = Testing.synth(chart)[1].spec;
-  expect(spec.selector.matchLabels).toEqual({});
+  expect(spec.selector.matchLabels).toBeUndefined();
 
   // assert the statefulset object doesnt have it.
   expect(statefulset.matchLabels).toEqual({});
@@ -74,7 +74,7 @@ test('Can select by label', () => {
 
   const expectedSelector = { foo: 'bar' };
 
-  statefulset.select(kplus.LabelQuery.is('foo', expectedSelector.foo));
+  statefulset.select(kplus.LabelSelector.of({ labels: { foo: expectedSelector.foo } }));
 
   // assert the k8s spec has it.
   const spec = Testing.synth(chart)[1].spec;

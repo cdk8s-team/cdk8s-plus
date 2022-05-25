@@ -97,6 +97,62 @@ test('Synthesizes spec lazily', () => {
 
 });
 
+<<<<<<< HEAD
+=======
+test('Can associate a deployment with an existing service', () => {
+
+  const chart = Testing.chart();
+
+  const service = new kplus.Service(chart, 'service');
+  const deployment = new kplus.Deployment(chart, 'dep');
+  deployment.addContainer({ image: 'foo', port: 7777 });
+
+  service.addDeployment(deployment);
+
+  const expectedSelector = { 'cdk8s.io/metadata.addr': 'test-dep-c8cc9f8f' };
+
+  const deploymentSpec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
+  const serviceSpec: k8s.ServiceSpec = Testing.synth(chart)[0].spec;
+  expect(deploymentSpec.selector.matchLabels).toEqual(expectedSelector);
+  expect(deploymentSpec.template.metadata?.labels).toEqual(expectedSelector);
+  expect(serviceSpec.selector).toEqual(expectedSelector);
+  expect(serviceSpec.ports![0].port).toEqual(7777);
+  expect(serviceSpec.ports![0].targetPort).toEqual(7777);
+
+});
+
+test('Cannot add a deployment if it does not have a label selector', () => {
+
+  const chart = Testing.chart();
+
+  const service = new kplus.Service(chart, 'service');
+  const deployment = new kplus.Deployment(chart, 'dep', {
+    select: false,
+    containers: [{ image: 'foo' }],
+  });
+
+  expect(() => service.addDeployment(deployment, { port: 1122 }))
+    .toThrow(/deployment does not have a label selector/);
+
+});
+
+test('Cannot add a deployment if a selector is already defined for this service', () => {
+
+  const chart = Testing.chart();
+  const service = new kplus.Service(chart, 'service');
+
+  const deployment = new kplus.Deployment(chart, 'dep1', {
+    containers: [{ image: 'foo' }],
+  });
+  service.addSelector('random', 'selector');
+
+  // THEN
+  expect(() => service.addDeployment(deployment, { port: 1010 }))
+    .toThrow(/a selector is already defined for this service. cannot add a deployment/);
+
+});
+
+>>>>>>> k8s-24/main
 test('Must set externalIPs if provided', () => {
 
   const chart = Testing.chart();

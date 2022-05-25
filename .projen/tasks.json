@@ -8,31 +8,17 @@
       ],
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive"
-        }
-      ]
-    },
-    "backport:20": {
-      "name": "backport:20",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
+          "exec": "rm -rf /tmp/.backport/"
+        },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-20/main"
-        }
-      ]
-    },
-    "backport:21": {
-      "name": "backport:21",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
+          "exec": "mkdir -p /tmp/.backport/"
+        },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main"
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -44,7 +30,61 @@
       ],
       "steps": [
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main"
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
+          "cwd": "/tmp/.backport/"
+        }
+      ]
+    },
+    "backport:23": {
+      "name": "backport:23",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
+          "cwd": "/tmp/.backport/"
+        }
+      ]
+    },
+    "backport:24": {
+      "name": "backport:24",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
+          "cwd": "/tmp/.backport/"
         }
       ]
     },
@@ -80,7 +120,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-24/"
       },
       "steps": [
         {
@@ -207,7 +247,7 @@
       "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.ts"
         }
       ]
     },
@@ -216,7 +256,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.22.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.24.0"
         }
       ]
     },
@@ -321,14 +361,14 @@
         }
       ]
     },
-    "release:k8s-22/main": {
-      "name": "release:k8s-22/main",
-      "description": "Prepare a release from \"k8s-22/main\" branch",
+    "release:k8s-24/main": {
+      "name": "release:k8s-24/main",
+      "description": "Prepare a release from \"k8s-24/main\" branch",
       "env": {
         "RELEASE": "true",
-        "MAJOR": "1",
+        "MAJOR": "2",
         "PRERELEASE": "beta",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-24/"
       },
       "steps": [
         {
@@ -353,7 +393,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --updateSnapshot"
+          "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8"
         },
         {
           "spawn": "eslint"
@@ -386,7 +426,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-22/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-24/"
       },
       "steps": [
         {

@@ -2,6 +2,7 @@ import { ApiObjectMetadata, ApiObjectMetadataDefinition, Names } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import * as pod from './pod';
+import { undefinedIfEmpty } from './utils';
 
 /**
  * Properties for `Workload`.
@@ -77,7 +78,7 @@ export abstract class Workload extends pod.AbstractPod {
     this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
 
     if (props.select ?? true) {
-      this.select(pod.LabelQuery.is(pod.Pod.ADDRESS_LABEL, matcher));
+      this.select(pod.LabelSelector.of({ labels: { [pod.Pod.ADDRESS_LABEL]: matcher } }));
     }
 
   }
@@ -85,12 +86,12 @@ export abstract class Workload extends pod.AbstractPod {
   /**
    * Configure selectors for this workload.
    */
-  public select(...selectors: pod.LabelQuery[]) {
+  public select(...selectors: pod.LabelSelector[]) {
     for (const selector of selectors) {
-      if (selector.operator === 'In' && selector.values?.length === 1) {
-        this._matchLabels[selector.key] = selector.values[0];
-      } else {
-        this._matchExpressions.push({ key: selector.key, values: selector.values, operator: selector.operator });
+      const kube = selector._toKube();
+      this._matchExpressions.push(...kube.matchExpressions ?? []);
+      for (const [key, value] of Object.entries(kube.matchLabels ?? {})) {
+        this._matchLabels[key] = value;
       }
     }
   }
@@ -117,7 +118,10 @@ export abstract class Workload extends pod.AbstractPod {
    * @internal
    */
   public _toLabelSelector(): k8s.LabelSelector {
-    return { matchExpressions: this._matchExpressions, matchLabels: this._matchLabels };
+    return {
+      matchExpressions: undefinedIfEmpty(this._matchExpressions),
+      matchLabels: undefinedIfEmpty(this._matchLabels),
+    };
   }
 
   /**
@@ -146,8 +150,19 @@ export interface WorkloadSchedulingSpreadOptions {
    */
   readonly weight?: number;
 
+  /**
+   * Which topology to spread on.
+   *
+   * @default - Topology.HOSTNAME
+   */
+  readonly topology?: pod.Topology;
+
 }
 
+/**
+ * Controls the pod scheduling strategy of this workload.
+ * It offers some additional API's on top of the core pod scheduling.
+ */
 export class WorkloadScheduling extends pod.PodScheduling {
 
   /**
@@ -155,8 +170,8 @@ export class WorkloadScheduling extends pod.PodScheduling {
    * A spread is a separation of the pod from itself and is used to
    * balance out pod replicas across a given topology.
    */
-  public spread(topologyKey: pod.Topology, options: WorkloadSchedulingSpreadOptions = {}) {
-    this.separate(this.instance, { weight: options.weight, topology: topologyKey });
+  public spread(options: WorkloadSchedulingSpreadOptions = {}) {
+    this.separate(this.instance, { weight: options.weight, topology: options.topology ?? pod.Topology.HOSTNAME });
   }
 
 }

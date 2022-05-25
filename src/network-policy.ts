@@ -1,7 +1,8 @@
 import { ApiObject, Lazy } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
+import * as namespace from './namespace';
 import * as pod from './pod';
 import { undefinedIfEmpty } from './utils';
 
@@ -12,11 +13,16 @@ export interface NetworkPolicyPortProps {
 
   /**
    * Specific port number.
+   *
+   * @default - all ports are allowed.
    */
   readonly port?: number;
 
   /**
    * End port (relative to `port`). Only applies if `port` is defined.
+   * Use this to specify a port range, rather that a specific one.
+   *
+   * @default - not a port range.
    */
   readonly endPort?: number;
 
@@ -94,36 +100,39 @@ export class NetworkPolicyPort {
     return { port: this.port, endPort: this.endPort, protocol: this.protocol };
   }
 
+}
+
+/**
+ * Configuration for network peers.
+ * A peer can either by an ip block, or a selection of pods, not both.
+ */
+export interface NetworkPolicyPeerConfig {
+
   /**
-   * @internal
+   * The ip block this peer represents.
    */
-  public _toServicePort(): k8s.ServicePort {
-    if (!this.port) {
-      throw new Error(`Unabel to convert network policy port ${JSON.stringify(this._toKube())} to service port: port is not defined`);
-    }
-    return { port: this.port.value };
-  }
+  readonly ipBlock?: NetworkPolicyIpBlock;
+
+  /**
+   * The pod selector this peer represents.
+   */
+  readonly podSelector?: pod.PodSelectorConfig;
 
 }
 
 /**
  * Describes a peer to allow traffic to/from.
- * A peer can either by an ip block, or a selection of pods, not both.
  */
-export interface INetworkPolicyPeer {
+export interface INetworkPolicyPeer extends IConstruct {
   /**
-   * Returns the ip block this peer represents.
-   *
-   * - Implementors should return `undefined` if the peer doesn't represent an ip block.
+   * Return the configuration of this peer.
    */
-  toIpBlock(): NetworkPolicyIpBlock | undefined;
+  toNetworkPolicyPeerConfig(): NetworkPolicyPeerConfig;
 
   /**
-   * Returns the namespaced pod this peer represents.
-   *
-   * - Implementors should return `undefined` if the peer doesn't represent a namespaced pod.
+   * Convert the peer into a pod selector, if possible.
    */
-  toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined;
+  toPodSelector(): pod.IPodSelector | undefined;
 }
 
 /**
@@ -150,12 +159,12 @@ export interface NetworkPolicyRule {
  * allowed to the pods matched by a network policy selector.
  * The except entry describes CIDRs that should not be included within this rule.
  */
-export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
+export class NetworkPolicyIpBlock extends Construct implements INetworkPolicyPeer {
 
   /**
    * Create an IPv4 peer from a CIDR
    */
-  public static ipv4(cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
+  public static ipv4(scope: Construct, id: string, cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
     const cidrMatch = cidrIp.match(/^(\d{1,3}\.){3}\d{1,3}(\/\d+)?$/);
 
     if (!cidrMatch) {
@@ -166,20 +175,20 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
       throw new Error(`CIDR mask is missing in IPv4: "${cidrIp}". Did you mean "${cidrIp}/32"?`);
     }
 
-    return new NetworkPolicyIpBlock(cidrIp, except);
+    return new NetworkPolicyIpBlock(scope, id, cidrIp, except);
   }
 
   /**
    * Any IPv4 address
    */
-  public static anyIpv4(): NetworkPolicyIpBlock {
-    return new NetworkPolicyIpBlock('0.0.0.0/0');
+  public static anyIpv4(scope: Construct, id: string): NetworkPolicyIpBlock {
+    return new NetworkPolicyIpBlock(scope, id, '0.0.0.0/0');
   }
 
   /**
    * Create an IPv6 peer from a CIDR
    */
-  public static ipv6(cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
+  public static ipv6(scope: Construct, id: string, cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
 
     const cidrMatch = cidrIp.match(/^([\da-f]{0,4}:){2,7}([\da-f]{0,4})?(\/\d+)?$/);
 
@@ -191,17 +200,17 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
       throw new Error(`CIDR mask is missing in IPv6: "${cidrIp}". Did you mean "${cidrIp}/128"?`);
     }
 
-    return new NetworkPolicyIpBlock(cidrIp, except);
+    return new NetworkPolicyIpBlock(scope, id, cidrIp, except);
   }
 
   /**
    * Any IPv6 address
    */
-  public static anyIpv6(): NetworkPolicyIpBlock {
-    return new NetworkPolicyIpBlock('::/0');
+  public static anyIpv6(scope: Construct, id: string): NetworkPolicyIpBlock {
+    return new NetworkPolicyIpBlock(scope, id, '::/0');
   }
 
-  private constructor(
+  private constructor(scope: Construct, id: string,
     /**
      * A string representing the IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64".
      */
@@ -210,19 +219,21 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
      * A slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64".
      * Except values will be rejected if they are outside the CIDR range.
      */
-    public readonly except?: string[]) {}
-
-  /**
-   * @see INetworkPolicyPeer.toIpBlock()
-   */
-  public toIpBlock(): NetworkPolicyIpBlock | undefined {
-    return this;
+    public readonly except?: string[]) {
+    super(scope, id);
   }
 
   /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector()
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
+  public toNetworkPolicyPeerConfig(): NetworkPolicyPeerConfig {
+    return { ipBlock: this };
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
     return undefined;
   }
 
@@ -264,7 +275,7 @@ export enum NetworkPolicyTrafficDefault {
    */
   DENY = 'DENY',
   /**
-   * The policy denies all traffic (either ingress or egress).
+   * The policy allows all traffic (either ingress or egress).
    * Since rules are additive, no additional rule or policies can
    * subsequently deny the traffic.
    */
@@ -278,7 +289,7 @@ export interface NetworkPolicyTraffic {
 
   /**
    * Specifies the default behavior of the policy when
-   * no egress rules are defined.
+   * no rules are defined.
    *
    * @default - unset, the policy does not change the behavior.
    */
@@ -317,9 +328,11 @@ export interface NetworkPolicyProps extends base.ResourceProps {
    * Which pods does this policy object applies to.
    *
    * This can either be a single pod / workload, or a grouping of pods selected
-   * via the `Pod.queried` function. The array of ingress rules is applied to any
-   * pods selected by this field. Multiple network policies can select the same
-   * set of pods. In this case, the ingress rules for each are combined additively.
+   * via the `Pods.select` function. Rules is applied to any pods selected by this property.
+   * Multiple network policies can select the same set of pods.
+   * In this case, the rules for each are combined additively.
+   *
+   * Note that
    *
    * @default - will select all pods in the namespace of the policy.
    */
@@ -378,7 +391,7 @@ export class NetworkPolicy extends base.Resource {
 
   public readonly resourceType: string = 'networkpolicies';
 
-  private readonly _podSelector: pod.IPodSelector;
+  private readonly _podSelectorConfig: pod.PodSelectorConfig;
   private readonly _egressRules: k8s.NetworkPolicyEgressRule[] = [];
   private readonly _ingressRules: k8s.NetworkPolicyIngressRule[] = [];
   private readonly _policyTypes: Set<string> = new Set();
@@ -386,12 +399,31 @@ export class NetworkPolicy extends base.Resource {
   public constructor(scope: Construct, id: string, props: NetworkPolicyProps = {}) {
     super(scope, id);
 
+    const podSelector = props.selector ?? pod.Pods.all(this, 'AllPods');
+    this._podSelectorConfig = podSelector.toPodSelectorConfig();
+
+    let ns;
+
+    if (!props.metadata?.namespace) {
+
+      if (this._podSelectorConfig.namespaces?.labelSelector && !this._podSelectorConfig.namespaces?.labelSelector.isEmpty()) {
+        throw new Error(`Unable to create a network policy for a selector (${podSelector.node.path}) that selects pods in namespaces based on labels`);
+      }
+
+      if (this._podSelectorConfig.namespaces?.names && this._podSelectorConfig.namespaces.names.length > 1) {
+        throw new Error(`Unable to create a network policy for a selector (${podSelector.node.path}) that selects pods in multiple namespaces`);
+      }
+
+      ns = this._podSelectorConfig.namespaces?.names ? this._podSelectorConfig.namespaces?.names[0] : undefined;
+
+    } else {
+      ns = props.metadata.namespace;
+    }
+
     this.apiObject = new k8s.KubeNetworkPolicy(this, 'Resource', {
-      metadata: props.metadata,
+      metadata: { ...props.metadata, namespace: ns },
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
-
-    this._podSelector = props.selector ?? pod.Pod.all();
 
     this.configureDefaultBehavior('Egress', props.egress?.default);
     this.configureDefaultBehavior('Ingress', props.ingress?.default);
@@ -412,7 +444,7 @@ export class NetworkPolicy extends base.Resource {
    */
   public addEgressRule(peer: INetworkPolicyPeer, ports?: NetworkPolicyPort[]) {
     this._policyTypes.add('Egress');
-    this._egressRules.push({ ports: (ports ?? []).map(p => p._toKube()), to: [this.createNetworkPolicyPeer(peer)] });
+    this._egressRules.push({ ports: (ports ?? []).map(p => p._toKube()), to: this.createNetworkPolicyPeers(peer) });
   }
 
   /**
@@ -422,20 +454,42 @@ export class NetworkPolicy extends base.Resource {
    */
   public addIngressRule(peer: INetworkPolicyPeer, ports?: NetworkPolicyPort[]) {
     this._policyTypes.add('Ingress');
-    this._ingressRules.push({ ports: (ports ?? []).map(p => p._toKube()), from: [this.createNetworkPolicyPeer(peer)] });
+    this._ingressRules.push({ ports: (ports ?? []).map(p => p._toKube()), from: this.createNetworkPolicyPeers(peer) });
   }
 
-  private createNetworkPolicyPeer(peer: INetworkPolicyPeer): k8s.NetworkPolicyPeer {
-    const ipBlock = peer.toIpBlock();
-    if (ipBlock) {
-      return { ipBlock: ipBlock._toKube() };
-    } else {
-      const namespacedPod = peerToNamespacedPodSelector(peer);
-      return {
-        namespaceSelector: namespacedPod.toNamespaceSelector()?.toNamespaceLabelSelector()?._toKube(),
-        podSelector: namespacedPod.toPodSelector().toPodLabelSelector()._toKube(),
-      };
+  private createNetworkPolicyPeers(peer: INetworkPolicyPeer): k8s.NetworkPolicyPeer[] {
+
+    const config = peer.toNetworkPolicyPeerConfig();
+
+    validatePeerConfig(config);
+
+    if (config.ipBlock) {
+      // ip block is a single peer.
+      return [{ ipBlock: config.ipBlock._toKube() }];
     }
+
+    if (!config.podSelector!.namespaces?.names) {
+      // when no explicit namespaces are defined we can just use
+      // the selector as is
+      return [{
+        namespaceSelector: config.podSelector!.namespaces?.labelSelector?._toKube(),
+        podSelector: config.podSelector!.labelSelector._toKube(),
+      }];
+    }
+
+    // when explicit namespaces are defined, we need to create a separate
+    // peer for each, since a label selector cannot have multiple name labels. (they will conflict)
+    const namespaceSelector = config.podSelector?.namespaces?.labelSelector?._toKube() ?? {};
+    return config.podSelector!.namespaces.names!.map(n => ({
+      podSelector: config.podSelector!.labelSelector._toKube(),
+      namespaceSelector: {
+        matchExpressions: namespaceSelector.matchExpressions,
+        matchLabels: {
+          ...namespaceSelector.matchLabels,
+          [namespace.Namespace.NAME_LABEL]: n,
+        },
+      },
+    }));
   }
 
   private configureDefaultBehavior(direction: 'Ingress' | 'Egress', _default?: NetworkPolicyTrafficDefault) {
@@ -463,7 +517,7 @@ export class NetworkPolicy extends base.Resource {
    */
   public _toKube(): k8s.NetworkPolicySpec {
     return {
-      podSelector: this._podSelector.toPodLabelSelector()._toKube(),
+      podSelector: this._podSelectorConfig.labelSelector._toKube(),
       egress: undefinedIfEmpty(this._egressRules),
       ingress: undefinedIfEmpty(this._ingressRules),
       policyTypes: undefinedIfEmpty(Array.from(this._policyTypes)),
@@ -472,10 +526,11 @@ export class NetworkPolicy extends base.Resource {
 
 }
 
-export function peerToNamespacedPodSelector(peer: INetworkPolicyPeer): pod.INamespacedPodSelector {
-  const namespacedPodSelector = peer.toNamespacedPodSelector();
-  if (!namespacedPodSelector) {
-    throw new Error('Inavlid peer: toNamespacedPodSelector() must return a value');
+export function validatePeerConfig(peerConfig: NetworkPolicyPeerConfig) {
+  if (!peerConfig.ipBlock && !peerConfig.podSelector) {
+    throw new Error('Inavlid peer: either \'ipBlock\' or \'podSelector\' must be defined');
   }
-  return namespacedPodSelector;
+  if (peerConfig.ipBlock && peerConfig.podSelector) {
+    throw new Error('Inavlid peer: only one of \'ipBlock\' and \'podSelector\' must be defined');
+  }
 }

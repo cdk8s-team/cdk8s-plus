@@ -1,23 +1,34 @@
 import { ApiObject, Lazy } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as networkpolicy from './network-policy';
 import * as pod from './pod';
 
 /**
- * Represents an object that can select namespaces.
+ * Configuration for selecting namespaces.
  */
-export interface INamespaceSelector {
-  /**
-   * Return the label selector that selects the namespaces.
-   */
-  toNamespaceLabelSelector(): pod.LabelSelector | undefined;
+export interface NamespaceSelectorConfig {
 
   /**
-   * Return the namespace name (if known).
+   * A selector to select namespaces by labels.
    */
-  toNamespaceName(): string | undefined;
+  readonly labelSelector?: pod.LabelSelector;
+
+  /**
+   * A list of names to select namespaces by names.
+   */
+  readonly names?: string[];
+}
+
+/**
+ * Represents an object that can select namespaces.
+ */
+export interface INamespaceSelector extends IConstruct {
+  /**
+   * Return the configuration of this selector.
+   */
+  toNamespaceSelectorConfig(): NamespaceSelectorConfig;
 }
 
 /**
@@ -39,32 +50,13 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
   public static readonly NAME_LABEL = 'kubernetes.io/metadata.name';
 
   /**
-   * Match a namespace by label queries.
-   */
-  public static queried(...queries: pod.LabelQuery[]): LabeledNamespace {
-    return new LabeledNamespace(queries);
-  }
-
-  /**
-   * Match a namespace by its name.
-   */
-  public static named(name: string): NamedNamespace {
-    return new NamedNamespace(name);
-  }
-
-  /**
-   * Match all namespaces.
-   */
-  public static all(): LabeledNamespace {
-    return Namespace.queried();
-  }
-
-  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
 
   public readonly resourceType: string = 'namespaces';
+
+  private readonly _pods: pod.Pods;
 
   public constructor(scope: Construct, id: string, props: NamespaceProps = {}) {
     super(scope, id);
@@ -73,34 +65,32 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this._pods = pod.Pods.all(this, 'Pods', {
+      namespaces: Namespaces.select(this, 'Namespaces', { names: [this.name] }),
+    });
+
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * @see INamespaceSelector.toNamespaceSelectorConfig()
    */
-  public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return Namespace.named(this.name).toNamespaceLabelSelector();
+  public toNamespaceSelectorConfig(): NamespaceSelectorConfig {
+    return { names: [this.name] };
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceName()
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
-  public toNamespaceName(): string | undefined {
-    return this.name;
+  public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
+    return this._pods.toNetworkPolicyPeerConfig();
   }
 
   /**
-   * @see INetworkPolicyPeer.toIpBlock()
+   * @see INetworkPolicyPeer.toPodSelector()
    */
-  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
-    return undefined;
-  }
-
-  /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return pod.Pod.all().namespaced(this);
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return this._pods.toPodSelector();
   }
 
   /**
@@ -113,102 +103,88 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
 }
 
 /**
- * Namespace(s) identified by labels.
+ * Options for `Namespaces.select`.
  */
-export class LabeledNamespace implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
-
-  public constructor(private readonly queries: pod.LabelQuery[]) {};
+export interface NamespacesSelectOptions {
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * Labels the namespaces must have.
+   * This is equivalent to using an 'Is' selector.
+   *
+   * @default - no strict labels requirements.
    */
-  public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return pod.LabelSelector.of(...this.queries);
-  }
+  readonly labels?: { [key: string]: string };
 
   /**
-   * @see INamespaceSelector.toNamespaceName()
+   * Namespaces must satisfy these selectors.
+   * The selectors query labels, just like the `labels` property, but they
+   * provide a more advanced matching mechanism.
+   *
+   * @default - no selector requirements.
    */
-  public toNamespaceName(): string | undefined {
-
-    // a named namespace also uses label queries by specifying a magic label.
-    // this means that if the appropriate query exists, we can use it to detect the namespace name.
-
-    const namespaceNameQuery = this.queries.filter(q => q.key === Namespace.NAME_LABEL && q.operator === 'In');
-
-    if (namespaceNameQuery.length === 0) {
-      // the magic query doesn't exist, we cant know
-      // the namesapce name.
-      return undefined;
-    }
-
-    // make sure only one such magic query exists.
-    if (namespaceNameQuery.length > 1) {
-      throw new Error(`Error extracting namespace name: Found multiple 'In' queries with key '${Namespace.NAME_LABEL}'`);
-    }
-
-    // a single magic query exists, make sure its valid.
-    const values = namespaceNameQuery[0].values;
-    if (!values) {
-      throw new Error(`Error extracting namespace name: Found multiple values for 'In' query with key '${Namespace.NAME_LABEL}': ${values}`);
-    }
-    if (values.length === 0) {
-      throw new Error(`Error extracting namespace name: No values found for 'In' query with key ${Namespace.NAME_LABEL}`);
-    }
-
-    // the single value in the query is the namespace name.
-    return values[0];
-  }
+  readonly expressions?: pod.LabelExpression[];
 
   /**
-   * @see INetworkPolicyPeer.toIpBlock();
+   * Namespaces names must be one of these.
+   *
+   * @default - no name requirements.
    */
-  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
-    return undefined;
-  }
-
-  /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector()
-   */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return pod.Pod.all().namespaced(this);
-  }
+  readonly names?: string[];
 
 }
 
 /**
- * Namespace identified by a name.
+ * Represents a group of namespaces.
  */
-export class NamedNamespace implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
-
-  public constructor(private readonly name: string) {};
+export class Namespaces extends Construct implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
 
   /**
-   * @see INamespaceSelector.toNamespaceLabelSelector()
+   * Select specific namespaces.
    */
-  public toNamespaceLabelSelector(): pod.LabelSelector | undefined {
-    return Namespace.queried(pod.LabelQuery.is(Namespace.NAME_LABEL, this.name)).toNamespaceLabelSelector();
+  public static select(scope: Construct, id: string, options: NamespacesSelectOptions): Namespaces {
+    return new Namespaces(scope, id, options.expressions, options.names, options.labels);
   }
 
   /**
-   * @see INamespaceSelector.toNamespaceName()
+   * Select all namespaces.
    */
-  public toNamespaceName(): string | undefined {
-    return this.name;
+  public static all(scope: Construct, id: string): Namespaces {
+    return Namespaces.select(scope, id, { expressions: [], labels: {} });
+  }
+
+  private readonly _pods: pod.Pods;
+
+  constructor(scope: Construct, id: string,
+    private readonly expressions?: pod.LabelExpression[],
+    private readonly names?: string[],
+    private readonly labels?: { [key: string]: string }) {
+    super(scope, id);
+
+    this._pods = pod.Pods.all(this, 'Pods', { namespaces: this });
   }
 
   /**
-   * @see INetworkPolicyPeer.toIpBlock();
+   * @see INamespaceSelector.toNamespaceSelectorConfig()
    */
-  public toIpBlock(): networkpolicy.NetworkPolicyIpBlock | undefined {
-    return undefined;
+  public toNamespaceSelectorConfig(): NamespaceSelectorConfig {
+    return {
+      labelSelector: pod.LabelSelector.of({ expressions: this.expressions, labels: this.labels } ),
+      names: this.names,
+    };
   }
 
   /**
-   * @see INetworkPolicyPeer.toNamespacedPodSelector()
+   * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
-  public toNamespacedPodSelector(): pod.INamespacedPodSelector | undefined {
-    return pod.Pod.all().namespaced(this);
+  public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
+    return this._pods.toNetworkPolicyPeerConfig();
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return this._pods.toPodSelector();
   }
 
 }

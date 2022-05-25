@@ -17,7 +17,8 @@ describe('EnvValue', () => {
 
   test('Can be created from config map name', () => {
 
-    const actual = kplus.EnvValue.fromConfigMap(kplus.ConfigMap.fromConfigMapName('ConfigMap'), 'key');
+    const chart = Testing.chart();
+    const actual = kplus.EnvValue.fromConfigMap(kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'), 'key');
 
     expect(actual.value).toBeUndefined();
     expect(actual.valueFrom).toEqual({
@@ -30,8 +31,9 @@ describe('EnvValue', () => {
   });
 
   test('Can be created from secret value', () => {
+    const chart = Testing.chart();
     const secretValue = {
-      secret: kplus.Secret.fromSecretName('Secret'),
+      secret: kplus.Secret.fromSecretName(chart, 'Secret', 'Secret'),
       key: 'my-key',
     };
 
@@ -158,7 +160,7 @@ describe('Container', () => {
       workingDir: 'workingDir',
       port: 9000,
       command: ['command'],
-      env: {
+      envVariables: {
         key: kplus.EnvValue.fromValue('value'),
       },
     });
@@ -167,7 +169,7 @@ describe('Container', () => {
 
     const expected: k8s.Container = {
       name: 'name',
-      imagePullPolicy: kplus.ImagePullPolicy.NEVER,
+      imagePullPolicy: 'Never',
       image: 'image',
       workingDir: 'workingDir',
       ports: [{
@@ -177,9 +179,7 @@ describe('Container', () => {
       env: [{
         name: 'key',
         value: 'value',
-        valueFrom: undefined,
       }],
-      volumeMounts: [],
       securityContext: {
         privileged: false,
         readOnlyRootFilesystem: false,
@@ -208,7 +208,7 @@ describe('Container', () => {
       image: 'image',
     });
 
-    container.addEnv('key', kplus.EnvValue.fromValue('value'));
+    container.env.addVariable('key', kplus.EnvValue.fromValue('value'));
 
     const actual: k8s.EnvVar[] = container._toKube().env!;
     const expected: k8s.EnvVar[] = [{
@@ -221,13 +221,43 @@ describe('Container', () => {
 
   });
 
+  test('can add environment variables from a source', () => {
+
+    const chart = Testing.chart();
+
+    const cm = new kplus.ConfigMap(chart, 'ConfigMap');
+    const secret = new kplus.Secret(chart, 'Secret');
+
+    const cmSource = kplus.Env.fromConfigMap(cm, 'pref');
+    const secretSource = kplus.Env.fromSecret(secret);
+
+    const container = new kplus.Container({
+      image: 'image',
+      envFrom: [cmSource],
+    });
+
+    container.env.copyFrom(secretSource);
+
+    const spec: k8s.Container = container._toKube();
+
+    expect(spec.envFrom).toEqual([
+      { configMapRef: { name: cm.name }, prefix: 'pref' },
+      { secretRef: { name: secret.name } },
+    ]);
+
+    expect(container.env.sources).toEqual([cmSource, secretSource]);
+  });
+
+  test('can add environment variables from a secret', () => {});
+
   test('Can mount container to volume', () => {
 
     const container = new kplus.Container({
       image: 'image',
     });
 
-    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName('ConfigMap'));
+    const chart = Testing.chart();
+    const volume = kplus.Volume.fromConfigMap(chart, 'Volume', kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
 
     container.mount('/path/to/mount', volume);
 
@@ -258,7 +288,8 @@ describe('Container', () => {
       image: 'image',
     });
 
-    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName('ConfigMap'));
+    const chart = Testing.chart();
+    const volume = kplus.Volume.fromConfigMap(chart, 'Volume', kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
 
     container.mount('/path/to/mount', volume, {
       propagation: kplus.MountPropagation.BIDIRECTIONAL,
@@ -276,12 +307,13 @@ describe('Container', () => {
   });
 
   test('mount from ctor', () => {
+    const chart = Testing.chart();
     const container = new kplus.Container({
       image: 'image',
       volumeMounts: [
         {
           path: '/foo',
-          volume: kplus.Volume.fromEmptyDir('empty'),
+          volume: kplus.Volume.fromEmptyDir(chart, 'Volume', 'empty'),
           subPath: 'subPath',
         },
       ],

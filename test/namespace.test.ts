@@ -13,14 +13,29 @@ test('defaultChild', () => {
 
 });
 
-test('can select a namespace by name', () => {
-  expect(kplus.Namespace.named('web').toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+test('defaults', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Namespace(chart, 'Namespace');
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
 });
 
-test('can select a namespace by labels', () => {
-  expect(kplus.Namespace.queried(kplus.LabelQuery.exists('role')).toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+test('can select namespaces', () => {
+  const chart = Testing.chart();
+  const namespaces = kplus.Namespaces.select(chart, 'Namespaces', {
+    labels: { foo: 'bar' },
+    expressions: [kplus.LabelExpression.exists('web')],
+    names: ['web'],
+  });
+  expect(namespaces.toNamespaceSelectorConfig().names).toEqual(['web']);
+  expect(namespaces.toNamespaceSelectorConfig()?.labelSelector?._toKube()).toMatchSnapshot();
 });
 
 test('can select all namespaces', () => {
-  expect(kplus.Namespace.all().toNamespaceLabelSelector()?._toKube()).toMatchSnapshot();
+  const chart = Testing.chart();
+  const namespaces = kplus.Namespaces.all(chart, 'All');
+  expect(namespaces.toNamespaceSelectorConfig().names).toBeUndefined();
+  expect(namespaces.toNamespaceSelectorConfig()?.labelSelector?._toKube()).toMatchSnapshot();
 });

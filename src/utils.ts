@@ -1,7 +1,9 @@
+import { IConstruct } from 'constructs';
+
 export function undefinedIfEmpty<T>(obj: T): T | undefined {
   if (typeof(obj) === 'string' && obj === '') { return undefined; }
   if (Array.isArray(obj) && obj.length === 0) { return undefined; }
-  if (typeof(obj) === 'object' && Object.keys(obj).length === 0) { return undefined; }
+  if (typeof(obj) === 'object' && (Object.keys(obj).length === 0 || Object.values(obj).filter(x => x).length === 0)) { return undefined; }
   return obj;
 }
 
@@ -13,4 +15,11 @@ export function filterUndefined(obj: any): any {
     }
   }
   return ret;
+}
+
+export function address(...constructs: IConstruct[]) {
+  const addresses = constructs
+    .map(c => c.node.addr)
+    .sort((a, b) => a.localeCompare(b));
+  return addresses.join('');
 }
