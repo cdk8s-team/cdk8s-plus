@@ -37,11 +37,9 @@ const project = new cdk.JsiiProject({
   ],
   deps: [
     'minimatch',
-    'safe-stable-stringify',
   ],
   bundledDeps: [
     'minimatch',
-    'safe-stable-stringify',
   ],
   devDeps: [
     'constructs',
@@ -98,6 +96,8 @@ const project = new cdk.JsiiProject({
     },
   },
 });
+
+project.gitignore.exclude('.vscode/');
 
 const importdir = path.join('src', 'imports');
 
