@@ -3,16 +3,7 @@ import { Construct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
-
-/**
- * Represents an object that can be used as a pod selector for a `Service`.
- */
-export interface IServicePodSelector {
-  /**
-   * Return labels that identify the pods of this object.
-   */
-  toPodLabels(): { [key: string]: string };
-}
+import * as pod from './pod';
 
 /**
  * Properties for `Service`.
@@ -24,8 +15,7 @@ export interface ServiceProps extends base.ResourceProps {
    * You can pass one of the following:
    *
    * - An instance of `Pod` or any workload resource (e.g `Deployment`, `StatefulSet`, ...)
-   * - A pod(s) selected by the `Pod.matchLabels` function.
-   * - A custom implementation of `IServicePodSelector`.
+   * - Pods selected by the `Pods.select` function. Note that in this case only labels can be specified.
    *
    * @default - unset, the service is assumed to have an external process managing
    * its endpoints, which Kubernetes will not modify.
@@ -40,7 +30,7 @@ export interface ServiceProps extends base.ResourceProps {
    * const backend = kplus.Pod.labeled({ tier: 'backend' });
    * new kplus.Service(this, 'Service', { selector: backend });
    */
-  readonly selector?: IServicePodSelector;
+  readonly selector?: pod.IPodSelector;
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -290,8 +280,9 @@ export class Service extends base.Resource {
    * Note that invoking this method multiple times acts as an AND operator
    * on the resulting labels.
    */
-  public select(selector: IServicePodSelector) {
-    for (const [key, value] of Object.entries(selector.toPodLabels())) {
+  public select(selector: pod.IPodSelector) {
+    const labels = selector.toPodSelectorConfig().labelSelector._toKube().matchLabels ?? {};
+    for (const [key, value] of Object.entries(labels)) {
       this._selector[key] = value;
     }
   }
