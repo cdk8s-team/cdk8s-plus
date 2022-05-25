@@ -1,4 +1,5 @@
 import { Size } from 'cdk8s';
+import { IConstruct, Construct } from 'constructs';
 import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
 import * as pvc from './pvc';
@@ -7,7 +8,7 @@ import * as secret from './secret';
 /**
  * Represents a piece of storage in the cluster.
  */
-export interface IStorage {
+export interface IStorage extends IConstruct {
 
   /**
    * Convert the piece of storage into a concrete volume.
@@ -48,7 +49,7 @@ export interface IStorage {
  * hierarchy, and any volumes are mounted at the specified paths within the
  * image. Volumes can not mount onto other volumes
  */
-export class Volume implements IStorage {
+export class Volume extends Construct implements IStorage {
 
   /**
    * Mounts an Amazon Web Services (AWS) EBS volume into your pod.
@@ -62,8 +63,8 @@ export class Volume implements IStorage {
    * - those instances need to be in the same region and availability zone as the EBS volume.
    * - EBS only supports a single EC2 instance mounting a volume.
    */
-  public static fromAwsElasticBlockStore(volumeId: string, options: AwsElasticBlockStoreVolumeOptions = {}): Volume {
-    return new Volume(options.name ?? `ebs-${volumeId}`, {
+  public static fromAwsElasticBlockStore(scope: Construct, id: string, volumeId: string, options: AwsElasticBlockStoreVolumeOptions = {}): Volume {
+    return new Volume(scope, id, options.name ?? `ebs-${volumeId}`, {
       awsElasticBlockStore: {
         volumeId,
         fsType: options.fsType ?? 'ext4',
@@ -76,8 +77,8 @@ export class Volume implements IStorage {
   /**
    * Mounts a Microsoft Azure Data Disk into a pod.
    */
-  public static fromAzureDisk(diskName: string, diskUri: string, options: AzureDiskVolumeOptions = {}): Volume {
-    return new Volume(options.name ?? `azuredisk-${diskName}`, {
+  public static fromAzureDisk(scope: Construct, id: string, diskName: string, diskUri: string, options: AzureDiskVolumeOptions = {}): Volume {
+    return new Volume(scope, id, options.name ?? `azuredisk-${diskName}`, {
       azureDisk: {
         diskName,
         diskUri,
@@ -100,8 +101,8 @@ export class Volume implements IStorage {
    * - the nodes on which Pods are running must be GCE VMs
    * - those VMs need to be in the same GCE project and zone as the persistent disk
    */
-  public static fromGcePersistentDisk(pdName: string, options: GCEPersistentDiskVolumeOptions = {}): Volume {
-    return new Volume(options.name ?? `gcedisk-${pdName}`, {
+  public static fromGcePersistentDisk(scope: Construct, id: string, pdName: string, options: GCEPersistentDiskVolumeOptions = {}): Volume {
+    return new Volume(scope, id, options.name ?? `gcedisk-${pdName}`, {
       gcePersistentDisk: {
         pdName,
         fsType: options.fsType ?? 'ext4',
@@ -126,8 +127,8 @@ export class Volume implements IStorage {
    * @param configMap The config map to use to populate the volume.
    * @param options Options
    */
-  public static fromConfigMap(configMap: configmap.IConfigMap, options: ConfigMapVolumeOptions = { }): Volume {
-    return new Volume(options.name ?? `configmap-${configMap.name}`, {
+  public static fromConfigMap(scope: Construct, id: string, configMap: configmap.IConfigMap, options: ConfigMapVolumeOptions = { }): Volume {
+    return new Volume(scope, id, options.name ?? `configmap-${configMap.name}`, {
       configMap: {
         name: configMap.name,
         defaultMode: options.defaultMode,
@@ -149,8 +150,8 @@ export class Volume implements IStorage {
    *
    * @param options - Additional options.
    */
-  public static fromEmptyDir(name: string, options: EmptyDirVolumeOptions = { }): Volume {
-    return new Volume(name, {
+  public static fromEmptyDir(scope: Construct, id: string, name: string, options: EmptyDirVolumeOptions = { }): Volume {
+    return new Volume(scope, id, name, {
       emptyDir: {
         medium: options.medium,
         sizeLimit: options.sizeLimit
@@ -175,8 +176,8 @@ export class Volume implements IStorage {
    * @param secr The secret to use to populate the volume.
    * @param options Options
    */
-  public static fromSecret(secr: secret.ISecret, options: SecretVolumeOptions = { }): Volume {
-    return new Volume(options.name ?? `secret-${secr.name}`, {
+  public static fromSecret(scope: Construct, id: string, secr: secret.ISecret, options: SecretVolumeOptions = { }): Volume {
+    return new Volume(scope, id, options.name ?? `secret-${secr.name}`, {
       secret: {
         secretName: secr.name,
         defaultMode: options.defaultMode,
@@ -193,8 +194,10 @@ export class Volume implements IStorage {
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/
    */
-  public static fromPersistentVolumeClaim(claim: pvc.IPersistentVolumeClaim, options: PersistentVolumeClaimVolumeOptions = {}): Volume {
-    return new Volume(options.name ?? `pvc-${claim.name}`, {
+  public static fromPersistentVolumeClaim(scope: Construct, id: string,
+    claim: pvc.IPersistentVolumeClaim,
+    options: PersistentVolumeClaimVolumeOptions = {}): Volume {
+    return new Volume(scope, id, options.name ?? `pvc-${claim.name}`, {
       persistentVolumeClaim: {
         claimName: claim.name,
         readOnly: options.readOnly ?? false,
@@ -219,8 +222,10 @@ export class Volume implements IStorage {
   };
 
 
-  private constructor(public readonly name: string, private readonly config: Omit<k8s.Volume, 'name'>) {
-
+  private constructor(scope: Construct, id: string,
+    public readonly name: string,
+    private readonly config: Omit<k8s.Volume, 'name'>) {
+    super(scope, id);
   }
 
   public asVolume(): Volume {

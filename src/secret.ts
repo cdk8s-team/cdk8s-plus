@@ -60,6 +60,33 @@ export interface SecretValue {
   readonly key: string;
 }
 
+class ImportedSecret extends Construct implements ISecret {
+
+  private readonly _name: string;
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeSecret.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubeSecret.GVK.kind;
+  }
+
+}
+
 /**
  * Kubernetes Secrets let you store and manage sensitive information, such as
  * passwords, OAuth tokens, and ssh keys. Storing confidential information in a
@@ -72,14 +99,9 @@ export class Secret extends base.Resource implements ISecret {
 
   /**
    * Imports a secret from the cluster as a reference.
-   * @param name The name of the secret to reference.
    */
-  public static fromSecretName(name: string): ISecret {
-    return {
-      apiGroup: '',
-      name,
-      ...k8s.KubeSecret.GVK,
-    };
+  public static fromSecretName(scope: Construct, id: string, name: string): ISecret {
+    return new ImportedSecret(scope, id, name);
   }
 
   /**
