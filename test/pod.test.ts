@@ -22,8 +22,8 @@ test('fails with two volumes with the same name', () => {
   const cm1 = new kplus.ConfigMap(chart, 'cm1', { data: { f1: 'f1-content' } });
   const cm2 = new kplus.ConfigMap(chart, 'cm2', { data: { f2: 'f2-content' } });
 
-  const v1 = kplus.Volume.fromConfigMap(cm1, { name: 'v' });
-  const v2 = kplus.Volume.fromConfigMap(cm2, { name: 'v' });
+  const v1 = kplus.Volume.fromConfigMap(chart, 'Volume1', cm1, { name: 'v' });
+  const v2 = kplus.Volume.fromConfigMap(chart, 'Volume2', cm2, { name: 'v' });
 
   expect(() => new kplus.Pod(chart, 'Pod', { volumes: [v1, v2] })).toThrow('Volume with name v already exists');
 
@@ -36,8 +36,8 @@ test('fails adding a volume with the same name', () => {
   const cm1 = new kplus.ConfigMap(chart, 'cm1', { data: { f1: 'f1-content' } });
   const cm2 = new kplus.ConfigMap(chart, 'cm2', { data: { f2: 'f2-content' } });
 
-  const v1 = kplus.Volume.fromConfigMap(cm1, { name: 'v' });
-  const v2 = kplus.Volume.fromConfigMap(cm2, { name: 'v' });
+  const v1 = kplus.Volume.fromConfigMap(chart, 'Volume1', cm1, { name: 'v' });
+  const v2 = kplus.Volume.fromConfigMap(chart, 'Volume2', cm2, { name: 'v' });
 
   const pod = new kplus.Pod(chart, 'Pod');
   pod.addVolume(v1);
@@ -53,8 +53,8 @@ test('fails with a container that has mounts with different volumes of the same 
   const cm1 = new kplus.ConfigMap(chart, 'cm1', { data: { f1: 'f1-content' } });
   const cm2 = new kplus.ConfigMap(chart, 'cm2', { data: { f2: 'f2-content' } });
 
-  const v1 = kplus.Volume.fromConfigMap(cm1, { name: 'v' });
-  const v2 = kplus.Volume.fromConfigMap(cm2, { name: 'v' });
+  const v1 = kplus.Volume.fromConfigMap(chart, 'Volume1', cm1, { name: 'v' });
+  const v2 = kplus.Volume.fromConfigMap(chart, 'Volume2', cm2, { name: 'v' });
 
   new kplus.Pod(chart, 'Pod', {
     containers: [{
@@ -89,7 +89,7 @@ test('can configure multiple mounts with the same volume', () => {
     },
   });
 
-  const volume = kplus.Volume.fromConfigMap(configMap);
+  const volume = kplus.Volume.fromConfigMap(chart, 'Volume', configMap);
 
   new kplus.Pod(chart, 'Pod', {
     containers: [
@@ -167,7 +167,7 @@ test('Can add volume post instantiation', () => {
     ],
   });
 
-  const volume = kplus.Volume.fromEmptyDir('volume');
+  const volume = kplus.Volume.fromEmptyDir(chart, 'Volume', 'volume');
   pod.addVolume(volume);
 
   const spec = Testing.synth(chart)[0].spec;
@@ -182,7 +182,7 @@ test('Automatically adds volumes from container mounts', () => {
 
   const pod = new kplus.Pod(chart, 'Pod');
 
-  const volume = kplus.Volume.fromEmptyDir('volume');
+  const volume = kplus.Volume.fromEmptyDir(chart, 'Volume', 'volume');
 
   const container = pod.addContainer({ image: 'image' });
   container.mount('/path/to/mount', volume);
@@ -291,7 +291,7 @@ test('automatically adds volumes from init container mounts', () => {
     containers: [{ image: 'image' }],
   });
 
-  const volume = kplus.Volume.fromEmptyDir('volume');
+  const volume = kplus.Volume.fromEmptyDir(chart, 'Volume', 'volume');
 
   const container = pod.addInitContainer({ image: 'image' });
   container.mount('/path/to/mount', volume);
@@ -641,9 +641,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.all(),
+      namespaces: kplus.Namespaces.all(chart, 'All'),
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -660,7 +660,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({ labels: { app: 'store' } });
+    const redis = kplus.Pods.select(chart, 'Redis', { labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -716,9 +716,9 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({
+    const redis = kplus.Pods.select(chart, 'Redis', {
       labels: { app: 'store' },
-      namespaces: kplus.Namespaces.select({ labels: { net: '1' }, names: ['web'] } ),
+      namespaces: kplus.Namespaces.select(chart, 'WebNamespace', { labels: { net: '1' }, names: ['web'] } ),
     });
 
     const web = new kplus.Pod(chart, 'Web', {
@@ -735,7 +735,7 @@ describe('scheduling', () => {
 
     const chart = Testing.chart();
 
-    const redis = kplus.Pods.select({ labels: { app: 'store' } });
+    const redis = kplus.Pods.select(chart, 'Redis', { labels: { app: 'store' } });
 
     const web = new kplus.Pod(chart, 'Web', {
       containers: [{ image: 'web' }],
@@ -753,10 +753,11 @@ describe('scheduling', () => {
 });
 
 test('can select pods', () => {
-  const pods = kplus.Pods.select({
+  const chart = Testing.chart();
+  const pods = kplus.Pods.select(chart, 'Selected', {
     labels: { foo: 'bar' },
     expressions: [kplus.LabelExpression.exists('key')],
-    namespaces: kplus.Namespaces.select({ labels: { foo: 'bar' } }),
+    namespaces: kplus.Namespaces.select(chart, 'Bar', { labels: { foo: 'bar' } }),
   });
   expect(pods.toPodSelectorConfig().labelSelector._toKube()).toMatchSnapshot();
   expect(pods.toPodSelectorConfig().namespaces?.names).toBeUndefined();

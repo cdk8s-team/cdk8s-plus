@@ -41,6 +41,31 @@ export interface RolePolicyRule {
   readonly resources: IApiResource[];
 }
 
+class ImportedRole extends Construct implements IRole {
+
+  private readonly _name: string;
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeRole.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return 'rbac.authorization.k8s.io';
+  }
+
+  public get kind(): string {
+    return k8s.KubeRole.GVK.kind;
+  }
+}
+
 /**
  * Role is a namespaced, logical grouping of PolicyRules that can be referenced
  * as a unit by a RoleBinding.
@@ -49,14 +74,9 @@ export class Role extends base.Resource implements IRole {
 
   /**
    * Imports a role from the cluster as a reference.
-   * @param name The name of the role resource.
    */
-  public static fromRoleName(name: string): IRole {
-    return {
-      apiGroup: 'rbac.authorization.k8s.io',
-      name,
-      ...k8s.KubeRole.GVK,
-    };
+  public static fromRoleName(scope: Construct, id: string, name: string): IRole {
+    return new ImportedRole(scope, id, name);
   }
 
   /**
@@ -253,6 +273,33 @@ export interface ClusterRolePolicyRule {
   readonly endpoints: IApiEndpoint[];
 }
 
+class ImportedClusterRole extends Construct implements IClusterRole {
+
+  private readonly _name: string;
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeClusterRole.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return 'rbac.authorization.k8s.io';
+  }
+
+  public get kind(): string {
+    return k8s.KubeClusterRole.GVK.kind;
+  }
+
+}
+
 /**
  * ClusterRole is a cluster level, logical grouping of PolicyRules that can be
  * referenced as a unit by a RoleBinding or ClusterRoleBinding.
@@ -261,14 +308,9 @@ export class ClusterRole extends base.Resource implements IClusterRole, IRole {
 
   /**
    * Imports a role from the cluster as a reference.
-   * @param name The name of the role resource.
    */
-  public static fromClusterRoleName(name: string): IClusterRole {
-    return {
-      apiGroup: 'rbac.authorization.k8s.io',
-      name,
-      ...k8s.KubeClusterRole.GVK,
-    };
+  public static fromClusterRoleName(scope: Construct, id: string, name: string): IClusterRole {
+    return new ImportedClusterRole(scope, id, name);
   }
 
   /**

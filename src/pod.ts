@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy, Names } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as json from 'safe-stable-stringify';
 import * as base from './base';
 import * as container from './container';
@@ -464,7 +464,7 @@ export interface PodSelectorConfig {
 /**
  * Represents an object that can select pods.
  */
-export interface IPodSelector {
+export interface IPodSelector extends IConstruct {
   /**
    * Return the configuration of this selector.
    */
@@ -1121,26 +1121,21 @@ export interface PodsSelectOptions {
 /**
  * Represents a group of pods.
  */
-export class Pods implements IPodSelector, networkpolicy.INetworkPolicyPeer {
+export class Pods extends Construct implements IPodSelector, networkpolicy.INetworkPolicyPeer {
 
   /**
    * Select pods in the cluster with various selectors.
    */
-  public static select(options: PodsSelectOptions): Pods {
-    return new Pods(options.expressions, options.labels, options.namespaces);
+  public static select(scope: Construct, id: string, options: PodsSelectOptions): Pods {
+    return new Pods(scope, id, options.expressions, options.labels, options.namespaces);
   }
 
-  /**
-   * Select all pods.
-   */
-  public static all(options: PodsAllOptions = {}) {
-    return Pods.select({ namespaces: options.namespaces });
-  }
-
-  constructor(
+  constructor(scope: Construct, id: string,
     private readonly expressions?: LabelExpression[],
     private readonly labels?: { [key: string]: string },
-    private readonly namespaces?: namespace.INamespaceSelector) { }
+    private readonly namespaces?: namespace.INamespaceSelector) {
+    super(scope, id);
+  }
 
   /**
    * @see IPodSelector.toPodSelectorConfig()

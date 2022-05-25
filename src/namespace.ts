@@ -1,5 +1,5 @@
 import { ApiObject, Lazy } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as networkpolicy from './network-policy';
@@ -24,7 +24,7 @@ export interface NamespaceSelectorConfig {
 /**
  * Represents an object that can select namespaces.
  */
-export interface INamespaceSelector {
+export interface INamespaceSelector extends IConstruct {
   /**
    * Return the configuration of this selector.
    */
@@ -77,7 +77,7 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
    */
   public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
     const pods = pod.Pods.all({
-      namespaces: Namespaces.select({ names: [this.name] }),
+      namespaces: Namespaces.select(this, `Namespace${this.name}`, { names: [this.name] }),
     });
     return pods.toNetworkPolicyPeerConfig();
   }
@@ -125,26 +125,28 @@ export interface NamespacesSelectOptions {
 /**
  * Represents a group of namespaces.
  */
-export class Namespaces implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
+export class Namespaces extends Construct implements INamespaceSelector, networkpolicy.INetworkPolicyPeer {
 
   /**
    * Select specific namespaces.
    */
-  public static select(options: NamespacesSelectOptions): Namespaces {
-    return new Namespaces(options.expressions, options.names, options.labels);
+  public static select(scope: Construct, id: string, options: NamespacesSelectOptions): Namespaces {
+    return new Namespaces(scope, id, options.expressions, options.names, options.labels);
   }
 
   /**
    * Select all namespaces.
    */
-  public static all(): Namespaces {
-    return Namespaces.select({ expressions: [], labels: {} });
+  public static all(scope: Construct, id: string): Namespaces {
+    return Namespaces.select(scope, id, { expressions: [], labels: {} });
   }
 
-  constructor(
+  constructor(scope: Construct, id: string,
     private readonly expressions?: pod.LabelExpression[],
     private readonly names?: string[],
-    private readonly labels?: { [key: string]: string }) { }
+    private readonly labels?: { [key: string]: string }) {
+    super(scope, id);
+  }
 
   /**
    * @see INamespaceSelector.toNamespaceSelectorConfig()
