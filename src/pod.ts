@@ -1,5 +1,5 @@
 import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy, Names } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as base from './base';
 import * as container from './container';
 import * as k8s from './imports/k8s';
@@ -450,7 +450,7 @@ export interface PodSelectorConfig {
 /**
  * Represents an object that can select pods.
  */
-export interface IPodSelector {
+export interface IPodSelector extends IConstruct {
   /**
    * Return the configuration of this selector.
    */
@@ -1092,19 +1092,21 @@ export interface PodSelectOptions {
 /**
  * Represents a group of pods.
  */
-export class Pods implements IPodSelector {
+export class Pods extends Construct implements IPodSelector {
 
   /**
    * Select pods in the cluster with various selectors.
    */
-  public static select(options: PodSelectOptions): Pods {
-    return new Pods(options.expressions, options.labels, options.namespaces);
+  public static select(scope: Construct, id: string, options: PodSelectOptions): Pods {
+    return new Pods(scope, id, options.expressions, options.labels, options.namespaces);
   }
 
-  constructor(
+  constructor(scope: Construct, id: string,
     private readonly expressions?: LabelExpression[],
     private readonly labels?: { [key: string]: string },
-    private readonly namespaces?: namespace.INamespaceSelector) { }
+    private readonly namespaces?: namespace.INamespaceSelector) {
+    super(scope, id);
+  }
 
   public toPodSelectorConfig(): PodSelectorConfig {
     return {

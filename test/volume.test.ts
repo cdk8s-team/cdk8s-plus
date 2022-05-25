@@ -8,7 +8,7 @@ describe('fromSecret', () => {
     const secret = new Secret(chart, 'my-secret');
 
     // WHEN
-    const vol = Volume.fromSecret(secret);
+    const vol = Volume.fromSecret(chart, 'Secret', secret);
 
     // THEN
     expect(vol._toKube()).toMatchInlineSnapshot(`
@@ -30,7 +30,7 @@ describe('fromSecret', () => {
     const secret = new Secret(chart, 'my-secret');
 
     // WHEN
-    const vol = Volume.fromSecret(secret, {
+    const vol = Volume.fromSecret(chart, 'Secret', secret, {
       name: 'filesystem',
     });
 
@@ -45,7 +45,7 @@ describe('fromSecret', () => {
     const secret = new Secret(chart, 'my-secret');
 
     // WHEN
-    const vol = Volume.fromSecret(secret, {
+    const vol = Volume.fromSecret(chart, 'Secret', secret, {
       defaultMode: 0o777,
     });
 
@@ -59,9 +59,9 @@ describe('fromSecret', () => {
     const secret = new Secret(chart, 'my-secret');
 
     // WHEN
-    const vol0 = Volume.fromSecret(secret);
-    const vol1 = Volume.fromSecret(secret, { optional: true });
-    const vol2 = Volume.fromSecret(secret, { optional: false });
+    const vol0 = Volume.fromSecret(chart, 'Secret1', secret);
+    const vol1 = Volume.fromSecret(chart, 'Secret2', secret, { optional: true });
+    const vol2 = Volume.fromSecret(chart, 'Secret3', secret, { optional: false });
 
     // THEN
     expect(vol0._toKube().secret?.optional).toBe(undefined);
@@ -75,7 +75,7 @@ describe('fromSecret', () => {
     const secret = new Secret(chart, 'my-secret');
 
     // WHEN
-    const vol = Volume.fromSecret(secret, {
+    const vol = Volume.fromSecret(chart, 'Secret', secret, {
       items: {
         key1: { path: 'path/to/key1' },
         key2: { path: 'path/key2', mode: 0o100 },
@@ -101,7 +101,7 @@ describe('fromSecret', () => {
     const secret = new Secret(chart, 'my-secret');
 
     // WHEN
-    const vol = Volume.fromSecret(secret, {
+    const vol = Volume.fromSecret(chart, 'Secret', secret, {
       items: {
         key2: { path: 'path2' },
         key1: { path: 'path1' },
@@ -129,7 +129,7 @@ describe('fromConfigMap', () => {
     const configMap = new ConfigMap(chart, 'my-config-map');
 
     // WHEN
-    const vol = Volume.fromConfigMap(configMap);
+    const vol = Volume.fromConfigMap(chart, 'ConfigMap', configMap);
 
     // THEN
     expect(vol._toKube()).toMatchInlineSnapshot(`
@@ -151,7 +151,7 @@ describe('fromConfigMap', () => {
     const configMap = new ConfigMap(chart, 'my-config-map');
 
     // WHEN
-    const vol = Volume.fromConfigMap(configMap, {
+    const vol = Volume.fromConfigMap(chart, 'ConfigMap', configMap, {
       name: 'filesystem',
     });
 
@@ -166,7 +166,7 @@ describe('fromConfigMap', () => {
     const configMap = new ConfigMap(chart, 'my-config-map');
 
     // WHEN
-    const vol = Volume.fromConfigMap(configMap, {
+    const vol = Volume.fromConfigMap(chart, 'ConfigMap', configMap, {
       defaultMode: 0o777,
     });
 
@@ -180,9 +180,9 @@ describe('fromConfigMap', () => {
     const configMap = new ConfigMap(chart, 'my-config-map');
 
     // WHEN
-    const vol0 = Volume.fromConfigMap(configMap);
-    const vol1 = Volume.fromConfigMap(configMap, { optional: true });
-    const vol2 = Volume.fromConfigMap(configMap, { optional: false });
+    const vol0 = Volume.fromConfigMap(chart, 'ConfigMap1', configMap);
+    const vol1 = Volume.fromConfigMap(chart, 'ConfigMap2', configMap, { optional: true });
+    const vol2 = Volume.fromConfigMap(chart, 'ConfigMap3', configMap, { optional: false });
 
     // THEN
     expect(vol0._toKube().configMap?.optional).toBe(undefined);
@@ -196,7 +196,7 @@ describe('fromConfigMap', () => {
     const configMap = new ConfigMap(chart, 'my-config-map');
 
     // WHEN
-    const vol = Volume.fromConfigMap(configMap, {
+    const vol = Volume.fromConfigMap(chart, 'ConfigMap', configMap, {
       items: {
         key1: { path: 'path/to/key1' },
         key2: { path: 'path/key2', mode: 0o100 },
@@ -222,7 +222,7 @@ describe('fromConfigMap', () => {
     const configMap = new ConfigMap(chart, 'my-config-map');
 
     // WHEN
-    const vol = Volume.fromConfigMap(configMap, {
+    const vol = Volume.fromConfigMap(chart, 'ConfigMap', configMap, {
       items: {
         key2: { path: 'path2' },
         key1: { path: 'path1' },
@@ -245,8 +245,9 @@ describe('fromConfigMap', () => {
 
 describe('fromEmptyDir', () => {
   test('minimal definition', () => {
+    const chart = Testing.chart();
     // GIVEN
-    const vol = Volume.fromEmptyDir('main');
+    const vol = Volume.fromEmptyDir(chart, 'Volume', 'main');
 
     // THEN
     expect(vol._toKube()).toStrictEqual({
@@ -259,17 +260,20 @@ describe('fromEmptyDir', () => {
   });
 
   test('default medium', () => {
-    const vol = Volume.fromEmptyDir('main', { medium: EmptyDirMedium.DEFAULT });
+    const chart = Testing.chart();
+    const vol = Volume.fromEmptyDir(chart, 'Volume', 'main', { medium: EmptyDirMedium.DEFAULT });
     expect(vol._toKube().emptyDir?.medium).toEqual('');
   });
 
   test('memory medium', () => {
-    const vol = Volume.fromEmptyDir('main', { medium: EmptyDirMedium.MEMORY });
+    const chart = Testing.chart();
+    const vol = Volume.fromEmptyDir(chart, 'Volume', 'main', { medium: EmptyDirMedium.MEMORY });
     expect(vol._toKube().emptyDir?.medium).toEqual('Memory');
   });
 
   test('size limit', () => {
-    const vol = Volume.fromEmptyDir('main', { sizeLimit: Size.gibibytes(20) });
+    const chart = Testing.chart();
+    const vol = Volume.fromEmptyDir(chart, 'Volume', 'main', { sizeLimit: Size.gibibytes(20) });
     expect(vol._toKube().emptyDir!.sizeLimit!.value).toEqual('20480Mi');
   });
 });
@@ -281,7 +285,7 @@ describe('fromPersistentVolumeClaim', () => {
     const chart = Testing.chart();
 
     const pvc = PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
-    const volume = Volume.fromPersistentVolumeClaim(pvc);
+    const volume = Volume.fromPersistentVolumeClaim(chart, 'Volume', pvc);
 
     expect(volume.name).toEqual('pvc-claim');
     expect(volume._toKube()).toEqual({
@@ -298,7 +302,7 @@ describe('fromPersistentVolumeClaim', () => {
     const chart = Testing.chart();
 
     const pvc = PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
-    const volume = Volume.fromPersistentVolumeClaim(pvc, {
+    const volume = Volume.fromPersistentVolumeClaim(chart, 'Volume', pvc, {
       name: 'custom',
       readOnly: true,
     });
@@ -319,7 +323,8 @@ describe('fromAwsElasticBlockStore', () => {
 
   test('defaults', () => {
 
-    const volume = Volume.fromAwsElasticBlockStore('vol');
+    const chart = Testing.chart();
+    const volume = Volume.fromAwsElasticBlockStore(chart, 'Volume', 'vol');
     const spec = volume._toKube();
     expect(spec).toEqual({
       name: 'ebs-vol',
@@ -334,7 +339,8 @@ describe('fromAwsElasticBlockStore', () => {
 
   test('custom', () => {
 
-    const volume = Volume.fromAwsElasticBlockStore('vol', {
+    const chart = Testing.chart();
+    const volume = Volume.fromAwsElasticBlockStore(chart, 'Volume', 'vol', {
       fsType: 'fs',
       name: 'name',
       partition: 1,
@@ -359,7 +365,8 @@ describe('fromGcePersistentDisk', () => {
 
   test('defaults', () => {
 
-    const volume = Volume.fromGcePersistentDisk('pd');
+    const chart = Testing.chart();
+    const volume = Volume.fromGcePersistentDisk(chart, 'Volume', 'pd');
     const spec = volume._toKube();
     expect(spec).toEqual({
       name: 'gcedisk-pd',
@@ -374,7 +381,8 @@ describe('fromGcePersistentDisk', () => {
 
   test('custom', () => {
 
-    const volume = Volume.fromGcePersistentDisk('pd', {
+    const chart = Testing.chart();
+    const volume = Volume.fromGcePersistentDisk(chart, 'Volume', 'pd', {
       fsType: 'fs',
       name: 'name',
       partition: 1,
@@ -399,7 +407,8 @@ describe('fromAzureDisk', () => {
 
   test('defaults', () => {
 
-    const volume = Volume.fromAzureDisk('disk', 'uri');
+    const chart = Testing.chart();
+    const volume = Volume.fromAzureDisk(chart, 'Volume', 'disk', 'uri');
     const spec = volume._toKube();
     expect(spec).toEqual({
       name: 'azuredisk-disk',
@@ -417,7 +426,8 @@ describe('fromAzureDisk', () => {
 
   test('custom', () => {
 
-    const volume = Volume.fromAzureDisk('disk', 'uri', {
+    const chart = Testing.chart();
+    const volume = Volume.fromAzureDisk(chart, 'Volume', 'disk', 'uri', {
       cachingMode: AzureDiskPersistentVolumeCachingMode.READ_ONLY,
       fsType: 'fs',
       kind: AzureDiskPersistentVolumeKind.DEDICATED,

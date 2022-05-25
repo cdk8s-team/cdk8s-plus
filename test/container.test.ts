@@ -257,7 +257,7 @@ describe('Container', () => {
     });
 
     const chart = Testing.chart();
-    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
+    const volume = kplus.Volume.fromConfigMap(chart, 'Volume', kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
 
     container.mount('/path/to/mount', volume);
 
@@ -289,7 +289,7 @@ describe('Container', () => {
     });
 
     const chart = Testing.chart();
-    const volume = kplus.Volume.fromConfigMap(kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
+    const volume = kplus.Volume.fromConfigMap(chart, 'Volume', kplus.ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'ConfigMap'));
 
     container.mount('/path/to/mount', volume, {
       propagation: kplus.MountPropagation.BIDIRECTIONAL,
@@ -307,12 +307,13 @@ describe('Container', () => {
   });
 
   test('mount from ctor', () => {
+    const chart = Testing.chart();
     const container = new kplus.Container({
       image: 'image',
       volumeMounts: [
         {
           path: '/foo',
-          volume: kplus.Volume.fromEmptyDir('empty'),
+          volume: kplus.Volume.fromEmptyDir(chart, 'Volume', 'empty'),
           subPath: 'subPath',
         },
       ],

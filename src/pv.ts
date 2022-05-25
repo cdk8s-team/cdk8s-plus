@@ -236,7 +236,7 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
 
   public asVolume(): volume.Volume {
     const claim = this.reserve();
-    return volume.Volume.fromPersistentVolumeClaim(claim);
+    return volume.Volume.fromPersistentVolumeClaim(this, 'Volume', claim);
   }
 
   /**
