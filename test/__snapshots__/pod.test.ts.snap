@@ -61,7 +61,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress676e20e1947168dc30ab3197af4a39ae-c863ba5a",
+      "name": "allowingressc82dc44e4f9989eb126eaaba4da220f06-c83d843e",
       "namespace": "default",
     },
     "spec": Object {
@@ -98,7 +98,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressdefault676e20e1947168dc30ab3197af4-c86eeef7",
+      "name": "allowegressdefaultc82dc44e4f9989eb126eaaba4da-c84a1044",
       "namespace": "default",
     },
     "spec": Object {
@@ -207,7 +207,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressdefault676e20e1947168dc30ab3197af4-c86eeef7",
+      "name": "allowegressdefaultc82dc44e4f9989eb126eaaba4da-c84a1044",
       "namespace": "default",
     },
     "spec": Object {
@@ -311,7 +311,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress676e20e1947168dc30ab3197af4a39ae-c863ba5a",
+      "name": "allowingressc82dc44e4f9989eb126eaaba4da220f06-c83d843e",
       "namespace": "default",
     },
     "spec": Object {
@@ -415,7 +415,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress676e20e1947168dc30ab3197af4a39ae-c8311550",
+      "name": "allowegressc82dc44e4f9989eb126eaaba4da220f06e-c80adbd2",
       "namespace": "default",
     },
     "spec": Object {
@@ -457,7 +457,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressdefault676e20e1947168dc30ab3197af-c87fd967",
+      "name": "allowingressdefaultc82dc44e4f9989eb126eaaba4d-c8e5b0f0",
       "namespace": "default",
     },
     "spec": Object {
@@ -571,7 +571,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressdefault676e20e1947168dc30ab3197af-c87fd967",
+      "name": "allowingressdefaultc82dc44e4f9989eb126eaaba4d-c8e5b0f0",
       "namespace": "default",
     },
     "spec": Object {
@@ -675,7 +675,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress676e20e1947168dc30ab3197af4a39ae-c8311550",
+      "name": "allowegressc82dc44e4f9989eb126eaaba4da220f06e-c80adbd2",
       "namespace": "default",
     },
     "spec": Object {
@@ -779,7 +779,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress6656fb86cd5e129695657c4f69ce44ca-c8145ee2",
+      "name": "allowingressc88991c35987b889bdbc2db5b9892cc87-c8081541",
       "namespace": "default",
     },
     "spec": Object {
@@ -807,7 +807,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressdefault6656fb86cd5e129695657c4f69c-c8498c63",
+      "name": "allowegressdefaultc88991c35987b889bdbc2db5b98-c8003fbf",
       "namespace": "default",
     },
     "spec": Object {
@@ -876,7 +876,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressc88db22008a01c8e2b472a6a5ce6991f-c82cb114",
+      "name": "allowingressc87440e54ccd134ddb2b351e4222a2d7d-c8373ce0",
       "namespace": "default",
     },
     "spec": Object {
@@ -942,7 +942,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressf94005c2734944c062c55002e41f64a6-c888f70c",
+      "name": "allowingressc8490b4294b43dbe5b4c95a59ac983348-c8475de1",
       "namespace": "default",
     },
     "spec": Object {
@@ -975,7 +975,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegresstest-namespace-c83f04e1f94005c2734-c8e8421f",
+      "name": "allowegresstest-namespace-c83f04e1c8490b4294b-c8979508",
       "namespace": "test-namespace-c83f04e1",
     },
     "spec": Object {
@@ -1052,7 +1052,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress676e20e1947168dc30ab3197af4a39ae-c863ba5a",
+      "name": "allowingressc82dc44e4f9989eb126eaaba4da220f06-c83d843e",
       "namespace": "default",
     },
     "spec": Object {
@@ -1089,7 +1089,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressdefault676e20e1947168dc30ab3197af4-c86eeef7",
+      "name": "allowegressdefaultc82dc44e4f9989eb126eaaba4da-c84a1044",
       "namespace": "default",
     },
     "spec": Object {
@@ -1193,7 +1193,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress3c9336a2e2439657a18cfc71afdd04b5-c80ebeff",
+      "name": "allowingressc83f5e5936a8a190b1ba5aebf19551d14-c8f4f617",
       "namespace": "default",
     },
     "spec": Object {
@@ -1230,7 +1230,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressdefault3c9336a2e2439657a18cfc71afd-c8c1a473",
+      "name": "allowegressdefaultc83f5e5936a8a190b1ba5aebf19-c80a7a57",
       "namespace": "default",
     },
     "spec": Object {
@@ -1355,7 +1355,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress4a1a052274bbd9057096e3196e010b21-c800bb1b",
+      "name": "allowingressc880996af92c38a237394619e07db1dc7-c88d7612",
       "namespace": "default",
     },
     "spec": Object {
@@ -1388,7 +1388,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressn14a1a052274bbd9057096e3196e010b21-c82cb124",
+      "name": "allowegressn1c880996af92c38a237394619e07db1dc-c81060da",
       "namespace": "n1",
     },
     "spec": Object {
@@ -1458,7 +1458,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressa6511c352ae027dce3e4915705ed577d-c8944c92",
+      "name": "allowingressc82dc44e4f9989eb126eaaba4da220f06-c83d843e",
       "namespace": "n1",
     },
     "spec": Object {
@@ -1495,7 +1495,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressn2a6511c352ae027dce3e4915705ed577d-c8b36798",
+      "name": "allowegressn2c82dc44e4f9989eb126eaaba4da220f0-c8989f9d",
       "namespace": "n2",
     },
     "spec": Object {
@@ -1600,7 +1600,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingress1ee4490134b0f304d5fb3317bd4379df-c8a5f4ef",
+      "name": "allowingressc87532153cca98350206df142ec1520c0-c8f26607",
       "namespace": "default",
     },
     "spec": Object {
@@ -1649,7 +1649,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressselected11ee4490134b0f304d5fb3317b-c8d43410",
+      "name": "allowegressselected1c87532153cca98350206df142-c82f906b",
       "namespace": "selected1",
     },
     "spec": Object {
@@ -1686,7 +1686,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressselected21ee4490134b0f304d5fb3317b-c81912c2",
+      "name": "allowegressselected2c87532153cca98350206df142-c85120c3",
       "namespace": "selected2",
     },
     "spec": Object {
@@ -1759,7 +1759,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressa4ce161a930bfd63a7e9156180aa002e-c8aefbeb",
+      "name": "allowingressc87532153cca98350206df142ec1520c0-c8f26607",
       "namespace": "default",
     },
     "spec": Object {
@@ -1791,7 +1791,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowegressdefaulta4ce161a930bfd63a7e9156180a-c8bc1f07",
+      "name": "allowegressdefaultc87532153cca98350206df142ec-c858ddbb",
       "namespace": "default",
     },
     "spec": Object {
@@ -1864,7 +1864,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress6656fb86cd5e129695657c4f69ce44ca-c83384af",
+      "name": "allowegressc88991c35987b889bdbc2db5b9892cc872-c8bb5ff9",
       "namespace": "default",
     },
     "spec": Object {
@@ -1892,7 +1892,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressdefault6656fb86cd5e129695657c4f69-c89c9d48",
+      "name": "allowingressdefaultc88991c35987b889bdbc2db5b9-c8d78d48",
       "namespace": "default",
     },
     "spec": Object {
@@ -1961,7 +1961,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegressc88db22008a01c8e2b472a6a5ce6991f-c8d105cb",
+      "name": "allowegressc87440e54ccd134ddb2b351e4222a2d7d7-c860cc50",
       "namespace": "default",
     },
     "spec": Object {
@@ -2027,7 +2027,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegressf94005c2734944c062c55002e41f64a6-c8f8d57c",
+      "name": "allowegressc8490b4294b43dbe5b4c95a59ac9833484-c80ece9b",
       "namespace": "default",
     },
     "spec": Object {
@@ -2060,7 +2060,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingresstest-namespace-c83f04e1f94005c273-c809452a",
+      "name": "allowingresstest-namespace-c83f04e1c8490b4294-c8b90d22",
       "namespace": "test-namespace-c83f04e1",
     },
     "spec": Object {
@@ -2137,7 +2137,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress676e20e1947168dc30ab3197af4a39ae-c8311550",
+      "name": "allowegressc82dc44e4f9989eb126eaaba4da220f06e-c80adbd2",
       "namespace": "default",
     },
     "spec": Object {
@@ -2179,7 +2179,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressdefault676e20e1947168dc30ab3197af-c87fd967",
+      "name": "allowingressdefaultc82dc44e4f9989eb126eaaba4d-c8e5b0f0",
       "namespace": "default",
     },
     "spec": Object {
@@ -2288,7 +2288,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress3c9336a2e2439657a18cfc71afdd04b5-c89ecfd8",
+      "name": "allowegressc83f5e5936a8a190b1ba5aebf19551d145-c8a91658",
       "namespace": "default",
     },
     "spec": Object {
@@ -2325,7 +2325,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressdefault3c9336a2e2439657a18cfc71af-c8758a91",
+      "name": "allowingressdefaultc83f5e5936a8a190b1ba5aebf1-c822ff05",
       "namespace": "default",
     },
     "spec": Object {
@@ -2450,7 +2450,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress4a1a052274bbd9057096e3196e010b21-c804f9aa",
+      "name": "allowegressc880996af92c38a237394619e07db1dc75-c863bace",
       "namespace": "default",
     },
     "spec": Object {
@@ -2483,7 +2483,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressn14a1a052274bbd9057096e3196e010b2-c8e5bc94",
+      "name": "allowingressn1c880996af92c38a237394619e07db1d-c80a6fce",
       "namespace": "n1",
     },
     "spec": Object {
@@ -2553,7 +2553,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegressa6511c352ae027dce3e4915705ed577d-c8cb8786",
+      "name": "allowegressc82dc44e4f9989eb126eaaba4da220f06e-c80adbd2",
       "namespace": "n1",
     },
     "spec": Object {
@@ -2590,7 +2590,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressn2a6511c352ae027dce3e4915705ed577-c8eca608",
+      "name": "allowingressn2c82dc44e4f9989eb126eaaba4da220f-c841c6b9",
       "namespace": "n2",
     },
     "spec": Object {
@@ -2695,7 +2695,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegress1ee4490134b0f304d5fb3317bd4379df-c8597616",
+      "name": "allowegressc87532153cca98350206df142ec1520c00-c812a038",
       "namespace": "default",
     },
     "spec": Object {
@@ -2744,7 +2744,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressselected11ee4490134b0f304d5fb3317-c8731df6",
+      "name": "allowingressselected1c87532153cca98350206df14-c8e4e2a7",
       "namespace": "selected1",
     },
     "spec": Object {
@@ -2781,7 +2781,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressselected21ee4490134b0f304d5fb3317-c874d9e8",
+      "name": "allowingressselected2c87532153cca98350206df14-c8899c50",
       "namespace": "selected2",
     },
     "spec": Object {
@@ -2854,7 +2854,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "p-allowegressa4ce161a930bfd63a7e9156180aa002e-c89f5265",
+      "name": "allowegressc87532153cca98350206df142ec1520c00-c812a038",
       "namespace": "default",
     },
     "spec": Object {
@@ -2886,7 +2886,7 @@ Array [
     "apiVersion": "networking.k8s.io/v1",
     "kind": "NetworkPolicy",
     "metadata": Object {
-      "name": "allowingressdefaulta4ce161a930bfd63a7e9156180-c8304c2b",
+      "name": "allowingressdefaultc87532153cca98350206df142e-c8be6030",
       "namespace": "default",
     },
     "spec": Object {

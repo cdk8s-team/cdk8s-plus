@@ -1,7 +1,5 @@
-import * as crypto from 'crypto';
 import { ApiObject, ApiObjectMetadataDefinition, Duration, Lazy, Names } from 'cdk8s';
 import { Construct, IConstruct } from 'constructs';
-import * as json from 'safe-stable-stringify';
 import * as base from './base';
 import * as container from './container';
 import * as k8s from './imports/k8s';
@@ -9,7 +7,7 @@ import * as namespace from './namespace';
 import * as networkpolicy from './network-policy';
 import * as secret from './secret';
 import * as serviceaccount from './service-account';
-import { undefinedIfEmpty } from './utils';
+import { undefinedIfEmpty, address } from './utils';
 import * as volume from './volume';
 
 export abstract class AbstractPod extends base.Resource implements IPodSelector, networkpolicy.INetworkPolicyPeer {
@@ -1651,7 +1649,7 @@ export class PodConnections {
     const config = peer.toNetworkPolicyPeerConfig();
     networkpolicy.validatePeerConfig(config);
 
-    const peerAddress = this.peerAddress(config);
+    const peerAddress = address(peer);
 
     if (!options.isolation || options.isolation === PodConnectionsIsolation.POD) {
 
@@ -1748,24 +1746,4 @@ export class PodConnections {
 
     return ports;
   }
-
-  private peerAddress(config: networkpolicy.NetworkPolicyPeerConfig): string {
-    const md5 = crypto.createHash('md5');
-    const data = config.ipBlock ? this.stringifyIpBlock(config.ipBlock) : this.stringifyPodSelector(config.podSelector!);
-    md5.update(data);
-    return md5.digest('hex');
-  }
-
-  private stringifyIpBlock(ipBlock: networkpolicy.NetworkPolicyIpBlock) {
-    return json.stringify(ipBlock._toKube());
-  }
-
-  private stringifyPodSelector(selector: PodSelectorConfig) {
-    return json.stringify({
-      podLabelSelector: selector.labelSelector._toKube(),
-      namespaceLabelSelector: selector.namespaces?.labelSelector?._toKube(),
-      namespaceNames: selector.namespaces?.names,
-    });
-  }
-
 }
