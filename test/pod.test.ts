@@ -1342,3 +1342,104 @@ describe('connections |', () => {
 
 
 });
+
+describe('permissions', () => {
+
+  test('can grant read permissions to a user', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'image' }],
+    });
+
+    pod.permissions.grantRead(kplus.User.fromName(chart, 'User', 'bob'));
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can grant read permissions to a group', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'image' }],
+    });
+
+    pod.permissions.grantRead(kplus.Group.fromName(chart, 'Group', 'manager'));
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can grant read permissions to a service account', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'image' }],
+    });
+
+    const sa = new kplus.ServiceAccount(chart, 'ServiceAccount');
+
+    pod.permissions.grantRead(sa);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can grant read permissions to another pod', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'image' }],
+    });
+
+    const scraper = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'scraper' }],
+    });
+
+    pod.permissions.grantRead(scraper);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can grant read permissions to workload', () => {
+
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'image' }],
+    });
+
+    const scraper = new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'scraper' }],
+    });
+
+    pod.permissions.grantRead(scraper);
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('can grant read permissions twice with different subjects', () => {
+
+    const chart = Testing.chart();
+    const service = new kplus.Service(chart, 'Service', {
+      ports: [{ port: 8080 }],
+    });
+
+    service.permissions.grantRead(kplus.Group.fromName(chart, 'Manager', 'manager'));
+    service.permissions.grantRead(kplus.Group.fromName(chart, 'Support', 'support'));
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
+  test('cannot grant permissions twice with same subject', () => {
+
+    const chart = Testing.chart();
+    const service = new kplus.Service(chart, 'Service', {
+      ports: [{ port: 8080 }],
+    });
+
+    const managerGroup = kplus.Group.fromName(chart, 'Manager', 'manager');
+    service.permissions.grantRead(managerGroup);
+
+    expect(() => service.permissions.grantRead(managerGroup)).toThrowError(/There is already a Construct with name/);
+
+  });
+
+});
