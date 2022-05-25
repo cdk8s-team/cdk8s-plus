@@ -78,29 +78,6 @@ test('Can select by label', () => {
 
 });
 
-test('Can be exposed as via service', () => {
-
-  const chart = Testing.chart();
-
-  const deployment = new kplus.Deployment(chart, 'Deployment', {
-    containers: [
-      {
-        image: 'image',
-        port: 9300,
-      },
-    ],
-  });
-
-  deployment.exposeViaService({ port: 9200, serviceType: kplus.ServiceType.LOAD_BALANCER });
-
-  const spec = Testing.synth(chart)[1].spec;
-  expect(spec.type).toEqual('LoadBalancer');
-  expect(spec.selector).toEqual({ 'cdk8s.io/metadata.addr': 'test-Deployment-c83f5e59' });
-  expect(spec.ports![0].port).toEqual(9200);
-  expect(spec.ports![0].targetPort).toEqual(9300);
-
-});
-
 test('Can be exposed as via ingress', () => {
 
   const chart = Testing.chart();
@@ -154,11 +131,9 @@ test('Expose can set service and port details', () => {
   });
 
   deployment.exposeViaService({
-    port: 9200,
+    ports: [{ port: 9200, protocol: kplus.Protocol.UDP, targetPort: 9500 }],
     name: 'test-srv',
     serviceType: kplus.ServiceType.CLUSTER_IP,
-    protocol: kplus.Protocol.UDP,
-    targetPort: 9500,
   });
 
   const srv = Testing.synth(chart)[1];
@@ -181,7 +156,7 @@ test('Cannot be exposed if there are no containers in spec', () => {
 
   const deployment = new kplus.Deployment(chart, 'Deployment');
 
-  expect(() => deployment.exposeViaService()).toThrowError('Cannot expose a deployment without containers');
+  expect(() => deployment.exposeViaService()).toThrowError('Unable to expose deployment');
 });
 
 test('Synthesizes spec lazily', () => {
@@ -372,16 +347,14 @@ test('can select with expressions', () => {
     select: false,
   });
 
-  const selector = kplus.LabelSelector.of({
+  deployment.select(kplus.LabelSelector.of({
     expressions: [
       kplus.LabelExpression.in('foo', ['v1', 'v2']),
       kplus.LabelExpression.notIn('foo', ['v1', 'v2']),
       kplus.LabelExpression.exists('foo'),
       kplus.LabelExpression.doesNotExist('foo'),
     ],
-  });
-
-  deployment.select(selector);
+  }));
 
   const expected: Set<k8s.LabelSelectorRequirement> = new Set([
     { key: 'foo', operator: 'In', values: ['v1', 'v2'] },
