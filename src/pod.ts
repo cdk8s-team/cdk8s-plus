@@ -1126,7 +1126,7 @@ export interface PodsSelectOptions {
 /**
  * Represents a group of pods.
  */
-export class Pods extends Construct implements IPodSelector, networkpolicy.INetworkPolicyPeer {
+export class Pods extends Construct implements IPodSelector {
 
   /**
    * Select pods in the cluster with various selectors.

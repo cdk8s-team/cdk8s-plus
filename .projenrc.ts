@@ -97,6 +97,8 @@ const project = new cdk.JsiiProject({
   },
 });
 
+project.gitignore.exclude('.vscode/');
+
 const importdir = path.join('src', 'imports');
 
 const importTask = project.addTask('import', {
