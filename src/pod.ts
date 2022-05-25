@@ -1727,22 +1727,6 @@ export class PodConnections {
   }
 
   private extractPorts(selector?: networkpolicy.INetworkPolicyPeer): networkpolicy.NetworkPolicyPort[] {
-
-    // empty means all ports
-    if (!selector) { return []; }
-
-    const ports = [];
-
-    // we don't use instanceof intentionally since it can create
-    // cyclic import problems.
-    const containers: container.Container[] = (selector as any).containers;
-
-    for (const con of containers ?? []) {
-      if (con.port) {
-        ports.push(networkpolicy.NetworkPolicyPort.tcp(con.port));
-      }
-    }
-
-    return ports;
+    return container.extractContainerPorts(selector).map(n => networkpolicy.NetworkPolicyPort.tcp(n));
   }
 }

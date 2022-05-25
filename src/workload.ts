@@ -60,10 +60,12 @@ export abstract class Workload extends pod.AbstractPod {
    */
   public readonly podMetadata: ApiObjectMetadataDefinition;
 
-  public readonly scheduling: WorkloadScheduling;
   public readonly connections: pod.PodConnections;
 
-  private readonly _selectors: k8s.LabelSelector[] = [];
+  public readonly scheduling: WorkloadScheduling;
+
+  private readonly _matchLabels: Record<string, string> = {};
+  private readonly _matchExpressions: LabelSelectorRequirement[] = [];
 
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
@@ -85,7 +87,13 @@ export abstract class Workload extends pod.AbstractPod {
    * Configure selectors for this workload.
    */
   public select(...selectors: pod.LabelSelector[]) {
-    this._selectors.push(...selectors.map(s => s._toKube()));
+    for (const selector of selectors) {
+      const kube = selector._toKube();
+      this._matchExpressions.push(...kube.matchExpressions ?? []);
+      for (const [key, value] of Object.entries(kube.matchLabels ?? {})) {
+        this._matchLabels[key] = value;
+      }
+    }
   }
 
   /**
@@ -94,13 +102,7 @@ export abstract class Workload extends pod.AbstractPod {
    * Returns a a copy. Use `select()` to add label matchers.
    */
   public get matchLabels(): Record<string, string> {
-    const labels: any = {};
-    for (const selector of this._selectors) {
-      for (const [key, value] of Object.entries(selector.matchLabels ?? {})) {
-        labels[key] = value;
-      }
-    }
-    return labels;
+    return { ...this._matchLabels };
   }
 
   /**
@@ -109,14 +111,7 @@ export abstract class Workload extends pod.AbstractPod {
    * Returns a a copy. Use `select()` to add expression matchers.
    */
   public get matchExpressions(): LabelSelectorRequirement[] {
-    const expressions: LabelSelectorRequirement[] = [];
-    for (const selector of this._selectors) {
-      for (const expression of selector.matchExpressions ?? []) {
-        expressions.push(expression);
-      }
-    }
-
-    return expressions;
+    return [...this._matchExpressions];
   }
 
   /**
@@ -124,8 +119,8 @@ export abstract class Workload extends pod.AbstractPod {
    */
   public _toLabelSelector(): k8s.LabelSelector {
     return {
-      matchExpressions: undefinedIfEmpty(this.matchExpressions),
-      matchLabels: undefinedIfEmpty(this.matchLabels),
+      matchExpressions: undefinedIfEmpty(this._matchExpressions),
+      matchLabels: undefinedIfEmpty(this._matchLabels),
     };
   }
 
