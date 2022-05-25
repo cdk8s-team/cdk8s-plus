@@ -12,7 +12,8 @@ test('defaultChild', () => {
 });
 
 test('Can be imported from secret name', () => {
-  const secret = kplus.Secret.fromSecretName('secret');
+  const chart = Testing.chart();
+  const secret = kplus.Secret.fromSecretName(chart, 'Secret', 'secret');
 
   expect(secret.name).toEqual('secret');
 });
@@ -287,7 +288,7 @@ test('can configure an immutable service account token secret', () => {
   const chart = Testing.chart();
 
   const secret = new kplus.ServiceAccountTokenSecret(chart, 'Secret', {
-    serviceAccount: kplus.ServiceAccount.fromServiceAccountName('sa'),
+    serviceAccount: kplus.ServiceAccount.fromServiceAccountName(chart, 'SA', 'sa'),
     immutable: true,
   });
 
