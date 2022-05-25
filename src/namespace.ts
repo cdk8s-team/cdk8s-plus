@@ -56,6 +56,8 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
 
   public readonly resourceType: string = 'namespaces';
 
+  private readonly _pods: pod.Pods;
+
   public constructor(scope: Construct, id: string, props: NamespaceProps = {}) {
     super(scope, id);
 
@@ -63,6 +65,11 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this._pods = pod.Pods.all(this, 'Pods', {
+      namespaces: Namespaces.select(this, 'Namespaces', { names: [this.name] }),
+    });
+
   }
 
   /**
@@ -76,10 +83,14 @@ export class Namespace extends base.Resource implements INamespaceSelector, netw
    * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
   public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
-    const pods = pod.Pods.all({
-      namespaces: Namespaces.select(this, `Namespace${this.name}`, { names: [this.name] }),
-    });
-    return pods.toNetworkPolicyPeerConfig();
+    return this._pods.toNetworkPolicyPeerConfig();
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return this._pods.toPodSelector();
   }
 
   /**
@@ -141,11 +152,15 @@ export class Namespaces extends Construct implements INamespaceSelector, network
     return Namespaces.select(scope, id, { expressions: [], labels: {} });
   }
 
+  private readonly _pods: pod.Pods;
+
   constructor(scope: Construct, id: string,
     private readonly expressions?: pod.LabelExpression[],
     private readonly names?: string[],
     private readonly labels?: { [key: string]: string }) {
     super(scope, id);
+
+    this._pods = pod.Pods.all(this, 'Pods', { namespaces: this });
   }
 
   /**
@@ -162,7 +177,14 @@ export class Namespaces extends Construct implements INamespaceSelector, network
    * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
   public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
-    return pod.Pods.all({ namespaces: this }).toNetworkPolicyPeerConfig();
+    return this._pods.toNetworkPolicyPeerConfig();
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return this._pods.toPodSelector();
   }
 
 }

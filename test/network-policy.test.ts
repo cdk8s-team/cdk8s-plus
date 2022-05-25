@@ -4,27 +4,33 @@ import * as kplus from '../src';
 describe('IpBlock |', () => {
 
   test('ipv4', () => {
-    expect(kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24'])._toKube()).toMatchSnapshot();
+    const chart = Testing.chart();
+    expect(kplus.NetworkPolicyIpBlock.ipv4(chart, 'Block', '172.17.0.0/16', ['172.17.1.0/24'])._toKube()).toMatchSnapshot();
   });
 
   test('throws on invalid ipv4 cidr', () => {
-    expect(() => kplus.NetworkPolicyIpBlock.ipv4('1234')).toThrow(/Invalid IPv4 CIDR:/);
+    const chart = Testing.chart();
+    expect(() => kplus.NetworkPolicyIpBlock.ipv4(chart, 'Block', '1234')).toThrow(/Invalid IPv4 CIDR:/);
   });
 
   test('ipv6', () => {
-    expect(kplus.NetworkPolicyIpBlock.ipv6('2002::1234:abcd:ffff:c0a8:101/64', ['2002::1234:abcd:ffff:c0a8:101/24'])._toKube()).toMatchSnapshot();
+    const chart = Testing.chart();
+    expect(kplus.NetworkPolicyIpBlock.ipv6(chart, 'Block', '2002::1234:abcd:ffff:c0a8:101/64', ['2002::1234:abcd:ffff:c0a8:101/24'])._toKube()).toMatchSnapshot();
   });
 
   test('throws on invalid ipv6 cidr', () => {
-    expect(() => kplus.NetworkPolicyIpBlock.ipv6('1234')).toThrow(/Invalid IPv6 CIDR:/);
+    const chart = Testing.chart();
+    expect(() => kplus.NetworkPolicyIpBlock.ipv6(chart, 'Block', '1234')).toThrow(/Invalid IPv6 CIDR:/);
   });
 
   test('anyIpv4', () => {
-    expect(kplus.NetworkPolicyIpBlock.anyIpv4()._toKube()).toMatchSnapshot();
+    const chart = Testing.chart();
+    expect(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'Block')._toKube()).toMatchSnapshot();
   });
 
   test('anyIpv6', () => {
-    expect(kplus.NetworkPolicyIpBlock.anyIpv6()._toKube()).toMatchSnapshot();
+    const chart = Testing.chart();
+    expect(kplus.NetworkPolicyIpBlock.anyIpv6(chart, 'Block')._toKube()).toMatchSnapshot();
   });
 
 });
@@ -92,7 +98,7 @@ describe('NeworkPolicy |', () => {
   test('can create a policy for selected pods', () => {
 
     const chart = Testing.chart();
-    const web = kplus.Pods.select({ labels: { app: 'web' } });
+    const web = kplus.Pods.select(chart, 'Pods', { labels: { app: 'web' } });
 
     new kplus.NetworkPolicy(chart, 'Policy', { selector: web });
 
@@ -104,7 +110,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
 
     new kplus.NetworkPolicy(chart, 'Policy1');
-    new kplus.NetworkPolicy(chart, 'Policy2', { selector: kplus.Pods.all() });
+    new kplus.NetworkPolicy(chart, 'Policy2', { selector: kplus.Pods.all(chart, 'AllPods') });
 
     expect(Testing.synth(chart)).toMatchSnapshot();
   });
@@ -160,8 +166,8 @@ describe('NeworkPolicy |', () => {
   test('cannot create a policy for a selector that selects pods in multiple namespaces', () => {
 
     const chart = Testing.chart();
-    const web = kplus.Pods.select({
-      namespaces: kplus.Namespaces.select({
+    const web = kplus.Pods.select(chart, 'Pods', {
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', {
         names: ['n1', 'n2'],
       }),
     });
@@ -175,9 +181,9 @@ describe('NeworkPolicy |', () => {
   test('cannot create a policy for a selector that selects pods in namespaces based on labels', () => {
 
     const chart = Testing.chart();
-    const web = kplus.Pods.select({
+    const web = kplus.Pods.select(chart, 'Pods', {
       labels: { app: 'web' },
-      namespaces: kplus.Namespaces.select({
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', {
         labels: { tier: 'web' },
       }),
     });
@@ -207,7 +213,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+    const ipBlock = kplus.NetworkPolicyIpBlock.ipv4(chart, 'Block', '172.17.0.0/16', ['172.17.1.0/24']);
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -250,7 +256,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const selected = kplus.Pods.select({ labels: { type: 'selected' } });
+    const selected = kplus.Pods.select(chart, 'Pods', { labels: { type: 'selected' } });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -265,9 +271,9 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({ labels: { type: 'selected' } }),
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
@@ -283,9 +289,9 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', {
         labels: { type: 'selected' },
         names: ['selected1', 'selected2'],
       }),
@@ -304,7 +310,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const all = kplus.Pods.all();
+    const all = kplus.Pods.all(chart, 'AllPods');
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -334,7 +340,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const namespace = kplus.Namespaces.select({ labels: { type: 'selected' } });
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -349,7 +355,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const namespaces = kplus.Namespaces.all();
+    const namespaces = kplus.Namespaces.all(chart, 'AllPods');
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -365,7 +371,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const ipBlock = kplus.NetworkPolicyIpBlock.ipv4('172.17.0.0/16', ['172.17.1.0/24']);
+    const ipBlock = kplus.NetworkPolicyIpBlock.ipv4(chart, 'Block', '172.17.0.0/16', ['172.17.1.0/24']);
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -408,7 +414,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const selected = kplus.Pods.select({ labels: { type: 'selected' } });
+    const selected = kplus.Pods.select(chart, 'Pods', { labels: { type: 'selected' } });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -423,9 +429,9 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({ labels: { type: 'selected' } }),
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
@@ -441,9 +447,9 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', {
         labels: { type: 'selected' },
         names: ['selected1', 'selected2'],
       }),
@@ -462,7 +468,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const all = kplus.Pods.all();
+    const all = kplus.Pods.all(chart, 'AllPods');
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -492,7 +498,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const namespace = kplus.Namespaces.select({ labels: { type: 'selected' } });
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 
@@ -507,7 +513,7 @@ describe('NeworkPolicy |', () => {
     const chart = Testing.chart();
     const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'pod' }] });
 
-    const namespaces = kplus.Namespaces.all();
+    const namespaces = kplus.Namespaces.all(chart, 'AllPods');
 
     const policy = new kplus.NetworkPolicy(chart, 'Policy', { selector: pod });
 

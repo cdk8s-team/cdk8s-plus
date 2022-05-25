@@ -773,7 +773,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    pod.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4());
+    pod.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'AnyIpv4'));
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -817,7 +817,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({ labels: { type: 'selected' } });
+    const selected = kplus.Pods.select(chart, 'Pods', { labels: { type: 'selected' } });
 
     pod.connections.allowTo(selected);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -831,9 +831,9 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({ names: ['selected1', 'selected2'] }),
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { names: ['selected1', 'selected2'] }),
     });
 
     pod.connections.allowTo(selected);
@@ -848,9 +848,9 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({ labels: { type: 'selected' } }),
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
     expect(() => pod.connections.allowTo(selected)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
@@ -864,9 +864,9 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.all(),
+      namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
     });
 
     expect(() => pod.connections.allowTo(selected)).toThrow(/Unable to create peer policy. Peer must specify namespace names/);
@@ -880,7 +880,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const all = kplus.Pods.all();
+    const all = kplus.Pods.all(chart, 'AllPods');
 
     pod.connections.allowTo(all);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -908,7 +908,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const namespace = kplus.Namespaces.select({ names: ['n1'] });
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { names: ['n1'] });
 
     pod.connections.allowTo(namespace);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -922,7 +922,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const namespace = kplus.Namespaces.select({ labels: { type: 'selected' } });
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
     expect(() => pod.connections.allowTo(namespace)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
 
@@ -954,7 +954,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const redis = kplus.Pods.select({ labels: { role: 'redis' } });
+    const redis = kplus.Pods.select(chart, 'Pods', { labels: { role: 'redis' } });
 
     pod.connections.allowTo(redis);
 
@@ -1023,7 +1023,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    pod.connections.allowFrom(kplus.NetworkPolicyIpBlock.anyIpv4());
+    pod.connections.allowFrom(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'AnyIpv4'));
     expect(Testing.synth(chart)).toMatchSnapshot();
 
   });
@@ -1067,7 +1067,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({ labels: { type: 'selected' } });
+    const selected = kplus.Pods.select(chart, 'Pods', { labels: { type: 'selected' } });
 
     pod.connections.allowFrom(selected);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1081,9 +1081,9 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({ names: ['selected1', 'selected2'] }),
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { names: ['selected1', 'selected2'] }),
     });
 
     pod.connections.allowFrom(selected);
@@ -1098,9 +1098,9 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.select({ labels: { type: 'selected' } }),
+      namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
     expect(() => pod.connections.allowFrom(selected)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
@@ -1114,9 +1114,9 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const selected = kplus.Pods.select({
+    const selected = kplus.Pods.select(chart, 'Pods', {
       labels: { type: 'selected' },
-      namespaces: kplus.Namespaces.all(),
+      namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
     });
 
     expect(() => pod.connections.allowFrom(selected)).toThrow(/Unable to create peer policy. Peer must specify namespace names/);
@@ -1130,7 +1130,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const all = kplus.Pods.all();
+    const all = kplus.Pods.all(chart, 'AllPods');
 
     pod.connections.allowFrom(all);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1158,7 +1158,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const namespace = kplus.Namespaces.select({ names: ['n1'] });
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { names: ['n1'] });
 
     pod.connections.allowFrom(namespace);
     expect(Testing.synth(chart)).toMatchSnapshot();
@@ -1172,7 +1172,7 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    const namespace = kplus.Namespaces.select({ labels: { type: 'selected' } });
+    const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
     expect(() => pod.connections.allowFrom(namespace)).toThrow(/Unable to create peer policy. Peer must specify namespaces only by name/);
 
@@ -1204,7 +1204,7 @@ describe('connections |', () => {
       metadata: { namespace: 'n1' },
     });
 
-    const redis = kplus.Pods.select({ labels: { role: 'redis' } });
+    const redis = kplus.Pods.select(chart, 'Pods', { labels: { role: 'redis' } });
 
     pod.connections.allowFrom(redis);
 

@@ -100,6 +100,13 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     return { podSelector: this.toPodSelectorConfig() };
   }
 
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): IPodSelector | undefined {
+    return this;
+  }
+
   public addContainer(cont: container.ContainerProps): container.Container {
     const impl = new container.Container(cont);
     this._containers.push(impl);
@@ -1130,6 +1137,13 @@ export class Pods extends Construct implements IPodSelector, networkpolicy.INetw
     return new Pods(scope, id, options.expressions, options.labels, options.namespaces);
   }
 
+  /**
+   * Select all pods.
+   */
+  public static all(scope: Construct, id: string, options: PodsAllOptions = {}) {
+    return Pods.select(scope, id, { namespaces: options.namespaces });
+  }
+
   constructor(scope: Construct, id: string,
     private readonly expressions?: LabelExpression[],
     private readonly labels?: { [key: string]: string },
@@ -1153,6 +1167,14 @@ export class Pods extends Construct implements IPodSelector, networkpolicy.INetw
   public toNetworkPolicyPeerConfig(): networkpolicy.NetworkPolicyPeerConfig {
     return { podSelector: this.toPodSelectorConfig() };
   }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): IPodSelector | undefined {
+    return this;
+  }
+
 }
 
 /**
@@ -1657,7 +1679,12 @@ export class PodConnections {
         return;
       }
 
-      const podSelectorConfig = config.podSelector!;
+      const podSelector = peer.toPodSelector();
+      if (!podSelector) {
+        throw new Error(`Unable to create policies for peer '${peer.node.addr}' since its not a pod selector`);
+      }
+
+      const podSelectorConfig = podSelector.toPodSelectorConfig();
       let namespaces: string[];
 
       if (!podSelectorConfig.namespaces) {
@@ -1685,14 +1712,14 @@ export class PodConnections {
         switch (direction) {
           case 'Egress':
             new networkpolicy.NetworkPolicy(this.instance, `AllowIngress${name}${peerAddress}`, {
-              selector: { toPodSelectorConfig: () => podSelectorConfig },
+              selector: podSelector,
               metadata: { namespace: name },
               ingress: { rules: [{ peer: this.instance, ports: options.ports }] },
             });
             break;
           case 'Ingress':
             new networkpolicy.NetworkPolicy(this.instance, `AllowEgress${name}${peerAddress}`, {
-              selector: { toPodSelectorConfig: () => podSelectorConfig },
+              selector: podSelector,
               metadata: { namespace: name },
               egress: { rules: [{ peer: this.instance, ports: options.ports }] },
             });

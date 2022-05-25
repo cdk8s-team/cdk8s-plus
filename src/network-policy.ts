@@ -1,5 +1,5 @@
 import { ApiObject, Lazy } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as namespace from './namespace';
@@ -123,11 +123,16 @@ export interface NetworkPolicyPeerConfig {
 /**
  * Describes a peer to allow traffic to/from.
  */
-export interface INetworkPolicyPeer {
+export interface INetworkPolicyPeer extends IConstruct {
   /**
    * Return the configuration of this peer.
    */
   toNetworkPolicyPeerConfig(): NetworkPolicyPeerConfig;
+
+  /**
+   * Convert the peer into a pod selector, if possible.
+   */
+  toPodSelector(): pod.IPodSelector | undefined;
 }
 
 /**
@@ -154,12 +159,12 @@ export interface NetworkPolicyRule {
  * allowed to the pods matched by a network policy selector.
  * The except entry describes CIDRs that should not be included within this rule.
  */
-export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
+export class NetworkPolicyIpBlock extends Construct implements INetworkPolicyPeer {
 
   /**
    * Create an IPv4 peer from a CIDR
    */
-  public static ipv4(cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
+  public static ipv4(scope: Construct, id: string, cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
     const cidrMatch = cidrIp.match(/^(\d{1,3}\.){3}\d{1,3}(\/\d+)?$/);
 
     if (!cidrMatch) {
@@ -170,20 +175,20 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
       throw new Error(`CIDR mask is missing in IPv4: "${cidrIp}". Did you mean "${cidrIp}/32"?`);
     }
 
-    return new NetworkPolicyIpBlock(cidrIp, except);
+    return new NetworkPolicyIpBlock(scope, id, cidrIp, except);
   }
 
   /**
    * Any IPv4 address
    */
-  public static anyIpv4(): NetworkPolicyIpBlock {
-    return new NetworkPolicyIpBlock('0.0.0.0/0');
+  public static anyIpv4(scope: Construct, id: string): NetworkPolicyIpBlock {
+    return new NetworkPolicyIpBlock(scope, id, '0.0.0.0/0');
   }
 
   /**
    * Create an IPv6 peer from a CIDR
    */
-  public static ipv6(cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
+  public static ipv6(scope: Construct, id: string, cidrIp: string, except?: string[]): NetworkPolicyIpBlock {
 
     const cidrMatch = cidrIp.match(/^([\da-f]{0,4}:){2,7}([\da-f]{0,4})?(\/\d+)?$/);
 
@@ -195,17 +200,17 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
       throw new Error(`CIDR mask is missing in IPv6: "${cidrIp}". Did you mean "${cidrIp}/128"?`);
     }
 
-    return new NetworkPolicyIpBlock(cidrIp, except);
+    return new NetworkPolicyIpBlock(scope, id, cidrIp, except);
   }
 
   /**
    * Any IPv6 address
    */
-  public static anyIpv6(): NetworkPolicyIpBlock {
-    return new NetworkPolicyIpBlock('::/0');
+  public static anyIpv6(scope: Construct, id: string): NetworkPolicyIpBlock {
+    return new NetworkPolicyIpBlock(scope, id, '::/0');
   }
 
-  private constructor(
+  private constructor(scope: Construct, id: string,
     /**
      * A string representing the IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64".
      */
@@ -214,14 +219,22 @@ export class NetworkPolicyIpBlock implements INetworkPolicyPeer {
      * A slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" or "2001:db9::/64".
      * Except values will be rejected if they are outside the CIDR range.
      */
-    public readonly except?: string[]) {}
-
+    public readonly except?: string[]) {
+    super(scope, id);
+  }
 
   /**
    * @see INetworkPolicyPeer.toNetworkPolicyPeerConfig()
    */
   public toNetworkPolicyPeerConfig(): NetworkPolicyPeerConfig {
     return { ipBlock: this };
+  }
+
+  /**
+   * @see INetworkPolicyPeer.toPodSelector()
+   */
+  public toPodSelector(): pod.IPodSelector | undefined {
+    return undefined;
   }
 
   /**
@@ -386,7 +399,7 @@ export class NetworkPolicy extends base.Resource {
   public constructor(scope: Construct, id: string, props: NetworkPolicyProps = {}) {
     super(scope, id);
 
-    this._podSelectorConfig = (props.selector ?? pod.Pods.all()).toPodSelectorConfig();
+    this._podSelectorConfig = (props.selector ?? pod.Pods.all(this, 'AllPods')).toPodSelectorConfig();
 
     let ns;
 
