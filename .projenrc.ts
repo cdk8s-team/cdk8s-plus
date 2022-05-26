@@ -29,7 +29,7 @@ const project = new cdk.JsiiProject({
   ],
 
   projenCredentials: github.GithubCredentials.fromPersonalAccessToken(),
-  prerelease: 'beta',
+  prerelease: 'rc',
 
   peerDeps: [
     'cdk8s',
