@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { cdk, DependencyType, github, javascript, JsonFile, Task } from 'projen';
+import { cdk, github, javascript, JsonFile, Task } from 'projen';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
@@ -97,8 +97,6 @@ const project = new cdk.JsiiProject({
   },
 });
 
-project.deps.removeDependency('ts-node', DependencyType.BUILD);
-project.deps.addDependency('ts-node@^10', DependencyType.BUILD);
 project.gitignore.exclude('.vscode/');
 
 const importdir = path.join('src', 'imports');
