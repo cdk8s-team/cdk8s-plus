@@ -1,5 +1,5 @@
 import { Testing, Size } from 'cdk8s';
-import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind } from '../src';
+import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind, HostPathVolumeType } from '../src';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -444,6 +444,46 @@ describe('fromAzureDisk', () => {
         fsType: 'fs',
         readOnly: true,
         kind: 'Dedicated',
+      },
+    });
+
+  });
+
+
+});
+
+describe('fromHostPath', () => {
+
+  test('defaults', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromHostPath(chart, 'Volume', 'disk', {
+      path: '/host/path',
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      hostPath: {
+        path: '/host/path',
+        type: '',
+      },
+    });
+
+  });
+
+  test('custom', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromHostPath(chart, 'Volume', 'disk', {
+      path: '/host/path',
+      type: HostPathVolumeType.DIRECTORY,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      hostPath: {
+        path: '/host/path',
+        type: 'Directory',
       },
     });
 
