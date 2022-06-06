@@ -1,5 +1,5 @@
 import { ApiObjectMetadata, ApiObject, ApiObjectMetadataDefinition } from 'cdk8s';
-import { Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import { IApiResource, IApiEndpoint } from './api-resource.generated';
 
 /**
@@ -16,7 +16,7 @@ export interface ResourceProps {
 /**
  * Represents a resource.
  */
-export interface IResource {
+export interface IResource extends IConstruct {
   /**
    * The Kubernetes name of this resource.
    */
@@ -48,6 +48,15 @@ export abstract class Resource extends Construct implements IResource, IApiResou
    * The underlying cdk8s API object.
    */
   protected abstract readonly apiObject: ApiObject;
+
+  public readonly abstract resourceType: string;
+
+  public readonly permissions: ResourcePermissions;
+
+  public constructor(scope: Construct, id: string) {
+    super(scope, id);
+    this.permissions = new ResourcePermissions(this);
+  }
 
   public get metadata(): ApiObjectMetadataDefinition {
     return this.apiObject.metadata;
@@ -85,8 +94,6 @@ export abstract class Resource extends Construct implements IResource, IApiResou
     return this.name;
   }
 
-  public readonly abstract resourceType: string;
-
   public asApiResource(): IApiResource | undefined {
     return this;
   }
@@ -96,3 +103,41 @@ export abstract class Resource extends Construct implements IResource, IApiResou
   }
 
 }
+
+/**
+ * Controls permissions for operations on resources.
+ */
+export class ResourcePermissions {
+
+  constructor(protected readonly instance: Resource) {}
+
+  /**
+   * Grants the list of subjects permissions to read this resource.
+   */
+  public grantRead(...subjects: rb.ISubject[]): rb.RoleBinding {
+    const subjectsAddress = address(...subjects);
+    const role = new r.Role(this.instance, `Role${subjectsAddress}`, {
+      metadata: { namespace: this.instance.metadata.namespace },
+    });
+    role.allowRead(this.instance);
+    return role.bind(...subjects);
+  }
+
+  /**
+   * Grants the list of subjects permissions to read and write this resource.
+   */
+  public grantReadWrite(...subjects: rb.ISubject[]): rb.RoleBinding {
+    const subjectsAddress = address(...subjects);
+    const role = new r.Role(this.instance, `Role${subjectsAddress}`, {
+      metadata: { namespace: this.instance.metadata.namespace },
+    });
+    role.allowReadWrite(this.instance);
+    return role.bind(...subjects);
+  }
+
+}
+
+// meh, avoiding errors due to circular imports...
+import * as r from './role';
+import * as rb from './role-binding';
+import { address } from './utils';

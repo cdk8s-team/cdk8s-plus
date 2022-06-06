@@ -1,5 +1,6 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
+import * as container from './container';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
 import * as service from './service';
@@ -51,16 +52,15 @@ export interface DeploymentProps extends workload.WorkloadProps {
 }
 
 /**
- * Options for exposing a deployment via a service.
+ * Options for `Deployment.exposeViaService`.
  */
-export interface ExposeDeploymentViaServiceOptions {
-
+export interface DeploymentExposeViaServiceOptions {
   /**
-   * The port that the service should serve on.
+   * The ports that the service should bind to.
    *
-   * @default - Copied from the container of the deployment. If a port could not be determined, throws an error.
+   * @default - extracted from the deployment.
    */
-  readonly port?: number;
+  readonly ports?: service.ServicePort[];
 
   /**
    * The type of the exposed service.
@@ -71,31 +71,18 @@ export interface ExposeDeploymentViaServiceOptions {
 
   /**
    * The name of the service to expose.
-   * This will be set on the Service.metadata and must be a DNS_LABEL
+   * If you'd like to expose the deployment multiple times,
+   * you must explicitly set a name starting from the second expose call.
    *
-   * @default undefined Uses the system generated name.
+   * @default - auto generated.
    */
   readonly name?: string;
-
-  /**
-   * The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
-   *
-   * @default Protocol.TCP
-   */
-  readonly protocol?: service.Protocol;
-
-  /**
-   * The port number the service will redirect to.
-   *
-   * @default - The port of the first container in the deployment (ie. containers[0].port)
-   */
-  readonly targetPort?: number;
 }
 
 /**
  * Options for exposing a deployment via an ingress.
  */
-export interface ExposeDeploymentViaIngressOptions extends ExposeDeploymentViaServiceOptions, service.ExposeServiceViaIngressOptions {}
+export interface ExposeDeploymentViaIngressOptions extends DeploymentExposeViaServiceOptions, service.ExposeServiceViaIngressOptions {}
 
 /**
 *
@@ -181,13 +168,19 @@ export class Deployment extends workload.Workload {
    *
    * @param options Options to determine details of the service and port exposed.
    */
-  public exposeViaService(options: ExposeDeploymentViaServiceOptions = {}): service.Service {
-    const ser = new service.Service(this, 'Service', {
+  public exposeViaService(options: DeploymentExposeViaServiceOptions = {}): service.Service {
+    const ports = options.ports ?? this.extractPorts();
+    if (ports.length === 0) {
+      throw new Error(`Unable to expose deployment ${this.name} via a service: `
+        + 'Deployment port cannot be determined.'
+        + 'Either pass \'ports\', or configure ports on the containers of the deployment');
+    }
+    return new service.Service(this, `${options.name ?? ''}Service`, {
+      selector: this,
+      ports,
       metadata: options.name ? { name: options.name } : undefined,
       type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
     });
-    ser.addDeployment(this, { protocol: options.protocol, targetPort: options.targetPort, port: options.port });
-    return ser;
   }
 
   /**
@@ -201,6 +194,10 @@ export class Deployment extends workload.Workload {
   public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): ingress.Ingress {
     const ser = this.exposeViaService(options);
     return ser.exposeViaIngress(path, options);
+  }
+
+  private extractPorts(): service.ServicePort[] {
+    return container.extractContainerPorts(this).map(port => ({ targetPort: port, port }));
   }
 
   /**

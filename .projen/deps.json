@@ -107,7 +107,6 @@
     },
     {
       "name": "ts-node",
-      "version": "^9",
       "type": "build"
     },
     {
@@ -116,10 +115,6 @@
     },
     {
       "name": "minimatch",
-      "type": "bundled"
-    },
-    {
-      "name": "safe-stable-stringify",
       "type": "bundled"
     },
     {
@@ -132,10 +127,6 @@
     },
     {
       "name": "minimatch",
-      "type": "runtime"
-    },
-    {
-      "name": "safe-stable-stringify",
       "type": "runtime"
     }
   ],

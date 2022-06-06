@@ -33,6 +33,33 @@ export interface ServiceAccountProps extends base.ResourceProps {
   readonly automountToken?: boolean;
 }
 
+class ImportedServiceAccount extends Construct implements IServiceAccount {
+
+  private readonly _name: string;
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeServiceAccount.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubeServiceAccount.GVK.kind;
+  }
+
+}
+
 /**
  * A service account provides an identity for processes that run in a Pod.
  *
@@ -51,12 +78,8 @@ export class ServiceAccount extends base.Resource implements IServiceAccount, rb
    * Imports a service account from the cluster as a reference.
    * @param name The name of the service account resource.
    */
-  public static fromServiceAccountName(name: string): IServiceAccount {
-    return {
-      apiGroup: '',
-      name,
-      ...k8s.KubeServiceAccount.GVK,
-    };
+  public static fromServiceAccountName(scope: Construct, id: string, name: string): IServiceAccount {
+    return new ImportedServiceAccount(scope, id, name);
   }
 
   /**
@@ -104,4 +127,16 @@ export class ServiceAccount extends base.Resource implements IServiceAccount, rb
   public get secrets() {
     return [...this._secrets];
   }
+
+  /**
+   * @see ISubect.toSubjectConfiguration()
+   */
+  public toSubjectConfiguration(): rb.SubjectConfiguration {
+    return {
+      kind: this.kind,
+      name: this.name,
+      apiGroup: this.apiGroup,
+    };
+  }
+
 }

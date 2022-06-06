@@ -29,7 +29,7 @@ const project = new cdk.JsiiProject({
   ],
 
   projenCredentials: github.GithubCredentials.fromPersonalAccessToken(),
-  prerelease: 'beta',
+  prerelease: 'rc',
 
   peerDeps: [
     'cdk8s',
@@ -37,11 +37,9 @@ const project = new cdk.JsiiProject({
   ],
   deps: [
     'minimatch',
-    'safe-stable-stringify',
   ],
   bundledDeps: [
     'minimatch',
-    'safe-stable-stringify',
   ],
   devDeps: [
     'constructs',
@@ -98,6 +96,8 @@ const project = new cdk.JsiiProject({
     },
   },
 });
+
+project.gitignore.exclude('.vscode/');
 
 const importdir = path.join('src', 'imports');
 

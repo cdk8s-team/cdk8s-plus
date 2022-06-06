@@ -23,7 +23,8 @@ test('defaults', () => {
 });
 
 test('can select namespaces', () => {
-  const namespaces = kplus.Namespaces.select({
+  const chart = Testing.chart();
+  const namespaces = kplus.Namespaces.select(chart, 'Namespaces', {
     labels: { foo: 'bar' },
     expressions: [kplus.LabelExpression.exists('web')],
     names: ['web'],
@@ -33,7 +34,8 @@ test('can select namespaces', () => {
 });
 
 test('can select all namespaces', () => {
-  const namespaces = kplus.Namespaces.all();
+  const chart = Testing.chart();
+  const namespaces = kplus.Namespaces.all(chart, 'All');
   expect(namespaces.toNamespaceSelectorConfig().names).toBeUndefined();
   expect(namespaces.toNamespaceSelectorConfig()?.labelSelector?._toKube()).toMatchSnapshot();
 });
