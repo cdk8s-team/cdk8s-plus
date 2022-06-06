@@ -206,6 +206,22 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
+   * Used to mount a file or directory from the host node's filesystem into a Pod.
+   * This is not something that most Pods will need, but it offers a powerful
+   * escape hatch for some applications.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
+   */
+  public static fromHostPath(scope: Construct, id: string, name: string, options: HostPathVolumeOptions): Volume {
+    return new Volume(scope, id, name, {
+      hostPath: {
+        path: options.path,
+        type: options.type ?? HostPathVolumeType.DEFAULT,
+      },
+    });
+  }
+
+  /**
     * @internal
    */
   private static renderItems = (items?: { [key: string]: PathMapping }): undefined | Array<k8s.KeyToPath> => {
@@ -572,4 +588,72 @@ export enum AzureDiskPersistentVolumeCachingMode {
    * ReadWrite.
    */
   READ_WRITE = 'ReadWrite'
+}
+
+/**
+ * Options for a HostPathVolume-based volume.
+ */
+export interface HostPathVolumeOptions {
+  /**
+   * The path of the directory on the host.
+   */
+  readonly path: string;
+
+  /**
+   * The expected type of the path found on the host.
+   *
+   * @default HostPathVolumeType.DEFAULT
+   */
+  readonly type?: HostPathVolumeType;
+
+}
+
+/**
+ * Host path types.
+ */
+export enum HostPathVolumeType {
+  /**
+   * Empty string (default) is for backward compatibility, which means that no
+   * checks will be performed before mounting the hostPath volume.
+   */
+  DEFAULT = '',
+
+  /**
+   * If nothing exists at the given path, an empty directory will be created
+   * there as needed with permission set to 0755, having the same group and
+   * ownership with Kubelet.
+   */
+  DIRECTORY_OR_CREATE = 'DirectoryOrCreate',
+
+  /**
+   * A directory must exist at the given path.
+   */
+  DIRECTORY = 'Directory',
+
+  /**
+   * If nothing exists at the given path, an empty file will be created there
+   * as needed with permission set to 0644, having the same group and ownership
+   * with Kubelet.
+   */
+  FILE_OR_CREATE = 'FileOrCreate',
+
+  /**
+   * A file must exist at the given path.
+   */
+  FILE = 'File',
+
+  /**
+   * A UNIX socket must exist at the given path.
+   */
+  SOCKET = 'Socket',
+
+  /**
+   * A character device must exist at the given path.
+   */
+  CHAR_DEVICE = 'CharDevice',
+
+  /**
+   * A block device must exist at the given path.
+   */
+  BLOCK_DEVICE = 'BlockDevice'
 }
