@@ -704,8 +704,8 @@ export class Container {
     let resourceRequirements: k8s.ResourceRequirements | undefined = undefined;
     if (Object.keys(limits).length > 0 || Object.keys(requests).length > 0) {
       resourceRequirements = {
-        limits: limits,
-        requests: requests,
+        limits: undefinedIfEmpty(limits),
+        requests: undefinedIfEmpty(requests),
       };
     }
 
@@ -861,16 +861,16 @@ export enum MountPropagation {
  * CPU and memory compute resources
  */
 export interface ContainerResources {
-  readonly cpu: CpuResources;
-  readonly memory: MemoryResources;
+  readonly cpu?: CpuResources;
+  readonly memory?: MemoryResources;
 }
 
 /**
  * CPU request and limit
  */
 export interface CpuResources {
-  readonly request: Cpu;
-  readonly limit: Cpu;
+  readonly request?: Cpu;
+  readonly limit?: Cpu;
 }
 
 /**
@@ -894,8 +894,8 @@ export class Cpu {
  * Memory request and limit
  */
 export interface MemoryResources {
-  readonly request: container;
-  readonly limit: container;
+  readonly request?: container;
+  readonly limit?: container;
 }
 
 /**
