@@ -178,7 +178,10 @@ export class Deployment extends workload.Workload {
     return new service.Service(this, `${options.name ?? ''}Service`, {
       selector: this,
       ports,
-      metadata: options.name ? { name: options.name } : undefined,
+      metadata: {
+        namespace: this.metadata.namespace,
+        name: options.name,
+      },
       type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
     });
   }
