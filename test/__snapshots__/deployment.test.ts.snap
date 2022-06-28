@@ -62,9 +62,6 @@ Array [
   Object {
     "apiVersion": "v1",
     "kind": "Service",
-    "metadata": Object {
-      "name": "test-deployment-service-c870ff98",
-    },
     "spec": Object {
       "externalIPs": Array [],
       "ports": Array [
