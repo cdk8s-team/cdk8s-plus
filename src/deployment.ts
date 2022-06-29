@@ -175,10 +175,15 @@ export class Deployment extends workload.Workload {
         + 'Deployment port cannot be determined.'
         + 'Either pass \'ports\', or configure ports on the containers of the deployment');
     }
+
+    const metadata: any = { namespace: this.metadata.namespace };
+    if (options.name) {
+      metadata.name = options.name;
+    }
     return new service.Service(this, `${options.name ?? ''}Service`, {
       selector: this,
       ports,
-      metadata: options.name ? { name: options.name } : undefined,
+      metadata,
       type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
     });
   }
