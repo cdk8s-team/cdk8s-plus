@@ -436,7 +436,7 @@ export interface PodProps extends AbstractPodProps {}
 /**
  * Options for `LabelSelector.of`.
  */
-export class LabelSelectorOptions {
+export interface LabelSelectorOptions {
 
   /**
    * Strict label matchers.
