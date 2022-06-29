@@ -614,3 +614,22 @@ describe('scheduling', () => {
   });
 
 });
+
+test('exposing via a service preserves deployment namespace', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{
+      image: 'image',
+      port: 9300,
+    }],
+    metadata: {
+      namespace: 'custom',
+    },
+  });
+
+  deployment.exposeViaService();
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
