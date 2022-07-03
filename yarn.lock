@@ -1426,9 +1426,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001359:
-  version "1.0.30001361"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001361.tgz#ba2adb2527566fb96f3ac7c67698ae7fc495a28d"
-  integrity sha512-ybhCrjNtkFji1/Wto6SSJKkWk6kZgVQsDq5QI83SafsF6FXv2JB4df9eEdH6g8sdGgqTXrFLjAxqBGgYoU3azQ==
+  version "1.0.30001362"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001362.tgz#4a2a7136ca98313bee9b42f4f9a25bc2802e579d"
+  integrity sha512-PFykHuC7BQTzCGQFaV6wD8IDRM3HpI83BXr99nNJhoOyDufgSuKlt0QVlWYt5ZJtEYFeuNVF5QY3kJcu8hVFjQ==
 
 case@^1.6.3:
   version "1.6.3"
@@ -1456,16 +1456,16 @@ cdk8s-cli@^1.1.40:
     yargs "^15"
 
 cdk8s-plus-22@^2.0.0-rc.32:
-  version "2.0.0-rc.37"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-2.0.0-rc.37.tgz#e5dccb65e6e4655a063002e492e8922d125b7989"
-  integrity sha512-dJzC7GAqbeVDioNJL3/8JaXHoTsR3tZtNAzfP/ZkvmUo4//vcX/xBnjE3pq9VCZ+T1bGyT+yoPI43VFbaXbdTw==
+  version "2.0.0-rc.38"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-2.0.0-rc.38.tgz#cc7e41b21bb1c1072a8d227d9ceb583d52d546af"
+  integrity sha512-TUfvG1h03nBIK3obedVapoKip+SGnwok9PLX/q/i2lOTuFb3nD1EahPNdZQgTXm7STu0hERdSJ89xHgnuImn4A==
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.3.42, cdk8s@^2.3.40:
-  version "2.3.42"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.3.42.tgz#b44ed3ddd1e0fbc4262f731a7712dcc3d4e96a3c"
-  integrity sha512-pPD+Acyg5FX+/mRNR9Xb5lA3v2r0tSpMQDgEULi/kWFyWbVcNlzoGN8CjD/XQqV6gIfRi3O3pPv9QSF0qDpnYA==
+cdk8s@2.3.43, cdk8s@^2.3.40:
+  version "2.3.43"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.3.43.tgz#487f47aaae2eaad729d9b6439f01ce19f5115ae8"
+  integrity sha512-YQzdNWmEpKyrFCdpe2B3q5z1bKGhI1UlkIt5tOb6CorydqZrMRTJuMQR6WlHSjwPvnUg7C5PTrMyZqdSO4ViCw==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.1"
@@ -3918,9 +3918,9 @@ jsii-rosetta@^1.44.0, jsii-rosetta@^1.61.0:
     yargs "^16.2.0"
 
 jsii-srcmak@^0.1.603:
-  version "0.1.605"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.605.tgz#43150ae5ef37c3738ec40fd3e052a6881cc4e808"
-  integrity sha512-FTllABJj9KYN1pLzUMBIiJ/bvwXj+dg0OsIEcAwaWkuzA6yuq6jfbQPb8Wv1rs3PQMFBu2B6DS6xk10W2Qh+7g==
+  version "0.1.606"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.606.tgz#bf1d939dfd40c3856d96cff29cb7315960f0008f"
+  integrity sha512-wI6gJSze2+Orbh9BO7wmgu927zdurMP2UeQgG7/C5m7Vc9sttbLEfGa2RTu9szj0Yc8WeRdh/6kbgehM8LYTcg==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.61.0"
@@ -3995,9 +3995,9 @@ json-stringify-safe@^5.0.1:
   integrity sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==
 
 json2jsii@^0.3.52:
-  version "0.3.54"
-  resolved "https://registry.yarnpkg.com/json2jsii/-/json2jsii-0.3.54.tgz#baf7425863d859bed65b40724431a98dbfd52c3a"
-  integrity sha512-aDP2H39XxZb3kdHvxaxrjxOnyZGL5qyGdkHzih8NuorPP++lrAz0M9g6Q/35B6BSYPCTtvxDzhwdB3RtONKAww==
+  version "0.3.55"
+  resolved "https://registry.yarnpkg.com/json2jsii/-/json2jsii-0.3.55.tgz#887b8796ad2f614771e48da60de7505a0ed78077"
+  integrity sha512-KCDF/v5u3nR72Po/Qt8nX1J0FCuyjUqfjR/D9Udsid5/PC00eROTJxrYyxloR8NVpCqJnBZT1WrJ7Lj4CE5bXw==
   dependencies:
     camelcase "^6.3.0"
     json-schema "^0.4.0"
@@ -5831,9 +5831,9 @@ ts-jest@^27:
     yargs-parser "20.x"
 
 ts-node@^10:
-  version "10.8.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.8.1.tgz#ea2bd3459011b52699d7e88daa55a45a1af4f066"
-  integrity sha512-Wwsnao4DQoJsN034wePSg5nZiw4YKXf56mPIAeD6wVmiv+RytNSWqc2f3fKvcUoV+Yn2+yocD71VOfQHbmVX4g==
+  version "10.8.2"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.8.2.tgz#3185b75228cef116bf82ffe8762594f54b2a23f2"
+  integrity sha512-LYdGnoGddf1D6v8REPtIH+5iq/gTDuZqv2/UJUU7tKjuEU8xVZorBM+buCGNjj+pGEud+sOoM4CX3/YzINpENA==
   dependencies:
     "@cspotcode/source-map-support" "^0.8.0"
     "@tsconfig/node10" "^1.0.7"
