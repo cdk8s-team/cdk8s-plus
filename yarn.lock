@@ -549,9 +549,9 @@
     "@jridgewell/trace-mapping" "^0.3.9"
 
 "@jridgewell/resolve-uri@^3.0.3":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.0.8.tgz#687cc2bbf243f4e9a868ecf2262318e2658873a1"
-  integrity sha512-YK5G9LaddzGbcucK4c8h5tWFmMPBvRZ/uyWmN1/SbBdIvqGUdWGkJ5BAaccgs6XbzVLsqbPJrBSFwKv3kT9i7w==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.0.tgz#2203b118c157721addfe69d47b70465463066d78"
+  integrity sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==
 
 "@jridgewell/set-array@^1.0.0", "@jridgewell/set-array@^1.0.1":
   version "1.1.2"
@@ -858,9 +858,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "18.0.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.1.tgz#e91bd73239b338557a84d1f67f7b9e0f25643870"
-  integrity sha512-CmR8+Tsy95hhwtZBKJBs0/FFq4XX7sDZHlGGf+0q+BRZfMbOTkzkj0AFAuTyXbObDIoanaBBW0+KEW+m3N16Wg==
+  version "18.0.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.2.tgz#a594e580c396c22dd6b1470be81737c79ec0b1b1"
+  integrity sha512-b947SdS4GH+g2W33wf5FzUu1KLj5FcSIiNWbU1ZyMvt/X7w48ZsVcsQoirIgE/Oq03WT5Qbn/dkY0hePi4ZXcQ==
 
 "@types/node@^12":
   version "12.20.55"
@@ -1456,9 +1456,9 @@ cdk8s-cli@^1.1.40:
     yargs "^15"
 
 cdk8s-plus-22@^2.0.0-rc.32:
-  version "2.0.0-rc.40"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-2.0.0-rc.40.tgz#2bc761c1abe4b9331b6792434f7c2bcfb884b4e0"
-  integrity sha512-mrpYTrLmN6tcKB3IF3JDeQg5wzFF//7J0mASe5v8Lq17s0hap/mc/PQv6MIxE8h02DX5qmNxHNL3sMaSQyawYw==
+  version "2.0.0-rc.41"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-22/-/cdk8s-plus-22-2.0.0-rc.41.tgz#da3b05756c4557dc2b6afc7eb14a96ab1cc5b7d9"
+  integrity sha512-HslKoEO4rCcPgOBn48v0+FfctZUamUKcoc1mKoeH2GD48fp+GhCamRrB3uHCGopMXf7z7ZBCmsf5x66gzs+Djg==
   dependencies:
     minimatch "^3.1.2"
 
@@ -2116,9 +2116,9 @@ duplexer3@^0.1.4:
   integrity sha512-CEj8FwwNA4cVH2uFCoHUrmojhYh1vmCdOaneKJXwkeY1i9jnlslVo9dx+hQ5Hl9GnH/Bwy/IjxAyOePyPKYnzA==
 
 electron-to-chromium@^1.4.172:
-  version "1.4.178"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.178.tgz#3dae6fda486007bb54bbfed420ebd40881a3de45"
-  integrity sha512-aWuhJXkwIdoQzGR8p2QvR3N0OzdUKZSP8+P/hzuMzNQIPZoEa8HiCGM75bQBHjyz+eKT5PB9dVCzkK/tyQ4B5Q==
+  version "1.4.180"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.180.tgz#380b06037836055d12c7de181ee90b8ed911c3e7"
+  integrity sha512-7at5ash3FD9U5gPa3/wPr6OdiZd/zBjvDZaaHBpcqFOFUhZiWnb7stkqk8xUFL9H9nk7Yok5vCCNK8wyC/+f8A==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3918,9 +3918,9 @@ jsii-rosetta@^1.44.0, jsii-rosetta@^1.61.0:
     yargs "^16.2.0"
 
 jsii-srcmak@^0.1.603:
-  version "0.1.608"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.608.tgz#3fd0b6524315236e1d44c4342b8fda56a08bad8c"
-  integrity sha512-lVmvv/z92ZRHvGLDB3ybMkp2A/jw/cEwUwwqgfIHi7lIWHncVEtjIE+rOEilyeOTrvnAUkvvws+zO6baLGvc6g==
+  version "0.1.609"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.609.tgz#fc4b3a571b5cc67a15d9310cb1ebd086c3dda173"
+  integrity sha512-3snqrIJzgavj8JOaN6G4NiaMAhyQzsqts4ah09V09Za76spFMTINNApvI57uLJfZPueirkytjmq632ccRFXK1A==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.61.0"
@@ -3995,9 +3995,9 @@ json-stringify-safe@^5.0.1:
   integrity sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==
 
 json2jsii@^0.3.52:
-  version "0.3.57"
-  resolved "https://registry.yarnpkg.com/json2jsii/-/json2jsii-0.3.57.tgz#5377fa13d6b9e3a5df7199d5ed931dea69d3f897"
-  integrity sha512-GIVJl5QbOJZPArIiS9lOf857HbmU54zixvQg3V6jBwZWixFeksU+jr6Z+G2Z0btq5d50V/jk3SB++iPPjgVOmA==
+  version "0.3.58"
+  resolved "https://registry.yarnpkg.com/json2jsii/-/json2jsii-0.3.58.tgz#ee9a3437d647565acd70b6b04be2a422f06b7bc3"
+  integrity sha512-QJ3liJs0l2QKB9u4R9G8oLHQAtz0mkklucU4QC816tYHxWEMsXsPvEAqwQeRAWiRv46YXNaMlqeJbfM2AOyVQA==
   dependencies:
     camelcase "^6.3.0"
     json-schema "^0.4.0"
