@@ -55,7 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "cdk8s": "2.3.50",
-    "cdk8s-cli": "^1.1.43",
+    "cdk8s-cli": "^1.1.44",
     "constructs": "10.1.43",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
