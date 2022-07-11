@@ -136,6 +136,7 @@ export class ServiceAccount extends base.Resource implements IServiceAccount, rb
       kind: this.kind,
       name: this.name,
       apiGroup: this.apiGroup,
+      namespace: this.metadata.namespace,
     };
   }
 
