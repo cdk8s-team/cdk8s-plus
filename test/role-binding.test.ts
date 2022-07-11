@@ -221,14 +221,15 @@ test('can add subjects to a RoleBinding after creating it', () => {
   // WHEN
   const user = kplus.User.fromName(chart, 'Alice', 'alice@example.com');
   const group = kplus.Group.fromName(chart, 'FrontendAdmins', 'frontend-admins');
+  const sa = new kplus.ServiceAccount(chart, 'ServiceAccount', { metadata: { namespace: 'n1' } });
   const binding = role.bind();
-  binding.addSubjects(user, group);
+  binding.addSubjects(user, group, sa);
 
   // THEN
   expect(binding.kind).toEqual('RoleBinding');
   expect(binding.metadata.namespace).toBeUndefined();
   expect(binding.role).toEqual(role);
-  expect(binding.subjects).toEqual([user, group]);
+  expect(binding.subjects).toEqual([user, group, sa]);
 
   const manifest = Testing.synth(chart);
   expect(manifest[1].subjects).toEqual([
@@ -241,6 +242,12 @@ test('can add subjects to a RoleBinding after creating it', () => {
       apiGroup: 'rbac.authorization.k8s.io',
       kind: 'Group',
       name: 'frontend-admins',
+    },
+    {
+      apiGroup: '',
+      kind: 'ServiceAccount',
+      name: 'test-serviceaccount-c8f15383',
+      namespace: 'n1',
     },
   ]);
 });
