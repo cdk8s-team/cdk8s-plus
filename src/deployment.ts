@@ -56,6 +56,20 @@ export interface DeploymentProps extends workload.WorkloadProps {
  */
 export interface DeploymentExposeViaServiceOptions {
   /**
+   * The IP address of the service and is usually assigned randomly by the
+   * master. If an address is specified manually and is not in use by others, it
+   * will be allocated to the service; otherwise, creation of the service will
+   * fail. This field can not be changed through updates. Valid values are
+   * "None", empty string (""), or a valid IP address. "None" can be specified
+   * for headless services when proxying is not required. Only applies to types
+   * ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName.
+   *
+   * @see https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+   * @default - Automatically assigned.
+   */
+  readonly clusterIP?: string;
+
+  /**
    * The ports that the service should bind to.
    *
    * @default - extracted from the deployment.
@@ -185,6 +199,7 @@ export class Deployment extends workload.Workload {
       ports,
       metadata,
       type: options.serviceType ?? service.ServiceType.CLUSTER_IP,
+      clusterIP: options.clusterIP
     });
   }
 
