@@ -56,6 +56,18 @@ export interface ProbeOptions {
   readonly timeoutSeconds?: Duration;
 }
 
+export enum HttpGetScheme {
+  /**
+   * Use HTTP request for connecting to host.
+   */  
+  HTTP = 'HTTP',
+
+  /**
+   * Use HTTPS request for connecting to host.
+   */  
+  HTTPS = 'HTTPS'
+}
+
 /**
  * Options for `Probe.fromHttpGet()`.
  */
@@ -66,6 +78,13 @@ export interface HttpGetProbeOptions extends ProbeOptions {
    * @default - defaults to `container.port`.
    */
   readonly port?: number;
+
+  /**
+   *  Scheme to use for connecting to the host (HTTP or HTTPS).
+   *
+   *  @default - Defaults to HTTP.
+   */
+  readonly scheme?: HttpGetScheme;
 }
 
 /**
