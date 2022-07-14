@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler } from '../src';
+import { Container, Cpu, Handler, HttpGetScheme } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 describe('EnvValue', () => {
@@ -334,19 +334,21 @@ describe('Container', () => {
       image: 'foo',
       readiness: kplus.Probe.fromHttpGet('/ping', {
         timeoutSeconds: cdk8s.Duration.minutes(2),
+        scheme: HttpGetScheme.HTTPS,
       }),
       liveness: kplus.Probe.fromHttpGet('/live', {
         timeoutSeconds: cdk8s.Duration.minutes(3),
       }),
       startup: kplus.Probe.fromHttpGet('/startup', {
         timeoutSeconds: cdk8s.Duration.minutes(4),
+        scheme: HttpGetScheme.HTTP,
       }),
     });
 
     // THEN
     expect(container._toKube().readinessProbe).toEqual({
       failureThreshold: 3,
-      httpGet: { path: '/ping', port: k8s.IntOrString.fromNumber(80) },
+      httpGet: { path: '/ping', port: k8s.IntOrString.fromNumber(80), scheme: HttpGetScheme.HTTPS },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
       successThreshold: undefined,
@@ -354,7 +356,7 @@ describe('Container', () => {
     });
     expect(container._toKube().livenessProbe).toEqual({
       failureThreshold: 3,
-      httpGet: { path: '/live', port: k8s.IntOrString.fromNumber(80) },
+      httpGet: { path: '/live', port: k8s.IntOrString.fromNumber(80), scheme: undefined },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
       successThreshold: undefined,
@@ -362,7 +364,7 @@ describe('Container', () => {
     });
     expect(container._toKube().startupProbe).toEqual({
       failureThreshold: 3,
-      httpGet: { path: '/startup', port: k8s.IntOrString.fromNumber(80) },
+      httpGet: { path: '/startup', port: k8s.IntOrString.fromNumber(80), scheme: HttpGetScheme.HTTP },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
       successThreshold: undefined,
