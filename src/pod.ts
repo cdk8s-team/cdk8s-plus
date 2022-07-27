@@ -19,6 +19,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
+  public readonly nodeSelector?: { [key: string]: string };
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
@@ -36,6 +37,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
+    this.nodeSelector = props.nodeSelector;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -227,6 +229,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
+      nodeSelector: this.nodeSelector,
     };
 
   }
@@ -412,6 +415,13 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
    */
   readonly automountServiceAccountToken?: boolean;
+
+  /**
+   * Assign pod to a node with matching labels
+   *
+   * @see https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+   */
+  readonly nodeSelector?: { [key: string]: string };
 
 }
 

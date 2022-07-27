@@ -3831,6 +3831,45 @@ Array [
 ]
 `;
 
+exports[`scheduling can be assiged to a node with matching labels 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
+      },
+      "name": "test-redis-c870fe8d",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "image": "redis",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "nodeSelector": Object {
+        "memory": "high",
+      },
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`scheduling can be assigned to a node by name 1`] = `
 Array [
   Object {

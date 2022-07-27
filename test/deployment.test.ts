@@ -429,6 +429,15 @@ describe('scheduling', () => {
 
   });
 
+  test('can be assiged to a node with matching labels', () => {
+
+    const chart = Testing.chart();
+
+    new kplus.Deployment(chart, 'Redis', { containers: [{ image: 'redis' }], nodeSelector: { memory: 'high' } });
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
   test('can be co-located with a managed deployment - default', () => {
 
     const chart = Testing.chart();
