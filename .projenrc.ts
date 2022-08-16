@@ -37,9 +37,11 @@ const project = new cdk.JsiiProject({
   ],
   deps: [
     'minimatch',
+    'moment-timezone',
   ],
   bundledDeps: [
     'minimatch',
+    'moment-timezone',
   ],
   devDeps: [
     'constructs',

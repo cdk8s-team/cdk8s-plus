@@ -119,6 +119,10 @@
       "type": "bundled"
     },
     {
+      "name": "moment-timezone",
+      "type": "bundled"
+    },
+    {
       "name": "cdk8s",
       "type": "peer"
     },
@@ -128,6 +132,10 @@
     },
     {
       "name": "minimatch",
+      "type": "runtime"
+    },
+    {
+      "name": "moment-timezone",
       "type": "runtime"
     }
   ],
