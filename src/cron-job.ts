@@ -20,37 +20,37 @@ export enum ConcurrencyPolicy {
  */
 export interface CronJobProps extends workload.WorkloadProps {
   /**
-	 * Properties of the Job that is being scheduled by CronJob.
-	 */
+   * Properties of the Job that is being scheduled by CronJob.
+   */
   readonly jobProperties: JobProps;
 
   /**
-	 * Specifies the time in which the job would run again.
+   * Specifies the time in which the job would run again.
    *
    * @default - Runs at every minute.
-	 */
+   */
   readonly schedule?: CronOptions;
 
   /**
-	 * Specifies the timezone for the job. This helps aligining the schedule to follow the specified timezone.
+   * Specifies the timezone for the job. This helps aligining the schedule to follow the specified timezone.
    *
    * @default - Timezone of kube-controller-manager process.
-	 */
+   */
   readonly timeZone?: string;
 
   /**
-	 * Specifies the concurrency policy for the job.
+   * Specifies the concurrency policy for the job.
    *
    * @default - Allow
-	 */
+   */
   readonly concurrencyPolicy?: ConcurrencyPolicy;
 
   /**
-	 * Specifies the time by which a recurring job should be scheduled after it has passed its expected scheduling time.
+   * Specifies the time by which a recurring job should be scheduled after it has passed its expected scheduling time.
    * Missed jobs are counted as failed ones.
    *
    * @default - There is no deadline.
-	 */
+   */
   readonly startingDeadline?: Duration;
 
   /**
@@ -110,13 +110,13 @@ export class CronJob extends workload.Workload {
   public readonly suspend?: boolean;
 
   /**
-	 * The number of successful jobs to retain.
-	 */
+   * The number of successful jobs to retain.
+   */
   public readonly successfulJobsRetained?: number;
 
   /**
-	 * The number of failed jobs to retain.
-	 */
+   * The number of failed jobs to retain.
+   */
   public readonly failedJobsRetained?: number;
 
   /**
