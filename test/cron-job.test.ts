@@ -1,4 +1,4 @@
-import { Testing, ApiObject, Duration } from 'cdk8s';
+import { Testing, ApiObject, Duration, CronOptions } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 
@@ -29,7 +29,19 @@ test('allow setting jobProperties / default configuration', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
+
+  console.log(`Spec: ${JSON.stringify(manifest, null, 2)}`);
+
+  expect(spec.schedule).toEqual('* * * * *');
+  expect(spec.concurrencyPolicy).toEqual('Forbid');
+  expect(spec.timeZone).toEqual(undefined);
+  expect(spec.startingDeadlineSeconds).toEqual(undefined);
+  expect(spec.suspend).toEqual(undefined);
+  expect(spec.successfulJobsHistoryLimit).toEqual(undefined);
+  expect(spec.failedJobsHistoryLimit).toEqual(undefined);
 
   expect(spec.jobTemplate.spec.activeDeadlineSeconds).toEqual(20);
   expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
@@ -60,9 +72,11 @@ test('allow setting schedule using cron options', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
-  expect(spec.schedule).toEqual('5 * * * ? *');
+  expect(spec.schedule).toEqual('5 * * * *');
 
   expect(spec.jobTemplate.spec.activeDeadlineSeconds).toEqual(20);
   expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
@@ -85,7 +99,9 @@ test('allow setting timezone', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
   expect(spec.timeZone).toEqual('America/Los_Angeles');
 
@@ -110,9 +126,11 @@ test('allow setting concurrency policy', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
-  expect(spec.concurrencyPolicy).toEqual('allow');
+  expect(spec.concurrencyPolicy).toEqual('Allow');
 
   expect(spec.jobTemplate.spec.activeDeadlineSeconds).toEqual(20);
   expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
@@ -135,7 +153,9 @@ test('allow setting starting deadline', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
   expect(spec.startingDeadlineSeconds).toEqual(5);
 
@@ -160,7 +180,9 @@ test('allow setting suspend', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
   expect(spec.suspend).toEqual(false);
 
@@ -185,7 +207,9 @@ test('allow setting successfulJobsRetained', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
   expect(spec.successfulJobsHistoryLimit).toEqual(3);
 
@@ -210,7 +234,9 @@ test('allow setting failedJobsRetained', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
   expect(spec.failedJobsHistoryLimit).toEqual(3);
 
@@ -224,7 +250,7 @@ test('allows setting all options', () => {
 
   const chart = Testing.chart();
 
-  const cronOptions = {
+  const cronOptions: CronOptions = {
     minute: '5',
     hour: '*',
     day: '*',
@@ -249,10 +275,14 @@ test('allows setting all options', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[0].spec;
 
-  expect(spec.schedule).toEqual('5 * * * ? *');
-  expect(spec.concurrencyPolicy).toEqual('allow');
+  console.log(`Spec: ${JSON.stringify(manifest, null, 2)}`);
+
+  expect(spec.schedule).toEqual('5 * * * *');
+  expect(spec.concurrencyPolicy).toEqual('Allow');
   expect(spec.timeZone).toEqual('America/Los_Angeles');
   expect(spec.startingDeadlineSeconds).toEqual(5);
   expect(spec.suspend).toEqual(false);

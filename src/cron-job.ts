@@ -10,9 +10,9 @@ import * as workload from './workload';
  * Concurrency policy for CronJobs.
  */
 export enum ConcurrencyPolicy {
-  ALLOW = 'allow',
-  FORBID = 'forbid',
-  REPLACE = 'replace',
+  ALLOW = 'Allow',
+  FORBID = 'Forbid',
+  REPLACE = 'Replace',
 }
 
 /**
@@ -160,7 +160,7 @@ export class CronJob extends workload.Workload {
    */
   public _toKube(): k8s.CronJobSpec {
     return {
-      concurrencyPolicy: this.concurrencyPolicy,
+      concurrencyPolicy: this.concurrencyPolicy ?? ConcurrencyPolicy.FORBID,
       failedJobsHistoryLimit: this.failedJobsRetained,
       jobTemplate: {
         metadata: this.jobProperties.metadata,
@@ -229,6 +229,23 @@ export class CronJob extends workload.Workload {
       throw new Error(`An error was encountered during regular expression conversion for schedule provided: ${schedule.expressionString}`);
     }
 
-    return matches[1];
+    return this.formatCronExpression(matches[1]);
+  }
+
+  /**
+   * Format cron expression since Kubernetes CronJob is expecting five cron values.
+   * Schedule CronOptions substitute weekday or day with ? when undefined.
+   * @param cronExpression
+   */
+
+  /**
+   * Format cron expression since Kubernetes CronJob is expecting five cron values.
+   * Schedule CronOptions substitute weekday or day with ? when undefined.
+   * @see {@link https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/schedule.ts#L47-L49 | Schedule Class}
+   * @param cronExpression The cron expression passed to the construct.
+   * @returns Formatted cron expression.
+   */
+  private formatCronExpression(cronExpression: string): string {
+    return cronExpression.replace(' ?', '');
   }
 }
