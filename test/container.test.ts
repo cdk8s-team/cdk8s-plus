@@ -328,6 +328,26 @@ describe('Container', () => {
     expect(container._toKube().volumeMounts).toEqual([expected]);
   });
 
+  test('can add port to container', () => {
+    const container = new kplus.Container({
+      image: 'image',
+    });
+
+    const port: kplus.ContainerPort = {
+      port: 8080,
+      name: 'test',
+    };
+
+    const expected: k8s.ContainerPort = {
+      containerPort: 8080,
+      name: 'test',
+    };
+
+    container.addPort(port);
+
+    expect(container._toKube().ports).toEqual([expected]);
+  });
+
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {
     // GIVEN
     const container = new kplus.Container({

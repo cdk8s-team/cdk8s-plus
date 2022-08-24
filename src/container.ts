@@ -414,6 +414,39 @@ export interface ContainerLifecycle {
 }
 
 /**
+ * ContainerPort represents a network port in a single container.
+ */
+export interface ContainerPort {
+  /**
+   * Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+   */
+  readonly port: number;
+
+  /**
+   * Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
+   */
+  readonly hostPort?: number;
+
+  /**
+   * What host IP to bind the external port to.
+   */
+  readonly hostIp?: string;
+
+  /**
+   * If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
+   */
+  readonly name?: string;
+
+  /**
+   * Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+   *
+   * @default TCP".
+   */
+  readonly protocol?: string;
+}
+
+
+/**
  * Properties for creating a container.
  */
 export interface ContainerProps {
@@ -436,6 +469,11 @@ export interface ContainerProps {
    * @default - No port is exposed.
    */
   readonly port?: number;
+
+  /**
+   * Array of port definitions to expose on the pod's IP Address.
+   */
+  readonly ports?: ContainerPort[];
 
   /**
    * Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
@@ -603,6 +641,7 @@ export class Container {
   private readonly _liveness?: probe.Probe;
   private readonly _startup?: probe.Probe;
   private readonly _lifecycle?: ContainerLifecycle;
+  private readonly _ports: ContainerPort[];
 
   constructor(props: ContainerProps) {
     if (props instanceof Container) {
@@ -618,6 +657,7 @@ export class Container {
     this._liveness = props.liveness;
     this._startup = props.startup;
     this._lifecycle = props.lifecycle;
+    this._ports = props.ports ?? [];
     this.resources = props.resources;
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
@@ -643,15 +683,27 @@ export class Container {
     return this._args ? [...this._args] : undefined;
   }
 
+  public get ports(): ContainerPort[] {
+    return this._ports;
+  }
+
   /**
    * Mount a volume to a specific path so that it is accessible by the container.
-   * Every pod that is configured to use this container will autmoatically have access to the volume.
+   * Every pod that is configured to use this container will automatically have access to the volume.
    *
    * @param path - The desired path in the container.
    * @param storage - The storage to mount.
    */
   public mount(path: string, storage: volume.IStorage, options: MountOptions = { }) {
     this.mounts.push({ path, volume: storage.asVolume(), ...options });
+  }
+
+  /**
+   * Expose a new port on the pod's IP address. For adding multiple port you should call this function multiple times.
+   * @param port - The options of the port to expose
+   */
+  public addPort(port: ContainerPort) {
+    this._ports.push(port);
   }
 
   /**
@@ -676,6 +728,16 @@ export class Container {
     if (this.port) {
       ports.push({
         containerPort: this.port,
+      });
+    }
+
+    for (const port of this._ports) {
+      ports.push({
+        containerPort: port.port,
+        name: port.name,
+        hostIp: port.hostIp,
+        hostPort: port.hostPort,
+        protocol: port.protocol,
       });
     }
 
