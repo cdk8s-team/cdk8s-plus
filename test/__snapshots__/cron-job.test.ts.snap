@@ -1,110 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`allow setting concurrency policy 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Allow",
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "* * * * *",
-    },
-  },
-]
-`;
-
-exports[`allow setting failedJobsRetained 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Forbid",
-      "failedJobsHistoryLimit": 3,
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "* * * * *",
-    },
-  },
-]
-`;
-
 exports[`allow setting jobProperties / default configuration 1`] = `
 Array [
   Object {
@@ -115,9 +10,10 @@ Array [
     },
     "spec": Object {
       "concurrencyPolicy": "Forbid",
+      "failedJobsHistoryLimit": 1,
       "jobTemplate": Object {
         "spec": Object {
-          "activeDeadlineSeconds": 20,
+          "activeDeadlineSeconds": 60,
           "backoffLimit": 4,
           "template": Object {
             "metadata": Object {
@@ -140,7 +36,7 @@ Array [
                 },
               ],
               "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
+              "restartPolicy": "Never",
               "securityContext": Object {
                 "fsGroupChangePolicy": "Always",
                 "runAsNonRoot": false,
@@ -148,274 +44,12 @@ Array [
               "setHostnameAsFQDN": false,
             },
           },
-          "ttlSecondsAfterFinished": 1,
         },
       },
       "schedule": "* * * * *",
-    },
-  },
-]
-`;
-
-exports[`allow setting schedule using cron options 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Forbid",
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "5 * * * *",
-    },
-  },
-]
-`;
-
-exports[`allow setting starting deadline 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Forbid",
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "* * * * *",
-      "startingDeadlineSeconds": 5,
-    },
-  },
-]
-`;
-
-exports[`allow setting successfulJobsRetained 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Forbid",
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "* * * * *",
+      "startingDeadlineSeconds": 10,
       "successfulJobsHistoryLimit": 3,
-    },
-  },
-]
-`;
-
-exports[`allow setting suspend 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Forbid",
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "* * * * *",
       "suspend": false,
-    },
-  },
-]
-`;
-
-exports[`allow setting timezone 1`] = `
-Array [
-  Object {
-    "apiVersion": "batch/v1",
-    "kind": "CronJob",
-    "metadata": Object {
-      "name": "test-cronjob-c812e113",
-    },
-    "spec": Object {
-      "concurrencyPolicy": "Forbid",
-      "jobTemplate": Object {
-        "spec": Object {
-          "activeDeadlineSeconds": 20,
-          "backoffLimit": 4,
-          "template": Object {
-            "metadata": Object {
-              "labels": Object {
-                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
-              },
-            },
-            "spec": Object {
-              "automountServiceAccountToken": true,
-              "containers": Array [
-                Object {
-                  "image": "image",
-                  "imagePullPolicy": "Always",
-                  "name": "main",
-                  "securityContext": Object {
-                    "privileged": false,
-                    "readOnlyRootFilesystem": false,
-                    "runAsNonRoot": false,
-                  },
-                },
-              ],
-              "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
-              "securityContext": Object {
-                "fsGroupChangePolicy": "Always",
-                "runAsNonRoot": false,
-              },
-              "setHostnameAsFQDN": false,
-            },
-          },
-          "ttlSecondsAfterFinished": 1,
-        },
-      },
-      "schedule": "* * * * *",
-      "timeZone": "America/Los_Angeles",
     },
   },
 ]
@@ -434,7 +68,7 @@ Array [
       "failedJobsHistoryLimit": 3,
       "jobTemplate": Object {
         "spec": Object {
-          "activeDeadlineSeconds": 20,
+          "activeDeadlineSeconds": 60,
           "backoffLimit": 4,
           "template": Object {
             "metadata": Object {
@@ -457,7 +91,7 @@ Array [
                 },
               ],
               "dnsPolicy": "ClusterFirst",
-              "restartPolicy": "OnFailure",
+              "restartPolicy": "Never",
               "securityContext": Object {
                 "fsGroupChangePolicy": "Always",
                 "runAsNonRoot": false,
@@ -465,11 +99,10 @@ Array [
               "setHostnameAsFQDN": false,
             },
           },
-          "ttlSecondsAfterFinished": 1,
         },
       },
       "schedule": "5 * * * *",
-      "startingDeadlineSeconds": 5,
+      "startingDeadlineSeconds": 60,
       "successfulJobsHistoryLimit": 3,
       "suspend": false,
       "timeZone": "America/Los_Angeles",

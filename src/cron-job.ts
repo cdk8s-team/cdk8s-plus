@@ -10,15 +10,24 @@ import * as workload from './workload';
  * Concurrency policy for CronJobs.
  */
 export enum ConcurrencyPolicy {
+  /**
+   * This policy allows to run job concurrently.
+   */
   ALLOW = 'Allow',
+  /**
+   * This policy does not allow to run job concurrently. It does not let a new job to be scheduled if the previous one is not finished yet.
+   */
   FORBID = 'Forbid',
+  /**
+   * This policy replaces the currently running job if a new job is being scheduled.
+   */
   REPLACE = 'Replace',
 }
 
 /**
  * Properties for `CronJob`.
  */
-export interface CronJobProps extends workload.WorkloadProps {
+export interface CronJobProps extends JobProps {
   /**
    * Properties of the Job that is being scheduled by CronJob.
    */
@@ -26,10 +35,8 @@ export interface CronJobProps extends workload.WorkloadProps {
 
   /**
    * Specifies the time in which the job would run again.
-   *
-   * @default - Runs at every minute.
    */
-  readonly schedule?: CronOptions;
+  readonly schedule: CronOptions;
 
   /**
    * Specifies the timezone for the job. This helps aligining the schedule to follow the specified timezone.
@@ -41,36 +48,50 @@ export interface CronJobProps extends workload.WorkloadProps {
   /**
    * Specifies the concurrency policy for the job.
    *
-   * @default - Allow
+   * @default Forbid
    */
   readonly concurrencyPolicy?: ConcurrencyPolicy;
 
   /**
-   * Specifies the time by which a recurring job should be scheduled after it has passed its expected scheduling time.
-   * Missed jobs are counted as failed ones.
+   * Kubernetes attempts to start cron jobs at its schedule time, but this is not guaranteed. This deadline specifies
+   * how much time can pass after a schedule point, for which kubernetes can still start the job.
+   * For example, if this is set to 100 seconds, kubernetes is allowed to start the job at a maximum 100 seconds after
+   * the scheduled time.
+   *
+   * Note that the Kubernetes CronJobController checks for things every 10 seconds, for this reason, a deadline below 10
+   * seconds is not allowed, as it may cause your job to never be scheduled.
+   *
+   * In addition, kubernetes will stop scheduling jobs if more than 100 schedules were missed (for any reason).
+   * This property also controls what time interval should kubernetes consider when counting for missed schedules.
+   *
+   * For example, suppose a CronJob is set to schedule a new Job every one minute beginning at 08:30:00,
+   * and its `startingDeadline` field is not set. If the CronJob controller happens to be down from 08:29:00 to 10:21:00,
+   * the job will not start as the number of missed jobs which missed their schedule is greater than 100.
+   * However, if `startingDeadline` is set to 200 seconds, kubernetes will only count 3 missed schedules, and thus
+   * start a new execution at 10:22:00.
    *
    * @default - There is no deadline.
    */
   readonly startingDeadline?: Duration;
 
   /**
-   * Specifies if the recurring job should be suspended.
+   * Specifies if the recurring job should be suspended. Only applies to future executions, current ones are remained untouched.
    *
-   * @default - false.
+   * @default false
    */
   readonly suspend?: boolean;
 
   /**
    * Specifies the number of successful jobs history retained.
    *
-   * @default - 3.
+   * @default 3
    */
   readonly successfulJobsRetained?: number;
 
   /**
    * Specifies the number of failed jobs history retained.
    *
-   * @default - 1.
+   * @default 1
    */
   readonly failedJobsRetained?: number;
 }
@@ -80,44 +101,44 @@ export interface CronJobProps extends workload.WorkloadProps {
  */
 export class CronJob extends workload.Workload {
   /**
-   * Properties of the recurring `Job`.
+   * The properties of the recurring `Job` that this cronjob will schedule.
    */
   public readonly jobProperties: JobProps;
 
   /**
-   * Schedule for which to run the recurring job. By default, the job would be scheduled to run every minute.
+   * The schedule this cron job is scheduled to run in.
    */
-  public readonly schedule?: CronOptions;
+  public readonly schedule: CronOptions;
 
   /**
-   * Timezone in which the recurring job is scheduled.
+   * The timezone in which this cron job will schedule job in.
    */
   public readonly timeZone?: string;
 
   /**
-   * Concurrency policy for the recurring job. This specifies how the job scheduling would be handled based on which policy is selected.
+   * The policy used by this cron job to determine the concurrency mode in which to schedule jobs.
    */
-  public readonly concurrencyPolicy?: string;
+  public readonly concurrencyPolicy: string;
 
   /**
-   * Deadline to start next instance of job after the expected scheduling time. The job is considered as failed if it misses this deadline.
+   * The time by which the running cron job should schedule the next job execution. The job is considered as failed if it misses this deadline.
    */
-  public readonly startingDeadline?: Duration;
+  public readonly startingDeadline: Duration;
 
   /**
-   * Flag that tells to suspend the upcoming executions of the job.
+   * Whether or not the cron job is currently suspended or not.
    */
-  public readonly suspend?: boolean;
+  public readonly suspend: boolean;
 
   /**
-   * The number of successful jobs to retain.
+   * The number of successful jobs retained by this cron job.
    */
-  public readonly successfulJobsRetained?: number;
+  public readonly successfulJobsRetained: number;
 
   /**
-   * The number of failed jobs to retain.
+   * The number of failed jobs retained by this cron job.
    */
-  public readonly failedJobsRetained?: number;
+  public readonly failedJobsRetained: number;
 
   /**
    * @see base.Resource.apiObject
@@ -131,8 +152,8 @@ export class CronJob extends workload.Workload {
 
   constructor(scope: Construct, id: string, props: CronJobProps) {
     super(scope, id, {
-      restartPolicy: RestartPolicy.ON_FAILURE,
-      select: false, //Why is this false in Job?
+      restartPolicy: RestartPolicy.NEVER,
+      select: false,
       ...props,
     });
 
@@ -148,11 +169,11 @@ export class CronJob extends workload.Workload {
     this.jobProperties = props.jobProperties;
     this.schedule = props.schedule;
     this.timeZone = props.timeZone;
-    this.concurrencyPolicy = props.concurrencyPolicy;
-    this.startingDeadline = props.startingDeadline;
-    this.suspend = props.suspend;
-    this.successfulJobsRetained = props.successfulJobsRetained;
-    this.failedJobsRetained = props.failedJobsRetained;
+    this.concurrencyPolicy = props.concurrencyPolicy ?? ConcurrencyPolicy.FORBID;
+    this.startingDeadline = props.startingDeadline ?? Duration.seconds(10);
+    this.suspend = props.suspend ?? false;
+    this.successfulJobsRetained = props.successfulJobsRetained ?? 3;
+    this.failedJobsRetained = props.failedJobsRetained ?? 1;
   }
 
   /**
@@ -160,14 +181,14 @@ export class CronJob extends workload.Workload {
    */
   public _toKube(): k8s.CronJobSpec {
     return {
-      concurrencyPolicy: this.concurrencyPolicy ?? ConcurrencyPolicy.FORBID,
+      concurrencyPolicy: this.concurrencyPolicy,
       failedJobsHistoryLimit: this.failedJobsRetained,
       jobTemplate: {
         metadata: this.jobProperties.metadata,
-        spec: this.getJobSpec(),
+        spec: this._toJobSpec(),
       },
       schedule: this.getCronExpression(this.schedule),
-      startingDeadlineSeconds: this.startingDeadline?.toSeconds(),
+      startingDeadlineSeconds: this.startingDeadline.toSeconds(),
       successfulJobsHistoryLimit: this.successfulJobsRetained,
       suspend: this.suspend,
       timeZone: this.timeZone,
@@ -177,7 +198,7 @@ export class CronJob extends workload.Workload {
   /**
    * Returns the job spec.
    */
-  private getJobSpec(): k8s.JobSpec {
+  private _toJobSpec(): k8s.JobSpec {
     return {
       template: {
         metadata: this.podMetadata.toJson(),
@@ -206,19 +227,7 @@ export class CronJob extends workload.Workload {
    * @param cronOptions Cron expression passed as CronOptions.
    * @returns Cron expression.
    */
-  private getCronExpression(cronOptions: CronOptions | undefined): string {
-    const runJobEveryMinute: CronOptions = {
-      minute: '*',
-      hour: '*',
-      day: '*',
-      month: '*',
-      year: '*',
-    };
-
-    if (cronOptions == undefined) {
-      return `${runJobEveryMinute.day} ${runJobEveryMinute.hour} ${runJobEveryMinute.day} ${runJobEveryMinute.month} ${runJobEveryMinute.year}`;
-    }
-
+  private getCronExpression(cronOptions: CronOptions): string {
     const schedule = Schedule.cron(cronOptions);
 
     const regularExpression = '\\((.*?)\\)';
@@ -249,3 +258,7 @@ export class CronJob extends workload.Workload {
     return cronExpression.replace(' ?', '');
   }
 }
+
+// Add details to Timezone that it is behind a feature flag and how it works as a default.
+// Add details for StartingDeadline and how it can not be below 10 sec. Add validation for it.
+// Add mention about job property of ttlAfterFinished and how it works against cronjob history limits.
