@@ -1,4 +1,4 @@
-import { Size as container, Size } from 'cdk8s';
+import { Size } from 'cdk8s';
 import * as configmap from './config-map';
 import * as handler from './handler';
 import * as k8s from './imports/k8s';
@@ -892,8 +892,8 @@ export class Cpu {
  * Memory request and limit
  */
 export interface MemoryResources {
-  readonly request?: container;
-  readonly limit?: container;
+  readonly request?: Size;
+  readonly limit?: Size;
 }
 
 /**
