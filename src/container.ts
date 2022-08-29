@@ -1,4 +1,4 @@
-import { Size as container } from 'cdk8s';
+import { Size as container, Size } from 'cdk8s';
 import * as configmap from './config-map';
 import * as handler from './handler';
 import * as k8s from './imports/k8s';
@@ -609,6 +609,17 @@ export class Container {
       throw new Error('Attempted to construct a container from a Container object.');
     }
 
+    const defaultResourceSpec: ContainerResources = {
+      cpu: {
+        request: Cpu.millis(1000),
+        limit: Cpu.millis(1500),
+      },
+      memory: {
+        request: Size.mebibytes(1769),
+        limit: Size.mebibytes(2048),
+      },
+    };
+
     this.name = props.name ?? 'main';
     this.image = props.image;
     this.port = props.port;
@@ -618,7 +629,7 @@ export class Container {
     this._liveness = props.liveness;
     this._startup = props.startup;
     this._lifecycle = props.lifecycle;
-    this.resources = props.resources;
+    this.resources = props.resources ?? defaultResourceSpec;
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;

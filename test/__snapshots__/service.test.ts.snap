@@ -69,6 +69,16 @@ Array [
               "image": "image",
               "imagePullPolicy": "Always",
               "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "1769Mi",
+                },
+              },
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
