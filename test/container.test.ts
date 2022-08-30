@@ -348,7 +348,7 @@ describe('Container', () => {
     // THEN
     expect(container._toKube().readinessProbe).toEqual({
       failureThreshold: 3,
-      httpGet: { path: '/ping', port: k8s.IntOrString.fromNumber(80), scheme: ConnectionScheme.HTTPS },
+      httpGet: { path: '/ping', port: k8s.IntOrString.fromNumber(80), scheme: 'HTTPS' },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
       successThreshold: undefined,
@@ -364,7 +364,7 @@ describe('Container', () => {
     });
     expect(container._toKube().startupProbe).toEqual({
       failureThreshold: 3,
-      httpGet: { path: '/startup', port: k8s.IntOrString.fromNumber(80), scheme: ConnectionScheme.HTTP },
+      httpGet: { path: '/startup', port: k8s.IntOrString.fromNumber(80), scheme: 'HTTP' },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
       successThreshold: undefined,
