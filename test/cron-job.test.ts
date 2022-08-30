@@ -1,4 +1,4 @@
-import { Testing, ApiObject, Duration, CronOptions } from 'cdk8s';
+import { Testing, ApiObject, Duration, CronOptions, Cron } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 
@@ -13,12 +13,14 @@ test('defaultChild', () => {
     hour: '*',
     day: '*',
     month: '*',
-    year: '*',
+    weekDay: '*',
   };
+
+  const schedule = new Cron(cronOptions);
 
   const defaultChild = Node.of(new kplus.CronJob(chart, 'CronJob', {
     jobProperties: jobProperties,
-    schedule: cronOptions,
+    schedule: schedule,
   })).defaultChild as ApiObject;
 
   expect(defaultChild.kind).toEqual('CronJob');
@@ -28,20 +30,14 @@ test('allow setting jobProperties / default configuration', () => {
 
   const chart = Testing.chart();
 
-  const cronOptions: CronOptions = {
-    minute: '*',
-    hour: '*',
-    day: '*',
-    month: '*',
-    year: '*',
-  };
+  const schedule = Cron.everyMinute();
 
   new kplus.CronJob(chart, 'CronJob', {
     jobProperties: {
       activeDeadline: Duration.seconds(60),
       backoffLimit: 4,
     },
-    schedule: cronOptions,
+    schedule: schedule,
     containers: [{ image: 'image' }],
   });
 
@@ -74,15 +70,17 @@ test('allows setting all options', () => {
     hour: '*',
     day: '*',
     month: '*',
-    year: '*',
+    weekDay: '*',
   };
+
+  const schedule = Cron.schedule(cronOptions);
 
   new kplus.CronJob(chart, 'CronJob', {
     jobProperties: {
       activeDeadline: Duration.seconds(60),
       backoffLimit: 4,
     },
-    schedule: cronOptions,
+    schedule: schedule,
     timeZone: 'America/Los_Angeles',
     concurrencyPolicy: kplus.ConcurrencyPolicy.ALLOW,
     startingDeadline: Duration.seconds(60),

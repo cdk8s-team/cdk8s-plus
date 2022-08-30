@@ -1,4 +1,4 @@
-import { ApiObject, CronOptions, Duration, Lazy, Schedule } from 'cdk8s';
+import { ApiObject, Duration, Lazy, Cron } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as timezone from 'moment-timezone';
 import * as k8s from './imports/k8s';
@@ -34,9 +34,9 @@ export interface CronJobProps extends JobProps {
   readonly jobProperties: JobProps;
 
   /**
-   * Specifies the time in which the job would run again.
+   * Specifies the time in which the job would run again. This is defined as a cron expression in the CronJob resource.
    */
-  readonly schedule: CronOptions;
+  readonly schedule: Cron;
 
   /**
    * Specifies the timezone for the job. This helps aligining the schedule to follow the specified timezone.
@@ -82,14 +82,14 @@ export interface CronJobProps extends JobProps {
   readonly suspend?: boolean;
 
   /**
-   * Specifies the number of successful jobs history retained.
+   * Specifies the number of successful jobs history retained. This would retain the Job and the associated Pod resource and can be useful for debugging.
    *
    * @default 3
    */
   readonly successfulJobsRetained?: number;
 
   /**
-   * Specifies the number of failed jobs history retained.
+   * Specifies the number of failed jobs history retained. This would retain the Job and the associated Pod resource and can be useful for debugging.
    *
    * @default 1
    */
@@ -97,7 +97,7 @@ export interface CronJobProps extends JobProps {
 }
 
 /**
- * A CronJob is responsible for creating a Job and scheduling it based on provided scheduled. This helps running Jobs in a recurring manner.
+ * A CronJob is responsible for creating a Job and scheduling it based on provided cron schedule. This helps running Jobs in a recurring manner.
  */
 export class CronJob extends workload.Workload {
   /**
@@ -108,10 +108,10 @@ export class CronJob extends workload.Workload {
   /**
    * The schedule this cron job is scheduled to run in.
    */
-  public readonly schedule: CronOptions;
+  public readonly schedule: Cron;
 
   /**
-   * The timezone in which this cron job will schedule job in.
+   * The timezone which this cron job would follow to schedule jobs.
    */
   public readonly timeZone?: string;
 
@@ -121,7 +121,7 @@ export class CronJob extends workload.Workload {
   public readonly concurrencyPolicy: string;
 
   /**
-   * The time by which the running cron job should schedule the next job execution. The job is considered as failed if it misses this deadline.
+   * The time by which the running cron job needs to schedule the next job execution. The job is considered as failed if it misses this deadline.
    */
   public readonly startingDeadline: Duration;
 
@@ -166,6 +166,14 @@ export class CronJob extends workload.Workload {
       throw new Error(`Invalid timezone: ${props.timeZone}`);
     }
 
+    if (props.startingDeadline != undefined && props.startingDeadline.toSeconds() < 10) {
+      throw new Error(`The starting deadline cannot be less than 10 seconds since the Kubernetes CronJobController checks things every 10 seconds and hence the CronJob may not be scheduled. The value passed is: ${props.startingDeadline}`);
+    }
+
+    if (props.jobProperties.ttlAfterFinished != undefined && (props.successfulJobsRetained != undefined || props.failedJobsRetained != undefined)) {
+      throw new Error('The ttlAfterFinished cannot be set if cron job is retaining successful or failed job runs. This would cause the retention of jobs to not work properly since it would delete the job based on its value.');
+    }
+
     this.jobProperties = props.jobProperties;
     this.schedule = props.schedule;
     this.timeZone = props.timeZone;
@@ -187,7 +195,7 @@ export class CronJob extends workload.Workload {
         metadata: this.jobProperties.metadata,
         spec: this._toJobSpec(),
       },
-      schedule: this.getCronExpression(this.schedule),
+      schedule: this.schedule.expressionString,
       startingDeadlineSeconds: this.startingDeadline.toSeconds(),
       successfulJobsHistoryLimit: this.successfulJobsRetained,
       suspend: this.suspend,
@@ -221,44 +229,4 @@ export class CronJob extends workload.Workload {
     }
     return timezone.tz.zone(tz) != null;
   }
-
-  /**
-   * Get cron expression in format expected by CronJob manifest.
-   * @param cronOptions Cron expression passed as CronOptions.
-   * @returns Cron expression.
-   */
-  private getCronExpression(cronOptions: CronOptions): string {
-    const schedule = Schedule.cron(cronOptions);
-
-    const regularExpression = '\\((.*?)\\)';
-    const regExp = new RegExp(regularExpression);
-    const matches = regExp.exec(schedule.expressionString);
-
-    if (matches == null) {
-      throw new Error(`An error was encountered during regular expression conversion for schedule provided: ${schedule.expressionString}`);
-    }
-
-    return this.formatCronExpression(matches[1]);
-  }
-
-  /**
-   * Format cron expression since Kubernetes CronJob is expecting five cron values.
-   * Schedule CronOptions substitute weekday or day with ? when undefined.
-   * @param cronExpression
-   */
-
-  /**
-   * Format cron expression since Kubernetes CronJob is expecting five cron values.
-   * Schedule CronOptions substitute weekday or day with ? when undefined.
-   * @see {@link https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/schedule.ts#L47-L49 | Schedule Class}
-   * @param cronExpression The cron expression passed to the construct.
-   * @returns Formatted cron expression.
-   */
-  private formatCronExpression(cronExpression: string): string {
-    return cronExpression.replace(' ?', '');
-  }
 }
-
-// Add details to Timezone that it is behind a feature flag and how it works as a default.
-// Add details for StartingDeadline and how it can not be below 10 sec. Add validation for it.
-// Add mention about job property of ttlAfterFinished and how it works against cronjob history limits.

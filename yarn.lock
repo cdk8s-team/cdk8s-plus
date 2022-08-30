@@ -1529,7 +1529,16 @@ cdk8s-plus-22@^2.0.0-rc.91:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.4.10, cdk8s@^2.4.9:
+cdk8s@2.4.15:
+  version "2.4.15"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.4.15.tgz#bf4c168212adbd17298ec5c1fd73c85fdbc123d7"
+  integrity sha512-j/TV7wvARa6fc86+wnuhvUG7zdMekvZXRD9gU2Me9c8N15y/RSBu9VMZPR0NeUXLxNKEOlxjY2CSuCxV/SHt5w==
+  dependencies:
+    fast-json-patch "^3.1.1"
+    follow-redirects "^1.15.1"
+    yaml "2.0.0-7"
+
+cdk8s@^2.4.9:
   version "2.4.10"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.4.10.tgz#5612241893b7c964e3bb737bbe3cd90642fe369f"
   integrity sha512-dfvVVGQVOyxnAVMDu3d9K3bmwLJWwnN5QyD7ULz2ZarLDMWB+4lYjQ+wvMTtqTVA7bw6Ei9N6LjicViOL1H9XA==
