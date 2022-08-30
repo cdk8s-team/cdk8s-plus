@@ -684,6 +684,8 @@ export class Container {
     const cpuRequest = this.resources?.cpu?.request?.amount;
     const memoryLimit = this.resources?.memory?.limit;
     const memoryRequest = this.resources?.memory?.request;
+    const ephemeralStorageLimit = this.resources?.ephemeralStorage?.limit;
+    const ephemeralStorageRequest = this.resources?.ephemeralStorage?.request;
 
     const limits: { [key: string]: k8s.Quantity } = {};
     const requests: { [key: string]: k8s.Quantity } = {};
@@ -694,11 +696,17 @@ export class Container {
     if (memoryLimit) {
       limits.memory = k8s.Quantity.fromString(memoryLimit.toMebibytes().toString() + 'Mi');
     }
+    if (ephemeralStorageLimit) {
+      limits['ephemeral-storage'] = k8s.Quantity.fromString(ephemeralStorageLimit.toGibibytes().toString() + 'Gi');
+    }
     if (cpuRequest) {
       requests.cpu = k8s.Quantity.fromString(cpuRequest);
     }
     if (memoryRequest) {
       requests.memory = k8s.Quantity.fromString(memoryRequest.toMebibytes().toString() + 'Mi');
+    }
+    if (ephemeralStorageRequest) {
+      requests['ephemeral-storage'] = k8s.Quantity.fromString(ephemeralStorageRequest.toGibibytes().toString() + 'Gi');
     }
 
     let resourceRequirements: k8s.ResourceRequirements | undefined = undefined;
@@ -863,6 +871,7 @@ export enum MountPropagation {
 export interface ContainerResources {
   readonly cpu?: CpuResources;
   readonly memory?: MemoryResources;
+  readonly ephemeralStorage?: EphemeralStorageResources;
 }
 
 /**
@@ -894,6 +903,14 @@ export class Cpu {
  * Memory request and limit
  */
 export interface MemoryResources {
+  readonly request?: container;
+  readonly limit?: container;
+}
+
+/**
+ * Emphemeral storage request and limit
+ */
+export interface EphemeralStorageResources {
   readonly request?: container;
   readonly limit?: container;
 }
