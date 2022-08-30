@@ -95,7 +95,6 @@ export interface ExposeDeploymentViaIngressOptions extends DeploymentExposeViaSe
 * > Note: Do not manage ReplicaSets owned by a Deployment. Consider opening an issue in the main Kubernetes repository if your use case is not covered below.
 *
 * Use Case
-* ---------
 *
 * The following are typical use cases for Deployments:
 *
