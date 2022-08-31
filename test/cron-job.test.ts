@@ -46,8 +46,6 @@ test('allow setting jobProperties / default configuration', () => {
   expect(manifest).toMatchSnapshot();
   const spec = manifest[0].spec;
 
-  console.log(`Spec: ${JSON.stringify(manifest, null, 2)}`);
-
   expect(spec.schedule).toEqual('* * * * *');
   expect(spec.concurrencyPolicy).toEqual('Forbid');
   expect(spec.timeZone).toEqual(undefined);
@@ -94,8 +92,6 @@ test('allows setting all options', () => {
   const manifest = Testing.synth(chart);
   expect(manifest).toMatchSnapshot();
   const spec = manifest[0].spec;
-
-  console.log(`Spec: ${JSON.stringify(manifest, null, 2)}`);
 
   expect(spec.schedule).toEqual('5 * * * *');
   expect(spec.concurrencyPolicy).toEqual('Allow');

@@ -1529,10 +1529,10 @@ cdk8s-plus-22@^2.0.0-rc.91:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.4.15:
-  version "2.4.15"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.4.15.tgz#bf4c168212adbd17298ec5c1fd73c85fdbc123d7"
-  integrity sha512-j/TV7wvARa6fc86+wnuhvUG7zdMekvZXRD9gU2Me9c8N15y/RSBu9VMZPR0NeUXLxNKEOlxjY2CSuCxV/SHt5w==
+cdk8s@2.4.16:
+  version "2.4.16"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.4.16.tgz#302b44c1851d69bfebc433883234bb2c259fbe92"
+  integrity sha512-SlLtpgbUbqhpYb0gcDW73tnrDoVbZODbNHFiG9lfCWPekbhfj2Lh36U/YDfDrA4OLlswAhUXWB7ZblpB4rBfrg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.1"
@@ -4508,18 +4508,6 @@ modify-values@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
-
-moment-timezone@^0.5.34:
-  version "0.5.34"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.34.tgz#a75938f7476b88f155d3504a9343f7519d9a405c"
-  integrity sha512-3zAEHh2hKUs3EXLESx/wsgw6IQdusOT8Bxm3D9UrHPQR7zlMmzwybC8zHEM1tQ4LJwP7fcxrWr8tuBg05fFCbg==
-  dependencies:
-    moment ">= 2.9.0"
-
-"moment@>= 2.9.0":
-  version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
-  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 ms@2.0.0:
   version "2.0.0"

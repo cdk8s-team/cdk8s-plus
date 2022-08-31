@@ -1,6 +1,5 @@
 import { ApiObject, Duration, Lazy, Cron } from 'cdk8s';
 import { Construct } from 'constructs';
-import * as timezone from 'moment-timezone';
 import * as k8s from './imports/k8s';
 import { JobProps } from './job';
 import { RestartPolicy } from './pod';
@@ -40,6 +39,8 @@ export interface CronJobProps extends JobProps {
 
   /**
    * Specifies the timezone for the job. This helps aligining the schedule to follow the specified timezone.
+   *
+   * @see {@link https://en.wikipedia.org/wiki/List_of_tz_database_time_zones} for list of valid timezone values.
    *
    * @default - Timezone of kube-controller-manager process.
    */
@@ -162,10 +163,6 @@ export class CronJob extends workload.Workload {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    if (!this.isValidTimezone(props.timeZone)) {
-      throw new Error(`Invalid timezone: ${props.timeZone}`);
-    }
-
     if (props.startingDeadline != undefined && props.startingDeadline.toSeconds() < 10) {
       throw new Error(`The starting deadline cannot be less than 10 seconds since the Kubernetes CronJobController checks things every 10 seconds and hence the CronJob may not be scheduled. The value passed is: ${props.startingDeadline}`);
     }
@@ -216,17 +213,5 @@ export class CronJob extends workload.Workload {
       backoffLimit: this.jobProperties.backoffLimit,
       ttlSecondsAfterFinished: this.jobProperties.ttlAfterFinished?.toSeconds(),
     };
-  }
-
-  /**
-   * Checks if the timezone passed if valid or not.
-   * @param tz Timezone.
-   * @returns result as boolean value for timezone validity.
-   */
-  private isValidTimezone(tz: string | undefined): boolean {
-    if (tz == undefined) {
-      return true;
-    }
-    return timezone.tz.zone(tz) != null;
   }
 }
