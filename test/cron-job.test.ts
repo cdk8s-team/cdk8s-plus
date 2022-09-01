@@ -6,8 +6,6 @@ test('defaultChild', () => {
 
   const chart = Testing.chart();
 
-  const jobProperties = {};
-
   const cronOptions: CronOptions = {
     minute: '*',
     hour: '*',
@@ -19,7 +17,6 @@ test('defaultChild', () => {
   const schedule = new Cron(cronOptions);
 
   const defaultChild = Node.of(new kplus.CronJob(chart, 'CronJob', {
-    jobProperties: jobProperties,
     schedule: schedule,
   })).defaultChild as ApiObject;
 
@@ -33,10 +30,8 @@ test('allow setting jobProperties / default configuration', () => {
   const schedule = Cron.everyMinute();
 
   new kplus.CronJob(chart, 'CronJob', {
-    jobProperties: {
-      activeDeadline: Duration.seconds(60),
-      backoffLimit: 4,
-    },
+    activeDeadline: Duration.seconds(60),
+    backoffLimit: 4,
     schedule: schedule,
     containers: [{ image: 'image' }],
   });
@@ -45,6 +40,8 @@ test('allow setting jobProperties / default configuration', () => {
   const manifest = Testing.synth(chart);
   expect(manifest).toMatchSnapshot();
   const spec = manifest[0].spec;
+
+  console.log(`Spec: ${JSON.stringify(manifest, null, 2)}`);
 
   expect(spec.schedule).toEqual('* * * * *');
   expect(spec.concurrencyPolicy).toEqual('Forbid');
@@ -74,10 +71,11 @@ test('allows setting all options', () => {
   const schedule = Cron.schedule(cronOptions);
 
   new kplus.CronJob(chart, 'CronJob', {
-    jobProperties: {
-      activeDeadline: Duration.seconds(60),
-      backoffLimit: 4,
+    jobMetadata: {
+      name: 'CustomJob',
     },
+    activeDeadline: Duration.seconds(60),
+    backoffLimit: 4,
     schedule: schedule,
     timeZone: 'America/Los_Angeles',
     concurrencyPolicy: kplus.ConcurrencyPolicy.ALLOW,
@@ -92,6 +90,8 @@ test('allows setting all options', () => {
   const manifest = Testing.synth(chart);
   expect(manifest).toMatchSnapshot();
   const spec = manifest[0].spec;
+
+  console.log(`Spec: ${JSON.stringify(manifest, null, 2)}`);
 
   expect(spec.schedule).toEqual('5 * * * *');
   expect(spec.concurrencyPolicy).toEqual('Allow');

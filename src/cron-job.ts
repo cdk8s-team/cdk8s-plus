@@ -1,4 +1,4 @@
-import { ApiObject, Duration, Lazy, Cron } from 'cdk8s';
+import { ApiObject, Duration, Lazy, Cron, ApiObjectMetadata } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import { JobProps } from './job';
@@ -28,9 +28,9 @@ export enum ConcurrencyPolicy {
  */
 export interface CronJobProps extends JobProps {
   /**
-   * Properties of the Job that is being scheduled by CronJob.
+   * Metadata of the Job that is being scheduled by CronJob.
    */
-  readonly jobProperties: JobProps;
+  readonly jobMetadata?: ApiObjectMetadata;
 
   /**
    * Specifies the time in which the job would run again. This is defined as a cron expression in the CronJob resource.
@@ -102,9 +102,9 @@ export interface CronJobProps extends JobProps {
  */
 export class CronJob extends workload.Workload {
   /**
-   * The properties of the recurring `Job` that this cronjob will schedule.
+   * The metadata of the recurring `Job` that this cronjob will schedule.
    */
-  public readonly jobProperties: JobProps;
+  public readonly jobMetadata?: ApiObjectMetadata;
 
   /**
    * The schedule this cron job is scheduled to run in.
@@ -142,6 +142,11 @@ export class CronJob extends workload.Workload {
   public readonly failedJobsRetained: number;
 
   /**
+   * The properties of the recurring `Job` that this cronjob will schedule.
+   */
+  private readonly jobProperties: JobProps;
+
+  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
@@ -167,11 +172,11 @@ export class CronJob extends workload.Workload {
       throw new Error(`The starting deadline cannot be less than 10 seconds since the Kubernetes CronJobController checks things every 10 seconds and hence the CronJob may not be scheduled. The value passed is: ${props.startingDeadline}`);
     }
 
-    if (props.jobProperties.ttlAfterFinished != undefined && (props.successfulJobsRetained != undefined || props.failedJobsRetained != undefined)) {
+    if (props.ttlAfterFinished != undefined && (props.successfulJobsRetained != undefined || props.failedJobsRetained != undefined)) {
       throw new Error('The ttlAfterFinished cannot be set if cron job is retaining successful or failed job runs. This would cause the retention of jobs to not work properly since it would delete the job based on its value.');
     }
 
-    this.jobProperties = props.jobProperties;
+    this.jobMetadata = props.jobMetadata;
     this.schedule = props.schedule;
     this.timeZone = props.timeZone;
     this.concurrencyPolicy = props.concurrencyPolicy ?? ConcurrencyPolicy.FORBID;
@@ -179,6 +184,11 @@ export class CronJob extends workload.Workload {
     this.suspend = props.suspend ?? false;
     this.successfulJobsRetained = props.successfulJobsRetained ?? 3;
     this.failedJobsRetained = props.failedJobsRetained ?? 1;
+    this.jobProperties = {
+      activeDeadline: props.activeDeadline,
+      backoffLimit: props.backoffLimit,
+      ttlAfterFinished: props.ttlAfterFinished,
+    };
   }
 
   /**
@@ -189,7 +199,7 @@ export class CronJob extends workload.Workload {
       concurrencyPolicy: this.concurrencyPolicy,
       failedJobsHistoryLimit: this.failedJobsRetained,
       jobTemplate: {
-        metadata: this.jobProperties.metadata,
+        metadata: this.jobMetadata,
         spec: this._toJobSpec(),
       },
       schedule: this.schedule.expressionString,

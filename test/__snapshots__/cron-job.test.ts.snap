@@ -67,6 +67,9 @@ Array [
       "concurrencyPolicy": "Allow",
       "failedJobsHistoryLimit": 3,
       "jobTemplate": Object {
+        "metadata": Object {
+          "name": "CustomJob",
+        },
         "spec": Object {
           "activeDeadlineSeconds": 60,
           "backoffLimit": 4,
