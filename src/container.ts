@@ -529,6 +529,14 @@ export interface ContainerProps {
   /**
    * Compute resources (CPU and memory requests and limits) required by the container
    * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+   *
+   * @default
+   *    cpu:
+   *      request: 1000 millis
+   *      limit: 1500 millis
+   *    memory:
+   *      request: 1769 mebibytes
+   *      limit: 2048 mebibytes
    */
   readonly resources?: ContainerResources;
 
@@ -909,8 +917,8 @@ export interface MemoryResources {
  * Emphemeral storage request and limit
  */
 export interface EphemeralStorageResources {
-  readonly request?: container;
-  readonly limit?: container;
+  readonly request?: Size;
+  readonly limit?: Size;
 }
 
 /**
