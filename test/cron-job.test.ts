@@ -97,6 +97,7 @@ test('allows setting all options', () => {
   expect(spec.successfulJobsHistoryLimit).toEqual(3);
   expect(spec.failedJobsHistoryLimit).toEqual(3);
 
+  expect(spec.jobTemplate.metadata.name).toEqual('CustomJob');
   expect(spec.jobTemplate.spec.activeDeadlineSeconds).toEqual(60);
   expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
   expect(spec.jobTemplate.spec.template.spec.containers[0].image).toEqual('image');
