@@ -391,18 +391,24 @@ describe('Container', () => {
           request: Size.mebibytes(256),
           limit: Size.mebibytes(384),
         },
+        ephemeralStorage: {
+          request: Size.mebibytes(1024),
+          limit: Size.mebibytes(2048),
+        },
       },
       image: 'image',
     });
 
     expect(container._toKube().resources).toEqual({
       limits: {
-        cpu: k8s.Quantity.fromString('0.5'),
-        memory: k8s.Quantity.fromString('384Mi'),
+        'cpu': k8s.Quantity.fromString('0.5'),
+        'memory': k8s.Quantity.fromString('384Mi'),
+        'ephemeral-storage': k8s.Quantity.fromString('2Gi'),
       },
       requests: {
-        cpu: k8s.Quantity.fromString('300m'),
-        memory: k8s.Quantity.fromString('256Mi'),
+        'cpu': k8s.Quantity.fromString('300m'),
+        'memory': k8s.Quantity.fromString('256Mi'),
+        'ephemeral-storage': k8s.Quantity.fromString('1Gi'),
       },
     });
 
@@ -490,6 +496,44 @@ test('Can add only limits and requests on cpu', () => {
     },
     requests: {
       cpu: k8s.Quantity.fromString('250m'),
+    },
+  });
+});
+
+test('Can add only limits and requests on emphemeral-storage', () => {
+  const container = new kplus.Container({
+    resources: {
+      ephemeralStorage: {
+        limit: Size.gibibytes(2),
+        request: Size.gibibytes(1),
+      },
+    },
+    image: 'image',
+  });
+
+  expect(container._toKube().resources).toEqual({
+    limits: {
+      'ephemeral-storage': k8s.Quantity.fromString('2Gi'),
+    },
+    requests: {
+      'ephemeral-storage': k8s.Quantity.fromString('1Gi'),
+    },
+  });
+});
+
+test('Can add only limits on emphemeral-storage', () => {
+  const container = new kplus.Container({
+    resources: {
+      ephemeralStorage: {
+        limit: Size.gibibytes(2),
+      },
+    },
+    image: 'image',
+  });
+
+  expect(container._toKube().resources).toEqual({
+    limits: {
+      'ephemeral-storage': k8s.Quantity.fromString('2Gi'),
     },
   });
 });
