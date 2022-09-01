@@ -623,7 +623,7 @@ export class Container {
         limit: Cpu.millis(1500),
       },
       memory: {
-        request: Size.mebibytes(1769),
+        request: Size.mebibytes(512),
         limit: Size.mebibytes(2048),
       },
     };

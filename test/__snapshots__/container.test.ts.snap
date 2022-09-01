@@ -25,7 +25,7 @@ Array [
             },
             "requests": Object {
               "cpu": "1000m",
-              "memory": "1769Mi",
+              "memory": "512Mi",
             },
           },
           "securityContext": Object {

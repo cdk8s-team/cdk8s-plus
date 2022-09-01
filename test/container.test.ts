@@ -182,7 +182,7 @@ describe('Container', () => {
         },
         requests: {
           cpu: k8s.Quantity.fromString('1000m'),
-          memory: k8s.Quantity.fromString('1769Mi'),
+          memory: k8s.Quantity.fromString('512Mi'),
         },
       },
       command: ['command'],
