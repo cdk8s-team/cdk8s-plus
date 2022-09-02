@@ -36,12 +36,24 @@ Array [
             Object {
               "image": "image",
               "imagePullPolicy": "Always",
+              "livenessProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 9300,
+                },
+              },
               "name": "main",
               "ports": Array [
                 Object {
                   "containerPort": 9300,
                 },
               ],
+              "readinessProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 9300,
+                },
+              },
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
@@ -148,12 +160,24 @@ Array [
             Object {
               "image": "image",
               "imagePullPolicy": "Always",
+              "livenessProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 9300,
+                },
+              },
               "name": "main",
               "ports": Array [
                 Object {
                   "containerPort": 9300,
                 },
               ],
+              "readinessProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 9300,
+                },
+              },
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,

@@ -1,5 +1,157 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Container "readiness", "liveness" are undefined if port is not provided 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "image": "foo",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
+exports[`Container "readiness", "liveness" have defaults if port is provided 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "image": "foo",
+          "imagePullPolicy": "Always",
+          "livenessProbe": Object {
+            "failureThreshold": 3,
+            "tcpSocket": Object {
+              "port": 8080,
+            },
+          },
+          "name": "main",
+          "ports": Array [
+            Object {
+              "containerPort": 8080,
+            },
+          ],
+          "readinessProbe": Object {
+            "failureThreshold": 3,
+            "tcpSocket": Object {
+              "port": 8080,
+            },
+          },
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
+exports[`Container Instantiation properties are all respected 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": true,
+      "containers": Array [
+        Object {
+          "command": Array [
+            "command",
+          ],
+          "env": Array [
+            Object {
+              "name": "key",
+              "value": "value",
+            },
+          ],
+          "image": "image",
+          "imagePullPolicy": "Never",
+          "livenessProbe": Object {
+            "failureThreshold": 3,
+            "tcpSocket": Object {
+              "port": 9000,
+            },
+          },
+          "name": "name",
+          "ports": Array [
+            Object {
+              "containerPort": 9000,
+            },
+          ],
+          "readinessProbe": Object {
+            "failureThreshold": 3,
+            "tcpSocket": Object {
+              "port": 9000,
+            },
+          },
+          "securityContext": Object {
+            "privileged": false,
+            "readOnlyRootFilesystem": false,
+            "runAsNonRoot": false,
+          },
+          "workingDir": "workingDir",
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": false,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`Container can mount container to a pv 1`] = `
 Array [
   Object {

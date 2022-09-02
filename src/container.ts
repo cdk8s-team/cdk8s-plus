@@ -502,14 +502,18 @@ export interface ContainerProps {
   /**
    * Determines when the container is ready to serve traffic.
    *
-   * @default - no readiness probe is defined
+   * @default - If a port is provided then knocks on that port
+   * to detemine when container is ready to accept traffic.
+   * Otherwise, no readiness probe is defined.
    */
   readonly readiness?: probe.Probe;
 
   /**
    * Periodic probe of container liveness. Container will be restarted if the probe fails.
    *
-   * @default - no liveness probe is defined
+   * @default - If a port is provided then knocks on that port
+   * to detemine if the container is healthy.
+   * Otherwise, no liveness probe is defined.
    */
   readonly liveness?: probe.Probe;
 
@@ -609,13 +613,18 @@ export class Container {
       throw new Error('Attempted to construct a container from a Container object.');
     }
 
+    const defaultProbeConfiguration: probe.Probe = probe.Probe.fromTcpSocket({
+      port: props.port,
+    });
+
+
     this.name = props.name ?? 'main';
     this.image = props.image;
     this.port = props.port;
     this._command = props.command;
     this._args = props.args;
-    this._readiness = props.readiness;
-    this._liveness = props.liveness;
+    this._readiness = props.readiness ?? ( props.port ? defaultProbeConfiguration : undefined);
+    this._liveness = props.liveness ?? ( props.port ? defaultProbeConfiguration : undefined);
     this._startup = props.startup;
     this._lifecycle = props.lifecycle;
     this.resources = props.resources;
