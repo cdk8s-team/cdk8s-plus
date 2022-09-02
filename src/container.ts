@@ -15,7 +15,7 @@ export interface ContainerSecurityContextProps {
   /**
     * The UID to run the entrypoint of the container process.
     *
-    * @default - 25000. An arbitrary number larger than 9999 is selected here.
+    * @default - 25000. An arbitrary number bigger than 9999 is selected here.
     * This is so that the container is blocked to access host files even if
     * somehow it manages to get access to host file system.
     */
@@ -24,7 +24,7 @@ export interface ContainerSecurityContextProps {
   /**
     * The GID to run the entrypoint of the container process.
     *
-    * @default - 26000. An arbitrary number larger than 9999 is selected here.
+    * @default - 26000. An arbitrary number bigger than 9999 is selected here.
     * This is so that the container is blocked to access host files even if
     * somehow it manages to get access to host file system.
     */
