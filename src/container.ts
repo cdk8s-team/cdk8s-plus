@@ -535,7 +535,7 @@ export interface ContainerProps {
    *      request: 1000 millis
    *      limit: 1500 millis
    *    memory:
-   *      request: 1769 mebibytes
+   *      request: 512 mebibytes
    *      limit: 2048 mebibytes
    */
   readonly resources?: ContainerResources;
