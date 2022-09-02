@@ -372,6 +372,10 @@ describe('Container', () => {
     // THEN
     const manifest = Testing.synth(chart);
     expect(manifest).toMatchSnapshot();
+    const container = manifest[0].spec.containers[0];
+
+    expect(container).not.toHaveProperty('readinessProbe');
+    expect(container).not.toHaveProperty('livenessProbe');
   });
 
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {

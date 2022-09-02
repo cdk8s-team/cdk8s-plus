@@ -502,8 +502,8 @@ export interface ContainerProps {
   /**
    * Determines when the container is ready to serve traffic.
    *
-   * @default - If a port is provided then knocks on that port
-   * to detemine when container is ready to accept traffic.
+   * @default - If a port is provided, then knocks on that port
+   * to determine when container is ready to accept traffic.
    * Otherwise, no readiness probe is defined.
    */
   readonly readiness?: probe.Probe;
@@ -511,8 +511,8 @@ export interface ContainerProps {
   /**
    * Periodic probe of container liveness. Container will be restarted if the probe fails.
    *
-   * @default - If a port is provided then knocks on that port
-   * to detemine if the container is healthy.
+   * @default - If a port is provided, then knocks on that port
+   * to determine if the container is healthy.
    * Otherwise, no liveness probe is defined.
    */
   readonly liveness?: probe.Probe;
@@ -616,7 +616,6 @@ export class Container {
     const defaultProbeConfiguration: probe.Probe = probe.Probe.fromTcpSocket({
       port: props.port,
     });
-
 
     this.name = props.name ?? 'main';
     this.image = props.image;
