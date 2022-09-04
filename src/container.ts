@@ -1,4 +1,4 @@
-import { Size as container } from 'cdk8s';
+import { Size } from 'cdk8s';
 import * as configmap from './config-map';
 import * as handler from './handler';
 import * as k8s from './imports/k8s';
@@ -533,6 +533,14 @@ export interface ContainerProps {
   /**
    * Compute resources (CPU and memory requests and limits) required by the container
    * @see https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+   *
+   * @default
+   *    cpu:
+   *      request: 1000 millis
+   *      limit: 1500 millis
+   *    memory:
+   *      request: 512 mebibytes
+   *      limit: 2048 mebibytes
    */
   readonly resources?: ContainerResources;
 
@@ -613,6 +621,17 @@ export class Container {
       throw new Error('Attempted to construct a container from a Container object.');
     }
 
+    const defaultResourceSpec: ContainerResources = {
+      cpu: {
+        request: Cpu.millis(1000),
+        limit: Cpu.millis(1500),
+      },
+      memory: {
+        request: Size.mebibytes(512),
+        limit: Size.mebibytes(2048),
+      },
+    };
+
     this.name = props.name ?? 'main';
     this.image = props.image;
     this.port = props.port;
@@ -622,7 +641,7 @@ export class Container {
     this._liveness = props.liveness;
     this._startup = props.startup;
     this._lifecycle = props.lifecycle;
-    this.resources = props.resources;
+    this.resources = props.resources ?? defaultResourceSpec;
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
@@ -907,16 +926,16 @@ export class Cpu {
  * Memory request and limit
  */
 export interface MemoryResources {
-  readonly request?: container;
-  readonly limit?: container;
+  readonly request?: Size;
+  readonly limit?: Size;
 }
 
 /**
  * Emphemeral storage request and limit
  */
 export interface EphemeralStorageResources {
-  readonly request?: container;
-  readonly limit?: container;
+  readonly request?: Size;
+  readonly limit?: Size;
 }
 
 /**
