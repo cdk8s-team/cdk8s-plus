@@ -194,6 +194,8 @@ describe('Container', () => {
         privileged: false,
         readOnlyRootFilesystem: false,
         runAsNonRoot: false,
+        runAsUser: 25000,
+        runAsGroup: 26000,
       },
     };
 
@@ -545,8 +547,6 @@ test('default security context', () => {
   expect(container.securityContext.ensureNonRoot).toBeFalsy();
   expect(container.securityContext.privileged).toBeFalsy();
   expect(container.securityContext.readOnlyRootFilesystem).toBeFalsy();
-  expect(container.securityContext.user).toBeUndefined();
-  expect(container.securityContext.group).toBeUndefined();
 
   expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
   expect(container.securityContext._toKube()).toStrictEqual({

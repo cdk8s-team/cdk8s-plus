@@ -55,7 +55,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -177,7 +179,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -265,7 +269,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -353,7 +359,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -439,7 +447,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -506,7 +516,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -585,7 +597,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -652,7 +666,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -728,7 +744,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -817,7 +835,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -903,7 +923,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -970,7 +992,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1049,7 +1073,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1116,7 +1142,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1192,7 +1220,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1281,7 +1311,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1367,7 +1399,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1451,7 +1485,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1532,7 +1568,9 @@ Array [
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1580,7 +1618,9 @@ Array [
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
