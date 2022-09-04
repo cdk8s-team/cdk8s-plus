@@ -175,6 +175,16 @@ describe('Container', () => {
       ports: [{
         containerPort: 9000,
       }],
+      resources: {
+        limits: {
+          cpu: k8s.Quantity.fromString('1500m'),
+          memory: k8s.Quantity.fromString('2048Mi'),
+        },
+        requests: {
+          cpu: k8s.Quantity.fromString('1000m'),
+          memory: k8s.Quantity.fromString('512Mi'),
+        },
+      },
       command: ['command'],
       env: [{
         name: 'key',
