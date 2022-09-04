@@ -15,14 +15,18 @@ export interface ContainerSecurityContextProps {
   /**
     * The UID to run the entrypoint of the container process.
     *
-    * @default - User specified in image metadata
+    * @default - 25000. An arbitrary number bigger than 9999 is selected here.
+    * This is so that the container is blocked to access host files even if
+    * somehow it manages to get access to host file system.
     */
   readonly user?: number;
 
   /**
     * The GID to run the entrypoint of the container process.
     *
-    * @default - Group configured by container runtime
+    * @default - 26000. An arbitrary number bigger than 9999 is selected here.
+    * This is so that the container is blocked to access host files even if
+    * somehow it manages to get access to host file system.
     */
   readonly group?: number;
 
@@ -66,8 +70,8 @@ export class ContainerSecurityContext {
     this.ensureNonRoot = props.ensureNonRoot ?? false;
     this.privileged = props.privileged ?? false;
     this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? false;
-    this.user = props.user;
-    this.group = props.group;
+    this.user = props.user ?? 25000;
+    this.group = props.group ?? 26000;
   }
 
   /**
