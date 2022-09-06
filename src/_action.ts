@@ -11,7 +11,7 @@ export class Action {
 
   public static fromTcpSocket(container: Container, options: { port?: number; host?: string } = {}): k8s.TcpSocketAction {
     return {
-      port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
+      port: k8s.IntOrString.fromNumber(options.port ?? container.portNumber ?? 80),
       host: options.host,
     };
   }
@@ -23,7 +23,7 @@ export class Action {
   public static fromHttpGet(container: Container, path: string, options: { port?: number } = { }): k8s.HttpGetAction {
     return {
       path,
-      port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
+      port: k8s.IntOrString.fromNumber(options.port ?? container.portNumber ?? 80),
     };
   }
 }

@@ -151,6 +151,23 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
+  test('portNumber is equivalent to port', () => {
+
+    const container1 = new kplus.Container({
+      image: 'image',
+      port: 9000,
+    });
+
+    const container2 = new kplus.Container({
+      image: 'image',
+      portNumber: 9000,
+    });
+
+    expect(container1._toKube()).toEqual(container2._toKube());
+    expect(container1.portNumber).toEqual(container1.port);
+
+  });
+
   test('Instantiation properties are all respected', () => {
 
     const container = new kplus.Container({

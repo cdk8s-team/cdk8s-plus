@@ -435,11 +435,17 @@ export interface ContainerProps {
   readonly name?: string;
 
   /**
-   * Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
-   *
-   * @default - No port is exposed.
+   * @deprecated - use `portNumber`.
    */
   readonly port?: number;
+
+  /**
+   * Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+   * If you need more advanced port configuration, use the `ports` property.
+   *
+   * @default - Only the ports mentiond in the `ports` property are exposed.
+   */
+  readonly portNumber?: number;
 
   /**
    * Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment.
@@ -564,9 +570,11 @@ export interface ContainerProps {
 export class Container {
 
   /**
-   * The port this container exposes.
+   * The port number that was configured for this container.
+   * If undefined, either the container doesn't expose a port, or its
+   * port configuration is stored in the `ports` field.
    */
-  public readonly port?: number;
+  public readonly portNumber?: number;
 
   /**
    * Volume mounts configured for this container.
@@ -632,9 +640,13 @@ export class Container {
       },
     };
 
+    if (props.port && props.portNumber) {
+      throw new Error('Either \'port\' or \'portNumber\' is allowed. Use \'portNumber\' since \'port\' is deprecated');
+    }
+
     this.name = props.name ?? 'main';
     this.image = props.image;
-    this.port = props.port;
+    this.portNumber = props.portNumber ?? props.port;
     this._command = props.command;
     this._args = props.args;
     this._readiness = props.readiness;
@@ -647,6 +659,13 @@ export class Container {
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
     this.securityContext = new ContainerSecurityContext(props.securityContext);
     this.env = new Env(props.envFrom ?? [], props.envVariables ?? {});
+  }
+
+  /**
+   * @deprecated - use `portNumber`.
+   */
+  public get port(): number | undefined {
+    return this.portNumber;
   }
 
   /**
@@ -696,9 +715,9 @@ export class Container {
 
     const ports = new Array<k8s.ContainerPort>();
 
-    if (this.port) {
+    if (this.portNumber) {
       ports.push({
-        containerPort: this.port,
+        containerPort: this.portNumber,
       });
     }
 
@@ -963,8 +982,8 @@ export function extractContainerPorts(selector?: any): number[] {
   const containers: Container[] = (selector as any).containers;
 
   for (const con of containers ?? []) {
-    if (con.port) {
-      ports.push(con.port);
+    if (con.portNumber) {
+      ports.push(con.portNumber);
     }
   }
 
