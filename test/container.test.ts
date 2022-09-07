@@ -175,6 +175,16 @@ describe('Container', () => {
       ports: [{
         containerPort: 9000,
       }],
+      resources: {
+        limits: {
+          cpu: k8s.Quantity.fromString('1500m'),
+          memory: k8s.Quantity.fromString('2048Mi'),
+        },
+        requests: {
+          cpu: k8s.Quantity.fromString('1000m'),
+          memory: k8s.Quantity.fromString('512Mi'),
+        },
+      },
       command: ['command'],
       env: [{
         name: 'key',
@@ -184,6 +194,8 @@ describe('Container', () => {
         privileged: false,
         readOnlyRootFilesystem: false,
         runAsNonRoot: false,
+        runAsUser: 25000,
+        runAsGroup: 26000,
       },
     };
 
@@ -537,8 +549,6 @@ test('default security context', () => {
   expect(container.securityContext.ensureNonRoot).toBeFalsy();
   expect(container.securityContext.privileged).toBeFalsy();
   expect(container.securityContext.readOnlyRootFilesystem).toBeFalsy();
-  expect(container.securityContext.user).toBeUndefined();
-  expect(container.securityContext.group).toBeUndefined();
 
   expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
   expect(container.securityContext._toKube()).toStrictEqual({

@@ -42,10 +42,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -140,10 +152,22 @@ Array [
               "containerPort": 6739,
             },
           ],
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -176,10 +200,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -238,10 +274,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -274,10 +322,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -336,10 +396,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -372,10 +444,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -480,10 +564,22 @@ Array [
               "containerPort": 6739,
             },
           ],
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -516,10 +612,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -578,10 +686,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -614,10 +734,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -676,10 +808,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -712,10 +856,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -802,10 +958,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -867,10 +1035,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -971,10 +1151,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1064,10 +1256,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1100,10 +1304,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1212,10 +1428,22 @@ Array [
               "image": "pod",
               "imagePullPolicy": "Always",
               "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -1250,10 +1478,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1405,10 +1645,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1436,10 +1688,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1472,10 +1736,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1569,10 +1845,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1675,10 +1963,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1711,10 +2011,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1859,10 +2171,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -1957,10 +2281,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2047,10 +2383,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2112,10 +2460,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2216,10 +2576,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2319,10 +2691,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2355,10 +2739,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2467,10 +2863,22 @@ Array [
               "image": "pod",
               "imagePullPolicy": "Always",
               "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -2505,10 +2913,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2660,10 +3080,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2691,10 +3123,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2727,10 +3171,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2824,10 +3280,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2930,10 +3398,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -2966,10 +3446,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3114,10 +3606,22 @@ Array [
           "image": "pod",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3212,10 +3716,22 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3248,10 +3764,22 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3328,10 +3856,22 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3416,10 +3956,22 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3496,10 +4048,22 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3571,10 +4135,22 @@ Array [
           "image": "scraper",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3607,10 +4183,22 @@ Array [
           "image": "image",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3701,10 +4289,22 @@ Array [
               "image": "scraper",
               "imagePullPolicy": "Always",
               "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
               "securityContext": Object {
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
+                "runAsGroup": 26000,
                 "runAsNonRoot": false,
+                "runAsUser": 25000,
               },
             },
           ],
@@ -3849,10 +4449,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3906,10 +4518,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3961,10 +4585,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -3997,10 +4633,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4045,10 +4693,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4081,10 +4741,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4126,10 +4798,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4179,10 +4863,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4230,10 +4926,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4266,10 +4974,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4314,10 +5034,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4350,10 +5082,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4395,10 +5139,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4448,10 +5204,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4506,10 +5274,22 @@ Array [
           "image": "web",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
@@ -4542,10 +5322,22 @@ Array [
           "image": "redis",
           "imagePullPolicy": "Always",
           "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
+            "runAsGroup": 26000,
             "runAsNonRoot": false,
+            "runAsUser": 25000,
           },
         },
       ],
