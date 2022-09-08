@@ -151,6 +151,81 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
+  test('cannot configure identical ports at instantiation', () => {
+
+    expect(() => new kplus.Container({
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+        },
+        {
+          number: 8080,
+        },
+      ],
+    })).toThrowError('Port with number 8080 already exists');
+
+  });
+
+  test('cannot add an already existing port number', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+      }],
+    });
+
+    expect(() => container.addPort({ number: 8080 })).toThrowError('Port with number 8080 already exists');
+
+  });
+
+  test('cannot add an already existing port name', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+        name: 'port1',
+      }],
+    });
+
+    expect(() => container.addPort({ number: 9090, name: 'port1' })).toThrowError('Port with name port1 already exists');
+
+  });
+
+  test('can configure multiple ports', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+      }],
+    });
+
+    container.addPort({ number: 9090 });
+    expect(container._toKube().ports).toEqual([{ containerPort: 8080 }, { containerPort: 9090 }]);
+    expect(container.ports).toEqual([{ number: 8080 }, { number: 9090 }]);
+
+  });
+
+  test('portNumber is equivalent to port', () => {
+
+    const container1 = new kplus.Container({
+      image: 'image',
+      port: 9000,
+    });
+
+    const container2 = new kplus.Container({
+      image: 'image',
+      portNumber: 9000,
+    });
+
+    expect(container1._toKube()).toEqual(container2._toKube());
+    expect(container1.portNumber).toEqual(container1.port);
+
+  });
+
   test('Instantiation properties are all respected', () => {
 
     const container = new kplus.Container({

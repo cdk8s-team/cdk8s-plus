@@ -1,6 +1,7 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
 import * as pod from './pod';
@@ -336,12 +337,6 @@ export class Service extends base.Resource {
   }
 }
 
-export enum Protocol {
-  TCP = 'TCP',
-  UDP = 'UDP',
-  SCTP = 'SCTP'
-}
-
 /**
  * Options for `Service.bind`.
  */
@@ -372,7 +367,7 @@ export interface ServiceBindOptions {
    *
    * @default Protocol.TCP
    */
-  readonly protocol?: Protocol;
+  readonly protocol?: container.Protocol;
 
   /**
    * The port number the service will redirect to.
