@@ -25,7 +25,11 @@ export class Action {
     return {
       path,
       port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
-      scheme: options.scheme ?? ConnectionScheme.HTTP,
+      scheme: toHttpGetActionScheme(options.scheme ?? ConnectionScheme.HTTP),
     };
   }
+}
+
+function toHttpGetActionScheme(scheme: ConnectionScheme): k8s.IoK8SApiCoreV1HttpGetActionScheme {
+  return k8s.IoK8SApiCoreV1HttpGetActionScheme[ConnectionScheme[scheme] as keyof typeof k8s.IoK8SApiCoreV1HttpGetActionScheme];
 }
