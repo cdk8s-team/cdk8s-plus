@@ -832,7 +832,7 @@ export class Container {
     for (const port of this.ports) {
       ports.push({
         containerPort: port.number,
-        protocol: port.protocol?.toString(),
+        protocol: port.protocol ? this._portProtocolToKube(port.protocol) : undefined,
         name: port.name,
         hostPort: port.hostPort,
         hostIp: port.hostIp,
@@ -914,6 +914,20 @@ export class Container {
         throw new Error(`Unsupported image pull policy: ${imagePullPolicy}`);
     }
   }
+
+  private _portProtocolToKube(protocol: Protocol): k8s.IoK8SApiCoreV1ContainerPortProtocol {
+    switch (protocol) {
+      case Protocol.SCTP:
+        return k8s.IoK8SApiCoreV1ContainerPortProtocol.SCTP;
+      case Protocol.TCP:
+        return k8s.IoK8SApiCoreV1ContainerPortProtocol.TCP;
+      case Protocol.UDP:
+        return k8s.IoK8SApiCoreV1ContainerPortProtocol.UDP;
+      default:
+        throw new Error(`Unsupported port protocol: ${protocol}`);
+    }
+  }
+
 }
 
 /**
