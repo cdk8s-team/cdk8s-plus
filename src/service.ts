@@ -337,13 +337,13 @@ export class Service extends base.Resource {
     };
   }
 
-  private _portProtocolToKube(protocol: Protocol): k8s.IoK8SApiCoreV1ServicePortProtocol {
+  private _portProtocolToKube(protocol: container.Protocol): k8s.IoK8SApiCoreV1ServicePortProtocol {
     switch (protocol) {
-      case Protocol.SCTP:
+      case container.Protocol.SCTP:
         return k8s.IoK8SApiCoreV1ServicePortProtocol.SCTP;
-      case Protocol.TCP:
+      case container.Protocol.TCP:
         return k8s.IoK8SApiCoreV1ServicePortProtocol.TCP;
-      case Protocol.UDP:
+      case container.Protocol.UDP:
         return k8s.IoK8SApiCoreV1ServicePortProtocol.UDP;
       default:
         throw new Error(`Unsupported port protocol: ${protocol}`);
