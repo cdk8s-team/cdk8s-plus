@@ -10,7 +10,7 @@ test('fromCommand', () => {
 test('fromHttpGet', () => {
   const container = new Container({ image: 'image' });
   const handler = Handler.fromHttpGet('/path');
-  expect(handler._toKube(container).httpGet).toEqual({ path: '/path', port: IntOrString.fromNumber(80) });
+  expect(handler._toKube(container).httpGet).toEqual({ path: '/path', port: IntOrString.fromNumber(80), scheme: 'HTTP' });
 });
 
 test('fromTcpSocket', () => {
