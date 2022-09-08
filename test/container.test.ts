@@ -151,6 +151,49 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
+  test('cannot configure identical ports at instantiation', () => {
+
+    expect(() => new kplus.Container({
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+        },
+        {
+          number: 8080,
+        },
+      ],
+    })).toThrowError('Port with number 8080 already exists');
+
+  });
+
+  test('cannot add an already existing port number', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+      }],
+    });
+
+    expect(() => container.addPort({ number: 8080 })).toThrowError('Port with number 8080 already exists');
+
+  });
+
+  test('cannot add an already existing port name', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+        name: 'port1',
+      }],
+    });
+
+    expect(() => container.addPort({ number: 9090, name: 'port1' })).toThrowError('Port with name port1 already exists');
+
+  });
+
   test('can configure multiple ports', () => {
 
     const container = new kplus.Container({

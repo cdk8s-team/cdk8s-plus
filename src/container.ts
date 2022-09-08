@@ -695,7 +695,7 @@ export class Container {
 
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
-  private readonly _ports: ContainerPort[];
+  private readonly _ports: ContainerPort[] = [];
   private readonly _readiness?: probe.Probe;
   private readonly _liveness?: probe.Probe;
   private readonly _startup?: probe.Probe;
@@ -724,7 +724,6 @@ export class Container {
     this.name = props.name ?? 'main';
     this.image = props.image;
     this.portNumber = props.portNumber ?? props.port;
-    this._ports = props.ports ?? [];
     this._command = props.command;
     this._args = props.args;
     this._readiness = props.readiness;
@@ -739,9 +738,13 @@ export class Container {
     this.env = new Env(props.envFrom ?? [], props.envVariables ?? {});
 
     if (this.portNumber) {
-      this._ports.push({
+      this.addPort({
         number: this.portNumber,
       });
+    }
+
+    for (const port of props.ports ?? []) {
+      this.addPort(port);
     }
   }
 
@@ -792,6 +795,18 @@ export class Container {
    * Add a port to expose from this container.
    */
   public addPort(port: ContainerPort) {
+
+    const names = this._ports.map(p => p.name).filter(x => x);
+    const numbers = this._ports.map(p => p.number);
+
+    if (port.name && names.includes(port.name)) {
+      throw new Error(`Port with name ${port.name} already exists`);
+    }
+
+    if (numbers.includes(port.number)) {
+      throw new Error(`Port with number ${port.number} already exists`);
+    }
+
     this._ports.push(port);
   }
 
