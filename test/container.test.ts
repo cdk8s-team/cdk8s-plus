@@ -151,6 +151,21 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
+  test('can configure multiple ports', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+      }],
+    });
+
+    container.addPort({ number: 9090 });
+    expect(container._toKube().ports).toEqual([{ containerPort: 8080 }, { containerPort: 9090 }]);
+    expect(container.ports).toEqual([{ number: 8080 }, { number: 9090 }]);
+
+  });
+
   test('portNumber is equivalent to port', () => {
 
     const container1 = new kplus.Container({

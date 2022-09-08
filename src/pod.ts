@@ -1751,6 +1751,6 @@ export class PodConnections {
   }
 
   private extractPorts(selector?: networkpolicy.INetworkPolicyPeer): networkpolicy.NetworkPolicyPort[] {
-    return container.extractContainerPorts(selector).map(n => networkpolicy.NetworkPolicyPort.tcp(n));
+    return container.extractContainerPorts(selector).map(n => networkpolicy.NetworkPolicyPort.tcp(n.number));
   }
 }
