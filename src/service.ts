@@ -1,6 +1,7 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
 import * as pod from './pod';
@@ -336,13 +337,13 @@ export class Service extends base.Resource {
     };
   }
 
-  private _portProtocolToKube(protocol: Protocol): k8s.IoK8SApiCoreV1ServicePortProtocol {
+  private _portProtocolToKube(protocol: container.Protocol): k8s.IoK8SApiCoreV1ServicePortProtocol {
     switch (protocol) {
-      case Protocol.SCTP:
+      case container.Protocol.SCTP:
         return k8s.IoK8SApiCoreV1ServicePortProtocol.SCTP;
-      case Protocol.TCP:
+      case container.Protocol.TCP:
         return k8s.IoK8SApiCoreV1ServicePortProtocol.TCP;
-      case Protocol.UDP:
+      case container.Protocol.UDP:
         return k8s.IoK8SApiCoreV1ServicePortProtocol.UDP;
       default:
         throw new Error(`Unsupported port protocol: ${protocol}`);
@@ -363,12 +364,6 @@ export class Service extends base.Resource {
         throw new Error(`Unsupported service type: ${serviceType}`);
     }
   }
-}
-
-export enum Protocol {
-  TCP = 'TCP',
-  UDP = 'UDP',
-  SCTP = 'SCTP'
 }
 
 /**
@@ -401,7 +396,7 @@ export interface ServiceBindOptions {
    *
    * @default Protocol.TCP
    */
-  readonly protocol?: Protocol;
+  readonly protocol?: container.Protocol;
 
   /**
    * The port number the service will redirect to.

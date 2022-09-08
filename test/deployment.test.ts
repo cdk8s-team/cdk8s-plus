@@ -125,7 +125,7 @@ test('Expose can set service and port details', () => {
     containers: [
       {
         image: 'image',
-        port: 9300,
+        port: 9500,
       },
     ],
   });
@@ -631,5 +631,54 @@ test('exposing via a service preserves deployment namespace', () => {
 
   deployment.exposeViaService();
   expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('expose captures all container ports', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+        },
+        {
+          number: 9090,
+        },
+      ],
+    }],
+  });
+
+  deployment.exposeViaService();
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
+test('cannot expose with a port not owned by the container', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+        },
+        {
+          number: 9090,
+        },
+      ],
+    }],
+  });
+
+  // this should fail because none of the containers in this
+  // deployment expose port 2020.
+  expect(() => deployment.exposeViaService({
+    ports: [{ port: 2020 }],
+  })).toThrowError('Unable to expose deployment');
 
 });
