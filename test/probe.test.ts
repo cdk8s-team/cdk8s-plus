@@ -16,6 +16,7 @@ describe('fromHttpGet()', () => {
       httpGet: {
         path: '/hello',
         port: IntOrString.fromNumber(5555),
+        scheme: 'HTTP',
       },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
@@ -37,6 +38,7 @@ describe('fromHttpGet()', () => {
       httpGet: {
         path: '/hello',
         port: IntOrString.fromNumber(1234),
+        scheme: 'HTTP',
       },
       initialDelaySeconds: undefined,
       periodSeconds: undefined,
@@ -63,6 +65,7 @@ describe('fromHttpGet()', () => {
       httpGet: {
         path: '/hello',
         port: IntOrString.fromNumber(5555),
+        scheme: 'HTTP',
       },
       failureThreshold: 11,
       initialDelaySeconds: 60,
