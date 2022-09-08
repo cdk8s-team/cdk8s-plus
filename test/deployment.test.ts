@@ -125,7 +125,7 @@ test('Expose can set service and port details', () => {
     containers: [
       {
         image: 'image',
-        port: 9300,
+        port: 9500,
       },
     ],
   });

@@ -1080,7 +1080,7 @@ export function extractContainerPorts(selector?: any): ContainerPort[] {
 
   // we don't use instanceof intentionally since it can create
   // cyclic import problems.
-  const containers: Container[] = (selector as any).containers;
+  const containers: Container[] = (selector as any).containers ?? [];
 
   return containers.flatMap(c => c.ports);
 }
