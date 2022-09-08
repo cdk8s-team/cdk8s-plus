@@ -168,11 +168,21 @@ export class Deployment extends workload.Workload {
    * @param options Options to determine details of the service and port exposed.
    */
   public exposeViaService(options: DeploymentExposeViaServiceOptions = {}): service.Service {
-    const ports = options.ports ?? this.extractPorts();
+    const myPorts = container.extractContainerPorts(this);
+    const myPortNumbers = myPorts.map(p => p.number);
+    const ports: service.ServicePort[] = options.ports ?? myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol }));
     if (ports.length === 0) {
       throw new Error(`Unable to expose deployment ${this.name} via a service: `
         + 'Deployment port cannot be determined.'
         + 'Either pass \'ports\', or configure ports on the containers of the deployment');
+    }
+
+    // validate the ports are owned by our containers
+    for (const port of ports) {
+      const targetPort = port.targetPort ?? port.port;
+      if (!myPortNumbers.includes(targetPort)) {
+        throw new Error(`Unable to expose deployment ${this.name} via a service: Port ${targetPort} is not exposed by any container`);
+      }
     }
 
     const metadata: any = { namespace: this.metadata.namespace };
@@ -198,10 +208,6 @@ export class Deployment extends workload.Workload {
   public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): ingress.Ingress {
     const ser = this.exposeViaService(options);
     return ser.exposeViaIngress(path, options);
-  }
-
-  private extractPorts(): service.ServicePort[] {
-    return container.extractContainerPorts(this).map(port => ({ targetPort: port, port }));
   }
 
   /**
