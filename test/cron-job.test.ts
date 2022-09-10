@@ -23,15 +23,13 @@ test('defaultChild', () => {
   expect(defaultChild.kind).toEqual('CronJob');
 });
 
-test('allow setting jobProperties / default configuration', () => {
+test('default configuration', () => {
 
   const chart = Testing.chart();
 
   const schedule = Cron.everyMinute();
 
   new kplus.CronJob(chart, 'CronJob', {
-    activeDeadline: Duration.seconds(60),
-    backoffLimit: 4,
     schedule: schedule,
     containers: [{ image: 'image' }],
   });
@@ -48,13 +46,9 @@ test('allow setting jobProperties / default configuration', () => {
   expect(spec.suspend).toEqual(false);
   expect(spec.successfulJobsHistoryLimit).toEqual(3);
   expect(spec.failedJobsHistoryLimit).toEqual(1);
-
-  expect(spec.jobTemplate.spec.activeDeadlineSeconds).toEqual(60);
-  expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
-  expect(spec.jobTemplate.spec.template.spec.containers[0].image).toEqual('image');
 });
 
-test('allows setting all options', () => {
+test('custom configuration', () => {
 
   const chart = Testing.chart();
 
@@ -69,9 +63,6 @@ test('allows setting all options', () => {
   const schedule = Cron.schedule(cronOptions);
 
   new kplus.CronJob(chart, 'CronJob', {
-    jobMetadata: {
-      name: 'CustomJob',
-    },
     activeDeadline: Duration.seconds(60),
     backoffLimit: 4,
     schedule: schedule,
@@ -97,7 +88,6 @@ test('allows setting all options', () => {
   expect(spec.successfulJobsHistoryLimit).toEqual(3);
   expect(spec.failedJobsHistoryLimit).toEqual(3);
 
-  expect(spec.jobTemplate.metadata.name).toEqual('CustomJob');
   expect(spec.jobTemplate.spec.activeDeadlineSeconds).toEqual(60);
   expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
   expect(spec.jobTemplate.spec.template.spec.containers[0].image).toEqual('image');

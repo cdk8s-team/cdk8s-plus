@@ -1,4 +1,4 @@
-import { ApiObject, Duration, Lazy, Cron, ApiObjectMetadata } from 'cdk8s';
+import { ApiObject, Duration, Lazy, Cron } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as k8s from './imports/k8s';
 import { JobProps } from './job';
@@ -28,11 +28,6 @@ export enum ConcurrencyPolicy {
  */
 export interface CronJobProps extends JobProps {
   /**
-   * Metadata of the Job that is being scheduled by CronJob.
-   */
-  readonly jobMetadata?: ApiObjectMetadata;
-
-  /**
    * Specifies the time in which the job would run again. This is defined as a cron expression in the CronJob resource.
    */
   readonly schedule: Cron;
@@ -49,7 +44,7 @@ export interface CronJobProps extends JobProps {
   /**
    * Specifies the concurrency policy for the job.
    *
-   * @default Forbid
+   * @default ConcurrencyPolicy.Forbid
    */
   readonly concurrencyPolicy?: ConcurrencyPolicy;
 
@@ -71,12 +66,12 @@ export interface CronJobProps extends JobProps {
    * However, if `startingDeadline` is set to 200 seconds, kubernetes will only count 3 missed schedules, and thus
    * start a new execution at 10:22:00.
    *
-   * @default - There is no deadline.
+   * @default Duration.seconds(10)
    */
   readonly startingDeadline?: Duration;
 
   /**
-   * Specifies if the recurring job should be suspended. Only applies to future executions, current ones are remained untouched.
+   * Specifies if the cron job should be suspended. Only applies to future executions, current ones are remained untouched.
    *
    * @default false
    */
@@ -101,11 +96,6 @@ export interface CronJobProps extends JobProps {
  * A CronJob is responsible for creating a Job and scheduling it based on provided cron schedule. This helps running Jobs in a recurring manner.
  */
 export class CronJob extends workload.Workload {
-  /**
-   * The metadata of the recurring `Job` that this cronjob will schedule.
-   */
-  public readonly jobMetadata?: ApiObjectMetadata;
-
   /**
    * The schedule this cron job is scheduled to run in.
    */
@@ -169,14 +159,13 @@ export class CronJob extends workload.Workload {
     });
 
     if (props.startingDeadline != undefined && props.startingDeadline.toSeconds() < 10) {
-      throw new Error(`The starting deadline cannot be less than 10 seconds since the Kubernetes CronJobController checks things every 10 seconds and hence the CronJob may not be scheduled. The value passed is: ${props.startingDeadline}`);
+      throw new Error(`The 'startingDeadline' property cannot be less than 10 seconds since the Kubernetes CronJobController checks things every 10 seconds and hence the CronJob may not be scheduled. The value passed is: ${props.startingDeadline}`);
     }
 
     if (props.ttlAfterFinished != undefined && (props.successfulJobsRetained != undefined || props.failedJobsRetained != undefined)) {
-      throw new Error('The ttlAfterFinished cannot be set if cron job is retaining successful or failed job runs. This would cause the retention of jobs to not work properly since it would delete the job based on its value.');
+      throw new Error('The \'ttlAfterFinished\' property cannot be set if \'successfulJobsRetained\' property or \'failedJobsRetained\' property is set. This would cause the retention of jobs to not work properly since it would delete the job based on its value.');
     }
 
-    this.jobMetadata = props.jobMetadata;
     this.schedule = props.schedule;
     this.timeZone = props.timeZone;
     this.concurrencyPolicy = props.concurrencyPolicy ?? ConcurrencyPolicy.FORBID;
@@ -199,7 +188,6 @@ export class CronJob extends workload.Workload {
       concurrencyPolicy: this.concurrencyPolicy,
       failedJobsHistoryLimit: this.failedJobsRetained,
       jobTemplate: {
-        metadata: this.jobMetadata,
         spec: this._toJobSpec(),
       },
       schedule: this.schedule.expressionString,
