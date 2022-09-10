@@ -1,5 +1,6 @@
 import { Container } from './container';
 import * as k8s from './imports/k8s';
+import { ConnectionScheme } from './probe';
 
 /**
  * Utility class to implement the conversion between our API and the k8s action
@@ -11,7 +12,7 @@ export class Action {
 
   public static fromTcpSocket(container: Container, options: { port?: number; host?: string } = {}): k8s.TcpSocketAction {
     return {
-      port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
+      port: k8s.IntOrString.fromNumber(options.port ?? container.portNumber ?? 80),
       host: options.host,
     };
   }
@@ -20,10 +21,11 @@ export class Action {
     return { command };
   }
 
-  public static fromHttpGet(container: Container, path: string, options: { port?: number } = { }): k8s.HttpGetAction {
+  public static fromHttpGet(container: Container, path: string, options: { port?: number; scheme?: ConnectionScheme } = { }): k8s.HttpGetAction {
     return {
       path,
-      port: k8s.IntOrString.fromNumber(options.port ?? container.port ?? 80),
+      port: k8s.IntOrString.fromNumber(options.port ?? container.portNumber ?? 80),
+      scheme: options.scheme ?? ConnectionScheme.HTTP,
     };
   }
 }
