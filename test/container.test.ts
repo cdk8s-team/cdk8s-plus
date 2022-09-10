@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, Probe } from '../src';
+import { Container, Cpu, Handler } from '../src';
 import * as k8s from '../src/imports/k8s';
 
 describe('EnvValue', () => {
@@ -153,18 +153,7 @@ describe('Container', () => {
 
   test('Instantiation properties are all respected', () => {
 
-    // GIVEN
-    const chart = Testing.chart();
-    const pod = new kplus.Pod(chart, 'Pod');
-    const port = 9000;
-    const readiness = Probe.fromTcpSocket({
-      port: port,
-    });
-    const liveness = Probe.fromTcpSocket({
-      port: port,
-    });
-
-    pod.addContainer({
+    const container = new kplus.Container({
       image: 'image',
       name: 'name',
       imagePullPolicy: kplus.ImagePullPolicy.NEVER,
@@ -174,30 +163,32 @@ describe('Container', () => {
       envVariables: {
         key: kplus.EnvValue.fromValue('value'),
       },
-      readiness: readiness,
-      liveness: liveness,
     });
 
-    // THEN
-    const manifest = Testing.synth(chart);
-    expect(manifest).toMatchSnapshot();
-    const container = manifest[0].spec.containers[0];
+    const actual: k8s.Container = container._toKube();
 
-    expect(container.name).toEqual('name');
-    expect(container.imagePullPolicy).toEqual('Never');
-    expect(container.image).toEqual('image');
-    expect(container.workingDir).toEqual('workingDir');
-    expect(container.ports[0].containerPort).toEqual(9000);
-    expect(container.command[0]).toEqual('command');
-    expect(container.env[0].name).toEqual('key');
-    expect(container.env[0].value).toEqual('value');
-    expect(container.securityContext.privileged).toEqual(false);
-    expect(container.securityContext.readOnlyRootFilesystem).toEqual(false);
-    expect(container.securityContext.runAsNonRoot).toEqual(false);
-    expect(container.readinessProbe.failureThreshold).toEqual(3);
-    expect(container.readinessProbe.tcpSocket.port).toEqual(9000);
-    expect(container.livenessProbe.failureThreshold).toEqual(3);
-    expect(container.livenessProbe.tcpSocket.port).toEqual(9000);
+    const expected: k8s.Container = {
+      name: 'name',
+      imagePullPolicy: 'Never',
+      image: 'image',
+      workingDir: 'workingDir',
+      ports: [{
+        containerPort: 9000,
+      }],
+      command: ['command'],
+      env: [{
+        name: 'key',
+        value: 'value',
+      }],
+      securityContext: {
+        privileged: false,
+        readOnlyRootFilesystem: false,
+        runAsNonRoot: false,
+      },
+    };
+
+    expect(actual).toEqual(expected);
+
   });
 
   test('Must use container props', () => {
@@ -335,47 +326,6 @@ describe('Container', () => {
     };
 
     expect(container._toKube().volumeMounts).toEqual([expected]);
-  });
-
-  test('"readiness", "liveness" have defaults if port is provided', () => {
-    // GIVEN
-    const chart = Testing.chart();
-    const pod = new kplus.Pod(chart, 'Pod');
-    const port = 8080;
-
-    pod.addContainer({
-      image: 'foo',
-      port: port,
-    });
-
-    // THEN
-    const manifest = Testing.synth(chart);
-    expect(manifest).toMatchSnapshot();
-    const container = manifest[0].spec.containers[0];
-
-    // Readiness Probe
-    expect(container.readinessProbe.failureThreshold).toEqual(3);
-    expect(container.readinessProbe.tcpSocket.port).toEqual(8080);
-
-    // Liveness Probe
-    expect(container.livenessProbe.failureThreshold).toEqual(3);
-    expect(container.livenessProbe.tcpSocket.port).toEqual(8080);
-  });
-
-  test('"readiness", "liveness" are undefined if port is not provided', () => {
-    // GIVEN
-    const chart = Testing.chart();
-    const pod = new kplus.Pod(chart, 'Pod');
-
-    pod.addContainer({ image: 'foo' });
-
-    // THEN
-    const manifest = Testing.synth(chart);
-    expect(manifest).toMatchSnapshot();
-    const container = manifest[0].spec.containers[0];
-
-    expect(container).not.toHaveProperty('readinessProbe');
-    expect(container).not.toHaveProperty('livenessProbe');
   });
 
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {

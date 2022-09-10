@@ -134,24 +134,12 @@ Array [
         Object {
           "image": "pod",
           "imagePullPolicy": "Always",
-          "livenessProbe": Object {
-            "failureThreshold": 3,
-            "tcpSocket": Object {
-              "port": 6739,
-            },
-          },
           "name": "main",
           "ports": Array [
             Object {
               "containerPort": 6739,
             },
           ],
-          "readinessProbe": Object {
-            "failureThreshold": 3,
-            "tcpSocket": Object {
-              "port": 6739,
-            },
-          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
@@ -486,24 +474,12 @@ Array [
         Object {
           "image": "pod",
           "imagePullPolicy": "Always",
-          "livenessProbe": Object {
-            "failureThreshold": 3,
-            "tcpSocket": Object {
-              "port": 6739,
-            },
-          },
           "name": "main",
           "ports": Array [
             Object {
               "containerPort": 6739,
             },
           ],
-          "readinessProbe": Object {
-            "failureThreshold": 3,
-            "tcpSocket": Object {
-              "port": 6739,
-            },
-          },
           "securityContext": Object {
             "privileged": false,
             "readOnlyRootFilesystem": false,
