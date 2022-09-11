@@ -1,6 +1,7 @@
 export * from './base';
 export * from './config-map';
 export * from './container';
+export * from './cron-job';
 export * from './deployment';
 export * from './job';
 export * from './pod';

@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom configuration 1`] = `
+Array [
+  Object {
+    "apiVersion": "batch/v1",
+    "kind": "CronJob",
+    "metadata": Object {
+      "name": "test-cronjob-c812e113",
+    },
+    "spec": Object {
+      "concurrencyPolicy": "Allow",
+      "failedJobsHistoryLimit": 3,
+      "jobTemplate": Object {
+        "spec": Object {
+          "activeDeadlineSeconds": 60,
+          "backoffLimit": 4,
+          "template": Object {
+            "metadata": Object {
+              "labels": Object {
+                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
+              },
+            },
+            "spec": Object {
+              "automountServiceAccountToken": true,
+              "containers": Array [
+                Object {
+                  "image": "image",
+                  "imagePullPolicy": "Always",
+                  "name": "main",
+                  "resources": Object {
+                    "limits": Object {
+                      "cpu": "1500m",
+                      "memory": "2048Mi",
+                    },
+                    "requests": Object {
+                      "cpu": "1000m",
+                      "memory": "512Mi",
+                    },
+                  },
+                  "securityContext": Object {
+                    "privileged": false,
+                    "readOnlyRootFilesystem": false,
+                    "runAsGroup": 26000,
+                    "runAsNonRoot": false,
+                    "runAsUser": 25000,
+                  },
+                },
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "restartPolicy": "Never",
+              "securityContext": Object {
+                "fsGroupChangePolicy": "Always",
+                "runAsNonRoot": false,
+              },
+              "setHostnameAsFQDN": false,
+            },
+          },
+        },
+      },
+      "schedule": "5 * * * *",
+      "startingDeadlineSeconds": 60,
+      "successfulJobsHistoryLimit": 3,
+      "suspend": false,
+      "timeZone": "America/Los_Angeles",
+    },
+  },
+]
+`;
+
+exports[`default configuration 1`] = `
+Array [
+  Object {
+    "apiVersion": "batch/v1",
+    "kind": "CronJob",
+    "metadata": Object {
+      "name": "test-cronjob-c812e113",
+    },
+    "spec": Object {
+      "concurrencyPolicy": "Forbid",
+      "failedJobsHistoryLimit": 1,
+      "jobTemplate": Object {
+        "spec": Object {
+          "template": Object {
+            "metadata": Object {
+              "labels": Object {
+                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
+              },
+            },
+            "spec": Object {
+              "automountServiceAccountToken": true,
+              "containers": Array [
+                Object {
+                  "image": "image",
+                  "imagePullPolicy": "Always",
+                  "name": "main",
+                  "resources": Object {
+                    "limits": Object {
+                      "cpu": "1500m",
+                      "memory": "2048Mi",
+                    },
+                    "requests": Object {
+                      "cpu": "1000m",
+                      "memory": "512Mi",
+                    },
+                  },
+                  "securityContext": Object {
+                    "privileged": false,
+                    "readOnlyRootFilesystem": false,
+                    "runAsGroup": 26000,
+                    "runAsNonRoot": false,
+                    "runAsUser": 25000,
+                  },
+                },
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "restartPolicy": "Never",
+              "securityContext": Object {
+                "fsGroupChangePolicy": "Always",
+                "runAsNonRoot": false,
+              },
+              "setHostnameAsFQDN": false,
+            },
+          },
+        },
+      },
+      "schedule": "* * * * *",
+      "startingDeadlineSeconds": 10,
+      "successfulJobsHistoryLimit": 3,
+      "suspend": false,
+    },
+  },
+]
+`;
