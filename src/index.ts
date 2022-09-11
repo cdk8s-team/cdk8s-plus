@@ -23,3 +23,4 @@ export * from './network-policy';
 export * from './namespace';
 
 export * from './api-resource.generated';
+export * as k8s from './imports/k8s';
