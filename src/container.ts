@@ -603,7 +603,10 @@ export interface ContainerProps {
    * StartupProbe indicates that the Pod has successfully initialized.
    * If specified, no other probes are executed until this completes successfully
    *
-   * @default - no startup probe is defined.
+   * @default - If a port is provided, then knocks on that port
+   * to determine when the container is ready for readiness and
+   * liveness probe checks.
+   * Otherwise, no startup probe is defined.
    */
   readonly startup?: probe.Probe;
 
@@ -721,14 +724,17 @@ export class Container {
       throw new Error('Either \'port\' or \'portNumber\' is allowed. Use \'portNumber\' since \'port\' is deprecated');
     }
 
+    const portNumber = props.portNumber ?? props.port;
+    const defaultProbeConfiguration: probe.Probe = probe.Probe.fromTcpSocket({ port: portNumber });
+
     this.name = props.name ?? 'main';
     this.image = props.image;
-    this.portNumber = props.portNumber ?? props.port;
+    this.portNumber = portNumber;
     this._command = props.command;
     this._args = props.args;
     this._readiness = props.readiness;
     this._liveness = props.liveness;
-    this._startup = props.startup;
+    this._startup = props.startup ?? (this.portNumber ? defaultProbeConfiguration : undefined);
     this._lifecycle = props.lifecycle;
     this.resources = props.resources ?? defaultResourceSpec;
     this.workingDir = props.workingDir;
