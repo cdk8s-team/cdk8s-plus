@@ -169,6 +169,12 @@ Array [
             "runAsNonRoot": false,
             "runAsUser": 25000,
           },
+          "startupProbe": Object {
+            "failureThreshold": 3,
+            "tcpSocket": Object {
+              "port": 6739,
+            },
+          },
         },
       ],
       "dnsPolicy": "ClusterFirst",
@@ -580,6 +586,12 @@ Array [
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
+          },
+          "startupProbe": Object {
+            "failureThreshold": 3,
+            "tcpSocket": Object {
+              "port": 6739,
+            },
           },
         },
       ],
