@@ -1,8 +1,7 @@
 import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { DeploymentStrategy, PercentOrAbsolute } from '../src';
-import * as k8s from '../src/imports/k8s';
+import { DeploymentStrategy, PercentOrAbsolute, k8s } from '../src';
 
 test('defaultChild', () => {
 

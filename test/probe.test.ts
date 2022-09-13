@@ -1,6 +1,5 @@
 import { Duration } from 'cdk8s';
-import { Container, Probe } from '../src';
-import { IntOrString } from '../src/imports/k8s';
+import { Container, Probe, k8s } from '../src';
 
 describe('fromHttpGet()', () => {
   test('defaults to the container port', () => {
@@ -15,7 +14,7 @@ describe('fromHttpGet()', () => {
       failureThreshold: 3,
       httpGet: {
         path: '/hello',
-        port: IntOrString.fromNumber(5555),
+        port: k8s.IntOrString.fromNumber(5555),
         scheme: 'HTTP',
       },
       initialDelaySeconds: undefined,
@@ -37,7 +36,7 @@ describe('fromHttpGet()', () => {
       failureThreshold: 3,
       httpGet: {
         path: '/hello',
-        port: IntOrString.fromNumber(1234),
+        port: k8s.IntOrString.fromNumber(1234),
         scheme: 'HTTP',
       },
       initialDelaySeconds: undefined,
@@ -64,7 +63,7 @@ describe('fromHttpGet()', () => {
     expect(min._toKube(container)).toEqual({
       httpGet: {
         path: '/hello',
-        port: IntOrString.fromNumber(5555),
+        port: k8s.IntOrString.fromNumber(5555),
         scheme: 'HTTP',
       },
       failureThreshold: 11,
@@ -135,7 +134,7 @@ describe('fromTcpSocket()', () => {
     // THEN
     expect(min._toKube(container)).toEqual({
       tcpSocket: {
-        port: IntOrString.fromNumber(5555),
+        port: k8s.IntOrString.fromNumber(5555),
         host: undefined,
       },
       failureThreshold: 3,
@@ -159,7 +158,7 @@ describe('fromTcpSocket()', () => {
     // THEN
     expect(min._toKube(container)).toEqual({
       tcpSocket: {
-        port: IntOrString.fromNumber(8080),
+        port: k8s.IntOrString.fromNumber(8080),
         host: 'hostname',
       },
       failureThreshold: 3,
@@ -186,7 +185,7 @@ describe('fromTcpSocket()', () => {
     // THEN
     expect(min._toKube(container)).toEqual({
       tcpSocket: {
-        port: IntOrString.fromNumber(5555),
+        port: k8s.IntOrString.fromNumber(5555),
         host: undefined,
       },
       failureThreshold: 11,
