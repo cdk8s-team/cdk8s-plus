@@ -1,8 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, ConnectionScheme, Probe } from '../src';
-import * as k8s from '../src/imports/k8s';
+import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s } from '../src';
 
 describe('EnvValue', () => {
 
