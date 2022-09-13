@@ -96,7 +96,7 @@ test('StatefulSet gets defaults', () => {
 
   const resources = Testing.synth(chart);
   const setSpec: k8s.StatefulSetSpec = resources[1].spec;
-  expect(setSpec.replicas).toEqual(1);
+  expect(setSpec.replicas).toEqual(2);
   expect(setSpec.serviceName).toEqual(resources[0].metadata.name);
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.ORDERED_READY);
   expect(setSpec.minReadySeconds).toEqual(0);

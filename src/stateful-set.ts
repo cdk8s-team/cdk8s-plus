@@ -32,7 +32,7 @@ export interface StatefulSetProps extends workload.WorkloadProps {
   /**
     * Number of desired pods.
     *
-    * @default 1
+    * @default 2
     */
   readonly replicas?: number;
 
@@ -131,7 +131,7 @@ export class StatefulSet extends workload.Workload {
 
     this.apiObject.addDependency(this._service);
 
-    this.replicas = props.replicas ?? 1;
+    this.replicas = props.replicas ?? 2;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
