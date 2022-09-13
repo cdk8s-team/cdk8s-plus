@@ -41,7 +41,6 @@ test('default configuration', () => {
 
   expect(spec.schedule).toEqual('* * * * *');
   expect(spec.concurrencyPolicy).toEqual('Forbid');
-  expect(spec.timeZone).toEqual(undefined);
   expect(spec.startingDeadlineSeconds).toEqual(10);
   expect(spec.suspend).toEqual(false);
   expect(spec.successfulJobsHistoryLimit).toEqual(3);
@@ -66,7 +65,6 @@ test('custom configuration', () => {
     activeDeadline: Duration.seconds(60),
     backoffLimit: 4,
     schedule: schedule,
-    timeZone: 'America/Los_Angeles',
     concurrencyPolicy: kplus.ConcurrencyPolicy.ALLOW,
     startingDeadline: Duration.seconds(60),
     suspend: false,
@@ -82,7 +80,6 @@ test('custom configuration', () => {
 
   expect(spec.schedule).toEqual('5 * * * *');
   expect(spec.concurrencyPolicy).toEqual('Allow');
-  expect(spec.timeZone).toEqual('America/Los_Angeles');
   expect(spec.startingDeadlineSeconds).toEqual(60);
   expect(spec.suspend).toEqual(false);
   expect(spec.successfulJobsHistoryLimit).toEqual(3);

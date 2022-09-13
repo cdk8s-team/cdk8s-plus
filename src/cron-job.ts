@@ -33,15 +33,6 @@ export interface CronJobProps extends JobProps {
   readonly schedule: Cron;
 
   /**
-   * Specifies the timezone for the job. This helps aligining the schedule to follow the specified timezone.
-   *
-   * @see {@link https://en.wikipedia.org/wiki/List_of_tz_database_time_zones} for list of valid timezone values.
-   *
-   * @default - Timezone of kube-controller-manager process.
-   */
-  readonly timeZone?: string;
-
-  /**
    * Specifies the concurrency policy for the job.
    *
    * @default ConcurrencyPolicy.Forbid
@@ -100,11 +91,6 @@ export class CronJob extends workload.Workload {
    * The schedule this cron job is scheduled to run in.
    */
   public readonly schedule: Cron;
-
-  /**
-   * The timezone which this cron job would follow to schedule jobs.
-   */
-  public readonly timeZone?: string;
 
   /**
    * The policy used by this cron job to determine the concurrency mode in which to schedule jobs.
@@ -167,7 +153,6 @@ export class CronJob extends workload.Workload {
     }
 
     this.schedule = props.schedule;
-    this.timeZone = props.timeZone;
     this.concurrencyPolicy = props.concurrencyPolicy ?? ConcurrencyPolicy.FORBID;
     this.startingDeadline = props.startingDeadline ?? Duration.seconds(10);
     this.suspend = props.suspend ?? false;
@@ -185,7 +170,7 @@ export class CronJob extends workload.Workload {
    */
   public _toKube(): k8s.CronJobSpec {
     return {
-      concurrencyPolicy: this.concurrencyPolicy,
+      concurrencyPolicy: this._toIoK8SApiBatchV1CronJobSpecConcurrencyPolicy(this.concurrencyPolicy),
       failedJobsHistoryLimit: this.failedJobsRetained,
       jobTemplate: {
         spec: this._toJobSpec(),
@@ -194,7 +179,6 @@ export class CronJob extends workload.Workload {
       startingDeadlineSeconds: this.startingDeadline.toSeconds(),
       successfulJobsHistoryLimit: this.successfulJobsRetained,
       suspend: this.suspend,
-      timeZone: this.timeZone,
     };
   }
 
@@ -211,5 +195,15 @@ export class CronJob extends workload.Workload {
       backoffLimit: this.jobProperties.backoffLimit,
       ttlSecondsAfterFinished: this.jobProperties.ttlAfterFinished?.toSeconds(),
     };
+  }
+
+  /**
+   * Returns policy value as k8s.IoK8SApiBatchV1CronJobSpecConcurrencyPolicy type
+   * @param policy Concurrency policy value
+   * @returns k8s.IoK8SApiBatchV1CronJobSpecConcurrencyPolicy
+   */
+  private _toIoK8SApiBatchV1CronJobSpecConcurrencyPolicy(policy: string): k8s.IoK8SApiBatchV1CronJobSpecConcurrencyPolicy {
+    const enumPolicy = policy.toUpperCase() as keyof typeof k8s.IoK8SApiBatchV1CronJobSpecConcurrencyPolicy;
+    return k8s.IoK8SApiBatchV1CronJobSpecConcurrencyPolicy[enumPolicy];
   }
 }

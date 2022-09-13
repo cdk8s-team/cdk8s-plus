@@ -62,7 +62,6 @@ Array [
       "startingDeadlineSeconds": 60,
       "successfulJobsHistoryLimit": 3,
       "suspend": false,
-      "timeZone": "America/Los_Angeles",
     },
   },
 ]
