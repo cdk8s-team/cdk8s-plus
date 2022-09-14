@@ -80,6 +80,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsGroup": 26000,

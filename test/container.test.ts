@@ -652,6 +652,9 @@ test('default security context', () => {
   expect(container.securityContext.ensureNonRoot).toBeFalsy();
   expect(container.securityContext.privileged).toBeFalsy();
   expect(container.securityContext.readOnlyRootFilesystem).toBeFalsy();
+  expect(container.securityContext.user).toEqual(25000);
+  expect(container.securityContext.group).toEqual(26000);
+  expect(container.securityContext.allowPrivilegeEscalation).toBeFalsy();
 
   expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
   expect(container.securityContext._toKube()).toStrictEqual({
@@ -660,6 +663,7 @@ test('default security context', () => {
     runAsGroup: container.securityContext.group,
     runAsNonRoot: container.securityContext.ensureNonRoot,
     runAsUser: container.securityContext.user,
+    allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
   });
 
 });
