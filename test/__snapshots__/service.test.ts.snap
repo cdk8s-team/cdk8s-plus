@@ -83,7 +83,7 @@ Array [
                 "privileged": false,
                 "readOnlyRootFilesystem": false,
                 "runAsGroup": 26000,
-                "runAsNonRoot": false,
+                "runAsNonRoot": true,
                 "runAsUser": 25000,
               },
             },
@@ -91,7 +91,7 @@ Array [
           "dnsPolicy": "ClusterFirst",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
+            "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
         },

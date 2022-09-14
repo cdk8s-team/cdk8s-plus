@@ -312,7 +312,7 @@ test('default security context', () => {
 
   const spec = Testing.synth(chart)[0].spec;
 
-  expect(pod.securityContext.ensureNonRoot).toBeFalsy();
+  expect(pod.securityContext.ensureNonRoot).toBeTruthy();
   expect(pod.securityContext.sysctls).toEqual([]);
   expect(pod.securityContext.fsGroup).toBeUndefined();
   expect(pod.securityContext.fsGroupChangePolicy).toEqual(FsGroupChangePolicy.ALWAYS);

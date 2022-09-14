@@ -264,7 +264,7 @@ describe('Container', () => {
     expect(container.env[0].value).toEqual('value');
     expect(container.securityContext.privileged).toEqual(false);
     expect(container.securityContext.readOnlyRootFilesystem).toEqual(false);
-    expect(container.securityContext.runAsNonRoot).toEqual(false);
+    expect(container.securityContext.runAsNonRoot).toEqual(true);
     expect(container.startupProbe.failureThreshold).toEqual(3);
     expect(container.startupProbe.tcpSocket.port).toEqual(9000);
   });
@@ -649,7 +649,7 @@ test('default security context', () => {
 
   const container = new Container({ image: 'image' });
 
-  expect(container.securityContext.ensureNonRoot).toBeFalsy();
+  expect(container.securityContext.ensureNonRoot).toBeTruthy();
   expect(container.securityContext.privileged).toBeFalsy();
   expect(container.securityContext.readOnlyRootFilesystem).toBeFalsy();
 
