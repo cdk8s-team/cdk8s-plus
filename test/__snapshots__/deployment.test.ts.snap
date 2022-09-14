@@ -31,7 +31,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "image",
@@ -160,7 +160,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "image",
@@ -262,7 +262,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "image",
@@ -363,7 +363,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -453,7 +453,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -541,7 +541,7 @@ Array [
               },
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -610,7 +610,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -691,7 +691,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -760,7 +760,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -838,7 +838,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -929,7 +929,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -1017,7 +1017,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -1086,7 +1086,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -1167,7 +1167,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -1236,7 +1236,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -1314,7 +1314,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -1405,7 +1405,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -1493,7 +1493,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "web",
@@ -1579,7 +1579,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -1662,7 +1662,7 @@ Array [
               ],
             },
           },
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "redis",
@@ -1712,7 +1712,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",

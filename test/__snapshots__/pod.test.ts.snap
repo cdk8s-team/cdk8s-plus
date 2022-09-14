@@ -36,7 +36,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -141,7 +141,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -200,7 +200,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -274,7 +274,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -322,7 +322,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -396,7 +396,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -444,7 +444,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -559,7 +559,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -618,7 +618,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -692,7 +692,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -740,7 +740,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -814,7 +814,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -862,7 +862,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -964,7 +964,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1041,7 +1041,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1157,7 +1157,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1262,7 +1262,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1310,7 +1310,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1434,7 +1434,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "pod",
@@ -1484,7 +1484,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1651,7 +1651,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1694,7 +1694,7 @@ Array [
       "name": "test-pod3-c81af0d3",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1742,7 +1742,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1851,7 +1851,7 @@ Array [
       "namespace": "n1",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -1969,7 +1969,7 @@ Array [
       "namespace": "n2",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2017,7 +2017,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2177,7 +2177,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2287,7 +2287,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2389,7 +2389,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2466,7 +2466,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2582,7 +2582,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2697,7 +2697,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2745,7 +2745,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -2869,7 +2869,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "pod",
@@ -2919,7 +2919,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3086,7 +3086,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3129,7 +3129,7 @@ Array [
       "name": "test-pod3-c81af0d3",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3177,7 +3177,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3286,7 +3286,7 @@ Array [
       "namespace": "n1",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3404,7 +3404,7 @@ Array [
       "namespace": "n2",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3452,7 +3452,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3612,7 +3612,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "pod",
@@ -3722,7 +3722,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
@@ -3770,7 +3770,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
@@ -3862,7 +3862,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
@@ -3941,7 +3941,7 @@ Array [
   },
   Object {
     "apiVersion": "v1",
-    "automountServiceAccountToken": true,
+    "automountServiceAccountToken": false,
     "kind": "ServiceAccount",
     "metadata": Object {
       "name": "test-serviceaccount-c8f15383",
@@ -3962,7 +3962,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
@@ -4054,7 +4054,7 @@ Array [
       "name": "test-pod1-c8153666",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
@@ -4127,9 +4127,17 @@ Array [
       Object {
         "apiGroup": "",
         "kind": "ServiceAccount",
-        "name": "default",
+        "name": "test-serviceaccount-c8f15383",
       },
     ],
+  },
+  Object {
+    "apiVersion": "v1",
+    "automountServiceAccountToken": false,
+    "kind": "ServiceAccount",
+    "metadata": Object {
+      "name": "test-serviceaccount-c8f15383",
+    },
   },
   Object {
     "apiVersion": "v1",
@@ -4141,7 +4149,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "scraper",
@@ -4171,6 +4179,7 @@ Array [
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
       },
+      "serviceAccountName": "test-serviceaccount-c8f15383",
       "setHostnameAsFQDN": false,
     },
   },
@@ -4189,7 +4198,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
@@ -4262,9 +4271,17 @@ Array [
       Object {
         "apiGroup": "",
         "kind": "ServiceAccount",
-        "name": "default",
+        "name": "test-serviceaccount-c8f15383",
       },
     ],
+  },
+  Object {
+    "apiVersion": "v1",
+    "automountServiceAccountToken": false,
+    "kind": "ServiceAccount",
+    "metadata": Object {
+      "name": "test-serviceaccount-c8f15383",
+    },
   },
   Object {
     "apiVersion": "apps/v1",
@@ -4295,7 +4312,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "scraper",
@@ -4325,6 +4342,7 @@ Array [
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
           },
+          "serviceAccountName": "test-serviceaccount-c8f15383",
           "setHostnameAsFQDN": false,
         },
       },
@@ -4455,7 +4473,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -4524,7 +4542,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -4591,7 +4609,7 @@ Array [
           },
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -4639,7 +4657,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -4699,7 +4717,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -4747,7 +4765,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -4804,7 +4822,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -4869,7 +4887,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -4932,7 +4950,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -4980,7 +4998,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -5040,7 +5058,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -5088,7 +5106,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",
@@ -5145,7 +5163,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -5210,7 +5228,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -5280,7 +5298,7 @@ Array [
           ],
         },
       },
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "web",
@@ -5328,7 +5346,7 @@ Array [
       "name": "test-redis-c870fe8d",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "redis",

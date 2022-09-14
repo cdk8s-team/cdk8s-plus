@@ -35,7 +35,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.securityContext = new PodSecurityContext(props.securityContext);
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
-    this.automountServiceAccountToken = props.automountServiceAccountToken ?? true;
+    this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -149,9 +149,9 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
    */
   public toSubjectConfiguration(): rb.SubjectConfiguration {
 
-    if (!this.serviceAccount && !this.automountServiceAccountToken) {
+    if (!this.serviceAccount) {
       throw new Error(`${this.name} cannot be converted to a role binding subject:`
-        + ' You must either assign a service account to it, or use \'automountServiceAccountToken: true\'');
+        + ' You must assign a service account to it');
     }
 
     // 'default' is assumed to be the name of the default service account
@@ -408,7 +408,7 @@ export interface AbstractPodProps extends base.ResourceProps {
   /**
    * Indicates whether a service account token should be automatically mounted.
    *
-   * @default true
+   * @default false
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
    */
   readonly automountServiceAccountToken?: boolean;

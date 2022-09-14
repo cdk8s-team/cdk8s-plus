@@ -509,8 +509,8 @@ test('auto mounting token defaults to true', () => {
 
   const spec: k8s.PodSpec = Testing.synth(chart)[0].spec;
 
-  expect(pod.automountServiceAccountToken).toBeTruthy();
-  expect(spec.automountServiceAccountToken).toBeTruthy();
+  expect(pod.automountServiceAccountToken).toBeFalsy();
+  expect(spec.automountServiceAccountToken).toBeFalsy();
 
 });
 
@@ -1389,13 +1389,15 @@ describe('permissions', () => {
       containers: [{ image: 'image' }],
     });
 
+    const serviceAccount = new kplus.ServiceAccount(chart, 'ServiceAccount', {});
+
     const scraper = new kplus.Pod(chart, 'Pod2', {
       containers: [{ image: 'scraper' }],
+      serviceAccount: serviceAccount,
     });
 
     pod.permissions.grantRead(scraper);
     expect(Testing.synth(chart)).toMatchSnapshot();
-
   });
 
   test('can grant read permissions to workload', () => {
@@ -1405,13 +1407,15 @@ describe('permissions', () => {
       containers: [{ image: 'image' }],
     });
 
+    const serviceAccount = new kplus.ServiceAccount(chart, 'ServiceAccount', {});
+
     const scraper = new kplus.Deployment(chart, 'Deployment', {
       containers: [{ image: 'scraper' }],
+      serviceAccount: serviceAccount,
     });
 
     pod.permissions.grantRead(scraper);
     expect(Testing.synth(chart)).toMatchSnapshot();
-
   });
 
   test('can grant read permissions twice with different subjects', () => {
