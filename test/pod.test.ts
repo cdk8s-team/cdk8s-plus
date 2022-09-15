@@ -15,7 +15,7 @@ test('defaults', () => {
 
   expect(manifest).toMatchSnapshot();
   expect(spec.restartPolicy).toEqual(RestartPolicy.ALWAYS);
-  expect(spec.automountServiceAccountToken).toBeTruthy();
+  expect(spec.automountServiceAccountToken).toBeFalsy();
 });
 
 test('fails with two volumes with the same name', () => {
@@ -1393,11 +1393,9 @@ describe('permissions', () => {
       containers: [{ image: 'image' }],
     });
 
-    const serviceAccount = new kplus.ServiceAccount(chart, 'ServiceAccount', {});
-
     const scraper = new kplus.Pod(chart, 'Pod2', {
       containers: [{ image: 'scraper' }],
-      serviceAccount: serviceAccount,
+      automountServiceAccountToken: true,
     });
 
     pod.permissions.grantRead(scraper);
@@ -1411,11 +1409,9 @@ describe('permissions', () => {
       containers: [{ image: 'image' }],
     });
 
-    const serviceAccount = new kplus.ServiceAccount(chart, 'ServiceAccount', {});
-
     const scraper = new kplus.Deployment(chart, 'Deployment', {
       containers: [{ image: 'scraper' }],
-      serviceAccount: serviceAccount,
+      automountServiceAccountToken: true,
     });
 
     pod.permissions.grantRead(scraper);

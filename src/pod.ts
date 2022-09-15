@@ -149,9 +149,9 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
    */
   public toSubjectConfiguration(): rb.SubjectConfiguration {
 
-    if (!this.serviceAccount) {
+    if (!this.serviceAccount && !this.automountServiceAccountToken) {
       throw new Error(`${this.name} cannot be converted to a role binding subject:`
-        + ' You must assign a service account to it');
+        + ' You must either assign a service account to it, or use \'automountServiceAccountToken: true\'');
     }
 
     // 'default' is assumed to be the name of the default service account

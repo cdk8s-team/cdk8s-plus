@@ -4174,17 +4174,9 @@ Array [
       Object {
         "apiGroup": "",
         "kind": "ServiceAccount",
-        "name": "test-serviceaccount-c8f15383",
+        "name": "default",
       },
     ],
-  },
-  Object {
-    "apiVersion": "v1",
-    "automountServiceAccountToken": false,
-    "kind": "ServiceAccount",
-    "metadata": Object {
-      "name": "test-serviceaccount-c8f15383",
-    },
   },
   Object {
     "apiVersion": "v1",
@@ -4196,7 +4188,7 @@ Array [
       "name": "test-pod2-c895d79d",
     },
     "spec": Object {
-      "automountServiceAccountToken": false,
+      "automountServiceAccountToken": true,
       "containers": Array [
         Object {
           "image": "scraper",
@@ -4227,7 +4219,6 @@ Array [
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
       },
-      "serviceAccountName": "test-serviceaccount-c8f15383",
       "setHostnameAsFQDN": false,
     },
   },
@@ -4320,17 +4311,9 @@ Array [
       Object {
         "apiGroup": "",
         "kind": "ServiceAccount",
-        "name": "test-serviceaccount-c8f15383",
+        "name": "default",
       },
     ],
-  },
-  Object {
-    "apiVersion": "v1",
-    "automountServiceAccountToken": false,
-    "kind": "ServiceAccount",
-    "metadata": Object {
-      "name": "test-serviceaccount-c8f15383",
-    },
   },
   Object {
     "apiVersion": "apps/v1",
@@ -4361,7 +4344,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": false,
+          "automountServiceAccountToken": true,
           "containers": Array [
             Object {
               "image": "scraper",
@@ -4392,7 +4375,6 @@ Array [
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
           },
-          "serviceAccountName": "test-serviceaccount-c8f15383",
           "setHostnameAsFQDN": false,
         },
       },
