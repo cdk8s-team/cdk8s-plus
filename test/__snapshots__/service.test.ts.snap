@@ -89,6 +89,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
