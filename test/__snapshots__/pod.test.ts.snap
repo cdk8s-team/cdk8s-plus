@@ -54,7 +54,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -62,6 +62,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -164,7 +165,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -178,6 +179,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -218,7 +220,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -226,6 +228,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -292,7 +295,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -300,6 +303,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -340,7 +344,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -348,6 +352,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -414,7 +419,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -422,6 +427,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -462,7 +468,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -470,6 +476,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -582,7 +589,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -596,6 +603,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -636,7 +644,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -644,6 +652,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -710,7 +719,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -718,6 +727,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -758,7 +768,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -766,6 +776,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -832,7 +843,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -840,6 +851,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -880,7 +892,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -888,6 +900,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -982,7 +995,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -990,6 +1003,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1059,7 +1073,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1067,6 +1081,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1175,7 +1190,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1183,6 +1198,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1280,7 +1296,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1288,6 +1304,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1328,7 +1345,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1336,6 +1353,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1452,7 +1470,7 @@ Array [
               },
               "securityContext": Object {
                 "privileged": false,
-                "readOnlyRootFilesystem": false,
+                "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
                 "runAsNonRoot": false,
                 "runAsUser": 25000,
@@ -1460,6 +1478,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
@@ -1502,7 +1521,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1510,6 +1529,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1669,7 +1689,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1677,6 +1697,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1712,7 +1733,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1720,6 +1741,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1760,7 +1782,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1768,6 +1790,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1869,7 +1892,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1877,6 +1900,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -1987,7 +2011,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -1995,6 +2019,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2035,7 +2060,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2043,6 +2068,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2195,7 +2221,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2203,6 +2229,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2305,7 +2332,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2313,6 +2340,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2407,7 +2435,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2415,6 +2443,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2484,7 +2513,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2492,6 +2521,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2600,7 +2630,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2608,6 +2638,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2715,7 +2746,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2723,6 +2754,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2763,7 +2795,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2771,6 +2803,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -2887,7 +2920,7 @@ Array [
               },
               "securityContext": Object {
                 "privileged": false,
-                "readOnlyRootFilesystem": false,
+                "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
                 "runAsNonRoot": false,
                 "runAsUser": 25000,
@@ -2895,6 +2928,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
@@ -2937,7 +2971,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -2945,6 +2979,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3104,7 +3139,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3112,6 +3147,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3147,7 +3183,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3155,6 +3191,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3195,7 +3232,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3203,6 +3240,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3304,7 +3342,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3312,6 +3350,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3422,7 +3461,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3430,6 +3469,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3470,7 +3510,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3478,6 +3518,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3630,7 +3671,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3638,6 +3679,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3740,7 +3782,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3748,6 +3790,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3788,7 +3831,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3796,6 +3839,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3880,7 +3924,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3888,6 +3932,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -3980,7 +4025,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -3988,6 +4033,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4072,7 +4118,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4080,6 +4126,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4159,7 +4206,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4167,6 +4214,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4207,7 +4255,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4215,6 +4263,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4313,7 +4362,7 @@ Array [
               },
               "securityContext": Object {
                 "privileged": false,
-                "readOnlyRootFilesystem": false,
+                "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
                 "runAsNonRoot": false,
                 "runAsUser": 25000,
@@ -4321,6 +4370,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
             "runAsNonRoot": false,
@@ -4473,7 +4523,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4482,6 +4532,7 @@ Array [
       ],
       "dnsPolicy": "ClusterFirst",
       "nodeName": "node1",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4542,7 +4593,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4550,6 +4601,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4609,7 +4661,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4617,6 +4669,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4657,7 +4710,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4665,6 +4718,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4717,7 +4771,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4725,6 +4779,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4765,7 +4820,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4773,6 +4828,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4822,7 +4878,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4830,6 +4886,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4887,7 +4944,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4895,6 +4952,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4950,7 +5008,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -4958,6 +5016,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -4998,7 +5057,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5006,6 +5065,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -5058,7 +5118,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5066,6 +5126,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -5106,7 +5167,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5114,6 +5175,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -5163,7 +5225,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5171,6 +5233,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -5228,7 +5291,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5236,6 +5299,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -5298,7 +5362,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5306,6 +5370,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,
@@ -5346,7 +5411,7 @@ Array [
           },
           "securityContext": Object {
             "privileged": false,
-            "readOnlyRootFilesystem": false,
+            "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
             "runAsNonRoot": false,
             "runAsUser": 25000,
@@ -5354,6 +5419,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
         "runAsNonRoot": false,

@@ -30,7 +30,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
 
-    this.restartPolicy = props.restartPolicy;
+    this.restartPolicy = props.restartPolicy ?? RestartPolicy.ALWAYS;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
     this.dns = new PodDns(props.dns);
