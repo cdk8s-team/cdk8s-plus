@@ -49,7 +49,7 @@ export interface ContainerSecurityContextProps {
   /**
    * Whether this container has a read-only root filesystem.
    *
-   * @default false
+   * @default true
    */
   readonly readOnlyRootFilesystem?: boolean;
 
@@ -134,7 +134,7 @@ export class ContainerSecurityContext {
   constructor(props: ContainerSecurityContextProps = {}) {
     this.ensureNonRoot = props.ensureNonRoot ?? true;
     this.privileged = props.privileged ?? false;
-    this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? false;
+    this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? true;
     this.user = props.user ?? 25000;
     this.group = props.group ?? 26000;
   }
@@ -638,7 +638,7 @@ export interface ContainerProps {
    *
    *   ensureNonRoot: true
    *   privileged: false
-   *   readOnlyRootFilesystem: false
+   *   readOnlyRootFilesystem: true
    */
   readonly securityContext?: ContainerSecurityContextProps;
 }

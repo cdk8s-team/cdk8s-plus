@@ -40,7 +40,7 @@ Array [
                   },
                   "securityContext": Object {
                     "privileged": false,
-                    "readOnlyRootFilesystem": false,
+                    "readOnlyRootFilesystem": true,
                     "runAsGroup": 26000,
                     "runAsNonRoot": true,
                     "runAsUser": 25000,
@@ -106,7 +106,7 @@ Array [
                   },
                   "securityContext": Object {
                     "privileged": false,
-                    "readOnlyRootFilesystem": false,
+                    "readOnlyRootFilesystem": true,
                     "runAsGroup": 26000,
                     "runAsNonRoot": true,
                     "runAsUser": 25000,

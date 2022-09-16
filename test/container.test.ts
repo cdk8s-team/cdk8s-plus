@@ -263,7 +263,7 @@ describe('Container', () => {
     expect(container.env[0].name).toEqual('key');
     expect(container.env[0].value).toEqual('value');
     expect(container.securityContext.privileged).toEqual(false);
-    expect(container.securityContext.readOnlyRootFilesystem).toEqual(false);
+    expect(container.securityContext.readOnlyRootFilesystem).toEqual(true);
     expect(container.securityContext.runAsNonRoot).toEqual(true);
     expect(container.startupProbe.failureThreshold).toEqual(3);
     expect(container.startupProbe.tcpSocket.port).toEqual(9000);
@@ -651,7 +651,7 @@ test('default security context', () => {
 
   expect(container.securityContext.ensureNonRoot).toBeTruthy();
   expect(container.securityContext.privileged).toBeFalsy();
-  expect(container.securityContext.readOnlyRootFilesystem).toBeFalsy();
+  expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
 
   expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
   expect(container.securityContext._toKube()).toStrictEqual({
