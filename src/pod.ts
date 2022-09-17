@@ -30,7 +30,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   constructor(scope: Construct, id: string, props: AbstractPodProps = {}) {
     super(scope, id);
 
-    this.restartPolicy = props.restartPolicy;
+    this.restartPolicy = props.restartPolicy ?? RestartPolicy.ALWAYS;
     this.serviceAccount = props.serviceAccount;
     this.securityContext = new PodSecurityContext(props.securityContext);
     this.dns = new PodDns(props.dns);
@@ -288,7 +288,7 @@ export interface PodSecurityContextProps {
    * If true, the Kubelet will validate the image at runtime to ensure that it does
    * not run as UID 0 (root) and fail to start the container if it does.
    *
-   * @default false
+   * @default true
    */
   readonly ensureNonRoot?: boolean;
 
@@ -375,7 +375,7 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default
    *
    *   fsGroupChangePolicy: FsGroupChangePolicy.FsGroupChangePolicy.ALWAYS
-   *   ensureNonRoot: false
+   *   ensureNonRoot: true
    */
   readonly securityContext?: PodSecurityContextProps;
 
@@ -748,7 +748,7 @@ export class PodSecurityContext {
   private readonly _sysctls: Sysctl[] = [];
 
   constructor(props: PodSecurityContextProps = {}) {
-    this.ensureNonRoot = props.ensureNonRoot ?? false;
+    this.ensureNonRoot = props.ensureNonRoot ?? true;
     this.fsGroupChangePolicy = props.fsGroupChangePolicy ?? FsGroupChangePolicy.ALWAYS;
     this.user = props.user;
     this.group = props.group;

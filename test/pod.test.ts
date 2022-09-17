@@ -1,7 +1,7 @@
 import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { DockerConfigSecret, FsGroupChangePolicy, Probe, k8s } from '../src';
+import { DockerConfigSecret, FsGroupChangePolicy, Probe, k8s, RestartPolicy } from '../src';
 
 test('defaults', () => {
 
@@ -10,8 +10,12 @@ test('defaults', () => {
     containers: [{ image: 'image' }],
   });
 
-  expect(Testing.synth(chart)).toMatchSnapshot();
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
 
+  expect(manifest).toMatchSnapshot();
+  expect(spec.restartPolicy).toEqual(RestartPolicy.ALWAYS);
+  expect(spec.automountServiceAccountToken).toBeTruthy();
 });
 
 test('fails with two volumes with the same name', () => {
@@ -312,7 +316,7 @@ test('default security context', () => {
 
   const spec = Testing.synth(chart)[0].spec;
 
-  expect(pod.securityContext.ensureNonRoot).toBeFalsy();
+  expect(pod.securityContext.ensureNonRoot).toBeTruthy();
   expect(pod.securityContext.sysctls).toEqual([]);
   expect(pod.securityContext.fsGroup).toBeUndefined();
   expect(pod.securityContext.fsGroupChangePolicy).toEqual(FsGroupChangePolicy.ALWAYS);
