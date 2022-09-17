@@ -53,6 +53,12 @@ export interface ContainerSecurityContextProps {
    */
   readonly readOnlyRootFilesystem?: boolean;
 
+  /**
+   * Whether a process can gain more privileges than its parent process.
+   *
+   * @default false
+   */
+  readonly allowPrivilegeEscalation?: boolean;
 }
 
 /**
@@ -130,6 +136,7 @@ export class ContainerSecurityContext {
   public readonly readOnlyRootFilesystem: boolean;
   public readonly user?: number;
   public readonly group?: number;
+  public readonly allowPrivilegeEscalation?: boolean;
 
   constructor(props: ContainerSecurityContextProps = {}) {
     this.ensureNonRoot = props.ensureNonRoot ?? true;
@@ -137,6 +144,7 @@ export class ContainerSecurityContext {
     this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? true;
     this.user = props.user ?? 25000;
     this.group = props.group ?? 26000;
+    this.allowPrivilegeEscalation = props.allowPrivilegeEscalation ?? false;
   }
 
   /**
@@ -149,6 +157,7 @@ export class ContainerSecurityContext {
       runAsNonRoot: this.ensureNonRoot,
       privileged: this.privileged,
       readOnlyRootFilesystem: this.readOnlyRootFilesystem,
+      allowPrivilegeEscalation: this.allowPrivilegeEscalation,
     };
   }
 
@@ -639,6 +648,9 @@ export interface ContainerProps {
    *   ensureNonRoot: true
    *   privileged: false
    *   readOnlyRootFilesystem: true
+   *   allowPrivilegeEscalation: false
+   *   user: 25000
+   *   group: 26000
    */
   readonly securityContext?: ContainerSecurityContextProps;
 }

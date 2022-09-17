@@ -53,6 +53,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -186,6 +187,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -286,6 +288,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -383,6 +386,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -474,6 +478,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -563,6 +568,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -633,6 +639,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -715,6 +722,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -785,6 +793,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -864,6 +873,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -956,6 +966,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1045,6 +1056,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1115,6 +1127,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1197,6 +1210,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1267,6 +1281,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1346,6 +1361,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1438,6 +1454,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1527,6 +1544,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1614,6 +1632,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1698,6 +1717,7 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
@@ -1749,6 +1769,7 @@ Array [
             },
           },
           "securityContext": Object {
+            "allowPrivilegeEscalation": false,
             "privileged": false,
             "readOnlyRootFilesystem": true,
             "runAsGroup": 26000,
