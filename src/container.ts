@@ -35,7 +35,7 @@ export interface ContainerSecurityContextProps {
     * If true, the Kubelet will validate the image at runtime to ensure that it does
     * not run as UID 0 (root) and fail to start the container if it does.
     *
-    * @default false
+    * @default true
     */
   readonly ensureNonRoot?: boolean;
 
@@ -132,7 +132,7 @@ export class ContainerSecurityContext {
   public readonly group?: number;
 
   constructor(props: ContainerSecurityContextProps = {}) {
-    this.ensureNonRoot = props.ensureNonRoot ?? false;
+    this.ensureNonRoot = props.ensureNonRoot ?? true;
     this.privileged = props.privileged ?? false;
     this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? true;
     this.user = props.user ?? 25000;
@@ -636,7 +636,7 @@ export interface ContainerProps {
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
    * @default
    *
-   *   ensureNonRoot: false
+   *   ensureNonRoot: true
    *   privileged: false
    *   readOnlyRootFilesystem: true
    */
