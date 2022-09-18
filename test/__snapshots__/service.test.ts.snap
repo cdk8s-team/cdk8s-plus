@@ -63,7 +63,7 @@ Array [
           },
         },
         "spec": Object {
-          "automountServiceAccountToken": true,
+          "automountServiceAccountToken": false,
           "containers": Array [
             Object {
               "image": "image",
