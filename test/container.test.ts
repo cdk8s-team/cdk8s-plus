@@ -264,7 +264,7 @@ describe('Container', () => {
     expect(container.env[0].value).toEqual('value');
     expect(container.securityContext.privileged).toEqual(false);
     expect(container.securityContext.readOnlyRootFilesystem).toEqual(true);
-    expect(container.securityContext.runAsNonRoot).toEqual(false);
+    expect(container.securityContext.runAsNonRoot).toEqual(true);
     expect(container.startupProbe.failureThreshold).toEqual(3);
     expect(container.startupProbe.tcpSocket.port).toEqual(9000);
   });
@@ -649,9 +649,12 @@ test('default security context', () => {
 
   const container = new Container({ image: 'image' });
 
-  expect(container.securityContext.ensureNonRoot).toBeFalsy();
+  expect(container.securityContext.ensureNonRoot).toBeTruthy();
   expect(container.securityContext.privileged).toBeFalsy();
   expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
+  expect(container.securityContext.user).toEqual(25000);
+  expect(container.securityContext.group).toEqual(26000);
+  expect(container.securityContext.allowPrivilegeEscalation).toBeFalsy();
 
   expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
   expect(container.securityContext._toKube()).toStrictEqual({
@@ -660,6 +663,7 @@ test('default security context', () => {
     runAsGroup: container.securityContext.group,
     runAsNonRoot: container.securityContext.ensureNonRoot,
     runAsUser: container.securityContext.user,
+    allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
   });
 
 });

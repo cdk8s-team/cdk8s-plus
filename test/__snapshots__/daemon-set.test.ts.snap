@@ -39,10 +39,11 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
-                "runAsNonRoot": false,
+                "runAsNonRoot": true,
                 "runAsUser": 25000,
               },
             },
@@ -51,7 +52,7 @@ Array [
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
+            "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
         },
@@ -100,10 +101,11 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
-                "runAsNonRoot": false,
+                "runAsNonRoot": true,
                 "runAsUser": 25000,
               },
             },
@@ -112,7 +114,7 @@ Array [
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
+            "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
         },
