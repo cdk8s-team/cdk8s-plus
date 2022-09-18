@@ -43,7 +43,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -80,10 +80,11 @@ Array [
                 },
               },
               "securityContext": Object {
+                "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
                 "runAsGroup": 26000,
-                "runAsNonRoot": false,
+                "runAsNonRoot": true,
                 "runAsUser": 25000,
               },
             },
@@ -92,7 +93,7 @@ Array [
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
-            "runAsNonRoot": false,
+            "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
         },
