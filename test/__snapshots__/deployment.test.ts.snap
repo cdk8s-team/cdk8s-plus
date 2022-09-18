@@ -11,7 +11,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -142,7 +142,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -246,7 +246,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -349,7 +349,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -421,7 +421,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -512,7 +512,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -602,7 +602,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -668,7 +668,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -756,7 +756,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -822,7 +822,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -907,7 +907,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1000,7 +1000,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1090,7 +1090,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -1156,7 +1156,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1244,7 +1244,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -1310,7 +1310,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1395,7 +1395,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1488,7 +1488,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1578,7 +1578,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1666,7 +1666,7 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 1,
+      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
