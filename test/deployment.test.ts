@@ -115,6 +115,8 @@ test('Expose uses the correct default values', () => {
   expect(spec.ports![0].targetPort).toEqual(9300);
   expect(spec.ports![0].port).toEqual(9300);
 
+  const replicas = Testing.synth(chart)[0].spec.replicas;
+  expect(replicas).toEqual(2);
 });
 
 test('Expose can set service and port details', () => {
