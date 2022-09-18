@@ -14,7 +14,7 @@ export interface DeploymentProps extends workload.WorkloadProps {
   /**
    * Number of desired pods.
    *
-   * @default 1
+   * @default 2
    */
   readonly replicas?: number;
 
@@ -156,7 +156,7 @@ export class Deployment extends workload.Workload {
       throw new Error(`'progressDeadline' (${this.progressDeadline.toSeconds()}s) must be greater than 'minReady' (${this.minReady.toSeconds()}s)`);
     }
 
-    this.replicas = props.replicas ?? 1;
+    this.replicas = props.replicas ?? 2;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
   }
 
