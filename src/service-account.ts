@@ -27,7 +27,7 @@ export interface ServiceAccountProps extends base.ResourceProps {
    * Indicates whether pods running as this service account
    * should have an API token automatically mounted. Can be overridden at the pod level.
    *
-   * @default true
+   * @default false
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
    */
   readonly automountToken?: boolean;
@@ -101,7 +101,7 @@ export class ServiceAccount extends base.Resource implements IServiceAccount, rb
     super(scope, id);
 
     this._secrets = props.secrets ?? [];
-    this.automountToken = props.automountToken ?? true;
+    this.automountToken = props.automountToken ?? false;
 
     this.apiObject = new k8s.KubeServiceAccount(this, 'Resource', {
       metadata: props.metadata,
