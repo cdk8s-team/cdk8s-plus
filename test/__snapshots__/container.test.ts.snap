@@ -12,7 +12,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "foo",
@@ -73,7 +73,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "foo",
@@ -123,7 +123,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "command": Array [
@@ -194,7 +194,7 @@ Array [
       "name": "test-pod-c890e1b8",
     },
     "spec": Object {
-      "automountServiceAccountToken": true,
+      "automountServiceAccountToken": false,
       "containers": Array [
         Object {
           "image": "image",
