@@ -3,6 +3,20 @@
 exports[`custom configuration 1`] = `
 Array [
   Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-cronjob-defaultdenyall-c81b49ed",
+    },
+    "spec": Object {
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Egress",
+        "Ingress",
+      ],
+    },
+  },
+  Object {
     "apiVersion": "batch/v1",
     "kind": "CronJob",
     "metadata": Object {
@@ -71,6 +85,20 @@ Array [
 
 exports[`default configuration 1`] = `
 Array [
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-cronjob-defaultdenyall-c81b49ed",
+    },
+    "spec": Object {
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Egress",
+        "Ingress",
+      ],
+    },
+  },
   Object {
     "apiVersion": "batch/v1",
     "kind": "CronJob",

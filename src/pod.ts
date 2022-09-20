@@ -1616,7 +1616,19 @@ export interface PodConnectionsAllowFromOptions {
  */
 export class PodConnections {
 
-  constructor(protected readonly instance: AbstractPod) {}
+  constructor(protected readonly instance: AbstractPod) {
+    new networkpolicy.NetworkPolicy(instance, 'DefaultDenyAll', {
+      // the policy must be defined in the namespace of the pod
+      // so it can select it.
+      metadata: Lazy.any({ produce: () => {return { namespace: instance.metadata.namespace };} }),
+      egress: {
+        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
+      },
+      ingress: {
+        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
+      },
+    });
+  }
 
   /**
    * Allow network traffic from this pod to the peer.

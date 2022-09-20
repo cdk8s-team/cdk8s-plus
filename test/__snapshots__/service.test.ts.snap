@@ -35,6 +35,20 @@ Object {
 exports[`can select a deployment 1`] = `
 Array [
   Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-deployment-defaultdenyall-c8a461c9",
+    },
+    "spec": Object {
+      "podSelector": Object {},
+      "policyTypes": Array [
+        "Egress",
+        "Ingress",
+      ],
+    },
+  },
+  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {

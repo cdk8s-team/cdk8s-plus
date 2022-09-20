@@ -24,7 +24,7 @@ test('A label selector is automatically allocated', () => {
   const expectedSelector = { 'cdk8s.io/metadata.addr': expectedValue };
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
@@ -43,7 +43,7 @@ test('No selector is generated if "select" is false', () => {
   });
 
   // assert the k8s spec doesnt have it.
-  const spec = Testing.synth(chart)[0].spec;
+  const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toBeUndefined();
 
   // assert the deployment object doesnt have it.
@@ -69,7 +69,7 @@ test('Can select by label', () => {
   deployment.select(kplus.LabelSelector.of({ labels: { foo: expectedSelector.foo } }));
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[0].spec;
+  const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the deployment object has it.
@@ -110,12 +110,12 @@ test('Expose uses the correct default values', () => {
 
   deployment.exposeViaService();
 
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[2].spec;
   expect(spec.type).toEqual('ClusterIP');
   expect(spec.ports![0].targetPort).toEqual(9300);
   expect(spec.ports![0].port).toEqual(9300);
 
-  const replicas = Testing.synth(chart)[0].spec.replicas;
+  const replicas = Testing.synth(chart)[1].spec.replicas;
   expect(replicas).toEqual(2);
 });
 
@@ -137,7 +137,7 @@ test('Expose can set service and port details', () => {
     serviceType: kplus.ServiceType.CLUSTER_IP,
   });
 
-  const srv = Testing.synth(chart)[1];
+  const srv = Testing.synth(chart)[2];
   const spec = srv.spec;
 
   expect(srv.metadata.name).toEqual('test-srv');
@@ -172,7 +172,7 @@ test('Synthesizes spec lazily', () => {
     },
   );
 
-  const container = Testing.synth(chart)[0].spec.template.spec.containers[0];
+  const container = Testing.synth(chart)[1].spec.template.spec.containers[0];
 
   expect(container.image).toEqual('image');
   expect(container.ports[0].containerPort).toEqual(9300);
@@ -186,7 +186,7 @@ test('default deployment strategy', () => {
   const deployment = new kplus.Deployment(chart, 'Deployment');
   deployment.addContainer({ image: 'image' });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(deployment.strategy).toEqual(DeploymentStrategy.rollingUpdate());
   expect(spec.strategy).toEqual({
@@ -208,7 +208,7 @@ test('custom deployment strategy', () => {
   });
   deployment.addContainer({ image: 'image' });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(deployment.strategy).toEqual(DeploymentStrategy.recreate());
   expect(spec.strategy).toEqual({ type: 'Recreate' });
@@ -227,7 +227,7 @@ test('rolling update deployment strategy with a custom maxSurge and maxUnavailab
   });
   deployment.addContainer({ image: 'image' });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(spec.strategy).toEqual({
     type: 'RollingUpdate',
@@ -264,7 +264,7 @@ test('default minReadySeconds', () => {
     containers: [{ image: 'image' }],
   });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(deployment.minReady).toEqual(Duration.seconds(0));
   expect(spec.minReadySeconds).toEqual(0);
@@ -278,7 +278,7 @@ test('default progressDeadlineSeconds', () => {
     containers: [{ image: 'image' }],
   });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(deployment.progressDeadline).toEqual(Duration.seconds(600));
   expect(spec.progressDeadlineSeconds).toEqual(600);
@@ -293,7 +293,7 @@ test('can configure minReadySeconds', () => {
     minReady: Duration.seconds(60),
   });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(deployment.minReady).toEqual(Duration.seconds(60));
   expect(spec.minReadySeconds).toEqual(60);
@@ -308,7 +308,7 @@ test('can configure progressDeadlineSeconds', () => {
     progressDeadline: Duration.seconds(60),
   });
 
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
 
   expect(deployment.progressDeadline).toEqual(Duration.seconds(60));
   expect(spec.progressDeadlineSeconds).toEqual(60);
@@ -365,7 +365,7 @@ test('can select with expressions', () => {
   ]);
 
   // assert the k8s spec has it.
-  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[1].spec;
   expect(new Set(spec.selector.matchExpressions)).toEqual(expected);
 });
 

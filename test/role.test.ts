@@ -90,7 +90,7 @@ Array [
 
     // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[2].rules).toEqual(expect.arrayContaining([
+    expect(manifest[3].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
         resources: ['pods'],
@@ -125,7 +125,7 @@ Array [
 
     // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+    expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
         resources: ['secrets'],
@@ -159,14 +159,14 @@ Array [
 
     // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+    expect(manifest[2].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
         resources: ['pods'],
         verbs: ['get', 'list', 'watch'],
       },
     ]));
-    expect(manifest[1].rules).not.toEqual([
+    expect(manifest[2].rules).not.toEqual([
       {
         apiGroups: [''],
         resources: ['pods'],
@@ -237,7 +237,7 @@ Array [
 
     // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+    expect(manifest[2].rules).toEqual(expect.arrayContaining([
       { apiGroups: [''], resourceNames: ['test-pod-c890e1b8'], resources: ['pods'], verbs: ['get'] },
       { apiGroups: [''], resources: ['pods'], verbs: ['get'] },
     ]));
@@ -359,7 +359,7 @@ Array [
     role.allowRead(pod, secret);
 
     const manifest = Testing.synth(chart);
-    expect(manifest[2].rules).toEqual(expect.arrayContaining([
+    expect(manifest[3].rules).toEqual(expect.arrayContaining([
       {
         apiGroups: [''],
         resources: ['pods'],
@@ -438,7 +438,7 @@ Array [
 
     // THEN
     const manifest = Testing.synth(chart);
-    expect(manifest[1].rules).toEqual(expect.arrayContaining([
+    expect(manifest[2].rules).toEqual(expect.arrayContaining([
       { apiGroups: [''], resourceNames: ['test-pod-c890e1b8'], resources: ['pods'], verbs: ['get'] },
       { apiGroups: [''], resourceNames: [], resources: ['pods'], verbs: ['get'] },
       { nonResourceURLs: ['/healthz'], verbs: ['get'] },
