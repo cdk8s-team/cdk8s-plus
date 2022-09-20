@@ -1633,10 +1633,6 @@ export class PodConnections {
   /**
    * Allow network traffic from this pod to the peer.
    *
-   * By default, this will create an egress network policy for this pod, and an ingress
-   * network policy for the peer. This is required if both sides are already isolated.
-   * Use `options.isolation` to control this behavior.
-   *
    * @example
    *
    * // create only an egress policy that selects the 'web' pod to allow outgoing traffic
@@ -1654,10 +1650,6 @@ export class PodConnections {
 
   /**
    * Allow network traffic from the peer to this pod.
-   *
-   * By default, this will create an ingress network policy for this pod, and an egress
-   * network policy for the peer. This is required if both sides are already isolated.
-   * Use `options.isolation` to control this behavior.
    *
    * @example
    *
@@ -1681,7 +1673,7 @@ export class PodConnections {
 
     const peerAddress = address(peer);
 
-    if (!options.isolation || options.isolation === PodConnectionsIsolation.POD) {
+    if (options.isolation === PodConnectionsIsolation.POD) {
 
       const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${peerAddress}`, {
         selector: this.instance,
@@ -1700,7 +1692,7 @@ export class PodConnections {
 
     }
 
-    if (!options.isolation || options.isolation === PodConnectionsIsolation.PEER) {
+    if (options.isolation === PodConnectionsIsolation.PEER) {
 
       if (config.ipBlock) {
         // for an ip block we don't need to create the opposite policies
