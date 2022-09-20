@@ -19,11 +19,7 @@ Status: **First draft** · Author: **@ryparker**
     - [Pods Metric](#pods-metric)
     - [External Metric](#external-metric)
     - [ContainerResource Metric](#containerresource-metric)
-  - [HPA with Status](#hpa-with-status)
-    - [Minimal Status](#minimal-status)
     - [Notes on the Metrics API](#notes-on-the-metrics-api)
-    - [Status Condition](#status-condition)
-    - [Status CurrentMetric](#status-currentmetric)
   - [HPA with Behavior](#hpa-with-behavior)
     - [scaleDown policy](#scaledown-policy)
     - [scaleUp policy](#scaleup-policy)
@@ -298,25 +294,6 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
 );
 ```
 
-## HPA with Status
-
-### Minimal Status
-
-Minimal Status (proto A)
-
-```ts
-declare const bookstoreApi: Deployment;
-
-const hpa = new HorizontalPodAutoscalerV2(chart,
-  "ProdBookstoreHpa",
-  {
-    target: bookstoreApi,
-    maxReplicas: 10,
-    desiredReplicas: 5,
-  },
-);
-```
-
 ### Notes on the Metrics API
 
 - Types of metrics: `ContainerResource`(feature-gated), `Resource`, `Pods`, `Object`, `External`
@@ -350,82 +327,6 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
       type: Value # <-- in the docs `type: Value` is only paired with the `value: …` quantity prop
       averageUtilization: 50 # <-- in the docs `averageUtilization: …` is only paired with `type: Utilization`
   ```
-
-### Status Condition
-
-> Conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
-
-Condition (proto A)
-
-```ts
-declare const bookstoreApi: Deployment;
-
-const hpa = new HorizontalPodAutoscalerV2(chart,
-  "ProdBookstoreHpa",
-  {
-    target: bookstoreApi,
-    maxReplicas: 10,
-    desiredReplicas: 5,
-    conditions: {
-      [ConditionType.ABLE_TO_SCALE]: {
-        status: ConditionStatus.TRUE,
-      },
-    }
-  },
-);
-```
-
-### Status CurrentMetric
-
-> The last read state of the metrics used by this autoscaler.
-
-CurrentMetric (proto A)
-
-```ts
-declare const bookstoreApi: Deployment;
-
-const hpa = new HorizontalPodAutoscalerV2(chart,
-  "ProdBookstoreHpa",
-  {
-    target: bookstoreApi,
-    maxReplicas: 10,
-    desiredReplicas: 5,
-    currentMetrics: {
-      [MetricType]: {
-        status: ConditionStatus.TRUE,
-      },
-    }
-  },
-);
-```
-
-This API repeats the same patten used in the ["HPA with Metric" section](#HPA-with-Metric). Because of this reuse we may consider extracting this out into a construct. i.e.
-
-```ts
-declare const bookstoreApi: Deployment;
-
-// init a new metric
-const genericMetric = new Metric({
-  type: MetricType.CONTAINER_RESOURCE,
-  container: 'bookstore-api-container'
-  name: MetricTargetName.CPU,
-  averageValue: 25
-});
-
-// Usage
-const hpa = new HorizontalPodAutoscalerV2(chart,
-  "ProdBookstoreHpa",
-  {
-    target: bookstoreApi,
-    maxReplicas: 10,
-    desiredReplicas: 5,
-    metrics: [genericMetric],
-    currentMetrics: {
-      [genericMetric.type]: genericMetric,
-    }
-  },
-);
-```
 
 ## HPA with Behavior
 
