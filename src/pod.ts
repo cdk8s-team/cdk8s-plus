@@ -1617,17 +1617,7 @@ export interface PodConnectionsAllowFromOptions {
 export class PodConnections {
 
   constructor(protected readonly instance: AbstractPod) {
-    new networkpolicy.NetworkPolicy(instance, 'DefaultDenyAll', {
-      // the policy must be defined in the namespace of the pod
-      // so it can select it.
-      metadata: Lazy.any({ produce: () => {return { namespace: instance.metadata.namespace };} }),
-      egress: {
-        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
-      },
-      ingress: {
-        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
-      },
-    });
+    this.defaultNetworkPolicy();
   }
 
   /**
@@ -1756,5 +1746,22 @@ export class PodConnections {
 
   private extractPorts(selector?: networkpolicy.INetworkPolicyPeer): networkpolicy.NetworkPolicyPort[] {
     return container.extractContainerPorts(selector).map(n => networkpolicy.NetworkPolicyPort.tcp(n.number));
+  }
+
+  /**
+   * Sets the default network policy for Pods to have all egress and ingress connections as disabled
+   */
+  private defaultNetworkPolicy() {
+    new networkpolicy.NetworkPolicy(this.instance, 'DefaultDenyAll', {
+      // the policy must be defined in the namespace of the pod
+      // so it can select it.
+      metadata: Lazy.any({ produce: () => {return { namespace: this.instance.metadata.namespace };} }),
+      egress: {
+        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
+      },
+      ingress: {
+        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
+      },
+    });
   }
 }
