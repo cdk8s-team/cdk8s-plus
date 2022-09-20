@@ -22,6 +22,20 @@ Array [
           },
         },
         "spec": Object {
+          "affinity": Object {
+            "podAntiAffinity": Object {
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
+                    },
+                  },
+                  "topologyKey": "kubernetes.io/hostname",
+                },
+              ],
+            },
+          },
           "automountServiceAccountToken": false,
           "containers": Array [
             Object {
@@ -84,6 +98,20 @@ Array [
           },
         },
         "spec": Object {
+          "affinity": Object {
+            "podAntiAffinity": Object {
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
+                    },
+                  },
+                  "topologyKey": "kubernetes.io/hostname",
+                },
+              ],
+            },
+          },
           "automountServiceAccountToken": false,
           "containers": Array [
             Object {

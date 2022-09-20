@@ -63,6 +63,20 @@ Array [
           },
         },
         "spec": Object {
+          "affinity": Object {
+            "podAntiAffinity": Object {
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+                    },
+                  },
+                  "topologyKey": "kubernetes.io/hostname",
+                },
+              ],
+            },
+          },
           "automountServiceAccountToken": false,
           "containers": Array [
             Object {
