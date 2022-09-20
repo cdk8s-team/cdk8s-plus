@@ -33,6 +33,14 @@ Array [
                       },
                       "topologyKey": "kubernetes.io/hostname",
                     },
+                    Object {
+                      "labelSelector": Object {
+                        "matchLabels": Object {
+                          "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
+                        },
+                      },
+                      "topologyKey": "topology.kubernetes.io/zone",
+                    },
                   ],
                 },
               },
@@ -113,6 +121,14 @@ Array [
                         },
                       },
                       "topologyKey": "kubernetes.io/hostname",
+                    },
+                    Object {
+                      "labelSelector": Object {
+                        "matchLabels": Object {
+                          "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
+                        },
+                      },
+                      "topologyKey": "topology.kubernetes.io/zone",
                     },
                   ],
                 },

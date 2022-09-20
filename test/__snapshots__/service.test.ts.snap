@@ -74,6 +74,14 @@ Array [
                   },
                   "topologyKey": "kubernetes.io/hostname",
                 },
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+                    },
+                  },
+                  "topologyKey": "topology.kubernetes.io/zone",
+                },
               ],
             },
           },

@@ -542,9 +542,11 @@ describe('scheduling', () => {
 
     const redis = new kplus.Deployment(chart, 'Redis', {
       containers: [{ image: 'redis' }],
+      defaultSpread: false,
     });
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
+      defaultSpread: false,
     });
 
     web.scheduling.separate(redis);
@@ -559,9 +561,11 @@ describe('scheduling', () => {
 
     const redis = new kplus.Deployment(chart, 'Redis', {
       containers: [{ image: 'redis' }],
+      defaultSpread: false,
     });
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
+      defaultSpread: false,
     });
 
     web.scheduling.separate(redis, {
@@ -584,6 +588,7 @@ describe('scheduling', () => {
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
+      defaultSpread: false,
     });
 
     web.scheduling.separate(redis);
@@ -603,6 +608,7 @@ describe('scheduling', () => {
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
+      defaultSpread: false,
     });
 
     web.scheduling.separate(redis, {

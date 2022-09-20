@@ -26,8 +26,8 @@ export interface WorkloadProps extends pod.AbstractPodProps {
   /**
    * Automatically spread pods across hostname and zones.
    *
-   * @default true
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/#internal-default-constraints
+   * @default true
    */
   readonly defaultSpread?: boolean;
 }
@@ -141,6 +141,9 @@ export abstract class Workload extends pod.AbstractPod {
       {
         this.scheduling.spread({
           topology: pod.Topology.HOSTNAME,
+        });
+        this.scheduling.spread({
+          topology: pod.Topology.ZONE,
         });
       }
     };

@@ -33,6 +33,14 @@ Array [
                   },
                   "topologyKey": "kubernetes.io/hostname",
                 },
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
+                    },
+                  },
+                  "topologyKey": "topology.kubernetes.io/zone",
+                },
               ],
             },
           },
@@ -108,6 +116,14 @@ Array [
                     },
                   },
                   "topologyKey": "kubernetes.io/hostname",
+                },
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-DaemonSet-c8f77186",
+                    },
+                  },
+                  "topologyKey": "topology.kubernetes.io/zone",
                 },
               ],
             },
