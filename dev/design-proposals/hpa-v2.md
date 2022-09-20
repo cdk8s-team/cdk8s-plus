@@ -323,7 +323,6 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
 - Types of target: `Utilization`, `Value`, `AverageValue`
 - Types of target measurement: `averageUtilization`, `averageValue`, `value`
 - The name of the metric is limited to the general names `cpu`/`memory`, or the user can specify a custom metric name via the `External` target type.
-- A name is required for each metric. If not provided we can generate a descriptive name based on the other props the user is required to provide.
 - In the HPA docs the `type` prop's value is only used with the matching quantity prop. For example here are the **only** prop pairs that the docs use together:
 
   ```yaml
