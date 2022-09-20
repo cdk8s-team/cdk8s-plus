@@ -77,7 +77,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
   </summary>
   <br/>
 
-  _✅Easy to understand / self-evident. ✅Groups all replica config. -nested config._
+  _✅Easy to understand / self-evident. ✅Groups all replica config. :x:nested config._
 
   ```ts
   declare const bookstoreApi: Deployment;
@@ -100,7 +100,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
   </summary>
   <br/>
 
-  _Nice and short, but not so self-evident._
+  _✅Nice and short :x:not so self-evident._
 
   ```ts
   declare const bookstoreApi: Deployment;
