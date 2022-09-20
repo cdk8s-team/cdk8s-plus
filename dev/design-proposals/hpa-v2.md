@@ -1,6 +1,6 @@
 # Horizontal Pod Autoscaler v2 (HPA) L2 API
 
-Design doc for the Horizontal Pod Autoscaler v2 L2 API.
+Design doc for the Horizontal Pod Autoscaler v2 L2 API. This document contains examples of how the HPAv2 features could be implemented in CDK8s-plus. Some sections contain more than one prototype. Prototypes that are hidden in accordions are alternatives I considered but did not choose as the preferred solution. I left them in the document though just in case we want to consider them.
 
 ---
 Status: **First draft** · Author: **@ryparker**
@@ -57,7 +57,7 @@ Status: **First draft** · Author: **@ryparker**
 
 ## Minimal API
 
-Minimal API (proto C) - _This is my preferred API. +self-evident. +surface level config. -replica config isn't as obvious as proto A. This probably isn't a big deal unless HPA introduces many new replica params._
+Minimal API (proto C) - _This is my preferred API. ✅self-evident. ✅surface level config. :x:replica config isn't as obvious as proto A. This probably isn't a big deal unless HPA introduces many new replica params._
 
 ```ts
 declare const bookstoreApi: Deployment;
@@ -77,7 +77,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
   </summary>
   <br/>
 
-  _+Easy to understand / self-evident. +Groups all replica config. -nested config._
+  _✅Easy to understand / self-evident. ✅Groups all replica config. -nested config._
 
   ```ts
   declare const bookstoreApi: Deployment;
@@ -117,7 +117,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
 
 ### Notes on the Minimal API
 
-- A metadata.name is required but we can generate one if not provided.
+- A `metadata.name` is required but we can generate one if not provided.
 
 ## HPA with Metric
 
@@ -152,7 +152,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
   </summary>
   <br/>
 
-  _-Same as v1 API, there is probably a reason why they migrated from this._
+  _:x:Same as v1 API, there is probably a reason why they migrated from this._
 
   ```ts
   declare const bookstoreApi: Deployment;
@@ -204,7 +204,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
   </summary>
   <br/>
 
-  _-Defining a `metric` prop in a metrics array seems a bit silly :shrug:._
+  _:x:Defining a `metric` prop in a metrics array seems a bit silly :shrug:._
 
   ```ts
   declare const bookstoreApi: Deployment;
@@ -323,15 +323,33 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
 - Types of target: `Utilization`, `Value`, `AverageValue`
 - Types of target measurement: `averageUtilization`, `averageValue`, `value`
 - The name of the metric is limited to the general names `cpu`/`memory`, or the user can specify a custom metric name via the `External` target type.
-- It seems like the type can only be paired with one target value type. So we can simplify the API by surfacing each target type & value to the top level of the metric object.
 - A name is required for each metric. If not provided we can generate a descriptive name based on the other props the user is required to provide.
-- Why does the HPA not fail if you specify a type that does not match the measurement provided? If it's intentional how does this change the scaling algorithm? This isn't documented anywhere.
+- In the HPA docs the `type` prop's value is only used with the matching quantity prop. For example here are the **only** prop pairs that the docs use together:
+
+  ```yaml
+  type: Utilization,
+  averageUtilization: 50,
+  ```
+
+  ```yaml
+  type: Value,
+  value: 50,
+  ```
+
+  ```yaml
+  type: AverageValue,
+  averageValue: 50,
+  ```
+
+  So we could simplify this API by surfacing each target type & value to the top level of the metric object. If we know the prop pairs then the user just has to define the quantity prop and we can assume the `type: …` prop for them.
+
+  Although in my testing I noticed that I was able to apply a metric pair that does not match my theory. It doesn't seem like intended behavior however it warrants more investigation.
   i.e.
 
   ```yaml
     target:
-      type: Value # <-- in the docs this is only paired with the `value` quantity prop
-      averageUtilization: 50 # <-- in the docs this is only paired with type: `Utilization`
+      type: Value # <-- in the docs `type: Value` is only paired with the `value: …` quantity prop
+      averageUtilization: 50 # <-- in the docs `averageUtilization: …` is only paired with `type: Utilization`
   ```
 
 ### Status Condition
@@ -361,11 +379,6 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
 ### Status CurrentMetric
 
 > The last read state of the metrics used by this autoscaler.
-
-Docs say:
-> :warning: Atomic: will be replaced during a merge
-
-but there's no mention of what will replace it in the API.
 
 CurrentMetric (proto A)
 
@@ -419,7 +432,7 @@ const hpa = new HorizontalPodAutoscalerV2(chart,
 
 > Behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
 
-There is no required prop at the top level of `behavior` skipping minimal behavior proto.
+`behavior` doesn't have a required prop at the root level so we'll skip the minimal behavior proto.
 
 ### scaleDown policy
 
@@ -622,7 +635,7 @@ enum ScalePolicyType {
 ## Constructs
 
 - `HorizontalPodAutoscaler` - The scaler
-- `HorizontalPodAutoscalerList` - A list of scalers - Do without for now.
+- `HorizontalPodAutoscalerList` - A list of scalers - Kubernetes docs do not have much documentation on how to use this. So we'll probably skip it in the first implementation.
 
 ## Error handling
 
@@ -660,7 +673,7 @@ metrics:
 
 ## Future development considerations
 
-API development plans i've come across in the Kubernetes repo.
+HPA design proposals i've come across in the Kubernetes repo.
 
 - [Talks](https://github.com/kubernetes/design-proposals-archive/blob/main/autoscaling/hpa-v2.md#limit-percentages) of adding a `targetPercentageOfLimit` to the Metric params.
 - [Talks](https://github.com/kubernetes/design-proposals-archive/blob/main/autoscaling/hpa-v2.md#calculating-final-desired-replica-count) of adding a prop that allows the user to change the behavior of defaulting to the max replica count when multiple Metrics are defined.
