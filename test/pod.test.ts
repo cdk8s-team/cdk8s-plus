@@ -776,11 +776,25 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    pod.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'AnyIpv4'), {
-      isolation: kplus.PodConnectionsIsolation.POD,
-    });
+    pod.connections.allowTo(kplus.NetworkPolicyIpBlock.anyIpv4(chart, 'AnyIpv4'));
     expect(Testing.synth(chart)).toMatchSnapshot();
 
+  });
+
+  test('can isolate pod', () => {
+    const chart = Testing.chart();
+
+    new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+      isolate: true,
+    });
+
+    const manifest = Testing.synth(chart);
+    expect(manifest).toMatchSnapshot();
+
+    const networkPolicy = manifest[1].spec;
+    expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+    expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
   });
 
   test('can allow to managed pod', () => {
@@ -858,9 +872,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
-    expect(() => pod.connections.allowTo(selected, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+    expect(() => pod.connections.allowTo(selected)).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -876,9 +888,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
     });
 
-    expect(() => pod.connections.allowTo(selected, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
+    expect(() => pod.connections.allowTo(selected)).toThrow('Unable to create an Ingress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
 
   });
 
@@ -933,9 +943,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
-    expect(() => pod.connections.allowTo(namespace, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow('Unable to create an Ingress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+    expect(() => pod.connections.allowTo(namespace)).toThrow('Unable to create an Ingress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -989,12 +997,8 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    pod1.connections.allowTo(pod2, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    });
-    expect(() => pod1.connections.allowTo(pod2, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow(/There is already a Construct with name/);
+    pod1.connections.allowTo(pod2);
+    expect(() => pod1.connections.allowTo(pod2)).toThrow(/There is already a Construct with name/);
 
   });
 
@@ -1008,13 +1012,11 @@ describe('connections |', () => {
 
     const redis = kplus.Pods.select(chart, 'Pods', { labels: { role: 'redis' } });
 
-    pod.connections.allowTo(redis, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    });
+    pod.connections.allowTo(redis);
 
     const manifest = Testing.synth(chart);
 
-    const ingressPolicyMetadata = manifest[1].metadata;
+    const ingressPolicyMetadata = manifest[2].metadata;
     expect(ingressPolicyMetadata.namespace).toEqual('n1');
 
   });
@@ -1157,9 +1159,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } }),
     });
 
-    expect(() => pod.connections.allowFrom(selected, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+    expect(() => pod.connections.allowFrom(selected)).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -1175,9 +1175,7 @@ describe('connections |', () => {
       namespaces: kplus.Namespaces.all(chart, 'AllNamespaces'),
     });
 
-    expect(() => pod.connections.allowFrom(selected, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
+    expect(() => pod.connections.allowFrom(selected)).toThrow('Unable to create an Egress policy for peer \'test/Pods\' (pod=test-pod-c890e1b8). Peer must specify namespace names');
 
   });
 
@@ -1232,9 +1230,7 @@ describe('connections |', () => {
 
     const namespace = kplus.Namespaces.select(chart, 'Namespaces', { labels: { type: 'selected' } });
 
-    expect(() => pod.connections.allowFrom(namespace, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow('Unable to create an Egress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
+    expect(() => pod.connections.allowFrom(namespace)).toThrow('Unable to create an Egress policy for peer \'test/Namespaces\' (pod=test-pod-c890e1b8). Peer must specify namespaces only by name');
 
   });
 
@@ -1288,12 +1284,8 @@ describe('connections |', () => {
       containers: [{ image: 'pod' }],
     });
 
-    pod1.connections.allowFrom(pod2, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    });
-    expect(() => pod1.connections.allowFrom(pod2, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    })).toThrow(/There is already a Construct with name/);
+    pod1.connections.allowFrom(pod2);
+    expect(() => pod1.connections.allowFrom(pod2)).toThrow(/There is already a Construct with name/);
 
   });
 
@@ -1307,13 +1299,11 @@ describe('connections |', () => {
 
     const redis = kplus.Pods.select(chart, 'Pods', { labels: { role: 'redis' } });
 
-    pod.connections.allowFrom(redis, {
-      isolation: kplus.PodConnectionsIsolation.PEER,
-    });
+    pod.connections.allowFrom(redis);
 
     const manifest = Testing.synth(chart);
 
-    const ingressPolicyMetadata = manifest[1].metadata;
+    const ingressPolicyMetadata = manifest[2].metadata;
     expect(ingressPolicyMetadata.namespace).toEqual('n1');
 
   });
