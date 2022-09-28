@@ -797,6 +797,29 @@ describe('connections |', () => {
     expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
   });
 
+  test('cannot allow connections on isolated pod', () => {
+    const chart = Testing.chart();
+
+    const pod1 = new kplus.Pod(chart, 'Pod1', {
+      containers: [{ image: 'pod' }],
+      isolate: true,
+    });
+
+    const pod2 = new kplus.Pod(chart, 'Pod2', {
+      containers: [{ image: 'pod' }],
+    });
+
+    const manifest = Testing.synth(chart);
+    expect(manifest).toMatchSnapshot();
+
+    const networkPolicy = manifest[1].spec;
+    expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+    expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+
+    expect(() => pod1.connections.allowTo(pod2)).toThrow('The \'isolate\' property is set to true currently. Please remove it before allowing connections to the Pod.');
+    expect(() => pod1.connections.allowFrom(pod2)).toThrow('The \'isolate\' property is set to true currently. Please remove it before allowing connections to the Pod.');
+  });
+
   test('can allow to managed pod', () => {
 
     const chart = Testing.chart();

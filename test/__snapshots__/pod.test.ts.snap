@@ -3862,6 +3862,119 @@ Array [
 ]
 `;
 
+exports[`connections | cannot allow connections on isolated pod 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod1-c8591188",
+      },
+      "name": "test-pod1-c8153666",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": false,
+      "containers": Array [
+        Object {
+          "image": "pod",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsGroup": 26000,
+            "runAsNonRoot": true,
+            "runAsUser": 25000,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": true,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-pod1-defaultdenyall-c89e804c",
+    },
+    "spec": Object {
+      "podSelector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Pod1-c8591188",
+        },
+      },
+      "policyTypes": Array [
+        "Egress",
+        "Ingress",
+      ],
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod2-c82dc44e",
+      },
+      "name": "test-pod2-c895d79d",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": false,
+      "containers": Array [
+        Object {
+          "image": "pod",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsGroup": 26000,
+            "runAsNonRoot": true,
+            "runAsUser": 25000,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": true,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`defaults 1`] = `
 Array [
   Object {
