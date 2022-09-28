@@ -46,7 +46,7 @@ test('a label selector is automatically allocated', () => {
   const expectedSelector = { 'cdk8s.io/metadata.addr': expectedValue };
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[0].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
@@ -65,7 +65,7 @@ test('no selector is generated if "select" is false', () => {
   });
 
   // assert the k8s spec doesnt have it.
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[0].spec;
   expect(spec.selector.matchLabels).toBeUndefined();
 
   // assert the deployment object doesnt have it.
@@ -87,7 +87,7 @@ test('can select by label', () => {
   ds.select(kplus.LabelSelector.of({ labels: { foo: expectedSelector.foo } }));
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[0].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the deployment object has it.

@@ -3,20 +3,6 @@
 exports[`Can be exposed as via ingress 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-deployment-defaultdenyall-c8a461c9",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -148,20 +134,6 @@ Array [
 exports[`expose captures all container ports 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-deployment-defaultdenyall-c8a461c9",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -264,20 +236,6 @@ Array [
 
 exports[`exposing via a service preserves deployment namespace 1`] = `
 Array [
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-deployment-defaultdenyall-c8a461c9",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
   Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
@@ -383,20 +341,6 @@ Array [
 exports[`scheduling can be assigned to a node by name 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -468,20 +412,6 @@ Array [
 
 exports[`scheduling can be attracted to a node by selector - custom 1`] = `
 Array [
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
   Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
@@ -574,20 +504,6 @@ Array [
 exports[`scheduling can be attracted to a node by selector - default 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -678,20 +594,6 @@ Array [
 exports[`scheduling can be co-located with a managed deployment - custom 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -755,20 +657,6 @@ Array [
           "setHostnameAsFQDN": false,
         },
       },
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
     },
   },
   Object {
@@ -860,20 +748,6 @@ Array [
 exports[`scheduling can be co-located with a managed deployment - default 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -937,20 +811,6 @@ Array [
           "setHostnameAsFQDN": false,
         },
       },
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
     },
   },
   Object {
@@ -1038,20 +898,6 @@ Array [
 
 exports[`scheduling can be co-located with an unmanaged deployment - custom 1`] = `
 Array [
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
   Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
@@ -1146,20 +992,6 @@ Array [
 exports[`scheduling can be co-located with an unmanaged deployment - default 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -1250,20 +1082,6 @@ Array [
 exports[`scheduling can be separated from a managed deployment - custom 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -1327,20 +1145,6 @@ Array [
           "setHostnameAsFQDN": false,
         },
       },
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
     },
   },
   Object {
@@ -1432,20 +1236,6 @@ Array [
 exports[`scheduling can be separated from a managed deployment - default 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -1509,20 +1299,6 @@ Array [
           "setHostnameAsFQDN": false,
         },
       },
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
     },
   },
   Object {
@@ -1610,20 +1386,6 @@ Array [
 
 exports[`scheduling can be separated from an unmanaged deployment - custom 1`] = `
 Array [
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
   Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
@@ -1718,20 +1480,6 @@ Array [
 exports[`scheduling can be separated from an unmanaged deployment - default 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-web-defaultdenyall-c83aae98",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -1822,20 +1570,6 @@ Array [
 exports[`scheduling can be spread - custom 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-deployment-defaultdenyall-c8a461c9",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
     "metadata": Object {
@@ -1923,20 +1657,6 @@ Array [
 
 exports[`scheduling can be spread - default 1`] = `
 Array [
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-deployment-defaultdenyall-c8a461c9",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
   Object {
     "apiVersion": "apps/v1",
     "kind": "Deployment",
@@ -2096,20 +1816,6 @@ Array [
         Object {
           "operator": "Exists",
         },
-      ],
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-redis-defaultdenyall-c82cd824",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
       ],
     },
   },

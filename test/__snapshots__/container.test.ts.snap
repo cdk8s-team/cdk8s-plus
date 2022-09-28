@@ -58,20 +58,6 @@ Array [
       "setHostnameAsFQDN": false,
     },
   },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-pod-defaultdenyall-c882408f",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
 ]
 `;
 
@@ -120,20 +106,6 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-pod-defaultdenyall-c882408f",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
     },
   },
 ]
@@ -207,20 +179,6 @@ Array [
       "setHostnameAsFQDN": false,
     },
   },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-pod-defaultdenyall-c882408f",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
 ]
 `;
 
@@ -283,20 +241,6 @@ Array [
             "readOnly": false,
           },
         },
-      ],
-    },
-  },
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-pod-defaultdenyall-c882408f",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
       ],
     },
   },

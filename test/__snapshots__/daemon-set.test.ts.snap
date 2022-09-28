@@ -3,20 +3,6 @@
 exports[`custom 1`] = `
 Array [
   Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-daemonset-defaultdenyall-c826616a",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
-  Object {
     "apiVersion": "apps/v1",
     "kind": "DaemonSet",
     "metadata": Object {
@@ -78,20 +64,6 @@ Array [
 
 exports[`defaults 1`] = `
 Array [
-  Object {
-    "apiVersion": "networking.k8s.io/v1",
-    "kind": "NetworkPolicy",
-    "metadata": Object {
-      "name": "test-daemonset-defaultdenyall-c826616a",
-    },
-    "spec": Object {
-      "podSelector": Object {},
-      "policyTypes": Array [
-        "Egress",
-        "Ingress",
-      ],
-    },
-  },
   Object {
     "apiVersion": "apps/v1",
     "kind": "DaemonSet",

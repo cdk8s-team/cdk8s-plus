@@ -37,7 +37,7 @@ test('default configuration', () => {
   // assert the k8s spec has it.
   const manifest = Testing.synth(chart);
   expect(manifest).toMatchSnapshot();
-  const spec = manifest[1].spec;
+  const spec = manifest[0].spec;
 
   expect(spec.schedule).toEqual('* * * * *');
   expect(spec.concurrencyPolicy).toEqual('Forbid');
@@ -78,7 +78,7 @@ test('custom configuration', () => {
   // assert the k8s spec has it.
   const manifest = Testing.synth(chart);
   expect(manifest).toMatchSnapshot();
-  const spec = manifest[1].spec;
+  const spec = manifest[0].spec;
 
   expect(spec.schedule).toEqual('5 * * * *');
   expect(spec.concurrencyPolicy).toEqual('Allow');

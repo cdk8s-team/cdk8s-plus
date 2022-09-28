@@ -19,6 +19,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
+  public readonly isolate: boolean;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
@@ -36,6 +37,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
+    this.isolate = props.isolate ?? false;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -413,6 +415,12 @@ export interface AbstractPodProps extends base.ResourceProps {
    */
   readonly automountServiceAccountToken?: boolean;
 
+  /**
+   * Isolates the pod. This does not allow any ingress or egress connections for the pod.
+   *
+   * @default false
+   */
+  readonly isolate?: boolean;
 }
 
 /**
@@ -1617,7 +1625,9 @@ export interface PodConnectionsAllowFromOptions {
 export class PodConnections {
 
   constructor(protected readonly instance: AbstractPod) {
-    this.defaultNetworkPolicy();
+    if (instance.isolate) {
+      this.isolatePod();
+    }
   }
 
   /**
@@ -1658,12 +1668,16 @@ export class PodConnections {
 
   private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
 
+    if (this.instance.isolate) {
+      throw new Error('The \'isolate\' property is set to true currently. Please remove it before allowing connections to the Pod.');
+    }
+
     const config = peer.toNetworkPolicyPeerConfig();
     networkpolicy.validatePeerConfig(config);
 
     const peerAddress = address(peer);
 
-    if (options.isolation === PodConnectionsIsolation.POD) {
+    if (!options.isolation || options.isolation === PodConnectionsIsolation.POD) {
 
       const src = new networkpolicy.NetworkPolicy(this.instance, `Allow${direction}${peerAddress}`, {
         selector: this.instance,
@@ -1682,7 +1696,7 @@ export class PodConnections {
 
     }
 
-    if (options.isolation === PodConnectionsIsolation.PEER) {
+    if (!options.isolation || options.isolation === PodConnectionsIsolation.PEER) {
 
       if (config.ipBlock) {
         // for an ip block we don't need to create the opposite policies
@@ -1749,12 +1763,13 @@ export class PodConnections {
   }
 
   /**
-   * Sets the default network policy for Pods to have all egress and ingress connections as disabled
+   * Sets the default network policy for Pod to have all egress and ingress connections as disabled
    */
-  private defaultNetworkPolicy() {
+  private isolatePod() {
     new networkpolicy.NetworkPolicy(this.instance, 'DefaultDenyAll', {
       // the policy must be defined in the namespace of the pod
       // so it can select it.
+      selector: this.instance,
       metadata: Lazy.any({ produce: () => {return { namespace: this.instance.metadata.namespace };} }),
       egress: {
         default: networkpolicy.NetworkPolicyTrafficDefault.DENY,

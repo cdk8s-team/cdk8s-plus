@@ -1014,7 +1014,7 @@ describe('connections |', () => {
 
     const manifest = Testing.synth(chart);
 
-    const ingressPolicyMetadata = manifest[2].metadata;
+    const ingressPolicyMetadata = manifest[1].metadata;
     expect(ingressPolicyMetadata.namespace).toEqual('n1');
 
   });
@@ -1313,7 +1313,7 @@ describe('connections |', () => {
 
     const manifest = Testing.synth(chart);
 
-    const ingressPolicyMetadata = manifest[2].metadata;
+    const ingressPolicyMetadata = manifest[1].metadata;
     expect(ingressPolicyMetadata.namespace).toEqual('n1');
 
   });

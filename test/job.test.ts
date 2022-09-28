@@ -24,7 +24,7 @@ test('Allows setting all options', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[0].spec;
 
   expect(spec.activeDeadlineSeconds).toEqual(20);
   expect(spec.backoffLimit).toEqual(job.backoffLimit);
@@ -48,7 +48,7 @@ test('Applies default restart policy to pod spec', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[0].spec;
   expect(spec.template.spec?.restartPolicy).toEqual('Never');
 
   // assert the job object has it.
@@ -67,7 +67,7 @@ test('Does not modify existing restart policy of pod spec', () => {
   });
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[1].spec;
+  const spec = Testing.synth(chart)[0].spec;
   expect(spec.template.spec?.restartPolicy).toEqual('Always');
 
   // assert the job object has it.
@@ -87,7 +87,7 @@ test('Synthesizes spec lazily', () => {
     },
   );
 
-  const container = Testing.synth(chart)[1].spec.template.spec.containers[0];
+  const container = Testing.synth(chart)[0].spec.template.spec.containers[0];
   expect(container.image).toEqual('image');
 
 });

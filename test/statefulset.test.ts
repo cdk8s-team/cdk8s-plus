@@ -27,7 +27,7 @@ test('A label selector is automatically allocated', () => {
   const expectedSelector = { 'cdk8s.io/metadata.addr': expectedValue };
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[2].spec;
+  const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
   expect(spec.template.metadata?.labels).toEqual(expectedSelector);
 
@@ -76,7 +76,7 @@ test('Can select by label', () => {
   statefulset.select(kplus.LabelSelector.of({ labels: { foo: expectedSelector.foo } }));
 
   // assert the k8s spec has it.
-  const spec = Testing.synth(chart)[2].spec;
+  const spec = Testing.synth(chart)[1].spec;
   expect(spec.selector.matchLabels).toEqual(expectedSelector);
 
   // assert the statefulset object has it.
@@ -95,9 +95,9 @@ test('StatefulSet gets defaults', () => {
   });
 
   const resources = Testing.synth(chart);
-  const setSpec: k8s.StatefulSetSpec = resources[2].spec;
+  const setSpec: k8s.StatefulSetSpec = resources[1].spec;
   expect(setSpec.replicas).toEqual(1);
-  expect(setSpec.serviceName).toEqual(resources[1].metadata.name);
+  expect(setSpec.serviceName).toEqual(resources[0].metadata.name);
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.ORDERED_READY);
   expect(setSpec.minReadySeconds).toEqual(0);
 });
@@ -121,7 +121,7 @@ test('StatefulSet allows overrides', () => {
   });
 
   const resources = Testing.synth(chart);
-  const setSpec = resources[2].spec;
+  const setSpec = resources[1].spec;
   expect(setSpec.replicas).toEqual(5);
   expect(setSpec.serviceName).toEqual('test-srv');
   expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.PARALLEL);
@@ -142,7 +142,7 @@ test('Synthesizes spec lazily', () => {
     },
   );
 
-  const container = Testing.synth(chart)[2].spec.template.spec.containers[0];
+  const container = Testing.synth(chart)[1].spec.template.spec.containers[0];
 
   expect(container.image).toEqual('image');
   expect(container.ports[0].containerPort).toEqual(9300);
@@ -159,7 +159,7 @@ test('default update strategy', () => {
   const set = new kplus.StatefulSet(chart, 'StatefulSet', { service });
   set.addContainer({ image: 'image' });
 
-  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[2].spec;
+  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[1].spec;
 
   expect(set.strategy).toEqual(kplus.StatefulSetUpdateStrategy.rollingUpdate());
   expect(spec.updateStrategy).toEqual({
@@ -185,7 +185,7 @@ test('custom update strategy', () => {
   });
   set.addContainer({ image: 'image' });
 
-  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[2].spec;
+  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[1].spec;
 
   expect(set.strategy).toEqual(kplus.StatefulSetUpdateStrategy.onDelete());
   expect(spec.updateStrategy).toEqual({ type: 'OnDelete' });
