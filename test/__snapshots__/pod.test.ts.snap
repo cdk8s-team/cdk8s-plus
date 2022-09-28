@@ -1470,28 +1470,6 @@ Array [
           },
         },
         "spec": Object {
-          "affinity": Object {
-            "podAntiAffinity": Object {
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "labelSelector": Object {
-                    "matchLabels": Object {
-                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
-                    },
-                  },
-                  "topologyKey": "kubernetes.io/hostname",
-                },
-                Object {
-                  "labelSelector": Object {
-                    "matchLabels": Object {
-                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
-                    },
-                  },
-                  "topologyKey": "topology.kubernetes.io/zone",
-                },
-              ],
-            },
-          },
           "automountServiceAccountToken": false,
           "containers": Array [
             Object {
@@ -2957,28 +2935,6 @@ Array [
           },
         },
         "spec": Object {
-          "affinity": Object {
-            "podAntiAffinity": Object {
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "labelSelector": Object {
-                    "matchLabels": Object {
-                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
-                    },
-                  },
-                  "topologyKey": "kubernetes.io/hostname",
-                },
-                Object {
-                  "labelSelector": Object {
-                    "matchLabels": Object {
-                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
-                    },
-                  },
-                  "topologyKey": "topology.kubernetes.io/zone",
-                },
-              ],
-            },
-          },
           "automountServiceAccountToken": false,
           "containers": Array [
             Object {
@@ -4437,28 +4393,6 @@ Array [
           },
         },
         "spec": Object {
-          "affinity": Object {
-            "podAntiAffinity": Object {
-              "requiredDuringSchedulingIgnoredDuringExecution": Array [
-                Object {
-                  "labelSelector": Object {
-                    "matchLabels": Object {
-                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
-                    },
-                  },
-                  "topologyKey": "kubernetes.io/hostname",
-                },
-                Object {
-                  "labelSelector": Object {
-                    "matchLabels": Object {
-                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
-                    },
-                  },
-                  "topologyKey": "topology.kubernetes.io/zone",
-                },
-              ],
-            },
-          },
           "automountServiceAccountToken": true,
           "containers": Array [
             Object {

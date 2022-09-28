@@ -536,17 +536,27 @@ describe('scheduling', () => {
 
   });
 
+  test('spread set to true', () => {
+
+    const chart = Testing.chart();
+
+    new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'redis' }],
+      spread: true,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+  });
+
   test('can be separated from a managed deployment - default', () => {
 
     const chart = Testing.chart();
 
     const redis = new kplus.Deployment(chart, 'Redis', {
       containers: [{ image: 'redis' }],
-      defaultSpread: false,
     });
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
-      defaultSpread: false,
     });
 
     web.scheduling.separate(redis);
@@ -561,11 +571,9 @@ describe('scheduling', () => {
 
     const redis = new kplus.Deployment(chart, 'Redis', {
       containers: [{ image: 'redis' }],
-      defaultSpread: false,
     });
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
-      defaultSpread: false,
     });
 
     web.scheduling.separate(redis, {
@@ -588,7 +596,6 @@ describe('scheduling', () => {
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
-      defaultSpread: false,
     });
 
     web.scheduling.separate(redis);
@@ -608,7 +615,6 @@ describe('scheduling', () => {
 
     const web = new kplus.Deployment(chart, 'Web', {
       containers: [{ image: 'web' }],
-      defaultSpread: false,
     });
 
     web.scheduling.separate(redis, {

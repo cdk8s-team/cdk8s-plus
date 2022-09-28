@@ -27,9 +27,9 @@ export interface WorkloadProps extends pod.AbstractPodProps {
    * Automatically spread pods across hostname and zones.
    *
    * @see https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/#internal-default-constraints
-   * @default true
+   * @default false
    */
-  readonly defaultSpread?: boolean;
+  readonly spread?: boolean;
 }
 
 /**
@@ -71,7 +71,7 @@ export abstract class Workload extends pod.AbstractPod {
 
   public readonly scheduling: WorkloadScheduling;
 
-  private readonly _defaultSpread: boolean;
+  private readonly spread: boolean;
 
   private readonly _matchLabels: Record<string, string> = {};
   private readonly _matchExpressions: LabelSelectorRequirement[] = [];
@@ -82,7 +82,7 @@ export abstract class Workload extends pod.AbstractPod {
     this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
     this.scheduling = new WorkloadScheduling(this);
     this.connections = new pod.PodConnections(this);
-    this._defaultSpread = props.defaultSpread ?? true;
+    this.spread = props.spread ?? false;
 
     const matcher = Names.toLabelValue(this);
     this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
@@ -137,7 +137,7 @@ export abstract class Workload extends pod.AbstractPod {
    * @internal
    */
   public _toPodSpec(): k8s.PodSpec {
-    if (this._defaultSpread) {
+    if (this.spread) {
       {
         this.scheduling.spread({
           topology: pod.Topology.HOSTNAME,
