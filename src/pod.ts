@@ -1767,9 +1767,9 @@ export class PodConnections {
    */
   private isolatePod() {
     new networkpolicy.NetworkPolicy(this.instance, 'DefaultDenyAll', {
+      selector: this.instance,
       // the policy must be defined in the namespace of the pod
       // so it can select it.
-      selector: this.instance,
       metadata: Lazy.any({ produce: () => {return { namespace: this.instance.metadata.namespace };} }),
       egress: {
         default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
