@@ -1821,3 +1821,96 @@ Array [
   },
 ]
 `;
+
+exports[`scheduling spread set to true 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {
+            "podAntiAffinity": Object {
+              "requiredDuringSchedulingIgnoredDuringExecution": Array [
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+                    },
+                  },
+                  "topologyKey": "kubernetes.io/hostname",
+                },
+                Object {
+                  "labelSelector": Object {
+                    "matchLabels": Object {
+                      "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+                    },
+                  },
+                  "topologyKey": "topology.kubernetes.io/zone",
+                },
+              ],
+            },
+          },
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "redis",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+]
+`;
