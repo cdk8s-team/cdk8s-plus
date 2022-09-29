@@ -15,6 +15,7 @@ export * from './probe';
 export * from './pvc';
 export * from './pv';
 export * from './handler';
+export * from './horizontal-pod-autoscaler';
 export * from './workload';
 export * from './daemon-set';
 export * from './role';

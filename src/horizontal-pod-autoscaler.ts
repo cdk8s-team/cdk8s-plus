@@ -13,96 +13,91 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
   /**
    * The resource to scale up or down.
    */
-  target: Workload;
+  readonly target: Workload;
   /**
    * The maximum number of replicas that can be scaled up to.
    */
-  maxReplicas: number;
+  readonly maxReplicas: number;
   /**
    * The minimum number of replicas that can be scaled down to.
    */
-  minReplicas?: number;
+  readonly minReplicas?: number;
   /**
    * The metric conditions that trigger a scale up or scale down.
    */
-  metrics?: Metric[];
+  readonly metrics?: Metric[];
   /**
   * The scaling behavior when scaling up.
   */
-  scaleUp?: {
-    selected?: ScalePolicy['type'];
-    policies?: ScalePolicy[];
-    stabilizationWindow?: Duration;
-  };
+  readonly scaleUp?: ScalingRules;
   /**
   * The scaling behavior when scaling down.
   */
-  scaleDown?: {
-    selected?: ScalePolicy['type'];
-    policies?: ScalePolicy[];
-    stabilizationWindow?: Duration;
-  };
+  readonly scaleDown?: ScalingRules;
 }
 
 /**
  * A HorizontalPodAutoscaler scales a workload up or down in response to a metric
  * change. This allows a service to meet demand as it peeks.
  *
- * Use Case
  *
  * The following are typical use cases for HorizontalPodAutoscaler:
  *
- * - When CPU usage is above 70%, scale up the number of replicas to meet the demand.
+ * - When Memory usage is above 70%, scale up the number of replicas to meet the demand.
  * - When CPU usage is below 30%, scale down the number of replicas to save resources.
  * - When a service is experiencing a spike in traffic, scale up the number of replicas
  * to meet the demand. Then, when the traffic subsides, scale down the number of
  * replicas to save resources.
+ *
+ * HorizontalPodAutoscaler's can be used to scale the following workloads:
+ * - Deployment
+ * - ReplicaSet
+ * - ReplicationController
+ * - StatefulSet
  */
 export class HorizontalPodAutoscaler extends Resource {
   /**
  * @see base.Resource.apiObject
  */
   protected readonly apiObject: ApiObject;
-
   public readonly resourceType = 'horizontalpodautoscaler';
-
-  /**
-   * The maximum number of replicas that can be scaled up to.
-   */
-  public readonly maxReplicas: number;
-
-  /**
-   * The minimum number of replicas that can be scaled down to.
-   */
-  public readonly minReplicas?: number;
-
   /**
    * The resource to scale up or down.
    */
   public readonly target: Workload;
-
+  /**
+   * The maximum number of replicas that can be scaled up to.
+   */
+  public readonly maxReplicas: number;
+  /**
+   * The minimum number of replicas that can be scaled down to.
+   *
+   * Can be set to 0 if the alpha feature gate `HPAScaleToZero` is enabled and
+   * at least one Object or External metric is configured.
+   *
+   * @default 1
+   */
+  public readonly minReplicas?: number;
   /**
    * The metric conditions that trigger a scale up or scale down.
+   *
+   * @default - No metrics are configured.
    */
   public readonly metrics?: Metric[];
-
   /**
    * The scaling behavior when scaling up.
+   *
+   * @default is the higher of
+   * - Increase no more than 4 pods per 60 seconds
+   * - Double the number of pods per 60 seconds
    */
-  public readonly scaleUp?: {
-    selected?: ScalePolicy['type'];
-    policies?: ScalePolicy[];
-    stabilizationWindow?: Duration;
-  };
-
+  public readonly scaleUp?: ScalingRules;
   /**
    * The scaling behavior when scaling down.
+   *
+   * @default - Scale down to minReplica count, with a 5 minute stabilization window.
    */
-  public readonly scaleDown?: {
-    selected?: ScalePolicy['type'];
-    policies?: ScalePolicy[];
-    stabilizationWindow?: Duration;
-  };
+  public readonly scaleDown?: ScalingRules;
 
 
   constructor(scope: Construct, id: string, props: HorizontalPodAutoscalerProps) {
@@ -112,16 +107,62 @@ export class HorizontalPodAutoscaler extends Resource {
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
 
-    const hasContainerWithoutResources = props.target.containers.some((r) => !r.resources?.cpu || !r.resources?.memory);
-    if (hasContainerWithoutResources && !props.metrics) {
+    const hasContainerWithoutResources = props.target.containers.some((c) => this._hasRequestsOrLimits(c));
+    if (!hasContainerWithoutResources && !props.metrics) {
       throw new Error('Every container in the HorizontalPodAutoscaler target must have CPU or memory resources defined');
     }
+    if (props.minReplicas && props.minReplicas > props.maxReplicas) {
+      throw new Error('minReplicas must be less than or equal to maxReplicas in order for HorizontalPodAutoscaler to scale.');
+    }
+    if (props?.scaleUp?.stabilizationWindow) {
+      this._isValidStabilizationWindow(props.scaleUp.stabilizationWindow);
+    }
+    if (props?.scaleDown?.stabilizationWindow) {
+      this._isValidStabilizationWindow(props.scaleDown.stabilizationWindow);
+    }
 
-    this.maxReplicas = props.maxReplicas;
     this.target = props.target;
-    this.metrics = props.metrics || [];
-    this.scaleUp = props?.scaleUp || {};
-    this.scaleDown = props?.scaleDown || {};
+    this.maxReplicas = props.maxReplicas;
+    this.minReplicas = props.minReplicas ?? 1;
+    this.metrics = props.metrics ?? undefined;
+    this.scaleUp = {
+      strategy: props.scaleUp?.strategy ?? ScalingStrategy.MAX_CHANGE,
+      policies: props.scaleUp?.policies ?? [
+        ScalingPolicy.pods(4, { scalingDuration: Duration.minutes(1) }),
+        ScalingPolicy.percent(200, { scalingDuration: Duration.minutes(1) }),
+      ],
+      stabilizationWindow: props?.scaleDown?.stabilizationWindow ?? Duration.seconds(0),
+    },
+    this.scaleDown = {
+      strategy: props.scaleUp?.strategy ?? ScalingStrategy.MAX_CHANGE,
+      policies: props.scaleUp?.policies ?? [
+        ScalingPolicy.pods(this.minReplicas, { scalingDuration: Duration.minutes(5) }),
+      ],
+      stabilizationWindow: props?.scaleDown?.stabilizationWindow ?? Duration.minutes(5),
+    };
+  }
+
+  /**
+   * Validate that the container has at least one CPU/memory request/limit defined.
+   * If the container does not have a request/limit and there are no metrics defined,
+   * then the HPA will not work.
+   * @internal
+   */
+  private _hasRequestsOrLimits(container: Container) {
+    const hasRequests = container.resources?.cpu?.request || container.resources?.memory?.request;
+    const hasLimits = container.resources?.cpu?.limit || container.resources?.memory?.limit;
+    return hasRequests || hasLimits;
+  }
+
+  /**
+   * @internal
+   */
+  private _isValidStabilizationWindow(window?: Duration) {
+    const windowSeconds = window?.toSeconds();
+    if (windowSeconds && (0 >= windowSeconds || windowSeconds > 3600)) {
+      throw new Error('ScalingRules stabilizationWindow must be more than 0 and no more than 1 hour.');
+    }
+    return window;
   }
 
   /**
@@ -130,6 +171,7 @@ export class HorizontalPodAutoscaler extends Resource {
   public _toKube(): k8s.HorizontalPodAutoscalerSpecV2 {
     return {
       maxReplicas: this.maxReplicas,
+      minReplicas: this.minReplicas,
       scaleTargetRef: {
         apiVersion: this.target.apiVersion,
         kind: this.target.kind,
@@ -139,12 +181,12 @@ export class HorizontalPodAutoscaler extends Resource {
       behavior: {
         scaleUp: {
           policies: this.scaleUp?.policies?.map(p => p?._toKube()),
-          selectPolicy: this.scaleUp?.selected,
+          selectPolicy: this.scaleUp?.strategy,
           stabilizationWindowSeconds: this.scaleUp?.stabilizationWindow?.toSeconds(),
         },
         scaleDown: {
           policies: this.scaleDown?.policies?.map(p => p?._toKube()),
-          selectPolicy: this.scaleDown?.selected,
+          selectPolicy: this.scaleDown?.strategy,
           stabilizationWindowSeconds: this.scaleDown?.stabilizationWindow?.toSeconds(),
         },
       },
@@ -157,10 +199,30 @@ export class HorizontalPodAutoscaler extends Resource {
  * Metric source types.
  */
 export enum MetricSourceType {
+  /**
+   * A container metric that will be tracked across all pods of the current scale target.
+   * Only a single container may be tracked in each pod. In other words, a pod
+   * that hosts two of the same container, will be ignored.
+   */
   CONTAINER_RESOURCE = 'ContainerResource',
+  /**
+   * A global metric that is not associated with any Kubernetes object.
+   * Allows for autoscaling based on information coming from components running outside of
+   * the cluster.
+   */
   EXTERNAL = 'External',
+  /**
+  * Metric that describes a kubernetes object
+  */
   OBJECT = 'Object',
+  /**
+   * A pod metric that will be averaged across all pods of the current scale target.
+   */
   PODS = 'Pods',
+  /**
+   * A resource metric can be used to track the current available resources of a
+   * scale target.
+   */
   RESOURCE = 'Resource',
 }
 
@@ -171,26 +233,48 @@ export interface MetricOptions {
   /**
    * The target metric value that will trigger scaling.
    */
-  target: MetricTarget;
+  readonly target: MetricTarget;
   /**
   * The name of the metric to scale on.
   */
-  name: string;
+  readonly name: string;
   /**
    * A selector to find a metric by labels.
    */
-  labelSelector?: kplus.LabelSelector;
+  readonly labelSelector?: kplus.LabelSelector;
 }
 
 
 /**
  * Options for `Metric.containerResource()`
  */
-export interface MetricContainerResourceOptions extends Omit<MetricOptions, 'labelSelector'> {
+export interface MetricContainerResourceOptions {
   /**
-   * The container where the metric can be found.
+   * Name of the container's resource.
    */
-  container: Container;
+  readonly name: string;
+  /**
+   * Container where the metric can be found.
+   */
+  readonly container: Container;
+  /**
+   * Target metric value that will trigger scaling.
+   */
+  readonly target: MetricTarget;
+}
+
+/**
+ * Options for `Metric.containerResource()`
+ */
+export interface MetricResourceMetricOptions {
+  /**
+   * Name of the resource.
+   */
+  readonly name: string;
+  /**
+   * Target metric value that will trigger scaling.
+   */
+  readonly target: MetricTarget;
 }
 
 /**
@@ -198,9 +282,9 @@ export interface MetricContainerResourceOptions extends Omit<MetricOptions, 'lab
  */
 export interface MetricObjectOptions extends MetricOptions {
   /**
-   * The Resource where the metric can be found.
+   * Resource where the metric can be found.
    */
-  object: Resource;
+  readonly object: Resource;
 }
 
 /**
@@ -210,6 +294,9 @@ export class Metric {
 
   /**
    * A container metric that will be tracked across all pods of the current scale target.
+   * Only a single container may be tracked in each pod. In other words, a pod
+   * that hosts two of the same container, will be ignored.
+   *
    */
   public static containerResource(options: MetricContainerResourceOptions): Metric {
     return new Metric({
@@ -223,10 +310,13 @@ export class Metric {
   }
 
   /**
-   * Global metric that is not associated with any Kubernetes object. It allows
-   * autoscaling based on information coming from components running outside of
-   * cluster (for example length of queue in cloud messaging service, or QPS from
-   * loadbalancer running outside of cluster).
+   * A global metric that is not associated with any Kubernetes object.
+   * Allows for autoscaling based on information coming from components running outside of
+   * the cluster.
+   *
+   * Use case:
+   * - Scale up when the length of an SQS queue is greater than 1000 messages.
+   * - Scale down when an outside load balancer's queries are less than 10 per second.
    */
   public static external(options: MetricOptions): Metric {
     return new Metric({
@@ -242,8 +332,10 @@ export class Metric {
   }
 
   /**
-  * Metric that describes a kubernetes object (for example,
-  * hits-per-second on an Ingress object)
+  * Metric that describes a kubernetes object
+  *
+  * Use case:
+  * - Scale on a Kubernetes Ingress's hits-per-second metric.
   */
   public static object(options: MetricObjectOptions): Metric {
     return new Metric({
@@ -264,9 +356,11 @@ export class Metric {
   }
 
   /**
-   * Metric that describes each pod in the current scale target (for
-   * example, transactions-processed-per-second). The values will be
-   * averaged together before being compared to the target value
+   * A pod metric that will be averaged across all pods of the current scale target.
+   *
+   * Use case:
+   * - Average CPU utilization across all pods
+   * - Transactions processed per second across all pods
    */
   public static pods(options: MetricOptions): Metric {
     return new Metric({
@@ -282,13 +376,13 @@ export class Metric {
   }
 
   /**
-  * A resource metric known to Kubernetes, as specified in requests and
-  * limits, describing each pod in the current scale target (e.g. CPU or
-  * memory).  Such metrics are built in to Kubernetes, and have special
-  * scaling options on top of those available to normal per-pod metrics
-  * (the "pods" source).
-  */
-  public static resource(options: MetricOptions): Metric {
+   * A resource metric can be used to track the current available resources of a
+   * scale target.
+   *
+   * Use case:
+   * - Scale up when CPU is above the reserved threshold.
+   */
+  public static resource(options: MetricResourceMetricOptions): Metric {
     return new Metric({
       type: MetricSourceType.RESOURCE,
       resource: {
@@ -334,26 +428,46 @@ export enum MetricTargetType {
 
 /**
  * A metric condition that will trigger scaling behavior when satisfied.
+ *
+ * @example
+ *
+ * MetricTarget.averageUtilization(70); // 70% average utilization
+ *
  */
 export class MetricTarget {
-  public static value(target: string): MetricTarget {
+  /**
+  * Target a specific target metric value.
+  *
+  * @param value The target value. Floats can be passed within a string. i.g. `"1.2"`
+  */
+  public static value(value: string): MetricTarget {
     return new MetricTarget({
       type: MetricTargetType.VALUE,
-      value: k8s.Quantity.fromString(target),
+      value: k8s.Quantity.fromString(value),
     });
   }
 
-  public static averageValue(target: string): MetricTarget {
+  /**
+   * Target the average metric value across all relevant pods.
+   *
+   * @param averageValue The average metric value. Floats can be passed within a string. i.g. `"1.2"`
+   */
+  public static averageValue(averageValue: string): MetricTarget {
     return new MetricTarget({
       type: MetricTargetType.AVERAGE_VALUE,
-      averageValue: k8s.Quantity.fromString(target),
+      averageValue: k8s.Quantity.fromString(averageValue),
     });
   }
 
-  public static averageUtilization(target: number): MetricTarget {
+  /**
+   * Target the average percentage of the metric across all relevant pods.
+   *
+   * @param averageUtilization The percentage of the utilization metric. i.g. `50` for 50%.
+   */
+  public static averageUtilization(averageUtilization: number): MetricTarget {
     return new MetricTarget({
       type: MetricTargetType.UTILIZATION,
-      averageUtilization: target,
+      averageUtilization,
     });
   }
 
@@ -369,43 +483,142 @@ export class MetricTarget {
 
 
 /**
- * Options for `ScalePolicy`.
+ * The direction to scale in.
  */
-export interface ScalePolicyOptions {
+export enum ScalingDirection {
   /**
-   * The type of scaling behavior to configure.
+   * Scale up
    */
-  type: string;
+  UP = 'scaleUp',
   /**
-   * The amount of change to apply.
+   * Scale down
    */
-  value: number;
+  DOWN = 'scaleDown',
+}
+
+/**
+ * A ScalingRules defines the scaling behavior for one direction.
+ */
+export interface ScalingRules {
   /**
-   * The amount of time the change is applied for before the scaling condition is
-   * revalidated.
+   * How long past recommendations should be considered while
+   * scaling.
    *
-   * Must be greater than 0 seconds and no longer than 30 minutes.
+   * Minimum duration is 1 second, max is 1 hour.
+   *
+   * @default - On scale down no stabilization is performed. On scale up stabilization is
+   * performed for 5 minutes.
    */
-  period: Duration;
+  readonly stabilizationWindow: Duration;
+  /**
+   * The strategy used when determining the ScalingPolicy to use.
+   *
+   * @default - MAX_CHANGE
+   */
+  readonly strategy: ScalingStrategy;
+  /**
+   * The scaling policies.
+   *
+   * @default
+   * - Scale up defaults to
+   *    - Increase no more than 4 pods per 60 seconds
+   *    - Double the number of pods per 60 seconds
+   * - Scale down defaults to
+   *    - Decrease to minReplica count
+   */
+  readonly policies: ScalingPolicy[];
+}
+
+
+export enum ScalingStrategy {
+  /**
+   * Use the policy that provisions the most changes.
+   *
+   * This is the default.
+   */
+  MAX_CHANGE = 'Max',
+  /**
+   * Use the policy that provisions the least amount of changes.
+   */
+  MIN_CHANGE = 'Min',
+  /**
+   * Disables scaling in this direction.
+   *
+   * @deprecated - Omit the ScalingRule instead
+   */
+  DISABLED = 'Disabled',
+}
+
+/**
+* The type of scaling policy that could be used to make scaling decisions.
+*/
+export enum ScalingPolicyType {
+  /**
+   * Changes the number of pods.
+   */
+  PODS = 'Pods',
+  /**
+   * Changes the pods by a percentage of the it's current value.
+   */
+  PERCENT = 'Percent',
 }
 
 
 /**
+ * Options for `ScalingPolicy`.
+ */
+export interface ScalingPolicyOptions {
+  /**
+   * The amount of time the scaling policy has to
+   * continue scaling before the target metric must be
+   * revalidated.
+   *
+   * Must be greater than 0 seconds and no longer than 30 minutes.
+   *
+   * @default 15 seconds
+   */
+  readonly scalingDuration: Duration;
+}
+
+/**
  * A ScalePolicy defines how scaling should be applied.
  */
-export class ScalePolicy {
+export class ScalingPolicy {
 
-  public static value(options: ScalePolicyOptions): ScalePolicy {
-    const periodSeconds = options.period.toSeconds();
+  /**
+   * Changes the pods by a percentage of the it's current value.
+   *
+   * @param value The amount of change to apply. Must be greater than 0.
+   * @param options Options for `ScalingPolicy`.
+   */
+  public static percent(value:number, options?: ScalingPolicyOptions): ScalingPolicy {
+    return new ScalingPolicy({
+      type: ScalingPolicyType.PERCENT,
+      value,
+      periodSeconds: this._periodSeconds(options?.scalingDuration),
+    });
+  }
+
+  /**
+   * Changes the pods by a percentage of the it's current value.
+   *
+   * @param value The amount of change to apply. Must be greater than 0.
+   * @param options Options for `ScalingPolicy`.
+   */
+  public static pods(value:number, options?: ScalingPolicyOptions): ScalingPolicy {
+    return new ScalingPolicy({
+      type: ScalingPolicyType.PODS,
+      value,
+      periodSeconds: this._periodSeconds(options?.scalingDuration),
+    });
+  }
+
+  private static _periodSeconds(duration?: Duration): number {
+    const periodSeconds = duration?.toSeconds() ?? 15;
     if (0 >= periodSeconds && periodSeconds > 1800) {
       throw new Error('ScalePolicy period must be greater than 0 seconds and no longer than 30 minutes.');
     }
-
-    return new ScalePolicy({
-      type: options.type,
-      value: options.value,
-      periodSeconds,
-    });
+    return periodSeconds;
   }
 
   public readonly type: string;
