@@ -536,6 +536,18 @@ describe('scheduling', () => {
 
   });
 
+  test('spread set to true', () => {
+
+    const chart = Testing.chart();
+
+    new kplus.Deployment(chart, 'Deployment', {
+      containers: [{ image: 'redis' }],
+      spread: true,
+    });
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+  });
+
   test('can be separated from a managed deployment - default', () => {
 
     const chart = Testing.chart();
