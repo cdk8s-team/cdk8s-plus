@@ -19,7 +19,7 @@ jobs:
         run: git config --global user.name "github-actions" && git config --global user.email "github-actions@github.com"
       - name: backport
         if: github.event.pull_request.merged == true
-        run: npx projen backport
         env:
           GITHUB_TOKEN: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           BACKPORT_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: npx projen backport
