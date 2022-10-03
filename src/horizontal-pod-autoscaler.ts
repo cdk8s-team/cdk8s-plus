@@ -62,7 +62,8 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
 
 /**
  * A HorizontalPodAutoscaler scales a workload up or down in response to a metric
- * change. This enables a service to .
+ * change. This allows your services to scale up when demand is high and scale down
+ * when they are no longer needed.
  *
  *
  * The following are typical use cases for HorizontalPodAutoscaler:
@@ -70,8 +71,8 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
  * * When Memory usage is above 70%, scale up the number of replicas to meet the demand.
  * * When CPU usage is below 30%, scale down the number of replicas to save resources.
  * * When a service is experiencing a spike in traffic, scale up the number of replicas
- * to meet the demand. Then, when the traffic subsides, scale down the number of
- * replicas to save resources.
+ *   to meet the demand. Then, when the traffic subsides, scale down the number of
+ *   replicas to save resources.
  *
  * HorizontalPodAutoscaler's can be used to scale the following workloads:
  * * Deployment
@@ -79,7 +80,35 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
  * * ReplicationController
  * * StatefulSet
  *
- * Cannot be used with a DaemonSet.
+ * :warning: HorizontalPodAutoscaler cannot be used with a DaemonSet.
+ *
+ * ### Targets that already have a replica count defined.
+ *
+ * It is recommended to remove any replica counts from the target resource before using a
+ * HorizontalPodAutoscaler. If this isn't done, then any time a change to that object is applied,
+ * Kubernetes will scale the current number of Pods to the value of the target.replicas key. This
+ * may not be desired and could lead to unexpected behavior.
+ *
+ *
+ * @see https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#implicit-maintenance-mode-deactivation
+ *
+ * @example
+ * ```ts
+ * const backend = new kplus.Deployment(this, 'Backend', ...);
+ *
+ * const hpa = new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+ *  target: backend,
+ *  maxReplicas: 10,
+ *  scaleUp: {
+ *    policies: [
+ *      {
+ *        replicas: kplus.Replicas.absolute(3),
+ *        duration: Duration.minutes(5),
+ *      },
+ *    ],
+ *  },
+ * });
+ * ```
  */
 export class HorizontalPodAutoscaler extends Resource {
   /**
@@ -127,14 +156,43 @@ export class HorizontalPodAutoscaler extends Resource {
    * * Increase no more than 4 pods per 60 seconds
    * * Double the number of pods per 60 seconds
    */
-  public scaleUp?: ScalingRules;
+  public scaleUp: ScalingRules;
   /**
    * The scaling behavior when scaling down.
    *
    * @default
    * Scale down to minReplica count with a 5 minute stabilization window.
    */
-  public readonly scaleDown?: ScalingRules;
+  public scaleDown: ScalingRules;
+
+  // Defaults
+  private readonly _defaultScaleUp = {
+    strategy: ScalingStrategy.MAX_CHANGE,
+    stabilizationWindow: Duration.seconds(0),
+    policies: [
+      {
+        replicas: Replicas.absolute(4),
+        duration: Duration.minutes(1),
+      },
+      {
+        replicas: Replicas.percent(200),
+        duration: Duration.minutes(1),
+      },
+    ],
+  };
+  private readonly _defaultScaleDown = {
+    strategy: ScalingStrategy.MAX_CHANGE,
+    stabilizationWindow: Duration.minutes(5),
+    policies: [
+      {
+        replicas: Replicas.absolute(this.minReplicas ?? 1),
+        duration: Duration.minutes(5),
+      },
+    ],
+  };
+  private readonly _defaultScalingPolicy = {
+    duration: Duration.seconds(15),
+  };
 
 
   constructor(scope: Construct, id: string, props: HorizontalPodAutoscalerProps) {
@@ -160,13 +218,13 @@ export class HorizontalPodAutoscaler extends Resource {
     if (props?.scaleDown?.stabilizationWindow && !this._isStabilizationWindowWithinRange(props.scaleDown.stabilizationWindow)) {
       throw new Error("'scaleDown.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
     }
-    const scalingPolicies = [
-      ...(props?.scaleUp?.policies ?? []),
-      ...(props?.scaleDown?.policies ?? []),
-    ];
-    const hasInvalidScalingPolicyDurations = scalingPolicies.some((p) => p?.duration && !this._isScalingPolicyDurationWithinRange(p.duration));
-    if (hasInvalidScalingPolicyDurations) {
-      throw new Error("'scaleUp' and 'scaleDown' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
+    if (props?.scaleUp?.policies?.length) {
+      this._validateScalingPolicies(ScalingDirection.UP, props.scaleUp.policies);
+      this._setDefaultsOnScalingPolicies(props.scaleUp.policies);
+    }
+    if (props?.scaleDown?.policies?.length) {
+      this._validateScalingPolicies(ScalingDirection.DOWN, props.scaleDown.policies);
+      this._setDefaultsOnScalingPolicies(props.scaleDown.policies);
     }
 
     this.target = props.target;
@@ -174,33 +232,35 @@ export class HorizontalPodAutoscaler extends Resource {
     this.minReplicas = props.minReplicas ?? 1;
     this.metrics = props.metrics ?? undefined;
     this.scaleUp = {
-      strategy: props.scaleUp?.strategy ?? ScalingStrategy.MAX_CHANGE,
-      stabilizationWindow: props?.scaleDown?.stabilizationWindow ?? Duration.seconds(0),
-      policies: props?.scaleUp?.policies?.length ? props.scaleUp.policies : [
-        {
-          replicas: Replicas.absolute(4),
-          duration: Duration.minutes(1),
-        },
-        {
-          replicas: Replicas.percent(200),
-          duration: Duration.minutes(1),
-        },
-      ],
+      ...this._defaultScaleUp,
+      ...props.scaleUp,
     };
     this.scaleDown = {
-      strategy: props.scaleDown?.strategy ?? ScalingStrategy.MAX_CHANGE,
-      stabilizationWindow: props?.scaleDown?.stabilizationWindow ?? Duration.minutes(5),
-      policies: props?.scaleDown?.policies?.length ? props?.scaleDown.policies : [
-        {
-          replicas: Replicas.absolute(this.minReplicas),
-          duration: Duration.minutes(5),
-        },
-      ],
+      ...this._defaultScaleDown,
+      ...props?.scaleDown,
     };
   }
 
-  public addScaleUp(options: ScalingRules) {
-    this.scaleUp = options;
+  /**
+   * Validate a list of scaling policies.
+   * @internal
+   */
+  private _validateScalingPolicies(direction: ScalingDirection, policies: ScalingPolicy[]) {
+    return policies.map((p) => {
+      if (p?.duration && !this._isScalingPolicyDurationWithinRange(p.duration)) {
+        throw new Error(`'${direction}' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.`);
+      }
+    });
+  }
+  /**
+   * Set the default values on a list of scaling policies.
+   * @internal
+   */
+  private _setDefaultsOnScalingPolicies(policies: ScalingPolicy[]) {
+    return policies.map((p) => ({
+      ...this._defaultScalingPolicy,
+      ...p,
+    }));
   }
 
   /**
@@ -209,7 +269,7 @@ export class HorizontalPodAutoscaler extends Resource {
    * then the HPA will not work.
    * @internal
    */
-  private _hasRequestsOrLimits(container: Container) {
+  private _hasRequestsOrLimits(container: Container): Boolean {
     const hasRequests = container.resources?.cpu?.request || container.resources?.memory?.request;
     const hasLimits = container.resources?.cpu?.limit || container.resources?.memory?.limit;
     return Boolean(hasRequests || hasLimits);
@@ -218,7 +278,7 @@ export class HorizontalPodAutoscaler extends Resource {
   /**
    * @internal
    */
-  private _isStabilizationWindowWithinRange(window?: Duration) {
+  private _isStabilizationWindowWithinRange(window?: Duration): Boolean {
     const windowSeconds = window?.toSeconds();
     const isWithinRange = windowSeconds && (0 < windowSeconds && windowSeconds <= 3600);
     return Boolean(isWithinRange);
@@ -227,7 +287,7 @@ export class HorizontalPodAutoscaler extends Resource {
   /**
    * @internal
    */
-  private _isScalingPolicyDurationWithinRange(duration: Duration) {
+  private _isScalingPolicyDurationWithinRange(duration: Duration): Boolean {
     const periodSeconds = duration?.toSeconds() ?? 15;
     const isWithinRange = 0 < periodSeconds && periodSeconds <= 1800;
     return Boolean(isWithinRange);
@@ -326,27 +386,9 @@ export interface MetricOptions {
  */
 export interface MetricContainerResourceOptions {
   /**
-   * Name of the container's resource.
-   */
-  readonly name: string;
-  /**
    * Container where the metric can be found.
    */
   readonly container: Container;
-  /**
-   * Target metric value that will trigger scaling.
-   */
-  readonly target: MetricTarget;
-}
-
-/**
- * Options for `Metric.resource()`
- */
-export interface MetricResourceMetricOptions {
-  /**
-   * Name of the resource.
-   */
-  readonly name: string;
   /**
    * Target metric value that will trigger scaling.
    */
@@ -716,13 +758,14 @@ export interface ScalingRules {
    * The scaling policies.
    *
    * @default
+   * If not scaling polices are defined then…
    * * Scale up defaults to
    *    * Increase no more than 4 pods per 60 seconds
    *    * Double the number of pods per 60 seconds
    * * Scale down defaults to
    *    * Decrease to minReplica count
    */
-  readonly policies?: ScalingPolicy[];
+  policies?: ScalingPolicy[];
 }
 
 
