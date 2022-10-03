@@ -55,47 +55,7 @@ test('default configuration', () => {
   });
 });
 
-test('throws error, when resource container does not have a request/limit defined and metrics is undefined', () => {
-  const chart = Testing.chart();
-  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
-
-  new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
-    target: deployment,
-    maxReplicas: 10,
-  });
-
-  const manifest = Testing.synth(chart);
-  expect(manifest).toMatchSnapshot();
-  const spec = manifest[1].spec;
-  expect(spec.maxReplicas).toEqual(10);
-  expect(spec.minReplicas).toEqual(1);
-  expect(spec.metrics).toEqual(undefined);
-  expect(spec.behavior.scaleUp).toEqual({
-    policies: [
-      {
-        periodSeconds: 60,
-        type: 'Pods',
-        value: 4,
-      },
-      {
-        periodSeconds: 60,
-        type: 'Percent',
-        value: 200,
-      },
-    ],
-    selectPolicy: 'Max',
-    stabilizationWindowSeconds: 0,
-  });
-  expect(spec.behavior.scaleDown).toEqual({
-    policies: [
-      { periodSeconds: 300, type: 'Pods', value: 1 },
-    ],
-    selectPolicy: 'Max',
-    stabilizationWindowSeconds: 300,
-  });
-});
-
-test('creates HPA, metrics, scaleUp,and scaleDown are configured', () => {
+test('creates HPA, when metrics, scaleUp, and scaleDown are all configured', () => {
   const chart = Testing.chart();
   const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
 
@@ -104,25 +64,32 @@ test('creates HPA, metrics, scaleUp,and scaleDown are configured', () => {
     maxReplicas: 10,
     minReplicas: 2,
     metrics: [
-      kplus.Metric.resource({
-        name: 'cpu',
-        target: kplus.MetricTarget.averageUtilization(50),
-      }),
+      kplus.Metric.resourceCpu(kplus.MetricTarget.averageUtilization(50)),
     ],
     scaleUp: {
       stabilizationWindow: Duration.minutes(5),
       strategy: kplus.ScalingStrategy.MAX_CHANGE,
       policies: [
-        kplus.ScalingPolicy.pods(3, { scalingDuration: Duration.minutes(3) }),
-        kplus.ScalingPolicy.percent(30),
+        {
+          replicas: kplus.Replicas.absolute(3),
+          duration: Duration.minutes(3),
+        },
+        {
+          replicas: kplus.Replicas.percent(30),
+        },
       ],
     },
     scaleDown: {
       stabilizationWindow: Duration.minutes(5),
       strategy: kplus.ScalingStrategy.MAX_CHANGE,
       policies: [
-        kplus.ScalingPolicy.pods(3, { scalingDuration: Duration.minutes(3) }),
-        kplus.ScalingPolicy.percent(30),
+        {
+          replicas: kplus.Replicas.absolute(3),
+          duration: Duration.minutes(3),
+        },
+        {
+          replicas: kplus.Replicas.percent(30),
+        },
       ],
     },
   });
@@ -158,4 +125,121 @@ test('creates HPA, metrics, scaleUp,and scaleDown are configured', () => {
     selectPolicy: 'Max',
     stabilizationWindowSeconds: 300,
   });
+});
+
+test('throws error, when target is set to DaemonSet', () => {
+  const chart = Testing.chart();
+  const daemonSet = new kplus.DaemonSet(chart, 'DaemonSet', { containers: [{ image: 'pod' }] });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: daemonSet,
+      maxReplicas: 10,
+    }),
+  ).toThrowError('HorizontalPodAutoscaler cannot be used with workloads that do not scale, such as a DaemonSet.');
+});
+
+test('throws error, when metrics are not provided and target container does not have resource constraints specified', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{
+      image: 'pod',
+      resources: {
+        cpu: undefined,
+        memory: undefined,
+        ephemeralStorage: undefined,
+      },
+    }],
+  });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: deployment,
+      maxReplicas: 10,
+    }),
+  ).toThrowError('Every container in the HorizontalPodAutoscaler target must have CPU or memory resources defined');
+});
+
+
+test('throws error, when minReplicas is more than maxReplicas', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: deployment,
+      maxReplicas: 10,
+      minReplicas: 11,
+    }),
+  ).toThrowError("'minReplicas' must be less than or equal to maxReplicas in order for HorizontalPodAutoscaler to scale.");
+});
+
+test('throws error, when scaleUp.stabilizationWindow is more than 1 hour', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: deployment,
+      maxReplicas: 10,
+      scaleUp: {
+        stabilizationWindow: Duration.hours(4),
+      },
+    }),
+  ).toThrowError("'scaleUp.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
+});
+
+test('throws error, when scaleDown.stabilizationWindow is more than 1 hour', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: deployment,
+      maxReplicas: 10,
+      scaleDown: {
+        stabilizationWindow: Duration.hours(4),
+      },
+    }),
+  ).toThrowError("'scaleDown.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
+});
+
+test('throws error, when scaleUp policy has a duration longer than 30 minutes', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: deployment,
+      maxReplicas: 10,
+      scaleUp: {
+        policies: [
+          {
+            replicas: kplus.Replicas.absolute(3),
+            duration: Duration.minutes(31),
+          },
+        ],
+      },
+    }),
+  ).toThrowError("'scaleUp' and 'scaleDown' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
+});
+
+test('throws error, when scaleDown policy has a duration longer than 30 minutes', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
+
+  expect(() =>
+    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+      target: deployment,
+      maxReplicas: 10,
+      scaleDown: {
+        policies: [
+          {
+            replicas: kplus.Replicas.absolute(3),
+            duration: Duration.minutes(31),
+          },
+        ],
+      },
+    }),
+  ).toThrowError("'scaleUp' and 'scaleDown' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
 });
