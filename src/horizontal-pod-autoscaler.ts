@@ -50,14 +50,14 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
    * * Increase no more than 4 pods per 60 seconds
    * * Double the number of pods per 60 seconds
    */
-  readonly scaleUp?: ScalingRules;
+  readonly scaleUp?: IScalingRules;
   /**
    * The scaling behavior when scaling down.
    *
    * @default
    * Scale down to minReplica count with a 5 minute stabilization window.
    */
-  readonly scaleDown?: ScalingRules;
+  readonly scaleDown?: IScalingRules;
 }
 
 /**
@@ -157,17 +157,17 @@ export class HorizontalPodAutoscaler extends Resource {
    * * Increase no more than 4 pods per 60 seconds
    * * Double the number of pods per 60 seconds
    */
-  public scaleUp: ScalingRules;
+  public scaleUp: IScalingRules;
   /**
    * The scaling behavior when scaling down.
    *
    * @default
    * Scale down to minReplica count with a 5 minute stabilization window.
    */
-  public scaleDown: ScalingRules;
+  public scaleDown: IScalingRules;
 
   // Defaults
-  private readonly _defaultScaleUp = {
+  private readonly _defaultScaleUp: IScalingRules = {
     strategy: ScalingStrategy.MAX_CHANGE,
     stabilizationWindow: Duration.seconds(0),
     policies: [
@@ -181,7 +181,7 @@ export class HorizontalPodAutoscaler extends Resource {
       },
     ],
   };
-  private readonly _defaultScaleDown = {
+  private readonly _defaultScaleDown: IScalingRules = {
     strategy: ScalingStrategy.MAX_CHANGE,
     stabilizationWindow: Duration.minutes(5),
     policies: [
@@ -221,24 +221,24 @@ export class HorizontalPodAutoscaler extends Resource {
     }
     if (props?.scaleUp?.policies?.length) {
       this._validateScalingPolicies(ScalingDirection.UP, props.scaleUp.policies);
-      this._setDefaultsOnScalingPolicies(props.scaleUp.policies);
+      props.scaleUp.policies = this._setDefaultsOnScalingPolicies(props.scaleUp.policies);
     }
     if (props?.scaleDown?.policies?.length) {
       this._validateScalingPolicies(ScalingDirection.DOWN, props.scaleDown.policies);
-      this._setDefaultsOnScalingPolicies(props.scaleDown.policies);
+      props.scaleDown.policies = this._setDefaultsOnScalingPolicies(props.scaleDown.policies);
     }
 
     this.target = props.target;
     this.maxReplicas = props.maxReplicas;
     this.minReplicas = props.minReplicas ?? 1;
-    this.metrics = props.metrics ?? undefined;
+    this.metrics = props.metrics;
     this.scaleUp = {
       ...this._defaultScaleUp,
       ...props.scaleUp,
     };
     this.scaleDown = {
       ...this._defaultScaleDown,
-      ...props?.scaleDown,
+      ...props.scaleDown,
     };
   }
 
@@ -312,7 +312,7 @@ export class HorizontalPodAutoscaler extends Resource {
           policies: this.scaleUp?.policies?.map(p => ({
             type: p.replicas.type,
             value: p.replicas.value,
-            periodSeconds: p.duration?.toSeconds() ?? Duration.seconds(15).toSeconds(),
+            periodSeconds: p.duration?.toSeconds() ?? this._defaultScalingPolicy.duration.toSeconds(),
           })),
           selectPolicy: this.scaleUp?.strategy,
           stabilizationWindowSeconds: this.scaleUp?.stabilizationWindow?.toSeconds(),
@@ -321,7 +321,7 @@ export class HorizontalPodAutoscaler extends Resource {
           policies: this.scaleDown?.policies?.map(p => ({
             type: p.replicas.type,
             value: p.replicas.value,
-            periodSeconds: p.duration?.toSeconds() ?? Duration.seconds(15).toSeconds(),
+            periodSeconds: p.duration?.toSeconds() ?? this._defaultScalingPolicy.duration.toSeconds(),
           })),
           selectPolicy: this.scaleDown?.strategy,
           stabilizationWindowSeconds: this.scaleDown?.stabilizationWindow?.toSeconds(),
@@ -731,12 +731,12 @@ export enum ScalingDirection {
 }
 
 /**
- * A ScalingRules defines the scaling behavior for one direction.
+ * Defines the scaling behavior for one direction.
  */
-export interface ScalingRules {
+export interface IScalingRules {
   /**
    * Defines the window of past metrics that the autoscaler should consider when calculating
-   * wither or not autoscaling should occur.
+   * wether or not autoscaling should occur.
    *
    * Minimum duration is 1 second, max is 1 hour.
    *
@@ -766,7 +766,7 @@ export interface ScalingRules {
    * * Scale down defaults to
    *    * Decrease to minReplica count
    */
-  readonly policies?: ScalingPolicy[];
+  policies?: ScalingPolicy[];
 }
 
 
