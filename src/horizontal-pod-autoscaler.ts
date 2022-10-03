@@ -96,7 +96,6 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
  * @see https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#implicit-maintenance-mode-deactivation
  *
  * @example
- * ```ts
  * const backend = new kplus.Deployment(this, 'Backend', ...);
  *
  * const hpa = new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
@@ -111,7 +110,6 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
  *    ],
  *  },
  * });
- * ```
  */
 export class HorizontalPodAutoscaler extends Resource {
   /**
@@ -768,7 +766,7 @@ export interface ScalingRules {
    * * Scale down defaults to
    *    * Decrease to minReplica count
    */
-  policies?: ScalingPolicy[];
+  readonly policies?: ScalingPolicy[];
 }
 
 
@@ -845,7 +843,6 @@ export class Replicas {
    * Changes the pods by a percentage of the it's current value.
    *
    * @param value The amount of change to apply. Must be greater than 0.
-   * @param options Options for `ScalingPolicy`.
    */
   public static percent(value:number): ReplicasToScale {
     return {
@@ -858,7 +855,6 @@ export class Replicas {
    * Changes the pods by a percentage of the it's current value.
    *
    * @param value The amount of change to apply. Must be greater than 0.
-   * @param options Options for `ScalingPolicy`.
    */
   public static absolute(value:number): ReplicasToScale {
     return {
