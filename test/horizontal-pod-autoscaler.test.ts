@@ -18,7 +18,6 @@ test('creates HPA, when minReplicas is same as maxReplicas', () => {
   expect(spec.minReplicas).toEqual(10);
 });
 
-
 test('creates HPA with expected spec, when metrics, scaleUp, and scaleDown are all configured', () => {
   const chart = Testing.chart();
   const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });

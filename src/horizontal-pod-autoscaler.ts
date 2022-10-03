@@ -82,6 +82,9 @@ export interface HorizontalPodAutoscalerProps extends ResourceProps {
  *
  * :warning: HorizontalPodAutoscaler cannot be used with a DaemonSet.
  *
+ * The autoscaler uses the following algorithm when determining the number of replicas to scale:
+ * `desiredReplicas = ceil[currentReplicas * ( currentMetricValue / desiredMetricValue )]`
+ *
  * ### Targets that already have a replica count defined.
  *
  * It is recommended to remove any replica counts from the target resource before using a
@@ -669,7 +672,7 @@ export enum MetricTargetType {
  */
 export class MetricTarget {
   /**
-  * Target a specific target metric value.
+  * Target a specific target value.
   *
   * @param value The target value. Floats can be passed within a string. i.g. `"1.2"`
   */
@@ -681,7 +684,7 @@ export class MetricTarget {
   }
 
   /**
-   * Target the average metric value across all relevant pods.
+   * Target the average value across all relevant pods.
    *
    * @param averageValue The average metric value. Floats can be passed within a string. i.g. `"1.2"`
    */
@@ -693,7 +696,7 @@ export class MetricTarget {
   }
 
   /**
-   * Target the average percentage of the metric across all relevant pods.
+   * Target a percentage value across all relevant pods.
    *
    * @param averageUtilization The percentage of the utilization metric. i.g. `50` for 50%.
    */
