@@ -1,5 +1,6 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
+import * as container from './container';
 import * as k8s from './imports/k8s';
 import * as service from './service';
 import * as workload from './workload';
@@ -26,8 +27,10 @@ export enum PodManagementPolicy {
 export interface StatefulSetProps extends workload.WorkloadProps {
   /**
    * Service to associate with the statefulset.
+   *
+   * @default - A new service will be created.
    */
-  readonly service: service.Service;
+  readonly service?: service.Service;
 
   /**
     * Number of desired pods.
@@ -118,7 +121,7 @@ export class StatefulSet extends workload.Workload {
 
   public readonly resourceType = 'statefulsets';
 
-  private readonly _service: service.Service;
+  public readonly service: service.Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
     super(scope, id, props);
@@ -127,16 +130,44 @@ export class StatefulSet extends workload.Workload {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
-    this._service = props.service;
+    this.service = props.service ?? this.createService();
 
-    this.apiObject.addDependency(this._service);
+    this.apiObject.addDependency(this.service);
 
     this.replicas = props.replicas ?? 1;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
 
-    this._service.select(this);
+    this.service.select(this);
+  }
+
+  private createService() {
+
+    const myPorts = container.extractContainerPorts(this);
+    const myPortNumbers = myPorts.map(p => p.number);
+    const ports: service.ServicePort[] = myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol }));
+    if (ports.length === 0) {
+      throw new Error(`Unable to create a service for the stateful set ${this.name}: `
+        + 'StatefulSet port cannot be determined.');
+    }
+
+    // validate the ports are owned by our containers
+    for (const port of ports) {
+      const targetPort = port.targetPort ?? port.port;
+      if (!myPortNumbers.includes(targetPort)) {
+        throw new Error(`Unable to expose stateful set ${this.name} via a service: Port ${targetPort} is not exposed by any container`);
+      }
+    }
+
+    const metadata: any = { namespace: this.metadata.namespace };
+    return new service.Service(this, 'Service', {
+      selector: this,
+      ports,
+      metadata,
+      type: service.ServiceType.CLUSTER_IP,
+    });
+
   }
 
   /**
@@ -145,7 +176,7 @@ export class StatefulSet extends workload.Workload {
   public _toKube(): k8s.StatefulSetSpec {
 
     return {
-      serviceName: this._service.name,
+      serviceName: this.service.name,
       replicas: this.replicas,
       minReadySeconds: this.minReady.toSeconds(),
       template: {
