@@ -1634,6 +1634,10 @@ export class PodConnections {
   /**
    * Allow network traffic from this pod to the peer.
    *
+   * By default, this will create an egress network policy for this pod, and an ingress
+   * network policy for the peer. This is required if both sides are already isolated.
+   * Use `options.isolation` to control this behavior.
+   *
    * @example
    *
    * // create only an egress policy that selects the 'web' pod to allow outgoing traffic
@@ -1651,6 +1655,10 @@ export class PodConnections {
 
   /**
    * Allow network traffic from the peer to this pod.
+   *
+   * By default, this will create an ingress network policy for this pod, and an egress
+   * network policy for the peer. This is required if both sides are already isolated.
+   * Use `options.isolation` to control this behavior.
    *
    * @example
    *
