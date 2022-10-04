@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Can be isolated 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": Object {
+      "name": "test-service-c85b0531",
+    },
+    "spec": Object {
+      "externalIPs": Array [],
+      "ports": Array [
+        Object {
+          "port": 80,
+        },
+      ],
+      "selector": Object {
+        "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+      },
+      "type": "ClusterIP",
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "StatefulSet",
+    "metadata": Object {
+      "name": "test-statefulset-c8a6ec86",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "podManagementPolicy": "OrderedReady",
+      "replicas": 1,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+        },
+      },
+      "serviceName": "test-service-c85b0531",
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "foobar",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+      "updateStrategy": Object {
+        "rollingUpdate": Object {
+          "partition": 0,
+        },
+        "type": "RollingUpdate",
+      },
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-statefulset-defaultdenyall-c8b814dd",
+    },
+    "spec": Object {
+      "podSelector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+        },
+      },
+      "policyTypes": Array [
+        "Egress",
+        "Ingress",
+      ],
+    },
+  },
+]
+`;

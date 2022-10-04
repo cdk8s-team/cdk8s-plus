@@ -149,6 +149,7 @@ export abstract class Workload extends pod.AbstractPod {
     };
 
     const scheduling = this.scheduling._toKube();
+
     return {
       ...super._toPodSpec(),
       affinity: scheduling.affinity,

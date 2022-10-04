@@ -85,6 +85,9 @@ export class Job extends workload.Workload {
     this.backoffLimit = props.backoffLimit;
     this.ttlAfterFinished = props.ttlAfterFinished;
 
+    if (this.isolate) {
+      this.connections.isolate();
+    }
   }
 
   /**

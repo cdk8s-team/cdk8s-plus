@@ -536,6 +536,10 @@ export class Pod extends AbstractPod {
 
     this.scheduling = new PodScheduling(this);
     this.connections = new PodConnections(this);
+
+    if (this.isolate) {
+      this.connections.isolate();
+    }
   }
 
   public get podMetadata(): ApiObjectMetadataDefinition {
@@ -547,6 +551,7 @@ export class Pod extends AbstractPod {
    */
   public _toKube(): k8s.PodSpec {
     const scheduling = this.scheduling._toKube();
+
     return {
       ...this._toPodSpec(),
       affinity: scheduling.affinity,
@@ -1624,11 +1629,7 @@ export interface PodConnectionsAllowFromOptions {
  */
 export class PodConnections {
 
-  constructor(protected readonly instance: AbstractPod) {
-    if (instance.isolate) {
-      this.isolatePod();
-    }
-  }
+  constructor(protected readonly instance: AbstractPod) {}
 
   /**
    * Allow network traffic from this pod to the peer.
@@ -1763,14 +1764,14 @@ export class PodConnections {
   }
 
   /**
-   * Sets the default network policy for Pod to have all egress and ingress connections as disabled
+   * Sets the default network policy for Pod/Workload to have all egress and ingress connections as disabled
    */
-  private isolatePod() {
+  public isolate() {
     new networkpolicy.NetworkPolicy(this.instance, 'DefaultDenyAll', {
       selector: this.instance,
       // the policy must be defined in the namespace of the pod
       // so it can select it.
-      metadata: Lazy.any({ produce: () => {return { namespace: this.instance.metadata.namespace };} }),
+      metadata: { namespace: this.instance.metadata.namespace },
       egress: {
         default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
       },
