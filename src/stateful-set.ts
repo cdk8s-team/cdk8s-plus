@@ -28,7 +28,7 @@ export interface StatefulSetProps extends workload.WorkloadProps {
   /**
    * Service to associate with the statefulset.
    *
-   * @default - A new service will be created.
+   * @default - A new headless service will be created.
    */
   readonly service?: service.Service;
 
@@ -130,7 +130,7 @@ export class StatefulSet extends workload.Workload {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
-    this.service = props.service ?? this.createService();
+    this.service = props.service ?? this.createHeadlessService();
 
     this.apiObject.addDependency(this.service);
 
@@ -142,14 +142,13 @@ export class StatefulSet extends workload.Workload {
     this.service.select(this);
   }
 
-  private createService() {
+  private createHeadlessService() {
 
     const myPorts = container.extractContainerPorts(this);
     const myPortNumbers = myPorts.map(p => p.number);
     const ports: service.ServicePort[] = myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol }));
     if (ports.length === 0) {
-      throw new Error(`Unable to create a service for the stateful set ${this.name}: `
-        + 'StatefulSet port cannot be determined.');
+      throw new Error(`Unable to create a service for the stateful set ${this.name}: StatefulSet ports cannot be determined.`);
     }
 
     // validate the ports are owned by our containers
@@ -165,6 +164,7 @@ export class StatefulSet extends workload.Workload {
       selector: this,
       ports,
       metadata,
+      clusterIP: 'None',
       type: service.ServiceType.CLUSTER_IP,
     });
 

@@ -88,18 +88,11 @@ test('StatefulSet gets defaults', () => {
 
   const chart = Testing.chart();
 
-  const service = new kplus.Service(chart, 'TestService', { ports: [{ port: 80 }] });
   new kplus.StatefulSet(chart, 'StatefulSet', {
-    containers: [{ image: 'image' }],
-    service,
+    containers: [{ image: 'image', portNumber: 6000 }],
   });
 
-  const resources = Testing.synth(chart);
-  const setSpec: k8s.StatefulSetSpec = resources[1].spec;
-  expect(setSpec.replicas).toEqual(1);
-  expect(setSpec.serviceName).toEqual(resources[0].metadata.name);
-  expect(setSpec.podManagementPolicy).toEqual(kplus.PodManagementPolicy.ORDERED_READY);
-  expect(setSpec.minReadySeconds).toEqual(0);
+  expect(Testing.synth(chart)).toMatchSnapshot();
 });
 
 
