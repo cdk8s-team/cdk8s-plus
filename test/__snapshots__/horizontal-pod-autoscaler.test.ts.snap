@@ -1,5 +1,1533 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`creates HPA with 2 default scaleUp policies and 1 default scaleDown policy, when all other scaleUp and scaleDown options are provided 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+      },
+      "maxReplicas": 10,
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with CPU ContainerResource metric, when provided a Metric.containerCpu() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "containerResource": Object {
+            "container": "main",
+            "name": "cpu",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "ContainerResource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Ephemeral Storage ContainerResource metric, when provided a Metric.containerStorage() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "containerResource": Object {
+            "container": "main",
+            "name": "ephemeral-storage",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "ContainerResource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Memory ContainerResource metric, when provided a Metric.containerMemory() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "containerResource": Object {
+            "container": "main",
+            "name": "memory",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "ContainerResource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource CPU metric targeting 47.2 average value, when provided a MetricTarget.averageUtilization() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "cpu",
+            "target": Object {
+              "averageValue": "47.2",
+              "type": "AverageValue",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource CPU metric targeting 70% average utilization, when provided a MetricTarget.averageUtilization() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "cpu",
+            "target": Object {
+              "averageUtilization": 70,
+              "type": "Utilization",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource CPU metric targeting the exact value of 29.5, when provided a MetricTarget.value() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "cpu",
+            "target": Object {
+              "type": "Value",
+              "value": "29.5",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource CPU metric, when provided a Metric.resourceCpu() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "cpu",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource Ephemeral Storage metric, when provided a Metric.resourceEphemeralStorage() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "ephemeral-storage",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource Memory metric, when provided a Metric.resourceMemory() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "memory",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Resource Storage metric, when provided a Metric.resourceStorage() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "storage",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with Storage ContainerResource metric, when provided a Metric.containerStorage() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "containerResource": Object {
+            "container": "main",
+            "name": "storage",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "ContainerResource",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
 exports[`creates HPA with expected spec, when metrics, scaleUp, and scaleDown are all configured 1`] = `
 Array [
   Object {
@@ -103,6 +1631,689 @@ Array [
               "periodSeconds": 15,
               "type": "Percent",
               "value": 30,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "resource": Object {
+            "name": "cpu",
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Resource",
+        },
+      ],
+      "minReplicas": 2,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with external metric, when provided a Metric.external() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "external": Object {
+            "metric": Object {
+              "name": "sqs-queue",
+              "selector": Object {
+                "matchLabels": Object {
+                  "app": "scraper",
+                },
+              },
+            },
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "External",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with object metric, when provided a Metric.object() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": Object {
+      "name": "test-my-service-c8493104",
+    },
+    "spec": Object {
+      "externalIPs": Array [],
+      "ports": Array [
+        Object {
+          "port": 80,
+        },
+      ],
+      "selector": Object {},
+      "type": "ClusterIP",
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "Ingress",
+    "metadata": Object {
+      "name": "test-my-ingress-c8135042",
+    },
+    "spec": Object {
+      "defaultBackend": Object {
+        "service": Object {
+          "name": "test-my-service-c8493104",
+          "port": Object {
+            "number": 80,
+          },
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "object": Object {
+            "describedObject": Object {
+              "apiVersion": "networking.k8s.io/v1",
+              "kind": "Ingress",
+              "name": "test-my-ingress-c8135042",
+            },
+            "metric": Object {
+              "name": "requests-per-second",
+            },
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Object",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with pods metric, when provided a Metric.pods() 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "metrics": Array [
+        Object {
+          "pods": Object {
+            "metric": Object {
+              "name": "requests-per-second",
+              "selector": Object {
+                "matchLabels": Object {
+                  "app": "scraper",
+                },
+              },
+            },
+            "target": Object {
+              "averageUtilization": 50,
+              "type": "Utilization",
+            },
+          },
+          "type": "Pods",
+        },
+      ],
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with scaleUp and scaleDown policies with the default 15 second periodSeconds, when policies are provided without duration option 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 15,
+              "type": "Pods",
+              "value": 3,
+            },
+            Object {
+              "periodSeconds": 15,
+              "type": "Percent",
+              "value": 30,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 15,
+              "type": "Pods",
+              "value": 3,
+            },
+            Object {
+              "periodSeconds": 15,
+              "type": "Percent",
+              "value": 30,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`creates HPA with two different scaling strategies, when provided a scaleUp strategy of Max and scaleDown strategy of Min 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 180,
+              "type": "Pods",
+              "value": 3,
+            },
+          ],
+          "selectPolicy": "Min",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 180,
+              "type": "Pods",
+              "value": 3,
             },
           ],
           "selectPolicy": "Max",
@@ -505,6 +2716,122 @@ Array [
 `;
 
 exports[`creates HPA, when target is a deployment 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c898c72d",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "replicas": 2,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "pod",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8e6eb3e",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 10,
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c898c72d",
+      },
+    },
+  },
+]
+`;
+
+exports[`default configuration 1`] = `
 Array [
   Object {
     "apiVersion": "apps/v1",

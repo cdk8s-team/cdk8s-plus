@@ -731,9 +731,7 @@ test('creates HPA with expected spec, when metrics, scaleUp, and scaleDown are a
     maxReplicas: 10,
     minReplicas: 2,
     metrics: [
-      kplus.Metric.resourceCpu({
-        target: kplus.MetricTarget.averageUtilization(50),
-      }),
+      kplus.Metric.resourceCpu(kplus.MetricTarget.averageUtilization(50)),
     ],
     scaleUp: {
       stabilizationWindow: Duration.minutes(5),
