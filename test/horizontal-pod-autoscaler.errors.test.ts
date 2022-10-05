@@ -1,20 +1,9 @@
 import { Testing, Duration } from 'cdk8s';
 import * as kplus from '../src';
 
-test('throws error, when target is set to DaemonSet', () => {
+test('throws error at synth, when metrics are not provided and target container does not have resource constraints specified', () => {
   const chart = Testing.chart();
-  const daemonSet = new kplus.DaemonSet(chart, 'DaemonSet', { containers: [{ image: 'pod' }] });
 
-  expect(() =>
-    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
-      target: daemonSet,
-      maxReplicas: 10,
-    }),
-  ).toThrowError('HorizontalPodAutoscaler cannot be used with workloads that do not scale, such as a DaemonSet.');
-});
-
-test('throws error, when metrics are not provided and target container does not have resource constraints specified', () => {
-  const chart = Testing.chart();
   const deployment = new kplus.Deployment(chart, 'Deployment', {
     containers: [{
       image: 'pod',
@@ -26,12 +15,11 @@ test('throws error, when metrics are not provided and target container does not 
     }],
   });
 
-  expect(() =>
-    new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
-      target: deployment,
-      maxReplicas: 10,
-    }),
-  ).toThrowError('Every container in the HorizontalPodAutoscaler target must have CPU or memory resources defined');
+  new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+    target: deployment,
+    maxReplicas: 10,
+  });
+  expect(() => Testing.synth(chart)).toThrowError('Every container in the HorizontalPodAutoscaler target must have CPU or memory resources defined');
 });
 
 test('throws error, when minReplicas is more than maxReplicas', () => {
@@ -226,4 +214,37 @@ test('throws error, when scaleDown policy has a duration set to -10 minutes', ()
       },
     }),
   ).toThrowError('Duration amounts cannot be negative. Received: -10');
+});
+
+test('throws error at synth, when Deployment target has replicas defined', () => {
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'pod' }],
+    replicas: 3,
+  });
+
+  new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+    target: deployment,
+    maxReplicas: 10,
+  });
+  expect(() => Testing.synth(chart) ).toThrowError('HorizontalPodAutoscaler target cannot have a fixed number of replicas. Found 3');
+});
+
+test('throws error at synth, when StatefulSet target has replicas defined', () => {
+  const chart = Testing.chart();
+  const service = new kplus.Service(chart, 'TestService', { ports: [{ port: 80 }] });
+
+  const statefulset = new kplus.StatefulSet(chart, 'StatefulSet', {
+    select: false,
+    containers: [{ image: 'foobar' }],
+    service: service,
+    replicas: 5,
+  });
+
+  new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+    target: statefulset,
+    maxReplicas: 10,
+  });
+  expect(() =>Testing.synth(chart)).toThrowError('HorizontalPodAutoscaler target cannot have a fixed number of replicas. Found 5');
 });

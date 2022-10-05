@@ -1,6 +1,7 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as container from './container';
+import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
 import * as service from './service';
@@ -111,12 +112,12 @@ export interface ExposeDeploymentViaIngressOptions extends DeploymentExposeViaSe
 * - Clean up older ReplicaSets that you don't need anymore.
 *
 **/
-export class Deployment extends workload.Workload {
+export class Deployment extends workload.Workload implements IScalable {
 
   /**
    * Number of desired pods.
    */
-  public readonly replicas: number;
+  public readonly replicas?: number;
 
   /**
    * Minimum duration for which a newly created pod should be ready without
@@ -156,7 +157,7 @@ export class Deployment extends workload.Workload {
       throw new Error(`'progressDeadline' (${this.progressDeadline.toSeconds()}s) must be greater than 'minReady' (${this.minReady.toSeconds()}s)`);
     }
 
-    this.replicas = props.replicas ?? 2;
+    this.replicas = props.replicas;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
   }
 
@@ -215,7 +216,7 @@ export class Deployment extends workload.Workload {
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
-      replicas: this.replicas,
+      replicas: this.replicas || 2,
       minReadySeconds: this.minReady.toSeconds(),
       progressDeadlineSeconds: this.progressDeadline.toSeconds(),
       template: {
@@ -227,6 +228,18 @@ export class Deployment extends workload.Workload {
     };
   }
 
+  /**
+   * @see IScalable.toScalingTarget()
+   */
+  public toScalingTarget(): ScalingTarget {
+    return {
+      kind: this.apiObject.kind,
+      apiVersion: this.apiObject.apiVersion,
+      name: this.name,
+      containers: this.containers,
+      replicas: this.replicas ?? 0,
+    };
+  }
 }
 
 /**

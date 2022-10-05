@@ -1,5 +1,6 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
+import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as k8s from './imports/k8s';
 import * as service from './service';
 import * as workload from './workload';
@@ -89,11 +90,11 @@ export interface StatefulSetProps extends workload.WorkloadProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends workload.Workload {
+export class StatefulSet extends workload.Workload implements IScalable {
   /**
     * Number of desired pods.
     */
-  public readonly replicas: number;
+  public readonly replicas?: number;
 
   /**
     * Management policy to use for the set.
@@ -131,7 +132,7 @@ export class StatefulSet extends workload.Workload {
 
     this.apiObject.addDependency(this._service);
 
-    this.replicas = props.replicas ?? 1;
+    this.replicas = props.replicas;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
@@ -146,7 +147,7 @@ export class StatefulSet extends workload.Workload {
 
     return {
       serviceName: this._service.name,
-      replicas: this.replicas,
+      replicas: this.replicas || 1,
       minReadySeconds: this.minReady.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
@@ -155,6 +156,19 @@ export class StatefulSet extends workload.Workload {
       selector: this._toLabelSelector(),
       podManagementPolicy: this.podManagementPolicy,
       updateStrategy: this.strategy._toKube(),
+    };
+  }
+
+  /**
+   * @see IScalable.toScalingTarget()
+   */
+  public toScalingTarget(): ScalingTarget {
+    return {
+      kind: this.apiObject.kind,
+      apiVersion: this.apiObject.apiVersion,
+      name: this.name,
+      containers: this.containers,
+      replicas: this.replicas ?? 0,
     };
   }
 }

@@ -1,6 +1,41 @@
 import { Testing, Duration } from 'cdk8s';
 import * as kplus from '../src';
 
+test('creates HPA, when target is a deployment', () => {
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
+
+  new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+    target: deployment,
+    maxReplicas: 10,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[1].spec;
+  expect(spec.scaleTargetRef.kind).toEqual('Deployment');
+});
+
+test('creates HPA, when target is a StatefulSet', () => {
+  const chart = Testing.chart();
+  const service = new kplus.Service(chart, 'TestService', { ports: [{ port: 80 }] });
+
+  const statefulset = new kplus.StatefulSet(chart, 'StatefulSet', {
+    select: false,
+    containers: [{ image: 'foobar' }],
+    service: service,
+  });
+
+  new kplus.HorizontalPodAutoscaler(chart, 'Hpa', {
+    target: statefulset,
+    maxReplicas: 10,
+  });
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+  const spec = manifest[2].spec;
+  expect(spec.scaleTargetRef.kind).toEqual('StatefulSet');
+});
+
 test('creates HPA, when minReplicas is same as maxReplicas', () => {
   const chart = Testing.chart();
   const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
