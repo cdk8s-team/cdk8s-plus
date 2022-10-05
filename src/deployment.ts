@@ -216,7 +216,7 @@ export class Deployment extends workload.Workload implements IScalable {
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
-      replicas: this.replicas || 2,
+      replicas: this.replicas ?? 2,
       minReadySeconds: this.minReady.toSeconds(),
       progressDeadlineSeconds: this.progressDeadline.toSeconds(),
       template: {

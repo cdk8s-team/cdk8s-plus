@@ -147,7 +147,7 @@ export class StatefulSet extends workload.Workload implements IScalable {
 
     return {
       serviceName: this._service.name,
-      replicas: this.replicas || 1,
+      replicas: this.replicas ?? 1,
       minReadySeconds: this.minReady.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
