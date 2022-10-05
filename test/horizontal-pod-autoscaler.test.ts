@@ -620,7 +620,7 @@ test('creates HPA with Resource CPU metric targeting 47.2 average value, when pr
     target: deployment,
     maxReplicas: 10,
     metrics: [
-      kplus.Metric.resourceCpu(kplus.MetricTarget.averageValue('47.2')),
+      kplus.Metric.resourceCpu(kplus.MetricTarget.averageValue(47.2)),
     ],
   });
 
@@ -633,7 +633,7 @@ test('creates HPA with Resource CPU metric targeting 47.2 average value, when pr
     resource: {
       name: 'cpu',
       target: {
-        averageValue: '47.2',
+        averageValue: 47.2,
         type: 'AverageValue',
       },
     },
@@ -648,7 +648,7 @@ test('creates HPA with Resource CPU metric targeting the exact value of 29.5, wh
     target: deployment,
     maxReplicas: 10,
     metrics: [
-      kplus.Metric.resourceCpu(kplus.MetricTarget.value('29.5')),
+      kplus.Metric.resourceCpu(kplus.MetricTarget.value(29.5)),
     ],
   });
 
@@ -661,7 +661,7 @@ test('creates HPA with Resource CPU metric targeting the exact value of 29.5, wh
     resource: {
       name: 'cpu',
       target: {
-        value: '29.5',
+        value: 29.5,
         type: 'Value',
       },
     },
@@ -861,7 +861,7 @@ test('throws error, when minReplicas is more than maxReplicas', () => {
       maxReplicas: 10,
       minReplicas: 11,
     }),
-  ).toThrowError("'minReplicas' must be less than or equal to maxReplicas in order for HorizontalPodAutoscaler to scale.");
+  ).toThrowError("'minReplicas' (11) must be less than or equal to 'maxReplicas' (10) in order for HorizontalPodAutoscaler to scale.");
 });
 
 test('throws error, when scaleUp.stabilizationWindow is more than 1 hour', () => {
@@ -876,7 +876,7 @@ test('throws error, when scaleUp.stabilizationWindow is more than 1 hour', () =>
         stabilizationWindow: Duration.hours(2),
       },
     }),
-  ).toThrowError("'scaleUp.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
+  ).toThrowError("'scaleUp.stabilizationWindow' (1 hour 60 minutes) must be 0 seconds or more with a max of 1 hour.");
 });
 
 
@@ -892,10 +892,10 @@ test('throws error, when scaleDown.stabilizationWindow is more than 1 hour', () 
         stabilizationWindow: Duration.hours(2),
       },
     }),
-  ).toThrowError("'scaleDown.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
+  ).toThrowError("'scaleDown.stabilizationWindow' (1 hour 60 minutes) must be 0 seconds or more with a max of 1 hour.");
 });
 
-test('throws error, when scaleUp.stabilizationWindow is 0', () => {
+test('throws error, when scaleUp.stabilizationWindow is -1', () => {
   const chart = Testing.chart();
   const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
 
@@ -904,13 +904,13 @@ test('throws error, when scaleUp.stabilizationWindow is 0', () => {
       target: deployment,
       maxReplicas: 10,
       scaleUp: {
-        stabilizationWindow: Duration.hours(0),
+        stabilizationWindow: Duration.seconds(-1),
       },
     }),
-  ).toThrowError("'scaleUp.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
+  ).toThrowError('Duration amounts cannot be negative. Received: -1');
 });
 
-test('throws error, when scaleDown.stabilizationWindow is 0', () => {
+test('throws error, when scaleDown.stabilizationWindow is -1 seconds', () => {
   const chart = Testing.chart();
   const deployment = new kplus.Deployment(chart, 'Deployment', { containers: [{ image: 'pod' }] });
 
@@ -919,10 +919,10 @@ test('throws error, when scaleDown.stabilizationWindow is 0', () => {
       target: deployment,
       maxReplicas: 10,
       scaleDown: {
-        stabilizationWindow: Duration.hours(0),
+        stabilizationWindow: Duration.seconds(-1),
       },
     }),
-  ).toThrowError("'scaleDown.stabilizationWindow' must be more than 0 seconds and no longer than 1 hour.");
+  ).toThrowError('Duration amounts cannot be negative. Received: -1');
 });
 
 test('throws error, when scaleUp policy has a duration longer than 30 minutes', () => {
@@ -942,7 +942,7 @@ test('throws error, when scaleUp policy has a duration longer than 30 minutes', 
         ],
       },
     }),
-  ).toThrowError("'scaleUp' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
+  ).toThrowError("'scaleUp.policies' duration (31 minutes) is outside of the allowed range. Must be at least 1 second long and no longer than 30 minutes.");
 });
 
 test('throws error, when scaleDown policy has a duration longer than 30 minutes', () => {
@@ -962,7 +962,7 @@ test('throws error, when scaleDown policy has a duration longer than 30 minutes'
         ],
       },
     }),
-  ).toThrowError("'scaleDown' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
+  ).toThrowError("'scaleDown.policies' duration (31 minutes) is outside of the allowed range. Must be at least 1 second long and no longer than 30 minutes.");
 });
 
 test('throws error, when scaleUp policy has a duration set to 0', () => {
@@ -982,7 +982,7 @@ test('throws error, when scaleUp policy has a duration set to 0', () => {
         ],
       },
     }),
-  ).toThrowError("'scaleUp' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
+  ).toThrowError("'scaleUp.policies' duration (0 minutes) is outside of the allowed range. Must be at least 1 second long and no longer than 30 minutes.");
 });
 
 test('throws error, when scaleDown policy has a duration set to 0', () => {
@@ -1002,7 +1002,7 @@ test('throws error, when scaleDown policy has a duration set to 0', () => {
         ],
       },
     }),
-  ).toThrowError("'scaleDown' policies may only be configured with a duration that is at least 1 second long and no longer than 30 minutes.");
+  ).toThrowError("'scaleDown.policies' duration (0 minutes) is outside of the allowed range. Must be at least 1 second long and no longer than 30 minutes.");
 });
 
 test('throws error, when scaleUp policy has a duration set to -10 minutes', () => {
@@ -1057,7 +1057,8 @@ test('throws error at synth, when Deployment target has replicas defined', () =>
     target: deployment,
     maxReplicas: 10,
   });
-  expect(() => Testing.synth(chart) ).toThrowError('HorizontalPodAutoscaler target cannot have a fixed number of replicas. Found 3');
+  const regex = new RegExp(/Validation failed with the following errors:[\s]*\[test\/Hpa\] HorizontalPodAutoscaler target cannot have a fixed number of replicas \(3\)\./);
+  expect(() => Testing.synth(chart) ).toThrowError(regex);
 });
 
 test('throws error at synth, when StatefulSet target has replicas defined', () => {
@@ -1075,5 +1076,6 @@ test('throws error at synth, when StatefulSet target has replicas defined', () =
     target: statefulset,
     maxReplicas: 10,
   });
-  expect(() =>Testing.synth(chart)).toThrowError('HorizontalPodAutoscaler target cannot have a fixed number of replicas. Found 5');
+  const regex = new RegExp(/Validation failed with the following errors:[\s]*\[test\/Hpa\] HorizontalPodAutoscaler target cannot have a fixed number of replicas \(5\)\./);
+  expect(() =>Testing.synth(chart)).toThrowError(regex);
 });

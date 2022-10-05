@@ -613,7 +613,7 @@ Array [
           "resource": Object {
             "name": "cpu",
             "target": Object {
-              "averageValue": "47.2",
+              "averageValue": 47.2,
               "type": "AverageValue",
             },
           },
@@ -870,7 +870,7 @@ Array [
             "name": "cpu",
             "target": Object {
               "type": "Value",
-              "value": "29.5",
+              "value": 29.5,
             },
           },
           "type": "Resource",
@@ -2549,7 +2549,7 @@ Array [
             Object {
               "periodSeconds": 300,
               "type": "Pods",
-              "value": 1,
+              "value": 10,
             },
           ],
           "selectPolicy": "Max",
