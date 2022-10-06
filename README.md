@@ -13,7 +13,7 @@
 | 1.22.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-22) | [Link](https://pypi.org/project/cdk8s-plus-22/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-22) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.22) |
 | 1.23.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-23) | [Link](https://pypi.org/project/cdk8s-plus-23/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-23) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.23) |
 | 1.24.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-24) | [Link](https://pypi.org/project/cdk8s-plus-24/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-24) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.24) |
-| 1.25.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-24) | [Link](https://pypi.org/project/cdk8s-plus-25/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-25) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.25) |
+| 1.25.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-25) | [Link](https://pypi.org/project/cdk8s-plus-25/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-25) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.25) |
 
 **cdk8s+** is a software development framework that provides high level
 abstractions for authoring Kubernetes applications. Built on top of the auto
