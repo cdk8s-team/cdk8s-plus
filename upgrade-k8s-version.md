@@ -29,7 +29,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
         const SPEC_VERSION = '25'; // <-- Upgraded from 24 to 25
         ```
 
-     2. (`.projenrc.ts`): In the `JsiiProjecT()` edit `depsUpgradeOptions` to include a the oldest supported branch of k8s.
+     2. (`.projenrc.ts`): In the `JsiiProject()` edit `depsUpgradeOptions` to include a the oldest supported branch of k8s.
 
         ```ts
         const LATEST_SUPPORTED_K8S_VERSION = 25 // <-- Upgraded from 24 to 25
