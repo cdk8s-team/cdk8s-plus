@@ -4,6 +4,8 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
 ## Prerequisite
 
+### Add new k8s spec to cdk8s repo
+
 1. (cdk8s repo): Generate `kubernetes-schema/vX.XX.X/_definitions.json`
 
     ```sh
@@ -12,6 +14,16 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
     ```
 
 2. Create PR, review, merge the updated spec into CDK8s
+
+### Publish new branch to cdk8s-plus-go repo
+
+1. (cdk8s-plus-go repo): Create and publish a new branch for the new k8s version
+
+    ```sh
+    git checkout -b k8s.xx
+    # i.e. k8s.25 for version 1.25.0
+    git push origin k8s.xx
+    ```
 
 ## Create the new CDK8s+ branch
 
@@ -76,17 +88,15 @@ yarn build
 
 9. Check all the expected files were updated as intended.
 
-10. TODO: step to fix Go publishing
+10. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
 
-11. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
-
-12. Push the branch and verify that automation builds/tags/releases the new version successfully.
+11. Push the branch and verify that automation builds/tags/releases the new version successfully.
 
 ## Update CDK8s
 
-13. Create a new cdk8s branch off of cdk8s/master
+12. Create a new cdk8s branch off of cdk8s/master
 
-14. On the new branch update the following:
+13. On the new branch update the following:
      1. (`.projenrc.js`): In the `javascript.NodeProject()` update the `devDeps` list with the new `cdk8s-plus-xx` version.
 
         ```js
@@ -183,13 +193,13 @@ yarn build
         ...
         ```
 
-15. Let Projen update the other files:
+14. Let Projen update the other files:
 
     ```sh
     yarn build
     # Updates .gitignore, .projen/*, package.json
     ```
 
-16. Update all the cdk8s `docs/**` with the new syntax.
+15. Update all the cdk8s `docs/**` with the new syntax.
 
-17. Create a PR for the new branch, review, and merge into master.
+16. Create a PR for the new branch, review, and merge into master.
