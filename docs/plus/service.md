@@ -21,7 +21,7 @@ const chart = new k.Chart(app, 'Chart');
 const frontends = new kplus.Service(chart, 'FrontEnds');
 
 // this will cause the service to select all pods with the 'run: frontend' label.
-frontends.selectByLabel('run', 'frontend')
+frontends.select(kplus.LabelSelector.equals('run', 'frontend'));
 ```
 
 ## Ports
@@ -37,5 +37,5 @@ const chart = new k.Chart(app, 'Chart');
 const frontends = new kplus.Service(chart, 'FrontEnds');
 
 // make the service bind to port 9000 and redirect to port 80 on the associated containers.
-frontends.serve({port: 9000, targetPort: 80)
+frontends.bind({port: 9000, targetPort: 80)
 ```

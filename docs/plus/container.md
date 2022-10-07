@@ -23,18 +23,16 @@ const container = pod.addContainer({
 });
 
 // use a static value.
-container.env.addVariable('endpoint', kplus.EnvValue.fromValue('value'));
+container.envVariables.addVariable('endpoint', kplus.EnvValue.fromValue('value'));
 
 // use a specific key from a config map.
 const backendsConfig = kplus.ConfigMap.fromConfigMapName('backends');
-container.env.addVariable('endpoint', kplus.EnvValue.fromConfigMap(backendsConfig, 'endpoint'));
+container.envVariables.addVariable('endpoint', kplus.EnvValue.fromConfigMap(backendsConfig, 'endpoint'));
 
 // use a specific key from a secret.
 const credentials = kplus.Secret.fromSecretName('credentials');
-container.env.addVariable('password', kplus.EnvValue.fromSecretValue({ secret: credentials, key: 'password' }));
+container.envVariables.addVariable('password', kplus.EnvValue.fromSecretValue({ secret: credentials, key: 'password' }));
 ```
-
-> You can pass env variables at instantiation time as well by specifying the `envVariables` property.
 
 ### Sources
 
@@ -56,7 +54,7 @@ const container = pod.addContainer({
 });
 
 // this will add 'key=value' env variable at runtime.
-container.env.copyFrom(kplus.Env.fromConfigMap(cm));
+container.envVariables.copyFrom(kplus.Env.fromConfigMap(cm));
 ```
 
 ## Volume Mounts

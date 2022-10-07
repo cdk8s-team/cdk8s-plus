@@ -27,7 +27,7 @@ const helloDeployment = new kplus.Deployment(this, text, {
   ]
 });
 
-const helloService = helloDeployment.expose(5678);
+const helloService = helloDeployment.exposeViaService({ port: 5678 });
 
 const ingress = new Ingress(this, 'ingress');
 ingress.addRule('/hello', kplus.IngressBackend.fromService(helloService));

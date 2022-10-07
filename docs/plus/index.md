@@ -114,7 +114,7 @@ const container = deployment.addContainer({
 container.mount(appPath, appVolume);
 
 // finally, we expose the deployment as a load balancer service and make it run
-deployment.exposeViaService({ serviceType: kplus.ServiceType.LOAD_BALANCER })
+deployment.exposeViaService({ serviceType: kplus.ServiceType.LOAD_BALANCER });
 
 // we are done, synth
 app.synth();

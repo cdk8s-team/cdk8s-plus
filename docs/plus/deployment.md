@@ -54,7 +54,7 @@ Following up on pod selection, you can also easily create a service that will se
 const frontends = new kplus.Deployment(chart, 'FrontEnds');
 
 // create a ClusterIP service that listens on port 9000 and redirects to port 9000 on the containers.
-frontends.expose(9000)
+frontends.exposeViaService({ port: 9000 });
 ```
 
 Notice the resulting manifest, will have the same `cdk8s.deployment` magic label as the selector.
