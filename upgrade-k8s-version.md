@@ -21,7 +21,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
     ```sh
     git checkout -b k8s.xx
-    # i.e. k8s.25 for version 1.25.0
+    # e.g. k8s.25 for version 1.25.0
     git push origin k8s.xx
     ```
 
