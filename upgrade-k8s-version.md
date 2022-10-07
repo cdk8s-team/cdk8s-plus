@@ -6,7 +6,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
 ### Add new k8s spec to cdk8s repo
 
-1. (cdk8s repo): Generate `kubernetes-schema/vX.XX.X/_definitions.json`
+1. ([cdk8s repo](https://github.com/cdk8s-team/cdk8s)): Generate [`kubernetes-schema/vX.XX.X/_definitions.json`](https://github.com/cdk8s-team/cdk8s/tree/master/kubernetes-schemas)
 
     ```sh
     tools/import-spec.sh x.xx.x
@@ -17,7 +17,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
 ### Publish new branch to cdk8s-plus-go repo
 
-3. (cdk8s-plus-go repo): Create and publish a new branch for the new k8s version
+3. ([cdk8s-plus-go repo](https://github.com/cdk8s-team/cdk8s-plus-go)): Create and publish a new branch for the new k8s version
 
     ```sh
     git checkout -b k8s.xx
@@ -31,7 +31,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
 5. On the new branch update the following:
 
-     1. (`.projenrc.ts`): Update `LATEST_SUPPORTED_K8S_VERSION` and `SPEC_VERSION` with the new version.
+     1. ([`.projenrc.ts`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/.projenrc.ts)): Update `LATEST_SUPPORTED_K8S_VERSION` and `SPEC_VERSION` with the new version.
 
         ```ts
         // the latest version of k8s we support
@@ -41,7 +41,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
         const SPEC_VERSION = '25'; // <-- Upgraded from 24 to 25
         ```
 
-     2. (`.projenrc.ts`): In the `JsiiProject()` edit `depsUpgradeOptions` to include a the oldest supported branch of k8s.
+     2. ([`.projenrc.ts`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/.projenrc.ts)): In the `JsiiProject()` edit `depsUpgradeOptions` to include a the oldest supported branch of k8s.
 
         ```ts
         const LATEST_SUPPORTED_K8S_VERSION = 25 // <-- Upgraded from 24 to 25
@@ -61,7 +61,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
         });
         ```
 
-     3. (`README.md`): Add the new version. i.e. Add a markdown status badge, and a new row in the supported k8s version table.
+     3. ([`README.md`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/README.md)): Add the new version. i.e. Add a markdown status badge, and a new row in the supported k8s version table.
 
 6. Import the k8s spec that you merged into cdk8s during the prerequisite.
 
@@ -97,7 +97,7 @@ yarn build
 13. Create a new cdk8s branch off of cdk8s/master
 
 14. On the new branch update the following:
-     1. (`.projenrc.js`): In the `javascript.NodeProject()` update the `devDeps` list with the new `cdk8s-plus-xx` version.
+     1. ([`.projenrc.js`](https://github.com/cdk8s-team/cdk8s/blob/master/.projenrc.js)): In the `javascript.NodeProject()` update the `devDeps` list with the new `cdk8s-plus-xx` version.
 
         ```js
         const project = new javascript.NodeProject({
@@ -121,7 +121,7 @@ yarn build
         });
         ```
 
-    2.  (`.projenrc.js`): Update the `packages` list with the new `cdk8s-plus-xx` version
+    2.  ([`.projenrc.js`](https://github.com/cdk8s-team/cdk8s/blob/master/.projenrc.js)): Update the `packages` list with the new `cdk8s-plus-xx` version
 
         ```js
         const packages = [
@@ -133,9 +133,9 @@ yarn build
         ];
         ```
 
-    3. (`README.md`): Add the new version. i.e. add a markdown status badge for the new version.
+    3. ([`README.md`](https://github.com/cdk8s-team/cdk8s/blob/master/README.md)): Add the new version. i.e. add a markdown status badge for the new version.
 
-    4. (`docs/build.sh`): Add the new version to the docs copy loop.
+    4. ([`docs/build.sh`](https://github.com/cdk8s-team/cdk8s/blob/master/docs/build.sh)): Add the new version to the docs copy loop.
 
         ```bash
         ...
@@ -150,7 +150,7 @@ yarn build
         ...
         ```
 
-    5.  (`website/build.sh`): Add the new version as an exported const
+    5.  ([`website/build.sh`](https://github.com/cdk8s-team/cdk8s/blob/master/website/build.sh)): Add the new version as an exported const
 
         ```bash
         ...
@@ -163,7 +163,7 @@ yarn build
         ...
         ```
 
-    6. (`website/layouts/index.html`): Add the new version to the website's landing page.
+    6. ([`website/layouts/index.html`](https://github.com/cdk8s-team/cdk8s/blob/master/website/layouts/index.html)): Add the new version to the website's landing page.
 
         ```html
         ...
@@ -200,6 +200,6 @@ yarn build
     # Updates .gitignore, .projen/*, package.json
     ```
 
-16. Update all the cdk8s `docs/**` with the new syntax.
+16. Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
 
 17. Create a PR for the new branch, review, and merge into master.
