@@ -17,7 +17,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
 ### Publish new branch to cdk8s-plus-go repo
 
-1. (cdk8s-plus-go repo): Create and publish a new branch for the new k8s version
+3. (cdk8s-plus-go repo): Create and publish a new branch for the new k8s version
 
     ```sh
     git checkout -b k8s.xx
@@ -27,9 +27,9 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
 ## Create the new CDK8s+ branch
 
-3. Create a new branch of CDK8s+ starting from the current latest K8s version branch. The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
+4. Create a new branch of CDK8s+ starting from the current latest K8s version branch. The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
 
-4. On the new branch update the following:
+5. On the new branch update the following:
 
      1. (`.projenrc.ts`): Update `LATEST_SUPPORTED_K8S_VERSION` and `SPEC_VERSION` with the new version.
 
@@ -63,40 +63,40 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
      3. (`README.md`): Add the new version. i.e. Add a markdown status badge, and a new row in the supported k8s version table.
 
-5. Import the k8s spec that you merged into cdk8s during the prerequisite.
+6. Import the k8s spec that you merged into cdk8s during the prerequisite.
 
 ```sh
 yarn run import
 # warning `yarn import` is a native yarn command so be sure to include `run`
 ```
 
-6. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure it is available on localhost:8080
+7. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure it is available on localhost:8080
 
-7. Generate API types from the local Kubernetes cluster
+8. Generate API types from the local Kubernetes cluster
 
 ```sh
 yarn regenerate-api-information
 # Updates ./api-resources.txt
 ```
 
-8. Let Projen upgrade the remaining files
+9. Let Projen upgrade the remaining files
 
 ```sh
 yarn build
 # Updates package.json, .gitattributes, .gitignore, workflows, src/api-resource.generated.ts, src/imports/k8s.ts, .projen/*
 ```
 
-9. Check all the expected files were updated as intended.
+10. Check all the expected files were updated as intended.
 
-10. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
+11. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
 
-11. Push the branch and verify that automation builds/tags/releases the new version successfully.
+12. Push the branch and verify that automation builds/tags/releases the new version successfully.
 
 ## Update CDK8s
 
-12. Create a new cdk8s branch off of cdk8s/master
+13. Create a new cdk8s branch off of cdk8s/master
 
-13. On the new branch update the following:
+14. On the new branch update the following:
      1. (`.projenrc.js`): In the `javascript.NodeProject()` update the `devDeps` list with the new `cdk8s-plus-xx` version.
 
         ```js
@@ -193,13 +193,13 @@ yarn build
         ...
         ```
 
-14. Let Projen update the other files:
+15. Let Projen update the other files:
 
     ```sh
     yarn build
     # Updates .gitignore, .projen/*, package.json
     ```
 
-15. Update all the cdk8s `docs/**` with the new syntax.
+16. Update all the cdk8s `docs/**` with the new syntax.
 
-16. Create a PR for the new branch, review, and merge into master.
+17. Create a PR for the new branch, review, and merge into master.
