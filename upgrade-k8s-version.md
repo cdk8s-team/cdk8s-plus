@@ -2,7 +2,7 @@
 
 This document describes the changes required in order to upgrade CDK8s+/CDK8s to support a new Kubernetes version. These steps should be executed in order.
 
-## Prerequisite
+## :one: Prerequisite
 
 ### Add new k8s spec to cdk8s repo
 
@@ -13,7 +13,7 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
     # provide the new version number e.g. 1.25.0
     ```
 
-2. Create PR, review, merge the updated spec into CDK8s
+2. Create PR, review then merge the updated spec into cdk8s/master branch ([e.g. v25 PR](https://github.com/cdk8s-team/cdk8s/pull/1007)).
 
 ### Publish new branch to cdk8s-plus-go repo
 
@@ -22,14 +22,24 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
     ```sh
     git checkout -b k8s.xx
     # e.g. k8s.25 for version 1.25.0
-    git push origin k8s.xx
+    git push --set-upstream origin k8s.xx
     ```
 
-## Create the new CDK8s+ branch
+### Create a new backport label in cdk8s-plus' GitHub
 
-4. Create a new branch of CDK8s+ starting from the current latest K8s version branch. The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
+4. Open the [cdk8s-plus GitHub label list](https://github.com/cdk8s-team/cdk8s-plus/issues/labels)
 
-5. On the new branch update the following:
+5. Add a new label for the **current** Kubernetes version.
+   - Label name: `backport-to-k8s-XX/main`
+   - Label color: `#F53E94`
+
+  e.g. If you were upgrading from v24 -> v25 the new label would be `backport-to-k8s-24/main`
+
+## :two: Create the new CDK8s+ branch
+
+6. Create a new branch of CDK8s+ starting from the current latest K8s version branch. The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
+
+7. On the new branch update the following:
 
      1. ([`.projenrc.ts`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/.projenrc.ts)): Update `LATEST_SUPPORTED_K8S_VERSION` and `SPEC_VERSION` with the new version.
 
@@ -63,40 +73,40 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
      3. ([`README.md`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/README.md)): Add the new version. i.e. Add a markdown status badge, and a new row in the supported k8s version table.
 
-6. Import the k8s spec that you merged into cdk8s during the prerequisite.
+8. Import the k8s spec that you merged into cdk8s during the prerequisite.
 
 ```sh
 yarn run import
 # warning `yarn import` is a native yarn command so be sure to include `run`
 ```
 
-7. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure it is available on localhost:8080
+9. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure it is available on localhost:8080
 
-8. Generate API types from the local Kubernetes cluster
+10. Generate API types from the local Kubernetes cluster
 
 ```sh
 yarn regenerate-api-information
 # Updates ./api-resources.txt
 ```
 
-9. Let Projen upgrade the remaining files
+11. Let Projen upgrade the remaining files
 
 ```sh
 yarn build
 # Updates package.json, .gitattributes, .gitignore, workflows, src/api-resource.generated.ts, src/imports/k8s.ts, .projen/*
 ```
 
-10. Check all the expected files were updated as intended.
+12. Check all the expected files were updated as intended.
 
-11. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
+13. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
 
-12. Push the branch and verify that automation builds/tags/releases the new version successfully.
+14. Push the branch and verify that automation builds/tags/releases the new version successfully.
 
-## Update CDK8s
+## :three: Update CDK8s
 
-13. Create a new cdk8s branch off of cdk8s/master
+15. Create a new cdk8s branch off of cdk8s/master
 
-14. On the new branch update the following:
+16. On the new branch update the following:
      1. ([`.projenrc.js`](https://github.com/cdk8s-team/cdk8s/blob/master/.projenrc.js)): In the `javascript.NodeProject()` update the `devDeps` list with the new `cdk8s-plus-xx` version.
 
         ```js
@@ -193,13 +203,28 @@ yarn build
         ...
         ```
 
-15. Let Projen update the other files:
+17. Let Projen update the other files:
 
     ```sh
     yarn build
     # Updates .gitignore, .projen/*, package.json
     ```
 
-16. Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
+18. Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
 
-17. Create a PR for the new branch, review, and merge into master.
+19. Create a PR for the new branch, review then merge into cdk8s/master branch.
+
+20. Wait for the automation to pull the new version docs and publish to the website.
+
+21. Verify the website has the new version docs:
+
+  - The [landing page](https://cdk8s.io/)'s "API Reference" dropdown.
+  - The [docs "cdk8s+" section](https://cdk8s.io/docs/latest/plus/).
+  - The [docs "API Reference" section](https://cdk8s.io/docs/latest/reference/).
+
+## 🎉 You did it! 🎉
+
+1. Now go outside :house_with_garden:
+2. Get some fresh air :lotus_position:
+3. Come back inside :door:
+4. Automate all of this :technologist:
