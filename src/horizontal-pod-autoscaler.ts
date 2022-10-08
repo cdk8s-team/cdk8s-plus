@@ -289,7 +289,7 @@ export class HorizontalPodAutoscaler extends Resource {
     const containers = this.target.toScalingTarget().containers;
     const hasResourceConstraints = containers.some((c) => this._hasRequestsOrLimits(c));
     if (!hasResourceConstraints && !this.metrics) {
-      return ['Every container in the HorizontalPodAutoscaler target must have CPU or memory resources defined'];
+      return ['If metrics are not defined, then every container in the HorizontalPodAutoscaler target must have a CPU or memory resource constraint defined.'];
     }
     return [];
   }
