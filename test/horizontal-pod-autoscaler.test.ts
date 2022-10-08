@@ -848,7 +848,8 @@ test('throws error at synth, when metrics are not provided and target container 
     target: deployment,
     maxReplicas: 10,
   });
-  expect(() => Testing.synth(chart)).toThrowError('Every container in the HorizontalPodAutoscaler target must have CPU or memory resources defined');
+  const regex = new RegExp(/Validation failed with the following errors:[\s]*\[test\/Hpa\] If HorizontalPodAutoscaler does not have metrics defined, then every container in the target must have a CPU or memory resource constraint defined\./);
+  expect(() => Testing.synth(chart)).toThrowError(regex);
 });
 
 test('throws error, when minReplicas is more than maxReplicas', () => {
