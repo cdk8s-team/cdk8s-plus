@@ -4,10 +4,10 @@ import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 24;
+const LATEST_SUPPORTED_K8S_VERSION = 25;
 
 // the version of k8s this branch supports
-const SPEC_VERSION = '24';
+const SPEC_VERSION = '25';
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 const project = new cdk.JsiiProject({
@@ -87,6 +87,7 @@ const project = new cdk.JsiiProject({
         `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`,
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
+        `k8s-${LATEST_SUPPORTED_K8S_VERSION - 3}/main`,
       ],
 
       // run upgrade-dependencies workflow at a different hour than other cdk8s

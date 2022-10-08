@@ -22,28 +22,6 @@
         }
       ]
     },
-    "backport:22": {
-      "name": "backport:22",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
     "backport:23": {
       "name": "backport:23",
       "requiredEnv": [
@@ -88,6 +66,28 @@
         }
       ]
     },
+    "backport:25": {
+      "name": "backport:25",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-25/main",
+          "cwd": "/tmp/.backport/"
+        }
+      ]
+    },
     "build": {
       "name": "build",
       "description": "Full release build",
@@ -120,7 +120,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-24/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-25/"
       },
       "steps": [
         {
@@ -256,7 +256,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.24.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.25.0"
         }
       ]
     },
@@ -361,14 +361,14 @@
         }
       ]
     },
-    "release:k8s-24/main": {
-      "name": "release:k8s-24/main",
-      "description": "Prepare a release from \"k8s-24/main\" branch",
+    "release:k8s-25/main": {
+      "name": "release:k8s-25/main",
+      "description": "Prepare a release from \"k8s-25/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "2",
         "PRERELEASE": "rc",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-24/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-25/"
       },
       "steps": [
         {
@@ -417,7 +417,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-24/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-25/"
       },
       "steps": [
         {
