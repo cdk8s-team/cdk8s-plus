@@ -102,11 +102,13 @@ yarn build
 
 14. Push the branch and verify that automation builds/tags/releases the new version successfully.
 
+15. Update CDK8s+'s default branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches) to the new branch.
+
 ## :three: Update CDK8s
 
-15. Create a new cdk8s branch off of cdk8s/master
+16. Create a new cdk8s branch off of cdk8s/master
 
-16. On the new branch update the following:
+17. On the new branch update the following:
      1. ([`.projenrc.js`](https://github.com/cdk8s-team/cdk8s/blob/master/.projenrc.js)): In the `javascript.NodeProject()` update the `devDeps` list with the new `cdk8s-plus-xx` version.
 
         ```js
@@ -203,20 +205,20 @@ yarn build
         ...
         ```
 
-17. Let Projen update the other files:
+18. Let Projen update the other files:
 
     ```sh
     yarn build
     # Updates .gitignore, .projen/*, package.json
     ```
 
-18. Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
+19. Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
 
-19. Create a PR for the new branch, review then merge into cdk8s/master branch.
+20. Create a PR for the new branch, review then merge into cdk8s/master branch.
 
-20. Wait for the automation to pull the new version docs and publish to the website.
+21. Wait for the automation to pull the new version docs and publish to the website.
 
-21. Verify the website has the new version docs:
+22. Verify the website has the new version docs:
 
   - The [landing page](https://cdk8s.io/)'s "API Reference" dropdown.
   - The [docs "cdk8s+" section](https://cdk8s.io/docs/latest/plus/).
