@@ -102,7 +102,7 @@ yarn build
 
 14. Push the branch and verify that automation builds/tags/releases the new version successfully.
 
-15. Update CDK8s+'s default branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches) to the new branch.
+15. Update CDK8s+'s default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches).
 
 ## :three: Update CDK8s
 
