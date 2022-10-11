@@ -205,20 +205,40 @@ yarn build
         ...
         ```
 
-18. Let Projen update the other files:
+    7. ([`docs/reference/`](https://github.com/cdk8s-team/cdk8s/blob/master/docs/reference/)): Create a new directory for the new version. i.e. `docs/reference/cdk8s-plus-XX/`. Inside the new dir create two files.
 
-    ```sh
-    yarn build
-    # Updates .gitignore, .projen/*, package.json
-    ```
+        Create a `.pages` file with the following:
 
-19. Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
+          ```bash
+          nav:
+          - TypeScript: typescript.md
+          - Python: python.md
+          - Java: java.md
+          - Go: go.md
+          ```
 
-20. Create a PR for the new branch, review then merge into cdk8s/master branch.
+        And a `go.md` file with the following (updated to match the new version):
 
-21. Wait for the automation to pull the new version docs and publish to the website.
+          ```markdown
+          # cdk8s-plus-25 (Go) <a name="API Reference"></a>
 
-22. Verify the website has the new version docs:
+          For Go API reference, please visit <https://pkg.go.dev/github.com/cdk8s-team/cdk8s-plus-go/cdk8splus25>.
+          ```
+
+18.  Let Projen update the other files:
+
+  ```sh
+  yarn build
+  # Updates .gitignore, .projen/*, package.json
+  ```
+
+19.  Update all the cdk8s [`docs/**`](https://github.com/cdk8s-team/cdk8s/tree/master/docs) with the new syntax.
+
+20.  Create a PR for the new branch, review then merge into cdk8s/master branch.
+
+21.  Wait for the automation to pull the new version docs and publish to the website.
+
+22.  Verify the website has the new version docs:
 
   - The [landing page](https://cdk8s.io/)'s "API Reference" dropdown.
   - The [docs "cdk8s+" section](https://cdk8s.io/docs/latest/plus/).
