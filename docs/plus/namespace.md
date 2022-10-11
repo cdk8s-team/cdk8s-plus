@@ -3,7 +3,7 @@
 Namespaces provides a mechanism for isolating groups of resources within a single cluster.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-24/typescript.md#namespace)
+    [API Reference](../../reference/cdk8s-plus-24/typescript.md#namespace)
 
 ## Create a `Namespace`
 

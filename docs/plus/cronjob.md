@@ -4,8 +4,8 @@ CronJob resource is responsible for creating recurring [Jobs](https://kubernetes
 
 CronJob is similar to a [job](https://cdk8s.io/docs/latest/plus/job/) but it is suitable when there is a need to run a job indefinitely following a schedule. These repetitive jobs can be utilized for recurring tasks such as backing up a database, pinging a server for health checks, creating snapshots of systems and much more.
 
-!!! tip "" 
-     [API Reference](../reference/cdk8s-plus-24/typescript.md#cronjob)
+!!! tip ""
+     [API Reference](../../reference/cdk8s-plus-24/typescript.md#cronjob)
 
 ## Creating a `CronJob`
 
@@ -42,7 +42,7 @@ app.synth();
 
 ### Defaults
 
-The above would create a cronjob resource which would schedule `databack/mysql-backup` to run every minute. With this resource, we also set some meaningful defaults. For instance, this cronjob would not run jobs concurrently by default. It will also retain 3 instance of successful job runs and 1 instance of a failed run for debugging later if needed. To customize the properties, see [API Reference](../reference/cdk8s-plus-24/typescript.md#cronjob).
+The above would create a cronjob resource which would schedule `databack/mysql-backup` to run every minute. With this resource, we also set some meaningful defaults. For instance, this cronjob would not run jobs concurrently by default. It will also retain 3 instance of successful job runs and 1 instance of a failed run for debugging later if needed. To customize the properties, see [API Reference](../../reference/cdk8s-plus-24/typescript.md#cronjob).
 
 ### Helper Functions
 
@@ -60,7 +60,7 @@ new kplus.CronJob(this, 'CronJob', {
 
 ### Validations
 
-The cronjob construct also validates some of the properties so that the manifest created works as expected. 
+The cronjob construct also validates some of the properties so that the manifest created works as expected.
 
 * You cannot pass `startingDeadline` property value less that 10 seconds. This is because the Kubernetes CronJobController checks things every 10 seconds and if the value passed is less than that then the jobs would not be scheduled.
 

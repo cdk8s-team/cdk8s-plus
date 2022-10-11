@@ -7,7 +7,7 @@ In configuration, they don't differ much from regular pods, but offer some
 additional properties.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-24/typescript.md#job)
+    [API Reference](../../reference/cdk8s-plus-24/typescript.md#job)
 
 ## Delete a Job after its finished
 
