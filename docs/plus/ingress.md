@@ -5,7 +5,7 @@ HTTP. Ingress may provide load balancing, SSL termination and name-based virtual
 hosting.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-24/typescript.md#ingressv1beta1)
+    [API Reference](../../reference/cdk8s-plus-25/typescript.md#ingressv1beta1)
 
 You must have an [Ingress controller] to satisfy an Ingress. Only creating an
 Ingress resource has no effect.
@@ -27,7 +27,7 @@ const helloDeployment = new kplus.Deployment(this, text, {
   ]
 });
 
-const helloService = helloDeployment.expose(5678);
+const helloService = helloDeployment.exposeViaService({ port: 5678 });
 
 const ingress = new Ingress(this, 'ingress');
 ingress.addRule('/hello', kplus.IngressBackend.fromService(helloService));
