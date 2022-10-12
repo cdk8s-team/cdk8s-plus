@@ -3,7 +3,7 @@
 Define containers that run in a pod using the `Container` class.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-25/typescript.md#container)
+    [API Reference](../../reference/cdk8s-plus-25/typescript.md#container)
 
 ## Environment
 

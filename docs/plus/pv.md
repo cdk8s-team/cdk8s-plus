@@ -3,7 +3,7 @@
 A `PersistentVolume` (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-25/typescript.md#persistent-volume)
+    [API Reference](../../reference/cdk8s-plus-25/typescript.md#persistent-volume)
 
 PV's are used by pods via the pod's `volumes` spec, just like regular [volumes](./volume.md).
 They are not intended to be interchangable with volumes, you can think of a `PersistentVolume`

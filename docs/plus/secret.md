@@ -3,7 +3,7 @@
 Secrets are used to store confidential information. Never store such information on the definition of the pod itself.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-25/typescript.md#secret)
+    [API Reference](../../reference/cdk8s-plus-25/typescript.md#secret)
 
 ## Use an existing `Secret`
 

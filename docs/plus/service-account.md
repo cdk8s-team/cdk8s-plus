@@ -3,7 +3,7 @@
 Use service accounts to provide an identity for pods.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-25/typescript.md#serviceaccount)
+    [API Reference](../../reference/cdk8s-plus-25/typescript.md#serviceaccount)
 
 ## Use an existing `ServiceAccount`
 
