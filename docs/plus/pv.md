@@ -28,7 +28,7 @@ import * as cdk8s from 'cdk8s';
 
 const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', {
   // must exist in aws
-  volumeId: 'vol1224',
+  volumeId: 'vol1234',
 
   // assign the volume to small-ebs storage class
   storageClassName: 'small-ebs',
@@ -63,7 +63,7 @@ You can also directly mount a persistent volume, which will implicitly reserve i
 and create a volume from the created claim:
 
 ```ts
-const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', { volumeId: 'vol1224' });
+const vol = new kplus.AwsElasticBlockStorePersistentVolume(chart, 'Volume', { volumeId: 'vol1234' });
 container.mount('/data', vol);
 ```
 

@@ -1,4 +1,4 @@
-# cdk8s+
+# cdk8s+ v22
 
 **cdk8s+** is a library with high level abstractions for authoring Kubernetes
 applications.
@@ -9,11 +9,11 @@ exposing richer API's with reduced complexity.
 
 !!! info
 
-    The documentation here relates to version `2.x` of the cdk8s toolchain, which is the latest. If you are still using version `1.x`, please refer to the [Migrating from 1.x Guide](../migrating-from-1.x.md).
+    The documentation here relates to version `2.x` of the cdk8s toolchain, which is the latest. If you are still using version `1.x`, please refer to the [Migrating from 1.x Guide](../../migrating-from-1.x.md).
 
 Here is an example of how we would deploy a simple nginx container, once with the low-level API (on the left), and once with the high level abstraction (on the right).
 
-![corevsplus](../assets/corevsplus.png)
+![corevsplus](../../assets/corevsplus.png)
 
 **cdk8s+** is vended as a separate library for each kubernetes spec version. The documentation presented here represents version [1.22.0](https://github.com/kubernetes/kubernetes/tree/v1.22.0/api/openapi-spec)
 and is vended as the `cdk8s-plus-22` library.
@@ -353,10 +353,4 @@ app.synth();
 
 ### Missing Property
 
-See https://cdk8s.io/docs/latest/basics/escape-hatches/#patching-api-objects-behind-higher-level-apis
-
-### cdk8s+ documentation versions
-
-* [**cdk8s-plus-22**](./cdk8s-plus-22/config-map/) · Kubernetes v1.22.0
-* [**cdk8s-plus-22**](./cdk8s-plus-22/config-map/) · Kubernetes v1.22.0
-* [**cdk8s-plus-22**](./cdk8s-plus-22/config-map/) · Kubernetes v1.22.0
+See [Patching API objects behind higher level APIs](https://cdk8s.io/docs/latest/basics/escape-hatches/#patching-api-objects-behind-higher-level-apis)
