@@ -353,4 +353,4 @@ app.synth();
 
 ### Missing Property
 
-See https://cdk8s.io/docs/latest/basics/escape-hatches/#patching-api-objects-behind-higher-level-apis
+See [Patching API objects behind higher level APIs](https://cdk8s.io/docs/latest/basics/escape-hatches/#patching-api-objects-behind-higher-level-apis)
