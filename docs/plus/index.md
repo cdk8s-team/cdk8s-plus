@@ -1,4 +1,4 @@
-# cdk8s+
+# cdk8s+ v24
 
 **cdk8s+** is a library with high level abstractions for authoring Kubernetes
 applications.
@@ -9,11 +9,11 @@ exposing richer API's with reduced complexity.
 
 !!! info
 
-    The documentation here relates to version `2.x` of the cdk8s toolchain, which is the latest. If you are still using version `1.x`, please refer to the [Migrating from 1.x Guide](../migrating-from-1.x.md).
+    The documentation here relates to version `2.x` of the cdk8s toolchain, which is the latest. If you are still using version `1.x`, please refer to the [Migrating from 1.x Guide](../../migrating-from-1.x.md).
 
 Here is an example of how we would deploy a simple nginx container, once with the low-level API (on the left), and once with the high level abstraction (on the right).
 
-![corevsplus](../assets/corevsplus.png)
+![corevsplus](../../assets/corevsplus.png)
 
 **cdk8s+** is vended as a separate library for each kubernetes spec version. The documentation presented here represents version [1.24.0](https://github.com/kubernetes/kubernetes/tree/v1.24.0/api/openapi-spec)
 and is vended as the `cdk8s-plus-24` library.
@@ -33,24 +33,6 @@ any spec version higher or equal to `1.24.0`. **Non-stable** resources are not g
     If you are deploying manifests produced by `cdk8s-plus-24` onto clusters of a lower version, you might encounter some unsupported spec properties or invalid manifests.
 
 ## FAQ
-
-### What's the difference between `cdk8s-plus-20`, `cdk8s-plus-21`, and `cdk8s-plus-22`?
-
-These are separately vended libraries that each target a different kubernetes
-version, marked by the `-XX` suffix. For example, `cdk8s-plus-22` targets
-kubernetes version `1.22.0`.
-
-We offer a dedicated package per Kubernetes version to allow users to match
-their manifests to the Kubernetes version they are operating. This way, users
-are only exposed to a set of capabilities offered by their specific cluster,
-preventing deployment errors caused by version mismatches.
-
-For example, imagine we had published a single library for all Kubernetes versions (call it `cdk8s-plus`).
-This library would have had support for the [`namespaceSelector`](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#namespace-selector) property when configuring pod affinity rules. This property was only added in Kubernetes 1.21.0.
-
-Now imagine you operate Kubernetes 1.20.0. In such a case, you would have access to the `namespaceSelector` property, even though
-it is unsupported, and will result in a deployment failure if you use it. With a dedicated package, this property would not be available
-for you to (mis)use.
 
 ### I operate Kubernetes version `1.XX` - which cdk8s+ library should I be using?
 
@@ -353,10 +335,4 @@ app.synth();
 
 ### Missing Property
 
-See https://cdk8s.io/docs/latest/basics/escape-hatches/#patching-api-objects-behind-higher-level-apis
-
-### cdk8s+ documentation versions
-
-* [**cdk8s-plus-22**](./cdk8s-plus-22/config-map/) · Kubernetes v1.22.0
-* [**cdk8s-plus-23**](./cdk8s-plus-23/config-map/) · Kubernetes v1.23.0
-* [**cdk8s-plus-24**](./cdk8s-plus-24/config-map/) · Kubernetes v1.24.0
+See [Patching API objects behind higher level APIs](https://cdk8s.io/docs/latest/basics/escape-hatches/#patching-api-objects-behind-higher-level-apis)
