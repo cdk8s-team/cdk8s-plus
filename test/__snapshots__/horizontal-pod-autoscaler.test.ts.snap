@@ -11,7 +11,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -127,7 +126,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -256,7 +254,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -385,7 +382,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -514,7 +510,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -642,7 +637,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -770,7 +764,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -898,7 +891,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1026,7 +1018,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1154,7 +1145,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1282,7 +1272,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1410,7 +1399,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1539,7 +1527,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1672,7 +1659,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1807,7 +1793,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1976,7 +1961,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -2111,7 +2095,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -2232,7 +2215,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -2355,7 +2337,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -2479,7 +2460,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -2614,7 +2594,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "podManagementPolicy": "OrderedReady",
-      "replicas": 1,
       "selector": Object {},
       "serviceName": "test-testservice-c876eb6f",
       "template": Object {
@@ -2726,7 +2705,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -2842,7 +2820,6 @@ Array [
     "spec": Object {
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
-      "replicas": 2,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",

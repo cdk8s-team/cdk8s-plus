@@ -1,7 +1,7 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as container from './container';
+import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as k8s from './imports/k8s';
 import * as service from './service';
 import * as workload from './workload';
