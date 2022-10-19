@@ -1,5 +1,89 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Can be isolated 1`] = `
+Array [
+  Object {
+    "apiVersion": "batch/v1",
+    "kind": "CronJob",
+    "metadata": Object {
+      "name": "test-cronjob-c812e113",
+    },
+    "spec": Object {
+      "concurrencyPolicy": "Forbid",
+      "failedJobsHistoryLimit": 1,
+      "jobTemplate": Object {
+        "spec": Object {
+          "template": Object {
+            "metadata": Object {
+              "labels": Object {
+                "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
+              },
+            },
+            "spec": Object {
+              "automountServiceAccountToken": false,
+              "containers": Array [
+                Object {
+                  "image": "foobar",
+                  "imagePullPolicy": "Always",
+                  "name": "main",
+                  "resources": Object {
+                    "limits": Object {
+                      "cpu": "1500m",
+                      "memory": "2048Mi",
+                    },
+                    "requests": Object {
+                      "cpu": "1000m",
+                      "memory": "512Mi",
+                    },
+                  },
+                  "securityContext": Object {
+                    "allowPrivilegeEscalation": false,
+                    "privileged": false,
+                    "readOnlyRootFilesystem": true,
+                    "runAsGroup": 26000,
+                    "runAsNonRoot": true,
+                    "runAsUser": 25000,
+                  },
+                },
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "restartPolicy": "Never",
+              "securityContext": Object {
+                "fsGroupChangePolicy": "Always",
+                "runAsNonRoot": true,
+              },
+              "setHostnameAsFQDN": false,
+            },
+          },
+        },
+      },
+      "schedule": "0 0 * * *",
+      "startingDeadlineSeconds": 10,
+      "successfulJobsHistoryLimit": 3,
+      "suspend": false,
+    },
+  },
+  Object {
+    "apiVersion": "networking.k8s.io/v1",
+    "kind": "NetworkPolicy",
+    "metadata": Object {
+      "name": "test-cronjob-defaultdenyall-c81b49ed",
+    },
+    "spec": Object {
+      "podSelector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-CronJob-c80e4ce0",
+        },
+      },
+      "policyTypes": Array [
+        "Egress",
+        "Ingress",
+      ],
+    },
+  },
+]
+`;
+
 exports[`custom configuration 1`] = `
 Array [
   Object {

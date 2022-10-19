@@ -184,3 +184,25 @@ test('custom update strategy', () => {
   expect(spec.updateStrategy).toEqual({ type: 'OnDelete' });
 
 });
+
+test('Can be isolated', () => {
+
+  const chart = Testing.chart();
+
+  const service = new kplus.Service(chart, 'Service', {
+    ports: [{ port: 80 }],
+  });
+
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [{ image: 'foobar' }],
+    service: service,
+    isolate: true,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+
+  const networkPolicy = manifest[2].spec;
+  expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+  expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});

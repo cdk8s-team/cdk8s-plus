@@ -140,6 +140,11 @@ export class StatefulSet extends workload.Workload {
     this.minReady = props.minReady ?? Duration.seconds(0);
 
     this.service.select(this);
+
+    if (this.isolate) {
+      this.connections.isolate();
+    }
+
   }
 
   private _createHeadlessService() {
