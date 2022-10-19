@@ -142,7 +142,7 @@ export class StatefulSet extends workload.Workload {
     this.service.select(this);
   }
 
-  private createHeadlessService() {
+  private _createHeadlessService() {
 
     const myPorts = container.extractContainerPorts(this);
     const myPortNumbers = myPorts.map(p => p.number);
