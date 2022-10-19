@@ -94,3 +94,20 @@ test('can select by label', () => {
   expect(ds.matchLabels).toEqual(expectedSelector);
 
 });
+
+test('Can be isolated', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.DaemonSet(chart, 'DaemonSet', {
+    containers: [{ image: 'foobar' }],
+    isolate: true,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+
+  const networkPolicy = manifest[1].spec;
+  expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+  expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});

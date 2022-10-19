@@ -152,6 +152,10 @@ export class CronJob extends workload.Workload {
       throw new Error('The \'ttlAfterFinished\' property cannot be set if \'successfulJobsRetained\' property or \'failedJobsRetained\' property is set. This would cause the retention of jobs to not work properly since it would delete the job based on its value.');
     }
 
+    if (this.isolate) {
+      this.connections.isolate();
+    }
+
     this.schedule = props.schedule;
     this.concurrencyPolicy = props.concurrencyPolicy ?? ConcurrencyPolicy.FORBID;
     this.startingDeadline = props.startingDeadline ?? Duration.seconds(10);

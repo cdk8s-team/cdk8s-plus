@@ -33,6 +33,25 @@ test('A label selector is automatically allocated', () => {
 
 });
 
+
+test('Can be isolated', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'foobar' }],
+    replicas: 5,
+    isolate: true,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+
+  const networkPolicy = manifest[1].spec;
+  expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+  expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});
+
 test('No selector is generated if "select" is false', () => {
 
   const chart = Testing.chart();
