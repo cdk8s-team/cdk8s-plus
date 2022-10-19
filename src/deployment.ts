@@ -161,6 +161,10 @@ export class Deployment extends workload.Workload implements IScalable {
 
     this.replicas = props.replicas;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
+
+    if (this.isolate) {
+      this.connections.isolate();
+    }
   }
 
   /**

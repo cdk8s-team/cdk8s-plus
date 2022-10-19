@@ -92,3 +92,21 @@ test('custom configuration', () => {
   expect(spec.jobTemplate.spec.backoffLimit).toEqual(4);
   expect(spec.jobTemplate.spec.template.spec.containers[0].image).toEqual('image');
 });
+
+test('Can be isolated', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.CronJob(chart, 'CronJob', {
+    containers: [{ image: 'foobar' }],
+    schedule: Cron.daily(),
+    isolate: true,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+
+  const networkPolicy = manifest[1].spec;
+  expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+  expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});
