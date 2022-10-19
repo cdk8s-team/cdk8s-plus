@@ -19,7 +19,8 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
-  public readonly isolate: boolean;
+
+  protected readonly isolate: boolean;
 
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
@@ -416,7 +417,8 @@ export interface AbstractPodProps extends base.ResourceProps {
   readonly automountServiceAccountToken?: boolean;
 
   /**
-   * Isolates the pod. This does not allow any ingress or egress connections for the pod.
+   * Isolates the pod. This will prevent any ingress or egress connections to / from this pod.
+   * You can however allow explicit connections post instantiation by using the `.connections` property.
    *
    * @default false
    */
@@ -1676,10 +1678,6 @@ export class PodConnections {
   }
 
   private allow(direction: 'Ingress' | 'Egress', peer: networkpolicy.INetworkPolicyPeer, options: PodConnectionsAllowToOptions | PodConnectionsAllowFromOptions = {}) {
-
-    if (this.instance.isolate) {
-      throw new Error('The \'isolate\' property is set to true currently. Please remove it before allowing connections to the Pod.');
-    }
 
     const config = peer.toNetworkPolicyPeerConfig();
     networkpolicy.validatePeerConfig(config);
