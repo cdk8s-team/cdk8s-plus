@@ -176,6 +176,9 @@ function parseApiResources(filename: string): Array<ApiResourceEntry> {
 
   for (const line of dataLines) {
     const entry: any = {};
+    if (line == '') {
+      continue;
+    }
 
     for (const column of columns) {
       const value = line.slice(column.start, column.end).trim();
@@ -321,7 +324,7 @@ function normalizeTypeName(typeName: string) {
     }
   } while (m);
 
-  result = result.replace(/^./, result[0].toUpperCase()); // ensure first letter is capitalized
+  result = result.replace(/^\S/, result[0]?.toUpperCase()); // ensure first letter is capitalized
   return result;
 }
 
