@@ -3,7 +3,7 @@
 HorizontalPodAutoscaler allows your services to scale up when demand is high and scale down when they are no longer needed.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-24/typescript.md#horizontalpodautoscaler)
+    [API Reference](../reference/cdk8s-plus-25/typescript.md#horizontalpodautoscaler)
 
 ## Using a HorizontalPodAutoscaler
 
@@ -66,6 +66,10 @@ The HorizontalPodAutoscaler supports the following metrics:
 
 Resource metrics are used to scale on a resource like CPU or memory.
 
+!!! note ""
+    Since the resource usages of all the containers are summed up the total pod utilization may not accurately represent the individual container resource usage. This could lead to situations where a single container might be running with high usage and the HPA will not scale out because the overall pod usage is still within acceptable limits.
+
+
 ```typescript
 import * as kplus from 'cdk8s-plus-25';
 
@@ -91,14 +95,36 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
   target: bookstoreWebsite,
   maxReplicas: 10,
   metrics: [
-     kplus.Metric.pods(kplus.MetricTarget.averageValue(70)),
+     kplus.Metric.pods({
+      name: 'requests-per-second',
+      target: kplus.MetricTarget.averageUtilization(50),
+      labelSelector: kplus.LabelSelector.of({ labels: { app: 'scraper' } }),
+    }),
+  ],
+ });
+```
+
+
+## Container Metrics
+
+Container metrics are used to scale on one of the scaling target's container metrics.
+
+```typescript
+import * as kplus from 'cdk8s-plus-25';
+
+
+const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
+  target: bookstoreWebsite,
+  maxReplicas: 10,
+  metrics: [
+     kplus.Metric.containerMemory(kplus.MetricTarget.value(4096)),
   ],
  });
 ```
 
 ### Object Metrics
 
-Object metrics are used to scale on a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
+Object metrics are used to scale on a metric describing a single kubernetes object (for example, requests-per-second on an Ingress object).
 
 ```typescript
 import * as kplus from 'cdk8s-plus-25';
@@ -108,14 +134,18 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
   target: bookstoreWebsite,
   maxReplicas: 10,
   metrics: [
-     kplus.Metric.object(kplus.MetricTarget.averageValue(70)),
+     kplus.Metric.object({
+        object: ingress,
+        name: 'requests-per-second',
+        target: kplus.MetricTarget.averageUtilization(50),
+      }),
   ],
- });
+});
 ```
 
 ### External Metrics
 
-External metrics are used to scale on a metric not associated with any Kubernetes object (for example, QPS on an external database server).
+External metrics are used to scale on a metric not associated with any Kubernetes object (for example, an SQS queue).
 
 ```typescript
 import * as kplus from 'cdk8s-plus-25';
@@ -125,7 +155,11 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
   target: bookstoreWebsite,
   maxReplicas: 10,
   metrics: [
-     kplus.Metric.external(kplus.MetricTarget.averageValue(70)),
+    kplus.Metric.external({
+      labelSelector: kplus.LabelSelector.of({ labels: { app: 'scraper' } }),
+      name: 'sqs-queue',
+      target: kplus.MetricTarget.averageUtilization(50),
+    }),
   ],
  });
 ```

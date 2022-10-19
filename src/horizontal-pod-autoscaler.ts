@@ -406,9 +406,7 @@ export class Metric {
 
   /**
    * Metric that tracks the CPU of a container. This metric
-   * will be tracked across all pods of the current scale target. Only a single
-   * container may be tracked in each pod. In other words, a pod that hosts two
-   * of the same container, will be ignored.
+   * will be tracked across all pods of the current scale target.
    *
    */
   public static containerCpu(options: MetricContainerResourceOptions): Metric {
@@ -424,9 +422,7 @@ export class Metric {
 
   /**
    * Metric that tracks the Memory of a container. This metric
-   * will be tracked across all pods of the current scale target. Only a single
-   * container may be tracked in each pod. In other words, a pod that hosts two
-   * of the same container, will be ignored.
+   * will be tracked across all pods of the current scale target.
    *
    */
   public static containerMemory(options: MetricContainerResourceOptions): Metric {
@@ -442,9 +438,7 @@ export class Metric {
 
   /**
    * Metric that tracks the volume size of a container. This metric
-   * will be tracked across all pods of the current scale target. Only a single
-   * container may be tracked in each pod. In other words, a pod that hosts two
-   * of the same container, will be ignored.
+   * will be tracked across all pods of the current scale target.
    *
    */
   public static containerStorage(options: MetricContainerResourceOptions): Metric {
@@ -460,9 +454,7 @@ export class Metric {
 
   /**
    * Metric that tracks the local ephemeral storage of a container. This metric
-   * will be tracked across all pods of the current scale target. Only a single
-   * container may be tracked in each pod. In other words, a pod that hosts two
-   * of the same container, will be ignored.
+   * will be tracked across all pods of the current scale target.
    *
    */
   public static containerEphemeralStorage(options: MetricContainerResourceOptions): Metric {
