@@ -266,6 +266,13 @@ export class Service extends base.Resource {
   }
 
   /**
+   * Return the first port of the service.
+   */
+  public get port(): number {
+    return [...this._ports][0].port;
+  }
+
+  /**
    * Configure a port the service will bind to.
    * This method can be called multiple times.
    *
