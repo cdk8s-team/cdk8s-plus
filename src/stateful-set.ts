@@ -130,7 +130,7 @@ export class StatefulSet extends workload.Workload {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
-    this.service = props.service ?? this.createHeadlessService();
+    this.service = props.service ?? this._createHeadlessService();
 
     this.apiObject.addDependency(this.service);
 
