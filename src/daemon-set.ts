@@ -55,6 +55,9 @@ export class DaemonSet extends workload.Workload {
 
     this.minReadySeconds = props.minReadySeconds ?? 0;
 
+    if (this.isolate) {
+      this.connections.isolate();
+    }
   }
 
   /**
