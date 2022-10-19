@@ -107,3 +107,106 @@ Array [
   },
 ]
 `;
+
+exports[`StatefulSet gets defaults 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": Object {
+      "name": "test-statefulset-service-c8d576f5",
+    },
+    "spec": Object {
+      "clusterIP": "None",
+      "externalIPs": Array [],
+      "ports": Array [
+        Object {
+          "port": 6000,
+          "targetPort": 6000,
+        },
+      ],
+      "selector": Object {
+        "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+      },
+      "type": "ClusterIP",
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "StatefulSet",
+    "metadata": Object {
+      "name": "test-statefulset-c8a6ec86",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "podManagementPolicy": "OrderedReady",
+      "replicas": 1,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+        },
+      },
+      "serviceName": "test-statefulset-service-c8d576f5",
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "image",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [
+                Object {
+                  "containerPort": 6000,
+                },
+              ],
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+              "startupProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 6000,
+                },
+              },
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+        },
+      },
+      "updateStrategy": Object {
+        "rollingUpdate": Object {
+          "partition": 0,
+        },
+        "type": "RollingUpdate",
+      },
+    },
+  },
+]
+`;
