@@ -168,7 +168,7 @@ export class StatefulSet extends workload.Workload implements IScalable {
       apiVersion: this.apiObject.apiVersion,
       name: this.name,
       containers: this.containers,
-      replicas: this.replicas ?? 0,
+      replicas: this.replicas,
     };
   }
 }

@@ -30,7 +30,7 @@ export interface ScalingTarget {
    * for validation purposes as Scalable targets should not have a
    * fixed number of replicas.
    */
-  readonly replicas: number;
+  readonly replicas?: number;
 }
 
 /**
