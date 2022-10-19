@@ -415,14 +415,6 @@ export class ApiResource implements IApiResource, IApiEndpoint {
   });
 
   /**
-   * API resource information for PodSecurityPolicy.
-   */
-  public static readonly POD_SECURITY_POLICIES = new ApiResource({
-    apiGroup: 'policy',
-    resourceType: 'podsecuritypolicies',
-  });
-
-  /**
    * API resource information for ClusterRoleBinding.
    */
   public static readonly CLUSTER_ROLE_BINDINGS = new ApiResource({
