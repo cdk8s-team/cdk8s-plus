@@ -158,6 +158,10 @@ export class Deployment extends workload.Workload {
 
     this.replicas = props.replicas ?? 2;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
+
+    if (this.isolate) {
+      this.connections.isolate();
+    }
   }
 
   /**

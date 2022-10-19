@@ -91,3 +91,20 @@ test('Synthesizes spec lazily', () => {
   expect(container.image).toEqual('image');
 
 });
+
+test('Can be isolated', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Job(chart, 'Job', {
+    containers: [{ image: 'foobar' }],
+    isolate: true,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+
+  const networkPolicy = manifest[1].spec;
+  expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+  expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});

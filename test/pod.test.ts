@@ -781,6 +781,22 @@ describe('connections |', () => {
 
   });
 
+  test('can isolate pod', () => {
+    const chart = Testing.chart();
+
+    new kplus.Pod(chart, 'Pod', {
+      containers: [{ image: 'pod' }],
+      isolate: true,
+    });
+
+    const manifest = Testing.synth(chart);
+    expect(manifest).toMatchSnapshot();
+
+    const networkPolicy = manifest[1].spec;
+    expect(networkPolicy.podSelector.matchLabels).toBeDefined;
+    expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+  });
+
   test('can allow to managed pod', () => {
 
     const chart = Testing.chart();
