@@ -20,6 +20,8 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
   public readonly automountServiceAccountToken: boolean;
 
+  protected readonly isolate: boolean;
+
   private readonly _containers: container.Container[] = [];
   private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
@@ -36,6 +38,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
+    this.isolate = props.isolate ?? false;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -413,6 +416,13 @@ export interface AbstractPodProps extends base.ResourceProps {
    */
   readonly automountServiceAccountToken?: boolean;
 
+  /**
+   * Isolates the pod. This will prevent any ingress or egress connections to / from this pod.
+   * You can however allow explicit connections post instantiation by using the `.connections` property.
+   *
+   * @default false
+   */
+  readonly isolate?: boolean;
 }
 
 /**
@@ -528,6 +538,10 @@ export class Pod extends AbstractPod {
 
     this.scheduling = new PodScheduling(this);
     this.connections = new PodConnections(this);
+
+    if (this.isolate) {
+      this.connections.isolate();
+    }
   }
 
   public get podMetadata(): ApiObjectMetadataDefinition {
@@ -539,6 +553,7 @@ export class Pod extends AbstractPod {
    */
   public _toKube(): k8s.PodSpec {
     const scheduling = this.scheduling._toKube();
+
     return {
       ...this._toPodSpec(),
       affinity: scheduling.affinity,
@@ -1752,5 +1767,23 @@ export class PodConnections {
 
   private extractPorts(selector?: networkpolicy.INetworkPolicyPeer): networkpolicy.NetworkPolicyPort[] {
     return container.extractContainerPorts(selector).map(n => networkpolicy.NetworkPolicyPort.tcp(n.number));
+  }
+
+  /**
+   * Sets the default network policy for Pod/Workload to have all egress and ingress connections as disabled
+   */
+  public isolate() {
+    new networkpolicy.NetworkPolicy(this.instance, 'DefaultDenyAll', {
+      selector: this.instance,
+      // the policy must be defined in the namespace of the pod
+      // so it can select it.
+      metadata: { namespace: this.instance.metadata.namespace },
+      egress: {
+        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
+      },
+      ingress: {
+        default: networkpolicy.NetworkPolicyTrafficDefault.DENY,
+      },
+    });
   }
 }
