@@ -142,6 +142,8 @@ export class Deployment extends workload.Workload implements IScalable {
 
   public readonly resourceType = 'deployments';
 
+  public hasAutoscaler = false;
+
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
     super(scope, id, props);
 
@@ -216,7 +218,7 @@ export class Deployment extends workload.Workload implements IScalable {
    */
   public _toKube(): k8s.DeploymentSpec {
     return {
-      replicas: this.replicas ?? 2,
+      replicas: this.hasAutoscaler ? undefined : (this.replicas ?? 2),
       minReadySeconds: this.minReady.toSeconds(),
       progressDeadlineSeconds: this.progressDeadline.toSeconds(),
       template: {
@@ -226,6 +228,13 @@ export class Deployment extends workload.Workload implements IScalable {
       selector: this._toLabelSelector(),
       strategy: this.strategy._toKube(),
     };
+  }
+
+  /**
+   * @see IScalable.markHasAutoscaler()
+   */
+  public markHasAutoscaler() {
+    this.hasAutoscaler = true;
   }
 
   /**

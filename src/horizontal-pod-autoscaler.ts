@@ -31,12 +31,22 @@ export interface ScalingTarget {
    * fixed number of replicas.
    */
   readonly replicas?: number;
+
+
 }
 
 /**
  * Represents a scalable workload.
  */
 export interface IScalable {
+  /**
+   * If this is a target of an autoscaler.
+   */
+  hasAutoscaler: boolean;
+  /**
+   * Called on all IScalable targets when they are associated with an autoscaler.
+   */
+  markHasAutoscaler(): void;
   /**
    * Return the target spec properties of this Scalable.
    */
@@ -197,6 +207,7 @@ export class HorizontalPodAutoscaler extends Resource {
     }
 
     this.target = props.target;
+    this.target.markHasAutoscaler();
     this.maxReplicas = props.maxReplicas;
     this.minReplicas = props.minReplicas ?? 1;
     this.metrics = props.metrics;

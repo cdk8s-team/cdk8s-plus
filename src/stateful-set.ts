@@ -119,6 +119,8 @@ export class StatefulSet extends workload.Workload implements IScalable {
 
   public readonly resourceType = 'statefulsets';
 
+  public hasAutoscaler = false;
+
   private readonly _service: service.Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
@@ -144,10 +146,9 @@ export class StatefulSet extends workload.Workload implements IScalable {
     * @internal
     */
   public _toKube(): k8s.StatefulSetSpec {
-
     return {
       serviceName: this._service.name,
-      replicas: this.replicas ?? 1,
+      replicas: this.hasAutoscaler ? undefined : (this.replicas ?? 1),
       minReadySeconds: this.minReady.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
@@ -157,6 +158,13 @@ export class StatefulSet extends workload.Workload implements IScalable {
       podManagementPolicy: this.podManagementPolicy,
       updateStrategy: this.strategy._toKube(),
     };
+  }
+
+  /**
+   * @see IScalable.markHasAutoscaler()
+   */
+  public markHasAutoscaler() {
+    this.hasAutoscaler = true;
   }
 
   /**
