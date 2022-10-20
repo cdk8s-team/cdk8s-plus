@@ -43,7 +43,6 @@ junit.xml
 !/.github/workflows/upgrade-k8s-25-main.yml
 !/.github/workflows/upgrade-k8s-24-main.yml
 !/.github/workflows/upgrade-k8s-23-main.yml
-!/.github/workflows/upgrade-k8s-22-main.yml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.dev.json
