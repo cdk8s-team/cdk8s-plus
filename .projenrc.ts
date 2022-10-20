@@ -84,6 +84,7 @@ const project = new cdk.JsiiProject({
   depsUpgradeOptions: {
     workflowOptions: {
       branches: [
+        // Support the 3 latest major versions
         `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`,
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
