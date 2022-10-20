@@ -1,8 +1,9 @@
 import { ApiObject, Duration, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
-import * as kplus from '../src';
 import { Resource, ResourceProps, IResource } from './base';
+import * as container from './container';
 import * as k8s from './imports/k8s';
+import * as pod from './pod';
 
 
 /**
@@ -24,7 +25,7 @@ export interface ScalingTarget {
   /**
    * Container definitions associated with the target.
    */
-  readonly containers: kplus.Container[];
+  readonly containers: container.Container[];
   /**
    * The fixed number of replicas defined on the target. This is used
    * for validation purposes as Scalable targets should not have a
@@ -324,9 +325,9 @@ export class HorizontalPodAutoscaler extends Resource {
    * Validate that the container has at least one CPU/memory request/limit defined.
    * @internal
    */
-  private _hasRequestsOrLimits(container: kplus.Container): Boolean {
-    const hasRequests = container.resources?.cpu?.request || container.resources?.memory?.request;
-    const hasLimits = container.resources?.cpu?.limit || container.resources?.memory?.limit;
+  private _hasRequestsOrLimits(c: container.Container): Boolean {
+    const hasRequests = c.resources?.cpu?.request || c.resources?.memory?.request;
+    const hasLimits = c.resources?.cpu?.limit || c.resources?.memory?.limit;
     return Boolean(hasRequests || hasLimits);
   }
 
@@ -382,7 +383,7 @@ export interface MetricOptions {
    *
    * @default - Just the metric 'name' will be used to gather metrics.
    */
-  readonly labelSelector?: kplus.LabelSelector;
+  readonly labelSelector?: pod.LabelSelector;
 }
 
 
@@ -393,7 +394,7 @@ export interface MetricContainerResourceOptions {
   /**
    * Container where the metric can be found.
    */
-  readonly container: kplus.Container;
+  readonly container: container.Container;
   /**
    * Target metric value that will trigger scaling.
    */
