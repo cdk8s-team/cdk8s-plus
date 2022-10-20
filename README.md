@@ -3,14 +3,12 @@
 ### High level constructs for Kubernetes
 
 ![Stability:Beta](https://img.shields.io/badge/stability-beta-orange)
-[![cdk8s-plus-22](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.22?label=cdk8s-plus-22&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.22.yml)
 [![cdk8s-plus-23](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.23?label=cdk8s-plus-23&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.23.yml)
 [![cdk8s-plus-24](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.24?label=cdk8s-plus-24&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.24.yml)
 [![cdk8s-plus-25](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.25?label=cdk8s-plus-25&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.25.yml)
 
 | k8s version | npm (JS/TS)                                         | PyPI (Python)                                   | Maven (Java)                                                      | Go                                                              |
 | ----------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| 1.22.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-22) | [Link](https://pypi.org/project/cdk8s-plus-22/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-22) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.22) |
 | 1.23.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-23) | [Link](https://pypi.org/project/cdk8s-plus-23/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-23) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.23) |
 | 1.24.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-24) | [Link](https://pypi.org/project/cdk8s-plus-24/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-24) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.24) |
 | 1.25.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-25) | [Link](https://pypi.org/project/cdk8s-plus-25/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-25) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.25) |
