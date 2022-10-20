@@ -1,6 +1,7 @@
 import { ApiObject, Lazy, Duration } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as container from './container';
+import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as k8s from './imports/k8s';
 import * as service from './service';
 import * as workload from './workload';
@@ -92,11 +93,11 @@ export interface StatefulSetProps extends workload.WorkloadProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
-export class StatefulSet extends workload.Workload {
+export class StatefulSet extends workload.Workload implements IScalable {
   /**
     * Number of desired pods.
     */
-  public readonly replicas: number;
+  public readonly replicas?: number;
 
   /**
     * Management policy to use for the set.
@@ -121,6 +122,8 @@ export class StatefulSet extends workload.Workload {
 
   public readonly resourceType = 'statefulsets';
 
+  public hasAutoscaler = false;
+
   public readonly service: service.Service;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
@@ -134,7 +137,7 @@ export class StatefulSet extends workload.Workload {
 
     this.apiObject.addDependency(this.service);
 
-    this.replicas = props.replicas ?? 1;
+    this.replicas = props.replicas;
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
@@ -179,10 +182,9 @@ export class StatefulSet extends workload.Workload {
     * @internal
     */
   public _toKube(): k8s.StatefulSetSpec {
-
     return {
+      replicas: this.hasAutoscaler ? undefined : (this.replicas ?? 1),
       serviceName: this.service.name,
-      replicas: this.replicas,
       minReadySeconds: this.minReady.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
@@ -203,6 +205,26 @@ export class StatefulSet extends workload.Workload {
       default:
         throw new Error(`Unsupported pod management policy: ${podManagementPolicy}`);
     }
+  }
+
+  /**
+   * @see IScalable.markHasAutoscaler()
+   */
+  public markHasAutoscaler() {
+    this.hasAutoscaler = true;
+  }
+
+  /**
+   * @see IScalable.toScalingTarget()
+   */
+  public toScalingTarget(): ScalingTarget {
+    return {
+      kind: this.apiObject.kind,
+      apiVersion: this.apiObject.apiVersion,
+      name: this.name,
+      containers: this.containers,
+      replicas: this.replicas,
+    };
   }
 }
 
