@@ -135,26 +135,26 @@ apply the feature or bug fix to all the appropriate libraries.
 
 We currently track each version on a separate branch:
 
-- k8s-25/main
 - k8s-24/main
 - k8s-23/main
+- k8s-22/main
 
 In most cases, all you need to do is make a change to the library corresponding
-to latest version of kubernetes (i.e to the `k8s-25/main` branch). To do this,
+to latest version of kubernetes (i.e to the `k8s-24/main` branch). To do this,
 you can just follow the standard process for making a pull request: fork the
 repository, create your own branch, and add your changes. When you are finished,
 you should run "npx projen build" to make sure all tests pass and documentation
 is automatically updated.
 
 When you clone the repo, it will check out the branch corresponding to the
-latest version (`k8s-25/main`), and when you create the pull request on GitHub, it
+latest version (`k8s-24/main`), and when you create the pull request on GitHub, it
 should automatically target this branch. We will take care of backporting your
 change to the other branches corresponding to cdk8s-plus-23 and cdk8s-plus-24
-once the changes are merged to cdk8s-plus-25.
+once the changes are merged to cdk8s-plus-24.
 
 > Note: In some situations, you might only want to make a change to a library
 targeting an older kubernetes version. For example, `IngressV1Beta` is not
-available in cdk8s-plus-25, so changing it would require making a change to
+available in cdk8s-plus-24, so changing it would require making a change to
 cdk8s-plus-24 and cdk8s-plus-23. If you need to make a pull request to a version
 of cdk8s-plus that isn't the latest version, create your branch from the corresponding
 `k8s-XX/main` branch, and when you submit the pull request on GitHub, make sure the
