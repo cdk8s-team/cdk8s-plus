@@ -61,7 +61,7 @@ app.synth();
 Here is a nifty little trick you can use to create a volume that contains a directory on the client machine (machine that runs `cdk8s synth`):
 
 ```typescript
-import * as kplus from 'cdk8s-plus-23';
+import * as kplus from 'cdk8s-plus-25';
 import * as path from 'path';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
