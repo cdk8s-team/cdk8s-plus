@@ -17,19 +17,19 @@ import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
 export class MyChart extends Chart {
-  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+  constructor(scope: Construct, id: string, props?: ChartProps) {
     super(scope, id, props);
 
-    const config: kplus.IConfigMap = kplus.ConfigMap.fromConfigMapName(this, 'config-map', 'config');
+    const config: kplus.IConfigMap = kplus.ConfigMap.fromConfigMapName(this, 'ConfigMap', 'config');
 
     // the 'config' constant can later be used by API's that require an IConfigMap.
     // for example when creating a volume.
-    kplus.Volume.fromConfigMap(this, 'volume', config);
+    kplus.Volume.fromConfigMap(this, 'Volume', config);
   }
 }
 
 const app = new App();
-new MyChart(app, 'config-map');
+new MyChart(app, 'VolumeFromConfigMap');
 app.synth();
 ```
 
@@ -43,7 +43,7 @@ import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
 export class MyChart extends Chart {
-  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+  constructor(scope: Construct, id: string, props?: ChartProps) {
     super(scope, id, props);
     
     const config = new kplus.ConfigMap(this, 'Config');
@@ -52,7 +52,7 @@ export class MyChart extends Chart {
 }
 
 const app = new App();
-new MyChart(app, 'config-map');
+new MyChart(app, 'ConfigMap');
 app.synth();
 ```
 
@@ -67,7 +67,7 @@ import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
 export class MyChart extends Chart {
-  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+  constructor(scope: Construct, id: string, props?: ChartProps) {
     super(scope, id, props);
     const appMap = new kplus.ConfigMap(this, 'Config');
 
@@ -77,7 +77,7 @@ export class MyChart extends Chart {
     // note: that only top level files will be included, sub-directories are not yet supported.
     appMap.addDirectory(path.join(__dirname, 'app'));
 
-    const appVolume = kplus.Volume.fromConfigMap(this, 'config-map', appMap);
+    const appVolume = kplus.Volume.fromConfigMap(this, 'ConfigMap', appMap);
 
     const mountPath = '/var/app';
     const pod = new kplus.Pod(this, 'Pod');
@@ -93,6 +93,6 @@ export class MyChart extends Chart {
 }
 
 const app = new App();
-new MyChart(app, 'config-map');
+new MyChart(app, 'AppWithDir');
 app.synth();
 ```
