@@ -3,7 +3,7 @@
 HorizontalPodAutoscaler allows your services to scale up when demand is high and scale down when they are no longer needed.
 
 !!! tip ""
-    [API Reference](../reference/cdk8s-plus-24/typescript.md#horizontalpodautoscaler)
+    [API Reference](../../reference/cdk8s-plus-24/typescript.md#horizontalpodautoscaler)
 
 ## Using a HorizontalPodAutoscaler
 
