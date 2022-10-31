@@ -42,7 +42,7 @@ export class MyChart extends Chart {
 }
 
 const app = new App();
-new MyChart(app, 'config-map');
+new MyChart(app, 'container');
 app.synth();
 ```
 
