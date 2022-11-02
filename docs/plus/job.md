@@ -35,7 +35,7 @@ export class MyChart extends Chart {
 }
 
 const app = new App();
-new MyChart(app, 'deployment');
+new MyChart(app, 'Job');
 app.synth();
 ```
 
