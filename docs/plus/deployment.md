@@ -11,37 +11,75 @@ When you specify pods in a deployment, you normally have to configure the approp
 make the deployment control the relevant pods. This construct does this automatically.
 
 ```typescript
-import * as k from 'cdk8s';
-import * as kplus from 'cdk8s-plus-24';
+import * as kplus from 'cdk8s-plus-25';
+import { Construct } from 'constructs';
+import { App, Chart, ChartProps } from 'cdk8s';
 
-const app = new k.App();
-const chart = new k.Chart(app, 'Chart');
+export class MyChart extends Chart {
+  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+    super(scope, id, props);
+    
+    new kplus.Deployment(this, 'FrontEnds', {
+      containers: [ { image: 'node' } ],
+    });
+  }
+}
 
-new kplus.Deployment(chart, 'FrontEnds', {
-  containers: [ { image: 'node' } ],
-});
+const app = new App();
+new MyChart(app, 'deployment');
+app.synth();
 ```
 
-Note the resulting manifest contains a special `cdk8s.deployment` label that is applied to the pods, and is used as
+Note the resulting manifest contains a special `cdk8s.io/metadata.addr` label that is applied to the pods, and is used as
 the selector for the deployment.
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations: {}
-  labels: {}
-  name: chart-frontends-pod-a48e7f2e
+  name: deployment-frontends-c8e48310
 spec:
-  replicas: 1
+  minReadySeconds: 0
+  progressDeadlineSeconds: 600
+  replicas: 2
   selector:
     matchLabels:
-      cdk8s.deployment: ChartFrontEndsDD8A97CE
+      cdk8s.io/metadata.addr: deployment-FrontEnds-c89e9e97
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
-      annotations: {}
       labels:
-        cdk8s.deployment: ChartFrontEndsDD8A97CE
+        cdk8s.io/metadata.addr: deployment-FrontEnds-c89e9e97
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - image: node
+          imagePullPolicy: Always
+          name: main
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 2048Mi
+            requests:
+              cpu: 1000m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 26000
+            runAsNonRoot: true
+            runAsUser: 25000
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext:
+        fsGroupChangePolicy: Always
+        runAsNonRoot: true
+      setHostnameAsFQDN: false
 ```
 
 ## Exposing via a service
@@ -49,30 +87,88 @@ spec:
 Following up on pod selection, you can also easily create a service that will select the pods relevant to the deployment.
 
 ```typescript
-
 // store the deployment to created in a constant
-const frontends = new kplus.Deployment(chart, 'FrontEnds');
+const frontends = new kplus.Deployment(this, 'FrontEnds', {
+  containers: [ { 
+    image: 'node',
+    portNumber: 9000, 
+  } ],
+});
 
 // create a ClusterIP service that listens on port 9000 and redirects to port 9000 on the containers.
-frontends.exposeViaService({ port: 9000 });
+frontends.exposeViaService({ ports: [{
+  port: 9000,
+}]
+});
 ```
 
-Notice the resulting manifest, will have the same `cdk8s.deployment` magic label as the selector.
+Notice the resulting manifest, will have the same `cdk8s.io/metadata.addr` magic label as the selector.
 This will cause the service to attach to the pods that were configured as part of the said deployment.
 
 ```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-frontends-c8e48310
+spec:
+  minReadySeconds: 0
+  progressDeadlineSeconds: 600
+  replicas: 2
+  selector:
+    matchLabels:
+      cdk8s.io/metadata.addr: deployment-FrontEnds-c89e9e97
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        cdk8s.io/metadata.addr: deployment-FrontEnds-c89e9e97
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - image: node
+          imagePullPolicy: Always
+          name: main
+          ports:
+            - containerPort: 9000
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 2048Mi
+            requests:
+              cpu: 1000m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 26000
+            runAsNonRoot: true
+            runAsUser: 25000
+          startupProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 9000
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext:
+        fsGroupChangePolicy: Always
+        runAsNonRoot: true
+      setHostnameAsFQDN: false
+---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: {}
-  labels: {}
-  name: chart-frontends-service-pod-1f70150b
+  name: deployment-frontends-service-c8206158
 spec:
   externalIPs: []
   ports:
     - port: 9000
   selector:
-    cdk8s.deployment: ChartFrontEndsDD8A97CE
+    cdk8s.io/metadata.addr: deployment-FrontEnds-c89e9e97
   type: ClusterIP
 ```
 
@@ -88,19 +184,15 @@ It can be used to ensure replicas of the same workload are scheduled on differen
 
 > The same API is also available on all workload resources (i.e `Deployment`, `StatefulSet`, `Job`, `DaemonSet`).
 
-```ts
-import * as k from 'cdk8s';
-import * as kplus from 'cdk8s-plus-25';
-
-const app = new k.App();
-const chart = new k.Chart(app, 'Chart');
-
-const redis = new kplus.Deployment(chart, 'Redis', {
+```typescript
+const redis = new kplus.Deployment(this, 'Redis', {
   containers: [{ image: 'redis' }],
   replicas: 3,
 });
 
-deployment.scheduling.spread(kplus.Topology.HOSTNAME);
+redis.scheduling.spread({
+  topology: kplus.Topology.HOSTNAME
+});
 ```
 
 This example ensures that each replica of the `Redis` deployment
@@ -110,27 +202,26 @@ Take, for [example](https://kubernetes.io/docs/concepts/scheduling-eviction/assi
 
 Here is how you can accomplish that:
 
-```ts
-import * as k from 'cdk8s';
-import * as kplus from 'cdk8s-plus-25';
-
-const app = new k.App();
-const chart = new k.Chart(app, 'Chart');
-
-const redis = new kplus.Deployment(chart, 'Redis', {
+```typescript
+const redis = new kplus.Deployment(this, 'Redis', {
   containers: [{ image: 'redis' }],
   replicas: 3,
 });
-const web = new kplus.Deployment(chart, 'Web', {
+
+const web = new kplus.Deployment(this, 'Web', {
   containers: [{ image: 'web' }],
   replicas: 3,
 });
 
 // ensure redis is spread across all nodes
-redis.scheduling.spread(kplus.Topology.HOSTNAME);
+redis.scheduling.spread({
+  topology: kplus.Topology.HOSTNAME
+});
 
 // ensure web app is spread across all nodes
-web.scheduling.spread(kplus.Topology.HOSTNAME);
+web.scheduling.spread({
+  topology: kplus.Topology.HOSTNAME
+});
 
 // ensure a web app pod always runs along side a cache instance
 web.scheduling.colocate(redis);
