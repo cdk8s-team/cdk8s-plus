@@ -15,23 +15,35 @@ Environment variables can be added to containers by specifying the
 variable name and value. The value can come from different sources, either dynamic or static.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-24'
+import * as kplus from 'cdk8s-plus-24';
+import { Construct } from 'constructs';
+import { App, Chart, ChartProps } from 'cdk8s';
 
-const pod = new kplus.Pod(this, 'Pod');
-const container = pod.addContainer({
-  image: 'my-app'
-});
+export class MyChart extends Chart {
+  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+    super(scope, id, props);
 
-// use a static value.
-container.env.addVariable('endpoint', kplus.EnvValue.fromValue('value'));
+    const pod = new kplus.Pod(this, 'Pod');
+    const container = pod.addContainer({
+      image: 'my-app'
+    });
 
-// use a specific key from a config map.
-const backendsConfig = kplus.ConfigMap.fromConfigMapName('backends');
-container.env.addVariable('endpoint', kplus.EnvValue.fromConfigMap(backendsConfig, 'endpoint'));
+    // use a static value.
+    container.env.addVariable('endpoint', kplus.EnvValue.fromValue('value'));
 
-// use a specific key from a secret.
-const credentials = kplus.Secret.fromSecretName('credentials');
-container.env.addVariable('password', kplus.EnvValue.fromSecretValue({ secret: credentials, key: 'password' }));
+    // use a specific key from a config map.
+    const backendsConfig = kplus.ConfigMap.fromConfigMapName(this, 'BackendConfig', 'backends');
+    container.env.addVariable('endpoint', kplus.EnvValue.fromConfigMap(backendsConfig, 'endpoint'));
+
+    // use a specific key from a secret.
+    const credentials = kplus.Secret.fromSecretName(this, 'Credentials', 'credentials');
+    container.env.addVariable('password', kplus.EnvValue.fromSecretValue({ secret: credentials, key: 'password' }));
+  }
+}
+
+const app = new App();
+new MyChart(app, 'container');
+app.synth();
 ```
 
 ### Sources
@@ -40,9 +52,7 @@ Environment variables can also be populated by referencing other objects as an e
 With this method, all the key-value data of the source is added as environment variables,
 where the key is the env name and the value is the env value.
 
-```ts
-import * as kplus from 'cdk8s-plus-24'
-
+```typescript
 const pod = new kplus.Pod(this, 'Pod');
 const cm = new kplus.ConfigMap(this, 'ConfigMap', {
   data: {
@@ -82,10 +92,8 @@ you would need to duplicate this configuration. This can get complex and clutter
 In contrast, here is how to do this with `cdk8s+`:
 
 ```typescript
-import * as kplus from 'cdk8s-plus-24';
-
-const config = kplus.ConfigMap.fromConfigMapName('config');
-const volume = kplus.Volume.fromConfigMap(config);
+const config = kplus.ConfigMap.fromConfigMapName(this, 'Config', 'config');
+const volume = kplus.Volume.fromConfigMap(this, 'Volume', config);
 
 const pod = new kplus.Pod(this, 'Pod');
 const container = pod.addContainer({
@@ -111,11 +119,11 @@ A `Probe` instance can be created through one of the `fromXxx` static methods:
 
 Readiness, liveness, and startup probes can be configured at the container-level through the `readiness`, `liveness`, and `startup` options:
 
-```ts
+```typescript
 new kplus.Pod(this, 'Pod', {
   containers: [
     {
-      // ...
+      image: 'my-app',
       readiness: kplus.Probe.fromHttpGet('/ping'),
     }
   ]
