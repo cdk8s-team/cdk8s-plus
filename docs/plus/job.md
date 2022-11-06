@@ -14,22 +14,29 @@ additional properties.
 You can configure a TTL for the job after it finished its execution successfully.
 
 ```typescript
-import * as k from 'cdk8s';
 import * as kplus from 'cdk8s-plus-25';
+import { Construct } from 'constructs';
+import { App, Chart, ChartProps, Duration } from 'cdk8s';
 
-const app = new k.App();
-const chart = new k.Chart(app, 'Chart');
+export class MyChart extends Chart {
+  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+    super(scope, id, props);
 
-// let's define a job spec, and set a 1 second TTL.
-const job = new kplus.Job(chart, 'LoadData', {
-  ttlAfterFinished: kplus.Duration.seconds(1)
- });
+    // let's define a job spec, and set a 1 second TTL.
+    const job = new kplus.Job(this, 'LoadData', {
+      ttlAfterFinished: Duration.seconds(1)
+    });
 
+    // now add a container to all the pods created by this job
+    job.addContainer({
+      image: 'loader'
+    });
+  }
+}
 
-// now add a container to all the pods created by this job
-job.addContainer({
-  image: 'loader'
-});
+const app = new App();
+new MyChart(app, 'Job');
+app.synth();
 ```
 
 ## Scheduling
