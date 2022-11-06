@@ -17,20 +17,41 @@ The following example will route HTTP requests sent to the `/hello` url prefix
 to a service associated with a deployment of the
 [hashicorp/http-echo](https://github.com/hashicorp/http-echo) image.
 
-```ts
-const helloDeployment = new kplus.Deployment(this, text, {
-  containers: [
-    {
-      image: 'hashicorp/http-echo',
-      args: [ '-text', 'hello ingress' ]
-    }
-  ]
-});
+```typescript
+import * as kplus from 'cdk8s-plus-23';
+import { Construct } from 'constructs';
+import { App, Chart, ChartProps } from 'cdk8s';
 
-const helloService = helloDeployment.expose(5678);
+export class MyChart extends Chart {
+  constructor(scope: Construct, id: string, props: ChartProps = { }) {
+    super(scope, id, props);
 
-const ingress = new Ingress(this, 'ingress');
-ingress.addRule('/hello', kplus.IngressBackend.fromService(helloService));
+    const helloDeployment = new kplus.Deployment(this, "Deployment", {
+      containers: [
+        {
+          image: 'hashicorp/http-echo',
+          args: [ '-text', 'hello ingress' ],
+          portNumber: 5678,
+        }
+      ]
+    });
+
+    const helloService = helloDeployment.exposeViaService({
+        ports: [
+          {
+            port: 5678,
+          }
+        ]
+      });
+
+    const ingress = new kplus.Ingress(this, 'ingress');
+    ingress.addRule('/hello', kplus.IngressBackend.fromService(helloService));
+ }
+}
+
+const app = new App();
+new MyChart(app, 'ingress');
+app.synth();
 ```
 
 You can use `addHostRule(host, path, backend)` to define a route that will only
