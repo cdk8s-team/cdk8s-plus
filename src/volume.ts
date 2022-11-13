@@ -222,6 +222,36 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
+   * Used to mount an NFS export into a Pod.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes/#nfs
+   */
+  public static fromNfs(scope: Construct, id: string, name: string, options: NfsVolumeOptions): Volume {
+    return new Volume(scope, id, name, {
+      nfs: {
+        ...options,
+        readOnly: options.readOnly ?? false,
+      },
+    });
+  }
+
+  /**
+   * Used to mount an iSCSI target into a Pod.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes/#iscsi
+   */
+  public static fromIscsi(scope: Construct, id: string, name: string, options: IscsiVolumeOptions): Volume {
+    return new Volume(scope, id, name, {
+      iscsi: {
+        ...options,
+        secretRef: (options.secretRef !== undefined) ? {
+          name: options.secretRef?.name,
+        } : undefined,
+      },
+    });
+  }
+
+  /**
     * @internal
    */
   private static renderItems = (items?: { [key: string]: PathMapping }): undefined | Array<k8s.KeyToPath> => {
@@ -656,4 +686,99 @@ export enum HostPathVolumeType {
    * A block device must exist at the given path.
    */
   BLOCK_DEVICE = 'BlockDevice'
+}
+
+/**
+ * Options for an Nfs-based volume.
+ */
+export interface NfsVolumeOptions {
+  /**
+   * Path that is exported by the NFS server.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#nfs
+   */
+  readonly path: string;
+
+  /**
+   * Force the NFS export to be mounted with read-only permissions.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#nfs
+   * @default false
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * The hostname or IP address of the NFS server.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#nfs
+   */
+  readonly server: string;
+}
+
+/**
+ * Represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
+ */
+export interface IscsiVolumeOptions {
+  /**
+   * Defines whether support iSCSI Discovery CHAP authentication is enabled or not
+   */
+  readonly chapAuthDiscovery?: boolean;
+
+  /**
+   * Defines whether support iSCSI Session CHAP authentication is enabled or not
+   */
+  readonly chapAuthSession?: boolean;
+
+  /**
+   * The filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+   * @default 'ext4'
+   */
+  readonly fsType?: string;
+
+  /**
+   * Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.
+   */
+  readonly initiatorName?: string;
+
+  /**
+   * Target iSCSI Qualified Name.
+   */
+  readonly iqn: string;
+
+  /**
+   * Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
+   *
+   * @default Protocol.TCP
+   */
+  readonly iscsiInterface?: string;
+
+  /**
+   * iSCSI Target Lun number.
+   */
+  readonly lun: number;
+
+  /**
+   * iSCSI Target Portal List. The portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+   */
+  readonly portals?: string[];
+
+  /**
+   * Force the ReadOnly setting in VolumeMounts. Defaults to false.
+   *
+   * @default false.
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * CHAP Secret for iSCSI target and initiator authentication
+   */
+  readonly secretRef?: secret.ISecret;
+
+  /**
+   * iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+   */
+  readonly targetPortal: string;
+
 }

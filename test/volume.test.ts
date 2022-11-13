@@ -490,3 +490,95 @@ describe('fromHostPath', () => {
   });
 
 });
+
+describe('fromNfs', () => {
+
+  test('defaults', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromNfs(chart, 'Volume', 'disk', {
+      server: 'some-hostname',
+      path: '/export/path',
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      nfs: {
+        server: 'some-hostname',
+        path: '/export/path',
+        readOnly: false,
+      },
+    });
+
+  });
+
+  test('custom', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromNfs(chart, 'Volume', 'disk', {
+      server: 'some-hostname',
+      path: '/export/path',
+      readOnly: true,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      nfs: {
+        server: 'some-hostname',
+        path: '/export/path',
+        readOnly: true,
+      },
+    },
+    );
+  });
+});
+
+describe('fromIscsi', () => {
+
+  test('defaults', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromIscsi(chart, 'Volume', 'disk', {
+      iqn: 'iqn.1994-05.com.redhat:some-iqn',
+      lun: 0,
+      targetPortal: '10.0.0.1',
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      iscsi: {
+        iqn: 'iqn.1994-05.com.redhat:some-iqn',
+        lun: 0,
+        targetPortal: '10.0.0.1',
+      },
+    });
+  });
+
+  test('custom', () => {
+
+    const chart = Testing.chart();
+    const chapSecret = new Secret(chart, 'id', {});
+    const volume = Volume.fromIscsi(chart, 'Volume', 'disk', {
+      iqn: 'iqn.1994-05.com.redhat:some-iqn',
+      lun: 0,
+      targetPortal: '10.0.0.1',
+      initiatorName: 'iqn.1994-05.com.redhat:some-other-initiator',
+      fsType: 'ext4',
+      secretRef: chapSecret,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      iscsi: {
+        iqn: 'iqn.1994-05.com.redhat:some-iqn',
+        lun: 0,
+        targetPortal: '10.0.0.1',
+        initiatorName: 'iqn.1994-05.com.redhat:some-other-initiator',
+        fsType: 'ext4',
+        secretRef: {
+          name: chapSecret.name,
+        },
+      },
+    });
+  });
+});
