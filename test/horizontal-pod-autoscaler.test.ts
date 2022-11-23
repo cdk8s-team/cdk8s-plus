@@ -2,6 +2,30 @@ import { Testing, Duration, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 
+// https://github.com/cdk8s-team/cdk8s-plus/issues/1423
+test('targets a deployment that has containers with volume mounts', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'deployment');
+  const volumeMounts = [{ volume: kplus.Volume.fromEmptyDir(chart, 'test-volume', 'test'), path: './test' }];
+
+  deployment.addContainer({
+    image: 'ubuntu',
+    name: 'test',
+    volumeMounts,
+  });
+
+  new kplus.HorizontalPodAutoscaler(chart, 'HPA', {
+    target: deployment,
+    maxReplicas: 5,
+  });
+
+  const manifest = Testing.synth(chart);
+  expect(manifest).toMatchSnapshot();
+
+});
+
 // Checking defaults
 test('defaultChild', () => {
   const chart = Testing.chart();
