@@ -2926,9 +2926,7 @@ Array [
                 "allowPrivilegeEscalation": false,
                 "privileged": false,
                 "readOnlyRootFilesystem": true,
-                "runAsGroup": 26000,
                 "runAsNonRoot": true,
-                "runAsUser": 25000,
               },
               "volumeMounts": Array [
                 Object {
