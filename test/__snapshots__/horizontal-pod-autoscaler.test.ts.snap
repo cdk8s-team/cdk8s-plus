@@ -2923,3 +2923,130 @@ Array [
   },
 ]
 `;
+
+exports[`targets a deployment that has containers with volume mounts 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "name": "test-deployment-c8dc6bdf",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "progressDeadlineSeconds": 600,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-deployment-c84c12f6",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "25%",
+          "maxUnavailable": "25%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-deployment-c84c12f6",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "ubuntu",
+              "imagePullPolicy": "Always",
+              "name": "test",
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsGroup": 26000,
+                "runAsNonRoot": true,
+                "runAsUser": 25000,
+              },
+              "volumeMounts": Array [
+                Object {
+                  "mountPath": "./test",
+                  "name": "test",
+                },
+              ],
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+          "volumes": Array [
+            Object {
+              "emptyDir": Object {},
+              "name": "test",
+            },
+          ],
+        },
+      },
+    },
+  },
+  Object {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": Object {
+      "name": "test-hpa-c8054d86",
+    },
+    "spec": Object {
+      "behavior": Object {
+        "scaleDown": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 300,
+              "type": "Pods",
+              "value": 1,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 300,
+        },
+        "scaleUp": Object {
+          "policies": Array [
+            Object {
+              "periodSeconds": 60,
+              "type": "Pods",
+              "value": 4,
+            },
+            Object {
+              "periodSeconds": 60,
+              "type": "Percent",
+              "value": 200,
+            },
+          ],
+          "selectPolicy": "Max",
+          "stabilizationWindowSeconds": 0,
+        },
+      },
+      "maxReplicas": 5,
+      "minReplicas": 1,
+      "scaleTargetRef": Object {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "test-deployment-c8dc6bdf",
+      },
+    },
+  },
+]
+`;
