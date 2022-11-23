@@ -142,8 +142,8 @@ export class ContainerSecurityContext {
     this.ensureNonRoot = props.ensureNonRoot ?? true;
     this.privileged = props.privileged ?? false;
     this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? true;
-    this.user = props.user ?? 25000;
-    this.group = props.group ?? 26000;
+    this.user = props.user;
+    this.group = props.group;
     this.allowPrivilegeEscalation = props.allowPrivilegeEscalation ?? false;
   }
 
