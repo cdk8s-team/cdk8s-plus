@@ -336,10 +336,15 @@ export class HorizontalPodAutoscaler extends Resource {
    * @internal
    */
   public _toKube(): k8s.HorizontalPodAutoscalerSpecV2 {
+    const scalingTarget = this.target.toScalingTarget();
     return {
       maxReplicas: this.maxReplicas,
       minReplicas: this.minReplicas,
-      scaleTargetRef: this.target.toScalingTarget(),
+      scaleTargetRef: {
+        apiVersion: scalingTarget.apiVersion,
+        name: scalingTarget.name,
+        kind: scalingTarget.kind,
+      },
       metrics: this.metrics?.map(m => m._toKube()),
       behavior: {
         scaleUp: {
