@@ -199,7 +199,10 @@ function createBackportTask(branch?: Number): Task {
   task.exec(`mkdir -p ${backportHome}`);
   task.exec(`cp ${backportConfig.path} ${backportHome}`);
 
-  const backport = ['npx', 'backport', '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
+  // pinning because of https://github.com/sqren/backport/issues/451
+  const backportVersion = '8.5.0';
+
+  const backport = ['npx', `backport@${backportVersion}`, '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
   if (branch) {
     backport.push(...['--branch', `k8s-${branch}/main`]);
   } else {
