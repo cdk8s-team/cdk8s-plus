@@ -652,8 +652,8 @@ test('default security context', () => {
   expect(container.securityContext.ensureNonRoot).toBeTruthy();
   expect(container.securityContext.privileged).toBeFalsy();
   expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
-  expect(container.securityContext.user).toEqual(25000);
-  expect(container.securityContext.group).toEqual(26000);
+  expect(container.securityContext.user).toBeUndefined();
+  expect(container.securityContext.group).toBeUndefined();
   expect(container.securityContext.allowPrivilegeEscalation).toBeFalsy();
 
   expect(container._toKube().securityContext).toEqual(container.securityContext._toKube());
@@ -665,7 +665,6 @@ test('default security context', () => {
     runAsUser: container.securityContext.user,
     allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
   });
-
 });
 
 test('custom security context', () => {
