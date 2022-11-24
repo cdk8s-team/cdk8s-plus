@@ -25,10 +25,6 @@
       "type": "build"
     },
     {
-      "name": "backport",
-      "type": "build"
-    },
-    {
       "name": "cdk8s",
       "type": "build"
     },

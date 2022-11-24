@@ -17,7 +17,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -39,7 +39,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -61,7 +61,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -83,7 +83,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-25/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-25/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -436,25 +436,25 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='backport'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='backport'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='backport'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='backport'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='backport'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii jsii-diff jsii-docgen jsii-pacmak json-schema npm-check-updates projen snake-case standard-version ts-jest ts-node typescript minimatch cdk8s constructs minimatch"
+          "exec": "yarn upgrade"
         },
         {
           "exec": "npx projen"
