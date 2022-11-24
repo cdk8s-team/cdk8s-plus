@@ -17,7 +17,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -39,7 +39,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -61,7 +61,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -83,7 +83,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
           "cwd": "/tmp/.backport/"
         }
       ]
