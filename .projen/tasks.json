@@ -17,7 +17,29 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
+          "cwd": "/tmp/.backport/"
+        }
+      ]
+    },
+    "backport:21": {
+      "name": "backport:21",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "rm -rf /tmp/.backport/"
+        },
+        {
+          "exec": "mkdir -p /tmp/.backport/"
+        },
+        {
+          "exec": "cp .backportrc.json /tmp/.backport/"
+        },
+        {
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-21/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -39,7 +61,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-22/main",
           "cwd": "/tmp/.backport/"
         }
       ]
@@ -61,29 +83,7 @@
           "exec": "cp .backportrc.json /tmp/.backport/"
         },
         {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
-    "backport:24": {
-      "name": "backport:24",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
+          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
           "cwd": "/tmp/.backport/"
         }
       ]

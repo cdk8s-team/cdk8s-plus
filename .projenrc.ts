@@ -4,7 +4,7 @@ import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 24;
+const LATEST_SUPPORTED_K8S_VERSION = 23;
 
 // the version of k8s this branch supports
 const SPEC_VERSION = '23';
@@ -199,7 +199,10 @@ function createBackportTask(branch?: Number): Task {
   task.exec(`mkdir -p ${backportHome}`);
   task.exec(`cp ${backportConfig.path} ${backportHome}`);
 
-  const backport = ['npx', 'backport', '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
+  // pinning because of https://github.com/sqren/backport/issues/451
+  const backportVersion = '8.5.0';
+
+  const backport = ['npx', `backport@${backportVersion}`, '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
   if (branch) {
     backport.push(...['--branch', `k8s-${branch}/main`]);
   } else {

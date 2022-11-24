@@ -10,9 +10,9 @@
 /.github/workflows/build.yml linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
 /.github/workflows/release-k8s.23.yml linguist-generated
+/.github/workflows/upgrade-k8s-21-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-22-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-23-main.yml linguist-generated
-/.github/workflows/upgrade-k8s-24-main.yml linguist-generated
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
 /.npmignore linguist-generated
