@@ -24,6 +24,22 @@ describe('fromSecret', () => {
     `);
   });
 
+  test('volume name is trimmed if needed', () => {
+
+    const chart = Testing.chart();
+    const secret = new Secret(chart, 'my-secret', {
+      metadata: { name: 'veryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong' },
+    });
+
+    // WHEN
+    const vol = Volume.fromSecret(chart, 'Secret', secret);
+
+    const expectedName = 'secret-veryveryveryveryveryveryveryveryveryveryveryveryveryvery';
+    expect(vol.name).toEqual(expectedName);
+    expect(vol._toKube().name).toEqual(expectedName);
+
+  });
+
   test('custom volume name', () => {
     // GIVEN
     const chart = Testing.chart();
@@ -123,6 +139,23 @@ describe('fromSecret', () => {
 });
 
 describe('fromConfigMap', () => {
+
+  test('volume name is trimmed if needed', () => {
+
+    const chart = Testing.chart();
+    const configMap = new ConfigMap(chart, 'my-config-map', {
+      metadata: { name: 'veryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong' },
+    });
+
+    // WHEN
+    const vol = Volume.fromConfigMap(chart, 'ConfigMap', configMap);
+
+    const expectedName = 'configmap-veryveryveryveryveryveryveryveryveryveryveryveryveryv';
+    expect(vol.name).toEqual(expectedName);
+    expect(vol._toKube().name).toEqual(expectedName);
+
+  });
+
   test('minimal definition', () => {
     // GIVEN
     const chart = Testing.chart();
@@ -280,6 +313,20 @@ describe('fromEmptyDir', () => {
 
 describe('fromPersistentVolumeClaim', () => {
 
+  test('volume name is trimmed if needed', () => {
+
+    const chart = Testing.chart();
+    const pvc = PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'veryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong');
+
+    // WHEN
+    const volume = Volume.fromPersistentVolumeClaim(chart, 'Volume', pvc);
+
+    const expectedName = 'pvc-veryveryveryveryveryveryveryveryveryveryveryveryveryveryver';
+    expect(volume.name).toEqual(expectedName);
+    expect(volume._toKube().name).toEqual(expectedName);
+
+  });
+
   test('defaults', () => {
 
     const chart = Testing.chart();
@@ -320,6 +367,19 @@ describe('fromPersistentVolumeClaim', () => {
 });
 
 describe('fromAwsElasticBlockStore', () => {
+
+  test('volume name is trimmed if needed', () => {
+
+    const chart = Testing.chart();
+
+    // WHEN
+    const volume = Volume.fromAwsElasticBlockStore(chart, 'Volume', 'veryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong');
+
+    const expectedName = 'ebs-veryveryveryveryveryveryveryveryveryveryveryveryveryveryver';
+    expect(volume.name).toEqual(expectedName);
+    expect(volume._toKube().name).toEqual(expectedName);
+
+  });
 
   test('defaults', () => {
 
@@ -363,6 +423,19 @@ describe('fromAwsElasticBlockStore', () => {
 
 describe('fromGcePersistentDisk', () => {
 
+  test('volume name is trimmed if needed', () => {
+
+    const chart = Testing.chart();
+
+    // WHEN
+    const volume = Volume.fromGcePersistentDisk(chart, 'Volume', 'veryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong');
+
+    const expectedName = 'gcedisk-veryveryveryveryveryveryveryveryveryveryveryveryveryver';
+    expect(volume.name).toEqual(expectedName);
+    expect(volume._toKube().name).toEqual(expectedName);
+
+  });
+
   test('defaults', () => {
 
     const chart = Testing.chart();
@@ -404,6 +477,19 @@ describe('fromGcePersistentDisk', () => {
 });
 
 describe('fromAzureDisk', () => {
+
+  test('volume name is trimmed if needed', () => {
+
+    const chart = Testing.chart();
+
+    // WHEN
+    const volume = Volume.fromAzureDisk(chart, 'Volume', 'veryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong', 'uri');
+
+    const expectedName = 'azuredisk-veryveryveryveryveryveryveryveryveryveryveryveryveryv';
+    expect(volume.name).toEqual(expectedName);
+    expect(volume._toKube().name).toEqual(expectedName);
+
+  });
 
   test('defaults', () => {
 
