@@ -14412,7 +14412,7 @@ export function toJson_ServiceSpec(obj: ServiceSpec | undefined): Record<string,
   if (obj === undefined) { return undefined; }
   const result = {
     'allocateLoadBalancerNodePorts': obj.allocateLoadBalancerNodePorts,
-    'clusterIP': obj.clusterIp,
+    'clusterIP': obj.clusterIP,
     'clusterIPs': obj.clusterIPs?.map(y => y),
     'externalIPs': obj.externalIPs?.map(y => y),
     'externalName': obj.externalName,
