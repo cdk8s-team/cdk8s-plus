@@ -105,8 +105,8 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     return this;
   }
 
-  public addContainer(cont: container.ContainerProps): container.Container {
-    const impl = new container.Container(cont);
+  public addContainer(cont: container.ContainerProps | container.Container): container.Container {
+    const impl = (cont instanceof container.Container) ? cont : new container.Container(cont);
     this._containers.push(impl);
     return impl;
   }
@@ -317,7 +317,7 @@ export interface AbstractPodProps extends base.ResourceProps {
    *
    * @default - No containers. Note that a pod spec must include at least one container.
    */
-  readonly containers?: container.ContainerProps[];
+  readonly containers?: container.ContainerProps[] | container.Container[];
 
   /**
    * List of initialization containers belonging to the pod.
