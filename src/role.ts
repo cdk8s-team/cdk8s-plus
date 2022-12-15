@@ -45,6 +45,9 @@ export interface RolePolicyRule {
 class ImportedRole extends Construct implements IRole {
 
   private readonly _name: string;
+
+  public readonly resourceType = 'roles';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -65,6 +68,11 @@ class ImportedRole extends Construct implements IRole {
   public get kind(): string {
     return k8s.KubeRole.GVK.kind;
   }
+
+  public get resourceName(): string {
+    return this.name;
+  }
+
 }
 
 /**
@@ -279,6 +287,8 @@ class ImportedClusterRole extends Construct implements IClusterRole {
 
   private readonly _name: string;
 
+  public readonly resourceType: string = 'clusterroles';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -298,6 +308,10 @@ class ImportedClusterRole extends Construct implements IClusterRole {
 
   public get kind(): string {
     return k8s.KubeClusterRole.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
   }
 
 }

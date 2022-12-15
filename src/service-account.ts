@@ -37,6 +37,8 @@ class ImportedServiceAccount extends Construct implements IServiceAccount {
 
   private readonly _name: string;
 
+  public readonly resourceType = 'serviceaccounts';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -56,6 +58,10 @@ class ImportedServiceAccount extends Construct implements IServiceAccount {
 
   public get kind(): string {
     return k8s.KubeServiceAccount.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
   }
 
 }

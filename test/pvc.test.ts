@@ -2,6 +2,18 @@ import * as cdk8s from 'cdk8s';
 import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
+test('can grant permissions on imported', () => {
+
+  const chart = Testing.chart();
+  const claim = kplus.PersistentVolumeClaim.fromClaimName(chart, 'Claim', 'claim');
+
+  const role = new kplus.Role(chart, 'Role');
+  role.allowRead(claim);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
 test('defaults', () => {
 
   const chart = cdk8s.Testing.chart();

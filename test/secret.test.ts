@@ -2,6 +2,18 @@ import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 
+test('can grant permissions on imported', () => {
+
+  const chart = Testing.chart();
+  const secret = kplus.Secret.fromSecretName(chart, 'Secret', 'secret');
+
+  const role = new kplus.Role(chart, 'Role');
+  role.allowRead(secret);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
 test('defaultChild', () => {
   const chart = Testing.chart();
 

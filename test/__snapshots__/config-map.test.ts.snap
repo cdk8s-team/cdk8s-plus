@@ -82,3 +82,33 @@ Array [
   },
 ]
 `;
+
+exports[`can grant permissions on imported 1`] = `
+Array [
+  Object {
+    "apiVersion": "rbac.authorization.k8s.io/v1",
+    "kind": "Role",
+    "metadata": Object {
+      "name": "test-role-c8eba390",
+    },
+    "rules": Array [
+      Object {
+        "apiGroups": Array [
+          "",
+        ],
+        "resourceNames": Array [
+          "name",
+        ],
+        "resources": Array [
+          "configmaps",
+        ],
+        "verbs": Array [
+          "get",
+          "list",
+          "watch",
+        ],
+      },
+    ],
+  },
+]
+`;
