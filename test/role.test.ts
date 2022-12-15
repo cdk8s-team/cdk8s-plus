@@ -4,6 +4,19 @@ import * as kplus from '../src';
 import { ApiResource } from '../src';
 
 describe('Role', () => {
+
+  test('can grant permissions on imported', () => {
+
+    const chart = Testing.chart();
+    const r2 = kplus.Role.fromRoleName(chart, 'R2', 'r2');
+
+    const role = new kplus.Role(chart, 'Role');
+    role.allowRead(r2);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
   test('defaultChild', () => {
 
     // GIVEN
@@ -247,6 +260,18 @@ Array [
 });
 
 describe('ClusterRole', () => {
+
+  test('can grant permissions on imported', () => {
+
+    const chart = Testing.chart();
+    const r2 = kplus.ClusterRole.fromClusterRoleName(chart, 'R2', 'r2');
+
+    const role = new kplus.Role(chart, 'Role');
+    role.allowRead(r2);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
 
   test('defaultChild', () => {
 

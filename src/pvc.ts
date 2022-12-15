@@ -75,6 +75,8 @@ class ImportedPersistentVolumeClaim extends Construct implements IPersistentVolu
 
   private readonly _name: string;
 
+  public readonly resourceType = 'persistentvolumeclaims';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -94,6 +96,10 @@ class ImportedPersistentVolumeClaim extends Construct implements IPersistentVolu
 
   public get kind(): string {
     return k8s.KubePersistentVolumeClaim.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
   }
 
 }
