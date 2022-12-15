@@ -14,6 +14,21 @@ test('can grant permissions on imported', () => {
 
 });
 
+test('role can bind to imported', () => {
+
+  const chart = Testing.chart();
+  const role = new kplus.Role(chart, 'Role');
+
+  const sa = kplus.ServiceAccount.fromServiceAccountName(chart, 'ServiceAccount', 'sa-name', {
+    namespaceName: 'kube-system',
+  });
+
+  role.bind(sa);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
+
 test('defaultChild', () => {
   const chart = Testing.chart();
 
