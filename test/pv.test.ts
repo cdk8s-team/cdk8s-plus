@@ -4,6 +4,18 @@ import * as kplus from '../src';
 
 describe('PersistentVolume', () => {
 
+  test('can grant permissions on imported', () => {
+
+    const chart = Testing.chart();
+    const pv = kplus.PersistentVolume.fromPersistentVolumeName(chart, 'Vol', 'vol');
+
+    const role = new kplus.Role(chart, 'Role');
+    role.allowRead(pv);
+
+    expect(Testing.synth(chart)).toMatchSnapshot();
+
+  });
+
   test('defaults', () => {
 
     const chart = cdk8s.Testing.chart();
