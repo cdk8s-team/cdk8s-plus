@@ -7,7 +7,7 @@ import * as secret from './secret';
 import { undefinedIfEmpty } from './utils';
 
 
-export interface IServiceAccount extends base.IResource {
+export interface IServiceAccount extends base.IResource, rb.ISubject {
 
 }
 
@@ -33,15 +33,36 @@ export interface ServiceAccountProps extends base.ResourceProps {
   readonly automountToken?: boolean;
 }
 
+export interface FromServiceAccountNameOptions {
+
+  /**
+   * The name of the namespace the service account belongs to.
+   *
+   * @default "default"
+   */
+  readonly namespaceName?: string;
+}
+
 class ImportedServiceAccount extends Construct implements IServiceAccount {
 
   private readonly _name: string;
+  private readonly _namespaceName: string;
 
   public readonly resourceType = 'serviceaccounts';
 
-  constructor(scope: Construct, id: string, name: string) {
+  constructor(scope: Construct, id: string, name: string, options: FromServiceAccountNameOptions = {}) {
     super(scope, id);
     this._name = name;
+    this._namespaceName = options.namespaceName ?? 'default';
+  }
+
+  public toSubjectConfiguration(): rb.SubjectConfiguration {
+    return {
+      kind: this.kind,
+      name: this.name,
+      apiGroup: this.apiGroup,
+      namespace: this._namespaceName,
+    };
   }
 
   public get name(): string {
@@ -83,9 +104,10 @@ export class ServiceAccount extends base.Resource implements IServiceAccount, rb
   /**
    * Imports a service account from the cluster as a reference.
    * @param name The name of the service account resource.
+   * @param options additional options.
    */
-  public static fromServiceAccountName(scope: Construct, id: string, name: string): IServiceAccount {
-    return new ImportedServiceAccount(scope, id, name);
+  public static fromServiceAccountName(scope: Construct, id: string, name: string, options: FromServiceAccountNameOptions = {}): IServiceAccount {
+    return new ImportedServiceAccount(scope, id, name, options);
   }
 
   /**
