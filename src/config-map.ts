@@ -56,6 +56,8 @@ class ImportedConfigMap extends Construct implements IConfigMap {
 
   private readonly _name: string;
 
+  public readonly resourceType = 'configmaps';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -75,6 +77,10 @@ class ImportedConfigMap extends Construct implements IConfigMap {
 
   public get kind(): string {
     return k8s.KubeConfigMap.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
   }
 
 }

@@ -1,6 +1,18 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
-import { ConfigMap } from '../src';
+import { ConfigMap, Role } from '../src';
+
+test('can grant permissions on imported', () => {
+
+  const chart = Testing.chart();
+  const cm = ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'name');
+
+  const role = new Role(chart, 'Role');
+  role.allowRead(cm);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
 
 test('defaultChild', () => {
 

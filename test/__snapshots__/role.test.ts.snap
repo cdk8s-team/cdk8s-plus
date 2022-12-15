@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClusterRole can grant permissions on imported 1`] = `
+Array [
+  Object {
+    "apiVersion": "rbac.authorization.k8s.io/v1",
+    "kind": "Role",
+    "metadata": Object {
+      "name": "test-role-c8eba390",
+    },
+    "rules": Array [
+      Object {
+        "apiGroups": Array [
+          "rbac.authorization.k8s.io",
+        ],
+        "resourceNames": Array [
+          "r2",
+        ],
+        "resources": Array [
+          "clusterroles",
+        ],
+        "verbs": Array [
+          "get",
+          "list",
+          "watch",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`Role can grant permissions on imported 1`] = `
+Array [
+  Object {
+    "apiVersion": "rbac.authorization.k8s.io/v1",
+    "kind": "Role",
+    "metadata": Object {
+      "name": "test-role-c8eba390",
+    },
+    "rules": Array [
+      Object {
+        "apiGroups": Array [
+          "rbac.authorization.k8s.io",
+        ],
+        "resourceNames": Array [
+          "r2",
+        ],
+        "resources": Array [
+          "roles",
+        ],
+        "verbs": Array [
+          "get",
+          "list",
+          "watch",
+        ],
+      },
+    ],
+  },
+]
+`;
