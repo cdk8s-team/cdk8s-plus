@@ -139,6 +139,12 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     return impl;
   }
 
+  public attachInitContainer(cont: container.Container) {
+    this._initContainers.push(cont);
+
+  }
+
+
   public addHostAlias(hostAlias: HostAlias): void {
     this._hostAliases.push(hostAlias);
   }
