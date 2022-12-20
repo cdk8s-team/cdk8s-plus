@@ -155,7 +155,7 @@ test('Can attach an existing container post instantiation', () => {
   const pod = new kplus.Pod(chart, 'Pod');
 
   const container = new kplus.Container({ image: 'image' });
-  
+
   pod.attachContainer(container);
 
   const spec = Testing.synth(chart)[0].spec;

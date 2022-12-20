@@ -107,7 +107,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
 
   public addContainer(cont: container.ContainerProps): container.Container {
     const impl = new container.Container(cont);
-    this.attachContainer(impl)
+    this.attachContainer(impl);
     return impl;
   }
 
