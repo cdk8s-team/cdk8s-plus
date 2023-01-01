@@ -1088,7 +1088,8 @@ export class EnvFrom {
   constructor(
     private readonly configMap?: configmap.IConfigMap,
     private readonly prefix?: string,
-    private readonly sec?: secret.ISecret) {};
+    private readonly sec?: secret.ISecret,
+    private readonly optional?: boolean) {};
 
   /**
    * @internal
@@ -1097,9 +1098,11 @@ export class EnvFrom {
     return {
       configMapRef: this.configMap ? {
         name: this.configMap.name,
+        optional: this.optional,
       } : undefined,
       secretRef: this.sec ? {
         name: this.sec.name,
+        optional: this.optional,
       } : undefined,
       prefix: this.prefix,
     };
