@@ -1,6 +1,7 @@
 import { ApiObject } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
+import { EnvValue, EnvValueFromSecretOptions } from './container';
 import * as k8s from './imports/k8s';
 import * as serviceaccount from './service-account';
 
@@ -42,7 +43,7 @@ export interface SecretProps extends CommonSecretProps {
 }
 
 export interface ISecret extends base.IResource {
-
+  envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue;
 }
 
 /**
@@ -83,6 +84,10 @@ class ImportedSecret extends Construct implements ISecret {
 
   public get kind(): string {
     return k8s.KubeSecret.GVK.kind;
+  }
+
+  envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
+    return EnvValue.fromSecretValue({ secret: this, key }, options);
   }
 
 }
@@ -147,6 +152,10 @@ export class Secret extends base.Resource implements ISecret {
    */
   public getStringData(key: string): string | undefined {
     return this.stringData[key];
+  }
+
+  envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
+    return EnvValue.fromSecretValue({ secret: this, key }, options);
   }
 }
 
