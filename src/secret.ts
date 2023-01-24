@@ -65,6 +65,8 @@ class ImportedSecret extends Construct implements ISecret {
 
   private readonly _name: string;
 
+  public readonly resourceType = 'secrets';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -84,6 +86,10 @@ class ImportedSecret extends Construct implements ISecret {
 
   public get kind(): string {
     return k8s.KubeSecret.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
   }
 
   envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
