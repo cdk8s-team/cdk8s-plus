@@ -47,6 +47,21 @@ describe('EnvValue', () => {
     });
   });
 
+  test('Can be created from secret.envValue', () => {
+    const chart = Testing.chart();
+
+    const actual = kplus.Secret.fromSecretName(chart, 'Secret', 'Secret').envValue('my-key', { optional: false });
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      secretKeyRef: {
+        key: 'my-key',
+        name: 'Secret',
+        optional: false,
+      },
+    });
+  });
+
   test('Cannot be created from missing required process env', () => {
 
     const key = 'cdk8s-plus.tests.container.env.fromProcess';

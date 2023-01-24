@@ -43,6 +43,11 @@ export interface SecretProps extends CommonSecretProps {
 }
 
 export interface ISecret extends base.IResource {
+  /**
+   * Returns EnvValue object from a secret's key.
+   * @param key Secret's key
+   * @param options Additional EnvValue options
+   */
   envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue;
 }
 
