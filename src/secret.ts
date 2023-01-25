@@ -97,7 +97,7 @@ class ImportedSecret extends Construct implements ISecret {
     return this.name;
   }
 
-  envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
+  public envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
     return EnvValue.fromSecretValue({ secret: this, key }, options);
   }
 
@@ -165,7 +165,7 @@ export class Secret extends base.Resource implements ISecret {
     return this.stringData[key];
   }
 
-  envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
+  public envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
     return EnvValue.fromSecretValue({ secret: this, key }, options);
   }
 }
