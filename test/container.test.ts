@@ -47,7 +47,7 @@ describe('EnvValue', () => {
     });
   });
 
-  test('Can be created from secret.envValue', () => {
+  test('Can be created from ISecret.envValue', () => {
     const chart = Testing.chart();
 
     const actual = kplus.Secret.fromSecretName(chart, 'Secret', 'Secret').envValue('my-key', { optional: false });
@@ -58,6 +58,21 @@ describe('EnvValue', () => {
         key: 'my-key',
         name: 'Secret',
         optional: false,
+      },
+    });
+  });
+
+  test('Can be created from new secret.envValue', () => {
+    const chart = Testing.chart();
+
+    const actual = new kplus.Secret(chart, 'Secret', { stringData: { 'my-key': 'my-value' } }).envValue('my-key', { optional: true });
+
+    expect(actual.value).toBeUndefined();
+    expect(actual.valueFrom).toEqual({
+      secretKeyRef: {
+        key: 'my-key',
+        name: 'test-secret-c837fa76',
+        optional: true,
       },
     });
   });
