@@ -199,6 +199,7 @@ export class BasicAuthSecret extends Secret {
         password: props.password,
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
@@ -226,6 +227,7 @@ export class SshAuthSecret extends Secret {
         'ssh-privatekey': props.sshPrivateKey,
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
@@ -249,13 +251,11 @@ export class ServiceAccountTokenSecret extends Secret {
   public constructor(scope: Construct, id: string, props: ServiceAccountTokenSecretProps) {
     super(scope, id, {
       type: 'kubernetes.io/service-account-token',
-      metadata: {
-        annotations: {
-          'kubernetes.io/service-account.name': props.serviceAccount.name,
-        },
-      },
+      metadata: props.metadata,
       immutable: props.immutable,
     });
+
+    this.metadata.addAnnotation('kubernetes.io/service-account.name', props.serviceAccount.name);
   }
 }
 
@@ -288,6 +288,7 @@ export class TlsSecret extends Secret {
         'tls.key': props.tlsKey,
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
@@ -319,6 +320,7 @@ export class DockerConfigSecret extends Secret {
         '.dockerconfigjson': JSON.stringify(props.data),
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
