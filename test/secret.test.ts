@@ -108,6 +108,25 @@ Array [
 `);
 });
 
+test('can override the name of a basic auth secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.BasicAuthSecret(chart, 'BasicAuthSecret', {
+    metadata: {
+      name: 'override-name',
+    },
+    username: 'admin',
+    password: 't0p-Secret',
+  });
+
+  const manifest = Testing.synth(chart);
+
+  expect(secret.name).toEqual('override-name');
+  expect(manifest[0].metadata.name).toEqual('override-name');
+
+});
+
 test('Can create an ssh auth secret', () => {
   const chart = Testing.chart();
 
@@ -131,6 +150,24 @@ Array [
   },
 ]
 `);
+});
+
+test('can override the name of an ssh auth secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.SshAuthSecret(chart, 'SshAuthSecret', {
+    metadata: {
+      name: 'override-name',
+    },
+    sshPrivateKey: 'fake-private-key',
+  });
+
+  const manifest = Testing.synth(chart);
+
+  expect(secret.name).toEqual('override-name');
+  expect(manifest[0].metadata.name).toEqual('override-name');
+
 });
 
 test('Can create a service account token secret', () => {
@@ -173,6 +210,50 @@ Array [
 `);
 });
 
+test('can override the name of a service account token secret', () => {
+
+  const chart = Testing.chart();
+
+  const sa = new kplus.ServiceAccount(chart, 'ServiceAccount');
+  const secret = new kplus.ServiceAccountTokenSecret(chart, 'ServiceAccountToken', {
+    metadata: {
+      name: 'override-name',
+    },
+    serviceAccount: sa,
+  });
+  secret.addStringData('extra', 'foo');
+
+  const manifest = Testing.synth(chart);
+
+  expect(secret.name).toEqual('override-name');
+  expect(manifest[1].metadata.name).toEqual('override-name');
+
+});
+
+test('can add annotations to a service account token secret', () => {
+
+  const chart = Testing.chart();
+
+  const sa = new kplus.ServiceAccount(chart, 'ServiceAccount');
+  const secret = new kplus.ServiceAccountTokenSecret(chart, 'ServiceAccountToken', {
+    metadata: {
+      annotations: {
+        'cdk8s.io/hello': 'world',
+      },
+    },
+    serviceAccount: sa,
+  });
+  secret.addStringData('extra', 'foo');
+
+  const manifest = Testing.synth(chart);
+
+  expect(manifest[1].metadata.annotations).toStrictEqual({
+    'kubernetes.io/service-account.name': 'test-serviceaccount-c8f15383',
+    'cdk8s.io/hello': 'world',
+  });
+
+});
+
 test('Can create a TLS secret', () => {
   const chart = Testing.chart();
 
@@ -198,6 +279,25 @@ Array [
   },
 ]
 `);
+});
+
+test('can override the name of a tls secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.TlsSecret(chart, 'TlsSecret', {
+    metadata: {
+      name: 'override-name',
+    },
+    tlsCert: 'tls-cert-value',
+    tlsKey: 'tls-key-value',
+  });
+
+  const manifest = Testing.synth(chart);
+
+  expect(secret.name).toEqual('override-name');
+  expect(manifest[0].metadata.name).toEqual('override-name');
+
 });
 
 test('Can create a Docker config secret', () => {
@@ -232,6 +332,33 @@ Array [
   },
 ]
 `);
+});
+
+test('can override the name of a DockerConfig secret', () => {
+
+  const chart = Testing.chart();
+
+  const secret = new kplus.DockerConfigSecret(chart, 'DockerConfigSecret', {
+    metadata: {
+      name: 'override-name',
+    },
+    data: {
+      auths: {
+        'hub.xxx.com': {
+          username: 'xxx',
+          password: 'xxx',
+          email: 'xxx',
+          auth: 'xxx',
+        },
+      },
+    },
+  });
+
+  const manifest = Testing.synth(chart);
+
+  expect(secret.name).toEqual('override-name');
+  expect(manifest[0].metadata.name).toEqual('override-name');
+
 });
 
 test('default immutability', () => {
