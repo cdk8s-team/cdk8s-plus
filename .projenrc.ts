@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { Cdk8sTeamJsiiProject } from '@cdk8s/projen-common';
-import { cdk, github, javascript, JsonFile, Task } from 'projen';
+import { github, javascript, JsonFile, Task } from 'projen';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
@@ -15,6 +15,7 @@ const project = new Cdk8sTeamJsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
   description: `cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-${SPEC_VERSION} synthesizes Kubernetes manifests for Kubernetes ${K8S_VERSION}`,
   projenrcTs: true,
+  repoName: 'cdk8s-plus',
 
   keywords: [
     'cdk',
@@ -52,7 +53,6 @@ const project = new Cdk8sTeamJsiiProject({
   releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
-  minNodeVersion: '14.17.0',
 
   golangBranch: `k8s.${SPEC_VERSION}`,
   depsUpgradeOptions: {
