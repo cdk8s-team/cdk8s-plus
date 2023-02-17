@@ -66,28 +66,6 @@
         }
       ]
     },
-    "backport:26": {
-      "name": "backport:26",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-26/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
     "build": {
       "name": "build",
       "description": "Full release build",

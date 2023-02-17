@@ -3,7 +3,7 @@
 Define containers that run in a pod using the `Container` class.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-25/typescript.md#container)
+    [API Reference](../../reference/cdk8s-plus-26/typescript.md#container)
 
 ## Environment
 
@@ -15,7 +15,7 @@ Environment variables can be added to containers by specifying the
 variable name and value. The value can come from different sources, either dynamic or static.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-25';
+import * as kplus from 'cdk8s-plus-26';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
@@ -30,11 +30,11 @@ export class MyChart extends Chart {
 
     // use a static value.
     container.env.addVariable('endpoint', kplus.EnvValue.fromValue('value'));
-    
+
     // use a specific key from a config map.
     const backendsConfig = kplus.ConfigMap.fromConfigMapName(this, 'BackendConfig', 'backends');
     container.env.addVariable('endpoint', kplus.EnvValue.fromConfigMap(backendsConfig, 'endpoint'));
-    
+
     // use a specific key from a secret.
     const credentials = kplus.Secret.fromSecretName(this, 'Credentials', 'credentials');
     container.env.addVariable('password', kplus.EnvValue.fromSecretValue({ secret: credentials, key: 'password' }));

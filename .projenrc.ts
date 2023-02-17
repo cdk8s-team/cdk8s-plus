@@ -145,7 +145,7 @@ const backportConfig = new JsonFile(project, '.backportrc.json', {
 const backportTask = createBackportTask();
 
 // backport tasks to explicit branches based on input
-for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
+for (const spec of [LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
   createBackportTask(spec);
 }
 

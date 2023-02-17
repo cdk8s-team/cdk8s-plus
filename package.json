@@ -9,7 +9,6 @@
     "backport": "npx projen backport",
     "backport:24": "npx projen backport:24",
     "backport:25": "npx projen backport:25",
-    "backport:26": "npx projen backport:26",
     "build": "npx projen build",
     "bump": "npx projen bump",
     "clobber": "npx projen clobber",

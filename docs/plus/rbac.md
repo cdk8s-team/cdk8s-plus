@@ -2,7 +2,7 @@
 
 Role Based Access Control(RBAC) helps you restrict actions that can be performed on specific Kubernetes resources. To make this possible, RBAC lets you create roles with rules which define access permissions for your specified resource.
 
-These roles can then be binded to Kubernetes subjects, which could be User, Group or ServiceAccount. 
+These roles can then be binded to Kubernetes subjects, which could be User, Group or ServiceAccount.
 
 !!! note
     Rules or permissions are purely additive and there are no deny rules.
@@ -16,15 +16,15 @@ and, similarly there are two types of binding available,
 * ClusterRoleBinding: These grant cluster wide permissions .
 
 !!! tip "Learn more"
-    * [Role API Reference](../../reference/cdk8s-plus-25/typescript.md#role)
-    * [RoleBinding API Reference](../../reference/cdk8s-plus-25/typescript.md#role-binding)
+    * [Role API Reference](../../reference/cdk8s-plus-26/typescript.md#role)
+    * [RoleBinding API Reference](../../reference/cdk8s-plus-26/typescript.md#role-binding)
 
 ## Role
 
 ### Create role and add rules to it
 
 ```typescript
-import * as kplus from 'cdk8s-plus-25';
+import * as kplus from 'cdk8s-plus-26';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
@@ -35,8 +35,8 @@ export class MyChart extends Chart {
     // Creating RBAC Role
     const role = new kplus.Role(this, 'SampleRole');
 
-    // The convenience method here `allowReadWrite` would add 
-    // `get, list, watch, create, update, patch, delete, 
+    // The convenience method here `allowReadWrite` would add
+    // `get, list, watch, create, update, patch, delete,
     // deletecollection` rules to the role for deployment resources.
     role.allowReadWrite(kplus.ApiResource.DEPLOYMENTS);
 
@@ -89,7 +89,7 @@ const user = kplus.User.fromName(this, 'SampleUser', 'Jane');
 const group = kplus.Group.fromName(this, 'SampleGroup', 'sample-group');
 const serviceAccount = new kplus.ServiceAccount(this, 'SampleServiceAccount');
 
-// You can grant permissions to specific user, group or service account. 
+// You can grant permissions to specific user, group or service account.
 pod.permissions.grantReadWrite(user, group, serviceAccount);
 ```
 

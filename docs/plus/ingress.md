@@ -5,7 +5,7 @@ HTTP. Ingress may provide load balancing, SSL termination and name-based virtual
 hosting.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-25/typescript.md#ingressv1beta1)
+    [API Reference](../../reference/cdk8s-plus-26/typescript.md#ingressv1beta1)
 
 You must have an [Ingress controller] to satisfy an Ingress. Only creating an
 Ingress resource has no effect.
@@ -18,14 +18,14 @@ to a service associated with a deployment of the
 [hashicorp/http-echo](https://github.com/hashicorp/http-echo) image.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-25';
+import * as kplus from 'cdk8s-plus-26';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
 export class MyChart extends Chart {
   constructor(scope: Construct, id: string, props: ChartProps = { }) {
     super(scope, id, props);
-    
+
     const helloDeployment = new kplus.Deployment(this, "Deployment", {
       containers: [
         {
@@ -35,17 +35,17 @@ export class MyChart extends Chart {
         }
       ]
     });
-    
-    const helloService = helloDeployment.exposeViaService({ 
+
+    const helloService = helloDeployment.exposeViaService({
         ports: [
           {
             port: 5678,
           }
         ]
       });
-    
+
     const ingress = new kplus.Ingress(this, 'ingress');
-    ingress.addRule('/hello', kplus.IngressBackend.fromService(helloService)); 
+    ingress.addRule('/hello', kplus.IngressBackend.fromService(helloService));
  }
 }
 
