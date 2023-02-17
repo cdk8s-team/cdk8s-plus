@@ -223,7 +223,7 @@ yarn build
 
           For Go API reference, please visit <https://pkg.go.dev/github.com/cdk8s-team/cdk8s-plus-go/cdk8splus25>.
           ```
-    8. Update the [navigation page](https://github.com/cdk8s-team/cdk8s/blob/master/docs/plus/.pages) for cdk8s-plus and the [api reference](https://github.com/cdk8s-team/cdk8s/blob/master/docs/reference/.pages)
+    8. Update the [navigation page](https://github.com/cdk8s-team/cdk8s/blob/master/docs/plus/.pages) for cdk8s-plus and the [api reference](https://github.com/cdk8s-team/cdk8s/blob/master/docs/reference/.pages) and the [index](https://github.com/cdk8s-team/cdk8s/blob/master/docs/reference/index.md)
 
 18.  Let Projen update the other files:
 
