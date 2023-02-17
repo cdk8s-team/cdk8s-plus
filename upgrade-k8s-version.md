@@ -63,7 +63,6 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
                 `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`, // was 24, now is 25
                 `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`, // was 23, now is 24
                 `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`, // was 22, now is 23
-                `k8s-${LATEST_SUPPORTED_K8S_VERSION - 3}/main`, // <-- Add this branch so that v22 is still supported.
               ],
             ...
             },
@@ -80,7 +79,7 @@ yarn run import
 # warning `yarn import` is a native yarn command so be sure to include `run`
 ```
 
-9. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure it is available on localhost:8080
+9. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure kubectl on your machine is configured to connect to it.
 
 10. Generate API types from the local Kubernetes cluster
 
