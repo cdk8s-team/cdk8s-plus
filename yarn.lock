@@ -1550,19 +1550,19 @@ cdk8s-cli@^1.2.133:
     yaml "2.0.0-11"
     yargs "^15"
 
-cdk8s@2.7.4:
-  version "2.7.4"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.7.4.tgz#42b3ccf83a27232585769fde743fbf8f287f3281"
-  integrity sha512-zmdL+i/Hysxh8Sq71aJOXDdyUxSlqpda/JBVLxtIU9Yt1bopIvC270kANvmkkwaS+SUwEJuY5xCxGm/Qy1lg5g==
+cdk8s@2.7.5:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.7.5.tgz#414b2d4fd8152f2219af34af26166d31c4f2ea67"
+  integrity sha512-TqhaSOXDnN7uhYnZb1TiS8TCeQ4En7siKnAPDfbVKQpxLXeULP21L1HKJTkOQZEGRQzFO/GQWwsOcovBpk4ivA==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
     yaml "2.0.0-7"
 
 cdk8s@^1.9.48:
-  version "1.10.4"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.10.4.tgz#04f44c439b7e1059232991b662bf69799660c5f7"
-  integrity sha512-vjuK9sPoU8HIrOkmRNl5aT1cW1cm8T3SCkvPYyARclh/bg5OkFkXdCrh3TqxDRlDTqLMZnKILrE5WIv5ktPmeQ==
+  version "1.10.5"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.10.5.tgz#013d384f0023959cb91d67856e657a54cada7862"
+  integrity sha512-yZx5To6jBUVMQ3Fn8VnWAuTLROlusHvg5eoeX4i6ywc1PyD+jorhnnue2ODFuoRxAqAAFHP+Why2A3q49dFdlA==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1788,15 +1788,15 @@ console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
-constructs@10.1.254:
-  version "10.1.254"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.254.tgz#4f235be6b43085c6d102cafb9b2f9740faf30f01"
-  integrity sha512-F1F6jyI0VjEQ7RWv8a9AzdHDRXPpg/VpPRqUbI8/JlGsphbTfnrtIOsj11XadZpMHBme6FXly0fGqIq84c5Xng==
+constructs@10.1.255:
+  version "10.1.255"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.255.tgz#940cfd731e9ab554bb7d314ce97466aaad80c1a3"
+  integrity sha512-m7ddP9mF92096r4/2oqUg8sUYNdt7x2tjRSltnTtgvqiasBr0gSjzLkHqlGR0IrnvQWemv1kA1GESWxYAK20vw==
 
 constructs@^3.4.244:
-  version "3.4.249"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.249.tgz#e34163806b10c777ce2fd1f5c8c8e85001baf025"
-  integrity sha512-CN3JXYqC+YsMGx5OR0YhRrW0QSXUNwrtMoIOwA2nzDn+z0HDLlXJ/LDiSMoZXN8hZhc4s6qQDA5oi1dsExld6Q==
+  version "3.4.250"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.250.tgz#d193f3de58855de937b1369c50f850bf56a33663"
+  integrity sha512-m2dCyeLru1cpbH21Y63Kq4ofvFW4ivTDfj7n9SOOxkbDitxQFeYewgfbs6ETqaHvLW4in30uyMnO8//Q5pcJ9g==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -4096,9 +4096,9 @@ jsii-rosetta@^1.44.0, jsii-rosetta@^1.75.0:
     yargs "^16.2.0"
 
 jsii-srcmak@^0.1.823:
-  version "0.1.828"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.828.tgz#12429b1e42f3cb36cce5f4fe33adbeb96eec99bf"
-  integrity sha512-QwHp2WJAKmGzN4RIAvRD7VbKf/m6SiAU0b/rrbxYvpnJKWq/Oc3KOJsmnvqAYqhfEdkZ7XOkDmSvIwBKV83xrg==
+  version "0.1.829"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.829.tgz#8f9d301c7491d5bdb2964f2569ac845a9e5e751e"
+  integrity sha512-L1XDKpv2KrrtU+buhAZVlvcSNSDKISap9M9cJeAs7ee36yH5RXps+1ofSAq1X5gklYGpzu1LzHmA2W/WKTZK4w==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.75.0"
@@ -4178,9 +4178,9 @@ json-stringify-safe@^5.0.1:
   integrity sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==
 
 json2jsii@^0.3.274:
-  version "0.3.279"
-  resolved "https://registry.yarnpkg.com/json2jsii/-/json2jsii-0.3.279.tgz#e6240c482dab69dd4e0dcb518f9b87cb7bf7be29"
-  integrity sha512-Dug9jzlPwTlavoCT1cwmT+4acga8UasUvpEvkOQ/0X4sPC/yfrq2wPk+jY8hi7tRhog+NUQNAJyRk1r7dCjpLg==
+  version "0.3.280"
+  resolved "https://registry.yarnpkg.com/json2jsii/-/json2jsii-0.3.280.tgz#ce202e02380e4621cc84cadc5b8bd259557c9907"
+  integrity sha512-E/8vtMz+dpCl/lpybDtgSU/BNPL+qOCi07oinOQY60BJzwiXkPv9NlZjoYCMaRWLEq2iGmBRP5gBPfPkencCMw==
   dependencies:
     camelcase "^6.3.0"
     json-schema "^0.4.0"
