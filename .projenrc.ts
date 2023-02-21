@@ -127,7 +127,7 @@ for (const spec of [LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSI
 const backportWorkflow = project.github!.addWorkflow('backport');
 backportWorkflow.on({ pullRequestTarget: { types: ['closed'] } });
 backportWorkflow.addJob('backport', {
-  runsOn: ['ubuntu-18.04'],
+  runsOn: ['ubuntu-latest'],
   permissions: {
     contents: JobPermission.WRITE,
   },
