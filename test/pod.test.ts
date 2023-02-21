@@ -148,6 +148,22 @@ test('Can add container post instantiation', () => {
 
 });
 
+test('Can attach an existing container post instantiation', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod');
+
+  const container = new kplus.Container({ image: 'image' });
+
+  pod.attachContainer(container);
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.containers[0].image).toEqual('image');
+
+});
+
 test('Must have at least one container', () => {
 
   const chart = Testing.chart();
