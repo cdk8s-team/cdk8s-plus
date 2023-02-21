@@ -3,14 +3,11 @@
 ### High level constructs for Kubernetes
 
 ![Stability:Stable](https://img.shields.io/badge/stability-stable-success)
-[![cdk8s-plus-23](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.23?label=cdk8s-plus-23&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.23.yml)
-[![cdk8s-plus-24](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.24?label=cdk8s-plus-24&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.24.yml)
-[![cdk8s-plus-26](https://img.shields.io/github/workflow/status/cdk8s-team/cdk8s-plus/release-k8s.25?label=cdk8s-plus-26&logo=GitHub)](https://github.com/cdk8s-team/cdk8s-plus/actions/workflows/release-k8s.25.yml)
 
 | k8s version | npm (JS/TS)                                         | PyPI (Python)                                   | Maven (Java)                                                      | Go                                                              |
 | ----------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
 | 1.24.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-24) | [Link](https://pypi.org/project/cdk8s-plus-24/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-24) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.24) |
-| 1.25.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-26) | [Link](https://pypi.org/project/cdk8s-plus-26/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-26) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.25) |
+| 1.25.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-25) | [Link](https://pypi.org/project/cdk8s-plus-25/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-25) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.25) |
 | 1.26.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-26) | [Link](https://pypi.org/project/cdk8s-plus-26/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-26) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.26) |
 
 **cdk8s+** is a software development framework that provides high level
