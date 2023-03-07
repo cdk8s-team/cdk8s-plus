@@ -1478,3 +1478,18 @@ describe('permissions', () => {
   });
 
 });
+
+test('can pass an existing secret as the docker auth', () => {
+
+  const chart = Testing.chart();
+
+  const registrySecret = kplus.Secret.fromSecretName(chart, 'RegistrySecret', 'scw-registry-secret');
+
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    dockerRegistryAuth: registrySecret,
+  });
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+
+});
