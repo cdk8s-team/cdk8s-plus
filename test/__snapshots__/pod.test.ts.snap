@@ -1,5 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`can pass an existing secret as the docker auth 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": false,
+      "containers": Array [
+        Object {
+          "image": "image",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsNonRoot": true,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "imagePullSecrets": Array [
+        Object {
+          "name": "scw-registry-secret",
+        },
+      ],
+      "restartPolicy": "Always",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": true,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`can select pods 1`] = `
 Object {
   "matchExpressions": Array [
