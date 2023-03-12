@@ -48,15 +48,15 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.275",
+    "@cdk8s/projen-common": "^0.0.276",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "^14",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdk8s": "2.7.27",
-    "cdk8s-cli": "^1.2.144",
-    "constructs": "10.1.274",
+    "cdk8s": "2.7.28",
+    "cdk8s-cli": "^1.2.145",
+    "constructs": "10.1.275",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -68,7 +68,7 @@
     "jsii-docgen": "^3.8.31",
     "jsii-pacmak": "^1.77.0",
     "npm-check-updates": "^16",
-    "projen": "^0.67.82",
+    "projen": "^0.67.83",
     "snake-case": "^3.0.4",
     "standard-version": "^9",
     "ts-jest": "^27",
@@ -76,8 +76,8 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "cdk8s": "^2.7.27",
-    "constructs": "^10.1.274"
+    "cdk8s": "^2.7.28",
+    "constructs": "^10.1.275"
   },
   "dependencies": {
     "minimatch": "^3.1.2"
