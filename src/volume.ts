@@ -2,6 +2,7 @@ import { Size } from 'cdk8s';
 import { IConstruct, Construct } from 'constructs';
 import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
+import * as ss from './imports/secrets-store';
 import * as pvc from './pvc';
 import * as secret from './secret';
 
@@ -134,6 +135,33 @@ export class Volume extends Construct implements IStorage {
         defaultMode: options.defaultMode,
         optional: options.optional,
         items: Volume.renderItems(options.items),
+      },
+    });
+  }
+
+  /**
+   * Populate the volume from a SecretProviderClass created as part of a K8s
+   * Secrets Store CSI Driver installation:
+   * https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
+   *
+   * The Secret Store CSI driver will need an associated provider to source the
+   * secrets. The following provider allows sourcing from AWS Secrets Manager
+   * and Systems Manager Parameter Store:
+   * https://aws.github.io/secrets-store-csi-driver-provider-aws/
+   *
+   * @param secretProvider The secret provider class to use to populate the volume.
+   * @param options Options
+   */
+  public static fromSecretProvider(
+    scope: Construct, id: string, secretProvider: ss.SecretProviderClass, options: SecretProviderVolumeOptions = { }): Volume {
+    return new Volume(scope, id, options.name ?? `secretproviderclass-${secretProvider.name}`, {
+      csi: {
+        driver: 'secrets-store.csi.k8s.io',
+        fsType: options.fsType,
+        readOnly: options.readOnly,
+        volumeAttributes: {
+          secretProviderClass: secretProvider.name,
+        },
       },
     });
   }
@@ -417,6 +445,34 @@ export interface ConfigMapVolumeOptions {
    * @default - no mapping
    */
   readonly items?: { [key: string]: PathMapping };
+}
+
+/**
+ * Options for the SecretProviderClass-based volume.
+ */
+export interface SecretProviderVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * The filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided,
+   * the empty value is passed to the associated CSI driver, which will
+   * determine the default filesystem to apply.
+   *
+   * @default - driver-dependent
+   */
+  readonly fsType?: string;
+
+  /**
+   * Whether the mounted volume should be read-only or not.
+   *
+   * @default - false
+   */
+  readonly readOnly?: boolean;
 }
 
 /**
