@@ -491,28 +491,26 @@ describe('fromHostPath', () => {
 
 });
 
-describe('fromSecretProviderClass', () => {
+describe('fromCsi', () => {
   test('minimal definition', () => {
     // GIVEN
     const chart = Testing.chart();
 
     // WHEN
-    const vol = Volume.fromSecretProviderClass(chart, 'SecretProvider', 'my-secret-provider');
+    const vol = Volume.fromCsi(chart, 'Csi', 'my-csi-driver');
 
     // THEN
     expect(vol._toKube()).toMatchInlineSnapshot(`
-Object {
-  "csi": Object {
-    "driver": "secrets-store.csi.k8s.io",
-    "fsType": undefined,
-    "readOnly": undefined,
-    "volumeAttributes": Object {
-      "secretProviderClass": "my-secret-provider",
-    },
-  },
-  "name": "secretproviderclass-my-secret-provider",
-}
-`);
+      Object {
+        "csi": Object {
+          "driver": "my-csi-driver",
+          "fsType": undefined,
+          "readOnly": undefined,
+          "volumeAttributes": undefined,
+        },
+        "name": "test-csi-c8e2763d",
+      }
+    `);
   });
 
   test('custom', () => {
@@ -520,15 +518,28 @@ Object {
     const chart = Testing.chart();
 
     // WHEN
-    const vol = Volume.fromSecretProviderClass(chart, 'SecretProvider', 'my-secret-provider', {
+    const vol = Volume.fromCsi(chart, 'Csi', 'secrets-store.csi.k8s.io', {
+      attributes: {
+        secretProviderClass: 'my-csi',
+      },
       fsType: 'ext4',
       name: 'filesystem',
       readOnly: true,
     });
 
     // THEN
-    expect(vol._toKube().name).toBe('filesystem');
-    expect(vol._toKube().csi?.fsType).toBe('ext4');
-    expect(vol._toKube().csi?.readOnly).toBeTruthy();
+    expect(vol._toKube()).toMatchInlineSnapshot(`
+      Object {
+        "csi": Object {
+          "driver": "secrets-store.csi.k8s.io",
+          "fsType": "ext4",
+          "readOnly": true,
+          "volumeAttributes": Object {
+            "secretProviderClass": "my-csi",
+          },
+        },
+        "name": "filesystem",
+      }
+    `);
   });
 });
