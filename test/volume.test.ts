@@ -1,6 +1,5 @@
 import { Testing, Size } from 'cdk8s';
 import { Volume, ConfigMap, EmptyDirMedium, Secret, PersistentVolumeClaim, AzureDiskPersistentVolumeCachingMode, AzureDiskPersistentVolumeKind, HostPathVolumeType } from '../src';
-import { SecretProviderClass } from '../src/imports/secrets-store';
 
 describe('fromSecret', () => {
   test('minimal definition', () => {
@@ -241,50 +240,6 @@ describe('fromConfigMap', () => {
       mode: undefined,
       path: 'path2',
     });
-  });
-});
-
-describe('fromSecretProvider', () => {
-  test('minimal definition', () => {
-    // GIVEN
-    const chart = Testing.chart();
-    const secretProvider = new SecretProviderClass(chart, 'my-secret-provider', { });
-
-    // WHEN
-    const vol = Volume.fromSecretProvider(chart, 'SecretProvider', secretProvider);
-
-    // THEN
-    expect(vol._toKube()).toMatchInlineSnapshot(`
-      Object {
-        "csi": Object {
-          "driver": "secrets-store.csi.k8s.io",
-          "fsType": undefined,
-          "readOnly": undefined,
-          "volumeAttributes": Object {
-            "secretProviderClass": "test-my-secret-provider-c847e069",
-          },
-        },
-        "name": "secretproviderclass-test-my-secret-provider-c847e069",
-      }
-    `);
-  });
-
-  test('custom', () => {
-    // GIVEN
-    const chart = Testing.chart();
-    const secretProvider = new SecretProviderClass(chart, 'my-secret-provider', { });
-
-    // WHEN
-    const vol = Volume.fromSecretProvider(chart, 'SecretProvider', secretProvider, {
-      fsType: 'ext4',
-      name: 'filesystem',
-      readOnly: true,
-    });
-
-    // THEN
-    expect(vol._toKube().name).toBe('filesystem');
-    expect(vol._toKube().csi?.fsType).toBe('ext4');
-    expect(vol._toKube().csi?.readOnly).toBeTruthy();
   });
 });
 
@@ -534,4 +489,46 @@ describe('fromHostPath', () => {
 
   });
 
+});
+
+describe('fromSecretProviderClass', () => {
+  test('minimal definition', () => {
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const vol = Volume.fromSecretProviderClass(chart, 'SecretProvider', 'my-secret-provider');
+
+    // THEN
+    expect(vol._toKube()).toMatchInlineSnapshot(`
+Object {
+  "csi": Object {
+    "driver": "secrets-store.csi.k8s.io",
+    "fsType": undefined,
+    "readOnly": undefined,
+    "volumeAttributes": Object {
+      "secretProviderClass": "my-secret-provider",
+    },
+  },
+  "name": "secretproviderclass-my-secret-provider",
+}
+`);
+  });
+
+  test('custom', () => {
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    const vol = Volume.fromSecretProviderClass(chart, 'SecretProvider', 'my-secret-provider', {
+      fsType: 'ext4',
+      name: 'filesystem',
+      readOnly: true,
+    });
+
+    // THEN
+    expect(vol._toKube().name).toBe('filesystem');
+    expect(vol._toKube().csi?.fsType).toBe('ext4');
+    expect(vol._toKube().csi?.readOnly).toBeTruthy();
+  });
 });
