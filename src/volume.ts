@@ -2,7 +2,6 @@ import { Size } from 'cdk8s';
 import { IConstruct, Construct } from 'constructs';
 import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
-import * as ss from './imports/secrets-store';
 import * as pvc from './pvc';
 import * as secret from './secret';
 
@@ -140,33 +139,6 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
-   * Populate the volume from a SecretProviderClass created as part of a K8s
-   * Secrets Store CSI Driver installation:
-   * https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
-   *
-   * The Secret Store CSI driver will need an associated provider to source the
-   * secrets. The following provider allows sourcing from AWS Secrets Manager
-   * and Systems Manager Parameter Store:
-   * https://aws.github.io/secrets-store-csi-driver-provider-aws/
-   *
-   * @param secretProvider The secret provider class to use to populate the volume.
-   * @param options Options
-   */
-  public static fromSecretProvider(
-    scope: Construct, id: string, secretProvider: ss.SecretProviderClass, options: SecretProviderVolumeOptions = { }): Volume {
-    return new Volume(scope, id, options.name ?? `secretproviderclass-${secretProvider.name}`, {
-      csi: {
-        driver: 'secrets-store.csi.k8s.io',
-        fsType: options.fsType,
-        readOnly: options.readOnly,
-        volumeAttributes: {
-          secretProviderClass: secretProvider.name,
-        },
-      },
-    });
-  }
-
-  /**
    * An emptyDir volume is first created when a Pod is assigned to a Node, and
    * exists as long as that Pod is running on that node. As the name says, it is
    * initially empty. Containers in the Pod can all read and write the same
@@ -245,6 +217,32 @@ export class Volume extends Construct implements IStorage {
       hostPath: {
         path: options.path,
         type: options.type ?? HostPathVolumeType.DEFAULT,
+      },
+    });
+  }
+
+  /**
+   * Populate the volume from a SecretProviderClass created as part of a K8s
+   * Secrets Store CSI Driver installation:
+   * https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
+   *
+   * The Secret Store CSI driver will need an associated provider to source the
+   * secrets. The following provider allows sourcing from AWS Secrets Manager
+   * and Systems Manager Parameter Store:
+   * https://aws.github.io/secrets-store-csi-driver-provider-aws/
+   *
+   * @param className The name of the secret provider class to use to populate the volume.
+   * @param options Options
+   */
+  public static fromSecretProviderClass(scope: Construct, id: string, className: string, options: SecretProviderVolumeOptions = { }): Volume {
+    return new Volume(scope, id, options.name ?? `secretproviderclass-${className}`, {
+      csi: {
+        driver: 'secrets-store.csi.k8s.io',
+        fsType: options.fsType,
+        readOnly: options.readOnly,
+        volumeAttributes: {
+          secretProviderClass: className,
+        },
       },
     });
   }
