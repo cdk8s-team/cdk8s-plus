@@ -1,4 +1,4 @@
-import { Size } from 'cdk8s';
+import { Names, Size } from 'cdk8s';
 import { IConstruct, Construct } from 'constructs';
 import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
@@ -222,27 +222,22 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
-   * Populate the volume from a SecretProviderClass created as part of a K8s
-   * Secrets Store CSI Driver installation:
-   * https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
+   * Populate the volume from a CSI driver, for example the Secrets Store CSI
+   * Driver: https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
+   * Which in turn needs an associated provider to source the secrets, such as
+   * the AWS Secrets Manager and Systems Manager Parameter Store provider:
+   * https://aws.github.io/secrets-store-csi-driver-provider-aws/.
    *
-   * The Secret Store CSI driver will need an associated provider to source the
-   * secrets. The following provider allows sourcing from AWS Secrets Manager
-   * and Systems Manager Parameter Store:
-   * https://aws.github.io/secrets-store-csi-driver-provider-aws/
-   *
-   * @param className The name of the secret provider class to use to populate the volume.
-   * @param options Options
+   * @param driver The name of the CSI driver to use to populate the volume.
+   * @param options Options for the CSI volume, including driver-specific ones.
    */
-  public static fromSecretProviderClass(scope: Construct, id: string, className: string, options: SecretProviderVolumeOptions = { }): Volume {
-    return new Volume(scope, id, options.name ?? `secretproviderclass-${className}`, {
+  public static fromCsi(scope: Construct, id: string, driver: string, options: CsiVolumeOptions = { }): Volume {
+    return new Volume(scope, id, options.name ?? Names.toDnsLabel(scope, { extra: [id] }), {
       csi: {
-        driver: 'secrets-store.csi.k8s.io',
+        driver: driver,
         fsType: options.fsType,
         readOnly: options.readOnly,
-        volumeAttributes: {
-          secretProviderClass: className,
-        },
+        volumeAttributes: options.attributes,
       },
     });
   }
@@ -443,34 +438,6 @@ export interface ConfigMapVolumeOptions {
    * @default - no mapping
    */
   readonly items?: { [key: string]: PathMapping };
-}
-
-/**
- * Options for the SecretProviderClass-based volume.
- */
-export interface SecretProviderVolumeOptions {
-  /**
-   * The volume name.
-   *
-   * @default - auto-generated
-   */
-  readonly name?: string;
-
-  /**
-   * The filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided,
-   * the empty value is passed to the associated CSI driver, which will
-   * determine the default filesystem to apply.
-   *
-   * @default - driver-dependent
-   */
-  readonly fsType?: string;
-
-  /**
-   * Whether the mounted volume should be read-only or not.
-   *
-   * @default - false
-   */
-  readonly readOnly?: boolean;
 }
 
 /**
@@ -710,4 +677,39 @@ export enum HostPathVolumeType {
    * A block device must exist at the given path.
    */
   BLOCK_DEVICE = 'BlockDevice'
+}
+
+/**
+ * Options for the CSI driver based volume.
+ */
+export interface CsiVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * The filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided,
+   * the empty value is passed to the associated CSI driver, which will
+   * determine the default filesystem to apply.
+   *
+   * @default - driver-dependent
+   */
+  readonly fsType?: string;
+
+  /**
+   * Whether the mounted volume should be read-only or not.
+   *
+   * @default - false
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * Any driver-specific attributes to pass to the CSI volume builder.
+   *
+   * @default - undefined
+   */
+  readonly attributes?: {[key: string]: string};
 }
