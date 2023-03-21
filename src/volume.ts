@@ -1,4 +1,4 @@
-import { Size } from 'cdk8s';
+import { Names, Size } from 'cdk8s';
 import { IConstruct, Construct } from 'constructs';
 import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
@@ -217,6 +217,27 @@ export class Volume extends Construct implements IStorage {
       hostPath: {
         path: options.path,
         type: options.type ?? HostPathVolumeType.DEFAULT,
+      },
+    });
+  }
+
+  /**
+   * Populate the volume from a CSI driver, for example the Secrets Store CSI
+   * Driver: https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
+   * Which in turn needs an associated provider to source the secrets, such as
+   * the AWS Secrets Manager and Systems Manager Parameter Store provider:
+   * https://aws.github.io/secrets-store-csi-driver-provider-aws/.
+   *
+   * @param driver The name of the CSI driver to use to populate the volume.
+   * @param options Options for the CSI volume, including driver-specific ones.
+   */
+  public static fromCsi(scope: Construct, id: string, driver: string, options: CsiVolumeOptions = { }): Volume {
+    return new Volume(scope, id, options.name ?? Names.toDnsLabel(scope, { extra: [id] }), {
+      csi: {
+        driver: driver,
+        fsType: options.fsType,
+        readOnly: options.readOnly,
+        volumeAttributes: options.attributes,
       },
     });
   }
@@ -657,4 +678,39 @@ export enum HostPathVolumeType {
    * A block device must exist at the given path.
    */
   BLOCK_DEVICE = 'BlockDevice'
+}
+
+/**
+ * Options for the CSI driver based volume.
+ */
+export interface CsiVolumeOptions {
+  /**
+   * The volume name.
+   *
+   * @default - auto-generated
+   */
+  readonly name?: string;
+
+  /**
+   * The filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided,
+   * the empty value is passed to the associated CSI driver, which will
+   * determine the default filesystem to apply.
+   *
+   * @default - driver-dependent
+   */
+  readonly fsType?: string;
+
+  /**
+   * Whether the mounted volume should be read-only or not.
+   *
+   * @default - false
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * Any driver-specific attributes to pass to the CSI volume builder.
+   *
+   * @default - undefined
+   */
+  readonly attributes?: {[key: string]: string};
 }

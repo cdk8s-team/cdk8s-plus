@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@cdk8s/projen-common",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "version": "^27",
       "type": "build"
@@ -80,10 +84,6 @@
       "type": "build"
     },
     {
-      "name": "json-schema",
-      "type": "build"
-    },
-    {
       "name": "npm-check-updates",
       "version": "^16",
       "type": "build"
@@ -117,6 +117,11 @@
     {
       "name": "minimatch",
       "type": "bundled"
+    },
+    {
+      "name": "@types/babel__traverse",
+      "version": "7.18.2",
+      "type": "override"
     },
     {
       "name": "@types/prettier",

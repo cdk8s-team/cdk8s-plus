@@ -79,6 +79,8 @@ class ImportedPersistentVolume extends Construct implements IPersistentVolume {
 
   private readonly _name: string;
 
+  public readonly resourceType = 'persistentvolumes';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -98,6 +100,10 @@ class ImportedPersistentVolume extends Construct implements IPersistentVolume {
 
   public get kind(): string {
     return k8s.KubePersistentVolume.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
   }
 
 }

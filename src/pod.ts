@@ -17,7 +17,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly serviceAccount?: serviceaccount.IServiceAccount;
   public readonly securityContext: PodSecurityContext;
   public readonly dns: PodDns;
-  public readonly dockerRegistryAuth?: secret.DockerConfigSecret;
+  public readonly dockerRegistryAuth?: secret.ISecret;
   public readonly automountServiceAccountToken: boolean;
 
   protected readonly isolate: boolean;
@@ -107,8 +107,12 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
 
   public addContainer(cont: container.ContainerProps): container.Container {
     const impl = new container.Container(cont);
-    this._containers.push(impl);
+    this.attachContainer(impl);
     return impl;
+  }
+
+  public attachContainer(cont: container.Container) {
+    this._containers.push(cont);
   }
 
   public addInitContainer(cont: container.ContainerProps): container.Container {
@@ -406,7 +410,7 @@ export interface AbstractPodProps extends base.ResourceProps {
    *
    * @default - No auth. Images are assumed to be publicly available.
    */
-  readonly dockerRegistryAuth?: secret.DockerConfigSecret;
+  readonly dockerRegistryAuth?: secret.ISecret;
 
   /**
    * Indicates whether a service account token should be automatically mounted.

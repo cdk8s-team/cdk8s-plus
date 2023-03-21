@@ -22,28 +22,6 @@
         }
       ]
     },
-    "backport:23": {
-      "name": "backport:23",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
     "backport:24": {
       "name": "backport:24",
       "requiredEnv": [
@@ -120,7 +98,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-25/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-26/"
       },
       "steps": [
         {
@@ -256,7 +234,25 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.25.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.26.0"
+        }
+      ]
+    },
+    "install": {
+      "name": "install",
+      "description": "Install project dependencies and update lockfile (non-frozen)",
+      "steps": [
+        {
+          "exec": "yarn install --check-files"
+        }
+      ]
+    },
+    "install:ci": {
+      "name": "install:ci",
+      "description": "Install project dependencies using frozen lockfile",
+      "steps": [
+        {
+          "exec": "yarn install --check-files --frozen-lockfile"
         }
       ]
     },
@@ -361,13 +357,13 @@
         }
       ]
     },
-    "release:k8s-25/main": {
-      "name": "release:k8s-25/main",
-      "description": "Prepare a release from \"k8s-25/main\" branch",
+    "release:k8s-26/main": {
+      "name": "release:k8s-26/main",
+      "description": "Prepare a release from \"k8s-26/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "2",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-25/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-26/"
       },
       "steps": [
         {
@@ -417,7 +413,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-25/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-26/"
       },
       "steps": [
         {

@@ -1,23 +1,22 @@
 import * as path from 'path';
-import { cdk, github, javascript, JsonFile, Task } from 'projen';
+import { Cdk8sTeamJsiiProject } from '@cdk8s/projen-common';
+import { github, javascript, JsonFile, Task } from 'projen';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 25;
+const LATEST_SUPPORTED_K8S_VERSION = 26;
 
 // the version of k8s this branch supports
-const SPEC_VERSION = '25';
+const SPEC_VERSION = '26';
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
-const project = new cdk.JsiiProject({
+const project = new Cdk8sTeamJsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
   description: `cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-${SPEC_VERSION} synthesizes Kubernetes manifests for Kubernetes ${K8S_VERSION}`,
   projenrcTs: true,
+  repoName: 'cdk8s-plus',
 
-  repositoryUrl: 'https://github.com/cdk8s-team/cdk8s-plus.git',
-  author: 'Amazon Web Services',
-  authorAddress: 'https://aws.amazon.com',
   keywords: [
     'cdk',
     'kubernetes',
@@ -47,39 +46,15 @@ const project = new cdk.JsiiProject({
     'cdk8s-cli',
     'constructs',
     'snake-case',
+    '@cdk8s/projen-common',
   ],
 
   majorVersion: 2,
   releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
-  minNodeVersion: '14.17.0',
 
-  // jsii configuration
-  publishToMaven: {
-    javaPackage: `org.cdk8s.plus${SPEC_VERSION}`,
-    mavenGroupId: 'org.cdk8s',
-    mavenArtifactId: `cdk8s-plus-${SPEC_VERSION}`,
-  },
-  publishToPypi: {
-    distName: `cdk8s-plus-${SPEC_VERSION}`,
-    module: `cdk8s_plus_${SPEC_VERSION}`,
-  },
-  publishToNuget: {
-    dotNetNamespace: `Org.Cdk8s.Plus${SPEC_VERSION}`,
-    packageId: `Org.Cdk8s.Plus${SPEC_VERSION}`,
-  },
-  publishToGo: {
-    gitUserName: 'cdk8s-automation',
-    gitUserEmail: 'cdk8s-team@amazon.com',
-    gitBranch: `k8s.${SPEC_VERSION}`,
-    moduleName: 'github.com/cdk8s-team/cdk8s-plus-go',
-  },
-  autoApproveOptions: {
-    allowedUsernames: ['cdk8s-automation'],
-    secret: 'GITHUB_TOKEN',
-  },
-  autoApproveUpgrades: true,
+  golangBranch: `k8s.${SPEC_VERSION}`,
   depsUpgradeOptions: {
     workflowOptions: {
       branches: [
@@ -145,14 +120,14 @@ const backportConfig = new JsonFile(project, '.backportrc.json', {
 const backportTask = createBackportTask();
 
 // backport tasks to explicit branches based on input
-for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
+for (const spec of [LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
   createBackportTask(spec);
 }
 
 const backportWorkflow = project.github!.addWorkflow('backport');
 backportWorkflow.on({ pullRequestTarget: { types: ['closed'] } });
 backportWorkflow.addJob('backport', {
-  runsOn: ['ubuntu-18.04'],
+  runsOn: ['ubuntu-latest'],
   permissions: {
     contents: JobPermission.WRITE,
   },

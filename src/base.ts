@@ -16,7 +16,7 @@ export interface ResourceProps {
 /**
  * Represents a resource.
  */
-export interface IResource extends IConstruct {
+export interface IResource extends IConstruct, IApiResource {
   /**
    * The Kubernetes name of this resource.
    */
@@ -26,11 +26,6 @@ export interface IResource extends IConstruct {
    * The object's API version (e.g. "authorization.k8s.io/v1")
    */
   readonly apiVersion: string;
-
-  /**
-   * The group portion of the API version (e.g. "authorization.k8s.io")
-   */
-  readonly apiGroup: string;
 
   /**
    * The object kind (e.g. "Deployment").

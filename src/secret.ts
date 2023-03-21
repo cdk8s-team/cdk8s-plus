@@ -1,6 +1,7 @@
 import { ApiObject } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
+import { EnvValue, EnvValueFromSecretOptions } from './container';
 import * as k8s from './imports/k8s';
 import * as serviceaccount from './service-account';
 
@@ -42,7 +43,12 @@ export interface SecretProps extends CommonSecretProps {
 }
 
 export interface ISecret extends base.IResource {
-
+  /**
+   * Returns EnvValue object from a secret's key.
+   * @param key Secret's key
+   * @param options Additional EnvValue options
+   */
+  envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue;
 }
 
 /**
@@ -64,6 +70,8 @@ class ImportedSecret extends Construct implements ISecret {
 
   private readonly _name: string;
 
+  public readonly resourceType = 'secrets';
+
   constructor(scope: Construct, id: string, name: string) {
     super(scope, id);
     this._name = name;
@@ -83,6 +91,14 @@ class ImportedSecret extends Construct implements ISecret {
 
   public get kind(): string {
     return k8s.KubeSecret.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
+  }
+
+  public envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
+    return EnvValue.fromSecretValue({ secret: this, key }, options);
   }
 
 }
@@ -148,6 +164,10 @@ export class Secret extends base.Resource implements ISecret {
   public getStringData(key: string): string | undefined {
     return this.stringData[key];
   }
+
+  public envValue(key: string, options?: EnvValueFromSecretOptions): EnvValue {
+    return EnvValue.fromSecretValue({ secret: this, key }, options);
+  }
 }
 
 /**
@@ -179,6 +199,7 @@ export class BasicAuthSecret extends Secret {
         password: props.password,
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
@@ -206,6 +227,7 @@ export class SshAuthSecret extends Secret {
         'ssh-privatekey': props.sshPrivateKey,
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
@@ -229,13 +251,11 @@ export class ServiceAccountTokenSecret extends Secret {
   public constructor(scope: Construct, id: string, props: ServiceAccountTokenSecretProps) {
     super(scope, id, {
       type: 'kubernetes.io/service-account-token',
-      metadata: {
-        annotations: {
-          'kubernetes.io/service-account.name': props.serviceAccount.name,
-        },
-      },
+      metadata: props.metadata,
       immutable: props.immutable,
     });
+
+    this.metadata.addAnnotation('kubernetes.io/service-account.name', props.serviceAccount.name);
   }
 }
 
@@ -268,6 +288,7 @@ export class TlsSecret extends Secret {
         'tls.key': props.tlsKey,
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
@@ -299,6 +320,7 @@ export class DockerConfigSecret extends Secret {
         '.dockerconfigjson': JSON.stringify(props.data),
       },
       immutable: props.immutable,
+      metadata: props.metadata,
     });
   }
 }
