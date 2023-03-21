@@ -246,6 +246,8 @@ yarn build
   - The [docs "cdk8s+" section](https://cdk8s.io/docs/latest/plus/).
   - The [docs "API Reference" section](https://cdk8s.io/docs/latest/reference/).
 
+23. Update the relevant packages in our package integrity mechanism (for example: https://github.com/cdklabs/cdk-ops/pull/2530)
+
 ## 🎉 You did it! 🎉
 
 1. Now go outside :house_with_garden:
