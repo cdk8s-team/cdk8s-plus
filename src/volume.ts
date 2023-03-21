@@ -242,7 +242,7 @@ export class Volume extends Construct implements IStorage {
     public readonly name: string,
     private readonly config: Omit<k8s.Volume, 'name'>) {
     super(scope, id);
-    this.name = name.length <= 63 ? name : name.slice(0, 63);
+    this.name = name.slice(0, 63);
   }
 
   public asVolume(): Volume {
