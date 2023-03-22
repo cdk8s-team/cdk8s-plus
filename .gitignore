@@ -62,8 +62,9 @@ tsconfig.json
 !/.github/ISSUE_TEMPLATE/bug.md
 !/.github/ISSUE_TEMPLATE/feature-request.md
 !/SECURITY.md
+!/.github/workflows/security.yml
 !/.github/workflows/triage.yml
-!/.github/workflows/dependabot-security-alerts.yml
+!/.github/workflows/stale.yml
 .vscode/
 docs/typescript.md
 docs/python.md
