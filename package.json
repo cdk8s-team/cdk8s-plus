@@ -47,7 +47,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.296",
+    "@cdk8s/projen-common": "^0.0.301",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "^14",
@@ -55,7 +55,7 @@
     "@typescript-eslint/parser": "^5",
     "cdk8s": "2.7.41",
     "cdk8s-cli": "^1.2.155",
-    "constructs": "10.1.286",
+    "constructs": "10.1.290",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -76,7 +76,7 @@
   },
   "peerDependencies": {
     "cdk8s": "^2.7.41",
-    "constructs": "^10.1.286"
+    "constructs": "^10.1.290"
   },
   "dependencies": {
     "minimatch": "^3.1.2"
@@ -94,7 +94,7 @@
     "microservices"
   ],
   "engines": {
-    "node": ">= 14.18.0"
+    "node": ">= 14.17.0"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
