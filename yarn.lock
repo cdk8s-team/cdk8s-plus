@@ -1605,10 +1605,10 @@ cdk8s-cli@^1.2.155:
     yaml "2.2.1"
     yargs "^15"
 
-cdk8s@2.7.41:
-  version "2.7.41"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.7.41.tgz#7305e9272f6d98257648c925440f1a0adc412554"
-  integrity sha512-7Wp7CKm1CTaD4mhSzNMeNMDjJDRyER0CAEEl5OSa9bwwjfY6NNekqePFw52c5vo9mk4WSFfxaOZrYcqURcsFSw==
+cdk8s@2.7.44:
+  version "2.7.44"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.7.44.tgz#d419caea27753b69fc85f0a0fe37aaa60d95d959"
+  integrity sha512-PIHjPCBbcvz4HyDr2fH5mwrVaP9naoNHHb+/HfA9biZRnvGK3qjC39D1UCKt29jaSqJP2NzhrNLUJQpzZ24ajQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
