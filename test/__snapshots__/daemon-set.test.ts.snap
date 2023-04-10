@@ -47,6 +47,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -125,6 +126,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -185,6 +187,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",

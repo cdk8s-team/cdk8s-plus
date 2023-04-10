@@ -67,6 +67,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -185,6 +186,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -280,6 +282,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -385,6 +388,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -475,6 +479,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "nodeName": "node1",
           "restartPolicy": "Always",
           "securityContext": Object {
@@ -565,6 +570,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -653,6 +659,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -722,6 +729,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -803,6 +811,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -872,6 +881,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -950,6 +960,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1041,6 +1052,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1129,6 +1141,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1198,6 +1211,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1279,6 +1293,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1348,6 +1363,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1426,6 +1442,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1517,6 +1534,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1605,6 +1623,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1691,6 +1710,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1774,6 +1794,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1824,6 +1845,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1945,6 +1967,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
