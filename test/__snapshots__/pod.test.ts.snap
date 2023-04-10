@@ -1,5 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`can add hostNetwork to pod 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": false,
+      "containers": Array [
+        Object {
+          "image": "image",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsNonRoot": true,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "hostNetwork": true,
+      "restartPolicy": "Always",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": true,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`can pass an existing secret as the docker auth 1`] = `
 Array [
   Object {
@@ -37,6 +86,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "imagePullSecrets": Array [
         Object {
           "name": "scw-registry-secret",
@@ -114,6 +164,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -230,6 +281,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -278,6 +330,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -352,6 +405,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -400,6 +454,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -474,6 +529,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -522,6 +578,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -648,6 +705,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -696,6 +754,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -770,6 +829,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -818,6 +878,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -892,6 +953,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -940,6 +1002,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1042,6 +1105,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1119,6 +1183,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1235,6 +1300,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1340,6 +1406,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1388,6 +1455,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1512,6 +1580,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -1562,6 +1631,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1729,6 +1799,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1772,6 +1843,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1820,6 +1892,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -1929,6 +2002,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2047,6 +2121,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2095,6 +2170,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2255,6 +2331,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2365,6 +2442,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2467,6 +2545,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2544,6 +2623,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2660,6 +2740,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2775,6 +2856,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2823,6 +2905,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -2947,6 +3030,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -2997,6 +3081,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3164,6 +3249,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3207,6 +3293,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3255,6 +3342,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3364,6 +3452,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3482,6 +3571,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3530,6 +3620,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3690,6 +3781,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3800,6 +3892,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3866,6 +3959,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -3914,6 +4008,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4006,6 +4101,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4106,6 +4202,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4198,6 +4295,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4285,6 +4383,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4333,6 +4432,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4439,6 +4539,7 @@ Array [
             },
           ],
           "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
           "restartPolicy": "Always",
           "securityContext": Object {
             "fsGroupChangePolicy": "Always",
@@ -4562,6 +4663,55 @@ Array [
 ]
 `;
 
+exports[`pod hostNetwork is not added by default 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-Pod-c815bc91",
+      },
+      "name": "test-pod-c890e1b8",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": false,
+      "containers": Array [
+        Object {
+          "image": "image",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsNonRoot": true,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
+      "restartPolicy": "Always",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": true,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
+
 exports[`scheduling can be assigned to a node by name 1`] = `
 Array [
   Object {
@@ -4599,6 +4749,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "nodeName": "node1",
       "restartPolicy": "Always",
       "securityContext": Object {
@@ -4668,6 +4819,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4735,6 +4887,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4783,6 +4936,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4843,6 +4997,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4891,6 +5046,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -4948,6 +5104,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5013,6 +5170,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5076,6 +5234,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5124,6 +5283,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5184,6 +5344,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5232,6 +5393,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5289,6 +5451,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5354,6 +5517,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5424,6 +5588,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
@@ -5472,6 +5637,7 @@ Array [
         },
       ],
       "dnsPolicy": "ClusterFirst",
+      "hostNetwork": false,
       "restartPolicy": "Always",
       "securityContext": Object {
         "fsGroupChangePolicy": "Always",
