@@ -1493,3 +1493,32 @@ test('can pass an existing secret as the docker auth', () => {
   expect(Testing.synth(chart)).toMatchSnapshot();
 
 });
+
+test('can add hostNetwork to pod', () => {
+
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    hostNetwork: true,
+  });
+
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
+
+  expect(spec.hostNetwork).toEqual(true);
+  expect(manifest).toMatchSnapshot();
+});
+
+test('pod hostNetwork is not added by default', () => {
+
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
+
+  expect(spec.hostNetwork).toEqual(false);
+  expect(manifest).toMatchSnapshot();
+});
