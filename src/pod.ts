@@ -19,6 +19,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.ISecret;
   public readonly automountServiceAccountToken: boolean;
+  public readonly hostNetwork?: boolean;
 
   protected readonly isolate: boolean;
 
@@ -39,6 +40,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
     this.isolate = props.isolate ?? false;
+    this.hostNetwork = props.hostNetwork ?? false;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -234,6 +236,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
+      hostNetwork: this.hostNetwork,
     };
 
   }
@@ -427,6 +430,13 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default false
    */
   readonly isolate?: boolean;
+
+  /**
+   * Host network for the pod.
+   *
+   * @default false
+   */
+  readonly hostNetwork?: boolean;
 }
 
 /**
