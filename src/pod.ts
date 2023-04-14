@@ -26,6 +26,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   private readonly _initContainers: container.Container[] = [];
   private readonly _hostAliases: HostAlias[] = [];
   private readonly _volumes: Map<string, volume.Volume> = new Map();
+  private readonly _readinessGates: k8s.PodReadinessGate[] = [];
 
   public abstract readonly podMetadata: ApiObjectMetadataDefinition;
 
@@ -56,6 +57,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       props.hostAliases.forEach(c => this.addHostAlias(c));
     }
 
+    if (props.readinessGates) {
+      props.readinessGates.forEach(c => this.addReadinessGate(c));
+    }
+
   }
 
   public get containers(): container.Container[] {
@@ -72,6 +77,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
 
   public get hostAliases(): HostAlias[] {
     return [...this._hostAliases];
+  }
+
+  public get readinessGates(): k8s.PodReadinessGate[] {
+    return [...this._readinessGates];
   }
 
   /**
@@ -147,6 +156,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this._volumes.set(vol.name, vol);
   }
 
+  public addReadinessGate(gate: k8s.PodReadinessGate): void {
+    this._readinessGates.push(gate);
+  }
+
   /**
    * @see ISubect.toSubjectConfiguration()
    */
@@ -180,6 +193,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     const volumes: Map<string, volume.Volume> = new Map();
     const containers: k8s.Container[] = [];
     const initContainers: k8s.Container[] = [];
+    const gates: k8s.PodReadinessGate[] = [];
 
     for (const cont of this.containers) {
       // automatically add volume from the container mount
@@ -213,6 +227,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       volumes.set(vol.name, vol);
     }
 
+    for (const gate of this.readinessGates) {
+      gates.push(gate);
+    }
+
     const dns = this.dns._toKube();
 
     return {
@@ -230,6 +248,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
+      readinessGates: undefinedIfEmpty(gates),
     };
 
   }
@@ -423,6 +442,12 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default false
    */
   readonly isolate?: boolean;
+  /**
+   * Creates readinessGate for the ingress management
+   *
+   * @default k8s.PodReadinessGate[]
+   */
+  readonly readinessGates?: k8s.PodReadinessGate[];
 }
 
 /**
