@@ -20,6 +20,7 @@
     ".github/workflows/upgrade-k8s-25-main.yml",
     ".gitignore",
     ".mergify.yml",
+    ".npmrc",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
