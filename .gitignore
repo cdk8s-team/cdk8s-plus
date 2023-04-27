@@ -44,6 +44,7 @@ junit.xml
 !/.github/workflows/upgrade-k8s-25-main.yml
 !/.github/workflows/upgrade-k8s-24-main.yml
 !/.github/pull_request_template.md
+!/.npmrc
 !/test/
 !/tsconfig.dev.json
 !/src/
