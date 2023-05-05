@@ -494,13 +494,18 @@ export interface ContainerLifecycle {
 /**
  * Properties for creating a container.
  */
-export interface ContainerProps {
+export interface ContainerProps extends ContainerOpts {
 
   /**
    * Docker image name.
    */
   readonly image: string;
+}
 
+/**
+ * Optional properties of a container.
+ */
+export interface ContainerOpts {
   /**
    * Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
    *
