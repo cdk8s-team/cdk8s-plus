@@ -66,10 +66,10 @@ tsconfig.json
 !/.github/workflows/security.yml
 !/.github/workflows/triage.yml
 !/.github/workflows/stale.yml
+!/.backportrc.json
+!/.github/workflows/backport.yml
 .vscode/
 docs/typescript.md
 docs/python.md
 docs/java.md
-!/.backportrc.json
-!/.github/workflows/backport.yml
 !/src/api-resource.generated.ts
