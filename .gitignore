@@ -66,6 +66,9 @@ tsconfig.json
 !/.github/workflows/security.yml
 !/.github/workflows/triage.yml
 !/.github/workflows/stale.yml
+!/.github/workflows/upgrade-configuration-k8s-25-main.yml
+!/.github/workflows/upgrade-configuration-k8s-24-main.yml
+!/.github/workflows/upgrade-configuration-k8s-23-main.yml
 .vscode/
 docs/typescript.md
 docs/python.md
