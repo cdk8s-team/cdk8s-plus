@@ -20,6 +20,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dockerRegistryAuth?: secret.ISecret;
   public readonly automountServiceAccountToken: boolean;
   public readonly hostNetwork?: boolean;
+  public readonly terminationGracePeriodSeconds?: Duration;
 
   protected readonly isolate: boolean;
 
@@ -41,6 +42,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
     this.isolate = props.isolate ?? false;
     this.hostNetwork = props.hostNetwork ?? false;
+    this.terminationGracePeriodSeconds = props.terminationGracePeriodSeconds ?? Duration.seconds(30);
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -237,6 +239,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
       hostNetwork: this.hostNetwork,
+      terminationGracePeriodSeconds: this.terminationGracePeriodSeconds?.toSeconds(),
     };
 
   }
@@ -437,6 +440,13 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default false
    */
   readonly hostNetwork?: boolean;
+
+  /**
+   * Grace period until the pod is terminated
+   *
+   * @default Duration.seconds(30)
+   */
+  readonly terminationGracePeriodSeconds?: Duration;
 }
 
 /**
