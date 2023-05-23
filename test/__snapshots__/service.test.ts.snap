@@ -95,6 +95,7 @@ Array [
             "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
+          "terminationGracePeriodSeconds": 30,
         },
       },
     },

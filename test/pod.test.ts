@@ -1522,3 +1522,38 @@ test('pod hostNetwork is not added by default', () => {
   expect(spec.hostNetwork).toEqual(false);
   expect(manifest).toMatchSnapshot();
 });
+
+test('default termination grace period', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+  });
+
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
+  expect(spec.terminationGracePeriodSeconds).toEqual(30);
+});
+
+test('custom termination grace period', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    terminationGracePeriod: Duration.seconds(60),
+  });
+
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
+  expect(spec.terminationGracePeriodSeconds).toEqual(60);
+});
+
+test('custom termination grace period - minutes', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    terminationGracePeriod: Duration.minutes(2),
+  });
+
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
+  expect(spec.terminationGracePeriodSeconds).toEqual(120);
+});
