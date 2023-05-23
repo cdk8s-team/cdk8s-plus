@@ -76,6 +76,7 @@ Array [
             "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
+          "terminationGracePeriodSeconds": 30,
         },
       },
       "updateStrategy": Object {
@@ -196,6 +197,7 @@ Array [
             "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
+          "terminationGracePeriodSeconds": 30,
         },
       },
       "updateStrategy": Object {
