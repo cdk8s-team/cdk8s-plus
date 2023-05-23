@@ -136,6 +136,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -180,6 +181,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -265,6 +267,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -328,6 +331,7 @@ Array [
             "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
+          "terminationGracePeriodSeconds": 30,
         },
       },
     },
@@ -415,6 +419,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -497,6 +502,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -578,6 +584,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -664,6 +671,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -758,6 +766,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -848,6 +857,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -952,6 +962,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1037,6 +1048,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1123,6 +1135,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1167,6 +1180,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1252,6 +1266,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1315,6 +1330,7 @@ Array [
             "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
+          "terminationGracePeriodSeconds": 30,
         },
       },
     },
@@ -1402,6 +1418,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1484,6 +1501,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1565,6 +1583,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1651,6 +1670,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1745,6 +1765,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1835,6 +1856,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -1939,6 +1961,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -2024,6 +2047,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -2110,6 +2134,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "terminationGracePeriodSeconds": 30,
     },
   },
   Object {
@@ -2192,6 +2217,7 @@ Array [
             "runAsNonRoot": true,
           },
           "setHostnameAsFQDN": false,
+          "terminationGracePeriodSeconds": 30,
         },
       },
     },
