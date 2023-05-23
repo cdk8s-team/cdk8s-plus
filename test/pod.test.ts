@@ -1538,7 +1538,7 @@ test('custom termination grace period', () => {
   const chart = Testing.chart();
   new kplus.Pod(chart, 'Pod', {
     containers: [{ image: 'image' }],
-    terminationGracePeriodSeconds: Duration.seconds(60),
+    terminationGracePeriod: Duration.seconds(60),
   });
 
   const manifest = Testing.synth(chart);
