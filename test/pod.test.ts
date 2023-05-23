@@ -1545,3 +1545,15 @@ test('custom termination grace period', () => {
   const spec = manifest[0].spec;
   expect(spec.terminationGracePeriodSeconds).toEqual(60);
 });
+
+test('custom termination grace period - minutes', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    terminationGracePeriod: Duration.minutes(2),
+  });
+
+  const manifest = Testing.synth(chart);
+  const spec = manifest[0].spec;
+  expect(spec.terminationGracePeriodSeconds).toEqual(120);
+});
