@@ -77,6 +77,7 @@ jobs:
             *Automatically created by projen via the "upgrade-configuration-k8s-23-main" workflow*
           branch: github-actions/upgrade-configuration-k8s-23-main
           title: "chore(deps): upgrade configuration"
+          labels: auto-approve
           body: |-
             Upgrades project dependencies. See details in [workflow run].
 
