@@ -1589,9 +1589,9 @@ bl@^4.1.0:
     readable-stream "^3.4.0"
 
 boxen@^7.0.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/boxen/-/boxen-7.1.0.tgz#ba10a9ef4e73a9e220105b5f8c07a56d359a4cb4"
-  integrity sha512-ScG8CDo8dj7McqCZ5hz4dIBp20xj4unQ2lXIDa7ff6RcZElCpuNzutdwzKVvRikfNjm7CFAlR3HJHcoHkDOExQ==
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/boxen/-/boxen-7.1.1.tgz#f9ba525413c2fec9cdb88987d835c4f7cad9c8f4"
+  integrity sha512-2hCgjEmP8YLWQ130n2FerGv7rYpfBmnmp9Uy2Le1vge6X3gZIfSmEzP5QTDElFxcvVcXlEn8Aq6MU/PZygIOog==
   dependencies:
     ansi-align "^3.0.1"
     camelcase "^7.0.1"
@@ -5686,10 +5686,10 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.71.122:
-  version "0.71.122"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.71.122.tgz#56f013ea3d35a1d29eaa7c4b05a26a45fb8df79c"
-  integrity sha512-ued/c3CTtK77R0WoefZSi9MbV66BrjqWiRShrsh+I1RV1if+ch+pj1Mh5xn/YRLNTuR2YRovc99CGIsyNTyn+g==
+projen@^0.71.124:
+  version "0.71.124"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.71.124.tgz#94823d7af5842f0ca6692f9f2464d90edfd525d0"
+  integrity sha512-XSS+A46RyP140kBfIewMO8Qym2g2o5/F+ntIQZ3kSsGe2vTEvUk63LauqkMzIv2StTwCv/6veRjIriXmdEwsMg==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
@@ -6512,9 +6512,9 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
 strip-json-comments@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-5.0.0.tgz#ec101b766476a703031bc607e3c712569de2aa06"
-  integrity sha512-V1LGY4UUo0jgwC+ELQ2BNWfPa17TIuwBLg+j1AA/9RPzKINl1lhxVEu2r+ZTTO8aetIsUzE5Qj6LMSBkoGYKKw==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-5.0.1.tgz#0d8b7d01b23848ed7dbdf4baaaa31a8250d8cfa0"
+  integrity sha512-0fk9zBqO67Nq5M/m45qHCJxylV/DhBlIOVExqgOMiCCrzrhU6tCibRXNqE3jwJLftzE9SNuZtYbpzcO+i9FiKw==
 
 strip-json-comments@~2.0.1:
   version "2.0.1"
