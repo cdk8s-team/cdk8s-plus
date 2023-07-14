@@ -577,6 +577,48 @@ describe('fromHostPath', () => {
 
 });
 
+describe('fromNfs', () => {
+
+  test('defaults', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromNfs(chart, 'Volume', 'disk', {
+      server: '169.254.1.1',
+      path: '/nfs/path',
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      nfs: {
+        server: '169.254.1.1',
+        path: '/nfs/path',
+      },
+    });
+
+  });
+
+  test('custom', () => {
+
+    const chart = Testing.chart();
+    const volume = Volume.fromNfs(chart, 'Volume', 'disk', {
+      server: '169.254.1.1',
+      path: '/nfs/path',
+      readOnly: true,
+    });
+    const spec = volume._toKube();
+    expect(spec).toEqual({
+      name: 'disk',
+      nfs: {
+        server: '169.254.1.1',
+        path: '/nfs/path',
+        readOnly: true,
+      },
+    });
+
+  });
+
+});
+
 describe('fromCsi', () => {
   test('minimal definition', () => {
     // GIVEN
