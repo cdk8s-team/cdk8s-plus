@@ -222,6 +222,21 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
+   * Used to mount an NFS share into a Pod.
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes/#nfs
+   */
+  public static fromNfs(scope: Construct, id: string, name: string, options: NfsVolumeOptions): Volume {
+    return new Volume(scope, id, name, {
+      nfs: {
+        server: options.server,
+        path: options.path,
+        readOnly: options.readOnly,
+      },
+    });
+  }
+
+  /**
    * Populate the volume from a CSI driver, for example the Secrets Store CSI
    * Driver: https://secrets-store-csi-driver.sigs.k8s.io/introduction.html.
    * Which in turn needs an associated provider to source the secrets, such as
@@ -678,6 +693,29 @@ export enum HostPathVolumeType {
    * A block device must exist at the given path.
    */
   BLOCK_DEVICE = 'BlockDevice'
+}
+
+/**
+ * Options for the NFS based volume.
+ */
+export interface NfsVolumeOptions {
+
+  /**
+   * Server is the hostname or IP address of the NFS server.
+   */
+  readonly server: string;
+
+  /**
+   * If set to true, will force the NFS export to be mounted with read-only permissions.
+   *
+   * @default - false
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * Path that is exported by the NFS server
+   */
+  readonly path: string;
 }
 
 /**
