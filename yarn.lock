@@ -1773,19 +1773,19 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^1.3.96:
-  version "1.3.96"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.3.96.tgz#6f1b4ad6c5094cee7c919a089a6340acec92f985"
-  integrity sha512-RPZHS+w8Ysgu7e0Zjhuty4IIvcLVaDpt1VDED/5rTZCxKDyLjBzHB3ufs0jngCV+XOBAfx7fYNi3FOXGQMBKbw==
+cdk8s-cli@^1.3.98:
+  version "1.3.98"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.3.98.tgz#187507ac3aee0415e59adc44fbf4463a38906704"
+  integrity sha512-En9we7E07ipsDvhVuR4M8Gim8r5LJGYIEnpzCM32uS88ZMLBldhQfQ+NIV7uLAyUXgE0ki0etpypP2lNh3eaCw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
-    cdk8s "^1.10.99"
-    codemaker "^1.84.0"
+    cdk8s "^1.10.112"
+    codemaker "^1.85.0"
     colors "1.4.0"
     constructs "^3.4.344"
     fs-extra "^8"
-    jsii-pacmak "^1.84.0"
+    jsii-pacmak "^1.85.0"
     jsii-srcmak "^0.1.949"
     json2jsii "^0.3.387"
     semver "^7.5.4"
@@ -1796,10 +1796,10 @@ cdk8s-cli@^1.3.96:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.7.114:
-  version "2.7.114"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.7.114.tgz#587b8563f8898111000c1e604b51492ef80ab873"
-  integrity sha512-PUDWO4bxylVgBiDOx9EVxo9rD8BHHcnKpw5rbAQ28Z9Wg3DlmOzh/KUdpxpXD1IU9Js2fwXblUa8bwtUnKjj/w==
+cdk8s@2.7.115:
+  version "2.7.115"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.7.115.tgz#4d53fbde373dd554b770ea4d5bc93423e64ee670"
+  integrity sha512-AFMF8fUxnH+nlvmQAlj5SHyD3NJuEKQF3k4Lf6O8LPPtI/giYr42mVlK2CGkpvbwoTuakT8g5BSXKT8n1Sm8Cg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1807,10 +1807,10 @@ cdk8s@2.7.114:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@^1.10.99:
-  version "1.10.111"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.10.111.tgz#c204ae0d25db943e962733479e53bd2eae9ec546"
-  integrity sha512-0cnTC7JcuIV35Jbqvv6ugofWBFOd6ydQcZ4/iUGcDy3xG+wLKi8tVbQJiaExpQh20zuIH+LjbGrJuIgueLLfKg==
+cdk8s@^1.10.112:
+  version "1.10.113"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.10.113.tgz#d01a2f4bcb4c78dd607acb2e0c2e6dbd0022d2a1"
+  integrity sha512-FMdTbMNAdQIR6z1rmq7+2YB+p2ql3ut266Yo/PL0tbsEnNOyLL53DWu8uRFdg/XHjXQoiWgvs6vHuHVxMjn4qA==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1943,7 +1943,7 @@ co@^4.6.0:
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==
 
-codemaker@^1.84.0, codemaker@^1.85.0:
+codemaker@^1.85.0:
   version "1.85.0"
   resolved "https://registry.yarnpkg.com/codemaker/-/codemaker-1.85.0.tgz#eb523e4625efa6ee5e2f6b4bef4b46c2770feecf"
   integrity sha512-58SuiaUdM2tTrfjW0HZ8Udiv9nCWUyKLe6tg11QtinTrzPgO0txqBYwo3AX/H6fg/e9NwtlZAqi58cfxSxG9/g==
@@ -2566,9 +2566,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.463"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.463.tgz#8eb04355f24fef5c8097661d14e143f6d8554055"
-  integrity sha512-fT3hvdUWLjDbaTGzyOjng/CQhQJSQP8ThO3XZAoaxHvHo2kUXiRQVMj9M235l8uDFiNPsPa6KHT1p3RaR6ugRw==
+  version "1.4.464"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.464.tgz#2f94bad78dff34e527aacbfc5d0b1a33cf046507"
+  integrity sha512-guZ84yoou4+ILNdj0XEbmGs6DEWj6zpVOWYpY09GU66yEb0DSYvP/biBPzHn0GuW/3RC/pnaYNUWlQE1fJYtgA==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3904,15 +3904,11 @@ is-text-path@^1.0.1:
     text-extensions "^1.0.0"
 
 is-typed-array@^1.1.10, is-typed-array@^1.1.9:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/is-typed-array/-/is-typed-array-1.1.11.tgz#893621188e6919d4e6a488b9f6557d8c4b051953"
-  integrity sha512-l2SCJk9RflSWHQjOJJgNsV5FnE1pq/RpHnYW6ckSjTCYypv07SMbiRSCmLQD63WOv2eXaEwNsn+7kcn3csvYSw==
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/is-typed-array/-/is-typed-array-1.1.12.tgz#d0bab5686ef4a76f7a73097b95470ab199c57d4a"
+  integrity sha512-Z14TF2JNG8Lss5/HMqt0//T9JeHXttXy5pH/DBU4vi98ozO2btxzq9MwYDZYnKwU8nRsz/+GVFVRDq3DkVuSPg==
   dependencies:
-    available-typed-arrays "^1.0.5"
-    call-bind "^1.0.2"
-    for-each "^0.3.3"
-    gopd "^1.0.1"
-    has-tostringtag "^1.0.0"
+    which-typed-array "^1.1.11"
 
 is-typedarray@^1.0.0:
   version "1.0.0"
@@ -6899,9 +6895,9 @@ typescript@^4.9.5:
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@next:
-  version "5.2.0-dev.20230717"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230717.tgz#e1468ce4983646adc9138de6f07d4c1a617d2783"
-  integrity sha512-T6Jl+oxydjHSfqyak7AeMpeei76VXFdEYdYkFavnQK8cEcw9knjJ8W63cT8IZUBgEIStQcI4zNEuoFUnotysOg==
+  version "5.2.0-dev.20230718"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230718.tgz#8c60b2f6807b3f8b2db47980ee6c73dea1f45e42"
+  integrity sha512-ED1Vm+2UzdbtKui+0lVswEuAX94fQXeoghXyy/+aTNers8X/WB81r5sFg6nA4e43nVQ2MP/Qsa7/XJRFuHR+Cg==
 
 typescript@~3.9.10:
   version "3.9.10"
@@ -7149,17 +7145,16 @@ which-module@^2.0.0:
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-2.0.1.tgz#776b1fe35d90aebe99e8ac15eb24093389a4a409"
   integrity sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==
 
-which-typed-array@^1.1.10:
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.10.tgz#74baa2789991905c2076abb317103b866c64e69e"
-  integrity sha512-uxoA5vLUfRPdjCuJ1h5LlYdmTLbYfums398v3WLkM+i/Wltl2/XyZpQWKbN++ck5L64SR/grOHqtXCUKmlZPNA==
+which-typed-array@^1.1.10, which-typed-array@^1.1.11:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.11.tgz#99d691f23c72aab6768680805a271b69761ed61a"
+  integrity sha512-qe9UWWpkeG5yzZ0tNYxDmd7vo58HDBc39mZ0xWWpolAGADdFOzkfamWLDxkOWcvHQKVmdTyQdLD4NOfjLWTKew==
   dependencies:
     available-typed-arrays "^1.0.5"
     call-bind "^1.0.2"
     for-each "^0.3.3"
     gopd "^1.0.1"
     has-tostringtag "^1.0.0"
-    is-typed-array "^1.1.10"
 
 which@^2.0.1, which@^2.0.2:
   version "2.0.2"
