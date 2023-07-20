@@ -19,6 +19,9 @@
 /.github/workflows/upgrade-configuration-k8s-23-main.yml linguist-generated
 /.github/workflows/upgrade-configuration-k8s-24-main.yml linguist-generated
 /.github/workflows/upgrade-configuration-k8s-25-main.yml linguist-generated
+/.github/workflows/upgrade-dev-dependencies-k8s-23-main.yml linguist-generated
+/.github/workflows/upgrade-dev-dependencies-k8s-24-main.yml linguist-generated
+/.github/workflows/upgrade-dev-dependencies-k8s-25-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-23-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-24-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-25-main.yml linguist-generated
