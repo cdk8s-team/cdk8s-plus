@@ -484,6 +484,33 @@
         }
       ]
     },
+    "upgrade-compiler-dependencies": {
+      "name": "upgrade-compiler-dependencies",
+      "description": "upgrade compiler dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "yarn upgrade npm-check-updates"
+        },
+        {
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='jsii-docgen,jsii-pacmak,typescript'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade jsii-docgen jsii-pacmak jsii-rosetta jsii typescript"
+        },
+        {
+          "exec": "npx projen"
+        },
+        {
+          "spawn": "post-upgrade"
+        }
+      ]
+    },
     "upgrade-configuration": {
       "name": "upgrade-configuration",
       "description": "upgrade configuration",
@@ -534,16 +561,16 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii,projen,@cdk8s/projen-common'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii,projen,@cdk8s/projen-common,jsii-docgen,jsii-pacmak,typescript'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii,projen,@cdk8s/projen-common'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii,projen,@cdk8s/projen-common,jsii-docgen,jsii-pacmak,typescript'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii npm-check-updates snake-case standard-version ts-jest ts-node typescript minimatch cdk8s constructs minimatch"
+          "exec": "yarn upgrade @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff npm-check-updates snake-case standard-version ts-jest ts-node minimatch cdk8s constructs minimatch"
         },
         {
           "exec": "npx projen"
