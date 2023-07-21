@@ -72,6 +72,9 @@ tsconfig.json
 !/.github/workflows/upgrade-dev-dependencies-k8s-24-main.yml
 !/.github/workflows/upgrade-dev-dependencies-k8s-23-main.yml
 !/.github/workflows/upgrade-dev-dependencies-k8s-22-main.yml
+!/.github/workflows/upgrade-compiler-dependencies-k8s-24-main.yml
+!/.github/workflows/upgrade-compiler-dependencies-k8s-23-main.yml
+!/.github/workflows/upgrade-compiler-dependencies-k8s-22-main.yml
 .vscode/
 docs/typescript.md
 docs/python.md
