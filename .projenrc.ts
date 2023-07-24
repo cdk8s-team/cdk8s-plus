@@ -4,10 +4,10 @@ import { github, javascript } from 'projen';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 26;
+const LATEST_SUPPORTED_K8S_VERSION = 27;
 
 // the version of k8s this branch supports
-const SPEC_VERSION = '26';
+const SPEC_VERSION = '27';
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 const project = new Cdk8sTeamJsiiProject({
