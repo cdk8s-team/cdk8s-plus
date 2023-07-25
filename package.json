@@ -38,7 +38,9 @@
     "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
+    "upgrade-compiler-dependencies": "npx projen upgrade-compiler-dependencies",
     "upgrade-configuration": "npx projen upgrade-configuration",
+    "upgrade-dev-dependencies": "npx projen upgrade-dev-dependencies",
     "watch": "npx projen watch",
     "projen": "npx projen"
   },

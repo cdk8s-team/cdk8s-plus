@@ -69,6 +69,12 @@ tsconfig.json
 !/.github/workflows/upgrade-configuration-k8s-27-main.yml
 !/.github/workflows/upgrade-configuration-k8s-26-main.yml
 !/.github/workflows/upgrade-configuration-k8s-25-main.yml
+!/.github/workflows/upgrade-dev-dependencies-k8s-27-main.yml
+!/.github/workflows/upgrade-dev-dependencies-k8s-26-main.yml
+!/.github/workflows/upgrade-dev-dependencies-k8s-25-main.yml
+!/.github/workflows/upgrade-compiler-dependencies-k8s-27-main.yml
+!/.github/workflows/upgrade-compiler-dependencies-k8s-26-main.yml
+!/.github/workflows/upgrade-compiler-dependencies-k8s-25-main.yml
 !/.backportrc.json
 !/.github/workflows/backport.yml
 .vscode/
