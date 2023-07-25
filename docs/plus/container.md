@@ -3,7 +3,7 @@
 Define containers that run in a pod using the `Container` class.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-26/typescript.md#container)
+    [API Reference](../../reference/cdk8s-plus-27/typescript.md#container)
 
 ## Environment
 
@@ -15,7 +15,7 @@ Environment variables can be added to containers by specifying the
 variable name and value. The value can come from different sources, either dynamic or static.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-26';
+import * as kplus from 'cdk8s-plus-27';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
