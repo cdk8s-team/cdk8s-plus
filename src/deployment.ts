@@ -177,11 +177,18 @@ export class Deployment extends workload.Workload implements IScalable {
   public exposeViaService(options: DeploymentExposeViaServiceOptions = {}): service.Service {
     const myPorts = container.extractContainerPorts(this);
     const myPortNumbers = myPorts.map(p => p.number);
-    const ports: service.ServicePort[] = options.ports ?? myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol }));
+    const ports: service.ServicePort[] = options.ports ?? myPorts.map(p => ({
+      port: p.number, targetPort: p.number, protocol: p.protocol, name: p.name,
+    }));
     if (ports.length === 0) {
       throw new Error(`Unable to expose deployment ${this.name} via a service: `
         + 'Deployment port cannot be determined.'
         + 'Either pass \'ports\', or configure ports on the containers of the deployment');
+    }
+    const portNames = ports.map(p => p.name);
+    if (ports.length > 1 && portNames.includes(undefined)) {
+      throw new Error(`Unable to expose deployment ${this.name} via a service: `
+        + 'When using multiple ports for a service, all ports must have port names so they are unambiguous.');
     }
 
     // validate the ports are owned by our containers

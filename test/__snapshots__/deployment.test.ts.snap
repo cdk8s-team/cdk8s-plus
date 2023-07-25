@@ -260,9 +260,11 @@ Array [
               "ports": Array [
                 Object {
                   "containerPort": 8080,
+                  "name": "port1",
                 },
                 Object {
                   "containerPort": 9090,
+                  "name": "port2",
                 },
               ],
               "resources": Object {
@@ -306,10 +308,12 @@ Array [
       "externalIPs": Array [],
       "ports": Array [
         Object {
+          "name": "port1",
           "port": 8080,
           "targetPort": 8080,
         },
         Object {
+          "name": "port2",
           "port": 9090,
           "targetPort": 9090,
         },
