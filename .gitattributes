@@ -16,9 +16,15 @@
 /.github/workflows/security.yml linguist-generated
 /.github/workflows/stale.yml linguist-generated
 /.github/workflows/triage.yml linguist-generated
+/.github/workflows/upgrade-compiler-dependencies-k8s-24-main.yml linguist-generated
+/.github/workflows/upgrade-compiler-dependencies-k8s-25-main.yml linguist-generated
+/.github/workflows/upgrade-compiler-dependencies-k8s-26-main.yml linguist-generated
 /.github/workflows/upgrade-configuration-k8s-24-main.yml linguist-generated
 /.github/workflows/upgrade-configuration-k8s-25-main.yml linguist-generated
 /.github/workflows/upgrade-configuration-k8s-26-main.yml linguist-generated
+/.github/workflows/upgrade-dev-dependencies-k8s-24-main.yml linguist-generated
+/.github/workflows/upgrade-dev-dependencies-k8s-25-main.yml linguist-generated
+/.github/workflows/upgrade-dev-dependencies-k8s-26-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-24-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-25-main.yml linguist-generated
 /.github/workflows/upgrade-k8s-26-main.yml linguist-generated
