@@ -3989,9 +3989,9 @@ istanbul-reports@^3.1.3:
     istanbul-lib-report "^3.0.0"
 
 jackspeak@^2.0.3:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-2.2.1.tgz#655e8cf025d872c9c03d3eb63e8f0c024fef16a6"
-  integrity sha512-MXbxovZ/Pm42f6cDIDkl3xpwv1AGwObKwfmjs2nQePiy85tP3fatofl3FC1aBsOtP/6fq5SbtgHwWcMsLP+bDw==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-2.2.2.tgz#707c62733924b8dc2a0a629dc6248577788b5385"
+  integrity sha512-mgNtVv4vUuaKA97yxUHoA3+FkuhtxkjdXEWOyB/N76fjy0FjezEt34oy3epBtvCvS+7DyKwqCFWx/oJLV5+kCg==
   dependencies:
     "@isaacs/cliui" "^8.0.2"
   optionalDependencies:
