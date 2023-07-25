@@ -676,9 +676,11 @@ test('expose captures all container ports', () => {
       ports: [
         {
           number: 8080,
+          name: 'port1',
         },
         {
           number: 9090,
+          name: 'port2',
         },
       ],
     }],
@@ -713,4 +715,42 @@ test('cannot expose with a port not owned by the container', () => {
     ports: [{ port: 2020 }],
   })).toThrowError('Unable to expose deployment');
 
+});
+
+test('expose via service with multiple ports throws error when names are not provided', () => {
+
+  const chart = Testing.chart();
+
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+          name: 'port1',
+        },
+        {
+          number: 9090,
+        },
+      ],
+    }],
+  });
+
+  expect(() => deployment.exposeViaService()).toThrowError('Unable to expose deployment');
+
+  const deployment1 = new kplus.Deployment(chart, 'Deployment2', {
+    containers: [{
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+        },
+        {
+          number: 9090,
+        },
+      ],
+    }],
+  });
+
+  expect(() => deployment1.exposeViaService()).toThrowError('Unable to expose deployment');
 });
