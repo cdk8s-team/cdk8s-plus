@@ -1,0 +1,4 @@
+output: dist
+pluginsDirectory: /home/runner/.cdk8s/plugins
+imports:
+  - k8s@1.26.0
