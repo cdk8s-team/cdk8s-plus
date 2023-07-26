@@ -1,14 +1,14 @@
 {
-  "name": "cdk8s-plus-26",
-  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-26 synthesizes Kubernetes manifests for Kubernetes 1.26.0",
+  "name": "cdk8s-plus-27",
+  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-27 synthesizes Kubernetes manifests for Kubernetes 1.27.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
   },
   "scripts": {
     "backport": "npx projen backport",
-    "backport:k8s-24/main": "npx projen backport:k8s-24/main",
     "backport:k8s-25/main": "npx projen backport:k8s-25/main",
+    "backport:k8s-26/main": "npx projen backport:k8s-26/main",
     "build": "npx projen build",
     "bump": "npx projen bump",
     "clobber": "npx projen clobber",
@@ -33,12 +33,14 @@
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
     "regenerate-api-information": "npx projen regenerate-api-information",
-    "release:k8s-26/main": "npx projen release:k8s-26/main",
+    "release:k8s-27/main": "npx projen release:k8s-27/main",
     "test": "npx projen test",
     "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
+    "upgrade-compiler-dependencies": "npx projen upgrade-compiler-dependencies",
     "upgrade-configuration": "npx projen upgrade-configuration",
+    "upgrade-dev-dependencies": "npx projen upgrade-dev-dependencies",
     "watch": "npx projen watch",
     "projen": "npx projen"
   },
@@ -48,14 +50,14 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.405",
+    "@cdk8s/projen-common": "^0.0.422",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "^16",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdk8s": "2.7.106",
-    "cdk8s-cli": "^1.3.92",
+    "cdk8s": "2.18.0",
+    "cdk8s-cli": "^1.10.0",
     "constructs": "10.2.69",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
@@ -64,12 +66,12 @@
     "jest": "^27",
     "jest-junit": "^15",
     "jsii": "1.x",
-    "jsii-diff": "^1.84.0",
+    "jsii-diff": "^1.85.0",
     "jsii-docgen": "^3.8.31",
-    "jsii-pacmak": "^1.84.0",
+    "jsii-pacmak": "^1.85.0",
     "jsii-rosetta": "1.x",
     "npm-check-updates": "^16",
-    "projen": "^0.71.135",
+    "projen": "^0.71.150",
     "snake-case": "^3.0.4",
     "standard-version": "^9",
     "ts-jest": "^27",
@@ -77,7 +79,7 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "cdk8s": "^2.7.106",
+    "cdk8s": "^2.18.0",
     "constructs": "^10.2.69"
   },
   "dependencies": {
@@ -151,19 +153,19 @@
     "outdir": "dist",
     "targets": {
       "java": {
-        "package": "org.cdk8s.plus26",
+        "package": "org.cdk8s.plus27",
         "maven": {
           "groupId": "org.cdk8s",
-          "artifactId": "cdk8s-plus-26"
+          "artifactId": "cdk8s-plus-27"
         }
       },
       "python": {
-        "distName": "cdk8s-plus-26",
-        "module": "cdk8s_plus_26"
+        "distName": "cdk8s-plus-27",
+        "module": "cdk8s_plus_27"
       },
       "dotnet": {
-        "namespace": "Org.Cdk8s.Plus26",
-        "packageId": "Org.Cdk8s.Plus26"
+        "namespace": "Org.Cdk8s.Plus27",
+        "packageId": "Org.Cdk8s.Plus27"
       },
       "go": {
         "moduleName": "github.com/cdk8s-team/cdk8s-plus-go"

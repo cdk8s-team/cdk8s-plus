@@ -12,18 +12,6 @@
         }
       ]
     },
-    "backport:k8s-24/main": {
-      "name": "backport:k8s-24/main",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main"
-        }
-      ]
-    },
     "backport:k8s-25/main": {
       "name": "backport:k8s-25/main",
       "requiredEnv": [
@@ -33,6 +21,18 @@
       "steps": [
         {
           "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-25/main"
+        }
+      ]
+    },
+    "backport:k8s-26/main": {
+      "name": "backport:k8s-26/main",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-26/main"
         }
       ]
     },
@@ -68,7 +68,8 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-26/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-27/",
+        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'"
       },
       "steps": [
         {
@@ -204,7 +205,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.26.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.27.0"
         }
       ]
     },
@@ -327,13 +328,13 @@
         }
       ]
     },
-    "release:k8s-26/main": {
-      "name": "release:k8s-26/main",
-      "description": "Prepare a release from \"k8s-26/main\" branch",
+    "release:k8s-27/main": {
+      "name": "release:k8s-27/main",
+      "description": "Prepare a release from \"k8s-27/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "2",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-26/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-27/"
       },
       "steps": [
         {
@@ -383,7 +384,8 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-26/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-27/",
+        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'"
       },
       "steps": [
         {
@@ -405,7 +407,7 @@
           "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
           "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'"
@@ -414,13 +416,40 @@
           "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
           "exec": "yarn upgrade"
+        },
+        {
+          "exec": "npx projen"
+        },
+        {
+          "spawn": "post-upgrade"
+        }
+      ]
+    },
+    "upgrade-compiler-dependencies": {
+      "name": "upgrade-compiler-dependencies",
+      "description": "upgrade compiler dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "yarn upgrade npm-check-updates"
+        },
+        {
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='jsii-docgen,jsii-pacmak,typescript'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade jsii-docgen jsii-pacmak jsii-rosetta jsii typescript"
         },
         {
           "exec": "npx projen"
@@ -441,25 +470,55 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='@cdk8s/projen-common,projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen,@cdk8s/projen-common'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='@cdk8s/projen-common,projen'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen,@cdk8s/projen-common'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='@cdk8s/projen-common,projen'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen,@cdk8s/projen-common'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='@cdk8s/projen-common,projen'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen,@cdk8s/projen-common'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='@cdk8s/projen-common,projen'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen,@cdk8s/projen-common'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
           "exec": "yarn upgrade @cdk8s/projen-common projen"
+        },
+        {
+          "exec": "npx projen"
+        },
+        {
+          "spawn": "post-upgrade"
+        }
+      ]
+    },
+    "upgrade-dev-dependencies": {
+      "name": "upgrade-dev-dependencies",
+      "description": "upgrade dev dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "yarn upgrade npm-check-updates"
+        },
+        {
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii,projen,@cdk8s/projen-common,jsii-docgen,jsii-pacmak,typescript'"
+        },
+        {
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii,projen,@cdk8s/projen-common,jsii-docgen,jsii-pacmak,typescript'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff npm-check-updates snake-case standard-version ts-jest ts-node minimatch cdk8s constructs minimatch"
         },
         {
           "exec": "npx projen"
