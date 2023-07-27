@@ -6,7 +6,6 @@
 
 | k8s version | npm (JS/TS)                                         | PyPI (Python)                                   | Maven (Java)                                                      | Go                                                              |
 | ----------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| 1.24.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-24) | [Link](https://pypi.org/project/cdk8s-plus-24/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-24) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.24) |
 | 1.25.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-25) | [Link](https://pypi.org/project/cdk8s-plus-25/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-25) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.25) |
 | 1.26.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-26) | [Link](https://pypi.org/project/cdk8s-plus-26/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-26) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.26) |
 | 1.27.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-27) | [Link](https://pypi.org/project/cdk8s-plus-27/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-27) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.27) |
