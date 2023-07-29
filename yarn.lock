@@ -1806,10 +1806,10 @@ cdk8s-cli@^1.13.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.23.0:
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.23.0.tgz#d00350c16f796494dc8dc74712144368e12e31a0"
-  integrity sha512-pUODggZNZ1ojeAYQ0OK0q2+XgqiD4F7L3+O656sxl9CyMgfPjrj7uZYiBjb6z/R5CKGFtP3yBEGc5XGHkqSDmw==
+cdk8s@2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.24.0.tgz#e7b0a10d259858aa221e44b1286402a30ed5a984"
+  integrity sha512-lT00vFXFmO69BnyIduLRY29aNDAv3AJoQ2rB0N3mQFWDNtYXT6DsP99/BRQL2UNj5xhezC2/UmSPpZt9whE7Rg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1818,9 +1818,9 @@ cdk8s@2.23.0:
     backport "8.5.0"
 
 cdk8s@^1.20.0:
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.20.0.tgz#d7250c2c8f8fc49cea82196e615b0f1316f00852"
-  integrity sha512-31zChaIicQn8aWP5gPgqC9x6Gv+0hHlvZN9q1TcVxUsncdLEZGXsPNORTrf4GHMd/4aTt0fmHh94688bZ1CIRg==
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.21.0.tgz#96b445d88ed84678f391ea9824f025b3aa12a3e7"
+  integrity sha512-ixPckhgC8pOXSii5bN3Js3yZp8OSPVYRyN8ajuVuF4CAEuhdeZabjym6KkAOwVgEie0+RhV3TR0WgP9AZvomug==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -2576,9 +2576,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.476"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.476.tgz#693df619ce1785ada6d5aec71fd3ce7ace71adc3"
-  integrity sha512-gzWl1m8pNy+5Kj17XcziNcbOhripjTqR2wAQmtdlFUngPYuFy7zUpJScVQAvCvQSFHNk3mS5fetNKW6BSpytFg==
+  version "1.4.477"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.477.tgz#05669aa6f161ee9076a6805457e9bd9fe6d0dfd1"
+  integrity sha512-shUVy6Eawp33dFBFIoYbIwLHrX0IZ857AlH9ug2o4rvbWmpaCUdBpQ5Zw39HRrfzAFm4APJE9V+E2A/WB0YqJw==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -6249,9 +6249,9 @@ signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
 signal-exit@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.0.2.tgz#ff55bb1d9ff2114c13b400688fa544ac63c36967"
-  integrity sha512-MY2/qGx4enyjprQnFaZsHib3Yadh3IXyV2C321GY0pjGfVBu4un0uDJkwgdxqO+Rdx8JMT8IfJIRwbYVz3Ob3Q==
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.0.3.tgz#6a11e3663c031d6196860374d710afda97875944"
+  integrity sha512-U97H1k7QQ8OQJ18ryc5lSI16ouK1a43nSNRkXz16OMcc5dTVz5TlQxgf2NbX+cF0luukRuy3/womPZqfpIucbw==
 
 sigstore@^1.3.0:
   version "1.8.0"
