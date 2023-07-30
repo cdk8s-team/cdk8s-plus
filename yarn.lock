@@ -1806,10 +1806,10 @@ cdk8s-cli@^1.13.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.24.0.tgz#e7b0a10d259858aa221e44b1286402a30ed5a984"
-  integrity sha512-lT00vFXFmO69BnyIduLRY29aNDAv3AJoQ2rB0N3mQFWDNtYXT6DsP99/BRQL2UNj5xhezC2/UmSPpZt9whE7Rg==
+cdk8s@2.25.0:
+  version "2.25.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.25.0.tgz#7bc51b0b8b795a3ae198da9026cae2524546b12a"
+  integrity sha512-hqAUecT6Alk7YYk7oJVZl2RsBSDBnIQVr2puPD6hp0CVNT5hpX1C+CCfxzp3WFWHhVkznEdXMW0vWSfw/i8RbQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1818,9 +1818,9 @@ cdk8s@2.24.0:
     backport "8.5.0"
 
 cdk8s@^1.20.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.21.0.tgz#96b445d88ed84678f391ea9824f025b3aa12a3e7"
-  integrity sha512-ixPckhgC8pOXSii5bN3Js3yZp8OSPVYRyN8ajuVuF4CAEuhdeZabjym6KkAOwVgEie0+RhV3TR0WgP9AZvomug==
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.22.0.tgz#cbf2329f478851ce2f79307d4330ca0dd377b6c2"
+  integrity sha512-yHhux9w/qOc4ejYSIJHuKH94etpnSmhNcXYZw4P+fjjJN09rUX4j4rAQj+Ea9TY3NKOdKx0DYZtLwRnVE0Ovrw==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -6944,9 +6944,9 @@ typescript@^4.9.5:
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@next:
-  version "5.2.0-dev.20230728"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230728.tgz#f6f52c8e257929900db802e6b7729762844e0463"
-  integrity sha512-pI6gdSexHd/ESfy6Vwmd6bdId1UIYl1fkE8d2o/n/frQCeD6oupH93WTh0syCk3mYMpnx++flvR1X2WHJS1oVg==
+  version "5.2.0-dev.20230729"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230729.tgz#af8744ddb074709b62c53ffb1f1b5015c0e69f1b"
+  integrity sha512-PUbdfeYxptkWvHyvE7umkPHIyiE8GR/ZqZkjVZmPOu4GVHA8Yxdv74dEHl0AP8WvgVtes66Rxc2TdMnHp9LeEw==
 
 typescript@~3.9.10:
   version "3.9.10"
