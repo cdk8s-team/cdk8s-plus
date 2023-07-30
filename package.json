@@ -56,8 +56,8 @@
     "@types/node": "^16",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdk8s": "2.24.0",
-    "cdk8s-cli": "^1.13.0",
+    "cdk8s": "2.26.0",
+    "cdk8s-cli": "^1.14.0",
     "constructs": "10.2.69",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
@@ -79,7 +79,7 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "cdk8s": "^2.24.0",
+    "cdk8s": "^2.26.0",
     "constructs": "^10.2.69"
   },
   "dependencies": {
