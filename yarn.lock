@@ -1783,14 +1783,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.15.0.tgz#b09cb707d9c4ee64f3ac6ddda423cc1fc02d231d"
-  integrity sha512-6CMp/Luamrlnu2QhXlxJYWoMaQrwlrdi96+heOkwjAzslOvvxpGkFDpuPm+uAkpz6i9MgzIVEQyGFKH91y7LQA==
+cdk8s-cli@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.16.0.tgz#adab7fea101fc3d48b9fe351d9f13a3342525621"
+  integrity sha512-0Wj1V7wt6ftb73Sc6qJzfFRVGMUljmbyH66uqgWwx23d5u+02fJv+YCVoy+05Kiuadh/DDayJPdRrx2IPuBKEw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
-    cdk8s "^1.23.0"
+    cdk8s "^1.25.0"
     codemaker "^1.85.0"
     colors "1.4.0"
     constructs "^3.4.344"
@@ -1806,10 +1806,10 @@ cdk8s-cli@^1.15.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.28.0:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.28.0.tgz#e35d4cbcecfbc1ead68ca2f0f359d0e8e3d16376"
-  integrity sha512-3udrH2mT53Nh7AULqXs1DHsdENw91r+DmvEnIEpihYgkBnkkxBQCZtUFgkRkjz9S1K5meIKH0M3wkWt87pZetg==
+cdk8s@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.29.0.tgz#ffadf1f28dfe8a459bb1139f6fd1132d498f32ec"
+  integrity sha512-w6kc457K1xr6dWNRPHIUjDleGNSar+85RZWI+b46DxNw4WdhFuSAEDRAFwcSWyxIv1d++C3ukO/BsFSOXQYU+A==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1817,10 +1817,10 @@ cdk8s@2.28.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@^1.23.0:
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.25.0.tgz#e862cbaa9fa290211fbe4c6adf09c6096b1ef2cb"
-  integrity sha512-oo/1EGUNysjWhjERZpz1w7l0FXsxGsuFaZ5ke4M5PDNT3BMFaN6oswr6J5wAKTaj5yKPIBLvLHGj/hCR+oKwjg==
+cdk8s@^1.25.0:
+  version "1.26.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.26.0.tgz#d74f2f78495ea641facc1e194fa3b159678dcb34"
+  integrity sha512-w1VGXAJMdHjXquqefhN8hqy7f9wXvNcNATEW6AzKA+FH4Dh+xabfruPLlyj4aCdAcoz+w6AsI2B5VNlA/FGesA==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
