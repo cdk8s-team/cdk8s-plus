@@ -1774,9 +1774,9 @@ camelcase@^7.0.1:
   integrity sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==
 
 caniuse-lite@^1.0.30001517:
-  version "1.0.30001517"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001517.tgz#90fabae294215c3495807eb24fc809e11dc2f0a8"
-  integrity sha512-Vdhm5S11DaFVLlyiKu4hiUTkpZu+y1KA/rZZqVQfOD5YdDT/eQKlkt7NaE0WGOFgX32diqt9MiP9CAiFeRklaA==
+  version "1.0.30001518"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001518.tgz#b3ca93904cb4699c01218246c4d77a71dbe97150"
+  integrity sha512-rup09/e3I0BKjncL+FesTayKtPrdwKhUufQFd3riFw1hHg8JmIFoInYfB102cFcY/pPgGmdyl/iy+jgiDi2vdA==
 
 case@^1.6.3:
   version "1.6.3"
@@ -1806,10 +1806,10 @@ cdk8s-cli@^1.15.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.27.0:
-  version "2.27.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.27.0.tgz#f61fcf07b832fa9d86a450e0e4797a52931263b5"
-  integrity sha512-Y7tIsOgx3Sx3DjTwflfOZV5rx4WqrBI3oA9ZjL7Z0eoDSBbAje0PajC6jIQkIaiPLm+3o61No3k8kWDVZBLpMw==
+cdk8s@2.28.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.28.0.tgz#e35d4cbcecfbc1ead68ca2f0f359d0e8e3d16376"
+  integrity sha512-3udrH2mT53Nh7AULqXs1DHsdENw91r+DmvEnIEpihYgkBnkkxBQCZtUFgkRkjz9S1K5meIKH0M3wkWt87pZetg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1818,9 +1818,9 @@ cdk8s@2.27.0:
     backport "8.5.0"
 
 cdk8s@^1.23.0:
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.24.0.tgz#5339bdc416d0834281ab8dd13119ffa41e3a7e38"
-  integrity sha512-5zexxlqzCBewGJhowkQygGNJGtvJocuHGgQnnkb11+GAoShFOSiTjFTj2YrA/oaN4S2U20wYmK1r0PDwGxE3qA==
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.25.0.tgz#e862cbaa9fa290211fbe4c6adf09c6096b1ef2cb"
+  integrity sha512-oo/1EGUNysjWhjERZpz1w7l0FXsxGsuFaZ5ke4M5PDNT3BMFaN6oswr6J5wAKTaj5yKPIBLvLHGj/hCR+oKwjg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -2576,9 +2576,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.477:
-  version "1.4.477"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.477.tgz#05669aa6f161ee9076a6805457e9bd9fe6d0dfd1"
-  integrity sha512-shUVy6Eawp33dFBFIoYbIwLHrX0IZ857AlH9ug2o4rvbWmpaCUdBpQ5Zw39HRrfzAFm4APJE9V+E2A/WB0YqJw==
+  version "1.4.478"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.478.tgz#687198cfcef9b854a79a229feaa6cd8961206290"
+  integrity sha512-qjTA8djMXd+ruoODDFGnRCRBpID+AAfYWCyGtYTNhsuwxI19s8q19gbjKTwRS5z/LyVf5wICaIiPQGLekmbJbA==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -6944,9 +6944,9 @@ typescript@^4.9.5:
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@next:
-  version "5.2.0-dev.20230730"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230730.tgz#cff28cdba02037eb45f5426a3a959af99b2dea1e"
-  integrity sha512-Un+AAI0hEctoChFvndwcw3Ygv9FxR/DkfohcAQu9bipcFWkCS2QqOHtFNO2r6mu+BAQ23QwArto2GSLp6I6Y7w==
+  version "5.2.0-dev.20230731"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230731.tgz#a72083c07043568ab856dd8ca0d8f3a708c3e3a6"
+  integrity sha512-RJVLgnDgu67ZrohYy0aBea+5TICfRod36+24zw0bR/KJDQJO9mlIjTC0k+/PKw87fXP5JuUHqepEk15PvFya7A==
 
 typescript@~3.9.10:
   version "3.9.10"
