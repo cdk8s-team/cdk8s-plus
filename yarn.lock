@@ -1791,20 +1791,20 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^1.17.1:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.17.1.tgz#4cc73375b8b2999b013436e4502e6b4f3d463bfb"
-  integrity sha512-gTSMeGThp7uxKSK/wFqOafLqRGp5fh99qjy3C3jO86B66et3jEe2Hcbqb1BvmP7XUdFtBUV6F2dS1Oude4Tg2g==
+cdk8s-cli@^1.18.0:
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.18.0.tgz#0bb6c9dfd5d1eb4a39a92cf6a82b3798b30d20f2"
+  integrity sha512-yZ4VlPyaGAgs62ds3OO32wQPyYxnRn1nksSPCLEj3Xh7qduursdWD4STKBGGfc6CgX0zWgO0Dp1apI0FbYYuuQ==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
-    cdk8s "^1.26.0"
-    codemaker "^1.86.0"
+    cdk8s "^1.27.0"
+    codemaker "^1.86.1"
     colors "1.4.0"
     constructs "^3.4.344"
     fs-extra "^8"
-    jsii-pacmak "^1.86.0"
-    jsii-srcmak "^0.1.949"
+    jsii-pacmak "^1.86.1"
+    jsii-srcmak "^0.1.950"
     json2jsii "^0.3.387"
     semver "^7.5.4"
     sscaff "^1.2.274"
@@ -1825,7 +1825,7 @@ cdk8s@2.30.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@^1.26.0:
+cdk8s@^1.27.0:
   version "1.27.0"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.27.0.tgz#a01990c7ae6a3dc6995d26c1282af490f8bb088c"
   integrity sha512-mR+fDUP3PdnjwMC1i3Wdr0YI9iwojeUCqQ9wmxss3wJZnmGtp3ljAXWYbPGVzFitUfNsYKDCk6EzOLn9kgzcoA==
@@ -3692,9 +3692,9 @@ ini@^4.1.1:
   integrity sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==
 
 inquirer@^8.2.3:
-  version "8.2.5"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.5.tgz#d8654a7542c35a9b9e069d27e2df4858784d54f8"
-  integrity sha512-QAgPDQMEgrDssk1XiwwHoOGYF9BAbUcc1+j+FhEvaOt8/cKRqyLn0U5qA6F74fGhTMGxf92pOvPBeh29jQJDTQ==
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.6.tgz#733b74888195d8d400a67ac332011b5fae5ea562"
+  integrity sha512-M1WuAmb7pn9zdFRtQYk26ZBoY043Sse0wVDdk4Bppr+JOXyQYybdtvK+l9wUibhtjdjvtoiNy8tk+EgsYIUqKg==
   dependencies:
     ansi-escapes "^4.2.1"
     chalk "^4.1.1"
@@ -3710,7 +3710,7 @@ inquirer@^8.2.3:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
     through "^2.3.6"
-    wrap-ansi "^7.0.0"
+    wrap-ansi "^6.0.1"
 
 internal-slot@^1.0.5:
   version "1.0.5"
@@ -4573,7 +4573,7 @@ jsii-rosetta@1.x, jsii-rosetta@^1.44.0, jsii-rosetta@^1.86.1:
     workerpool "^6.4.0"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.949:
+jsii-srcmak@^0.1.950:
   version "0.1.950"
   resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.950.tgz#6787c70403848d35591217d926e0f4a3ac84169b"
   integrity sha512-tv40puwfmgeYfYiO8vZLWAgDe42tkrZeUSCfBat0mJW7cGWpJ3UAjSMas1d2XOBG4Y/e+0ysxVwyyt6EwM0OAA==
@@ -7286,7 +7286,7 @@ workerpool@^6.4.0:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
 
-wrap-ansi@^6.2.0:
+wrap-ansi@^6.0.1, wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
