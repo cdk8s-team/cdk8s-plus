@@ -4,7 +4,7 @@ name: upgrade-configuration-k8s-25-main
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: 0 0 * * *
+    - cron: 0 15 * * *
 jobs:
   upgrade:
     name: Upgrade
