@@ -294,10 +294,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdk8s/projen-common@^0.0.435":
-  version "0.0.435"
-  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.0.435.tgz#2dbc3ddabe7433bd305b60b488702419feb0aad4"
-  integrity sha512-cEgIu58toogtvYY5Odtw6xDby1OO2x2UM5CYFPEJlO42E/hrR3L0G4Ipn4oCnS26U0ebfwDw673yGNjH8XuxhQ==
+"@cdk8s/projen-common@^0.0.436":
+  version "0.0.436"
+  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.0.436.tgz#c6f1360603946aa90788f2fe2bc599872377bcf0"
+  integrity sha512-UchL5Vcp+83NpkkL/2C0ESukqctbIeXUViTNiEuHTUKlAWDzKQfZ7+ZtJgvk6TmkVYgIjx5fl3c1eEnDXaNsCw==
   dependencies:
     codemaker "^1.86.1"
 
@@ -5281,9 +5281,9 @@ npm-bundled@^3.0.0:
     npm-normalize-package-bin "^3.0.0"
 
 npm-check-updates@^16:
-  version "16.10.17"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.10.17.tgz#1f28b024235c2ecc34ce7361c0376d61953b556c"
-  integrity sha512-ZoIbWYJhlgMDoByq1WC6Ys3E76IvNCxgS54tPUFbK5J/nqf/BCJt6xiMPAEa7G1HuyAruG+orUF9uTsTGUZl8g==
+  version "16.10.18"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.10.18.tgz#6f6fcbc57c519e7ad12d370a18de8afdf021b597"
+  integrity sha512-dmfhCMX7+UNrBeftBGb1rMX4Qi6+FOI5cuu1VkLeE4LIazbiEYsdgTG+GQywYry+BR9R3EfOXITYPfgRhcdznw==
   dependencies:
     chalk "^5.3.0"
     cli-table3 "^0.6.3"
@@ -5742,10 +5742,10 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.72.4:
-  version "0.72.4"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.72.4.tgz#663e29bf75cbc4e62ab10f10a9950d276499fcdc"
-  integrity sha512-zbYq7NXKrkz9zb8wS6jgk2q6zNoap/bmHTKmwk3I/eAGeEXc2Rt06HkrjQ/z9LqTUbqwsk4YQU5wzY7IE8n5iw==
+projen@^0.72.5:
+  version "0.72.5"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.72.5.tgz#0947ddd085bd98d626a32563889e63e51e35a9dd"
+  integrity sha512-ARWAkPYMm/dOU4mpL/sPiBDCzMlo5goNU0iw8pFfngvftVxZnbTBE6emMj1WtnFgXzsmj29FKZ33dTF2qXaSyQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
