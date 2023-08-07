@@ -1789,14 +1789,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^1.25.0:
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.25.0.tgz#4935f378fb32930379f07c7db4442c83ef2c9aa5"
-  integrity sha512-Dc/jXWyhBgmVbvsOuzX1+i4Cj3zOdTf2K18hKZW2yzOOknz/TK8WoU26n/Gr1qYWrY3nPBeapj0virean813/w==
+cdk8s-cli@^1.26.0:
+  version "1.26.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-1.26.0.tgz#5c0c4f84369e02e6903e85a117db85cf76374585"
+  integrity sha512-oeaC/QVo00PLgDnIopVclD79llDr06NTsVUcNZtEI+vDjM3PD5GD/Un3hfEs2q8d1rLjFpw/28DTLPTB899fUg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
-    cdk8s "^1.31.0"
+    cdk8s "^1.32.0"
     codemaker "^1.86.1"
     colors "1.4.0"
     constructs "^3.4.344"
@@ -1823,7 +1823,7 @@ cdk8s@2.35.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@^1.31.0:
+cdk8s@^1.32.0:
   version "1.32.0"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.32.0.tgz#5e907911bdfe6a21a755cb755c23d1cffab20df5"
   integrity sha512-KGmfnku5QwoYnT4mkDcFveYS5I0rJiJolSzh5fGIRw/rSV2ta8lLuRKr5zm0ffRB7gbL3XZKB6W1kIzW4zhAEA==
@@ -6936,9 +6936,9 @@ typescript@^4.9.5:
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@next:
-  version "5.2.0-dev.20230806"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230806.tgz#c7c283b2f77d8451e8a173df474b32db3ab1525a"
-  integrity sha512-YQFa8UzjncWuVozkTh+XxPySrW053wUDWVofVi6fwqipHsGtZzi3SYpXv4H3OpViICbej9bCwEL17lo8WhMq+w==
+  version "5.2.0-dev.20230807"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230807.tgz#652fa8a3fcc46958035d9b911c815299deb9f58e"
+  integrity sha512-sF8sZl3r/mpAdKAxASaWaoU+mNPF3g8OrZ601HraU2l4WEwAf6nO7sq0Bzl+Y3FV7sWjy+gb6kdM1CtLjVne/g==
 
 typescript@~3.9.10:
   version "3.9.10"
