@@ -1804,10 +1804,10 @@ cdk8s-cli@^1.62.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.60.0:
-  version "2.60.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.60.0.tgz#a299b8ffa7cb33c0c72bdbd99514d10ad7ef72cc"
-  integrity sha512-65hp3sjf61zvBo9r3pna/ed1wIodXa9FynOELwyTYBsVez4jfwI0B8gWNngB16GtklBJ/PKI0DWvJVB0IFE9Kw==
+cdk8s@2.61.0:
+  version "2.61.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.61.0.tgz#49870faa83712fa682f00b3df4833e729d19e0db"
+  integrity sha512-GlGARlQC7xjYF9JKlh679naBYwlt9dTJeCYvf+WhvKF96P/EKplMBMpd1BZxdmaD88RZvU4UjAYP/C30t0PHmg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -1816,9 +1816,9 @@ cdk8s@2.60.0:
     backport "8.5.0"
 
 cdk8s@^1.57.0:
-  version "1.57.0"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.57.0.tgz#cd841f23b9ad573fd5c7423d99ecad40a98f20e2"
-  integrity sha512-vPSdilU3YEs2xAnssOT7tH73A6byUf27bp/bsKUV9k2+znVjMCmwk3rlIlFOXn4r3gDbF1t2iuDtMXwnoJHk3g==
+  version "1.58.0"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-1.58.0.tgz#2c70436a62819234eb2332b0cfb9829a8e633f24"
+  integrity sha512-xbNg0gPWWzD1uv4W2jolSTAZQ40rwf3RebsxJuN03wTlZNd4zj4LZ+RtGD0r4X8eCDBcjZp329ACHfbRN2l3KQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.2"
@@ -5404,13 +5404,13 @@ object.assign@^4.1.4:
     object-keys "^1.1.1"
 
 object.fromentries@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.6.tgz#cdb04da08c539cffa912dcd368b886e0904bfa73"
-  integrity sha512-VciD13dswC4j1Xt5394WR4MzmAQmlgN72phd/riNp9vtD7tp4QQWJ0R4wvclXcafgcYK8veHRed2W6XeGBvcfg==
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.7.tgz#71e95f441e9a0ea6baf682ecaaf37fa2a8d7e616"
+  integrity sha512-UPbPHML6sL8PI/mOqPwsH4G6iyXcCGzLin8KvEPenOZN5lpCNBZZQ+V62vdjB1mQHrmqGQt5/OJzemUA+KJmEA==
   dependencies:
     call-bind "^1.0.2"
-    define-properties "^1.1.4"
-    es-abstract "^1.20.4"
+    define-properties "^1.2.0"
+    es-abstract "^1.22.1"
 
 object.groupby@^1.0.0:
   version "1.0.1"
@@ -6935,9 +6935,9 @@ typescript@^4.9.5:
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@next:
-  version "5.3.0-dev.20230828"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.0-dev.20230828.tgz#77b37fcd9187a016ac7193d971f29722ff967b38"
-  integrity sha512-uBVHpn+yxJsHMANa01Fn1Ni/3v4HzKcZbbzsbLYxgPKNJTAWQM8FoZWOFh5mrjZmpJcpGtPBcwbeuTUDOCD6QA==
+  version "5.3.0-dev.20230829"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.0-dev.20230829.tgz#992aa41b87a374b8612e85072af5216957b5c5e2"
+  integrity sha512-2bsH+jTfOtehS2ZMI6RteCCRFk2QTUUY3BijvnyS0+o0CB/xWJDu7+WRbpt/XEZgOcoTLf9evRm/tyGSlPyNgA==
 
 typescript@~3.9.10:
   version "3.9.10"
