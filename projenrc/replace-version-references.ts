@@ -5,13 +5,6 @@ export function replaceOldVersionReferences(latestVersion: string) {
 
   const latestVersionNumber = Number(latestVersion);
 
-  // replaces references in .projenrc.ts file
-  const projenFilePath = '.projenrc.ts';
-  let projenFileData = fs.readFileSync(projenFilePath, 'utf-8');
-  projenFileData = projenFileData.replace(`= ${latestVersionNumber - 1}`, `= ${latestVersion}`);
-  projenFileData = projenFileData.replace(`= '${latestVersionNumber - 1}`, `= '${latestVersion}`);
-  fs.writeFileSync(projenFilePath, projenFileData);
-
   // replace references in docs/plus/**
   // all version references here appear in the form: cdk8s-plus-XX
   const docsFileNames = fs.readdirSync('docs/plus/', { encoding: 'utf-8' });

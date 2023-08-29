@@ -105,7 +105,8 @@ project.addTask('regenerate-api-information', {
 });
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
-const taskObject = project.addTask('update-k8s-version-references');
-taskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
+// Projen task to update references to old versions of cdk8s-plus
+const versionTaskObject = project.addTask('update-k8s-version-references');
+versionTaskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
 
 project.synth();
