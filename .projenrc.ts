@@ -4,10 +4,10 @@ import { github, javascript } from 'projen';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 27;
+const LATEST_SUPPORTED_K8S_VERSION = 28;
 
 // the version of k8s this branch supports
-const SPEC_VERSION = '27';
+const SPEC_VERSION = '28';
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
 
 const project = new Cdk8sTeamJsiiProject({
@@ -103,5 +103,8 @@ project.addTask('regenerate-api-information', {
   exec: 'kubectl api-resources -o wide > api-resources.txt',
 });
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
+
+const taskObject = project.addTask('update-k8s-version-references');
+taskObject.exec('ts-node projenrc/replace-version-references.ts ' + 28);
 
 project.synth();
