@@ -37,6 +37,7 @@
     "test": "npx projen test",
     "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
+    "update-k8s-version-references": "npx projen update-k8s-version-references",
     "upgrade": "npx projen upgrade",
     "upgrade-compiler-dependencies": "npx projen upgrade-compiler-dependencies",
     "upgrade-configuration": "npx projen upgrade-configuration",
