@@ -66,7 +66,7 @@ jobs:
         with:
           token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
-            feat(deps): upgrade compiler dependencies
+            chore(deps): upgrade compiler dependencies
 
             Upgrades project dependencies. See details in [workflow run].
 
@@ -76,7 +76,7 @@ jobs:
 
             *Automatically created by projen via the "upgrade-compiler-dependencies-k8s-25-main" workflow*
           branch: github-actions/upgrade-compiler-dependencies-k8s-25-main
-          title: "feat(deps): upgrade compiler dependencies"
+          title: "chore(deps): upgrade compiler dependencies"
           labels: auto-approve
           body: |-
             Upgrades project dependencies. See details in [workflow run].
