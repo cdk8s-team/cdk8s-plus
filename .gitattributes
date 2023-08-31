@@ -25,9 +25,9 @@
 /.github/workflows/upgrade-dev-dependencies-k8s-24-main.yml linguist-generated
 /.github/workflows/upgrade-dev-dependencies-k8s-25-main.yml linguist-generated
 /.github/workflows/upgrade-dev-dependencies-k8s-26-main.yml linguist-generated
-/.github/workflows/upgrade-k8s-24-main.yml linguist-generated
-/.github/workflows/upgrade-k8s-25-main.yml linguist-generated
-/.github/workflows/upgrade-k8s-26-main.yml linguist-generated
+/.github/workflows/upgrade-runtime-dependencies-k8s-24-main.yml linguist-generated
+/.github/workflows/upgrade-runtime-dependencies-k8s-25-main.yml linguist-generated
+/.github/workflows/upgrade-runtime-dependencies-k8s-26-main.yml linguist-generated
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
 /.npmignore linguist-generated
