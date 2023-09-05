@@ -135,6 +135,11 @@
       "type": "override"
     },
     {
+      "name": "**/downlevel-dts/**/typescript",
+      "version": "~5.2.2",
+      "type": "override"
+    },
+    {
       "name": "cdk8s",
       "type": "peer"
     },

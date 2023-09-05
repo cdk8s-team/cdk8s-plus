@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Cdk8sTeamJsiiProject } from '@cdk8s/projen-common';
-import { github, javascript } from 'projen';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the version of k8s this branch supports
@@ -26,8 +25,6 @@ const project = new Cdk8sTeamJsiiProject({
     'configuration',
     'microservices',
   ],
-
-  projenCredentials: github.GithubCredentials.fromPersonalAccessToken(),
 
   peerDeps: [
     'cdk8s',
@@ -63,11 +60,6 @@ const project = new Cdk8sTeamJsiiProject({
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
         `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
       ],
-
-      // run upgrade-dependencies workflow at a different hour than other cdk8s
-      // repos to decrease flakiness of integration tests caused by new versions
-      // of cdk8s being published to different languages at the same time
-      schedule: javascript.UpgradeDependenciesSchedule.expressions(['0 2 * * *']),
     },
   },
   backport: true,
