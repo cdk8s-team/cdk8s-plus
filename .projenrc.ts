@@ -1,13 +1,14 @@
+import * as fs from 'fs';
 import * as path from 'path';
 import { Cdk8sTeamJsiiProject } from '@cdk8s/projen-common';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
-// the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 26;
-
 // the version of k8s this branch supports
-const SPEC_VERSION = '26';
+const SPEC_VERSION = fs.readFileSync('projenrc/latest-k8s-version.txt', 'utf-8');
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
+
+// the latest version of k8s we support
+const LATEST_SUPPORTED_K8S_VERSION = Number(SPEC_VERSION);
 
 const project = new Cdk8sTeamJsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
@@ -95,5 +96,9 @@ project.addTask('regenerate-api-information', {
   exec: 'kubectl api-resources -o wide > api-resources.txt',
 });
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
+
+// Projen task to update references to old versions of cdk8s-plus
+const versionTaskObject = project.addTask('update-k8s-version-references');
+versionTaskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
 
 project.synth();
