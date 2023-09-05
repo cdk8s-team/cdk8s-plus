@@ -393,6 +393,14 @@
         }
       ]
     },
+    "update-k8s-version-references": {
+      "name": "update-k8s-version-references",
+      "steps": [
+        {
+          "exec": "ts-node projenrc/replace-version-references.ts 27"
+        }
+      ]
+    },
     "upgrade-compiler-dependencies": {
       "name": "upgrade-compiler-dependencies",
       "description": "upgrade compiler dependencies",
