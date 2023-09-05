@@ -1,15 +1,14 @@
+import * as fs from 'fs';
 import * as path from 'path';
 import { Cdk8sTeamJsiiProject } from '@cdk8s/projen-common';
-import { JsonFile, Task } from 'projen';
-import { JobPermission } from 'projen/lib/github/workflows-model';
 import { generateApiResources } from './projenrc/gen-api-resource';
 
-// the latest version of k8s we support
-const LATEST_SUPPORTED_K8S_VERSION = 25;
-
 // the version of k8s this branch supports
-const SPEC_VERSION = '25';
+const SPEC_VERSION = fs.readFileSync('projenrc/latest-k8s-version.txt', 'utf-8');
 const K8S_VERSION = `1.${SPEC_VERSION}.0`;
+
+// the latest version of k8s we support
+const LATEST_SUPPORTED_K8S_VERSION = Number(SPEC_VERSION);
 
 const project = new Cdk8sTeamJsiiProject({
   name: `cdk8s-plus-${SPEC_VERSION}`,
@@ -63,6 +62,11 @@ const project = new Cdk8sTeamJsiiProject({
       ],
     },
   },
+  backport: true,
+  backportBranches: [
+    `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`,
+    `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`,
+  ],
 });
 
 project.gitignore.exclude('.vscode/');
@@ -87,95 +91,14 @@ for (const lang of ['typescript', 'python', 'java']) {
   project.gitignore.exclude(output);
 }
 
-// run backport in clean directories every time.
-const backportHome = '/tmp/.backport/';
-const backportDir = `${backportHome}/repositories/cdk8s-team/cdk8s-plus`;
-const backportConfig = new JsonFile(project, '.backportrc.json', {
-  // see https://github.com/sqren/backport/blob/main/docs/config-file-options.md
-  obj: {
-    repoOwner: 'cdk8s-team',
-    repoName: 'cdk8s-plus',
-    signoff: true,
-    branchLabelMapping: {
-      '^backport-to-(.+)$': '$1',
-    },
-    prTitle: '{commitMessages}',
-    fork: false,
-    publishStatusCommentOnFailure: true,
-    publishStatusCommentOnSuccess: true,
-    publishStatusCommentOnAbort: true,
-    targetPRLabels: [project.autoApprove!.label],
-    dir: backportDir,
-  },
-});
-
-// backport task to branches based on pr labels
-const backportTask = createBackportTask();
-
-// backport tasks to explicit branches based on input
-for (const spec of [LATEST_SUPPORTED_K8S_VERSION, LATEST_SUPPORTED_K8S_VERSION - 1, LATEST_SUPPORTED_K8S_VERSION - 2].map(s => new Number(s))) {
-  createBackportTask(spec);
-}
-
-const backportWorkflow = project.github!.addWorkflow('backport');
-backportWorkflow.on({ pullRequestTarget: { types: ['closed'] } });
-backportWorkflow.addJob('backport', {
-  runsOn: ['ubuntu-latest'],
-  permissions: {
-    contents: JobPermission.WRITE,
-  },
-  steps: [
-    // needed in order to run the projen task as well
-    // as use the backport configuration in the repo.
-    {
-      name: 'checkout',
-      uses: 'actions/checkout@v3',
-      with: {
-        // required because we need the full history
-        // for proper backports.
-        'fetch-depth': 0,
-      },
-    },
-    {
-      name: 'Set Git Identity',
-      run: 'git config --global user.name "github-actions" && git config --global user.email "github-actions@github.com"',
-    },
-    {
-      name: 'backport',
-      if: 'github.event.pull_request.merged == true',
-      run: `npx projen ${backportTask.name}`,
-      env: {
-        GITHUB_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
-        BACKPORT_PR_NUMBER: '${{ github.event.pull_request.number }}',
-      },
-    },
-  ],
-});
-
 project.addTask('regenerate-api-information', {
   description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
   exec: 'kubectl api-resources -o wide > api-resources.txt',
 });
 generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
 
+// Projen task to update references to old versions of cdk8s-plus
+const versionTaskObject = project.addTask('update-k8s-version-references');
+versionTaskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
+
 project.synth();
-
-function createBackportTask(branch?: Number): Task {
-  const name = branch ? `backport:${branch}` : 'backport';
-  const task = project.addTask(name, { requiredEnv: ['BACKPORT_PR_NUMBER', 'GITHUB_TOKEN'] });
-  task.exec(`rm -rf ${backportHome}`);
-  task.exec(`mkdir -p ${backportHome}`);
-  task.exec(`cp ${backportConfig.path} ${backportHome}`);
-
-  // pinning because of https://github.com/sqren/backport/issues/451
-  const backportVersion = '8.5.0';
-
-  const backport = ['npx', `backport@${backportVersion}`, '--accesstoken', '${GITHUB_TOKEN}', '--pr', '${BACKPORT_PR_NUMBER}'];
-  if (branch) {
-    backport.push(...['--branch', `k8s-${branch}/main`]);
-  } else {
-    backport.push('--non-interactive');
-  }
-  task.exec(backport.join(' '), { cwd: backportHome });
-  return task;
-}

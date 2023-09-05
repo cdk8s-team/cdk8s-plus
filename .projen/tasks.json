@@ -8,83 +8,31 @@
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive",
-          "cwd": "/tmp/.backport/"
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive"
         }
       ]
     },
-    "backport:23": {
-      "name": "backport:23",
+    "backport:k8s-23/main": {
+      "name": "backport:k8s-23/main",
       "requiredEnv": [
         "BACKPORT_PR_NUMBER",
         "GITHUB_TOKEN"
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main",
-          "cwd": "/tmp/.backport/"
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-23/main"
         }
       ]
     },
-    "backport:24": {
-      "name": "backport:24",
+    "backport:k8s-24/main": {
+      "name": "backport:k8s-24/main",
       "requiredEnv": [
         "BACKPORT_PR_NUMBER",
         "GITHUB_TOKEN"
       ],
       "steps": [
         {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main",
-          "cwd": "/tmp/.backport/"
-        }
-      ]
-    },
-    "backport:25": {
-      "name": "backport:25",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "rm -rf /tmp/.backport/"
-        },
-        {
-          "exec": "mkdir -p /tmp/.backport/"
-        },
-        {
-          "exec": "cp .backportrc.json /tmp/.backport/"
-        },
-        {
-          "exec": "npx backport@8.5.0 --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-25/main",
-          "cwd": "/tmp/.backport/"
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-24/main"
         }
       ]
     },
@@ -442,6 +390,14 @@
       "steps": [
         {
           "builtin": "release/reset-version"
+        }
+      ]
+    },
+    "update-k8s-version-references": {
+      "name": "update-k8s-version-references",
+      "steps": [
+        {
+          "exec": "ts-node projenrc/replace-version-references.ts 25"
         }
       ]
     },

@@ -75,10 +75,10 @@ tsconfig.json
 !/.github/workflows/upgrade-compiler-dependencies-k8s-25-main.yml
 !/.github/workflows/upgrade-compiler-dependencies-k8s-24-main.yml
 !/.github/workflows/upgrade-compiler-dependencies-k8s-23-main.yml
+!/.backportrc.json
+!/.github/workflows/backport.yml
 .vscode/
 docs/typescript.md
 docs/python.md
 docs/java.md
-!/.backportrc.json
-!/.github/workflows/backport.yml
 !/src/api-resource.generated.ts
