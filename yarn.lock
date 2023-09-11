@@ -1784,15 +1784,15 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.81.0:
-  version "2.81.0"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.81.0.tgz#dd1d35ca181e425f42d384686ffb11a29e3d77f3"
-  integrity sha512-Bph85AvOSvf/zfQR3Z1DWeaHLxo6PtLpPV6AWrkUsijTWl7tHOLj/0Pihu5M2JB9RQXHEH0ys1KITBnSwBPLMg==
+cdk8s-cli@^2.82.0:
+  version "2.82.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.82.0.tgz#2f9088efedfeedea90523d605bcb031c2d2374fe"
+  integrity sha512-R0ZjQRTiNOhYJeVxAk72TBHiDTMh1mNt7wE20OeeUVicvIkNJKMSfnkKkrBcqk0oZvv/8P88uqzxRPT3epeplg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
     cdk8s "^2.64.6"
-    cdk8s-plus-25 "^2.22.7"
+    cdk8s-plus-25 "^2.22.8"
     codemaker "^1.88.0"
     colors "1.4.0"
     constructs "^10.2.70"
@@ -1808,10 +1808,10 @@ cdk8s-cli@^2.81.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s-plus-25@^2.22.7:
-  version "2.22.8"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.8.tgz#5c61c531fa69f6a12807d2f7f29f42e853c0c16a"
-  integrity sha512-ARMiMHmxXrXBezXT+qGKtknajFXWci5HejK7VO8trKVefYkn0KH6MbatQlethUOQSZGDZzNumh64wiZ8Jni7sw==
+cdk8s-plus-25@^2.22.8:
+  version "2.22.9"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.9.tgz#01ba37187a915a628bd3992450b94334cc5eefaa"
+  integrity sha512-IMj+KDdDQ1OdcWa/LLIveHjWIKeTP3eimnuf97kvQwUvof2yWjZLTrtvCvvfygHttw5goOtNtMHzMzgdGryy+A==
   dependencies:
     minimatch "^3.1.2"
   optionalDependencies:
@@ -7233,7 +7233,6 @@ workerpool@^6.4.2:
   integrity sha512-MrDWwemtC4xNV22kbbZDQQQmxNX+yLm790sgYl2wVD3CWnK7LJY1youI/11wHorAjHjK+GEjUxUh74XoPU71uQ==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
