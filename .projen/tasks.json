@@ -140,6 +140,14 @@
         }
       ]
     },
+    "disable-publishing": {
+      "name": "disable-publishing",
+      "steps": [
+        {
+          "exec": "ts-node projenrc/disable-publishing.ts "
+        }
+      ]
+    },
     "docgen": {
       "name": "docgen",
       "description": "Generate API.md from .jsii manifest",

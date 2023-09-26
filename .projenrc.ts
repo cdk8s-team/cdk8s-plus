@@ -69,6 +69,9 @@ const project = new Cdk8sTeamJsiiProject({
   ],
 });
 
+// Used in K8s upgrade tests to control publishing of new branches
+project.package.addField('private', false);
+
 project.gitignore.exclude('.vscode/');
 
 const importdir = path.join('src', 'imports');
@@ -100,5 +103,9 @@ generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.t
 // Projen task to update references to old versions of cdk8s-plus
 const versionTaskObject = project.addTask('update-k8s-version-references');
 versionTaskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
+
+// Projen task to disable publishing
+const disablePublishingTaskObject = project.addTask('disable-publishing');
+disablePublishingTaskObject.exec('ts-node projenrc/disable-publishing.ts ');
 
 project.synth();
