@@ -69,6 +69,9 @@ const project = new Cdk8sTeamJsiiProject({
   ],
 });
 
+// Used in K8s upgrade tests to control publishing of new branches
+project.package.addField('private', false);
+
 project.gitignore.exclude('.vscode/');
 
 const importdir = path.join('src', 'imports');
