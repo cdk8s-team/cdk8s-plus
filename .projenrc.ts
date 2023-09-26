@@ -104,4 +104,8 @@ generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.t
 const versionTaskObject = project.addTask('update-k8s-version-references');
 versionTaskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
 
+// Projen task to disable publishing
+const disablePublishingTaskObject = project.addTask('disable-publishing');
+disablePublishingTaskObject.exec('ts-node projenrc/disable-publishing.ts ');
+
 project.synth();
