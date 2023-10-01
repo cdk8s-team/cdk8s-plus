@@ -1792,15 +1792,15 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.113.0:
-  version "2.113.0"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.113.0.tgz#ba40e071708d6434e704066b6fdd2d9c0267eae6"
-  integrity sha512-N1vOIi4b7x54ZhxdcpehZn1xzTRtkXjT19feMwyKb2mHqeTEYb6mRQway7NxRGXZJZicM60cRp9COBiRrrCGAQ==
+cdk8s-cli@^2.114.0:
+  version "2.114.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.114.0.tgz#be1053c824a96bbc74e1854bf0f36bd5ebe047bf"
+  integrity sha512-IcCn4+1jE2xTVBOQvBqWXBSNm/Fnl6AzZnyO5FcbtASEQq5agexNjq9HgpsaYBcookxcXrWa7XkjbYIEiSGfkw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
     cdk8s "^2.64.25"
-    cdk8s-plus-25 "^2.22.22"
+    cdk8s-plus-25 "^2.22.23"
     codemaker "^1.89.0"
     colors "1.4.0"
     constructs "^10.2.70"
@@ -1816,10 +1816,10 @@ cdk8s-cli@^2.113.0:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s-plus-25@^2.22.22:
-  version "2.22.23"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.23.tgz#3d3cd92b926afcdec1b4d1a5d63fdd17334a3de8"
-  integrity sha512-T3zQ9sMeIQG8MQAbQs3dPF1nkWGBSFYN0nlr5T8QgqehsmOlOExSjO2bOHjD2VIYySHB8NTYx1C7vusOtUt3FA==
+cdk8s-plus-25@^2.22.23:
+  version "2.22.24"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.24.tgz#2fc7095e61895c682dc74d558eb99473523f7b9f"
+  integrity sha512-HmRWcN70uf9AXD4dyWG4CfyhecY/puGkoJIQ4qmVWmGJEj2lZzAr2SP1QAe5SGrfqE2zjDKH7ghFKO7c/0rBzA==
   dependencies:
     minimatch "^3.1.2"
   optionalDependencies:
@@ -7266,7 +7266,6 @@ workerpool@^6.5.0:
   integrity sha512-r64Ea3glXY2RVzMeNxB+4J+0YHAVzUdV4cM5nHi4BBC2LvnO1pWFAIYKYuGcPElbg1/7eEiaPtZ/jzCjIUuGBg==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
