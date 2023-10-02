@@ -1825,7 +1825,18 @@ cdk8s-plus-25@^2.22.23:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.64.25, cdk8s@^2.64.25:
+cdk8s@2.66.2:
+  version "2.66.2"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.66.2.tgz#f3468fa91cfa761b4a7a0c00fbaf2a3dd0700760"
+  integrity sha512-nNxKfr+6DPZJuRzY/208970EEbQ6pnfQpdEqE70lvifbzBL+DhaR70Ig0meegSf88ECvcY7hJ5DOUkxWfxY/fg==
+  dependencies:
+    fast-json-patch "^3.1.1"
+    follow-redirects "^1.15.2"
+    yaml "2.3.2"
+  optionalDependencies:
+    backport "8.5.0"
+
+cdk8s@^2.64.25:
   version "2.64.25"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.64.25.tgz#875ee1654ec9a4a7998ba88567c504d46eb19e89"
   integrity sha512-XCezhqItouUBWy6AysIUvvQvz53JrE5BFXp+cQmfDmtd4zPl1Dh4kiDk152X6kfcfOwLShewA/ur/+pcLmiR2A==
@@ -7266,6 +7277,7 @@ workerpool@^6.5.0:
   integrity sha512-r64Ea3glXY2RVzMeNxB+4J+0YHAVzUdV4cM5nHi4BBC2LvnO1pWFAIYKYuGcPElbg1/7eEiaPtZ/jzCjIUuGBg==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
