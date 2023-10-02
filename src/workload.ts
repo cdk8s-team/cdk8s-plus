@@ -62,11 +62,6 @@ export interface LabelSelectorRequirement {
  */
 export abstract class Workload extends pod.AbstractPod {
 
-  /**
-   * The metadata of pods in this workload.
-   */
-  public readonly podMetadata: ApiObjectMetadataDefinition;
-
   public readonly connections: pod.PodConnections;
 
   public readonly scheduling: WorkloadScheduling;
@@ -76,20 +71,38 @@ export abstract class Workload extends pod.AbstractPod {
   private readonly _matchLabels: Record<string, string> = {};
   private readonly _matchExpressions: LabelSelectorRequirement[] = [];
 
+  private _podMetadata?: ApiObjectMetadataDefinition;
+
+  private readonly _props: WorkloadProps;
+  private readonly _matcher: string;
+
   constructor(scope: Construct, id: string, props: WorkloadProps = {}) {
     super(scope, id, props);
 
-    this.podMetadata = new ApiObjectMetadataDefinition(props.podMetadata);
+    this._props = props;
     this.scheduling = new WorkloadScheduling(this);
     this.connections = new pod.PodConnections(this);
     this.spread = props.spread ?? false;
 
-    const matcher = Names.toLabelValue(this);
-    this.podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, matcher);
+    this._matcher = Names.toLabelValue(this);
 
     if (props.select ?? true) {
-      this.select(pod.LabelSelector.of({ labels: { [pod.Pod.ADDRESS_LABEL]: matcher } }));
+      this.select(pod.LabelSelector.of({ labels: { [pod.Pod.ADDRESS_LABEL]: this._matcher } }));
     }
+  }
+
+  /**
+   * The metadata of pods in this workload.
+   */
+  public get podMetadata(): ApiObjectMetadataDefinition {
+    if (!this._podMetadata) {
+      this._podMetadata = new ApiObjectMetadataDefinition({
+        ...this._props.podMetadata,
+        apiObject: this.apiObject,
+      });
+      this._podMetadata.addLabel(pod.Pod.ADDRESS_LABEL, this._matcher);
+    }
+    return this._podMetadata;
   }
 
   /**
