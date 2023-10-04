@@ -42,7 +42,10 @@ export interface IngressProps extends base.ResourceProps {
   readonly tls?: IngressTls[];
 
   /**
-   * Ingress Class Name is an optional String property.
+   * Class Name for this ingress.
+   *
+   * This field is a reference to an IngressClass resource that contains
+   * additional Ingress configuration, including the name of the Ingress controller.
    */
   readonly className?: string;
 }
