@@ -95,7 +95,7 @@ export class Ingress extends base.Resource {
       metadata: props.metadata,
       spec: {
         defaultBackend: Lazy.any({ produce: () => this._defaultBackend?._toKube() }),
-        ingressClassName: props.ingressClassName,
+        ingressClassName: props.className,
         rules: Lazy.any({ produce: () => this.synthRules() }),
         tls: Lazy.any({ produce: () => this.tlsConfig() }),
       },

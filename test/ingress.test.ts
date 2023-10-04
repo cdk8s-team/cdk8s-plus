@@ -20,7 +20,7 @@ test('IngressClassName can be set', () => {
   // WHEN
   new Ingress(chart, 'my-ingress', {
     defaultBackend: IngressBackend.fromService(service),
-    ingressClassName: 'myIngressClassName',
+    className: 'myIngressClassName',
   });
 
   // THEN
