@@ -44,7 +44,7 @@ export interface IngressProps extends base.ResourceProps {
   /**
    * Ingress Class Name is an optional String property.
    */
-  readonly ingressClassName?: string;
+  readonly className?: string;
 }
 
 /**
