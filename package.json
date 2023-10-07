@@ -70,7 +70,7 @@
     "jsii": "1.x",
     "jsii-diff": "^1.90.0",
     "jsii-docgen": "^3.8.31",
-    "jsii-pacmak": "^1.89.0",
+    "jsii-pacmak": "^1.90.0",
     "jsii-rosetta": "1.x",
     "npm-check-updates": "^16",
     "projen": "^0.73.0",
