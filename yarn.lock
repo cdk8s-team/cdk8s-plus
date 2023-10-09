@@ -1792,14 +1792,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.131.0:
-  version "2.131.0"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.131.0.tgz#e800773ee5c536a0bb6b511831d690e466f5f449"
-  integrity sha512-ferF4K0Nv4R0r8tw2rv12dIWmtafA3/tp2OvgKQvxguXRiSFJacRxae7FOUKlbP1r4kfxha19x3ZGVdl6L9lIg==
+cdk8s-cli@^2.132.0:
+  version "2.132.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.132.0.tgz#47881bd26142288e3c0508882e0f5ef8430010f6"
+  integrity sha512-pYmDexHX6f/PLS2gzESJjorbnvYyj7Sy3aFNcNk2QJWidYd7Ahwgdh7lUE7mBKrGNo2Xurhqan8qu7RgcDIkiw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
-    cdk8s "^2.66.7"
+    cdk8s "^2.66.8"
     cdk8s-plus-25 "^2.22.30"
     codemaker "^1.90.0"
     colors "1.4.0"
@@ -1817,15 +1817,15 @@ cdk8s-cli@^2.131.0:
     backport "8.5.0"
 
 cdk8s-plus-25@^2.22.30:
-  version "2.22.30"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.30.tgz#553b0939f7c58b4a5aa9f3f16fa3a4440a8570e6"
-  integrity sha512-kHlanCMeSfTUqNl3M42By/3QwF24HxS0DraifjFays3hFO/zq0gMUMyaVWXNeu2lbbfppwaaUap3liIlDFQSAA==
+  version "2.22.31"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.31.tgz#e3c49c8e9e4411ffe8c9b05f96fc83c074374dd5"
+  integrity sha512-pzbAEyQ/1aIbgqtqlEYGkLMuMoE8hC0LEYdXC2qEKJw/aXHyaP1y8VwU94PYavwVyEa+WBfDdYCjFMzbsXBhHg==
   dependencies:
     minimatch "^3.1.2"
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.66.8, cdk8s@^2.66.7:
+cdk8s@2.66.8, cdk8s@^2.66.8:
   version "2.66.8"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.66.8.tgz#ed5bc983f389f5f7dc8e2716fa5a9574165bb102"
   integrity sha512-ELWEWe84VXd06O8itktG8TtzDDNxr1wpiucuzeZnxe1YHoEM2jr+8nc1j85tWzz6Cy6miPStglQs2TZc/LxK4g==
@@ -7269,7 +7269,6 @@ workerpool@^6.5.0:
   integrity sha512-r64Ea3glXY2RVzMeNxB+4J+0YHAVzUdV4cM5nHi4BBC2LvnO1pWFAIYKYuGcPElbg1/7eEiaPtZ/jzCjIUuGBg==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
