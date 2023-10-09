@@ -81,8 +81,8 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "cdk8s": "^2.66.5",
-    "constructs": "^10.2.70"
+    "cdk8s": "^2.66.8",
+    "constructs": "^10.3.0"
   },
   "dependencies": {
     "minimatch": "^3.1.2"
