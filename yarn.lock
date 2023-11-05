@@ -1837,10 +1837,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.166.0:
-  version "2.166.0"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.166.0.tgz#4a6795cf9132bc4aacfd9ace774b5fa5e831a805"
-  integrity sha512-5VYTE4MEQ+Tz5ZVeFwbBA9lQRZXi/uuWpdMNOJv9jXbJmYl6EG6gxJ9++OVk+zipFYsWr4vuwqUkhMYsddrEAw==
+cdk8s-cli@^2.167.0:
+  version "2.167.0"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.167.0.tgz#acc3bae9154416a8da7ef32eaca36f403c3e0349"
+  integrity sha512-CFEsqQelVe4P1qH2t36kMvG0UDWiyt8rWoCee6wPVptkUI0ayrwzFR689j188qnjIJPQTxZb++yO6roB9T077A==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
@@ -1851,7 +1851,7 @@ cdk8s-cli@^2.166.0:
     constructs "^10.3.0"
     fs-extra "^8"
     jsii-pacmak "^1.91.0"
-    jsii-srcmak "^0.1.955"
+    jsii-srcmak "^0.1.956"
     json2jsii "^0.3.389"
     semver "^7.5.4"
     sscaff "^1.2.274"
@@ -1862,9 +1862,9 @@ cdk8s-cli@^2.166.0:
     backport "8.5.0"
 
 cdk8s-plus-25@^2.22.50:
-  version "2.22.50"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.50.tgz#1315f12aac2d5af0d3897e8b5fdeb47d61780f44"
-  integrity sha512-FGu4+g7d1YC/lk+I/MqXTM9UqxFNkRnwCMzl3/Q2y+Vpmz/XPk30TW/KFJpyuok04y4MWxE+zoqVHRCCV0B6cQ==
+  version "2.22.51"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-25/-/cdk8s-plus-25-2.22.51.tgz#a00fec70595fc60f61fc5ed86e3899ffa969f998"
+  integrity sha512-E+FkEhVoMX0Tl41VoCSAMQjcxj1GclV87uJ+MLdfpB2Qwv0LhB41t0szHFdx2Lttd1ahgun4RdM2bNmt65oiWw==
   dependencies:
     minimatch "^3.1.2"
   optionalDependencies:
@@ -4621,10 +4621,10 @@ jsii-rosetta@1.x, jsii-rosetta@^1.44.0, jsii-rosetta@^1.91.0:
     workerpool "^6.5.1"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.955:
-  version "0.1.955"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.955.tgz#f5910974de54241b11262cc025cd6fc55e93c81f"
-  integrity sha512-Ek/VoLov+ChsHMIQ/pSDWYjJmclfmyZTP2xReR1Wwv9Hr3fieObKQ+eio9hBUefYg3OHV7qM2XsXyihl8CBT4g==
+jsii-srcmak@^0.1.956:
+  version "0.1.956"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.956.tgz#074bbfccf39666b697a91e86ed784a8ba753925e"
+  integrity sha512-9V5OOxORDa8vcRZv7avURUUrUDAsOv99LKuXo+SIhP7LG4YMu0jtNdq91oJe0h8qp30luTVBS5h7G1uSXMR7VQ==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.2.23"
@@ -7381,7 +7381,6 @@ workerpool@^6.5.1:
   integrity sha512-Fs4dNYcsdpYSAfVxhnl1L5zTksjvOJxtC5hzMNl+1t9B8hTJTdKDyZ5ju7ztgPy+ft9tBFXoOlDNiOT9WUXZlA==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
