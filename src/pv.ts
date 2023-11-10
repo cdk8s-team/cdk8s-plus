@@ -4,6 +4,7 @@ import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as pvc from './pvc';
 import * as volume from './volume';
+import * as secret from './secret';
 
 /**
  * Contract of a `PersistentVolumeClaim`.
@@ -597,6 +598,139 @@ export class GCEPersistentDiskPersistentVolume extends PersistentVolume {
         partition: this.partition,
         readOnly: this.readOnly,
       },
+    };
+  }
+}
+
+/**
+ * Properties for `IscsiPersistentVolume`.
+ */
+export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
+
+  /**
+   * chapAuthDiscovery defines whether support iSCSI Discovery CHAP authentication
+   *
+   * @default false
+   */
+  readonly chapAuthDiscovery?: boolean;
+
+  /**
+   * chapAuthSession defines whether support iSCSI Session CHAP authentication
+   *
+   * @default false
+   */
+  readonly chapAuthSession?: boolean;
+
+  /**
+   * fsType is the filesystem type of the volume that you want to mount.
+   *
+   * Tip: * Ensure that the filesystem type is supported by the host operating
+   * system.
+   *
+   * Examples: "ext4", "xfs", "ntfs".
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+   * @default 'ext4'
+   */
+  readonly fsType?: string;
+
+  /**
+   * initiatorName is the custom iSCSI Initiator Name. If initiatorName is
+   * specified with iscsiInterface simultaneously, new iSCSI interface <target
+   * portal>:<volume name> will be created for the connection.
+   */
+  readonly initiatorName?: string;
+
+  /**
+   * iqn is Target iSCSI Qualified Name.
+   */
+  readonly iqn?: string;
+
+  /**
+   * iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
+   *
+   * @default 'default'
+   */
+  readonly iscsiInterface?: string;
+
+  /**
+   * lun is iSCSI Target Lun number.
+   */
+  readonly lun?: number;
+
+  /**
+   * portals is the iSCSI Target Portal List. The Portal is either an IP or
+   * ip_addr:port if the port is other than default (typically TCP ports 860
+   * and 3260).
+   */
+  readonly portals?: string[];
+
+  /**
+   * readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * secretRef is the CHAP Secret for iSCSI target and initiator authentication
+   */
+  readonly secretRef?: secret.ISecret;
+
+  /**
+   * targetPortal is iSCSI Target Portal. The Portal is either an IP or
+   * ip_addr:port if the port is other than default (typically TCP ports 860
+   * and 3260).
+   */
+  readonly targetPortal?: string;
+
+}
+
+/**
+ * Iscsi
+ *
+ * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+ */
+export class IscsiPersistentVolume extends PersistentVolume {
+
+
+  constructor(scope: Construct, id: string, props: IscsiPersistentVolumeProps) {
+    super(scope, id, props);
+
+    this.chapAuthDiscovery = props.chapAuthDiscovery;
+    this.chapAuthSession = props.chapAuthSession;
+    this.fsType = props.fsType;
+    this.initiatorName = props.initiatorName;
+    this.iqn = props.iqn,;
+    this.iscsiInterface = props.iscsiInterface;
+    this.lun = props.lun,;
+    this.portals = props.portals;
+    this.readOnly = props.readOnly;
+    this.secretRef = props.secretRef;
+    this.targetPortal = props.targetPortal;
+
+  }
+
+  /**
+   * @internal
+   *
+   * @see https://github.com/kubernetes/examples/tree/master/volumes/iscsi
+   */
+  public _toKube(): k8s.PersistentVolumeSpec {
+    const spec = super._toKube();
+    return {
+      ...spec,
+      iscsi: {
+        chapAuthDiscovery: this.chapAuthDiscovery ? { this.chapAuthDiscovery } : undefined,
+        chapAuthSession: this.chapAuthSession ? { this.chapAuthSession } : undefined,
+        fsType: this.fsType ? { this.fsType } : undefined,
+        initiatorName: this.initiatorName ? { this.initiatorName } : undefined,
+        iqn: this.iqn,
+        iscsiInterface: this.iscsiInterface ? { this.iscsiInterface } : undefined,
+        lun: this.lun,
+        portals: this.portals ? { this.portals } : undefined,
+        readOnly: this.readOnly ? { this.readOnly } : undefined,
+        secretRef: this.secretRef ? { this.secretRef } : undefined,
+        targetPortal: this.targetPortal
+     },
     };
   }
 }
