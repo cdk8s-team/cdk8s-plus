@@ -609,15 +609,11 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
 
   /**
    * chapAuthDiscovery defines whether support iSCSI Discovery CHAP authentication
-   *
-   * @default false
    */
   readonly chapAuthDiscovery?: boolean;
 
   /**
    * chapAuthSession defines whether support iSCSI Session CHAP authentication
-   *
-   * @default false
    */
   readonly chapAuthSession?: boolean;
 
@@ -630,7 +626,6 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
    * Examples: "ext4", "xfs", "ntfs".
    *
    * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
-   * @default 'ext4'
    */
   readonly fsType?: string;
 
@@ -648,8 +643,6 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
 
   /**
    * iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
-   *
-   * @default 'default'
    */
   readonly iscsiInterface?: string;
 
@@ -699,9 +692,9 @@ export class IscsiPersistentVolume extends PersistentVolume {
     this.chapAuthSession = props.chapAuthSession;
     this.fsType = props.fsType;
     this.initiatorName = props.initiatorName;
-    this.iqn = props.iqn,;
+    this.iqn = props.iqn;
     this.iscsiInterface = props.iscsiInterface;
-    this.lun = props.lun,;
+    this.lun = props.lun;
     this.portals = props.portals;
     this.readOnly = props.readOnly;
     this.secretRef = props.secretRef;
