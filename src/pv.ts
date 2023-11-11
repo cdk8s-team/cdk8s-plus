@@ -236,8 +236,14 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    * @param claim The PVC to bind to.
    */
   public bind(claim: pvc.IPersistentVolumeClaim) {
-    if (this._claim && (this._claim.name !== claim.name || this._claim.namespace !== claim.namespace)) {
-      throw new Error(`Cannot bind volume '${this.name}' to claim '${claim.name}' since it is already bound to claim '${this._claim.name}'`);
+    if (
+      this._claim &&
+      (this._claim.name !== claim.name ||
+        this._claim.namespace !== claim.namespace)
+    ) {
+      throw new Error(
+        `Cannot bind volume '${this.name}' to claim '${claim.name}' since it is already bound to claim '${this._claim.name}' in namespace '${this._claim.namespace}'`,
+      );
     }
     this._claim = claim;
   }
@@ -254,8 +260,15 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
     const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes() + 'Gi') : undefined;
 
     return {
-      claimRef: this._claim ? { name: this._claim?.name } : undefined,
-      accessModes: this.accessModes?.map(a => a.toString()),
+      claimRef: this._claim
+        ? {
+          name: this._claim?.name,
+          namespace: this._claim?.namespace,
+          kind: this._claim?.kind,
+          apiVersion: this._claim?.apiVersion,
+        }
+        : undefined,
+      accessModes: this.accessModes?.map((a) => a.toString()),
       capacity: storage ? { storage } : undefined,
       mountOptions: this.mountOptions?.map(o => o),
       storageClassName: this.storageClassName,
@@ -263,7 +276,6 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
       volumeMode: this.mode,
     };
   }
-
 }
 
 /**
@@ -780,8 +792,12 @@ export class IscsiPersistentVolume extends PersistentVolume {
     return {
       ...spec,
       iscsi: {
-        chapAuthDiscovery: this.chapAuthDiscovery ? this.chapAuthDiscovery : undefined,
-        chapAuthSession: this.chapAuthSession ? this.chapAuthSession : undefined,
+        chapAuthDiscovery: this.chapAuthDiscovery
+          ? this.chapAuthDiscovery
+          : undefined,
+        chapAuthSession: this.chapAuthSession
+          ? this.chapAuthSession
+          : undefined,
         fsType: this.fsType ? this.fsType : undefined,
         initiatorName: this.initiatorName ? this.initiatorName : undefined,
         iqn: this.iqn,
