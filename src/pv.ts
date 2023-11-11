@@ -211,7 +211,8 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    */
   public reserve(): pvc.PersistentVolumeClaim {
     const claim = new pvc.PersistentVolumeClaim(this, `${this.name}PVC`, {
-      metadata: { name: `pvc-${this.name}`, namespace: this.metadata.namespace },
+      metadata: { name: `pvc-${this.name}` },
+      namespace: this.metadata.namespace,
 
       // the storage classes must match, otherwise the claim
       // will use the default class (or no class at all), which may be different than the class
@@ -235,7 +236,7 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    * @param claim The PVC to bind to.
    */
   public bind(claim: pvc.IPersistentVolumeClaim) {
-    if (this._claim && this._claim.name !== claim.name) {
+    if (this._claim && (this._claim.name !== claim.name || this._claim.namespace !== claim.namespace)) {
       throw new Error(`Cannot bind volume '${this.name}' to claim '${claim.name}' since it is already bound to claim '${this._claim.name}'`);
     }
     this._claim = claim;
@@ -639,7 +640,7 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
   /**
    * iqn is Target iSCSI Qualified Name.
    */
-  readonly iqn?: string;
+  readonly iqn: string;
 
   /**
    * iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
@@ -649,7 +650,7 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
   /**
    * lun is iSCSI Target Lun number.
    */
-  readonly lun?: number;
+  readonly lun: number;
 
   /**
    * portals is the iSCSI Target Portal List. The Portal is either an IP or
@@ -673,7 +674,7 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
    * ip_addr:port if the port is other than default (typically TCP ports 860
    * and 3260).
    */
-  readonly targetPortal?: string;
+  readonly targetPortal: string;
 
 }
 
@@ -684,6 +685,73 @@ export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
  */
 export class IscsiPersistentVolume extends PersistentVolume {
 
+  /**
+   * chapAuthDiscovery defines whether support iSCSI Discovery CHAP authentication
+   */
+  readonly chapAuthDiscovery?: boolean;
+
+  /**
+   * chapAuthSession defines whether support iSCSI Session CHAP authentication
+   */
+  readonly chapAuthSession?: boolean;
+
+  /**
+   * fsType is the filesystem type of the volume that you want to mount.
+   *
+   * Tip: * Ensure that the filesystem type is supported by the host operating
+   * system.
+   *
+   * Examples: "ext4", "xfs", "ntfs".
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+   */
+  readonly fsType?: string;
+
+  /**
+   * initiatorName is the custom iSCSI Initiator Name. If initiatorName is
+   * specified with iscsiInterface simultaneously, new iSCSI interface <target
+   * portal>:<volume name> will be created for the connection.
+   */
+  readonly initiatorName?: string;
+
+  /**
+   * iqn is Target iSCSI Qualified Name.
+   */
+  readonly iqn: string;
+
+  /**
+   * iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
+   */
+  readonly iscsiInterface?: string;
+
+  /**
+   * lun is iSCSI Target Lun number.
+   */
+  readonly lun: number;
+
+  /**
+   * portals is the iSCSI Target Portal List. The Portal is either an IP or
+   * ip_addr:port if the port is other than default (typically TCP ports 860
+   * and 3260).
+   */
+  readonly portals?: string[];
+
+  /**
+   * readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * secretRef is the CHAP Secret for iSCSI target and initiator authentication
+   */
+  readonly secretRef?: secret.ISecret;
+
+  /**
+   * targetPortal is iSCSI Target Portal. The Portal is either an IP or
+   * ip_addr:port if the port is other than default (typically TCP ports 860
+   * and 3260).
+   */
+  readonly targetPortal: string;
 
   constructor(scope: Construct, id: string, props: IscsiPersistentVolumeProps) {
     super(scope, id, props);
@@ -712,18 +780,18 @@ export class IscsiPersistentVolume extends PersistentVolume {
     return {
       ...spec,
       iscsi: {
-        chapAuthDiscovery: this.chapAuthDiscovery ? { this.chapAuthDiscovery } : undefined,
-        chapAuthSession: this.chapAuthSession ? { this.chapAuthSession } : undefined,
-        fsType: this.fsType ? { this.fsType } : undefined,
-        initiatorName: this.initiatorName ? { this.initiatorName } : undefined,
+        chapAuthDiscovery: this.chapAuthDiscovery ? this.chapAuthDiscovery : undefined,
+        chapAuthSession: this.chapAuthSession ? this.chapAuthSession : undefined,
+        fsType: this.fsType ? this.fsType : undefined,
+        initiatorName: this.initiatorName ? this.initiatorName : undefined,
         iqn: this.iqn,
-        iscsiInterface: this.iscsiInterface ? { this.iscsiInterface } : undefined,
+        iscsiInterface: this.iscsiInterface ? this.iscsiInterface : undefined,
         lun: this.lun,
-        portals: this.portals ? { this.portals } : undefined,
-        readOnly: this.readOnly ? { this.readOnly } : undefined,
-        secretRef: this.secretRef ? { this.secretRef } : undefined,
-        targetPortal: this.targetPortal
-     },
+        portals: this.portals ? this.portals : undefined,
+        readOnly: this.readOnly ? this.readOnly : undefined,
+        secretRef: this.secretRef ? this.secretRef : undefined,
+        targetPortal: this.targetPortal,
+      },
     };
   }
 }
