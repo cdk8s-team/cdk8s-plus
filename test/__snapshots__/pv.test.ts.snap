@@ -149,6 +149,8 @@ Array [
         "volumeID": "vol1",
       },
       "claimRef": Object {
+        "apiVersion": "v1",
+        "kind": "PersistentVolumeClaim",
         "name": "claim",
       },
       "persistentVolumeReclaimPolicy": "Retain",
@@ -173,6 +175,8 @@ Array [
         "volumeID": "vol1",
       },
       "claimRef": Object {
+        "apiVersion": "v1",
+        "kind": "PersistentVolumeClaim",
         "name": "claim",
       },
       "persistentVolumeReclaimPolicy": "Retain",
@@ -197,6 +201,8 @@ Array [
         "volumeID": "vol1",
       },
       "claimRef": Object {
+        "apiVersion": "v1",
+        "kind": "PersistentVolumeClaim",
         "name": "pvc-test-volume-c8db061e",
       },
       "persistentVolumeReclaimPolicy": "Retain",
@@ -234,6 +240,8 @@ Array [
         "volumeID": "vol1",
       },
       "claimRef": Object {
+        "apiVersion": "v1",
+        "kind": "PersistentVolumeClaim",
         "name": "pvc-test-volume-c8db061e",
       },
       "persistentVolumeReclaimPolicy": "Retain",

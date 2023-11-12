@@ -257,6 +257,8 @@ Array [
         "volumeID": "vol",
       },
       "claimRef": Object {
+        "apiVersion": "v1",
+        "kind": "PersistentVolumeClaim",
         "name": "pvc-test-pv-c8b2a2c6",
       },
       "persistentVolumeReclaimPolicy": "Retain",
