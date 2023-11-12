@@ -209,11 +209,10 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
    */
-  public reserve(): pvc.PersistentVolumeClaim {
+  public reserve(namespace?: string): pvc.PersistentVolumeClaim {
     const claim = new pvc.PersistentVolumeClaim(this, `${this.name}PVC`, {
       metadata: { name: `pvc-${this.name}` },
-      namespace: this.metadata.namespace,
-
+      namespace: namespace ? namespace : this.metadata.namespace,
       // the storage classes must match, otherwise the claim
       // will use the default class (or no class at all), which may be different than the class
       // of this volume. note that other requirements are not needed since
