@@ -52,7 +52,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.466",
+    "@cdk8s/projen-common": "^0.0.467",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "^16",
@@ -62,7 +62,6 @@
     "cdk8s-cli": "^2.177.0",
     "constructs": "10.3.0",
     "eslint": "^8",
-    "eslint-import-resolver-node": "^0.3.9",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.29.0",
     "jest": "^27",
@@ -73,7 +72,7 @@
     "jsii-pacmak": "^1.91.0",
     "jsii-rosetta": "1.x",
     "npm-check-updates": "^16",
-    "projen": "^0.73.0",
+    "projen": "^0.76.28",
     "snake-case": "^3.0.4",
     "standard-version": "^9",
     "ts-jest": "^27",
