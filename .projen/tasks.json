@@ -489,13 +489,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=peer,prod,optional --filter=cdk8s,constructs,minimatch"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=prod,optional --filter=minimatch"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade cdk8s constructs minimatch"
+          "exec": "yarn upgrade minimatch"
         },
         {
           "exec": "npx projen"
