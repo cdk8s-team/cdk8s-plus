@@ -1535,10 +1535,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.20:
-  version "2.198.20"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.20.tgz#1d47761fb9921b11cd7d8cf7fa7d4ead2827e62f"
-  integrity sha512-eieehRz6VXpVF0L7dHXnRC5yqwY9fHWgYDXEiLnq9azIzWfTwWHv/PkIHsego2Uu0wJ6LXhQm0fvjN3A/284Zw==
+cdk8s-cli@^2.198.21:
+  version "2.198.21"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.21.tgz#63b50bfaed072dd37e9629d92ee03c43d6b5058a"
+  integrity sha512-oWwVdgmDjpXgfW2aTyXE4DOj1iwxDtQNWSqVOh6mgBWxYiSD90wCnNlvXQVOWyLbepbRAkOnUgK13Oh1GOw9/g==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
