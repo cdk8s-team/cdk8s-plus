@@ -1526,19 +1526,19 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001565:
-  version "1.0.30001572"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001572.tgz#1ccf7dc92d2ee2f92ed3a54e11b7b4a3041acfa0"
-  integrity sha512-1Pbh5FLmn5y4+QhNyJE9j3/7dK44dGB83/ZMjv/qJk86TvDbjk0LosiZo0i0WB0Vx607qMX9jYrn1VLHCkN4rw==
+  version "1.0.30001574"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001574.tgz#fb4f1359c77f6af942510493672e1ec7ec80230c"
+  integrity sha512-BtYEK4r/iHt/txm81KBudCUcTy7t+s9emrIaHqjYurQ10x71zJ5VQ9x1dYPcz/b+pKSp4y/v1xSI67A+LzpNyg==
 
 case@^1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.25:
-  version "2.198.25"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.25.tgz#fe4f81c10dacdc7c285ba297f8e8f2f8782a1e76"
-  integrity sha512-S1in5cR0ALdXKjteBVghaP8Yy3xempcvrUdw7jvrEhYEu0I2VQUvAGYeW4T7HigCVPLgjKUymdKMZdCtgoTSwA==
+cdk8s-cli@^2.198.26:
+  version "2.198.26"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.26.tgz#76ec41d54219e358edce76586cd8695320fbb72e"
+  integrity sha512-ROnN80EuKiDCvHRWAy0o4UMD6afNVIK4mphs119Ef2nzE8YsWG7xbvAVE5WRXjZdESZfrkY7fB99nye3wxeaUw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
@@ -2233,9 +2233,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.601:
-  version "1.4.617"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.617.tgz#3b0dde6c54e5f0f26db75ce6c6ae751e5df4bf75"
-  integrity sha512-sYNE3QxcDS4ANW1k4S/wWYMXjCVcFSOX3Bg8jpuMFaXt/x8JCmp0R1Xe1ZXDX4WXnSRBf+GJ/3eGWicUuQq5cg==
+  version "1.4.620"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.620.tgz#a6481e0703f8df1e6821063fb43c9b818a7a2ef4"
+  integrity sha512-a2fcSHOHrqBJsPNXtf6ZCEZpXrFCcbK1FBxfX3txoqWzNgtEDG1f3M59M98iwxhRW4iMKESnSjbJ310/rkrp0g==
 
 emittery@^0.8.1:
   version "0.8.1"
