@@ -31,7 +31,6 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
-!/.projenrc.js
 /test-reports/
 junit.xml
 /coverage/
@@ -81,3 +80,4 @@ docs/typescript.md
 docs/python.md
 docs/java.md
 !/src/api-resource.generated.ts
+!/.projenrc.ts
