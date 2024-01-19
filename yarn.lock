@@ -2233,9 +2233,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.601:
-  version "1.4.637"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.637.tgz#ed8775cf5e0c380c3e8452e9818a0e4b7a671ac4"
-  integrity sha512-G7j3UCOukFtxVO1vWrPQUoDk3kL70mtvjc/DC/k2o7lE0wAdq+Vwp1ipagOow+BH0uVztFysLWbkM/RTIrbK3w==
+  version "1.4.639"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.639.tgz#c6f9cc685f9efb2980d2cfc95a27f8142c9adf28"
+  integrity sha512-CkKf3ZUVZchr+zDpAlNLEEy2NJJ9T64ULWaDgy3THXXlPVPkLu3VOs9Bac44nebVtdwl2geSj6AxTtGDOxoXhg==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3962,9 +3962,9 @@ jsii-rosetta@1.x, jsii-rosetta@^1.44.0, jsii-rosetta@^1.94.0:
     yargs "^16.2.0"
 
 jsii-srcmak@^0.1.999:
-  version "0.1.1008"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1008.tgz#9e90cb0774291b35d36b18437e52950874fe5b94"
-  integrity sha512-bjMujcijnTbkiDFKZofDV2IRGatMD4QTZ0+AL1jXcdhbcns+ctlVjKy66WR/rWMgdtsy8qjWAqA+a7MD4VSi+Q==
+  version "0.1.1009"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1009.tgz#07566be50394d38ecbf20e406c912aea1db9e8ff"
+  integrity sha512-uiob7lADmiP9fZbm/gGWAenK1ilSQEX7+kh5DoWwkCCGviYefeuXTYVMeu4Jy8/pkfilsxD8qsYLSdppIefjQQ==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.3.7"
