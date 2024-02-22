@@ -7,14 +7,14 @@ In configuration, they don't differ much from regular pods, but offer some
 additional properties.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-27/typescript.md#job)
+    [API Reference](../../reference/cdk8s-plus-28/typescript.md#job)
 
 ## Delete a Job after its finished
 
 You can configure a TTL for the job after it finished its execution successfully.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-28';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps, Duration } from 'cdk8s';
 
