@@ -72,6 +72,8 @@ const project = new Cdk8sTeamJsiiProject({
 // Used in K8s upgrade tests to control publishing of new branches
 project.package.addField('private', false);
 
+// not using `npmAccess` property because projen omits values that are
+// identical to npm defaults.
 project.package.addField('publishConfig', { access: 'public' });
 
 project.gitignore.exclude('.vscode/');
