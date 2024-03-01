@@ -104,6 +104,10 @@ export class Role extends base.Resource implements IRole {
       metadata: props.metadata,
       rules: Lazy.any({ produce: () => this.synthesizeRules() }),
     });
+
+    for (const rule of props.rules ?? []) {
+      this.allow(rule.verbs, ...rule.resources);
+    }
   }
 
   /**
