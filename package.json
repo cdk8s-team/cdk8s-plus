@@ -52,7 +52,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.497",
+    "@cdk8s/projen-common": "^0.0.498",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "^16 <= 16.18.78",
@@ -71,7 +71,7 @@
     "jsii-docgen": "^3.8.31",
     "jsii-pacmak": "^1.95.0",
     "jsii-rosetta": "1.x",
-    "projen": "^0.80.6",
+    "projen": "^0.80.7",
     "snake-case": "^3.0.4",
     "standard-version": "^9",
     "ts-jest": "^27",
