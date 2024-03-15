@@ -3,7 +3,7 @@
 Create a deployment to govern the lifecycle and orchestration of a set of identical pods.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-27/typescript.md#deployment)
+    [API Reference](../../reference/cdk8s-plus-28/typescript.md#deployment)
 
 ## Automatic pod selection
 
@@ -11,7 +11,7 @@ When you specify pods in a deployment, you normally have to configure the approp
 make the deployment control the relevant pods. This construct does this automatically.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-28';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
