@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as pvc from './pvc';
+import * as secret from './secret';
 import * as volume from './volume';
 
 /**
@@ -208,10 +209,10 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume
    */
-  public reserve(): pvc.PersistentVolumeClaim {
+  public reserve(namespace?: string): pvc.PersistentVolumeClaim {
     const claim = new pvc.PersistentVolumeClaim(this, `${this.name}PVC`, {
-      metadata: { name: `pvc-${this.name}`, namespace: this.metadata.namespace },
-
+      metadata: { name: `pvc-${this.name}` },
+      namespace: namespace ? namespace : this.metadata.namespace,
       // the storage classes must match, otherwise the claim
       // will use the default class (or no class at all), which may be different than the class
       // of this volume. note that other requirements are not needed since
@@ -234,8 +235,14 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
    * @param claim The PVC to bind to.
    */
   public bind(claim: pvc.IPersistentVolumeClaim) {
-    if (this._claim && this._claim.name !== claim.name) {
-      throw new Error(`Cannot bind volume '${this.name}' to claim '${claim.name}' since it is already bound to claim '${this._claim.name}'`);
+    if (
+      this._claim &&
+      (this._claim.name !== claim.name ||
+        this._claim.namespace !== claim.namespace)
+    ) {
+      throw new Error(
+        `Cannot bind volume '${this.name}' to claim '${claim.name}' since it is already bound to claim '${this._claim.name}' in namespace '${this._claim.namespace}'`,
+      );
     }
     this._claim = claim;
   }
@@ -252,8 +259,15 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
     const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes() + 'Gi') : undefined;
 
     return {
-      claimRef: this._claim ? { name: this._claim?.name } : undefined,
-      accessModes: this.accessModes?.map(a => a.toString()),
+      claimRef: this._claim
+        ? {
+          name: this._claim?.name,
+          namespace: this._claim?.namespace,
+          kind: this._claim?.kind,
+          apiVersion: this._claim?.apiVersion,
+        }
+        : undefined,
+      accessModes: this.accessModes?.map((a) => a.toString()),
       capacity: storage ? { storage } : undefined,
       mountOptions: this.mountOptions?.map(o => o),
       storageClassName: this.storageClassName,
@@ -261,7 +275,6 @@ export class PersistentVolume extends base.Resource implements IPersistentVolume
       volumeMode: this.mode,
     };
   }
-
 }
 
 /**
@@ -596,6 +609,125 @@ export class GCEPersistentDiskPersistentVolume extends PersistentVolume {
         fsType: this.fsType,
         partition: this.partition,
         readOnly: this.readOnly,
+      },
+    };
+  }
+}
+
+/**
+ * Properties for `IscsiPersistentVolume`.
+ */
+export interface IscsiPersistentVolumeProps extends PersistentVolumeProps {
+
+  /**
+   * chapAuthDiscovery defines whether support iSCSI Discovery CHAP authentication
+   */
+  readonly chapAuthDiscovery?: boolean;
+
+  /**
+   * chapAuthSession defines whether support iSCSI Session CHAP authentication
+   */
+  readonly chapAuthSession?: boolean;
+
+  /**
+   * fsType is the filesystem type of the volume that you want to mount.
+   *
+   * Tip: * Ensure that the filesystem type is supported by the host operating
+   * system.
+   *
+   * Examples: "ext4", "xfs", "ntfs".
+   *
+   * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+   */
+  readonly fsType?: string;
+
+  /**
+   * initiatorName is the custom iSCSI Initiator Name. If initiatorName is
+   * specified with iscsiInterface simultaneously, new iSCSI interface <target
+   * portal>:<volume name> will be created for the connection.
+   */
+  readonly initiatorName?: string;
+
+  /**
+   * iqn is Target iSCSI Qualified Name.
+   */
+  readonly iqn: string;
+
+  /**
+   * iscsiInterface is the interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
+   */
+  readonly iscsiInterface?: string;
+
+  /**
+   * lun is iSCSI Target Lun number.
+   */
+  readonly lun: number;
+
+  /**
+   * portals is the iSCSI Target Portal List. The Portal is either an IP or
+   * ip_addr:port if the port is other than default (typically TCP ports 860
+   * and 3260).
+   */
+  readonly portals?: string[];
+
+  /**
+   * readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
+   */
+  readonly readOnly?: boolean;
+
+  /**
+   * secretRef is the CHAP Secret for iSCSI target and initiator authentication
+   */
+  readonly secretRef?: secret.ISecret;
+
+  /**
+   * targetPortal is iSCSI Target Portal. The Portal is either an IP or
+   * ip_addr:port if the port is other than default (typically TCP ports 860
+   * and 3260).
+   */
+  readonly targetPortal: string;
+
+}
+
+/**
+ * Iscsi
+ *
+ * @see https://kubernetes.io/docs/concepts/storage/volumes#iscsi
+ */
+export class IscsiPersistentVolume extends PersistentVolume {
+
+  readonly props: IscsiPersistentVolumeProps;
+
+  constructor(scope: Construct, id: string, props: IscsiPersistentVolumeProps) {
+    super(scope, id, props);
+    this.props = props;
+  }
+
+  /**
+   * @internal
+   *
+   * @see https://github.com/kubernetes/examples/tree/master/volumes/iscsi
+   */
+  public _toKube(): k8s.PersistentVolumeSpec {
+    const spec = super._toKube();
+    return {
+      ...spec,
+      iscsi: {
+        chapAuthDiscovery: this.props.chapAuthDiscovery
+          ? this.props.chapAuthDiscovery
+          : undefined,
+        chapAuthSession: this.props.chapAuthSession
+          ? this.props.chapAuthSession
+          : undefined,
+        fsType: this.props.fsType ? this.props.fsType : undefined,
+        initiatorName: this.props.initiatorName ? this.props.initiatorName : undefined,
+        iqn: this.props.iqn,
+        iscsiInterface: this.props.iscsiInterface ? this.props.iscsiInterface : undefined,
+        lun: this.props.lun,
+        portals: this.props.portals ? this.props.portals : undefined,
+        readOnly: this.props.readOnly ? this.props.readOnly : undefined,
+        secretRef: this.props.secretRef ? this.props.secretRef : undefined,
+        targetPortal: this.props.targetPortal,
       },
     };
   }

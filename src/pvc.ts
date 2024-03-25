@@ -9,6 +9,8 @@ import * as pv from './pv';
  */
 export interface IPersistentVolumeClaim extends base.IResource {
 
+  readonly namespace?: string;
+
 }
 
 /**
@@ -69,6 +71,7 @@ export interface PersistentVolumeClaimProps extends base.ResourceProps {
    */
   readonly volume?: pv.IPersistentVolume;
 
+  readonly namespace?: string;
 }
 
 class ImportedPersistentVolumeClaim extends Construct implements IPersistentVolumeClaim {
@@ -145,9 +148,12 @@ export class PersistentVolumeClaim extends base.Resource implements IPersistentV
 
   private _volume?: pv.IPersistentVolume;
 
+  public readonly namespace?: string;
+
   public constructor(scope: Construct, id: string, props: PersistentVolumeClaimProps = { }) {
     super(scope, id);
 
+    this.namespace = props.namespace;
     this.storage = props.storage;
     this.volumeMode = props.volumeMode ?? PersistentVolumeMode.FILE_SYSTEM;
     this.storageClassName = props.storageClassName;
@@ -158,7 +164,10 @@ export class PersistentVolumeClaim extends base.Resource implements IPersistentV
     }
 
     this.apiObject = new k8s.KubePersistentVolumeClaim(this, 'Resource', {
-      metadata: props.metadata,
+      metadata: {
+        ...props.metadata,
+        namespace: this.namespace ? this.namespace : undefined,
+      },
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
   }
