@@ -19,6 +19,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.ISecret;
   public readonly automountServiceAccountToken: boolean;
+  public readonly shareProcessNamespace: boolean;
   public readonly hostNetwork?: boolean;
   public readonly terminationGracePeriod?: Duration;
 
@@ -40,6 +41,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
+    this.shareProcessNamespace = props.shareProcessNamespace ?? false;
     this.isolate = props.isolate ?? false;
     this.hostNetwork = props.hostNetwork ?? false;
     this.terminationGracePeriod = props.terminationGracePeriod ?? Duration.seconds(30);
@@ -238,6 +240,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
+      shareProcessNamespace: this.shareProcessNamespace,
       hostNetwork: this.hostNetwork,
       terminationGracePeriodSeconds: this.terminationGracePeriod?.toSeconds(),
     };
@@ -425,6 +428,14 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
    */
   readonly automountServiceAccountToken?: boolean;
+
+  /**
+   * When process namespace sharing is enabled, processes in a container are visible to all other containers in the same pod.
+   *
+   * @default false
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/
+   */
+  readonly shareProcessNamespace?: boolean;
 
   /**
    * Isolates the pod. This will prevent any ingress or egress connections to / from this pod.

@@ -55,6 +55,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "shareProcessNamespace": false,
       "terminationGracePeriodSeconds": 30,
     },
   },
@@ -105,6 +106,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "shareProcessNamespace": false,
       "terminationGracePeriodSeconds": 30,
     },
   },
@@ -176,6 +178,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "shareProcessNamespace": false,
       "terminationGracePeriodSeconds": 30,
     },
   },
@@ -232,6 +235,7 @@ Array [
         "runAsNonRoot": true,
       },
       "setHostnameAsFQDN": false,
+      "shareProcessNamespace": false,
       "terminationGracePeriodSeconds": 30,
       "volumes": Array [
         Object {
