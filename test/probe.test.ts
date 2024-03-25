@@ -57,6 +57,7 @@ describe('fromHttpGet()', () => {
       periodSeconds: Duration.seconds(5),
       successThreshold: 3,
       timeoutSeconds: Duration.minutes(2),
+      host: '1.1.1.1',
     });
 
     // THEN
@@ -65,6 +66,7 @@ describe('fromHttpGet()', () => {
         path: '/hello',
         port: k8s.IntOrString.fromNumber(5555),
         scheme: 'HTTP',
+        host: '1.1.1.1',
       },
       failureThreshold: 11,
       initialDelaySeconds: 60,

@@ -21,11 +21,16 @@ export class Action {
     return { command };
   }
 
-  public static fromHttpGet(container: Container, path: string, options: { port?: number; scheme?: ConnectionScheme } = { }): k8s.HttpGetAction {
+  public static fromHttpGet(container: Container, path: string, options: {
+    port?: number;
+    scheme?: ConnectionScheme;
+    host?: string;
+  } = {}): k8s.HttpGetAction {
     return {
       path,
       port: k8s.IntOrString.fromNumber(options.port ?? container.portNumber ?? 80),
       scheme: options.scheme ?? ConnectionScheme.HTTP,
+      host: options.host,
     };
   }
 }

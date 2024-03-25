@@ -85,6 +85,13 @@ export interface HttpGetProbeOptions extends ProbeOptions {
    *  @default ConnectionScheme.HTTP
    */
   readonly scheme?: ConnectionScheme;
+
+  /**
+   * The host name to connect to on the container.
+   *
+   * @default - defaults to the pod IP
+   */
+  readonly host?: string;
 }
 
 /**
