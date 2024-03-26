@@ -154,6 +154,32 @@ Array [
 
   });
 
+  test('specify access from props', () => {
+
+    // GIVEN
+    const chart = Testing.chart();
+
+    // WHEN
+    new kplus.Role(chart, 'my-role', {
+      rules: [
+        {
+          verbs: ['get', 'list', 'watch'],
+          resources: [kplus.ApiResource.PODS],
+        },
+      ],
+    });
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest[0].rules).toEqual(expect.arrayContaining([
+      {
+        apiGroups: [''],
+        resources: ['pods'],
+        verbs: ['get', 'list', 'watch'],
+      },
+    ]));
+  });
+
   test('giving access to a single pod and all pods still gives access to all pods', () => {
 
     // GIVEN
