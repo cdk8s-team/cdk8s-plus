@@ -149,7 +149,7 @@ export class Secret extends base.Resource implements ISecret {
   }
 
   /**
-   * Adds a string data field to the secert.
+   * Adds a string data field to the secret.
    * @param key Key
    * @param value Value
    */
