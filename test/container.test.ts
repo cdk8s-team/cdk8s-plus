@@ -180,23 +180,56 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
-  test('cannot configure identical ports at instantiation', () => {
+  test('cannot configure identical ports and protocols at instantiation', () => {
 
     expect(() => new kplus.Container({
       image: 'image',
       ports: [
         {
           number: 8080,
+          protocol: kplus.Protocol.TCP,
         },
         {
           number: 8080,
+          protocol: kplus.Protocol.TCP,
         },
       ],
-    })).toThrowError('Port with number 8080 already exists');
+    })).toThrowError('Port with number 8080 and protocol TCP already exists');
 
   });
 
-  test('cannot add an already existing port number', () => {
+  test('can configure identical ports with different protocols at instantiation', () => {
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+          protocol: kplus.Protocol.TCP,
+        },
+        {
+          number: 8080,
+          protocol: kplus.Protocol.UDP,
+        },
+      ],
+    });
+
+    expect(container._toKube().ports).toEqual([{
+      containerPort: 8080,
+      protocol: 'TCP',
+    }, {
+      containerPort: 8080,
+      protocol: 'UDP',
+    }]);
+    expect(container.ports).toEqual([{
+      number: 8080,
+      protocol: kplus.Protocol.TCP,
+    }, {
+      number: 8080,
+      protocol: kplus.Protocol.UDP,
+    }]);
+  });
+
+  test('cannot add an already existing port number with identical protocol', () => {
 
     const container = new kplus.Container({
       image: 'image',
@@ -205,8 +238,38 @@ describe('Container', () => {
       }],
     });
 
-    expect(() => container.addPort({ number: 8080 })).toThrowError('Port with number 8080 already exists');
+    expect(() => container.addPort({ number: 8080 })).toThrowError('Port with number 8080 and protocol TCP already exists');
 
+  });
+
+  test('can add an already existing port number with a different protocol', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+        protocol: kplus.Protocol.TCP,
+      }],
+    });
+    container.addPort({
+      number: 8080,
+      protocol: kplus.Protocol.UDP,
+    });
+
+    expect(container._toKube().ports).toEqual([{
+      containerPort: 8080,
+      protocol: 'TCP',
+    }, {
+      containerPort: 8080,
+      protocol: 'UDP',
+    }]);
+    expect(container.ports).toEqual([{
+      number: 8080,
+      protocol: kplus.Protocol.TCP,
+    }, {
+      number: 8080,
+      protocol: kplus.Protocol.UDP,
+    }]);
   });
 
   test('cannot add an already existing port name', () => {
