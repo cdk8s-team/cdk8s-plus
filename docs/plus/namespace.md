@@ -3,14 +3,14 @@
 Namespaces provides a mechanism for isolating groups of resources within a single cluster.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-27/typescript.md#namespace)
+    [API Reference](../../reference/cdk8s-plus-28/typescript.md#namespace)
 
 ## Create a `Namespace`
 
 To create a new namespace in the cluster:
 
 ```ts
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-28';
 import * as k from 'cdk8s';
 
 const app = new k.App();
@@ -32,7 +32,7 @@ cdk8s+ API's, such as [pod selection](./pod.md#pod-selection) during scheduling.
 Select a namespace called `backoffice`.
 
 ```ts
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-28';
 
 const backoffice = kplus.Namespaces.select(this, 'Backoffice', { names: ['backoffice'] });
 ```
@@ -42,7 +42,7 @@ const backoffice = kplus.Namespaces.select(this, 'Backoffice', { names: ['backof
 Select all namespaces that have the `processing=batch` label.
 
 ```ts
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-28';
 
 const batch = kplus.Namespaces.select(this, 'Batch', { labels: { processing: 'batch'} });
 ```
@@ -52,7 +52,7 @@ const batch = kplus.Namespaces.select(this, 'Batch', { labels: { processing: 'ba
 Select all namespaces in the cluster.
 
 ```ts
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-28';
 
 const all = kplus.Namespaces.all();
 ```
