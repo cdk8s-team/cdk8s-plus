@@ -820,14 +820,15 @@ export class Container {
   public addPort(port: ContainerPort) {
 
     const names = this._ports.map(p => p.name).filter(x => x);
-    const numbers = this._ports.map(p => p.number);
+    const numberProtocols = this._ports.map(p => `${p.number}/${p.protocol || Protocol.TCP}`);
 
     if (port.name && names.includes(port.name)) {
       throw new Error(`Port with name ${port.name} already exists`);
     }
 
-    if (numbers.includes(port.number)) {
-      throw new Error(`Port with number ${port.number} already exists`);
+    const protocol = `${port.number}/${port.protocol || Protocol.TCP}`;
+    if (numberProtocols.includes(protocol)) {
+      throw new Error(`Port with number ${port.number} and protocol ${port.protocol || Protocol.TCP} already exists`);
     }
 
     this._ports.push(port);
