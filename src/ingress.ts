@@ -40,6 +40,14 @@ export interface IngressProps extends base.ResourceProps {
    * extension, if the ingress controller fulfilling the ingress supports SNI.
    */
   readonly tls?: IngressTls[];
+
+  /**
+   * Class Name for this ingress.
+   *
+   * This field is a reference to an IngressClass resource that contains
+   * additional Ingress configuration, including the name of the Ingress controller.
+   */
+  readonly className?: string;
 }
 
 /**
@@ -90,6 +98,7 @@ export class Ingress extends base.Resource {
       metadata: props.metadata,
       spec: {
         defaultBackend: Lazy.any({ produce: () => this._defaultBackend?._toKube() }),
+        ingressClassName: props.className,
         rules: Lazy.any({ produce: () => this.synthRules() }),
         tls: Lazy.any({ produce: () => this.tlsConfig() }),
       },

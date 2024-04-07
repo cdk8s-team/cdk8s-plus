@@ -12,6 +12,36 @@ test('defaultChild', () => {
 
 });
 
+test('IngressClassName can be set', () => {
+  // GIVEN
+  const chart = Testing.chart();
+  const service = new Service(chart, 'my-service', { ports: [{ port: 80 }] } );
+
+  // WHEN
+  new Ingress(chart, 'my-ingress', {
+    defaultBackend: IngressBackend.fromService(service),
+    className: 'myIngressClassName',
+  });
+
+  // THEN
+  expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toStrictEqual([
+    {
+      apiVersion: 'networking.k8s.io/v1',
+      kind: 'Ingress',
+      metadata: { name: 'test-my-ingress-c8135042' },
+      spec: {
+        defaultBackend: {
+          service: {
+            name: 'test-my-service-c8493104',
+            port: { number: 80 },
+          },
+        },
+        ingressClassName: 'myIngressClassName',
+      },
+    },
+  ]);
+});
+
 describe('IngressBackend', () => {
   describe('fromService', () => {
     test('if the service exposes a port, it will be used by the ingress', () => {
