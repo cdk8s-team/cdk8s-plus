@@ -154,7 +154,7 @@ export class StatefulSet extends workload.Workload implements IScalable {
 
     const myPorts = container.extractContainerPorts(this);
     const myPortNumbers = myPorts.map(p => p.number);
-    const ports: service.ServicePort[] = myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol }));
+    const ports: service.ServicePort[] = myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol, name: p.name }));
     if (ports.length === 0) {
       throw new Error(`Unable to create a service for the stateful set ${this.name}: StatefulSet ports cannot be determined.`);
     }
