@@ -58,7 +58,7 @@
     "@types/node": "^16 <= 16.18.78",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
-    "cdk8s": "2.68.57",
+    "cdk8s": "2.68.58",
     "cdk8s-cli": "^2.198.95",
     "constructs": "10.3.0",
     "eslint": "^8",
