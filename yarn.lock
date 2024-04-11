@@ -1556,14 +1556,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.95:
-  version "2.198.95"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.95.tgz#b3f6b4c4c4097fd5d22f536e5dc2b210ba8c1b49"
-  integrity sha512-qxyHsefn1CuJmCD0T7jMVxS9RRMiGO1+HuXIjdIkJc8sHJzYcerBLDJJ8AWT6x6yWOUhkSNJB+/zfBAiF59eqQ==
+cdk8s-cli@^2.198.96:
+  version "2.198.96"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.96.tgz#12a3d57fc245e77a453073435ef338be908e7aad"
+  integrity sha512-p0AzM6Z2GzoycQXJdWycKcAU/HONrwpN72cg6lj+wjBmB5MoVd31nW7/bUemcHd8ZYWq2+A434EI3SQFo3A/jA==
   dependencies:
     "@types/node" "^16"
     ajv "^8.12.0"
-    cdk8s "^2.68.56"
+    cdk8s "^2.68.58"
     cdk8s-plus-25 "^2.22.79"
     codemaker "^1.97.0"
     colors "1.4.0"
@@ -1589,7 +1589,7 @@ cdk8s-plus-25@^2.22.79:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.68.58, cdk8s@^2.68.56:
+cdk8s@2.68.58, cdk8s@^2.68.58:
   version "2.68.58"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.68.58.tgz#53ea75f430d8c1e69fa579579e2ea28e6c62cf93"
   integrity sha512-cCY7xsyvWi6xmfuVDfdIChqxZ8n2K3mhsA6Mj/pJC8KNJ5n2PKqquSnY7x+Ti1b967wHiK2OiGn72inlagvXXg==
@@ -2281,9 +2281,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.668:
-  version "1.4.731"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.731.tgz#d3dc19f359045b750a1fb0bc42315a502d950187"
-  integrity sha512-+TqVfZjpRz2V/5SPpmJxq9qK620SC5SqCnxQIOi7i/U08ZDcTpKbT7Xjj9FU5CbXTMUb4fywbIr8C7cGv4hcjw==
+  version "1.4.733"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.733.tgz#708d51ce01a7ed3b401d5ced85e9f5d504fd4217"
+  integrity sha512-gUI9nhI2iBGF0OaYYLKOaOtliFMl+Bt1rY7VmEjwxOxqoYLub/D9xmduPEhbw2imE6gYkJKhIE5it+KE2ulVxQ==
 
 emittery@^0.8.1:
   version "0.8.1"
