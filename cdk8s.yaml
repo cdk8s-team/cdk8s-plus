@@ -3,3 +3,4 @@ pluginsDirectory: /home/runner/.cdk8s/plugins
 imports:
   - k8s@1.27.0
   - k8s@1.28.0
+  - k8s@1.29.0
