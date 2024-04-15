@@ -1,6 +1,7 @@
-# How to Upgrade CDK8s+/CDK8s to a new Kubernetes version
+# Rotate
 
-This document describes the changes required in order to upgrade CDK8s+/CDK8s to support a new Kubernetes version. These steps should be executed in order.
+This document describes the changes required in order to create a new cdk8s-plus-XX library based 
+on the latest kubernetes version. These steps should be executed in order.
 
 ## :one: Prerequisite
 
@@ -35,75 +36,27 @@ This document describes the changes required in order to upgrade CDK8s+/CDK8s to
 
   e.g. If you were upgrading from v24 -> v25 the new label would be `backport-to-k8s-24/main`
 
-## :two: Create the new CDK8s+ branch
+## :two: Create the new cdk8s-plus branch
 
-6. Create a new branch of CDK8s+ starting from the current latest K8s version branch. The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
+6. Create a new branch in the [cdk8s-plus](https://github.com/cdk8s-team/cdk8s-plus) off the current default branch. 
+The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
 
 7. On the new branch update the following:
 
-     1. ([`.projenrc.ts`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/.projenrc.ts)): Update `LATEST_SUPPORTED_K8S_VERSION` and `SPEC_VERSION` with the new version.
+     1. Bump the minor version in [latest-k8s-version.txt](./projenrc/latest-k8s-version.txt)
+     2. ([`README.md`](./README.md)): In the table of supported versions, add a new row and remove the oldest one.
+     3. `yarn projen`
+     4. `yarn run import` # generates the L1 code based on the new spec
+     5. `yarn rotate` # updates all version references in documenation
+     6. `yarn build`
+     7. `git commit -m "k8s-XX/main"`
+     8. `git push origin k8s-XX/main"`
 
-        ```ts
-        // the latest version of k8s we support
-        const LATEST_SUPPORTED_K8S_VERSION = 25; // <-- Upgraded from 24 to 25
+8. Verify that automation builds/tags/releases the new version successfully.
 
-        // the version of k8s this branch supports
-        const SPEC_VERSION = '25'; // <-- Upgraded from 24 to 25
-        ```
+9. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches).
 
-     2. ([`.projenrc.ts`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/.projenrc.ts)): In the `JsiiProject()` edit `depsUpgradeOptions` to include a the oldest supported branch of k8s.
-
-        ```ts
-        const LATEST_SUPPORTED_K8S_VERSION = 25 // <-- Upgraded from 24 to 25
-        const project = new cdk.JsiiProject({
-        ...
-        depsUpgradeOptions: {
-            workflowOptions: {
-              branches: [
-                `k8s-${LATEST_SUPPORTED_K8S_VERSION}/main`, // was 24, now is 25
-                `k8s-${LATEST_SUPPORTED_K8S_VERSION - 1}/main`, // was 23, now is 24
-                `k8s-${LATEST_SUPPORTED_K8S_VERSION - 2}/main`, // was 22, now is 23
-              ],
-            ...
-            },
-        },
-        });
-        ```
-
-     3. ([`README.md`](https://github.com/cdk8s-team/cdk8s-plus/blob/k8s-24/main/README.md)): Add the new version. i.e. Add a markdown status badge, and a new row in the supported k8s version table.
-
-8. Import the k8s spec that you merged into cdk8s during the prerequisite.
-
-```sh
-yarn run import
-# warning `yarn import` is a native yarn command so be sure to include `run`
-```
-
-9. Start up a local Kubernetes cluster using the same version that you are upgrading to. Make sure kubectl on your machine is configured to connect to it.
-
-10. Generate API types from the local Kubernetes cluster
-
-```sh
-yarn regenerate-api-information
-# Updates ./api-resources.txt
-```
-
-11. Let Projen upgrade the remaining files
-
-```sh
-yarn build
-# Updates package.json, .gitattributes, .gitignore, workflows, src/api-resource.generated.ts, src/imports/k8s.ts, .projen/*
-```
-
-12. Check all the expected files were updated as intended.
-
-13. Update all the cdk8s-plus `docs/plus/**` with the new syntax.
-
-14. Push the branch and verify that automation builds/tags/releases the new version successfully.
-
-15. Update CDK8s+'s default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches).
-
-## :three: Update CDK8s
+## :three: Update Website
 
 16. Create a new cdk8s branch off of cdk8s/master
 
