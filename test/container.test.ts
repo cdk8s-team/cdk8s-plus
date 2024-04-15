@@ -553,7 +553,7 @@ describe('Container', () => {
     expect(manifest).toMatchSnapshot();
     const container = manifest[0].spec.initContainers[0];
 
-    expect(container).toHaveProperty('restartPolicy');
+    expect(container.restartPolicy).toEqual('Always');
   });
 
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {
