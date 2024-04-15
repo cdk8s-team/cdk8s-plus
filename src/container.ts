@@ -342,17 +342,6 @@ export class ContainerSecurityContext {
    * @internal
    */
   public _toKube(): k8s.SecurityContext {
-    if (this.capabilities) {
-      return {
-        runAsGroup: this.group,
-        runAsUser: this.user,
-        runAsNonRoot: this.ensureNonRoot,
-        privileged: this.privileged,
-        readOnlyRootFilesystem: this.readOnlyRootFilesystem,
-        allowPrivilegeEscalation: this.allowPrivilegeEscalation,
-        capabilities: this.capabilities,
-      };
-    }
     return {
       runAsGroup: this.group,
       runAsUser: this.user,
@@ -360,6 +349,7 @@ export class ContainerSecurityContext {
       privileged: this.privileged,
       readOnlyRootFilesystem: this.readOnlyRootFilesystem,
       allowPrivilegeEscalation: this.allowPrivilegeEscalation,
+      capabilities: this.capabilities,
     };
   }
 

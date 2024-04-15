@@ -694,6 +694,7 @@ test('default security context', () => {
     runAsNonRoot: container.securityContext.ensureNonRoot,
     runAsUser: container.securityContext.user,
     allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
+    capabilities: container.securityContext.capabilities,
   });
 });
 
