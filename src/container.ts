@@ -685,7 +685,7 @@ export interface ContainerOpts {
    * but instead of waiting for its completion, it will wait for the container startup completion
    * Currently, only accepted value is Always
    * @see https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
-   * @default - no restart policy is defined
+   * @default - no restart policy is defined and the pod restart policy is applied
    */
   readonly restartPolicy?: ContainerRestartPolicy;
 }
