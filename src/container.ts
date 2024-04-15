@@ -743,6 +743,11 @@ export class Container {
    */
   public readonly env: Env;
 
+  /**
+   * The restart policy of the container.
+   */
+  public readonly restartPolicy?: ContainerRestartPolicy;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _ports: ContainerPort[] = [];
@@ -750,7 +755,6 @@ export class Container {
   private readonly _liveness?: probe.Probe;
   private readonly _startup?: probe.Probe;
   private readonly _lifecycle?: ContainerLifecycle;
-  private readonly _restartPolicy?: ContainerRestartPolicy;
 
   constructor(props: ContainerProps) {
     if (props instanceof Container) {
@@ -790,7 +794,7 @@ export class Container {
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
     this.securityContext = new ContainerSecurityContext(props.securityContext);
     this.env = new Env(props.envFrom ?? [], props.envVariables ?? {});
-    this._restartPolicy = props.restartPolicy;
+    this.restartPolicy = props.restartPolicy;
 
     if (this.portNumber) {
       this.addPort({
@@ -954,7 +958,7 @@ export class Container {
         preStop: this._lifecycle.preStop?._toKube(this),
       } : undefined,
       resources: resourceRequirements,
-      restartPolicy: this._restartPolicy,
+      restartPolicy: this.restartPolicy,
       securityContext: this.securityContext._toKube(),
     };
   }
