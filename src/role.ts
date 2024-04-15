@@ -1,6 +1,6 @@
 import { ApiObject, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IApiResource, IApiEndpoint } from './api-resource.generated';
+import { IApiResource, IApiEndpoint } from './api-resource';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as rb from './role-binding';
