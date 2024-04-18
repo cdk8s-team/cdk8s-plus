@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s } from '../src';
+import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability } from '../src';
 
 describe('EnvValue', () => {
 
@@ -757,6 +757,7 @@ test('default security context', () => {
     runAsNonRoot: container.securityContext.ensureNonRoot,
     runAsUser: container.securityContext.user,
     allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
+    capabilities: container.securityContext.capabilities,
   });
 });
 
@@ -770,6 +771,14 @@ test('custom security context', () => {
       privileged: true,
       user: 1000,
       group: 2000,
+      capabilities: {
+        add: [
+          Capability.AUDIT_CONTROL,
+        ],
+        drop: [
+          Capability.BPF,
+        ],
+      },
     },
   });
 
@@ -778,6 +787,8 @@ test('custom security context', () => {
   expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
   expect(container.securityContext.user).toEqual(1000);
   expect(container.securityContext.group).toEqual(2000);
+  expect(container.securityContext.capabilities?.add).toEqual(['CAP_AUDIT_CONTROL']);
+  expect(container.securityContext.capabilities?.drop).toEqual(['CAP_BPF']);
 
 });
 
