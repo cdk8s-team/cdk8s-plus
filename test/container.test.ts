@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability } from '../src';
+import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability, ContainerRestartPolicy } from '../src';
 
 describe('EnvValue', () => {
 
@@ -534,6 +534,26 @@ describe('Container', () => {
     const container = manifest[0].spec.containers[0];
 
     expect(container).not.toHaveProperty('startupProbe');
+  });
+
+  test('"restartPolicy" property can be used to define restartPolicy', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod');
+
+    // WHEN
+    pod.addContainer({ image: 'foo' });
+    pod.addInitContainer({
+      image: 'bar',
+      restartPolicy: ContainerRestartPolicy.ALWAYS,
+    });
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest).toMatchSnapshot();
+    const container = manifest[0].spec.initContainers[0];
+
+    expect(container.restartPolicy).toEqual('Always');
   });
 
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {

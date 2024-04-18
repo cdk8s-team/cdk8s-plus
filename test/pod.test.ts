@@ -1,7 +1,7 @@
 import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { DockerConfigSecret, FsGroupChangePolicy, Probe, k8s, RestartPolicy } from '../src';
+import { DockerConfigSecret, FsGroupChangePolicy, Probe, k8s, RestartPolicy, ContainerRestartPolicy } from '../src';
 
 test('defaults', () => {
 
@@ -1557,3 +1557,12 @@ test('custom termination grace period - minutes', () => {
   const spec = manifest[0].spec;
   expect(spec.terminationGracePeriodSeconds).toEqual(120);
 });
+
+test('Containers should not specify "restartPolicy" field', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image', restartPolicy: ContainerRestartPolicy.ALWAYS }],
+  });
+  expect(() => Testing.synth(chart)).toThrowError();
+});
+

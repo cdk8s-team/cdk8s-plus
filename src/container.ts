@@ -684,6 +684,27 @@ export interface ContainerLifecycle {
 }
 
 /**
+ * RestartPolicy defines the restart behavior of individual containers in a pod.
+ * This field may only be set for init containers, and the only allowed value is "Always".
+ * For non-init containers or when this field is not specified,
+ * the restart behavior is defined by the Pod's restart policy and the container type.
+ * Setting the RestartPolicy as "Always" for the init container will have the following effect:
+ * this init container will be continually restarted on exit until all regular containers have terminated.
+ * Once all regular containers have completed, all init containers with restartPolicy "Always" will be shut down.
+ * This lifecycle differs from normal init containers and is often referred to as a "sidecar" container.
+ *
+ * @see https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
+ */
+export enum ContainerRestartPolicy {
+
+  /**
+   * If an init container is created with its restartPolicy set to Always,
+   * it will start and remain running during the entire life of the Pod.
+   * For regular containers, this is ignored by Kubernetes.
+   */
+  ALWAYS = 'Always'
+}
+/**
  * Properties for creating a container.
  */
 export interface ContainerProps extends ContainerOpts {
@@ -850,6 +871,15 @@ export interface ContainerOpts {
    *   group: 26000
    */
   readonly securityContext?: ContainerSecurityContextProps;
+
+  /**
+   * Kubelet will start init containers with restartPolicy=Always in the order with other init containers,
+   * but instead of waiting for its completion, it will wait for the container startup completion
+   * Currently, only accepted value is Always
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
+   * @default - no restart policy is defined and the pod restart policy is applied
+   */
+  readonly restartPolicy?: ContainerRestartPolicy;
 }
 
 /**
@@ -905,6 +935,11 @@ export class Container {
    */
   public readonly env: Env;
 
+  /**
+   * The restart policy of the container.
+   */
+  public readonly restartPolicy?: ContainerRestartPolicy;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _ports: ContainerPort[] = [];
@@ -951,6 +986,7 @@ export class Container {
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
     this.securityContext = new ContainerSecurityContext(props.securityContext);
     this.env = new Env(props.envFrom ?? [], props.envVariables ?? {});
+    this.restartPolicy = props.restartPolicy;
 
     if (this.portNumber) {
       this.addPort({
@@ -1114,6 +1150,7 @@ export class Container {
         preStop: this._lifecycle.preStop?._toKube(this),
       } : undefined,
       resources: resourceRequirements,
+      restartPolicy: this.restartPolicy,
       securityContext: this.securityContext._toKube(),
     };
   }
