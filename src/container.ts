@@ -8,6 +8,188 @@ import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
 /**
+ * Capability - complete list of POSIX capabilities
+ */
+export enum Capability {
+  /**
+   * CAP_AUDIT_CONTROL
+   */
+  AUDIT_CONTROL = 'CAP_AUDIT_CONTROL',
+  /**
+   * CAP_AUDIT_READ
+   */
+  AUDIT_READ = 'CAP_AUDIT_READ',
+  /**
+   * CAP_AUDIT_WRITE
+   */
+  AUDIT_WRITE = 'CAP_AUDIT_WRITE',
+  /**
+   * CAP_BLOCK_SUSPEND
+   */
+  BLOCK_SUSPEND = 'CAP_BLOCK_SUSPEND',
+  /**
+   * CAP_BPF
+   */
+  BPF = 'CAP_BPF',
+  /**
+   * CAP_CHECKPOINT_RESTORE
+   */
+  CHECKPOINT_RESTORE = 'CAP_CHECKPOINT_RESTORE',
+  /**
+   * CAP_CHOWN
+   */
+  CHOWN = 'CAP_CHOWN',
+  /**
+   * CAP_DAC_OVERRIDE
+   */
+  DAC_OVERRIDE = 'CAP_DAC_OVERRIDE',
+  /**
+   * CAP_DAC_READ_SEARCH
+   */
+  DAC_READ_SEARCH = 'CAP_DAC_READ_SEARCH',
+  /**
+   * CAP_FOWNER
+   */
+  FOWNER = 'CAP_FOWNER',
+  /**
+   * CAP_FSETID
+   */
+  FSETID = 'CAP_FSETID',
+  /**
+   * CAP_IPC_LOCK
+   */
+  IPC_LOCK = 'CAP_IPC_LOCK',
+  /**
+   * CAP_IPC_OWNER
+   */
+  IPC_OWNER = 'CAP_IPC_OWNER',
+  /**
+   * CAP_KILL
+   */
+  KILL = 'CAP_KILL',
+  /**
+   * CAP_LEASE
+   */
+  LEASE = 'CAP_LEASE',
+  /**
+   * CAP_LINUX_IMMUTABLE
+   */
+  LINUX_IMMUTABLE = 'CAP_LINUX_IMMUTABLE',
+  /**
+   * CAP_MAC_ADMIN
+   */
+  MAC_ADMIN = 'CAP_MAC_ADMIN',
+  /**
+   * CAP_MAC_OVERRIDE
+   */
+  MAC_OVERRIDE = 'CAP_MAC_OVERRIDE',
+  /**
+   * CAP_MKNOD
+   */
+  MKNOD = 'CAP_MKNOD',
+  /**
+   * CAP_NET_ADMIN
+   */
+  NET_ADMIN = 'CAP_NET_ADMIN',
+  /**
+   * CAP_NET_BIND_SERVICE
+   */
+  NET_BIND_SERVICE = 'CAP_NET_BIND_SERVICE',
+  /**
+   * CAP_NET_BROADCAST
+   */
+  NET_BROADCAST = 'CAP_NET_BROADCAST',
+  /**
+   * CAP_NET_RAW
+   */
+  NET_RAW = 'CAP_NET_RAW',
+  /**
+   * CAP_PERFMON
+   */
+  PERFMON = 'CAP_PERFMON',
+  /**
+   * CAP_SETGID
+   */
+  SETGID = 'CAP_SETGID',
+  /**
+   * CAP_SETFCAP
+   */
+  SETFCAP = 'CAP_SETFCAP',
+  /**
+   * CAP_SETPCAP
+   */
+  SETPCAP = 'CAP_SETPCAP',
+  /**
+   * CAP_SETUID
+   */
+  SETUID = 'CAP_SETUID',
+  /**
+   * CAP_SYS_ADMIN
+   */
+  SYS_ADMIN = 'CAP_SYS_ADMIN',
+  /**
+   * CAP_SYS_BOOT
+   */
+  SYS_BOOT = 'CAP_SYS_BOOT',
+  /**
+   * CAP_SYS_CHROOT
+   */
+  SYS_CHROOT = 'CAP_SYS_CHROOT',
+  /**
+   * CAP_SYS_MODULE
+   */
+  SYS_MODULE = 'CAP_SYS_MODULE',
+  /**
+   * CAP_SYS_NICE
+   */
+  SYS_NICE = 'CAP_SYS_NICE',
+  /**
+   * CAP_SYS_PACCT
+   */
+  SYS_PACCT = 'CAP_SYS_PACCT',
+  /**
+   * CAP_SYS_PTRACE
+   */
+  SYS_PTRACE = 'CAP_SYS_PTRACE',
+  /**
+   * CAP_SYS_RAWIO
+   */
+  SYS_RAWIO = 'CAP_SYS_RAWIO',
+  /**
+   * CAP_SYS_RESOURCE
+   */
+  SYS_RESOURCE = 'CAP_SYS_RESOURCE',
+  /**
+   * CAP_SYS_TIME
+   */
+  SYS_TIME = 'CAP_SYS_TIME',
+  /**
+   * CAP_SYS_TTY_CONFIG
+   */
+  SYS_TTY_CONFIG = 'CAP_SYS_TTY_CONFIG',
+  /**
+   * CAP_SYSLOG
+   */
+  SYSLOG = 'CAP_SYSLOG',
+  /**
+   * CAP_WAKE_ALARM
+   */
+  WAKE_ALARM = 'CAP_WAKE_ALARM',
+}
+
+export interface ContainerSecutiryContextCapabilities {
+  /**
+   * Added capabilities
+   */
+  readonly add?: Capability[];
+
+  /**
+   * Removed capabilities
+   */
+  readonly drop?: Capability[];
+}
+
+/**
  * Properties for `ContainerSecurityContext`
  */
 export interface ContainerSecurityContextProps {
@@ -59,6 +241,13 @@ export interface ContainerSecurityContextProps {
    * @default false
    */
   readonly allowPrivilegeEscalation?: boolean;
+
+  /**
+   * POSIX capabilities for running containers
+   *
+   * @default none
+   */
+  readonly capabilities?: ContainerSecutiryContextCapabilities;
 }
 
 /**
@@ -137,6 +326,7 @@ export class ContainerSecurityContext {
   public readonly user?: number;
   public readonly group?: number;
   public readonly allowPrivilegeEscalation?: boolean;
+  public readonly capabilities?: ContainerSecutiryContextCapabilities;
 
   constructor(props: ContainerSecurityContextProps = {}) {
     this.ensureNonRoot = props.ensureNonRoot ?? true;
@@ -145,6 +335,7 @@ export class ContainerSecurityContext {
     this.user = props.user;
     this.group = props.group;
     this.allowPrivilegeEscalation = props.allowPrivilegeEscalation ?? false;
+    this.capabilities = props.capabilities;
   }
 
   /**
@@ -158,6 +349,7 @@ export class ContainerSecurityContext {
       privileged: this.privileged,
       readOnlyRootFilesystem: this.readOnlyRootFilesystem,
       allowPrivilegeEscalation: this.allowPrivilegeEscalation,
+      capabilities: this.capabilities,
     };
   }
 
@@ -330,7 +522,7 @@ export class EnvValue {
    * @param key - The key to extract the value from.
    * @param options - Additional options.
    */
-  public static fromConfigMap(configMap: configmap.IConfigMap, key: string, options: EnvValueFromConfigMapOptions = { }): EnvValue {
+  public static fromConfigMap(configMap: configmap.IConfigMap, key: string, options: EnvValueFromConfigMapOptions = {}): EnvValue {
 
     const source: k8s.EnvVarSource = {
       configMapKeyRef: {
@@ -432,7 +624,7 @@ export class EnvValue {
     return EnvValue.fromValue(value!);
   }
 
-  private constructor(public readonly value?: any, public readonly valueFrom?: any) {}
+  private constructor(public readonly value?: any, public readonly valueFrom?: any) { }
 }
 
 export enum ImagePullPolicy {
@@ -846,7 +1038,7 @@ export class Container {
    * @param path - The desired path in the container.
    * @param storage - The storage to mount.
    */
-  public mount(path: string, storage: volume.IStorage, options: MountOptions = { }) {
+  public mount(path: string, storage: volume.IStorage, options: MountOptions = {}) {
     this.mounts.push({ path, volume: storage.asVolume(), ...options });
   }
 
@@ -1131,7 +1323,7 @@ export class EnvFrom {
   constructor(
     private readonly configMap?: configmap.IConfigMap,
     private readonly prefix?: string,
-    private readonly sec?: secret.ISecret) {};
+    private readonly sec?: secret.ISecret) { };
 
   /**
    * @internal
