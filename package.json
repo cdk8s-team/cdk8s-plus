@@ -69,7 +69,7 @@
     "jsii-docgen": "^3.8.31",
     "jsii-pacmak": "^1.97.0",
     "jsii-rosetta": "1.x",
-    "projen": "^0.81.0",
+    "projen": "^0.81.1",
     "snake-case": "^3.0.4",
     "standard-version": "^9",
     "ts-jest": "^27",
