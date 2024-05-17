@@ -1,9 +1,8 @@
 import { Testing, ApiObject } from 'cdk8s';
 import { Node } from 'constructs';
-import { ConfigMap, Role } from '../src';
+import { ConfigMap, Namespace, Role } from '../src';
 
 test('can grant permissions on imported', () => {
-
   const chart = Testing.chart();
   const cm = ConfigMap.fromConfigMapName(chart, 'ConfigMap', 'name');
 
@@ -11,17 +10,15 @@ test('can grant permissions on imported', () => {
   role.allowRead(cm);
 
   expect(Testing.synth(chart)).toMatchSnapshot();
-
 });
 
 test('defaultChild', () => {
-
   const chart = Testing.chart();
 
-  const defaultChild = Node.of(new ConfigMap(chart, 'ConfigMap')).defaultChild as ApiObject;
+  const defaultChild = Node.of(new ConfigMap(chart, 'ConfigMap'))
+    .defaultChild as ApiObject;
 
   expect(defaultChild.kind).toEqual('ConfigMap');
-
 });
 
 test('minimal', () => {
@@ -307,7 +304,6 @@ Array [
 });
 
 test('can configure an immutable config map', () => {
-
   const chart = Testing.chart();
   const cm = new ConfigMap(chart, 'my-config-map', {
     immutable: true,
@@ -317,5 +313,142 @@ test('can configure an immutable config map', () => {
 
   expect(cm.immutable).toBeTruthy();
   expect(spec.immutable).toBeTruthy();
+});
 
+test('computes checksum on data', () => {
+  // GIVEN
+  const chart = Testing.chart();
+
+  // WHEN
+  const cm = new ConfigMap(chart, 'my-config-map', {
+    data: {
+      key1: 'foo',
+      key2: 'bar',
+    },
+  });
+  const ns = new Namespace(chart, 'my-namespace', {});
+  cm.addChecksumTo(ns);
+
+  // THEN
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "apiVersion": "v1",
+    "data": Object {
+      "key1": "foo",
+      "key2": "bar",
+    },
+    "immutable": false,
+    "kind": "ConfigMap",
+    "metadata": Object {
+      "name": "test-my-config-map-c8eaefa4",
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "annotations": Object {
+        "checksum/my-config-map": "c37e79f8763eee273067a631184c2b7f644ad9dfafd11c43ef59607de9efe183",
+      },
+      "name": "test-my-namespace-c8f002e8",
+    },
+    "spec": Object {},
+  },
+]
+`);
+});
+
+test('computes checksum on binary data', () => {
+  // GIVEN
+  const chart = Testing.chart();
+
+  // WHEN
+  const cm = new ConfigMap(chart, 'my-config-map', {
+    binaryData: {
+      key1: 'foo',
+      key2: 'bar',
+    },
+  });
+  const ns = new Namespace(chart, 'my-namespace', {});
+  cm.addChecksumTo(ns);
+
+  // THEN
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "apiVersion": "v1",
+    "binaryData": Object {
+      "key1": "foo",
+      "key2": "bar",
+    },
+    "immutable": false,
+    "kind": "ConfigMap",
+    "metadata": Object {
+      "name": "test-my-config-map-c8eaefa4",
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "annotations": Object {
+        "checksum/my-config-map": "da1ec1e1c4abd021db22dca6b3b6576edd1906083d38f8958afadd480ae681ab",
+      },
+      "name": "test-my-namespace-c8f002e8",
+    },
+    "spec": Object {},
+  },
+]
+`);
+});
+
+test('computes checksum on data and binary data', () => {
+  // GIVEN
+  const chart = Testing.chart();
+
+  // WHEN
+  const cm = new ConfigMap(chart, 'my-config-map', {
+    data: {
+      key1: 'foo',
+      key2: 'bar',
+    },
+    binaryData: {
+      key3: 'baz',
+    },
+  });
+  const ns = new Namespace(chart, 'my-namespace', {});
+  cm.addChecksumTo(ns);
+
+  // THEN
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "apiVersion": "v1",
+    "binaryData": Object {
+      "key3": "baz",
+    },
+    "data": Object {
+      "key1": "foo",
+      "key2": "bar",
+    },
+    "immutable": false,
+    "kind": "ConfigMap",
+    "metadata": Object {
+      "name": "test-my-config-map-c8eaefa4",
+    },
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": Object {
+      "annotations": Object {
+        "checksum/my-config-map": "06da74ccc1cdbe5529612527e7014c09017aee509fb4c1af91428404f5a5051e",
+      },
+      "name": "test-my-namespace-c8f002e8",
+    },
+    "spec": Object {},
+  },
+]
+`);
 });

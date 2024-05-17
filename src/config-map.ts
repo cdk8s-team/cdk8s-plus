@@ -1,7 +1,9 @@
+import { createHash } from 'crypto';
 import * as configmap from 'fs';
 import * as path from 'path';
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
+import stringify from 'json-stable-stringify';
 import { Minimatch } from 'minimatch';
 import * as base from './base';
 import * as k8s from './imports/k8s';
@@ -42,18 +44,14 @@ export interface ConfigMapProps extends base.ResourceProps {
    * @default false
    */
   readonly immutable?: boolean;
-
 }
 
 /**
  * Represents a config map.
  */
-export interface IConfigMap extends base.IResource {
-
-}
+export interface IConfigMap extends base.IResource {}
 
 class ImportedConfigMap extends Construct implements IConfigMap {
-
   private readonly _name: string;
 
   public readonly resourceType = 'configmaps';
@@ -82,18 +80,20 @@ class ImportedConfigMap extends Construct implements IConfigMap {
   public get resourceName(): string {
     return this.name;
   }
-
 }
 
 /**
  * ConfigMap holds configuration data for pods to consume.
  */
 export class ConfigMap extends base.Resource implements IConfigMap {
-
   /**
    * Represents a ConfigMap created elsewhere.
    */
-  public static fromConfigMapName(scope: Construct, id: string, name: string): IConfigMap {
+  public static fromConfigMapName(
+    scope: Construct,
+    id: string,
+    name: string,
+  ): IConfigMap {
     return new ImportedConfigMap(scope, id, name);
   }
 
@@ -104,15 +104,15 @@ export class ConfigMap extends base.Resource implements IConfigMap {
 
   public readonly resourceType = 'configmaps';
 
-  private readonly _binaryData: { [key: string]: string } = { };
-  private readonly _data: { [key: string]: string } = { };
+  private readonly _binaryData: { [key: string]: string } = {};
+  private readonly _data: { [key: string]: string } = {};
 
   /**
    * Whether or not this config map is immutable.
    */
   public readonly immutable: boolean;
 
-  public constructor(scope: Construct, id: string, props: ConfigMapProps = { }) {
+  public constructor(scope: Construct, id: string, props: ConfigMapProps = {}) {
     super(scope, id);
 
     this.immutable = props.immutable ?? false;
@@ -125,14 +125,13 @@ export class ConfigMap extends base.Resource implements IConfigMap {
       immutable: this.immutable,
     });
 
-    for (const [k, v] of Object.entries(props.data ?? { })) {
+    for (const [k, v] of Object.entries(props.data ?? {})) {
       this.addData(k, v);
     }
 
-    for (const [k, v] of Object.entries(props.binaryData ?? { })) {
+    for (const [k, v] of Object.entries(props.binaryData ?? {})) {
       this.addBinaryData(k, v);
     }
-
   }
 
   /**
@@ -197,7 +196,7 @@ export class ConfigMap extends base.Resource implements IConfigMap {
    * @param localDir A path to a local directory
    * @param options Options
    */
-  public addDirectory(localDir: string, options: AddDirectoryOptions = { }) {
+  public addDirectory(localDir: string, options: AddDirectoryOptions = {}) {
     const exclude = options.exclude ?? [];
     const shouldInclude = (file: string) => {
       for (const pattern of exclude) {
@@ -211,7 +210,6 @@ export class ConfigMap extends base.Resource implements IConfigMap {
 
     const keyPrefix = options.keyPrefix ?? '';
     for (const file of configmap.readdirSync(localDir)) {
-
       const filePath = path.join(localDir, file);
 
       if (configmap.statSync(filePath).isDirectory()) {
@@ -227,9 +225,25 @@ export class ConfigMap extends base.Resource implements IConfigMap {
     }
   }
 
+  /**
+   * Adds an annotation to the supplied object that contains the checksum of the
+   * config map contents.
+   * @param obj Resource object to add the annotation to
+   */
+  public addChecksumTo(obj: base.Resource) {
+    obj.metadata.addAnnotation(
+      `checksum/${this.node.id}`,
+      Lazy.any({
+        produce: () => this.computeChecksum(),
+      }),
+    );
+  }
+
   private verifyKeyAvailable(key: string) {
     if (key in this._data || key in this._binaryData) {
-      throw new Error(`unable to add a ConfigMap entry with key "${key}". It is already used`);
+      throw new Error(
+        `unable to add a ConfigMap entry with key "${key}". It is already used`,
+      );
     }
   }
 
@@ -239,6 +253,13 @@ export class ConfigMap extends base.Resource implements IConfigMap {
 
   private synthesizeBinaryData() {
     return undefinedIfEmpty(this._binaryData);
+  }
+
+  private computeChecksum() {
+    return createHash('sha256')
+      .update(stringify(this._data))
+      .update(stringify(this._binaryData))
+      .digest('hex');
   }
 }
 
