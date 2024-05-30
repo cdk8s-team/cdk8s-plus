@@ -12,6 +12,10 @@ import * as volume from './volume';
  */
 export enum Capability {
   /**
+   * ALL
+   */
+  ALL = 'ALL',
+  /**
    * CAP_AUDIT_CONTROL
    */
   AUDIT_CONTROL = 'CAP_AUDIT_CONTROL',
