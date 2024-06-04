@@ -70,7 +70,7 @@ In the ([cdk8s repo](https://github.com/cdk8s-team/cdk8s)):
     2. `yarn projen`
     3. `yarn rotate-cdk8s-plus`
 
-12.  Create a PR for the new branch, review then merge into cdk8s/master branch.
+12.  Create a PR for the new branch, review then merge into cdk8s/master branch. (See [example](https://github.com/cdk8s-team/cdk8s/pull/1988))
 
 ## :four: Update Ops
 
@@ -81,4 +81,4 @@ In the ([cdk-ops](https://github.com/cdklabs/cdk-ops)):
     1. Bump the minor version in [latest-cdk8s-plus-version.txt](https://github.com/cdklabs/cdk-ops/blob/master/latest-cdk8s-plus-version.txt)
     2. `yarn projen`
 
-14. Create a PR and send for approval.
+14. Create a PR and send for approval. (See [example](https://github.com/cdklabs/cdk-ops/pull/3323))
