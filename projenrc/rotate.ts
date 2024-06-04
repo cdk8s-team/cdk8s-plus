@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export function replaceOldVersionReferences(latestVersion: string) {
+export function rotate(latestVersion: string) {
 
   const latestVersionNumber = Number(latestVersion);
 
@@ -16,4 +16,4 @@ export function replaceOldVersionReferences(latestVersion: string) {
   });
 }
 
-replaceOldVersionReferences(process.argv.slice(2)[0]);
+rotate(process.argv.slice(2)[0]);

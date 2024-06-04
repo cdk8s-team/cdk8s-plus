@@ -1,6 +1,6 @@
 import { ApiObject, Lazy, Names } from 'cdk8s';
 import { Construct } from 'constructs';
-import { IApiResource, IApiEndpoint } from './api-resource.generated';
+import { IApiResource, IApiEndpoint } from './api-resource';
 import * as base from './base';
 import * as k8s from './imports/k8s';
 import * as rb from './role-binding';
@@ -104,6 +104,10 @@ export class Role extends base.Resource implements IRole {
       metadata: props.metadata,
       rules: Lazy.any({ produce: () => this.synthesizeRules() }),
     });
+
+    for (const rule of props.rules ?? []) {
+      this.allow(rule.verbs, ...rule.resources);
+    }
   }
 
   /**

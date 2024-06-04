@@ -23,5 +23,5 @@ export * from './role-binding';
 export * from './network-policy';
 export * from './namespace';
 
-export * from './api-resource.generated';
+export * from './api-resource';
 export * as k8s from './imports/k8s';
