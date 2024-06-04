@@ -58,6 +58,10 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
 
 10. Update any existing PRs to use k8s-XX/main as the base.
 
+11. Rotate the backport labels on existing PRs. (for exmaple when rotating from k8s.29 to k8s.30, remove the `backport-to-k8s-27/main` label and add the `backport-to-k8s-29/main` label.
+
+12. Delete the `backport-to-k8s-(XX - 3)/main` label. (for exmaple when rotating from k8s.29 to k8s.30, delete the `backport-to-k8s-27/main` label
+
 ## :three: Update Website
 
 In the ([cdk8s repo](https://github.com/cdk8s-team/cdk8s)):
