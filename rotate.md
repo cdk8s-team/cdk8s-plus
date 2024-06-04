@@ -34,7 +34,7 @@ on the latest kubernetes version. These steps should be executed in order.
    - Label name: `backport-to-k8s-XX/main`
    - Label color: `#F53E94`
 
-  e.g. If you were upgrading from v24 -> v25 the new label would be `backport-to-k8s-25/main`
+  e.g. If you were upgrading from v24 -> v25 the new label would be `backport-to-k8s-24/main`
 
 ## :two: Create the new cdk8s-plus branch
 
