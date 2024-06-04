@@ -52,7 +52,7 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      7. `git commit -m "k8s-XX/main"`
      8. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
 
-8. Verify that automation builds/tags/releases the new version successfully.
+8. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
 
 9. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches).
 
