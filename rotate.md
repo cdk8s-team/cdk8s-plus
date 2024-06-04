@@ -48,9 +48,7 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      3. `yarn projen`
      4. `yarn rotate` # updates all version references in documenation
      5. `yarn build`
-     6. `git add .`
-     7. `git commit -m "k8s-XX/main"`
-     8. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
+     6. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
 
 8. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
 
