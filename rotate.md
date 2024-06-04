@@ -48,7 +48,7 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      3. `yarn projen`
      4. `yarn rotate` # updates all version references in documenation
      5. `yarn build`
-     6. `git commit -m "k8s-XX/main"`
+     6. `git commit -am "k8s-XX/main"`
      7. `git push origin k8s-XX/main"`
 
 8. Verify that automation builds/tags/releases the new version successfully.
