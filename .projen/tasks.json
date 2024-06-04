@@ -12,18 +12,6 @@
         }
       ]
     },
-    "backport:k8s-27/main": {
-      "name": "backport:k8s-27/main",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-27/main"
-        }
-      ]
-    },
     "backport:k8s-28/main": {
       "name": "backport:k8s-28/main",
       "requiredEnv": [
@@ -33,6 +21,18 @@
       "steps": [
         {
           "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-28/main"
+        }
+      ]
+    },
+    "backport:k8s-29/main": {
+      "name": "backport:k8s-29/main",
+      "requiredEnv": [
+        "BACKPORT_PR_NUMBER",
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-29/main"
         }
       ]
     },
@@ -68,7 +68,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-29/",
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-30/",
         "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+' --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
       },
       "steps": [
@@ -206,7 +206,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.29.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.30.0"
         }
       ]
     },
@@ -320,13 +320,13 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
-    "release:k8s-29/main": {
-      "name": "release:k8s-29/main",
-      "description": "Prepare a release from \"k8s-29/main\" branch",
+    "release:k8s-30/main": {
+      "name": "release:k8s-30/main",
+      "description": "Prepare a release from \"k8s-30/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "2",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-29/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-30/"
       },
       "steps": [
         {
@@ -350,7 +350,7 @@
       "name": "rotate",
       "steps": [
         {
-          "exec": "ts-node projenrc/rotate.ts 29"
+          "exec": "ts-node projenrc/rotate.ts 30"
         }
       ]
     },
@@ -384,7 +384,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-29/",
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-30/",
         "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+' --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
       },
       "steps": [
