@@ -52,7 +52,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.522",
+    "@cdk8s/projen-common": "^0.0.524",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "16.18.78",
