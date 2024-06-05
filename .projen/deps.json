@@ -29,6 +29,11 @@
       "type": "build"
     },
     {
+      "name": "backport",
+      "version": "8.5.0",
+      "type": "build"
+    },
+    {
       "name": "cdk8s",
       "type": "build"
     },
