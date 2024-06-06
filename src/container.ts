@@ -18,167 +18,167 @@ export enum Capability {
   /**
    * CAP_AUDIT_CONTROL
    */
-  AUDIT_CONTROL = 'CAP_AUDIT_CONTROL',
+  AUDIT_CONTROL = 'AUDIT_CONTROL',
   /**
    * CAP_AUDIT_READ
    */
-  AUDIT_READ = 'CAP_AUDIT_READ',
+  AUDIT_READ = 'AUDIT_READ',
   /**
    * CAP_AUDIT_WRITE
    */
-  AUDIT_WRITE = 'CAP_AUDIT_WRITE',
+  AUDIT_WRITE = 'AUDIT_WRITE',
   /**
    * CAP_BLOCK_SUSPEND
    */
-  BLOCK_SUSPEND = 'CAP_BLOCK_SUSPEND',
+  BLOCK_SUSPEND = 'BLOCK_SUSPEND',
   /**
    * CAP_BPF
    */
-  BPF = 'CAP_BPF',
+  BPF = 'BPF',
   /**
    * CAP_CHECKPOINT_RESTORE
    */
-  CHECKPOINT_RESTORE = 'CAP_CHECKPOINT_RESTORE',
+  CHECKPOINT_RESTORE = 'CHECKPOINT_RESTORE',
   /**
    * CAP_CHOWN
    */
-  CHOWN = 'CAP_CHOWN',
+  CHOWN = 'CHOWN',
   /**
    * CAP_DAC_OVERRIDE
    */
-  DAC_OVERRIDE = 'CAP_DAC_OVERRIDE',
+  DAC_OVERRIDE = 'DAC_OVERRIDE',
   /**
    * CAP_DAC_READ_SEARCH
    */
-  DAC_READ_SEARCH = 'CAP_DAC_READ_SEARCH',
+  DAC_READ_SEARCH = 'DAC_READ_SEARCH',
   /**
    * CAP_FOWNER
    */
-  FOWNER = 'CAP_FOWNER',
+  FOWNER = 'FOWNER',
   /**
    * CAP_FSETID
    */
-  FSETID = 'CAP_FSETID',
+  FSETID = 'FSETID',
   /**
    * CAP_IPC_LOCK
    */
-  IPC_LOCK = 'CAP_IPC_LOCK',
+  IPC_LOCK = 'IPC_LOCK',
   /**
    * CAP_IPC_OWNER
    */
-  IPC_OWNER = 'CAP_IPC_OWNER',
+  IPC_OWNER = 'IPC_OWNER',
   /**
    * CAP_KILL
    */
-  KILL = 'CAP_KILL',
+  KILL = 'KILL',
   /**
    * CAP_LEASE
    */
-  LEASE = 'CAP_LEASE',
+  LEASE = 'LEASE',
   /**
    * CAP_LINUX_IMMUTABLE
    */
-  LINUX_IMMUTABLE = 'CAP_LINUX_IMMUTABLE',
+  LINUX_IMMUTABLE = 'LINUX_IMMUTABLE',
   /**
    * CAP_MAC_ADMIN
    */
-  MAC_ADMIN = 'CAP_MAC_ADMIN',
+  MAC_ADMIN = 'MAC_ADMIN',
   /**
    * CAP_MAC_OVERRIDE
    */
-  MAC_OVERRIDE = 'CAP_MAC_OVERRIDE',
+  MAC_OVERRIDE = 'MAC_OVERRIDE',
   /**
    * CAP_MKNOD
    */
-  MKNOD = 'CAP_MKNOD',
+  MKNOD = 'MKNOD',
   /**
    * CAP_NET_ADMIN
    */
-  NET_ADMIN = 'CAP_NET_ADMIN',
+  NET_ADMIN = 'NET_ADMIN',
   /**
    * CAP_NET_BIND_SERVICE
    */
-  NET_BIND_SERVICE = 'CAP_NET_BIND_SERVICE',
+  NET_BIND_SERVICE = 'NET_BIND_SERVICE',
   /**
    * CAP_NET_BROADCAST
    */
-  NET_BROADCAST = 'CAP_NET_BROADCAST',
+  NET_BROADCAST = 'NET_BROADCAST',
   /**
    * CAP_NET_RAW
    */
-  NET_RAW = 'CAP_NET_RAW',
+  NET_RAW = 'NET_RAW',
   /**
    * CAP_PERFMON
    */
-  PERFMON = 'CAP_PERFMON',
+  PERFMON = 'PERFMON',
   /**
    * CAP_SETGID
    */
-  SETGID = 'CAP_SETGID',
+  SETGID = 'SETGID',
   /**
    * CAP_SETFCAP
    */
-  SETFCAP = 'CAP_SETFCAP',
+  SETFCAP = 'SETFCAP',
   /**
    * CAP_SETPCAP
    */
-  SETPCAP = 'CAP_SETPCAP',
+  SETPCAP = 'SETPCAP',
   /**
    * CAP_SETUID
    */
-  SETUID = 'CAP_SETUID',
+  SETUID = 'SETUID',
   /**
    * CAP_SYS_ADMIN
    */
-  SYS_ADMIN = 'CAP_SYS_ADMIN',
+  SYS_ADMIN = 'SYS_ADMIN',
   /**
    * CAP_SYS_BOOT
    */
-  SYS_BOOT = 'CAP_SYS_BOOT',
+  SYS_BOOT = 'SYS_BOOT',
   /**
    * CAP_SYS_CHROOT
    */
-  SYS_CHROOT = 'CAP_SYS_CHROOT',
+  SYS_CHROOT = 'SYS_CHROOT',
   /**
    * CAP_SYS_MODULE
    */
-  SYS_MODULE = 'CAP_SYS_MODULE',
+  SYS_MODULE = 'SYS_MODULE',
   /**
    * CAP_SYS_NICE
    */
-  SYS_NICE = 'CAP_SYS_NICE',
+  SYS_NICE = 'SYS_NICE',
   /**
    * CAP_SYS_PACCT
    */
-  SYS_PACCT = 'CAP_SYS_PACCT',
+  SYS_PACCT = 'SYS_PACCT',
   /**
    * CAP_SYS_PTRACE
    */
-  SYS_PTRACE = 'CAP_SYS_PTRACE',
+  SYS_PTRACE = 'SYS_PTRACE',
   /**
    * CAP_SYS_RAWIO
    */
-  SYS_RAWIO = 'CAP_SYS_RAWIO',
+  SYS_RAWIO = 'SYS_RAWIO',
   /**
    * CAP_SYS_RESOURCE
    */
-  SYS_RESOURCE = 'CAP_SYS_RESOURCE',
+  SYS_RESOURCE = 'SYS_RESOURCE',
   /**
    * CAP_SYS_TIME
    */
-  SYS_TIME = 'CAP_SYS_TIME',
+  SYS_TIME = 'SYS_TIME',
   /**
    * CAP_SYS_TTY_CONFIG
    */
-  SYS_TTY_CONFIG = 'CAP_SYS_TTY_CONFIG',
+  SYS_TTY_CONFIG = 'SYS_TTY_CONFIG',
   /**
    * CAP_SYSLOG
    */
-  SYSLOG = 'CAP_SYSLOG',
+  SYSLOG = 'SYSLOG',
   /**
    * CAP_WAKE_ALARM
    */
-  WAKE_ALARM = 'CAP_WAKE_ALARM',
+  WAKE_ALARM = 'WAKE_ALARM',
 }
 
 export interface ContainerSecutiryContextCapabilities {
