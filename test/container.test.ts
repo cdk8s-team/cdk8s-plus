@@ -807,8 +807,8 @@ test('custom security context', () => {
   expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
   expect(container.securityContext.user).toEqual(1000);
   expect(container.securityContext.group).toEqual(2000);
-  expect(container.securityContext.capabilities?.add).toEqual(['CAP_AUDIT_CONTROL']);
-  expect(container.securityContext.capabilities?.drop).toEqual(['CAP_BPF']);
+  expect(container.securityContext.capabilities?.add).toEqual(['AUDIT_CONTROL']);
+  expect(container.securityContext.capabilities?.drop).toEqual(['BPF']);
 
 });
 
