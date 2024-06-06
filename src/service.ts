@@ -6,6 +6,15 @@ import * as k8s from './imports/k8s';
 import * as ingress from './ingress';
 import * as pod from './pod';
 
+export interface IService extends base.IResource {
+
+  /**
+   * Ports this service binds to.
+   */
+  readonly ports: ServicePort[];
+
+}
+
 /**
  * Properties for `Service`.
  */
@@ -167,6 +176,35 @@ export interface AddDeploymentOptions extends ServiceBindOptions {
   readonly port?: number;
 }
 
+class ImportedService extends Construct implements IService {
+
+  private readonly _name: string;
+
+  public readonly resourceType = 'services';
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeService.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubeService.GVK.kind;
+  }
+
+}
+
 /**
  * An abstract way to expose an application running on a set of Pods as a network service.
  * With Kubernetes you don't need to modify your application to use an unfamiliar service discovery mechanism.
@@ -182,6 +220,15 @@ export interface AddDeploymentOptions extends ServiceBindOptions {
  * or load balancer in between your application and the backend Pods.
  */
 export class Service extends base.Resource {
+
+  /**
+   * Imports a service from the cluster as a reference.
+   * @param name The name of the service resource.
+   * @param options additional options.
+   */
+  public static fromServiceName(scope: Construct, id: string, name: string): IService {
+    return new ImportedService(scope, id, name);
+  }
 
   /**
    * The IP address of the service and is usually assigned randomly by the
