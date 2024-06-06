@@ -30,7 +30,6 @@
     },
     {
       "name": "backport",
-      "version": "8.5.0",
       "type": "build"
     },
     {
