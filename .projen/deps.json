@@ -20,12 +20,16 @@
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "version": "^6",
+      "version": "^7",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
-      "version": "^6",
+      "version": "^7",
+      "type": "build"
+    },
+    {
+      "name": "backport",
       "type": "build"
     },
     {
