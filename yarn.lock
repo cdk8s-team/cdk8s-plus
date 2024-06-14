@@ -645,14 +645,7 @@
     chalk "^4.1.2"
     semver "^7.6.0"
 
-"@jsii/spec@1.99.0", "@jsii/spec@^1.44.0":
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.99.0.tgz#f71bfcf83e2e48d7894821cc8b52c320f52cbbf4"
-  integrity sha512-R4E0lFj+C2PpLt2tnexIlQA7Ovy52tL9PRcDy6sUcnJto4iZufexudIm4pjIJPN+bfwimQX5aMjALloRwDixtQ==
-  dependencies:
-    ajv "^8.13.0"
-
-"@jsii/spec@^1.100.0", "@jsii/spec@^1.98.0", "@jsii/spec@^1.99.0":
+"@jsii/spec@1.100.0", "@jsii/spec@^1.100.0", "@jsii/spec@^1.44.0", "@jsii/spec@^1.98.0", "@jsii/spec@^1.99.0":
   version "1.100.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.100.0.tgz#44e5c6fb84299664f40479b2ebe11e2aee0b727e"
   integrity sha512-4LJCpSkmi3Hfcbmbchv+2JPIquV+cgrkhQcwglBAWqS4liLGbWPwgfHRL22sMXEKXiyXeHfitVwkP+IoGIyJ8g==
@@ -4428,7 +4421,7 @@ jsii-pacmak@^1.99.0:
     xmlbuilder "^15.1.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.100.0:
+jsii-reflect@^1.100.0, jsii-reflect@^1.44.0:
   version "1.100.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.100.0.tgz#82b21ad160a7c3d830ec8990b6cba52da7910049"
   integrity sha512-4hicwZirzhSqFRpX/USpvy6RewDi5mCkDESLjBSNpnGWhc3oVByX3x/KJyKQdjEfjVkflHWxSGJEA0qEMoXFUw==
@@ -4440,7 +4433,7 @@ jsii-reflect@^1.100.0:
     oo-ascii-tree "^1.100.0"
     yargs "^16.2.0"
 
-jsii-reflect@^1.44.0, jsii-reflect@^1.99.0:
+jsii-reflect@^1.99.0:
   version "1.99.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.99.0.tgz#aee4be2020e2c04b44222917d1d77f226da10ae4"
   integrity sha512-ro26sl1u7osaPBMMXNF3K0bHtYgZKAB3+ojjqaoDuCc/MZ1u9ZS3duPJ95Qo5Izvh9Ae9yezzNB3Qrtvyzfxrg==
@@ -4453,16 +4446,16 @@ jsii-reflect@^1.44.0, jsii-reflect@^1.99.0:
     yargs "^16.2.0"
 
 jsii-rosetta@1.x, jsii-rosetta@^1.44.0:
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.99.0.tgz#1e55bc265589a5953d5827cfd4483562883ce6cf"
-  integrity sha512-6b8MgL8VI96wJEfBbGLmzpMxm/JZopNzyCCsPNGpe+e/pql17sntY33sbNwOEtG+jBPcBUD4i4V0zH5hNIl1BQ==
+  version "1.100.0"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.100.0.tgz#1f244597f197ce798e86140ab8165d8785ead181"
+  integrity sha512-JeVS7twbDM48Z6IE9OJ24DzBs9scpeWa9XmI00bggMWV0xcP2GCTkz2c8cqEZU4DPggcygS1H+TWhQiSkol4gQ==
   dependencies:
-    "@jsii/check-node" "1.99.0"
-    "@jsii/spec" "1.99.0"
+    "@jsii/check-node" "1.100.0"
+    "@jsii/spec" "1.100.0"
     "@xmldom/xmldom" "^0.8.10"
     commonmark "^0.31.0"
     fast-glob "^3.3.2"
-    jsii "1.99.0"
+    jsii "1.100.0"
     semver "^7.6.0"
     semver-intersect "^1.5.0"
     stream-json "^1.8.0"
@@ -4501,13 +4494,13 @@ jsii-srcmak@^0.1.1153:
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@1.99.0, jsii@1.x:
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.99.0.tgz#75f6613b706abb9fbbc0721a2189246cbc07e6fa"
-  integrity sha512-t8fyMzjYr1WVFcSs6oCOgQM3Ikycu89HcZM61C/DRpOfSACLoKoB5oAD23zNdl/fvdDpJSXVRQ4NIDRVmQF3ug==
+jsii@1.100.0, jsii@1.x:
+  version "1.100.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.100.0.tgz#7e9dcb7d7b1b0d9874a7d25a4b1a02de6f35054e"
+  integrity sha512-DUTvq90XyyIRE+O/CAIHXZwBsxVy9ZkFDGkDjUknYV84VyzlMnBkdptQq0oJj8LRPTMJl2yiiPPMsJCvuv01Xg==
   dependencies:
-    "@jsii/check-node" "1.99.0"
-    "@jsii/spec" "^1.99.0"
+    "@jsii/check-node" "1.100.0"
+    "@jsii/spec" "^1.100.0"
     case "^1.6.3"
     chalk "^4"
     fast-deep-equal "^3.1.3"
@@ -5154,15 +5147,10 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-oo-ascii-tree@^1.100.0:
+oo-ascii-tree@^1.100.0, oo-ascii-tree@^1.99.0:
   version "1.100.0"
   resolved "https://registry.yarnpkg.com/oo-ascii-tree/-/oo-ascii-tree-1.100.0.tgz#1104a689c1143346de2c46d889e306ade721a061"
   integrity sha512-Y/C4AN9IVjsIyNQ1iK4x65xe2AV9q0MtXlYAOKZLA2ZscOzZJbRNi0BzcpmeMb/DSIAFm9M5kaxLqdAKpETbHg==
-
-oo-ascii-tree@^1.99.0:
-  version "1.99.0"
-  resolved "https://registry.yarnpkg.com/oo-ascii-tree/-/oo-ascii-tree-1.99.0.tgz#9bc7c7fd5ff40a28f445fb32b0f8fc9a5db9458f"
-  integrity sha512-/BTLvFECySvAwOUeu/iSkhQk+WXH8FPcXOrjbadlnWuNwYtNH5jcEOxyBkL0sT6WvmFFsogRu2zLb2H/nPCJrQ==
 
 optional-js@^2.0.0:
   version "2.3.0"
