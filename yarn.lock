@@ -2556,9 +2556,9 @@ elastic-apm-node@^3.47.0:
     unicode-byte-truncate "^1.0.0"
 
 electron-to-chromium@^1.4.796:
-  version "1.4.809"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.809.tgz#93057c51ae91f1f42799838fdf41f9734e89bedc"
-  integrity sha512-Xg2vEbpMfkVivK8l9QwbjkLoHSUQouZLC0InWHqKJhNvB1VGoOfdlzbdnl4f1jVGTnxmWV1dP/IwoJRqJP78ug==
+  version "1.4.810"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.810.tgz#7dee01b090b9e048e6db752f7b30921790230654"
+  integrity sha512-Kaxhu4T7SJGpRQx99tq216gCq2nMxJo+uuT6uzz9l8TVN2stL7M06MIIXAtr9jsrLs2Glflgf2vMQRepxawOdQ==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -4428,9 +4428,9 @@ jsii-rosetta@^5.4.22:
     yargs "^17.7.2"
 
 jsii-srcmak@^0.1.1161:
-  version "0.1.1161"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1161.tgz#0647eefd4f6d05a4722b54fc3014a8d0280b2b39"
-  integrity sha512-5/MdNb7MeJ0B13psD/77IHOXx0Iqbwj2GoOAjMDrEM/UmC407a/nYTvZSlEEh7mw++Ngg8dyhNnW/DugF/OWFA==
+  version "0.1.1162"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1162.tgz#dde3b1f4a054db06cef378a9da7bbfe286a84eca"
+  integrity sha512-RDwWF4kb6jcaCGKWZtG/X8YkzJxCGJjTcLQapCuW8L3vSRoLfPD/XlJvYP93Ycjb8IZN60TumZQxO0jvIOvaSA==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.4.22"
