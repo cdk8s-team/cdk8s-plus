@@ -2556,9 +2556,9 @@ elastic-apm-node@^3.47.0:
     unicode-byte-truncate "^1.0.0"
 
 electron-to-chromium@^1.4.820:
-  version "1.4.823"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.823.tgz#38587f7aa55bed14930f04091dfc65c39a3d8bd7"
-  integrity sha512-4h+oPeAiGQOHFyUJOqpoEcPj/xxlicxBzOErVeYVMMmAiXUXsGpsFd0QXBMaUUbnD8hhSfLf9uw+MlsoIA7j5w==
+  version "1.4.825"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.825.tgz#2d9c3d1eb81a67ecea0c06bcf70740b00ba52718"
+  integrity sha512-OCcF+LwdgFGcsYPYC5keEEFC2XT0gBhrYbeGzHCx7i9qRFbzO/AqTmc/C/1xNhJj+JA7rzlN7mpBuStshh96Cg==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -4428,9 +4428,9 @@ jsii-rosetta@^5.4.25:
     yargs "^17.7.2"
 
 jsii-srcmak@^0.1.1178:
-  version "0.1.1178"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1178.tgz#b466cd64253ef2033610098d2825c38ca58222ba"
-  integrity sha512-PiUm4ezqAgj23fwGf1EAubaJWjYC2x0WoKkiin0+peA7maTTvDBt/M3nuqTErCvfnc9vRdsUfBN1c/RO1Mrarw==
+  version "0.1.1179"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1179.tgz#309edb9803a2e7d3c943c62f47e8253d61e20979"
+  integrity sha512-GgkZvbovUp/HAn3QVdA3/gRwdSPoZ6BIbn2BeCIcpwFESexPmbGjXP8IAjv6mWuSrTTVxSjgi4SzUf7/b9utqg==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.4.26"
@@ -4688,10 +4688,10 @@ log4js@^6.9.1:
     rfdc "^1.3.0"
     streamroller "^3.1.5"
 
-logform@^2.3.2, logform@^2.4.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/logform/-/logform-2.6.0.tgz#8c82a983f05d6eaeb2d75e3decae7a768b2bf9b5"
-  integrity sha512-1ulHeNPp6k/LD8H91o7VYFBng5i1BDE7HoKxVbZiGFidS1Rj65qcywLxX+pVfAPoQJEjRdvKcusKwOupHCVOVQ==
+logform@^2.6.0, logform@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/logform/-/logform-2.6.1.tgz#71403a7d8cae04b2b734147963236205db9b3df0"
+  integrity sha512-CdaO738xRapbKIMVn2m4F6KTj4j7ooJ8POVnebSgKo3KBz5axNXRAL7ZdRjIV6NOr2Uf4vjtRkxrFETOioCqSA==
   dependencies:
     "@colors/colors" "1.6.0"
     "@types/triple-beam" "^1.3.2"
@@ -4998,9 +4998,9 @@ npm-run-path@^4.0.1:
     path-key "^3.0.0"
 
 nwsapi@^2.2.0:
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.10.tgz#0b77a68e21a0b483db70b11fad055906e867cda8"
-  integrity sha512-QK0sRs7MKv0tKe1+5uZIQk/C8XGza4DAnztJG8iD+TpJIORARrCxczA738awHrZoHeTjSSoHqao2teO0dC/gFQ==
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.12.tgz#fb6af5c0ec35b27b4581eb3bbad34ec9e5c696f8"
+  integrity sha512-qXDmcVlZV4XRtKFzddidpfVP4oMSGhga+xdMc25mv8kaLUHtgzCDhUxkrN8exkGdTlLNaXj7CV3GtON7zuGZ+w==
 
 object-filter-sequence@^1.0.0:
   version "1.0.0"
@@ -5467,7 +5467,7 @@ read-pkg@^5.2.0:
     parse-json "^5.0.0"
     type-fest "^0.6.0"
 
-readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.4.0, readable-stream@^3.6.0:
+readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.4.0, readable-stream@^3.6.2:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.2.tgz#56a9b36ea965c00c5a93ef31eb111a0f11056967"
   integrity sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==
@@ -6661,24 +6661,24 @@ which@^2.0.1:
     isexe "^2.0.0"
 
 winston-transport@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.7.0.tgz#e302e6889e6ccb7f383b926df6936a5b781bd1f0"
-  integrity sha512-ajBj65K5I7denzer2IYW6+2bNIVqLGDHqDw3Ow8Ohh+vdW+rv4MZ6eiDvHoKhfJFZ2auyN8byXieDDJ96ViONg==
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.7.1.tgz#52ff1bcfe452ad89991a0aaff9c3b18e7f392569"
+  integrity sha512-wQCXXVgfv/wUPOfb2x0ruxzwkcZfxcktz6JIMUaPLmcNhO4bZTwA/WtDWK74xV3F2dKu8YadrFv0qhwYjVEwhA==
   dependencies:
-    logform "^2.3.2"
-    readable-stream "^3.6.0"
+    logform "^2.6.1"
+    readable-stream "^3.6.2"
     triple-beam "^1.3.0"
 
 winston@^3.7.2, winston@^3.8.2:
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/winston/-/winston-3.13.0.tgz#e76c0d722f78e04838158c61adc1287201de7ce3"
-  integrity sha512-rwidmA1w3SE4j0E5MuIufFhyJPBDG7Nu71RkZor1p2+qHvJSZ9GYDA81AyleQcZbh/+V6HjeBdfnTZJm9rSeQQ==
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-3.13.1.tgz#53ddadb9c2332eb12cff8306413b3480dc82b6c3"
+  integrity sha512-SvZit7VFNvXRzbqGHsv5KSmgbEYR5EiQfDAL9gxYkRqa934Hnk++zze0wANKtMHcy/gI4W/3xmSDwlhf865WGw==
   dependencies:
     "@colors/colors" "^1.6.0"
     "@dabh/diagnostics" "^2.0.2"
     async "^3.2.3"
     is-stream "^2.0.0"
-    logform "^2.4.0"
+    logform "^2.6.0"
     one-time "^1.0.0"
     readable-stream "^3.4.0"
     safe-stable-stringify "^2.3.1"
