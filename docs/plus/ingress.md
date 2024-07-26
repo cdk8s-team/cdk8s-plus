@@ -5,7 +5,7 @@ HTTP. Ingress may provide load balancing, SSL termination and name-based virtual
 hosting.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-27/typescript.md#ingressv1beta1)
+    [API Reference](../../reference/cdk8s-plus-30/typescript.md#ingressv1beta1)
 
 You must have an [Ingress controller] to satisfy an Ingress. Only creating an
 Ingress resource has no effect.
@@ -18,7 +18,7 @@ to a service associated with a deployment of the
 [hashicorp/http-echo](https://github.com/hashicorp/http-echo) image.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-30';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 

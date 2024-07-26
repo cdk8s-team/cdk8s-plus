@@ -15,17 +15,21 @@
     },
     {
       "name": "@types/node",
-      "version": "^16 <= 16.18.78",
+      "version": "16.18.78",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "version": "^6",
+      "version": "^7",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
-      "version": "^6",
+      "version": "^7",
+      "type": "build"
+    },
+    {
+      "name": "backport",
       "type": "build"
     },
     {

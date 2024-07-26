@@ -192,6 +192,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     const initContainers: k8s.Container[] = [];
 
     for (const cont of this.containers) {
+      // check if restartPolicy is defined for containers
+      if (cont.restartPolicy) {
+        throw new Error(`Invalid container spec: ${cont.name} has non-empty restartPolicy field. The field can only be specified for initContainers`);
+      }
       // automatically add volume from the container mount
       // to this pod so thats its available to the container.
       for (const mount of cont.mounts) {

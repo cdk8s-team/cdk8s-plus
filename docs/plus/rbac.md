@@ -16,15 +16,15 @@ and, similarly there are two types of binding available,
 * ClusterRoleBinding: These grant cluster wide permissions .
 
 !!! tip "Learn more"
-    * [Role API Reference](../../reference/cdk8s-plus-27/typescript.md#role)
-    * [RoleBinding API Reference](../../reference/cdk8s-plus-27/typescript.md#role-binding)
+    * [Role API Reference](../../reference/cdk8s-plus-30/typescript.md#role)
+    * [RoleBinding API Reference](../../reference/cdk8s-plus-30/typescript.md#role-binding)
 
 ## Role
 
 ### Create role and add rules to it
 
 ```typescript
-import * as kplus from 'cdk8s-plus-27';
+import * as kplus from 'cdk8s-plus-30';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 

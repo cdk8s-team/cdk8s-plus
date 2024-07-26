@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s } from '../src';
+import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability, ContainerRestartPolicy } from '../src';
 
 describe('EnvValue', () => {
 
@@ -180,23 +180,56 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
-  test('cannot configure identical ports at instantiation', () => {
+  test('cannot configure identical ports and protocols at instantiation', () => {
 
     expect(() => new kplus.Container({
       image: 'image',
       ports: [
         {
           number: 8080,
+          protocol: kplus.Protocol.TCP,
         },
         {
           number: 8080,
+          protocol: kplus.Protocol.TCP,
         },
       ],
-    })).toThrowError('Port with number 8080 already exists');
+    })).toThrowError('Port with number 8080 and protocol TCP already exists');
 
   });
 
-  test('cannot add an already existing port number', () => {
+  test('can configure identical ports with different protocols at instantiation', () => {
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [
+        {
+          number: 8080,
+          protocol: kplus.Protocol.TCP,
+        },
+        {
+          number: 8080,
+          protocol: kplus.Protocol.UDP,
+        },
+      ],
+    });
+
+    expect(container._toKube().ports).toEqual([{
+      containerPort: 8080,
+      protocol: 'TCP',
+    }, {
+      containerPort: 8080,
+      protocol: 'UDP',
+    }]);
+    expect(container.ports).toEqual([{
+      number: 8080,
+      protocol: kplus.Protocol.TCP,
+    }, {
+      number: 8080,
+      protocol: kplus.Protocol.UDP,
+    }]);
+  });
+
+  test('cannot add an already existing port number with identical protocol', () => {
 
     const container = new kplus.Container({
       image: 'image',
@@ -205,8 +238,38 @@ describe('Container', () => {
       }],
     });
 
-    expect(() => container.addPort({ number: 8080 })).toThrowError('Port with number 8080 already exists');
+    expect(() => container.addPort({ number: 8080 })).toThrowError('Port with number 8080 and protocol TCP already exists');
 
+  });
+
+  test('can add an already existing port number with a different protocol', () => {
+
+    const container = new kplus.Container({
+      image: 'image',
+      ports: [{
+        number: 8080,
+        protocol: kplus.Protocol.TCP,
+      }],
+    });
+    container.addPort({
+      number: 8080,
+      protocol: kplus.Protocol.UDP,
+    });
+
+    expect(container._toKube().ports).toEqual([{
+      containerPort: 8080,
+      protocol: 'TCP',
+    }, {
+      containerPort: 8080,
+      protocol: 'UDP',
+    }]);
+    expect(container.ports).toEqual([{
+      number: 8080,
+      protocol: kplus.Protocol.TCP,
+    }, {
+      number: 8080,
+      protocol: kplus.Protocol.UDP,
+    }]);
   });
 
   test('cannot add an already existing port name', () => {
@@ -473,6 +536,26 @@ describe('Container', () => {
     expect(container).not.toHaveProperty('startupProbe');
   });
 
+  test('"restartPolicy" property can be used to define restartPolicy', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod');
+
+    // WHEN
+    pod.addContainer({ image: 'foo' });
+    pod.addInitContainer({
+      image: 'bar',
+      restartPolicy: ContainerRestartPolicy.ALWAYS,
+    });
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest).toMatchSnapshot();
+    const container = manifest[0].spec.initContainers[0];
+
+    expect(container.restartPolicy).toEqual('Always');
+  });
+
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {
     // GIVEN
     const container = new kplus.Container({
@@ -694,6 +777,7 @@ test('default security context', () => {
     runAsNonRoot: container.securityContext.ensureNonRoot,
     runAsUser: container.securityContext.user,
     allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
+    capabilities: container.securityContext.capabilities,
   });
 });
 
@@ -707,6 +791,14 @@ test('custom security context', () => {
       privileged: true,
       user: 1000,
       group: 2000,
+      capabilities: {
+        add: [
+          Capability.AUDIT_CONTROL,
+        ],
+        drop: [
+          Capability.BPF,
+        ],
+      },
     },
   });
 
@@ -715,6 +807,8 @@ test('custom security context', () => {
   expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
   expect(container.securityContext.user).toEqual(1000);
   expect(container.securityContext.group).toEqual(2000);
+  expect(container.securityContext.capabilities?.add).toEqual(['AUDIT_CONTROL']);
+  expect(container.securityContext.capabilities?.drop).toEqual(['BPF']);
 
 });
 

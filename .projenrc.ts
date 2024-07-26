@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Cdk8sTeamJsiiProject } from '@cdk8s/projen-common';
-import { generateApiResources } from './projenrc/gen-api-resource';
 
 // the version of k8s this branch supports
 const SPEC_VERSION = fs.readFileSync('projenrc/latest-k8s-version.txt', 'utf-8');
@@ -69,8 +68,9 @@ const project = new Cdk8sTeamJsiiProject({
   ],
 });
 
-// Used in K8s upgrade tests to control publishing of new branches
-project.package.addField('private', false);
+// not using `npmAccess` property because projen omits values that are
+// identical to npm defaults.
+project.package.addField('publishConfig', { access: 'public' });
 
 project.gitignore.exclude('.vscode/');
 
@@ -94,18 +94,8 @@ for (const lang of ['typescript', 'python', 'java']) {
   project.gitignore.exclude(output);
 }
 
-project.addTask('regenerate-api-information', {
-  description: 'Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.',
-  exec: 'kubectl api-resources -o wide > api-resources.txt',
-});
-generateApiResources(project, 'api-resources.txt', 'src/api-resource.generated.ts');
-
 // Projen task to update references to old versions of cdk8s-plus
-const versionTaskObject = project.addTask('update-k8s-version-references');
-versionTaskObject.exec('ts-node projenrc/replace-version-references.ts ' + SPEC_VERSION);
-
-// Projen task to disable publishing
-const disablePublishingTaskObject = project.addTask('disable-publishing');
-disablePublishingTaskObject.exec('ts-node projenrc/disable-publishing.ts ');
+const versionTaskObject = project.addTask('rotate');
+versionTaskObject.exec('ts-node projenrc/rotate.ts ' + SPEC_VERSION);
 
 project.synth();
