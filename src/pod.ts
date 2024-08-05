@@ -122,15 +122,15 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public addInitContainer(cont: container.ContainerProps): container.Container {
 
     // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
-    if (cont.readiness) {
+    if (cont.restartPolicy != container.ContainerRestartPolicy.ALWAYS && cont.readiness) {
       throw new Error('Init containers must not have a readiness probe');
     }
 
-    if (cont.liveness) {
+    if (cont.restartPolicy != container.ContainerRestartPolicy.ALWAYS && cont.liveness) {
       throw new Error('Init containers must not have a liveness probe');
     }
 
-    if (cont.startup) {
+    if (cont.restartPolicy != container.ContainerRestartPolicy.ALWAYS && cont.startup) {
       throw new Error('Init containers must not have a startup probe');
     }
 
