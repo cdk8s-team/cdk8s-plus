@@ -270,3 +270,6 @@ jobs:
           GIT_USER_EMAIL: cdk8s-team@amazon.com
           GITHUB_TOKEN: ${{ secrets.GO_GITHUB_TOKEN }}
         run: npx -p publib@latest publib-golang
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
