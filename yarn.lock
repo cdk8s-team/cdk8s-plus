@@ -1740,9 +1740,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001646:
-  version "1.0.30001649"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001649.tgz#3ec700309ca0da2b0d3d5fb03c411b191761c992"
-  integrity sha512-fJegqZZ0ZX8HOWr6rcafGr72+xcgJKI9oWfDW5DrD7ExUtgZC7a7R7ZYmZqplh7XDocFdGeIFn7roAxhOeYrPQ==
+  version "1.0.30001650"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001650.tgz#dd1eba0938e39536d184c3c99b2569a13788bc16"
+  integrity sha512-fgEc7hP/LB7iicdXHUI9VsBsMZmUmlVJeQP2qqQW+3lkqVhbmjEU8zp+h5stWeilX+G7uXuIUIIlWlDw9jdt8g==
 
 case@^1.6.3:
   version "1.6.3"
@@ -1781,10 +1781,10 @@ cdk8s-plus-25@^2.22.79:
   optionalDependencies:
     backport "8.5.0"
 
-cdk8s@2.68.92, cdk8s@^2.68.92:
-  version "2.68.92"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.68.92.tgz#03ed6a56d333b0ec1360dcf3cb868e07fed0a5c0"
-  integrity sha512-S6MNqU5QWGdWiboDbJRnGsVY/Cccc7dmptEX1q4og5KP4bMMHEQ22LsblT+oIPrJ+AkXaqw7d0GvhWzIoQcMVA==
+cdk8s@2.68.93, cdk8s@^2.68.92:
+  version "2.68.93"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.68.93.tgz#b58a58191581d78809f5fdc1bd8f1e593558709a"
+  integrity sha512-IpRJpJuGUFMV/CGiULzpIT8/90LBlJRSY91PC/wZ77ufNC5rlPaopstbE69RVqLvNutH8+xP3NcMsEemNnPbKQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.6"
@@ -4401,9 +4401,9 @@ jsii-rosetta@^5.4.29:
     yargs "^17.7.2"
 
 jsii-srcmak@^0.1.1205:
-  version "0.1.1205"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1205.tgz#c817c6dd6ea436e23b83658c76519963df26392d"
-  integrity sha512-LLeBKZZHb5TXOdtL1/mkT97/mJJRiuSIPksg6pISwmxOT5raxMnc6V+8KHCMEvvjozkf8CeUsCMKzQnUcx1ULQ==
+  version "0.1.1206"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1206.tgz#c4412d99e52b722a4c17b41c89a4778a6b0019aa"
+  integrity sha512-PeWbTJh4GBbywuvnNz7DLcIDaKcrifosBKkwAESN4w8ivA4GGNgSq09owqn0TIkvq+LmDs3C4RcWHzkBmqtsbg==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.4.31"
