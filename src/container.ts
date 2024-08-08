@@ -181,6 +181,37 @@ export enum Capability {
   WAKE_ALARM = 'WAKE_ALARM',
 }
 
+export enum SeccompProfileType {
+  /**
+  * A profile defined in a file on the node should be used
+  */
+  LOCALHOST = 'Localhost',
+  /**
+  * The container runtime default profile should be used
+  */
+  RUNTIME_DEFAULT = 'RuntimeDefault',
+  /**
+  * No profile should be applied
+  */
+  UNCONFINED = 'Unconfined',
+}
+
+export interface SeccompProfile {
+  /**
+   * localhostProfile indicates a profile defined in a file on the node should be used.
+   * The profile must be preconfigured on the node to work. Must be a descending path,
+   * relative to the kubelet's configured seccomp profile location.
+   * Must only be set if type is "Localhost".
+   *
+   * @default - empty string
+   */
+  readonly localhostProfile?: string;
+  /**
+   * Indicates which kind of seccomp profile will be applied
+   */
+  readonly type: SeccompProfileType;
+}
+
 export interface ContainerSecutiryContextCapabilities {
   /**
    * Added capabilities
@@ -252,6 +283,13 @@ export interface ContainerSecurityContextProps {
    * @default none
    */
   readonly capabilities?: ContainerSecutiryContextCapabilities;
+
+  /**
+  * Container's seccomp profile settings. Only one profile source may be set
+  *
+  * @default none
+  */
+  readonly seccompProfile?: SeccompProfile;
 }
 
 /**
@@ -331,8 +369,12 @@ export class ContainerSecurityContext {
   public readonly group?: number;
   public readonly allowPrivilegeEscalation?: boolean;
   public readonly capabilities?: ContainerSecutiryContextCapabilities;
+  public readonly seccompProfile?: SeccompProfile;
 
   constructor(props: ContainerSecurityContextProps = {}) {
+    if (props.seccompProfile?.localhostProfile && props.seccompProfile.type != SeccompProfileType.LOCALHOST) {
+      throw new Error('localhostProfile must only be set if type is "Localhost"');
+    }
     this.ensureNonRoot = props.ensureNonRoot ?? true;
     this.privileged = props.privileged ?? false;
     this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? true;
@@ -340,6 +382,7 @@ export class ContainerSecurityContext {
     this.group = props.group;
     this.allowPrivilegeEscalation = props.allowPrivilegeEscalation ?? false;
     this.capabilities = props.capabilities;
+    this.seccompProfile = props.seccompProfile;
   }
 
   /**
@@ -354,6 +397,7 @@ export class ContainerSecurityContext {
       readOnlyRootFilesystem: this.readOnlyRootFilesystem,
       allowPrivilegeEscalation: this.allowPrivilegeEscalation,
       capabilities: this.capabilities,
+      seccompProfile: this.seccompProfile,
     };
   }
 
