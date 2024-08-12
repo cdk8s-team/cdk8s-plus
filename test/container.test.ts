@@ -831,6 +831,9 @@ test('seccompProfile localhostProfile can not be used if type is not Localhost',
 
   const spec = container._toKube();
   expect(spec.securityContext?.seccompProfile?.localhostProfile).toEqual('localhostProfile');
+});
+
+test('seccompProfile localhostProfile must only be set if type is Localhost', () => {
 
   expect(() => new Container({
     image: 'image',
