@@ -185,3 +185,14 @@ test('can be exposed by an ingress', () => {
   const ingress = Testing.synth(chart)[1];
   expect(ingress).toMatchSnapshot();
 });
+
+test('can set publishNotReadyAddresses', () => {
+  const chart = Testing.chart();
+  new kplus.Service(chart, 'service', {
+    ports: [{ port: 80 }],
+    publishNotReadyAddresses: true,
+  });
+
+  const spec = Testing.synth(chart)[0].spec;
+  expect(spec.publishNotReadyAddresses).toBeTruthy();
+});
