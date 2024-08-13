@@ -1650,10 +1650,10 @@ cdk8s-plus-28@^2.3.17:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.68.93, cdk8s@^2.68.93:
-  version "2.68.93"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.68.93.tgz#b58a58191581d78809f5fdc1bd8f1e593558709a"
-  integrity sha512-IpRJpJuGUFMV/CGiULzpIT8/90LBlJRSY91PC/wZ77ufNC5rlPaopstbE69RVqLvNutH8+xP3NcMsEemNnPbKQ==
+cdk8s@2.68.94, cdk8s@^2.68.93:
+  version "2.68.94"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.68.94.tgz#02e61cb1fe85e1654b63577190c2c4e94361674d"
+  integrity sha512-OcKTzxS0lObfhdpghz9XgbBIJyXnxqAt9eKJEHtyNM9AEUgzg5ib89/wMHLVLWBrg55HCk43DUPYe2WXsKBIkw==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.6"
@@ -4250,7 +4250,7 @@ jsii-rosetta@1.x, jsii-rosetta@^1.44.0:
     workerpool "^6.5.1"
     yargs "^16.2.0"
 
-jsii-rosetta@^5.4.29, jsii-rosetta@^5.4.30:
+jsii-rosetta@^5.4.30:
   version "5.4.30"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.4.30.tgz#9f891a5116937b030f3859ff3074f6b1162e0328"
   integrity sha512-DyJlVO1L7p37poEtja3ktr3zGv15kvnkVrJ+uPuv5+QOvSs2XTTzi2qsgt/l7N/6yXelQ2LDvSDzXfEY08UZjg==
@@ -4270,14 +4270,14 @@ jsii-rosetta@^5.4.29, jsii-rosetta@^5.4.30:
     yargs "^17.7.2"
 
 jsii-srcmak@^0.1.1211:
-  version "0.1.1211"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1211.tgz#9e947f6ee9c68f56639f945a8b6d57c3adc0dee7"
-  integrity sha512-a7RSHWVoYaX/MgqvEZeDMD0lCBKweBn5+8DXQtuTQLCiJm3KDB6SrUsq0gs2hUKo/4zyqH6m6wbg5Keu5TZtOg==
+  version "0.1.1212"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1212.tgz#acd4b8833cb913779da66f246f0ec0c5bd9f71a9"
+  integrity sha512-2FqkMQd1jKv/HKssH9QdM78bVzrvj3mLf+I8MWeD6ePQPA/4XVmGzJNyBdp4QgyDwDkxcWtuxFrd0TQMVdwarQ==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.4.31"
     jsii-pacmak "^1.102.0"
-    jsii-rosetta "^5.4.29"
+    jsii-rosetta "^5.4.30"
     ncp "^2.0.0"
     yargs "^17.7.2"
 
