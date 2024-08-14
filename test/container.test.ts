@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability, ContainerRestartPolicy } from '../src';
+import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability, ContainerRestartPolicy, SeccompProfileType } from '../src';
 
 describe('EnvValue', () => {
 
@@ -778,6 +778,7 @@ test('default security context', () => {
     runAsUser: container.securityContext.user,
     allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
     capabilities: container.securityContext.capabilities,
+    seccompProfile: container.securityContext.seccompProfile,
   });
 });
 
@@ -799,6 +800,9 @@ test('custom security context', () => {
           Capability.BPF,
         ],
       },
+      seccompProfile: {
+        type: SeccompProfileType.RUNTIME_DEFAULT,
+      },
     },
   });
 
@@ -809,7 +813,37 @@ test('custom security context', () => {
   expect(container.securityContext.group).toEqual(2000);
   expect(container.securityContext.capabilities?.add).toEqual(['AUDIT_CONTROL']);
   expect(container.securityContext.capabilities?.drop).toEqual(['BPF']);
+  expect(container.securityContext.seccompProfile?.type).toEqual('RuntimeDefault');
 
+});
+
+test('seccompProfile localhostProfile can not be used if type is not Localhost', () => {
+
+  const container = new Container({
+    image: 'image',
+    securityContext: {
+      seccompProfile: {
+        type: SeccompProfileType.LOCALHOST,
+        localhostProfile: 'localhostProfile',
+      },
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.securityContext?.seccompProfile?.localhostProfile).toEqual('localhostProfile');
+});
+
+test('seccompProfile localhostProfile must only be set if type is Localhost', () => {
+
+  expect(() => new Container({
+    image: 'image',
+    securityContext: {
+      seccompProfile: {
+        type: SeccompProfileType.UNCONFINED,
+        localhostProfile: 'localhostProfile',
+      },
+    },
+  })).toThrowError('localhostProfile must only be set if type is "Localhost"');
 });
 
 test('can configure a postStart lifecycle hook', () => {
