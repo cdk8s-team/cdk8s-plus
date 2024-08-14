@@ -94,6 +94,16 @@ export interface ServiceProps extends base.ResourceProps {
    */
   readonly loadBalancerSourceRanges?: string[];
 
+  /**
+   * The publishNotReadyAddresses indicates that any agent which deals with endpoints for this Service
+   * should disregard any indications of ready/not-ready
+   *
+   * More info: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#servicespec-v1-core
+   *
+   * @default - false
+   */
+  readonly publishNotReadyAddresses?: boolean;
+
 }
 
 /**
@@ -210,6 +220,7 @@ export class Service extends base.Resource {
   private readonly _selector: Record<string, string>;
   private readonly _ports: ServicePort[];
   private readonly _loadBalancerSourceRanges?: string[];
+  private readonly _publishNotReadyAddresses?: boolean;
 
   constructor(scope: Construct, id: string, props: ServiceProps = {}) {
     super(scope, id);
@@ -232,6 +243,7 @@ export class Service extends base.Resource {
     this._ports = [];
     this._selector = { };
     this._loadBalancerSourceRanges = props.loadBalancerSourceRanges;
+    this._publishNotReadyAddresses = props.publishNotReadyAddresses;
 
     if (props.selector) {
       this.select(props.selector);
@@ -337,6 +349,7 @@ export class Service extends base.Resource {
       selector: this._selector,
       ports: ports,
       loadBalancerSourceRanges: this._loadBalancerSourceRanges,
+      publishNotReadyAddresses: this._publishNotReadyAddresses,
     } : {
       type: this.type,
       externalName: this.externalName,
