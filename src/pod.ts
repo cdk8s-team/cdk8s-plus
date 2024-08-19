@@ -147,7 +147,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   // documentation for more details:
   // https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/#differences-from-init-containers
   private isSidecarContainer(cont: container.ContainerProps) {
-    return this.restartPolicy && cont.restartPolicy === container.ContainerRestartPolicy.ALWAYS
+    return cont.restartPolicy === container.ContainerRestartPolicy.ALWAYS;
   }
 
   public addHostAlias(hostAlias: HostAlias): void {
