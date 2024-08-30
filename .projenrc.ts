@@ -86,6 +86,7 @@ const importTask = project.addTask('import', {
 });
 project.compileTask.prependSpawn(importTask);
 
+project.addDevDeps('jsii-docgen@^3.8.31');
 const docgenTask = project.tasks.tryFind('docgen')!;
 docgenTask.reset();
 for (const lang of ['typescript', 'python', 'java']) {
