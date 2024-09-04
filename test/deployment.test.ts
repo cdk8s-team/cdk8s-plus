@@ -319,6 +319,21 @@ test('can configure minReadySeconds', () => {
 
 });
 
+test('can configure revisionHistoryLimit', () => {
+
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+    revisionHistoryLimit: 3,
+  });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.revisionHistoryLimit).toEqual(3);
+  expect(spec.revisionHistoryLimit).toEqual(3);
+
+});
+
 test('can configure progressDeadlineSeconds', () => {
 
   const chart = Testing.chart();

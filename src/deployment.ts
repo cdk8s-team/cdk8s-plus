@@ -50,6 +50,14 @@ export interface DeploymentProps extends workload.WorkloadProps {
    */
   readonly progressDeadline?: Duration;
 
+
+  /**
+   * The number of old ReplicaSets to retain to allow rollback. Defaults to 10.
+   *
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#revision-history-limit
+   * @default 10
+   */
+  readonly revisionHistoryLimit?: number;
 }
 
 /**
@@ -130,6 +138,12 @@ export class Deployment extends workload.Workload implements IScalable {
    */
   public readonly progressDeadline: Duration;
 
+  /**
+   * The number of old ReplicaSets to retain to allow rollback.
+   *
+   */
+  public readonly revisionHistoryLimit: number;
+
   /*
    * The upgrade strategy of this deployment.
    */
@@ -154,6 +168,7 @@ export class Deployment extends workload.Workload implements IScalable {
 
     this.minReady = props.minReady ?? Duration.seconds(0);
     this.progressDeadline = props.progressDeadline ?? Duration.seconds(600);
+    this.revisionHistoryLimit = props.revisionHistoryLimit ?? 10;
 
     if (this.progressDeadline.toSeconds() <= this.minReady.toSeconds()) {
       throw new Error(`'progressDeadline' (${this.progressDeadline.toSeconds()}s) must be greater than 'minReady' (${this.minReady.toSeconds()}s)`);
@@ -232,6 +247,7 @@ export class Deployment extends workload.Workload implements IScalable {
       replicas: this.hasAutoscaler ? undefined : (this.replicas ?? 2),
       minReadySeconds: this.minReady.toSeconds(),
       progressDeadlineSeconds: this.progressDeadline.toSeconds(),
+      revisionHistoryLimit: this.revisionHistoryLimit,
       template: {
         metadata: this.podMetadata.toJson(),
         spec: this._toPodSpec(),
