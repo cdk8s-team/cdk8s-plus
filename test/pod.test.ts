@@ -254,6 +254,45 @@ test('init containers cannot have startup probe', () => {
 
 });
 
+test('sidecar containers can have liveness probe', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+  pod.addInitContainer({ image: 'image', liveness: Probe.fromTcpSocket(), restartPolicy: ContainerRestartPolicy.ALWAYS });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.initContainers[0].livenessProbe).toBeTruthy();
+
+});
+
+test('sidecar containers can have readiness probe', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+  pod.addInitContainer({ image: 'image', readiness: Probe.fromTcpSocket(), restartPolicy: ContainerRestartPolicy.ALWAYS });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.initContainers[0].readinessProbe).toBeTruthy();
+
+});
+
+test('sidecar containers can have startup probe', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+  pod.addInitContainer({ image: 'image', startup: Probe.fromTcpSocket(), restartPolicy: ContainerRestartPolicy.ALWAYS });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.initContainers[0].startupProbe).toBeTruthy();
+
+});
+
 test('can specify init containers at instantiation', () => {
 
   const chart = Testing.chart();
