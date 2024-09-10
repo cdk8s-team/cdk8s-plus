@@ -122,15 +122,15 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public addInitContainer(cont: container.ContainerProps): container.Container {
 
     // https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#differences-from-regular-containers
-    if (cont.readiness) {
+    if (!this.isSidecarContainer(cont) && cont.readiness) {
       throw new Error('Init containers must not have a readiness probe');
     }
 
-    if (cont.liveness) {
+    if (!this.isSidecarContainer(cont) && cont.liveness) {
       throw new Error('Init containers must not have a liveness probe');
     }
 
-    if (cont.startup) {
+    if (!this.isSidecarContainer(cont) && cont.startup) {
       throw new Error('Init containers must not have a startup probe');
     }
 
@@ -141,6 +141,13 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
 
     this._initContainers.push(impl);
     return impl;
+  }
+
+  // Any initContainer that has `restartPolicy=Always` is a sidecar container. Please refer to
+  // documentation for more details:
+  // https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/#differences-from-init-containers
+  private isSidecarContainer(cont: container.ContainerProps) {
+    return cont.restartPolicy === container.ContainerRestartPolicy.ALWAYS;
   }
 
   public addHostAlias(hostAlias: HostAlias): void {
@@ -190,6 +197,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     const initContainers: k8s.Container[] = [];
 
     for (const cont of this.containers) {
+      // check if restartPolicy is defined for containers
+      if (cont.restartPolicy) {
+        throw new Error(`Invalid container spec: ${cont.name} has non-empty restartPolicy field. The field can only be specified for initContainers`);
+      }
       // automatically add volume from the container mount
       // to this pod so thats its available to the container.
       for (const mount of cont.mounts) {

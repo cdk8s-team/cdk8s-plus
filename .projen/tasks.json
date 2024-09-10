@@ -12,27 +12,27 @@
         }
       ]
     },
-    "backport:k8s-26/main": {
-      "name": "backport:k8s-26/main",
+    "backport:k8s-28/main": {
+      "name": "backport:k8s-28/main",
       "requiredEnv": [
         "BACKPORT_PR_NUMBER",
         "GITHUB_TOKEN"
       ],
       "steps": [
         {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-26/main"
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-28/main"
         }
       ]
     },
-    "backport:k8s-27/main": {
-      "name": "backport:k8s-27/main",
+    "backport:k8s-29/main": {
+      "name": "backport:k8s-29/main",
       "requiredEnv": [
         "BACKPORT_PR_NUMBER",
         "GITHUB_TOKEN"
       ],
       "steps": [
         {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-27/main"
+          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-29/main"
         }
       ]
     },
@@ -68,15 +68,16 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-28/",
-        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+' --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-30/",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
+        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep \"^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+\" --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
       },
       "steps": [
         {
           "builtin": "release/bump-version"
         }
       ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+      "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
     },
     "clobber": {
       "name": "clobber",
@@ -137,14 +138,6 @@
       "steps": [
         {
           "exec": "ts-node --project tsconfig.dev.json .projenrc.ts"
-        }
-      ]
-    },
-    "disable-publishing": {
-      "name": "disable-publishing",
-      "steps": [
-        {
-          "exec": "ts-node projenrc/disable-publishing.ts "
         }
       ]
     },
@@ -214,7 +207,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.28.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.30.0"
         }
       ]
     },
@@ -241,7 +234,12 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "if [ ! -z ${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi"
+          "spawn": "package:js",
+          "condition": "node -e \"if (!process.env.CI) process.exit(1)\""
+        },
+        {
+          "spawn": "package-all",
+          "condition": "node -e \"if (process.env.CI) process.exit(1)\""
         }
       ]
     },
@@ -328,22 +326,13 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
-    "regenerate-api-information": {
-      "name": "regenerate-api-information",
-      "description": "Regenerate the information about the kubernetes API needed for auto-generating source code files. Requires access to a kubernetes cluster.",
-      "steps": [
-        {
-          "exec": "kubectl api-resources -o wide > api-resources.txt"
-        }
-      ]
-    },
-    "release:k8s-28/main": {
-      "name": "release:k8s-28/main",
-      "description": "Prepare a release from \"k8s-28/main\" branch",
+    "release:k8s-30/main": {
+      "name": "release:k8s-30/main",
+      "description": "Prepare a release from \"k8s-30/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "2",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-28/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-30/"
       },
       "steps": [
         {
@@ -363,12 +352,20 @@
         }
       ]
     },
+    "rotate": {
+      "name": "rotate",
+      "steps": [
+        {
+          "exec": "ts-node projenrc/rotate.ts 30"
+        }
+      ]
+    },
     "test": {
       "name": "test",
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --coverageProvider=v8 --updateSnapshot",
+          "exec": "jest --passWithNoTests --updateSnapshot",
           "receiveArgs": true
         },
         {
@@ -393,20 +390,13 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-28/",
-        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+' --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-30/",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
+        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep \"^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+\" --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
       },
       "steps": [
         {
           "builtin": "release/reset-version"
-        }
-      ]
-    },
-    "update-k8s-version-references": {
-      "name": "update-k8s-version-references",
-      "steps": [
-        {
-          "exec": "ts-node projenrc/replace-version-references.ts 28"
         }
       ]
     },
@@ -442,7 +432,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=projen,@cdk8s/projen-common"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev --filter=projen,@cdk8s/projen-common"
         },
         {
           "exec": "yarn install --check-files"
@@ -466,13 +456,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev --filter=@types/minimatch,cdk8s,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,snake-case,ts-node,minimatch"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev --filter=@types/minimatch,backport,cdk8s,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,snake-case,ts-node,minimatch"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff snake-case standard-version ts-jest ts-node minimatch"
+          "exec": "yarn upgrade @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser backport cdk8s cdk8s-cli commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff snake-case ts-jest ts-node minimatch"
         },
         {
           "exec": "npx projen"

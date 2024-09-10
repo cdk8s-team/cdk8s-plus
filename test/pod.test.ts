@@ -1,7 +1,7 @@
 import { Testing, ApiObject, Duration } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { DockerConfigSecret, FsGroupChangePolicy, Probe, k8s, RestartPolicy } from '../src';
+import { DockerConfigSecret, FsGroupChangePolicy, Probe, k8s, RestartPolicy, ContainerRestartPolicy } from '../src';
 
 test('defaults', () => {
 
@@ -251,6 +251,45 @@ test('init containers cannot have startup probe', () => {
   const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
 
   expect(() => pod.addInitContainer({ image: 'image', startup: Probe.fromTcpSocket() })).toThrow('Init containers must not have a startup probe');
+
+});
+
+test('sidecar containers can have liveness probe', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+  pod.addInitContainer({ image: 'image', liveness: Probe.fromTcpSocket(), restartPolicy: ContainerRestartPolicy.ALWAYS });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.initContainers[0].livenessProbe).toBeTruthy();
+
+});
+
+test('sidecar containers can have readiness probe', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+  pod.addInitContainer({ image: 'image', readiness: Probe.fromTcpSocket(), restartPolicy: ContainerRestartPolicy.ALWAYS });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.initContainers[0].readinessProbe).toBeTruthy();
+
+});
+
+test('sidecar containers can have startup probe', () => {
+
+  const chart = Testing.chart();
+  const pod = new kplus.Pod(chart, 'Pod', { containers: [{ image: 'image' }] });
+
+  pod.addInitContainer({ image: 'image', startup: Probe.fromTcpSocket(), restartPolicy: ContainerRestartPolicy.ALWAYS });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.initContainers[0].startupProbe).toBeTruthy();
 
 });
 
@@ -1557,3 +1596,12 @@ test('custom termination grace period - minutes', () => {
   const spec = manifest[0].spec;
   expect(spec.terminationGracePeriodSeconds).toEqual(120);
 });
+
+test('Containers should not specify "restartPolicy" field', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image', restartPolicy: ContainerRestartPolicy.ALWAYS }],
+  });
+  expect(() => Testing.synth(chart)).toThrowError();
+});
+

@@ -3,7 +3,7 @@
 HorizontalPodAutoscaler allows your services to scale up when demand is high and scale down when they are no longer needed.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-28/typescript.md#horizontalpodautoscaler)
+    [API Reference](../../reference/cdk8s-plus-30/typescript.md#horizontalpodautoscaler)
 
 ## Using a HorizontalPodAutoscaler
 
@@ -11,7 +11,7 @@ The example below creates a HorizontalPodAutoscaler that scales the number of re
 
 ```typescript
 import * as k from 'cdk8s';
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 
 const app = new k.App();
 const chart = new k.Chart(app, 'Chart');
@@ -71,7 +71,7 @@ Resource metrics are used to scale on a resource like CPU or memory.
 
 
 ```typescript
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 
 
 const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
@@ -88,7 +88,7 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
 Pods metrics are used to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
 
 ```typescript
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 
 
 const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
@@ -110,7 +110,7 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
 Container metrics are used to scale on one of the scaling target's container metrics.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 
 
 const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
@@ -127,7 +127,7 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
 Object metrics are used to scale on a metric describing a single kubernetes object (for example, requests-per-second on an Ingress object).
 
 ```typescript
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 
 
 const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
@@ -148,7 +148,7 @@ const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
 External metrics are used to scale on a metric not associated with any Kubernetes object (for example, an SQS queue).
 
 ```typescript
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 
 
 const hpa = new kplus.HorizontalPodAutoscaler(chart, 'BookstoreWebsiteHpa', {
@@ -223,4 +223,4 @@ This means that if we currently have 3 web server pods, and the CPU utilization 
 
 This will result in a total of 9 web server pods. If after 60 seconds the CPU utilization is still at 72% the autoscaler will only be allowed to add one more replica because `maxReplicas` has been configured to 10.
 
-For more information on HorizontalPodAutoscaler check out the [API Reference](../reference/cdk8s-plus-28/typescript.md#horizontalpodautoscaler).
+For more information on HorizontalPodAutoscaler check out the [API Reference](../reference/cdk8s-plus-30/typescript.md#horizontalpodautoscaler).

@@ -5,12 +5,12 @@ CronJob resource is responsible for creating recurring [Jobs](https://kubernetes
 CronJob is similar to a [job](https://cdk8s.io/docs/latest/plus/job/) but it is suitable when there is a need to run a job indefinitely following a schedule. These repetitive jobs can be utilized for recurring tasks such as backing up a database, pinging a server for health checks, creating snapshots of systems and much more.
 
 !!! tip ""
-     [API Reference](../../reference/cdk8s-plus-28/typescript.md#cronjob)
+     [API Reference](../../reference/cdk8s-plus-30/typescript.md#cronjob)
 
 ## Creating a `CronJob`
 
 ```typescript
-import * as kplus from 'cdk8s-plus-28';
+import * as kplus from 'cdk8s-plus-30';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps, Cron } from 'cdk8s';
 
@@ -42,7 +42,7 @@ app.synth();
 
 ### Defaults
 
-The above would create a cronjob resource which would schedule `databack/mysql-backup` to run every minute. With this resource, we also set some meaningful defaults. For instance, this cronjob would not run jobs concurrently by default. It will also retain 3 instance of successful job runs and 1 instance of a failed run for debugging later if needed. To customize the properties, see [API Reference](../../reference/cdk8s-plus-28/typescript.md#cronjob).
+The above would create a cronjob resource which would schedule `databack/mysql-backup` to run every minute. With this resource, we also set some meaningful defaults. For instance, this cronjob would not run jobs concurrently by default. It will also retain 3 instance of successful job runs and 1 instance of a failed run for debugging later if needed. To customize the properties, see [API Reference](../../reference/cdk8s-plus-30/typescript.md#cronjob).
 
 ### Helper Functions
 

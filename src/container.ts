@@ -8,6 +8,223 @@ import { undefinedIfEmpty } from './utils';
 import * as volume from './volume';
 
 /**
+ * Capability - complete list of POSIX capabilities
+ */
+export enum Capability {
+  /**
+   * ALL
+   */
+  ALL = 'ALL',
+  /**
+   * CAP_AUDIT_CONTROL
+   */
+  AUDIT_CONTROL = 'AUDIT_CONTROL',
+  /**
+   * CAP_AUDIT_READ
+   */
+  AUDIT_READ = 'AUDIT_READ',
+  /**
+   * CAP_AUDIT_WRITE
+   */
+  AUDIT_WRITE = 'AUDIT_WRITE',
+  /**
+   * CAP_BLOCK_SUSPEND
+   */
+  BLOCK_SUSPEND = 'BLOCK_SUSPEND',
+  /**
+   * CAP_BPF
+   */
+  BPF = 'BPF',
+  /**
+   * CAP_CHECKPOINT_RESTORE
+   */
+  CHECKPOINT_RESTORE = 'CHECKPOINT_RESTORE',
+  /**
+   * CAP_CHOWN
+   */
+  CHOWN = 'CHOWN',
+  /**
+   * CAP_DAC_OVERRIDE
+   */
+  DAC_OVERRIDE = 'DAC_OVERRIDE',
+  /**
+   * CAP_DAC_READ_SEARCH
+   */
+  DAC_READ_SEARCH = 'DAC_READ_SEARCH',
+  /**
+   * CAP_FOWNER
+   */
+  FOWNER = 'FOWNER',
+  /**
+   * CAP_FSETID
+   */
+  FSETID = 'FSETID',
+  /**
+   * CAP_IPC_LOCK
+   */
+  IPC_LOCK = 'IPC_LOCK',
+  /**
+   * CAP_IPC_OWNER
+   */
+  IPC_OWNER = 'IPC_OWNER',
+  /**
+   * CAP_KILL
+   */
+  KILL = 'KILL',
+  /**
+   * CAP_LEASE
+   */
+  LEASE = 'LEASE',
+  /**
+   * CAP_LINUX_IMMUTABLE
+   */
+  LINUX_IMMUTABLE = 'LINUX_IMMUTABLE',
+  /**
+   * CAP_MAC_ADMIN
+   */
+  MAC_ADMIN = 'MAC_ADMIN',
+  /**
+   * CAP_MAC_OVERRIDE
+   */
+  MAC_OVERRIDE = 'MAC_OVERRIDE',
+  /**
+   * CAP_MKNOD
+   */
+  MKNOD = 'MKNOD',
+  /**
+   * CAP_NET_ADMIN
+   */
+  NET_ADMIN = 'NET_ADMIN',
+  /**
+   * CAP_NET_BIND_SERVICE
+   */
+  NET_BIND_SERVICE = 'NET_BIND_SERVICE',
+  /**
+   * CAP_NET_BROADCAST
+   */
+  NET_BROADCAST = 'NET_BROADCAST',
+  /**
+   * CAP_NET_RAW
+   */
+  NET_RAW = 'NET_RAW',
+  /**
+   * CAP_PERFMON
+   */
+  PERFMON = 'PERFMON',
+  /**
+   * CAP_SETGID
+   */
+  SETGID = 'SETGID',
+  /**
+   * CAP_SETFCAP
+   */
+  SETFCAP = 'SETFCAP',
+  /**
+   * CAP_SETPCAP
+   */
+  SETPCAP = 'SETPCAP',
+  /**
+   * CAP_SETUID
+   */
+  SETUID = 'SETUID',
+  /**
+   * CAP_SYS_ADMIN
+   */
+  SYS_ADMIN = 'SYS_ADMIN',
+  /**
+   * CAP_SYS_BOOT
+   */
+  SYS_BOOT = 'SYS_BOOT',
+  /**
+   * CAP_SYS_CHROOT
+   */
+  SYS_CHROOT = 'SYS_CHROOT',
+  /**
+   * CAP_SYS_MODULE
+   */
+  SYS_MODULE = 'SYS_MODULE',
+  /**
+   * CAP_SYS_NICE
+   */
+  SYS_NICE = 'SYS_NICE',
+  /**
+   * CAP_SYS_PACCT
+   */
+  SYS_PACCT = 'SYS_PACCT',
+  /**
+   * CAP_SYS_PTRACE
+   */
+  SYS_PTRACE = 'SYS_PTRACE',
+  /**
+   * CAP_SYS_RAWIO
+   */
+  SYS_RAWIO = 'SYS_RAWIO',
+  /**
+   * CAP_SYS_RESOURCE
+   */
+  SYS_RESOURCE = 'SYS_RESOURCE',
+  /**
+   * CAP_SYS_TIME
+   */
+  SYS_TIME = 'SYS_TIME',
+  /**
+   * CAP_SYS_TTY_CONFIG
+   */
+  SYS_TTY_CONFIG = 'SYS_TTY_CONFIG',
+  /**
+   * CAP_SYSLOG
+   */
+  SYSLOG = 'SYSLOG',
+  /**
+   * CAP_WAKE_ALARM
+   */
+  WAKE_ALARM = 'WAKE_ALARM',
+}
+
+export enum SeccompProfileType {
+  /**
+  * A profile defined in a file on the node should be used
+  */
+  LOCALHOST = 'Localhost',
+  /**
+  * The container runtime default profile should be used
+  */
+  RUNTIME_DEFAULT = 'RuntimeDefault',
+  /**
+  * No profile should be applied
+  */
+  UNCONFINED = 'Unconfined',
+}
+
+export interface SeccompProfile {
+  /**
+   * localhostProfile indicates a profile defined in a file on the node should be used.
+   * The profile must be preconfigured on the node to work. Must be a descending path,
+   * relative to the kubelet's configured seccomp profile location.
+   * Must only be set if type is "Localhost".
+   *
+   * @default - empty string
+   */
+  readonly localhostProfile?: string;
+  /**
+   * Indicates which kind of seccomp profile will be applied
+   */
+  readonly type: SeccompProfileType;
+}
+
+export interface ContainerSecutiryContextCapabilities {
+  /**
+   * Added capabilities
+   */
+  readonly add?: Capability[];
+
+  /**
+   * Removed capabilities
+   */
+  readonly drop?: Capability[];
+}
+
+/**
  * Properties for `ContainerSecurityContext`
  */
 export interface ContainerSecurityContextProps {
@@ -59,6 +276,20 @@ export interface ContainerSecurityContextProps {
    * @default false
    */
   readonly allowPrivilegeEscalation?: boolean;
+
+  /**
+   * POSIX capabilities for running containers
+   *
+   * @default none
+   */
+  readonly capabilities?: ContainerSecutiryContextCapabilities;
+
+  /**
+  * Container's seccomp profile settings. Only one profile source may be set
+  *
+  * @default none
+  */
+  readonly seccompProfile?: SeccompProfile;
 }
 
 /**
@@ -137,14 +368,21 @@ export class ContainerSecurityContext {
   public readonly user?: number;
   public readonly group?: number;
   public readonly allowPrivilegeEscalation?: boolean;
+  public readonly capabilities?: ContainerSecutiryContextCapabilities;
+  public readonly seccompProfile?: SeccompProfile;
 
   constructor(props: ContainerSecurityContextProps = {}) {
+    if (props.seccompProfile?.localhostProfile && props.seccompProfile.type != SeccompProfileType.LOCALHOST) {
+      throw new Error('localhostProfile must only be set if type is "Localhost"');
+    }
     this.ensureNonRoot = props.ensureNonRoot ?? true;
     this.privileged = props.privileged ?? false;
     this.readOnlyRootFilesystem = props.readOnlyRootFilesystem ?? true;
     this.user = props.user;
     this.group = props.group;
     this.allowPrivilegeEscalation = props.allowPrivilegeEscalation ?? false;
+    this.capabilities = props.capabilities;
+    this.seccompProfile = props.seccompProfile;
   }
 
   /**
@@ -158,6 +396,8 @@ export class ContainerSecurityContext {
       privileged: this.privileged,
       readOnlyRootFilesystem: this.readOnlyRootFilesystem,
       allowPrivilegeEscalation: this.allowPrivilegeEscalation,
+      capabilities: this.capabilities,
+      seccompProfile: this.seccompProfile,
     };
   }
 
@@ -330,7 +570,7 @@ export class EnvValue {
    * @param key - The key to extract the value from.
    * @param options - Additional options.
    */
-  public static fromConfigMap(configMap: configmap.IConfigMap, key: string, options: EnvValueFromConfigMapOptions = { }): EnvValue {
+  public static fromConfigMap(configMap: configmap.IConfigMap, key: string, options: EnvValueFromConfigMapOptions = {}): EnvValue {
 
     const source: k8s.EnvVarSource = {
       configMapKeyRef: {
@@ -432,7 +672,7 @@ export class EnvValue {
     return EnvValue.fromValue(value!);
   }
 
-  private constructor(public readonly value?: any, public readonly valueFrom?: any) {}
+  private constructor(public readonly value?: any, public readonly valueFrom?: any) { }
 }
 
 export enum ImagePullPolicy {
@@ -491,6 +731,27 @@ export interface ContainerLifecycle {
 
 }
 
+/**
+ * RestartPolicy defines the restart behavior of individual containers in a pod.
+ * This field may only be set for init containers, and the only allowed value is "Always".
+ * For non-init containers or when this field is not specified,
+ * the restart behavior is defined by the Pod's restart policy and the container type.
+ * Setting the RestartPolicy as "Always" for the init container will have the following effect:
+ * this init container will be continually restarted on exit until all regular containers have terminated.
+ * Once all regular containers have completed, all init containers with restartPolicy "Always" will be shut down.
+ * This lifecycle differs from normal init containers and is often referred to as a "sidecar" container.
+ *
+ * @see https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
+ */
+export enum ContainerRestartPolicy {
+
+  /**
+   * If an init container is created with its restartPolicy set to Always,
+   * it will start and remain running during the entire life of the Pod.
+   * For regular containers, this is ignored by Kubernetes.
+   */
+  ALWAYS = 'Always'
+}
 /**
  * Properties for creating a container.
  */
@@ -658,6 +919,15 @@ export interface ContainerOpts {
    *   group: 26000
    */
   readonly securityContext?: ContainerSecurityContextProps;
+
+  /**
+   * Kubelet will start init containers with restartPolicy=Always in the order with other init containers,
+   * but instead of waiting for its completion, it will wait for the container startup completion
+   * Currently, only accepted value is Always
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
+   * @default - no restart policy is defined and the pod restart policy is applied
+   */
+  readonly restartPolicy?: ContainerRestartPolicy;
 }
 
 /**
@@ -713,6 +983,11 @@ export class Container {
    */
   public readonly env: Env;
 
+  /**
+   * The restart policy of the container.
+   */
+  public readonly restartPolicy?: ContainerRestartPolicy;
+
   private readonly _command?: readonly string[];
   private readonly _args?: readonly string[];
   private readonly _ports: ContainerPort[] = [];
@@ -759,6 +1034,7 @@ export class Container {
     this.imagePullPolicy = props.imagePullPolicy ?? ImagePullPolicy.ALWAYS;
     this.securityContext = new ContainerSecurityContext(props.securityContext);
     this.env = new Env(props.envFrom ?? [], props.envVariables ?? {});
+    this.restartPolicy = props.restartPolicy;
 
     if (this.portNumber) {
       this.addPort({
@@ -810,7 +1086,7 @@ export class Container {
    * @param path - The desired path in the container.
    * @param storage - The storage to mount.
    */
-  public mount(path: string, storage: volume.IStorage, options: MountOptions = { }) {
+  public mount(path: string, storage: volume.IStorage, options: MountOptions = {}) {
     this.mounts.push({ path, volume: storage.asVolume(), ...options });
   }
 
@@ -922,6 +1198,7 @@ export class Container {
         preStop: this._lifecycle.preStop?._toKube(this),
       } : undefined,
       resources: resourceRequirements,
+      restartPolicy: this.restartPolicy,
       securityContext: this.securityContext._toKube(),
     };
   }
@@ -1094,7 +1371,7 @@ export class EnvFrom {
   constructor(
     private readonly configMap?: configmap.IConfigMap,
     private readonly prefix?: string,
-    private readonly sec?: secret.ISecret) {};
+    private readonly sec?: secret.ISecret) { };
 
   /**
    * @internal

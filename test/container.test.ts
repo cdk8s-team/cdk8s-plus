@@ -1,7 +1,7 @@
 import * as cdk8s from 'cdk8s';
 import { Size, Testing } from 'cdk8s';
 import * as kplus from '../src';
-import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s } from '../src';
+import { Container, Cpu, Handler, ConnectionScheme, Probe, k8s, Capability, ContainerRestartPolicy, SeccompProfileType } from '../src';
 
 describe('EnvValue', () => {
 
@@ -536,6 +536,26 @@ describe('Container', () => {
     expect(container).not.toHaveProperty('startupProbe');
   });
 
+  test('"restartPolicy" property can be used to define restartPolicy', () => {
+    // GIVEN
+    const chart = Testing.chart();
+    const pod = new kplus.Pod(chart, 'Pod');
+
+    // WHEN
+    pod.addContainer({ image: 'foo' });
+    pod.addInitContainer({
+      image: 'bar',
+      restartPolicy: ContainerRestartPolicy.ALWAYS,
+    });
+
+    // THEN
+    const manifest = Testing.synth(chart);
+    expect(manifest).toMatchSnapshot();
+    const container = manifest[0].spec.initContainers[0];
+
+    expect(container.restartPolicy).toEqual('Always');
+  });
+
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {
     // GIVEN
     const container = new kplus.Container({
@@ -757,6 +777,8 @@ test('default security context', () => {
     runAsNonRoot: container.securityContext.ensureNonRoot,
     runAsUser: container.securityContext.user,
     allowPrivilegeEscalation: container.securityContext.allowPrivilegeEscalation,
+    capabilities: container.securityContext.capabilities,
+    seccompProfile: container.securityContext.seccompProfile,
   });
 });
 
@@ -770,6 +792,17 @@ test('custom security context', () => {
       privileged: true,
       user: 1000,
       group: 2000,
+      capabilities: {
+        add: [
+          Capability.AUDIT_CONTROL,
+        ],
+        drop: [
+          Capability.BPF,
+        ],
+      },
+      seccompProfile: {
+        type: SeccompProfileType.RUNTIME_DEFAULT,
+      },
     },
   });
 
@@ -778,7 +811,39 @@ test('custom security context', () => {
   expect(container.securityContext.readOnlyRootFilesystem).toBeTruthy();
   expect(container.securityContext.user).toEqual(1000);
   expect(container.securityContext.group).toEqual(2000);
+  expect(container.securityContext.capabilities?.add).toEqual(['AUDIT_CONTROL']);
+  expect(container.securityContext.capabilities?.drop).toEqual(['BPF']);
+  expect(container.securityContext.seccompProfile?.type).toEqual('RuntimeDefault');
 
+});
+
+test('seccompProfile localhostProfile can not be used if type is not Localhost', () => {
+
+  const container = new Container({
+    image: 'image',
+    securityContext: {
+      seccompProfile: {
+        type: SeccompProfileType.LOCALHOST,
+        localhostProfile: 'localhostProfile',
+      },
+    },
+  });
+
+  const spec = container._toKube();
+  expect(spec.securityContext?.seccompProfile?.localhostProfile).toEqual('localhostProfile');
+});
+
+test('seccompProfile localhostProfile must only be set if type is Localhost', () => {
+
+  expect(() => new Container({
+    image: 'image',
+    securityContext: {
+      seccompProfile: {
+        type: SeccompProfileType.UNCONFINED,
+        localhostProfile: 'localhostProfile',
+      },
+    },
+  })).toThrowError('localhostProfile must only be set if type is "Localhost"');
 });
 
 test('can configure a postStart lifecycle hook', () => {
