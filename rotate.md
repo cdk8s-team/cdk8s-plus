@@ -41,7 +41,7 @@ on the latest kubernetes version. These steps should be executed in order.
 6. Create a new branch in the [cdk8s-plus](https://github.com/cdk8s-team/cdk8s-plus) off the current default branch. 
 The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
 
-7. On a new branch, based off `k8s-XX/main`, do the following:
+7. **On a new branch**, based off `k8s-XX/main`, do the following:
 
      1. Bump the minor version in [latest-k8s-version.txt](./projenrc/latest-k8s-version.txt)
      2. ([`README.md`](./README.md)): In the table of supported versions, add a new row and remove the oldest one.
@@ -52,7 +52,7 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
 
 8. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
 
-9. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings/branches).
+9. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings).
 
 10. Update any existing PRs to use k8s-XX/main as the base.
 
