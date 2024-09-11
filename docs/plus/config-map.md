@@ -4,7 +4,7 @@ ConfigMap are used to store configuration data. They provide a dictionary based
 data structure that can be consumed in various shapes and forms.
 
 !!! tip ""
-    [API Reference](../../reference/cdk8s-plus-30/typescript.md#configmap)
+    [API Reference](../../reference/cdk8s-plus-31/typescript.md#configmap)
 
 ## Use an existing `ConfigMap`
 
@@ -12,7 +12,7 @@ You can reference to an existing `ConfigMap` like so. Note that this does not cr
 and will therefore not be included in the resulting manifest.
 
 ```typescript
-import * as kplus from 'cdk8s-plus-30';
+import * as kplus from 'cdk8s-plus-31';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
@@ -38,7 +38,7 @@ app.synth();
 You can create config maps and add some data to them like so:
 
 ```typescript
-import * as kplus from 'cdk8s-plus-30';
+import * as kplus from 'cdk8s-plus-31';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
@@ -61,7 +61,7 @@ app.synth();
 Here is a nifty little trick you can use to create a volume that contains a directory on the client machine (machine that runs `cdk8s synth`):
 
 ```typescript
-import * as kplus from 'cdk8s-plus-30';
+import * as kplus from 'cdk8s-plus-31';
 import * as path from 'path';
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
