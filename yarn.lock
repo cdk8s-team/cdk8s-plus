@@ -1663,10 +1663,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.215:
-  version "2.198.215"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.215.tgz#a198d9d5912592dcd00df0681d824154492b0a09"
-  integrity sha512-54DkhbEzupbNFtsSTHBhoTx6Kby14U3L6X467mO/l4YL37Bs+sbFyxhSDBIZIgzW4li+DwYIo/Od/a2JR6j05Q==
+cdk8s-cli@^2.198.216:
+  version "2.198.216"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.216.tgz#f8f14d319dbcc7d0eb67b182259fa81f45b8f3d3"
+  integrity sha512-adLMnSs6a90c1+kdrsU0aAkyT7jQ/mQbOEzJl6Ia/knqu79MgmLS5UHS1UodJ1aXrri/2Z+gVksZia/KERvMBg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -2449,9 +2449,9 @@ elastic-apm-node@^3.47.0:
     unicode-byte-truncate "^1.0.0"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.20"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.20.tgz#2914e42cfc5cc992cbee5538b500ddaf7c2c7091"
-  integrity sha512-74mdl6Fs1HHzK9SUX4CKFxAtAe3nUns48y79TskHNAG6fGOlLfyKA4j855x+0b5u8rWJIrlaG9tcTPstMlwjIw==
+  version "1.5.22"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.22.tgz#5ae58990a35391bad7605742e52855a0f281ef82"
+  integrity sha512-tKYm5YHPU1djz0O+CGJ+oJIvimtsCcwR2Z9w7Skh08lUdyzXY5djods3q+z2JkWdb7tCcmM//eVavSRAiaPRNg==
 
 emittery@^0.8.1:
   version "0.8.1"
