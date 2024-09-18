@@ -49,6 +49,12 @@ export interface DeploymentProps extends workload.WorkloadProps {
    * @default Duration.seconds(600)
    */
   readonly progressDeadline?: Duration;
+  /**
+   * Number of desired replicasets history.
+   *
+   * @default 10
+   */
+  readonly revisionHistoryLimit?: number;
 
 }
 
