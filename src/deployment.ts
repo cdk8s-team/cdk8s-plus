@@ -142,6 +142,13 @@ export class Deployment extends workload.Workload implements IScalable {
   public readonly strategy: DeploymentStrategy;
 
   /**
+   * Number of desired replicasets history.
+   *
+   * @default 10
+   */
+
+  readonly revisionHistoryLimit?: number;
+  /**
    * @see base.Resource.apiObject
    */
   protected readonly apiObject: ApiObject;
@@ -167,6 +174,7 @@ export class Deployment extends workload.Workload implements IScalable {
 
     this.replicas = props.replicas;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
+    this.revisionHistoryLimit = props.revisionHistoryLimit;
 
     if (this.isolate) {
       this.connections.isolate();
