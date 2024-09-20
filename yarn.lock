@@ -284,10 +284,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdk8s/projen-common@^0.0.547":
-  version "0.0.547"
-  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.0.547.tgz#def291303445417606d8e2f7bcb19b6590158025"
-  integrity sha512-RJkLLGcyoxzdPfRmTyD8TTiGW7o9UxkQuR8HEPzL9atfN8sIg8+ujpz8Cnpq4HxzR5lRdKcfVsK7okiYkajqPA==
+"@cdk8s/projen-common@^0.0.548":
+  version "0.0.548"
+  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.0.548.tgz#26680d51e7158438573e7caf8743db0517857107"
+  integrity sha512-J0yy4v+Ux6qh9yvX7lAWFS+Hyr07UgVXrFs/etkBm721eZEu8hyeYiOHhWRM8U0ecntRhXAEVfDx+7xdI/rn9g==
   dependencies:
     codemaker "^1.103.1"
     deepmerge "^4.3.1"
@@ -1660,10 +1660,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.222:
-  version "2.198.222"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.222.tgz#8faa3356f770b63a41c31633338f9b10665241d4"
-  integrity sha512-gKOwSICAM7WYeFcy79zB0rVtekVcDk80YEesk87HZ0aFxwmRqphL8oSGEwFWFx3sKwtWXxAhYUDrFcrVl6vjew==
+cdk8s-cli@^2.198.223:
+  version "2.198.223"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.223.tgz#03163ec0df87069826684952e62ca5c2c2b281c1"
+  integrity sha512-NYoBcme9tE0khTXKt2e7KxEnuqxXeQA8ELSmM+6587dzUYqYp5m2u6qC7KGwSR6GlVgEmXecwhQcHveDQTe9HA==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -1908,13 +1908,13 @@ commit-and-tag-version@^12:
     yargs "^17.7.2"
 
 commonmark@^0.31.1:
-  version "0.31.1"
-  resolved "https://registry.yarnpkg.com/commonmark/-/commonmark-0.31.1.tgz#5c8b1b5eaaca00a0912cad68d1f0f00c836cecd3"
-  integrity sha512-M6pbc3sRU96iiOK7rmjv/TNrXvTaOscvthUCq7YOrlvZWbqAA36fyEtBvyI3nCcEK4u+JAy9sAdtftIeXwIWig==
+  version "0.31.2"
+  resolved "https://registry.yarnpkg.com/commonmark/-/commonmark-0.31.2.tgz#9d8d5439c82c9a235154d858a53e1a7965d573a5"
+  integrity sha512-2fRLTyb9r/2835k5cwcAwOj0DEc44FARnMp5veGsJ+mEAZdi52sNopLu07ZyElQUz058H43whzlERDIaaSw4rg==
   dependencies:
     entities "~3.0.1"
     mdurl "~1.0.1"
-    minimist "~1.2.5"
+    minimist "~1.2.8"
 
 compare-func@^2.0.0:
   version "2.0.0"
@@ -2446,9 +2446,9 @@ elastic-apm-node@^3.47.0:
     unicode-byte-truncate "^1.0.0"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.25"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.25.tgz#492ade1cde401332b9b75aa0c55fd5e1550ca66c"
-  integrity sha512-kMb204zvK3PsSlgvvwzI3wBIcAw15tRkYk+NQdsjdDtcQWTp2RABbMQ9rUBy8KNEOM+/E6ep+XC3AykiWZld4g==
+  version "1.5.26"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.26.tgz#449b4fa90e83ab98abbe3b6a96c8ee395de94452"
+  integrity sha512-Z+OMe9M/V6Ep9n/52+b7lkvYEps26z4Yz3vjWL1V61W0q+VLF1pOHhMY17sa4roz4AWmULSI8E6SAojZA5L0YQ==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -4836,7 +4836,7 @@ minimist-options@4.1.0:
     is-plain-obj "^1.1.0"
     kind-of "^6.0.3"
 
-minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5, minimist@^1.2.6, minimist@~1.2.5:
+minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5, minimist@^1.2.6, minimist@~1.2.8:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
   integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
