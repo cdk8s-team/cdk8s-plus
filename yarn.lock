@@ -1660,14 +1660,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.223:
-  version "2.198.223"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.223.tgz#03163ec0df87069826684952e62ca5c2c2b281c1"
-  integrity sha512-NYoBcme9tE0khTXKt2e7KxEnuqxXeQA8ELSmM+6587dzUYqYp5m2u6qC7KGwSR6GlVgEmXecwhQcHveDQTe9HA==
+cdk8s-cli@^2.198.224:
+  version "2.198.224"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.224.tgz#7ee7df98deee353e2a27858860616b34348f827b"
+  integrity sha512-Rf6TLasIP0QizIFtA8+bsBMwaxalRpUy675nEy4/oY5kVPKQG63sruuYL0fDIU6969bg/FPJGUXLEycLQJC3lA==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.69.3"
+    cdk8s "^2.69.4"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.103.1"
     colors "1.4.0"
@@ -1690,10 +1690,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.69.3, cdk8s@^2.69.3:
-  version "2.69.3"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.3.tgz#540dfa62501084b1cf003387455ea42f87430caf"
-  integrity sha512-wtU9t+7H2p7Wqu+0eu93f/v2mk4x52qdhNp2Nwj+l8aBOAxLFqO1yJvyoT7snDHeLZdFgSba2DRdAVKsEcdeOQ==
+cdk8s@2.69.4, cdk8s@^2.69.4:
+  version "2.69.4"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.4.tgz#c1bcd1c2bf80a7ef2f4476e4859804ccdd331a65"
+  integrity sha512-UjFS1tFulZurUv2Wy9P9pkV/DWlN+mgj91UGWXWHZadQTBMntNcPmS8k38LcDjGGbXylVA/+uFeoMFWrT1Kzmg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.9"
@@ -2446,9 +2446,9 @@ elastic-apm-node@^3.47.0:
     unicode-byte-truncate "^1.0.0"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.26"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.26.tgz#449b4fa90e83ab98abbe3b6a96c8ee395de94452"
-  integrity sha512-Z+OMe9M/V6Ep9n/52+b7lkvYEps26z4Yz3vjWL1V61W0q+VLF1pOHhMY17sa4roz4AWmULSI8E6SAojZA5L0YQ==
+  version "1.5.27"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.27.tgz#5203ce5d6054857d84ba84d3681cbe59132ade78"
+  integrity sha512-o37j1vZqCoEgBuWWXLHQgTN/KDKe7zwpiY5CPeq2RvUqOyJw9xnrULzZAEVQ5p4h+zjMk7hgtOoPdnLxr7m/jw==
 
 emittery@^0.8.1:
   version "0.8.1"
