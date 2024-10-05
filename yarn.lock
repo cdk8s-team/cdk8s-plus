@@ -1675,10 +1675,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.236:
-  version "2.198.236"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.236.tgz#1d5e1052f81db1e431c43740ce995bbde1260966"
-  integrity sha512-9zja+f+BGi1mH9EYvwSRKHRoQ3+dahVUo+arzcUOHX4WTY/8RP9M1GFvdFVdkWJZfxLtL4Xdnn+gHYQFf60S/Q==
+cdk8s-cli@^2.198.237:
+  version "2.198.237"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.237.tgz#b94e45075142ee769fb4e231ed9d7e269ddd4e28"
+  integrity sha512-QUZz4YfcXCJ4BV/95Pa7vHwdIG1h6JCbXaj/DgDIpPjvpmurJkP5kYkpiHeocani2CRmpFl2oMzKpfRuJyldSg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -6695,9 +6695,9 @@ winston-transport@^4.7.0:
     triple-beam "^1.3.0"
 
 winston@^3.8.2:
-  version "3.14.2"
-  resolved "https://registry.yarnpkg.com/winston/-/winston-3.14.2.tgz#94ce5fd26d374f563c969d12f0cd9c641065adab"
-  integrity sha512-CO8cdpBB2yqzEf8v895L+GNKYJiEq8eKlHU38af3snQBQ+sdAIUepjMSguOIJC7ICbzm0ZI+Af2If4vIJrtmOg==
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-3.15.0.tgz#4df7b70be091bc1a38a4f45b969fa79589b73ff5"
+  integrity sha512-RhruH2Cj0bV0WgNL+lOfoUBI4DVfdUNjVnJGVovWZmrcKtrFTTRzgXYK2O9cymSGjrERCtaAeHwMNnUWXlwZow==
   dependencies:
     "@colors/colors" "^1.6.0"
     "@dabh/diagnostics" "^2.0.2"
