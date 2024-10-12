@@ -627,14 +627,7 @@
     chalk "^4.1.2"
     semver "^7.6.3"
 
-"@jsii/spec@1.103.1", "@jsii/spec@^1.44.0":
-  version "1.103.1"
-  resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.103.1.tgz#2f8e61c603238c56d30d26100eb7ee9f51aa35b8"
-  integrity sha512-14OGYM3DjEBjUOUaih+bwPgkhFnR8L9TSNSM0oE0L0hjWscTapvClqOgMDJ1ID52qkROCAgKl1d71Vmm4v0Buw==
-  dependencies:
-    ajv "^8.17.1"
-
-"@jsii/spec@^1.103.1", "@jsii/spec@^1.104.0":
+"@jsii/spec@1.104.0", "@jsii/spec@^1.103.1", "@jsii/spec@^1.104.0", "@jsii/spec@^1.44.0":
   version "1.104.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.104.0.tgz#9f1206b3712808ad7cbbdbf6cf333a77a8f3df8c"
   integrity sha512-7jxU8iRowA3O7Dpn8XAsX8o4Y8Fy8plbEVg0CnjvIQsJh3puI3KFHspXur70OOccfGkoL1TWnXBZ+BwCcvhu1g==
@@ -4412,7 +4405,7 @@ jsii-pacmak@^1.104.0:
     xmlbuilder "^15.1.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.103.1, jsii-reflect@^1.44.0:
+jsii-reflect@^1.103.1:
   version "1.103.1"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.103.1.tgz#486ea9077a20ac244d0127c08388c2bf33de4f03"
   integrity sha512-kFm09KL9dlxyxesf7mtm12+4vVaRin5YI4Eca2OOa0X28HNVpr62/n21T3BuAAhFaI0nkiUoJuBWtdOz475BSQ==
@@ -4424,7 +4417,7 @@ jsii-reflect@^1.103.1, jsii-reflect@^1.44.0:
     oo-ascii-tree "^1.103.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.104.0:
+jsii-reflect@^1.104.0, jsii-reflect@^1.44.0:
   version "1.104.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.104.0.tgz#5ac03b8e895c4b248743969252fab699ef2df5a5"
   integrity sha512-tBdJvLPdfrlAI7ijKmuUv48Nkk0aC26VC/wtNjVqtJmpKsDOOG1JXKiIny690FnifhgpdoHnrVE12asSpFdPfA==
@@ -4437,16 +4430,16 @@ jsii-reflect@^1.104.0:
     yargs "^16.2.0"
 
 jsii-rosetta@1.x, jsii-rosetta@^1.44.0:
-  version "1.103.1"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.103.1.tgz#503e332f33cbddcdacd142f64711d74171b42e7e"
-  integrity sha512-LzLtFqQXOXdvYxDeq2OzaiR+Xhq7q9+NfUEWTpNVsvVh3N7E7w3G/75shsl8BfacJVvrH0hYVMkOH4Lyd0np2g==
+  version "1.104.0"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.104.0.tgz#3e31098e359d67d3f00a5d7458b57d9fca5b51cd"
+  integrity sha512-tpGNUoNKJ2zs7gQAypFYSAQ+zEuGG+A604B0gsQiJ7h12iZbBSw4tB7XxRC9ErmBNU8+YiMwYiFcNIoDiiIAEA==
   dependencies:
-    "@jsii/check-node" "1.103.1"
-    "@jsii/spec" "1.103.1"
+    "@jsii/check-node" "1.104.0"
+    "@jsii/spec" "1.104.0"
     "@xmldom/xmldom" "^0.8.10"
     commonmark "^0.31.1"
     fast-glob "^3.3.2"
-    jsii "1.103.1"
+    jsii "1.104.0"
     semver "^7.6.3"
     semver-intersect "^1.5.0"
     stream-json "^1.8.0"
@@ -4485,13 +4478,13 @@ jsii-srcmak@0.1.1236:
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@1.103.1, jsii@1.x:
-  version "1.103.1"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.103.1.tgz#614888435e24891a3ea93dd293c8a97352e5bc26"
-  integrity sha512-SjS/g9iq8UJIEPBcaGUIYUJ3/oCboBKpDlJOOzMj2w4MpXQbXP3eyRO6NWBWkWsrIczyJ7HZiRWUJ7J4rUJ0sg==
+jsii@1.104.0, jsii@1.x:
+  version "1.104.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.104.0.tgz#3f7bc416c6d947fa6cfaf6d72d3b513c90b3f532"
+  integrity sha512-txdalBQAQtcNjV59pL3nz2jYqXsVOBFJjepcXVMAl44Jdh+EKCVpewAW5u7Honq+LSwkcMMszqWmTSIqyXNtuA==
   dependencies:
-    "@jsii/check-node" "1.103.1"
-    "@jsii/spec" "^1.103.1"
+    "@jsii/check-node" "1.104.0"
+    "@jsii/spec" "^1.104.0"
     case "^1.6.3"
     chalk "^4"
     fast-deep-equal "^3.1.3"
@@ -5133,12 +5126,7 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-oo-ascii-tree@^1.103.1:
-  version "1.103.1"
-  resolved "https://registry.yarnpkg.com/oo-ascii-tree/-/oo-ascii-tree-1.103.1.tgz#74d498282d7027dc3be15d78d87e52875ebaedce"
-  integrity sha512-X0nmbb8xUUi637JXzCxY/K4AtO/I0fB5b7iiGaHJHu8IXBWV8TnQ4xqa0Igb/NoAg3OP2uXNhSeiTsErETOA/g==
-
-oo-ascii-tree@^1.104.0:
+oo-ascii-tree@^1.103.1, oo-ascii-tree@^1.104.0:
   version "1.104.0"
   resolved "https://registry.yarnpkg.com/oo-ascii-tree/-/oo-ascii-tree-1.104.0.tgz#f17857f84f25b0b9d0879bbea2f04caf15a72384"
   integrity sha512-2cScXtwxt5WVIi3+vdkbKoHSeRepRcibnFhdV2ojGxVvj1KU0m0EHfBCsal6XEg1vBkMgTIxnxVd+E/l/Fam3w==
