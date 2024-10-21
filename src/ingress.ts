@@ -48,6 +48,16 @@ export interface IngressProps extends base.ResourceProps {
    * additional Ingress configuration, including the name of the Ingress controller.
    */
   readonly className?: string;
+
+  /**
+   * A custom comparison function used to sort ingress paths.
+   * This function compares two `HttpIngressPath` objects, `a` and `b`, and returns:
+   *   - A negative number if `a` should appear before `b`
+   *   - A positive number if `a` should appear after `b`
+   *   - Zero if their order does not matter.
+   * This function can be customized to control how ingress paths are ordered when applied to an array of paths.
+   */
+  readonly pathCompareFn?: ((a: k8s.HttpIngressPath, b: k8s.HttpIngressPath) => number);
 }
 
 /**
@@ -90,9 +100,12 @@ export class Ingress extends base.Resource {
   private readonly _rulesPerHost: { [host: string]: k8s.HttpIngressPath[] } = {};
   private _defaultBackend?: IngressBackend;
   private readonly _tlsConfig: IngressTls[] = [];
+  private readonly _pathCompareFn: ((a: k8s.HttpIngressPath, b: k8s.HttpIngressPath) => number)
 
   constructor(scope: Construct, id: string, props: IngressProps = {}) {
     super(scope, id);
+
+    this._pathCompareFn = props.pathCompareFn ?? sortByPath
 
     this.apiObject = new k8s.KubeIngress(this, 'Resource', {
       metadata: props.metadata,
@@ -217,7 +230,7 @@ export class Ingress extends base.Resource {
     for (const [host, paths] of Object.entries(this._rulesPerHost)) {
       rules.push({
         host: host ? host : undefined,
-        http: { paths: paths.sort(sortByPath) },
+        http: { paths: paths.sort(this._pathCompareFn) },
       });
     }
 
@@ -319,7 +332,7 @@ export class IngressBackend {
     });
   }
 
-  private constructor(private readonly backend: k8s.IngressBackend) {
+  constructor(private readonly backend: k8s.IngressBackend) {
 
   }
 
