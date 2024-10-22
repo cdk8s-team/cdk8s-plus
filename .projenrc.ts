@@ -49,6 +49,11 @@ const project = new Cdk8sTeamJsiiProject({
   releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
+  githubOptions: {
+    // use mergify because merge queues don't support branch patterns
+    mergify: true,
+    mergeQueue: false,
+  },
 
   golangBranch: `k8s.${SPEC_VERSION}`,
   depsUpgradeOptions: {
