@@ -50,7 +50,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.551",
+    "@cdk8s/projen-common": "^0.0.552",
     "@types/jest": "^27",
     "@types/minimatch": "^3.0.5",
     "@types/node": "16.18.78",
@@ -58,7 +58,7 @@
     "@typescript-eslint/parser": "^7",
     "backport": "8.9.9",
     "cdk8s": "2.69.10",
-    "cdk8s-cli": "^2.198.252",
+    "cdk8s-cli": "^2.198.253",
     "commit-and-tag-version": "^12",
     "constructs": "10.3.0",
     "eslint": "^8",
