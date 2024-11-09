@@ -1665,10 +1665,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.257:
-  version "2.198.257"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.257.tgz#fe260a0c3fe8a54288e3e1230423729275a30b74"
-  integrity sha512-gJuzhwRiXSMpz/ZgPRbCq9RpkWlVsqO8RGPS9rMTSuyWyj9tfTG1I1hqd+WQIF/MiYCPL1r3zCueL0kQvMLkZA==
+cdk8s-cli@^2.198.258:
+  version "2.198.258"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.258.tgz#4a87603f11072f426b42bddfd2dc2cd31ea96859"
+  integrity sha512-apgXZamZcpR7mEVSrpVkvviU5t9KePalPqKf70PjZXOjew+VLalBsMznJgIBt1oK6QE+YQ536YMqVsKX1l3pDw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -4987,9 +4987,9 @@ object-identity-map@^1.0.2:
     object.entries "^1.1.0"
 
 object-inspect@^1.13.1:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.13.2.tgz#dea0088467fb991e67af4058147a24824a3043ff"
-  integrity sha512-IRZSRuzJiynemAXPYtPe5BoI/RESNYR7TYm50MC5Mqbd3Jmw5y790sErYw3V6SryFJD64b74qQQs9wn5Bg/k3g==
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.13.3.tgz#f14c183de51130243d6d18ae149375ff50ea488a"
+  integrity sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==
 
 object-keys@^1.1.1:
   version "1.1.1"
