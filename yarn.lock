@@ -5414,10 +5414,10 @@ process-warning@^1.0.0:
   resolved "https://registry.yarnpkg.com/process-warning/-/process-warning-1.0.0.tgz#980a0b25dc38cd6034181be4b7726d89066b4616"
   integrity sha512-du4wfLyj4yCZq1VupnVSZmRsPJsNuxoDQFdCFHLaYiEbFBD7QE0a+I4D7hOxrVnh78QE/YipFAj9lXHiXocV+Q==
 
-projen@^0.90.5:
-  version "0.90.5"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.90.5.tgz#89eb914721bbab2b2f73400d4b30d468b33e7f05"
-  integrity sha512-MfywqL+8e1gTHblreaxJOxW/Cyvm6dcY/Sg0tBwS6xCAsnlqO0qx+MQSPpPEIouVqcDNKLx8Jsd7BwTqGuQBBQ==
+projen@^0.90.6:
+  version "0.90.6"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.90.6.tgz#67d49718a90b80db0caee1724f67f417f4ea62d2"
+  integrity sha512-y1mUfVsqswwOnTfgJs3GhVDlYe+0o8Wtk/ydbZGdkJ6SzKqSk2ASTEOnuzwpl+jBjeqnnjL7N93wI78TanXiyQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
