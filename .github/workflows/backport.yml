@@ -4,28 +4,26 @@ name: backport
 on:
   pull_request_target:
     types:
+      - labeled
+      - unlabeled
       - closed
 jobs:
   backport:
+    name: Backport PR
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    permissions: {}
+    if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      - name: Check for backport labels
+        id: check_labels
+        run: |-
+          labels='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          matched=$(echo $labels | jq '.|map(select(startswith("backport-to-"))) | length')
+          echo "matched=$matched"
+          echo "matched=$matched" >> $GITHUB_OUTPUT
+      - name: Backport Action
+        if: fromJSON(steps.check_labels.outputs.matched) > 0
+        uses: sqren/backport-github-action@v9.5.1
         with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
-      - name: Set Git Identity
-        run: git config --global user.name "github-actions" && git config --global user.email "github-actions@github.com"
-      - name: backport
-        if: github.event.pull_request.merged == true
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROJEN_GITHUB_TOKEN }}
-          BACKPORT_PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: npx projen backport
+          github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          auto_backport_label_prefix: backport-to-
