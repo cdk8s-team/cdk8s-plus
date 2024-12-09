@@ -1,41 +1,5 @@
 {
   "tasks": {
-    "backport": {
-      "name": "backport",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --non-interactive"
-        }
-      ]
-    },
-    "backport:k8s-28/main": {
-      "name": "backport:k8s-28/main",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-28/main"
-        }
-      ]
-    },
-    "backport:k8s-29/main": {
-      "name": "backport:k8s-29/main",
-      "requiredEnv": [
-        "BACKPORT_PR_NUMBER",
-        "GITHUB_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "BACKPORT_HOME=$(mktemp -d) && mkdir -p ${BACKPORT_HOME} && cp .backportrc.json ${BACKPORT_HOME} && cd ${BACKPORT_HOME} && backport --dir ${BACKPORT_HOME}/cdk8s-plus --accesstoken ${GITHUB_TOKEN} --pr ${BACKPORT_PR_NUMBER} --branch k8s-29/main"
-        }
-      ]
-    },
     "build": {
       "name": "build",
       "description": "Full release build",
@@ -459,13 +423,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev --filter=@types/minimatch,backport,cdk8s,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,snake-case,ts-node,minimatch"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev --filter=@types/minimatch,cdk8s,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,snake-case,ts-node,minimatch"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser backport cdk8s cdk8s-cli commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff snake-case ts-jest ts-node minimatch"
+          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff snake-case ts-jest ts-node minimatch"
         },
         {
           "exec": "npx projen"
