@@ -689,9 +689,9 @@
     "@sinonjs/commons" "^1.7.0"
 
 "@stylistic/eslint-plugin@^2":
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin/-/eslint-plugin-2.12.0.tgz#9819678f919d75241845c2e9379888ecde8e8ad2"
-  integrity sha512-IvD2WXbOoSp0zNpyYbjdSyEjZtut78RYfj2WIlbChE7HFuposTK5X1hc5+4AyqYcjLXYdD5oo/sJtqMGFNRb1w==
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin/-/eslint-plugin-2.12.1.tgz#e341beb4e4315084d8be20bceeeda7d8a46f079f"
+  integrity sha512-fubZKIHSPuo07FgRTn6S4Nl0uXPRPYVNpyZzIDGfp7Fny6JjNus6kReLD7NI380JXi4HtUTSOZ34LBuNPO1XLQ==
   dependencies:
     "@typescript-eslint/utils" "^8.13.0"
     eslint-visitor-keys "^4.2.0"
@@ -1385,10 +1385,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.279:
-  version "2.198.279"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.279.tgz#ef28167021b50baef976144877ded81617dd2359"
-  integrity sha512-TknfRaS5llWYl0A7ljAiAFbM96beHuGfQvLpKqJmvrwQMkrhCNCGWeS/UR4jYWiZkjcg2HRKY0/Ssg+6Whr86A==
+cdk8s-cli@^2.198.280:
+  version "2.198.280"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.280.tgz#eb1b54a87ae6f22fa82224ec148628c67510cd1c"
+  integrity sha512-+AsytfBLVfZ8aVAZZsT/cUCbfVm7wpWKrL9KtmSbdmM7/Zwva04jlKbg1x2lSYOnWZVE3E4GH4zj0ngoHxke3g==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -3720,9 +3720,9 @@ jsdom@^25.0.0:
     xml-name-validator "^5.0.0"
 
 jsesc@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-3.0.2.tgz#bb8b09a6597ba426425f2e4a07245c3d00b9343e"
-  integrity sha512-xKqzzWXDttJuOcawBt4KnKHHIf5oQ/Cxax+0PWFG+DFDgHNAdi+TXECADI+RYiFUMmx8792xsMbbgXj4CwnP4g==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-3.1.0.tgz#74d335a234f67ed19907fdadfac7ccf9d409825d"
+  integrity sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==
 
 jsii-diff@^1.105.0:
   version "1.105.0"
