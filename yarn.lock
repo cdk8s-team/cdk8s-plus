@@ -1407,10 +1407,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.286:
-  version "2.198.286"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.286.tgz#5d18930603d59b9233ed24efbfbe7a4efebad03f"
-  integrity sha512-ark+GLRP85ndi/GVRd8MtKK5dojsztiw5BXFQ+XqRK3VmL6QGdXZIfn0BAwwcX4ouJoD7SvDx9UnInWIPJk0wA==
+cdk8s-cli@^2.198.287:
+  version "2.198.287"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.287.tgz#47a0edbf9084b4f66c2bb65870eb3102959c6d91"
+  integrity sha512-iYKj79N2n4bw5Awz/VLPcBVQBkGKzLDtZjs29kefM5Rj7ouiq+whAtiN6f20uTJn5yHyeB8+p31ExX3An6NExg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -5388,17 +5388,17 @@ through@2, "through@>=2.2.7 <3":
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
-tldts-core@^6.1.69:
-  version "6.1.69"
-  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.69.tgz#079ffcac8a4407bc74567e292aecf30b943674e1"
-  integrity sha512-nygxy9n2PBUFQUtAXAc122gGo+04/j5qr5TGQFZTHafTKYvmARVXt2cA5rgero2/dnXUfkdPtiJoKmrd3T+wdA==
+tldts-core@^6.1.70:
+  version "6.1.70"
+  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.70.tgz#a954e93237ece2e1705b438600793c86a25f8c00"
+  integrity sha512-RNnIXDB1FD4T9cpQRErEqw6ZpjLlGdMOitdV+0xtbsnwr4YFka1zpc7D4KD+aAn8oSG5JyFrdasZTE04qDE9Yg==
 
 tldts@^6.1.32:
-  version "6.1.69"
-  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.69.tgz#0fe1fcb1ad09510459693e72f96062cee2411f1f"
-  integrity sha512-Oh/CqRQ1NXNY7cy9NkTPUauOWiTro0jEYZTioGbOmcQh6EC45oribyIMJp0OJO3677r13tO6SKdWoGZUx2BDFw==
+  version "6.1.70"
+  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.70.tgz#b571e5645ab9dc6f289453115d52602b8a384cfe"
+  integrity sha512-/W1YVgYVJd9ZDjey5NXadNh0mJXkiUMUue9Zebd0vpdo1sU+H4zFFTaJ1RKD4N6KFoHfcXy6l+Vu7bh+bdWCzA==
   dependencies:
-    tldts-core "^6.1.69"
+    tldts-core "^6.1.70"
 
 tmpl@1.0.5:
   version "1.0.5"
