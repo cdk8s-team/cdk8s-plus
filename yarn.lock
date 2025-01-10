@@ -1446,14 +1446,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.198.295:
-  version "2.198.295"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.295.tgz#f1360e8ddc8b9d767d65fe78660e0f78cf2aadb4"
-  integrity sha512-pe3nyjKisoIitJqelukBhTbtFEjX/PDfnQoQzPNu4lRuvpgKB6TDNyGe2CpDMlWXPD9v7nGajs08yMGmARHLZw==
+cdk8s-cli@^2.198.296:
+  version "2.198.296"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.198.296.tgz#66d0afcd31224e8067c811fc2aec00ab4c397138"
+  integrity sha512-ZRooFvCNQCCAimpINmgFwODCBv4hEEmnaviS8pMHG7WkGgHCTDJYroIunOFI082xxjAtrpiPBvu59iIc8lDzeg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.69.32"
+    cdk8s "^2.69.33"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.106.0"
     colors "1.4.0"
@@ -1476,10 +1476,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.69.32, cdk8s@^2.69.32:
-  version "2.69.32"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.32.tgz#95a10914d3c9f7f5aec78d0b3ebdcd74260be9e5"
-  integrity sha512-moinwbF/6QcSm/z2h0jD0QvCFm53GVp87YdaNRdKo8BEPHdnJzAQJ0g2hvQVihyBPt8bG9KXGaAKRWs5fczJ2w==
+cdk8s@2.69.33, cdk8s@^2.69.33:
+  version "2.69.33"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.33.tgz#a076b893a789ff1bf743acdfcd41fdb8fb2505fc"
+  integrity sha512-Bzq0jVfDPdHp9wME0XutEol4P+IbzBx8yoqRb9GCxZ39vDVb5++quNOHshA+O5S31s1OvZ0keYZcAbaoU8+HXw==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.9"
@@ -2092,9 +2092,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.73:
-  version "1.5.79"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.79.tgz#4424f23f319db7a653cf9ee76102e4ac283e6b3e"
-  integrity sha512-nYOxJNxQ9Om4EC88BE4pPoNI8xwSFf8pU/BAeOl4Hh/b/i6V4biTAzwV7pXi3ARKeoYO5JZKMIXTryXSVer5RA==
+  version "1.5.80"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.80.tgz#ca7a8361d7305f0ec9e203ce4e633cbb8a8ef1b1"
+  integrity sha512-LTrKpW0AqIuHwmlVNV+cjFYTnXtM9K37OGhpe0ZI10ScPSxqVSryZHIY3WnCS5NSYbBODRTZyhRMS2h5FAEqAw==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -5520,9 +5520,9 @@ tough-cookie@^4.0.0:
     url-parse "^1.5.3"
 
 tough-cookie@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-5.0.0.tgz#6b6518e2b5c070cf742d872ee0f4f92d69eac1af"
-  integrity sha512-FRKsF7cz96xIIeMZ82ehjC3xW2E+O2+v11udrDYewUbszngYhsGa8z6YUMMzO9QJZzzyd0nGGXnML/TReX6W8Q==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-5.1.0.tgz#0667b0f2fbb5901fe6f226c3e0b710a9a4292f87"
+  integrity sha512-rvZUv+7MoBYTiDmFPBrhL7Ujx9Sk+q9wwm22x8c8T5IJaR+Wsyc7TNxbVxo84kZoRJZZMazowFLqpankBEQrGg==
   dependencies:
     tldts "^6.1.32"
 
