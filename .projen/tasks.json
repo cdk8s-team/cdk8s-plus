@@ -338,7 +338,8 @@
         {
           "spawn": "eslint"
         }
-      ]
+      ],
+      "condition": "node -e \"if (process.env.SKIP_TESTS==='1') process.exit(1)\""
     },
     "test:watch": {
       "name": "test:watch",
