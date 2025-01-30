@@ -83,7 +83,9 @@ export interface DeploymentExposeViaServiceOptions {
 /**
  * Options for exposing a deployment via an ingress.
  */
-export interface ExposeDeploymentViaIngressOptions extends DeploymentExposeViaServiceOptions, service.ExposeServiceViaIngressOptions {}
+export interface ExposeDeploymentViaIngressOptions extends DeploymentExposeViaServiceOptions, service.ExposeServiceViaIngressOptions {
+  readonly className?: string;
+}
 
 /**
 *
@@ -221,7 +223,10 @@ export class Deployment extends workload.Workload implements IScalable {
    */
   public exposeViaIngress(path: string, options: ExposeDeploymentViaIngressOptions = {}): ingress.Ingress {
     const ser = this.exposeViaService(options);
-    return ser.exposeViaIngress(path, options);
+    return ser.exposeViaIngress(path, {
+      ...options, 
+      className: options.className,
+    });
   }
 
   /**
