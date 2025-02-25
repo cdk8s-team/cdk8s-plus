@@ -1,6 +1,6 @@
 {
-  "name": "cdk8s-plus-31",
-  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-31 synthesizes Kubernetes manifests for Kubernetes 1.31.0",
+  "name": "cdk8s-plus-32",
+  "description": "cdk8s+ is a software development framework that provides high level abstractions for authoring Kubernetes applications. cdk8s-plus-32 synthesizes Kubernetes manifests for Kubernetes 1.32.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/cdk8s-team/cdk8s-plus.git"
@@ -29,7 +29,7 @@
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
-    "release:k8s-31/main": "npx projen release:k8s-31/main",
+    "release:k8s-32/main": "npx projen release:k8s-32/main",
     "rotate": "npx projen rotate",
     "test": "npx projen test",
     "test:watch": "npx projen test:watch",
@@ -154,19 +154,19 @@
     "outdir": "dist",
     "targets": {
       "java": {
-        "package": "org.cdk8s.plus31",
+        "package": "org.cdk8s.plus32",
         "maven": {
           "groupId": "org.cdk8s",
-          "artifactId": "cdk8s-plus-31"
+          "artifactId": "cdk8s-plus-32"
         }
       },
       "python": {
-        "distName": "cdk8s-plus-31",
-        "module": "cdk8s_plus_31"
+        "distName": "cdk8s-plus-32",
+        "module": "cdk8s_plus_32"
       },
       "dotnet": {
-        "namespace": "Org.Cdk8s.Plus31",
-        "packageId": "Org.Cdk8s.Plus31"
+        "namespace": "Org.Cdk8s.Plus32",
+        "packageId": "Org.Cdk8s.Plus32"
       },
       "go": {
         "moduleName": "github.com/cdk8s-team/cdk8s-plus-go"
