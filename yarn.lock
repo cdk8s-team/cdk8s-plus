@@ -1460,14 +1460,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.1:
-  version "2.200.1"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.1.tgz#88d364d411418723914d41b08021d5c584887c27"
-  integrity sha512-p0ddSnbztnmuY2jbTHDWqixi8xUwl+Yp3f3lKsG0UdDGIF7I1yrimLrvFOOW/TrB3aKc8JVl6NvVU3hLddncYw==
+cdk8s-cli@^2.200.2:
+  version "2.200.2"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.2.tgz#eadefaade0234cb1e823c98f640296f3855121c4"
+  integrity sha512-Dius1h5y5XLx4km4YzSYYISYW6by/PfzCUDJW0xVk0dSUtXf8JAbZaYI321MsdkFoms7rwGZ7iSjQmdf04sO/Q==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.69.45"
+    cdk8s "^2.69.46"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.108.0"
     colors "1.4.0"
@@ -1490,10 +1490,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.69.45, cdk8s@^2.69.45:
-  version "2.69.45"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.45.tgz#6e6842b2ccbb17f554cf1aef64008765761a3f08"
-  integrity sha512-SsQ08Oxjgl0G9OTSJOcwQOlETumoB1Kqq0UH9yqEmiwDN7TbWoNgdNcPO6+PasWqrYqY1JG6LGrLOlQgqNzGkw==
+cdk8s@2.69.46, cdk8s@^2.69.46:
+  version "2.69.46"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.46.tgz#629485490a28cdc66b7d51cbe4508dcf2e8bbdf7"
+  integrity sha512-VXVuCqIJVCZGan4RHr+Ag89fy1+N1OpAUa7fIviwYSsv6H/Kmm4LnLapzxWWF+2g6UFyKnwUwatnVr489H+Iwg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.9"
@@ -2106,9 +2106,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.73:
-  version "1.5.105"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.105.tgz#0b2396e7e1a467434cd3132950bbe53c04f74a5e"
-  integrity sha512-ccp7LocdXx3yBhwiG0qTQ7XFrK48Ua2pxIxBdJO8cbddp/MvbBtPFzvnTchtyHQTsgqqczO8cdmAIbpMa0u2+g==
+  version "1.5.107"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.107.tgz#0a12a0b50e6f925cde8bf9c16c13d514c54c694b"
+  integrity sha512-dJr1o6yCntRkXElnhsHh1bAV19bo/hKyFf7tCcWgpXbuFIF0Lakjgqv5LRfSDaNzAII8Fnxg2tqgHkgCvxdbxw==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -5770,9 +5770,9 @@ universalify@^2.0.0:
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
 update-browserslist-db@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.1.2.tgz#97e9c96ab0ae7bcac08e9ae5151d26e6bc6b5580"
-  integrity sha512-PPypAm5qvlD7XMZC3BujecnaOxwhrtoFR+Dqkk5Aa/6DssiH0ibKoketaj9w8LP7Bont1rYeoV5plxD7RTEPRg==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.1.3.tgz#348377dd245216f9e7060ff50b15a1b740b75420"
+  integrity sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==
   dependencies:
     escalade "^3.2.0"
     picocolors "^1.1.1"
