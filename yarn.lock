@@ -1460,14 +1460,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.4:
-  version "2.200.4"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.4.tgz#468f264b7506514f6beca8609c5ab3b0e66f8de2"
-  integrity sha512-dyGlq31zMjmfbmfH4trtmuh1ayzynLGUjvQe6QJnybLKbZfn6TLE5Pr8I9MhDhqn0+JcjkPnYJe6b3VU7Uylwg==
+cdk8s-cli@^2.200.5:
+  version "2.200.5"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.5.tgz#d3204c34f6c84df72c4f739d8b2237d87619149c"
+  integrity sha512-QpGxoscbnZkdxQtB4y4fJKNZm2vdFcMhiAtB+FLFfw1M/4QXKd/leWWtsDAf2+Nv0mLTHFh6A1cjkuWmB8uALQ==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.69.46"
+    cdk8s "^2.69.47"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.108.0"
     colors "1.4.0"
@@ -1490,10 +1490,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.69.46, cdk8s@^2.69.46:
-  version "2.69.46"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.46.tgz#629485490a28cdc66b7d51cbe4508dcf2e8bbdf7"
-  integrity sha512-VXVuCqIJVCZGan4RHr+Ag89fy1+N1OpAUa7fIviwYSsv6H/Kmm4LnLapzxWWF+2g6UFyKnwUwatnVr489H+Iwg==
+cdk8s@2.69.47, cdk8s@^2.69.47:
+  version "2.69.47"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.69.47.tgz#66a370d3ca365bb8f27597d637f5829984a73cfd"
+  integrity sha512-obKkCbRFnl2FBu47tHhYgy7gPTOBZ9c5TPS9QWG2l2dQBH3b9vtClGp7LQfeXLNfVv1MsEg8Bx9NayFitBapVw==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.9"
@@ -5502,17 +5502,17 @@ through@2, "through@>=2.2.7 <3":
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
-tldts-core@^6.1.79:
-  version "6.1.79"
-  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.79.tgz#2d98689a161fbafe38a6640a54f5d4c88bd941a1"
-  integrity sha512-HM+Ud/2oQuHt4I43Nvjc213Zji/z25NSH5OkJskJwHXNtYh9DTRlHMDFhms9dFMP7qyve/yVaXFIxmcJ7TdOjw==
+tldts-core@^6.1.82:
+  version "6.1.82"
+  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.82.tgz#b93e0312378f67cfc15ea1da9bc1b699ec621ae9"
+  integrity sha512-Jabl32m21tt/d/PbDO88R43F8aY98Piiz6BVH9ShUlOAiiAELhEqwrAmBocjAqnCfoUeIsRU+h3IEzZd318F3w==
 
 tldts@^6.1.32:
-  version "6.1.79"
-  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.79.tgz#1804eddc48f8ae22a0e20937c9d92634ace7580b"
-  integrity sha512-wjlYwK8lC/WcywLWf3A7qbK07SexezXjTRVwuPWXHvcjD7MnpPS2RXY5rLO3g12a8CNc7Y7jQRQsV7XyuBZjig==
+  version "6.1.82"
+  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.82.tgz#1c06e884bcdbcccbaf73bd552e2f188ad670a4a9"
+  integrity sha512-KCTjNL9F7j8MzxgfTgjT+v21oYH38OidFty7dH00maWANAI2IsLw2AnThtTJi9HKALHZKQQWnNebYheadacD+g==
   dependencies:
-    tldts-core "^6.1.79"
+    tldts-core "^6.1.82"
 
 tmpl@1.0.5:
   version "1.0.5"
