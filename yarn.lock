@@ -657,14 +657,6 @@
     chalk "^4.1.2"
     semver "^7.6.3"
 
-"@jsii/check-node@1.108.0":
-  version "1.108.0"
-  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.108.0.tgz#d223d97178c84ed470195d532364e59bd66be17b"
-  integrity sha512-wa8AGH31Cl0x1jU/KtM6JB32IurBmK1YiX5ZnCndifRCehLnS8DmJCPYrzJbKD4xqmHigaq6696fAnM/L7qIsw==
-  dependencies:
-    chalk "^4.1.2"
-    semver "^7.6.3"
-
 "@jsii/check-node@1.109.0":
   version "1.109.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.109.0.tgz#d6d988f50f0d11591f6ac7476e6fa1ed9ff43c2e"
@@ -680,7 +672,7 @@
   dependencies:
     ajv "^8.17.1"
 
-"@jsii/spec@^1.105.0", "@jsii/spec@^1.108.0", "@jsii/spec@^1.109.0", "@jsii/spec@^1.44.0":
+"@jsii/spec@^1.105.0", "@jsii/spec@^1.109.0", "@jsii/spec@^1.44.0":
   version "1.109.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.109.0.tgz#dd5b80014726fc4dce5982ab9c3f2ea4521015f5"
   integrity sha512-+IQT4DN7/ZjaheFuwKgfpVdDIF+Reb8Hq4nO43Lu0hjeVugelOL0P22cXL229BjQ5yDRr44Fr64FuI/WUNGRKA==
@@ -3928,12 +3920,12 @@ jsii-rosetta@^5.5.4, jsii-rosetta@^5.8.1:
     yargs "^17.7.2"
 
 jsii-rosetta@~5.6.0:
-  version "5.6.10"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.6.10.tgz#4e76e3fa829ad3660edc04f83e536d56b19227bc"
-  integrity sha512-YeA0wFw/xatYcdEaFLm6bSW11dbzH439X79tXM3itJWdq9ZqIqrPfyRNU2ZGfd1J+ArAXrpVBSX4q9n1yEjoVg==
+  version "5.6.11"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.6.11.tgz#dce50336b034e529ae6086400eee818f6cd11fb2"
+  integrity sha512-xmyuNKxDTyKnlb3nG167F5rtX7B5b5+1Qz5f/hIDSAlNbPPfFe2sOu0VhJ9nsdKdwF3quI2/COCd8j0WlectZQ==
   dependencies:
-    "@jsii/check-node" "1.108.0"
-    "@jsii/spec" "^1.108.0"
+    "@jsii/check-node" "1.109.0"
+    "@jsii/spec" "^1.109.0"
     "@xmldom/xmldom" "^0.9.8"
     chalk "^4"
     commonmark "^0.31.2"
@@ -3997,12 +3989,12 @@ jsii@~5.5.3:
     yargs "^17.7.2"
 
 jsii@~5.6.0:
-  version "5.6.12"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.6.12.tgz#861ec378b7e038824b12ef27a2af1d3be332a50c"
-  integrity sha512-HQm/n5REC2JnMGOioZL6X3Y+pp8nK5wziuhlSm2gha4ggXXSYK6kF3RSQWQP0GjsIzhd/iO/9pvEqKGHIXjELQ==
+  version "5.6.13"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.6.13.tgz#03332ecc4be822e5769aceb45c0211b8a8bc5f24"
+  integrity sha512-ZkENp5w1Pj2VGtLixhmUuemZWRlieTKPLxxxs4cz+n3Wlpovit5dzy8wyx5CXiRjlwDMLRWnt7axn0qe7UFjpg==
   dependencies:
-    "@jsii/check-node" "1.108.0"
-    "@jsii/spec" "^1.108.0"
+    "@jsii/check-node" "1.109.0"
+    "@jsii/spec" "^1.109.0"
     case "^1.6.3"
     chalk "^4"
     fast-deep-equal "^3.1.3"
