@@ -1466,10 +1466,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.19:
-  version "2.200.19"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.19.tgz#c47a0d0fef6cb035cd576fa0ec65d856155ddf64"
-  integrity sha512-7rIDR2sRi+fSINDK3NAi+D2Cn7u0GPdyWj4uwVg2VQb6TcgcCGQ4/UKITIrvgYmYYFzgQhtn7V/nHgbQiEB5wA==
+cdk8s-cli@^2.200.20:
+  version "2.200.20"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.20.tgz#8fec560572aa21ff12ab5e284833256277236498"
+  integrity sha512-XtyDxm6W0rg0frPXI8Xhsv2H20TM1n/210pRJFaXsViA0imTVhz2MqBCWa26kCoN12kS/Tn5D2UvR0nAIL0wHQ==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -1480,7 +1480,7 @@ cdk8s-cli@^2.200.19:
     constructs "^10.4.2"
     fs-extra "^8"
     jsii-pacmak "^1.109.0"
-    jsii-rosetta "^5.8.0"
+    jsii-rosetta "^5.8.1"
     jsii-srcmak "0.1.1236"
     json2jsii "0.5.0"
     semver "^7.7.1"
@@ -3908,10 +3908,10 @@ jsii-rosetta@^1.44.0:
     workerpool "^6.5.1"
     yargs "^16.2.0"
 
-jsii-rosetta@^5.5.4, jsii-rosetta@^5.8.0:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.0.tgz#ed6e473ca2c2c7a7ba29355c7761d0044c7a03e7"
-  integrity sha512-iRqQoGDONPfL6Ga8VnctreQsrYzfWvsFSocKcOctiiHJ+5mbFwWreg/XLMFTz8N3VlblzUbNRnCXfB4XE+3XOg==
+jsii-rosetta@^5.5.4, jsii-rosetta@^5.8.1:
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.1.tgz#618582edfeb345ea01e28710a4ca16905d4b1543"
+  integrity sha512-Yp9rc/iJvEclV95waSK2BGurmRHp2po51a3kdsfcvIqeknXkvMvmGvGweXMQMaPNnCf66OOd5MKlJHlaQR5jnw==
   dependencies:
     "@jsii/check-node" "1.109.0"
     "@jsii/spec" "^1.109.0"
@@ -3978,12 +3978,12 @@ jsii@1.105.0:
     yargs "^16.2.0"
 
 jsii@~5.5.3:
-  version "5.5.24"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.5.24.tgz#00313e3155353ff40ed9afee18c20379a15f2238"
-  integrity sha512-ZpMBjLRO0dZ7A3UX5wFrSqOwS7Yn8mZizbMUDBzhwJ6OficlZF4qZDUh/fxcO/LHaehvrim7nPvJfN6/1l8ivQ==
+  version "5.5.25"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.5.25.tgz#6a09fae73a7f0c43d939e4ed404bd1f4d8326024"
+  integrity sha512-ro9NkQORVBd6j88GyvRuIAnYelQIZXSVulMOsqM6YK5XG6P9ptr+KiuIPBXPwD/7Mnu/UFBuncXg9ZG6IkjUxQ==
   dependencies:
-    "@jsii/check-node" "1.108.0"
-    "@jsii/spec" "^1.108.0"
+    "@jsii/check-node" "1.109.0"
+    "@jsii/spec" "^1.109.0"
     case "^1.6.3"
     chalk "^4"
     downlevel-dts "^0.11.0"
@@ -4015,9 +4015,9 @@ jsii@~5.6.0:
     yargs "^17.7.2"
 
 jsii@~5.8.0:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.0.tgz#8dcd83017064ea1c39c516952aa9b33532d5570e"
-  integrity sha512-aFcGir8GAQu5ZNzuvqLxLSvMeSSFsHeh1enoXt7Vp23lvQ7eBvUXMfxmsJ8exq7SuIAVhmx0dWjrJyekOCmAFA==
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.1.tgz#51b6263b64d4af7d71c1bcc04421d65d512424cf"
+  integrity sha512-h3K9z0NOlxe+/vqnbG2Axy00TYN70UasxVCQ3/qAUb4qSI1yWjPbqclGNw493xySB4EYG/fyXtLC9ZbkpuDGmg==
   dependencies:
     "@jsii/check-node" "1.109.0"
     "@jsii/spec" "^1.109.0"
