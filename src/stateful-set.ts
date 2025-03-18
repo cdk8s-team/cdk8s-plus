@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as container from './container';
 import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as k8s from './imports/k8s';
+import * as pvc from './pvc';
 import * as service from './service';
 import * as workload from './workload';
 
@@ -65,6 +66,16 @@ export interface StatefulSetProps extends workload.WorkloadProps {
    */
   readonly minReady?: Duration;
 
+  /**
+   * A list of PersistentVolumeClaim templates that will be created for each pod in the StatefulSet.
+   * The StatefulSet controller creates a PVC and a PV for each template based on the pod's ordinal index,
+   * ensuring stable storage across pod restarts and rescheduling.
+   *
+   * Each claim in this list must have at least one matching (by name) volumeMount in one of the containers.
+   *
+   * @default - No volume claim templates will be created.
+   */
+  readonly volumeClaimTemplates?: PersistentVolumeClaimTemplate[];
 }
 
 /**
@@ -93,6 +104,19 @@ export interface StatefulSetProps extends workload.WorkloadProps {
  * - Ordered, graceful deployment and scaling.
  * - Ordered, automated rolling updates.
  */
+/**
+ * A PersistentVolumeClaim template for StatefulSets
+ */
+export interface PersistentVolumeClaimTemplate extends pvc.PersistentVolumeClaimProps {
+  /**
+   * The name of the claim that the StatefulSet controller will create for each pod.
+   * This will be used to name the created PVC in the format <claim-name>-<pod-name>
+   *
+   * This name should match the name of a volume mount in one of the containers.
+   */
+  readonly name: string;
+}
+
 export class StatefulSet extends workload.Workload implements IScalable {
   /**
     * Number of desired pods.
@@ -126,6 +150,11 @@ export class StatefulSet extends workload.Workload implements IScalable {
 
   public readonly service: service.Service;
 
+  /**
+   * PersistentVolumeClaim templates that will be created for each pod.
+   */
+  private readonly _volumeClaimTemplates: PersistentVolumeClaimTemplate[];
+
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
     super(scope, id, props);
 
@@ -141,6 +170,7 @@ export class StatefulSet extends workload.Workload implements IScalable {
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
+    this._volumeClaimTemplates = props.volumeClaimTemplates ? [...props.volumeClaimTemplates] : [];
 
     this.service.select(this);
 
@@ -179,20 +209,75 @@ export class StatefulSet extends workload.Workload implements IScalable {
   }
 
   /**
+   * Add a PersistentVolumeClaim template to the StatefulSet.
+   *
+   * Each pod in the StatefulSet will get its own PVC based on this template.
+   *
+   * @param template The PVC template to add
+   */
+  public addVolumeClaimTemplate(template: PersistentVolumeClaimTemplate) {
+    this._volumeClaimTemplates.push(template);
+    return this;
+  }
+
+  /**
+   * Get all PersistentVolumeClaim templates that will be created for each pod.
+   */
+  public get volumeClaimTemplates(): PersistentVolumeClaimTemplate[] {
+    return [...this._volumeClaimTemplates];
+  }
+
+  /**
     * @internal
     */
   public _toKube(): k8s.StatefulSetSpec {
+    // Get base pod spec
+    const basePodSpec = this._toPodSpec();
+
+    // Create a new pod spec for the StatefulSet with filtered volumes
+    const podSpec = { ...basePodSpec };
+
+    // When using volumeClaimTemplates, the volumes with matching names should not be included in the pod spec
+    if (this._volumeClaimTemplates.length > 0 && podSpec.volumes) {
+      const volumeClaimNames = this._volumeClaimTemplates.map(vct => vct.name);
+      const filteredVolumes = podSpec.volumes.filter(vol => !volumeClaimNames.includes(vol.name));
+
+      // If there are no volumes after filtering, don't include volumes property
+      if (filteredVolumes.length === 0) {
+        podSpec.volumes = undefined;
+      } else {
+        podSpec.volumes = filteredVolumes;
+      }
+    }
+
     return {
       replicas: this.hasAutoscaler ? undefined : (this.replicas ?? 1),
       serviceName: this.service.name,
       minReadySeconds: this.minReady.toSeconds(),
       template: {
         metadata: this.podMetadata.toJson(),
-        spec: this._toPodSpec(),
+        spec: podSpec,
       },
       selector: this._toLabelSelector(),
       podManagementPolicy: this.podManagementPolicy,
       updateStrategy: this.strategy._toKube(),
+      volumeClaimTemplates: this._volumeClaimTemplates.length > 0 ?
+        this._volumeClaimTemplates.map(template => {
+          return {
+            metadata: { name: template.name },
+            spec: {
+              accessModes: template.accessModes?.map(am => am.toString()),
+              resources: template.storage ? {
+                requests: {
+                  storage: k8s.Quantity.fromString(template.storage.toGibibytes() + 'Gi'),
+                },
+              } : undefined,
+              storageClassName: template.storageClassName,
+              volumeMode: template.volumeMode,
+              volumeName: template.volume?.name,
+            },
+          };
+        }) : undefined,
     };
   }
 

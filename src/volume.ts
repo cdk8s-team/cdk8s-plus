@@ -206,6 +206,13 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
+   * Used to mount a Volume into a Pod by name.
+   */
+  public static fromName(scope: Construct, id: string, name:string): Volume {
+    return new Volume(scope, id, name, {});
+  }
+
+  /**
    * Used to mount a file or directory from the host node's filesystem into a Pod.
    * This is not something that most Pods will need, but it offers a powerful
    * escape hatch for some applications.

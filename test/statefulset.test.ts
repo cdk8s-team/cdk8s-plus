@@ -1,4 +1,4 @@
-import { Testing, ApiObject, Duration } from 'cdk8s';
+import { Testing, ApiObject, Duration, Size } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
 import { StatefulSetUpdateStrategy, k8s } from '../src';
@@ -205,4 +205,95 @@ test('Can be isolated', () => {
   const networkPolicy = manifest[2].spec;
   expect(networkPolicy.podSelector.matchLabels).toBeDefined;
   expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});
+
+test('with volumeClaimTemplates in constructor', () => {
+  const chart = Testing.chart();
+
+  // Create a service for the StatefulSet
+  const service = new kplus.Service(chart, 'Service', {
+    ports: [{ port: 80 }],
+  });
+
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'nginx',
+        port: 80,
+        volumeMounts: [
+          {
+            volume: kplus.Volume.fromName(chart, 'pvc-template', 'data-volume'),
+            path: '/data',
+          },
+        ],
+      },
+    ],
+    volumeClaimTemplates: [
+      {
+        name: 'data-volume',
+        storage: Size.gibibytes(10),
+        accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE],
+      },
+    ],
+    service,
+  });
+
+  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[1].spec;
+  expect(spec.template.spec?.volumes).toBeUndefined();
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+});
+
+test('with volumeClaimTemplates using add method', () => {
+  const chart = Testing.chart();
+
+  // Create a service for the StatefulSet
+  const service = new kplus.Service(chart, 'Service', {
+    ports: [{ port: 80 }],
+  });
+
+  const statefulSet = new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'nginx',
+        port: 80,
+        volumeMounts: [
+          {
+            volume: kplus.Volume.fromName(
+              chart,
+              'pvc-template-data',
+              'data-volume',
+            ),
+            path: '/data',
+          },
+          {
+            volume: kplus.Volume.fromName(
+              chart,
+              'pvc-template-logs',
+              'logs-volume',
+            ),
+            path: '/logs',
+          },
+        ],
+      },
+    ],
+    service,
+  });
+
+  statefulSet.addVolumeClaimTemplate({
+    name: 'data-volume',
+    storage: Size.gibibytes(10),
+    accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE],
+  });
+  statefulSet.addVolumeClaimTemplate({
+    name: 'logs-volume',
+    storage: Size.gibibytes(5),
+    accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE],
+    storageClassName: 'standard',
+  });
+
+  const spec: k8s.StatefulSetSpec = Testing.synth(chart)[1].spec;
+  expect(spec.template.spec?.volumes).toBeUndefined();
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
 });

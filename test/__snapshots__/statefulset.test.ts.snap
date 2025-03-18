@@ -212,3 +212,273 @@ Array [
   },
 ]
 `;
+
+exports[`with volumeClaimTemplates in constructor 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": Object {
+      "name": "test-service-c85b0531",
+    },
+    "spec": Object {
+      "externalIPs": Array [],
+      "ports": Array [
+        Object {
+          "port": 80,
+        },
+      ],
+      "selector": Object {
+        "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+      },
+      "type": "ClusterIP",
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "StatefulSet",
+    "metadata": Object {
+      "name": "test-statefulset-c8a6ec86",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "podManagementPolicy": "OrderedReady",
+      "replicas": 1,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+        },
+      },
+      "serviceName": "test-service-c85b0531",
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "nginx",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [
+                Object {
+                  "containerPort": 80,
+                },
+              ],
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsNonRoot": true,
+              },
+              "startupProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 80,
+                },
+              },
+              "volumeMounts": Array [
+                Object {
+                  "mountPath": "/data",
+                  "name": "data-volume",
+                },
+              ],
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+          "shareProcessNamespace": false,
+          "terminationGracePeriodSeconds": 30,
+        },
+      },
+      "updateStrategy": Object {
+        "rollingUpdate": Object {
+          "partition": 0,
+        },
+        "type": "RollingUpdate",
+      },
+      "volumeClaimTemplates": Array [
+        Object {
+          "metadata": Object {
+            "name": "data-volume",
+          },
+          "spec": Object {
+            "accessModes": Array [
+              "ReadWriteOnce",
+            ],
+            "resources": Object {
+              "requests": Object {
+                "storage": "10Gi",
+              },
+            },
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`with volumeClaimTemplates using add method 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": Object {
+      "name": "test-service-c85b0531",
+    },
+    "spec": Object {
+      "externalIPs": Array [],
+      "ports": Array [
+        Object {
+          "port": 80,
+        },
+      ],
+      "selector": Object {
+        "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+      },
+      "type": "ClusterIP",
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "StatefulSet",
+    "metadata": Object {
+      "name": "test-statefulset-c8a6ec86",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "podManagementPolicy": "OrderedReady",
+      "replicas": 1,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+        },
+      },
+      "serviceName": "test-service-c85b0531",
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "nginx",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [
+                Object {
+                  "containerPort": 80,
+                },
+              ],
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsNonRoot": true,
+              },
+              "startupProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 80,
+                },
+              },
+              "volumeMounts": Array [
+                Object {
+                  "mountPath": "/data",
+                  "name": "data-volume",
+                },
+                Object {
+                  "mountPath": "/logs",
+                  "name": "logs-volume",
+                },
+              ],
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+          "shareProcessNamespace": false,
+          "terminationGracePeriodSeconds": 30,
+        },
+      },
+      "updateStrategy": Object {
+        "rollingUpdate": Object {
+          "partition": 0,
+        },
+        "type": "RollingUpdate",
+      },
+      "volumeClaimTemplates": Array [
+        Object {
+          "metadata": Object {
+            "name": "data-volume",
+          },
+          "spec": Object {
+            "accessModes": Array [
+              "ReadWriteOnce",
+            ],
+            "resources": Object {
+              "requests": Object {
+                "storage": "10Gi",
+              },
+            },
+          },
+        },
+        Object {
+          "metadata": Object {
+            "name": "logs-volume",
+          },
+          "spec": Object {
+            "accessModes": Array [
+              "ReadWriteOnce",
+            ],
+            "resources": Object {
+              "requests": Object {
+                "storage": "5Gi",
+              },
+            },
+            "storageClassName": "standard",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
