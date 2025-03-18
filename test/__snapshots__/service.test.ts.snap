@@ -32,6 +32,38 @@ Object {
 }
 `;
 
+exports[`can be imported and used by an ingress 1`] = `
+Object {
+  "apiVersion": "networking.k8s.io/v1",
+  "kind": "Ingress",
+  "metadata": Object {
+    "name": "test-service-ingress-c8a1c328",
+  },
+  "spec": Object {
+    "rules": Array [
+      Object {
+        "http": Object {
+          "paths": Array [
+            Object {
+              "backend": Object {
+                "service": Object {
+                  "name": "service-name",
+                  "port": Object {
+                    "number": 8080,
+                  },
+                },
+              },
+              "path": "/hello",
+              "pathType": "Prefix",
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+`;
+
 exports[`can select a deployment 1`] = `
 Array [
   Object {

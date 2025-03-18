@@ -7,6 +7,42 @@ import * as ingress from './ingress';
 import * as pod from './pod';
 
 /**
+ * Interface for Service constructs.
+ * This interface allows users to interact with a Service without having to create one directly.
+ */
+export interface IService extends base.IResource {
+  /**
+   * The ports this service binds to.
+   */
+  readonly ports: ServicePort[];
+
+  /**
+   * The first port of the service, if available.
+   */
+  readonly port?: number;
+
+  /**
+   * Expose a service via an ingress using the specified path.
+   *
+   * @param path The path to expose the service under.
+   * @param options Additional options.
+   *
+   * @returns The `Ingress` resource that was used.
+   */
+  exposeViaIngress(path: string, options?: ExposeServiceViaIngressOptions): ingress.Ingress;
+
+  /**
+   * Require this service to select pods matching the selector.
+   *
+   * Note that invoking this method multiple times acts as an AND operator
+   * on the resulting labels.
+   *
+   * @param selector The pod selector
+   */
+  select(selector: pod.IPodSelector): void;
+}
+
+/**
  * Properties for `Service`.
  */
 export interface ServiceProps extends base.ResourceProps {
@@ -124,6 +160,14 @@ export interface ExposeServiceViaIngressOptions {
    * @default - An ingress will be automatically created.
    */
   readonly ingress?: ingress.Ingress;
+
+  /**
+   * The port to use for the service backend.
+   *
+   * @default - For regular services, the first port or port 80 will be used.
+   *            For imported services, this is required.
+   */
+  readonly port?: number;
 }
 
 /**
@@ -177,6 +221,83 @@ export interface AddDeploymentOptions extends ServiceBindOptions {
   readonly port?: number;
 }
 
+class ImportedService extends Construct implements IService {
+  private readonly _name: string;
+
+  public readonly resourceType = 'service';
+
+  constructor(scope: Construct, id: string, name: string) {
+    super(scope, id);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get apiVersion(): string {
+    return k8s.KubeService.GVK.apiVersion;
+  }
+
+  public get apiGroup(): string {
+    return '';
+  }
+
+  public get kind(): string {
+    return k8s.KubeService.GVK.kind;
+  }
+
+  public get resourceName(): string {
+    return this.name;
+  }
+
+  /**
+   * For imported services, we don't have information about the ports.
+   * If specific port information is needed, it should be passed in configuration.
+   */
+  public get ports(): ServicePort[] {
+    return [];
+  }
+
+  /**
+   * For imported services, we don't have information about the port.
+   * If specific port information is needed, it should be passed in configuration.
+   */
+  public get port(): number | undefined {
+    return undefined;
+  }
+
+  /**
+   * For imported services, we don't support selecting pods.
+   * This is a no-op for compatibility with the IService interface.
+   *
+   * @param _selector The pod selector (unused)
+   */
+  public select(_selector: pod.IPodSelector): void {
+    // No-op for imported services
+  }
+
+  /**
+   * Expose a service via an ingress using the specified path.
+   *
+   * @param path The path to expose the service under.
+   * @param options Additional options.
+   *
+   * @returns The `Ingress` resource that was used.
+   */
+  public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): ingress.Ingress {
+    const ingr = options.ingress ?? new ingress.Ingress(this, 'Ingress');
+
+    // For imported services, we require a port to be specified in the options
+    if (!options.port) {
+      throw new Error('A port must be specified when exposing an imported service via ingress');
+    }
+
+    ingr.addRule(path, ingress.IngressBackend.fromService(this, { port: options.port }), options.pathType);
+    return ingr;
+  }
+}
+
 /**
  * An abstract way to expose an application running on a set of Pods as a network service.
  * With Kubernetes you don't need to modify your application to use an unfamiliar service discovery mechanism.
@@ -191,7 +312,14 @@ export interface AddDeploymentOptions extends ServiceBindOptions {
  * that get updated whenever the set of Pods in a Service changes. For non-native applications, Kubernetes offers ways to place a network port
  * or load balancer in between your application and the backend Pods.
  */
-export class Service extends base.Resource {
+export class Service extends base.Resource implements IService {
+  /**
+   * Imports a service from the cluster as a reference.
+   * @param name The name of the service resource.
+   */
+  public static fromServiceName(scope: Construct, id: string, name: string): IService {
+    return new ImportedService(scope, id, name);
+  }
 
   /**
    * The IP address of the service and is usually assigned randomly by the
@@ -264,8 +392,22 @@ export class Service extends base.Resource {
    */
   public exposeViaIngress(path: string, options: ExposeServiceViaIngressOptions = {}): ingress.Ingress {
     const ingr = options.ingress ?? new ingress.Ingress(this, 'Ingress');
-    ingr.addRule(path, ingress.IngressBackend.fromService(this), options.pathType);
-    return ingr;
+
+    // Use explicitly provided port if available
+    if (options.port !== undefined) {
+      ingr.addRule(path, ingress.IngressBackend.fromService(this, { port: options.port }), options.pathType);
+      return ingr;
+    }
+
+    // Otherwise use the port property if available
+    const firstPort = this.port;
+    if (firstPort !== undefined) {
+      ingr.addRule(path, ingress.IngressBackend.fromService(this), options.pathType);
+      return ingr;
+    }
+
+    // If no ports are defined, throw an error
+    throw new Error('A port must be specified when exposing a service via ingress with no defined ports');
   }
 
   /**
@@ -273,15 +415,21 @@ export class Service extends base.Resource {
    *
    * Use `bind()` to bind additional service ports.
    */
-  public get ports() {
+  public get ports(): ServicePort[] {
     return [...this._ports];
   }
 
   /**
-   * Return the first port of the service.
+   * Return the first port of the service, if available.
+   *
+   * @returns The first port number if ports are defined, undefined otherwise
    */
-  public get port(): number {
-    return [...this._ports][0].port;
+  public get port(): number | undefined {
+    const ports = [...this._ports];
+    if (ports.length === 0) {
+      return undefined;
+    }
+    return ports[0].port;
   }
 
   /**

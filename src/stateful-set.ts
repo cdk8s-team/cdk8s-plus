@@ -31,7 +31,7 @@ export interface StatefulSetProps extends workload.WorkloadProps {
    *
    * @default - A new headless service will be created.
    */
-  readonly service?: service.Service;
+  readonly service?: service.IService;
 
   /**
     * Number of desired pods.
@@ -124,7 +124,7 @@ export class StatefulSet extends workload.Workload implements IScalable {
 
   public hasAutoscaler = false;
 
-  public readonly service: service.Service;
+  public readonly service: service.IService;
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
     super(scope, id, props);

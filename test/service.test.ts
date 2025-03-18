@@ -196,3 +196,14 @@ test('can set publishNotReadyAddresses', () => {
   const spec = Testing.synth(chart)[0].spec;
   expect(spec.publishNotReadyAddresses).toBeTruthy();
 });
+
+test('can be imported and used by an ingress', () => {
+  const chart = Testing.chart();
+
+  const service = kplus.Service.fromServiceName(chart, 'Service', 'service-name');
+
+  // Now we must specify a port for imported services
+  service.exposeViaIngress('/hello', { port: 8080 });
+  const ingress = Testing.synth(chart)[0];
+  expect(ingress).toMatchSnapshot();
+});

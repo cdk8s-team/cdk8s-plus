@@ -270,9 +270,20 @@ export class IngressBackend {
    * A Kubernetes `Service` to use as the backend for this path.
    * @param serv The service object.
    */
-  public static fromService(serv: service.Service, options: ServiceIngressBackendOptions = {}) {
-    if (serv.ports.length === 0) {
-      throw new Error('service does not expose any ports');
+  public static fromService(serv: service.IService, options: ServiceIngressBackendOptions = {}) {
+    // For imported services, ports might be undefined or empty
+    // In that case, we must rely on the port provided in options
+    if (!serv.ports || serv.ports.length === 0) {
+      if (options.port !== undefined) {
+        return new IngressBackend({
+          service: {
+            name: serv.name,
+            port: { number: options.port },
+          },
+        });
+      } else {
+        throw new Error('service does not expose any ports');
+      }
     }
 
     let servicePort;
