@@ -1458,10 +1458,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.21:
-  version "2.200.21"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.21.tgz#bb43776cbd0c76b978a25114f53dd4749058eb31"
-  integrity sha512-zoy29mLvxZt2Eknyxr7s3OVnnMvfjb8e7DBWRumkPmToPP25WhfUp+ok1w8zxLKDpYIN39hGX9VL0MhYjQ4Vqg==
+cdk8s-cli@^2.200.22:
+  version "2.200.22"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.22.tgz#251ec07f7c6cfa4c82d0b037aca6daf11bb7704c"
+  integrity sha512-myytW2n+u5CbN7m4b6JY5GE/4QhTSIQ7J8ujOzc6RAfLQphjIIgAFP9eBUdYHutslbfFtF0CtQFCitUeUQRlbw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -4510,9 +4510,9 @@ npm-run-path@^4.0.1:
     path-key "^3.0.0"
 
 nwsapi@^2.2.0, nwsapi@^2.2.12:
-  version "2.2.18"
-  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.18.tgz#3c4d7927e1ef4d042d319438ecfda6cd81b7ee41"
-  integrity sha512-p1TRH/edngVEHVbwqWnxUViEmq5znDvyB+Sik5cmuLpGOIfDf/39zLiq3swPF8Vakqn+gvNiOQAZu8djYlQILA==
+  version "2.2.19"
+  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.19.tgz#586660f7c24c34691907002309a8dc28064c9c0b"
+  integrity sha512-94bcyI3RsqiZufXjkr3ltkI86iEl+I7uiHVDtcq9wJUTwYQJ5odHDeSzkkrRzi80jJ8MaeZgqKjH1bAWAFw9bA==
 
 object-inspect@^1.13.3:
   version "1.13.4"
