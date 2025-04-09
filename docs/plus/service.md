@@ -37,5 +37,5 @@ const chart = new k.Chart(app, 'Chart');
 const frontends = new kplus.Service(chart, 'FrontEnds');
 
 // make the service bind to port 9000 and redirect to port 80 on the associated containers.
-frontends.bind({port: 9000, targetPort: 80)
+frontends.bind({port: 9000, targetPort: 80})
 ```
