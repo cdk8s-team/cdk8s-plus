@@ -10,13 +10,13 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@asamuzakjp/css-color@^3.1.1":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@asamuzakjp/css-color/-/css-color-3.1.2.tgz#4efb1abb3bfbb5982df66bd6e71fea21e3a29fbe"
-  integrity sha512-nwgc7jPn3LpZ4JWsoHtuwBsad1qSSLDDX634DdG0PBJofIuIEtSWk4KkRmuXyu178tjuHAbwiMNNzwqIyLYxZw==
+"@asamuzakjp/css-color@^3.1.2":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@asamuzakjp/css-color/-/css-color-3.1.3.tgz#e408e8756a0dc561ccf20f52931034ea509ee760"
+  integrity sha512-u25AyjuNrRFGb1O7KmWEu0ExN6iJMlUmDSlOPW/11JF8khOrIGG6oCoYpC+4mZlthNVhFUahk68lNrNI91f6Yg==
   dependencies:
-    "@csstools/css-calc" "^2.1.2"
-    "@csstools/css-color-parser" "^3.0.8"
+    "@csstools/css-calc" "^2.1.3"
+    "@csstools/css-color-parser" "^3.0.9"
     "@csstools/css-parser-algorithms" "^3.0.4"
     "@csstools/css-tokenizer" "^3.0.3"
     lru-cache "^10.4.3"
@@ -297,12 +297,12 @@
   resolved "https://registry.yarnpkg.com/@csstools/color-helpers/-/color-helpers-5.0.2.tgz#82592c9a7c2b83c293d9161894e2a6471feb97b8"
   integrity sha512-JqWH1vsgdGcw2RR6VliXXdA0/59LttzlU8UlRT/iUUsEeWfYq8I+K0yhihEUTTHLRm1EXvpsCx3083EU15ecsA==
 
-"@csstools/css-calc@^2.1.2", "@csstools/css-calc@^2.1.3":
+"@csstools/css-calc@^2.1.3":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@csstools/css-calc/-/css-calc-2.1.3.tgz#6f68affcb569a86b91965e8622d644be35a08423"
   integrity sha512-XBG3talrhid44BY1x3MHzUx/aTG8+x/Zi57M4aTKK9RFB4aLlF3TTSzfzn8nWVHWL3FgAXAxmupmDd6VWww+pw==
 
-"@csstools/css-color-parser@^3.0.8":
+"@csstools/css-color-parser@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@csstools/css-color-parser/-/css-color-parser-3.0.9.tgz#8d81b77d6f211495b5100ec4cad4c8828de49f6b"
   integrity sha512-wILs5Zk7BU86UArYBJTPy/FMPPKVKHMj1ycCEyf3VUptol0JNRLFU/BZsJ4aiIHJEbSLiizzRrw8Pc1uAEDrXw==
@@ -1458,10 +1458,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.47:
-  version "2.200.47"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.47.tgz#b6e5ee80c3deaab4347aeb5462c6cedbeb6aadcf"
-  integrity sha512-nLgHaDb1KC6l3d+Nt8fLLHEBn0kmUmHSiCbuaKxv+pb77BnCrd6WOI28wvgEiUsUPQFcT1J2OY7WW2RRuw7nxQ==
+cdk8s-cli@^2.200.48:
+  version "2.200.48"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.48.tgz#7daa839d1bed549406a991479a5ab6dd2209126b"
+  integrity sha512-eQ9pcK/a0PtFCvRFgNwk97KtK3EWMzThLWzRhtOQA0i6ScoZAhuexaeN5vbFYvYBLpE++4iZ2XjDNemSIeIlGg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -1472,7 +1472,7 @@ cdk8s-cli@^2.200.47:
     constructs "^10.4.2"
     fs-extra "^8"
     jsii-pacmak "^1.111.0"
-    jsii-rosetta "^5.8.4"
+    jsii-rosetta "^5.8.5"
     jsii-srcmak "0.1.1236"
     json2jsii "0.5.0"
     semver "^7.7.1"
@@ -1888,11 +1888,11 @@ cssstyle@^2.3.0:
     cssom "~0.3.6"
 
 cssstyle@^4.1.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-4.3.0.tgz#83db22d1aec8eb7e5ecd812b4d14a17fb3dd243d"
-  integrity sha512-6r0NiY0xizYqfBvWp1G7WXJ06/bZyrk7Dc6PHql82C/pKGUTKu4yAX4Y8JPamb1ob9nBKuxWzCGTRuGwU3yxJQ==
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-4.3.1.tgz#68a3c9f5a70aa97d5a6ebecc9805e511fc022eb8"
+  integrity sha512-ZgW+Jgdd7i52AaLYCriF8Mxqft0gD/R9i9wi6RWBhs1pqdPEzPjym7rvRKi397WmQFf3SlyUsszhw+VVCbx79Q==
   dependencies:
-    "@asamuzakjp/css-color" "^3.1.1"
+    "@asamuzakjp/css-color" "^3.1.2"
     rrweb-cssom "^0.8.0"
 
 dargs@^7.0.0:
@@ -3943,10 +3943,10 @@ jsii-rosetta@^1.44.0:
     workerpool "^6.5.1"
     yargs "^16.2.0"
 
-jsii-rosetta@^5.5.4, jsii-rosetta@^5.8.4:
-  version "5.8.4"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.4.tgz#df73ef479299991b4ddaa714015c3fce0328fc0f"
-  integrity sha512-LcDuvSSPPNHpmCXc1B3VbaQRJFz06PIoYVOhDWiq1zwOcXugYdAAjvBSsTXSUD3yEfAHUX7kkcJ2uH4yPOsAyA==
+jsii-rosetta@^5.5.4, jsii-rosetta@^5.8.5:
+  version "5.8.5"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.5.tgz#99fb17c148c43543a04b73a0187a647d81e4aef4"
+  integrity sha512-zO9Y/ABJcJVuF/OHPCwB0hdPtBEkQXkhA4Cl+n381Btxw1X/eo/Naqp+dI8vBMK1qbPjsZCSTi3bZT+mZ6gu9Q==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
@@ -4013,9 +4013,9 @@ jsii@1.105.0:
     yargs "^16.2.0"
 
 jsii@~5.5.3:
-  version "5.5.29"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.5.29.tgz#1df9e9696d9067b21324b28cdb8e7daadffc70e1"
-  integrity sha512-69td2SYBoOYmJdrO54U8j1vK0Xti9xORGkLzhZ0KQF+6usYIFOaG4OkDp1AaWIjpH47oQEnUpjntQSTtyIbrbA==
+  version "5.5.30"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.5.30.tgz#4eda2482f564f0b09ce057047d1adb203f86db5a"
+  integrity sha512-kjySELuZKBcnlBQgxHa3vd7KWC1JxZgNhppYy2TFvC1CL8rSajtYd6/wojd0V3VuI3O7fpPAG3M/jaU902hrdg==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
@@ -4050,9 +4050,9 @@ jsii@~5.6.0:
     yargs "^17.7.2"
 
 jsii@~5.8.0:
-  version "5.8.5"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.5.tgz#ce087067f1192f306698f6cb94a8e97200326ba2"
-  integrity sha512-b5PrhKyfIonCtEfsDLTcPaG11xKaGp58IHJcFtXlRP8U4TQM5vNpItkwG8rd4/20b5RQPLcZnQ/wjOAT4+GL8A==
+  version "5.8.6"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.6.tgz#bc60114016fc6e2bcb11acc3782d397d471370ad"
+  integrity sha512-CcRH0/u5X1htu1w+Qs6SSUAUopwcoaJRcIpu0WWMGP8XuLWx2Ey6ceRPfuOsUYG64BmJGoyXPiNV+na7CCh2lQ==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
