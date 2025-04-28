@@ -890,9 +890,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "22.15.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.2.tgz#1db55aa64618ee93a58c8912f74beefe44aca905"
-  integrity sha512-uKXqKN9beGoMdBfcaTY1ecwz6ctxuJAcUlwE55938g0ZJ8lRxwAZqRz2AJ4pzpt5dHdTPMB863UZ0ESiFUcP7A==
+  version "22.15.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.3.tgz#b7fb9396a8ec5b5dfb1345d8ac2502060e9af68b"
+  integrity sha512-lX7HFZeHf4QG/J7tBZqrCAXwz9J5RD56Y6MpP0eJkka8p+K0RY/yBTW7CYFJ4VGCclxqOLKmiGP5juQc6MKgcw==
   dependencies:
     undici-types "~6.21.0"
 
@@ -3963,9 +3963,9 @@ jsii-rosetta@^5.5.4, jsii-rosetta@^5.8.5:
     yargs "^17.7.2"
 
 jsii-rosetta@~5.6.0:
-  version "5.6.15"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.6.15.tgz#8952b496195db7bd803d53b17d459d28eeebbf62"
-  integrity sha512-gvEfN9xU3pnhFVqHskLFkZUixMeU+uD/QohsWQZ4hiuIlssTqp9N0Hxtq/BGKZryxs4KtaNvskj9ih20eRJU2w==
+  version "5.6.16"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.6.16.tgz#e94b390697d380072268b87f58810249a91d472f"
+  integrity sha512-jPo+M3nmEQoeVJAtmfKlwYekL2cmEzlDv+sLb2siGVIyQN/emUKOvhEPk3S5nwKUWS1V6b2DRwoBiVXjNHzv0w==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
@@ -4032,9 +4032,9 @@ jsii@~5.5.3:
     yargs "^17.7.2"
 
 jsii@~5.6.0:
-  version "5.6.17"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.6.17.tgz#9809d1a414d1fa4da908f23c29230521089fd318"
-  integrity sha512-V03B+gscq5/n1aycErw7IrFi6KiRJthLxTBCa3cjKTDL/D/C0mInUOp7U+dGoMtxSJWQJRC/CJLjpqEvROt+cQ==
+  version "5.6.18"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.6.18.tgz#b8a419d8ab891347ec1be032ea45bda3c0f07046"
+  integrity sha512-nNVjXTyrBNo40iSRhwnMLv9aJxo5NbDahwK70X+R1Ehz0cORgVEhZyxZ/96QOdZ9nyG0rxWUgoLhBR+ZJl+IZg==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
@@ -4050,9 +4050,9 @@ jsii@~5.6.0:
     yargs "^17.7.2"
 
 jsii@~5.8.0:
-  version "5.8.6"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.6.tgz#bc60114016fc6e2bcb11acc3782d397d471370ad"
-  integrity sha512-CcRH0/u5X1htu1w+Qs6SSUAUopwcoaJRcIpu0WWMGP8XuLWx2Ey6ceRPfuOsUYG64BmJGoyXPiNV+na7CCh2lQ==
+  version "5.8.7"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.7.tgz#b38280e71d32440f5f20fa18561dd4911ef4a8ad"
+  integrity sha512-q0XwDDM7CIQUdgB7yhUtTA8gh0XZogRobBD8ovG+PUw5eYLco7KTAG1NoW2NktxX/YiaibDALfFrsV0Pb1S4BQ==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
