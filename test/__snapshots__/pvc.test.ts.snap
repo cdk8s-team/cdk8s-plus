@@ -100,3 +100,23 @@ Array [
   },
 ]
 `;
+
+exports[`small size 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": Object {
+      "name": "test-persistentvolumeclaim-c8af0974",
+    },
+    "spec": Object {
+      "resources": Object {
+        "requests": Object {
+          "storage": "0.5Gi",
+        },
+      },
+      "volumeMode": "Filesystem",
+    },
+  },
+]
+`;
