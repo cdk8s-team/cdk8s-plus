@@ -100,6 +100,11 @@ for (const lang of ['typescript', 'python', 'java']) {
   project.gitignore.exclude(output);
 }
 
+// Allow skipping tests in build based on an env variable
+// This is only used by the package integrity check running outside the repo
+// While this check needs to replicate the release, it does not need to run tests
+project.testTask.addCondition("node -e \"if (process.env.SKIP_TESTS==='1') process.exit(1)\"");
+
 // Projen task to update references to old versions of cdk8s-plus
 const versionTaskObject = project.addTask('rotate');
 versionTaskObject.exec('ts-node projenrc/rotate.ts ' + SPEC_VERSION);
