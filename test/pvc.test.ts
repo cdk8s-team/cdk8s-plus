@@ -49,6 +49,19 @@ test('custom', () => {
 
 });
 
+test('small size', () => {
+
+  const chart = cdk8s.Testing.chart();
+  const pvc = new kplus.PersistentVolumeClaim(chart, 'PersistentVolumeClaim', {
+    storage: cdk8s.Size.mebibytes(512),
+  });
+
+  expect(pvc.storage).toEqual(cdk8s.Size.mebibytes(512));
+
+  const resources = cdk8s.Testing.synth(chart);
+  expect(resources).toMatchSnapshot();
+});
+
 test('can be imported', () => {
 
   const chart = Testing.chart();
