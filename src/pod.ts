@@ -22,6 +22,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly shareProcessNamespace: boolean;
   public readonly hostNetwork?: boolean;
   public readonly terminationGracePeriod?: Duration;
+  public readonly enableServiceLinks?: boolean;
 
   protected readonly isolate: boolean;
 
@@ -45,6 +46,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.isolate = props.isolate ?? false;
     this.hostNetwork = props.hostNetwork ?? false;
     this.terminationGracePeriod = props.terminationGracePeriod ?? Duration.seconds(30);
+    this.enableServiceLinks = props.enableServiceLinks;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -254,6 +256,7 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       shareProcessNamespace: this.shareProcessNamespace,
       hostNetwork: this.hostNetwork,
       terminationGracePeriodSeconds: this.terminationGracePeriod?.toSeconds(),
+      enableServiceLinks: this.enableServiceLinks,
     };
 
   }
@@ -469,6 +472,15 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default Duration.seconds(30)
    */
   readonly terminationGracePeriod?: Duration;
+
+  /**
+   * Indicates whether information about services should be injected into pod's
+   * environment variables, matching the syntax of Docker links.
+   *
+   * @default true
+   * @see https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#accessing-the-service
+   */
+  readonly enableServiceLinks?: boolean;
 }
 
 /**
