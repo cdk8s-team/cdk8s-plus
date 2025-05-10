@@ -1510,10 +1510,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.65:
-  version "2.200.65"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.65.tgz#23a91a147244343a71659c08966669f5db01819a"
-  integrity sha512-hkqziTYt0rHK1UP3lHy5sFJVlxRvuIcNtEbGtzd3kTIu4jk5Gn72N8TVNWVjcyiA3uFLzYPnhXPaUa29EDeONg==
+cdk8s-cli@^2.200.66:
+  version "2.200.66"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.66.tgz#398394bf3d49e6398cf86e67e00dacd609f13d4b"
+  integrity sha512-TLN+9UGeBKkynIM+L0ujdM1d9PIOE7Wg9FQ2Fu2rr9E9wP1CvLWAhPcQFCYtvZeDPH0QVbLwVQHZ9+58v6ROTA==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -2548,9 +2548,9 @@ eventsource-parser@^3.0.1:
   integrity sha512-VARTJ9CYeuQYb0pZEPbzi740OWFgpHe7AYJ2WFZVnUDUQp5Dk2yJUgF36YsZ81cOyxT0QxmXD2EQpapAouzWVA==
 
 eventsource@^3.0.2:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-3.0.6.tgz#5c4b24cd70c0323eed2651a5ee07bd4bc391e656"
-  integrity sha512-l19WpE2m9hSuyP06+FbuUUf1G+R0SFLrtQfbRb9PRr+oimOfxQhgGCbVaXg5IvZyyTThJsxh6L/srkMiCeBPDA==
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-3.0.7.tgz#1157622e2f5377bb6aef2114372728ba0c156989"
+  integrity sha512-CRT1WTyuQoD771GW56XEZFQ/ZoSfWid1alKGDYMmkt2yl8UXrVR4pspqWNEcqKvVIzg6PAltWjxcSSPrboA4iA==
   dependencies:
     eventsource-parser "^3.0.1"
 
