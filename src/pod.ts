@@ -778,7 +778,8 @@ export class PodDns {
     subdomain?: string;
     hostnameAsFQDN: boolean;
     policy: string;
-    config: k8s.PodDnsConfig; } {
+    config: k8s.PodDnsConfig;
+  } {
 
     if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
       throw new Error('When dns policy is set to NONE, at least one nameserver is required');
@@ -870,7 +871,7 @@ export enum RestartPolicy {
   /**
    * Never restart the pod.
    */
-  NEVER = 'Never'
+  NEVER = 'Never',
 }
 
 export enum FsGroupChangePolicy {
@@ -885,7 +886,7 @@ export enum FsGroupChangePolicy {
   /**
    * Always change permission and ownership of the volume when volume is mounted.
    */
-  ALWAYS = 'Always'
+  ALWAYS = 'Always',
 }
 
 /**

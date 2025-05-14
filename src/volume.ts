@@ -518,7 +518,7 @@ export enum EmptyDirMedium {
    * fast, be aware that unlike disks, tmpfs is cleared on node reboot and any
    * files you write will count against your Container's memory limit.
    */
-  MEMORY = 'Memory'
+  MEMORY = 'Memory',
 }
 
 /**
@@ -624,7 +624,7 @@ export enum AzureDiskPersistentVolumeCachingMode {
   /**
    * ReadWrite.
    */
-  READ_WRITE = 'ReadWrite'
+  READ_WRITE = 'ReadWrite',
 }
 
 /**
@@ -692,7 +692,7 @@ export enum HostPathVolumeType {
   /**
    * A block device must exist at the given path.
    */
-  BLOCK_DEVICE = 'BlockDevice'
+  BLOCK_DEVICE = 'BlockDevice',
 }
 
 /**
@@ -750,5 +750,5 @@ export interface CsiVolumeOptions {
    *
    * @default - undefined
    */
-  readonly attributes?: {[key: string]: string};
+  readonly attributes?: { [key: string]: string };
 }
