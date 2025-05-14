@@ -65,7 +65,7 @@ export enum ConnectionScheme {
   /**
    * Use HTTPS request for connecting to host.
    */
-  HTTPS = 'HTTPS'
+  HTTPS = 'HTTPS',
 }
 
 /**
