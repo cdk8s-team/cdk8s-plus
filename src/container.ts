@@ -353,7 +353,7 @@ export enum Protocol {
   /**
    * SCTP.
    */
-  SCTP = 'SCTP'
+  SCTP = 'SCTP',
 }
 
 
@@ -750,7 +750,7 @@ export enum ContainerRestartPolicy {
    * it will start and remain running during the entire life of the Pod.
    * For regular containers, this is ignored by Kubernetes.
    */
-  ALWAYS = 'Always'
+  ALWAYS = 'Always',
 }
 /**
  * Properties for creating a container.
