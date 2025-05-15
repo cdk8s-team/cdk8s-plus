@@ -239,7 +239,7 @@ export enum PersistentVolumeAccessMode {
    * only one pod across whole cluster can read that PVC or write to it.
    * This is only supported for CSI volumes and Kubernetes version 1.22+.
    */
-  READ_WRITE_ONCE_POD = 'ReadWriteOncePod'
+  READ_WRITE_ONCE_POD = 'ReadWriteOncePod',
 
 }
 
@@ -263,5 +263,5 @@ export enum PersistentVolumeMode {
    * and the volume. On the other hand, the application running in
    * the Pod must know how to handle a raw block device
    */
-  BLOCK = 'Block'
+  BLOCK = 'Block',
 }
