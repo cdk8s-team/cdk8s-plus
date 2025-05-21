@@ -68,6 +68,18 @@ export enum ConnectionScheme {
   HTTPS = 'HTTPS',
 }
 
+export interface HttpHeader {
+  /**
+   * The HTTP Header name to be used
+   */
+  readonly name: string;
+
+  /**
+   * The HTTP header value to be set
+   */
+  readonly value: string;
+}
+
 /**
  * Options for `Probe.fromHttpGet()`.
  */
@@ -92,6 +104,13 @@ export interface HttpGetProbeOptions extends ProbeOptions {
    * @default - defaults to the pod IP
    */
   readonly host?: string;
+
+  /**
+   * Custom HTTP headers to set in the probe request. Note that HTTP allows repeated headers.
+   *
+   * @default - no custom headers are set
+   */
+  readonly httpHeaders?: HttpHeader[];
 }
 
 /**
