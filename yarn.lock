@@ -10,7 +10,7 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@asamuzakjp/css-color@^3.1.2":
+"@asamuzakjp/css-color@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@asamuzakjp/css-color/-/css-color-3.2.0.tgz#cc42f5b85c593f79f1fa4f25d2b9b321e61d1794"
   integrity sha512-K1A6z8tS3XsmCMM86xoWdn7Fkdn9m6RSVtocUrJYIwZnFVkng/PvkEoWtOWmP+Scc6saYWHWZYbndEEXxl24jw==
@@ -1476,10 +1476,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.93:
-  version "2.200.93"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.93.tgz#fa0816cab578c696450c113b1cfbec407524f173"
-  integrity sha512-n8iT8RbVZHAzrqaSFwfPKzORW1E98f45v0SQxDYHm8X8rVdMGI//1gT53D+GgeIZMLZwIhGyi9yl02z615SZKA==
+cdk8s-cli@^2.200.94:
+  version "2.200.94"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.94.tgz#69c1481b008b66e5b3babadee7945df5cb75d197"
+  integrity sha512-9H4pM9GGna624d5scdkTPztSUnqTev++SiReTuDEk4uOXerMGr1Bb2MrZaUFBiHSHnRuZPzR5D7qjf1pPa45Eg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -1906,11 +1906,11 @@ cssstyle@^2.3.0:
     cssom "~0.3.6"
 
 cssstyle@^4.1.0:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-4.3.1.tgz#68a3c9f5a70aa97d5a6ebecc9805e511fc022eb8"
-  integrity sha512-ZgW+Jgdd7i52AaLYCriF8Mxqft0gD/R9i9wi6RWBhs1pqdPEzPjym7rvRKi397WmQFf3SlyUsszhw+VVCbx79Q==
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-4.4.0.tgz#a185e81564a6047693586d904d278cbe8565ba07"
+  integrity sha512-W0Y2HOXlPkb2yaKrCVRjinYKciu/qSLEmK0K9mcfDei3zwlnHFEHAs/Du3cIRwPqY+J4JsiBzUjoHyc8RsJ03A==
   dependencies:
-    "@asamuzakjp/css-color" "^3.1.2"
+    "@asamuzakjp/css-color" "^3.2.0"
     rrweb-cssom "^0.8.0"
 
 dargs@^7.0.0:
