@@ -1482,10 +1482,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.118:
-  version "2.200.118"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.118.tgz#6124dc6f209ef51dd90580bac912e67dbd66b70a"
-  integrity sha512-AA0U5WlYzVG282yeaDYZKrkAYDpqWOHe4A/3KHZQgc6J8WmeUf0wk4Ki4a2VfxcVu9nuzx2fz4/E/PKasix1Mg==
+cdk8s-cli@^2.200.119:
+  version "2.200.119"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.119.tgz#3aa6db12b2284d7eb44287b776535c60882e86b8"
+  integrity sha512-2U6I2dVrRidWY5HQT1oCvj0tpQmJpWb+/M2SdwyyGJ20DgBVLMGUWE9dGQ4kDe/CDhYR5MOWbHUn+kPRMs+NnA==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -2139,9 +2139,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.173:
-  version "1.5.178"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.178.tgz#6fc4d69eb5275bb13068931448fd822458901fbb"
-  integrity sha512-wObbz/ar3Bc6e4X5vf0iO8xTN8YAjN/tgiAOJLr7yjYFtP9wAjq8Mb5h0yn6kResir+VYx2DXBj9NNobs0ETSA==
+  version "1.5.179"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.179.tgz#453d53f360014a2604d40ccd41c4ea0a6e31b99a"
+  integrity sha512-UWKi/EbBopgfFsc5k61wFpV7WrnnSlSzW/e2XcBmS6qKYTivZlLtoll5/rdqRTxGglGHkmkW0j0pFNJG10EUIQ==
 
 emittery@^0.8.1:
   version "0.8.1"
