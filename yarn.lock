@@ -889,9 +889,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "24.0.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.0.13.tgz#93ed8c05c7b188a59760be0ce2ee3fa7ad0f83f6"
-  integrity sha512-Qm9OYVOFHFYg3wJoTSrz80hoec5Lia/dPp84do3X7dZvLikQvM1YpmvTBEdIr/e+U8HTkFjLHLnl78K/qjf+jQ==
+  version "24.0.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.0.14.tgz#6e3d4fb6d858c48c69707394e1a0e08ce1ecc1bc"
+  integrity sha512-4zXMWD91vBLGRtHK3YbIoFMia+1nqEz72coM42C5ETjnNCa/heoj7NT1G67iAfOqMmcfhuCZ4uNpyz8EjlAejw==
   dependencies:
     undici-types "~7.8.0"
 
@@ -1476,14 +1476,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.130:
-  version "2.200.130"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.130.tgz#c3ab1c1ce0fd82dd4ebf902e0d10dc96ccbd8453"
-  integrity sha512-yXkvy7opogcRbUL8nFZszscEoairwvx3PNigoDADK/psScE63hkNN3eagXGczww/ClGI8BHaGEMm/UJZxHRv9w==
+cdk8s-cli@^2.200.131:
+  version "2.200.131"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.131.tgz#90de99de6ef48740a0b00d2822607ea9fdb6b160"
+  integrity sha512-KMDnVD7+FmKuxRBNkf7aDH7MqzfCx/2S9AOKbAYylKlpu+7DPPMqFT/ea7NCArWFvA42HmnLAa/z0Kkyr/sEqg==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.69.76"
+    cdk8s "^2.70.0"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.112.0"
     colors "1.4.0"
@@ -1506,7 +1506,7 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.0, cdk8s@^2.69.76:
+cdk8s@2.70.0, cdk8s@^2.70.0:
   version "2.70.0"
   resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.0.tgz#c0ba4e7170b61bb95664965517124c7e2d9bb793"
   integrity sha512-itu+7+C5MC7XN5AYGGMIcqtrU6MyJyLmMkzhXAVp0K3WuneKKauuQp8MshDQ8La0CVvLE8gI1eSwHidUWrynNg==
