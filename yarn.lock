@@ -889,9 +889,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "24.0.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.0.14.tgz#6e3d4fb6d858c48c69707394e1a0e08ce1ecc1bc"
-  integrity sha512-4zXMWD91vBLGRtHK3YbIoFMia+1nqEz72coM42C5ETjnNCa/heoj7NT1G67iAfOqMmcfhuCZ4uNpyz8EjlAejw==
+  version "24.0.15"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.0.15.tgz#f34fbc973e7d64217106e0c59ed8761e6b51381e"
+  integrity sha512-oaeTSbCef7U/z7rDeJA138xpG3NuKc64/rZ2qmUFkFJmnMsAPaluIifqyWd8hSSMxyP9oie3dLAqYPblag9KgA==
   dependencies:
     undici-types "~7.8.0"
 
@@ -1476,10 +1476,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.134:
-  version "2.200.134"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.134.tgz#83d4cd6b4c3f4a17f79bff8f9241b1012c83ad27"
-  integrity sha512-Nx1gk7MgLq2Hy3Mlov1LpWT6wvBaZ3PT13jNZDaj5/r8sOrmp8ak8oP2HfGQJfYGa/iL0xoCKGEmEMeLzvLElw==
+cdk8s-cli@^2.200.135:
+  version "2.200.135"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.135.tgz#1b443cfffda1fcd5f6ed8e4e32d25eb50b2ae0d3"
+  integrity sha512-iN8BuhlXU8FGCTqmtDN3G5xyy0u0SUIWpGEGK8HX6kjdBcWRJY5UVZRdbzIP+F9Vpeb8pBWVJDQC+9yqQRQQVw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
