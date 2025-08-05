@@ -679,14 +679,7 @@
   dependencies:
     ajv "^8.17.1"
 
-"@jsii/spec@^1.105.0", "@jsii/spec@^1.44.0":
-  version "1.112.0"
-  resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.112.0.tgz#9a70db6bbe3c78ede1095686a7cacda8b2d91f26"
-  integrity sha512-O6peIhjjGkIQpbKUMHTNJHMuyqd6EXqWlxnBKpoBoUwDz18HXxt/SwUvnovYCELjgxOUMCdO5Y4/YjeABvatUw==
-  dependencies:
-    ajv "^8.17.1"
-
-"@jsii/spec@^1.112.0", "@jsii/spec@^1.113.0":
+"@jsii/spec@^1.105.0", "@jsii/spec@^1.112.0", "@jsii/spec@^1.113.0", "@jsii/spec@^1.44.0":
   version "1.113.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.113.0.tgz#cc9960a69c285466088c370f8e47d07c5ae73fb4"
   integrity sha512-OAQNfJHzMmE42ySJpelOFFKCgnh6hxcKLnmgtaYEzsFW9UxH9gc945FFOXff52GbhUcigGElCqJ3MclrbgXoGw==
@@ -836,7 +829,7 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.8.tgz#958b91c991b1867ced318bedea0e215ee050726e"
   integrity sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==
 
-"@types/glob@*":
+"@types/glob@*", "@types/glob@^8":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-8.1.0.tgz#b63e70155391b0584dce44e7ea25190bbc38f2fc"
   integrity sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==
@@ -887,11 +880,6 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
-
-"@types/minimatch@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.5.tgz#1001cc5e6a3704b83c236027e77f2f58ea010f40"
-  integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/minimatch@^5.1.2":
   version "5.1.2"
@@ -3927,7 +3915,7 @@ jsii-docgen@^3.8.31:
     semver "^7.3.5"
     yargs "^16.2.0"
 
-jsii-pacmak@^1.103.1:
+jsii-pacmak@^1.103.1, jsii-pacmak@^1.113.0:
   version "1.113.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.113.0.tgz#98a70008546a63e73e68a0a2deabbc8b5c4b6aa4"
   integrity sha512-DeXAWq0v7khODfWxdYXLLmaXP+sC6Lf3Y9/vCrx6/yHoDRw1tnJs07VXjU3e3Gjv1nQxCdzWwnns304o9AjZKQ==
@@ -3963,7 +3951,7 @@ jsii-pacmak@^1.112.0:
     xmlbuilder "^15.1.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.112.0, jsii-reflect@^1.113.0:
+jsii-reflect@^1.112.0, jsii-reflect@^1.113.0, jsii-reflect@^1.44.0:
   version "1.113.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.113.0.tgz#35f6e2c9e285710edbebeb4c405b8c1fde0e9cba"
   integrity sha512-YS0ewXfjFGTuvp8Rrd40yhPc9yYIoF2zMu8xZpWbdwCtgBabAfzra5mwNPeLBWvR4qI4PHE+A2qEGarx3Tufnw==
@@ -3973,18 +3961,6 @@ jsii-reflect@^1.112.0, jsii-reflect@^1.113.0:
     chalk "^4"
     fs-extra "^10.1.0"
     oo-ascii-tree "^1.113.0"
-    yargs "^16.2.0"
-
-jsii-reflect@^1.44.0:
-  version "1.112.0"
-  resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.112.0.tgz#8dafcd56ffbbba27e21d089e89a7f8e7203a6217"
-  integrity sha512-B7agb4kmmtW9KHk1KJyB0AHaAs28pOt3FF/yKuDSfJyFZnqh26pbd5ok6Y5jx0qVYcaTydil7FkTF7gRwBz7nQ==
-  dependencies:
-    "@jsii/check-node" "1.112.0"
-    "@jsii/spec" "^1.112.0"
-    chalk "^4"
-    fs-extra "^10.1.0"
-    oo-ascii-tree "^1.112.0"
     yargs "^16.2.0"
 
 jsii-rosetta@^1.44.0:
@@ -4466,7 +4442,7 @@ minimatch@^3.0.4, minimatch@^3.1.1, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@^9.0.4:
+minimatch@^9.0.4, minimatch@^9.0.5:
   version "9.0.5"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.5.tgz#d74f9dd6b57d83d8e98cfb82133b03978bc929e5"
   integrity sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==
@@ -4649,7 +4625,7 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-oo-ascii-tree@^1.112.0, oo-ascii-tree@^1.113.0:
+oo-ascii-tree@^1.113.0:
   version "1.113.0"
   resolved "https://registry.yarnpkg.com/oo-ascii-tree/-/oo-ascii-tree-1.113.0.tgz#69b40e2b52d812be78141119d3010f62f3d198fe"
   integrity sha512-9hGp+3S8qy0MSdBzp5pX2448Iv+w6QyXI6KBVihdt+Sb8nw1MxNu6ErMadTAXmyfCwZzZoEpn9hybTHEQuSJcQ==
