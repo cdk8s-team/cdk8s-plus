@@ -50,7 +50,6 @@
     "@cdk8s/projen-common": "^0.0.613",
     "@stylistic/eslint-plugin": "^2",
     "@types/jest": "^27",
-    "@types/minimatch": "^3.0.5",
     "@types/node": "16.18.78",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -79,12 +78,13 @@
     "constructs": "^10.3.0"
   },
   "dependencies": {
-    "minimatch": "^3.1.2"
+    "minimatch": "^9.0.5"
   },
   "bundledDependencies": [
     "minimatch"
   ],
   "resolutions": {
+    "@types/glob": "^8",
     "**/downlevel-dts/**/typescript": "~5.2.2"
   },
   "keywords": [

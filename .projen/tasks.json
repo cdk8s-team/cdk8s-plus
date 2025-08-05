@@ -424,13 +424,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev --filter=@types/jest,@types/minimatch,cdk8s,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,snake-case,ts-jest,ts-node,minimatch"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev --filter=@types/jest,cdk8s,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,snake-case,ts-jest,ts-node,minimatch"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/minimatch @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii-diff snake-case ts-jest ts-node minimatch"
+          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s cdk8s-cli commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii-diff snake-case ts-jest ts-node minimatch"
         },
         {
           "exec": "npx projen"
