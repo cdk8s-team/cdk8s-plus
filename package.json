@@ -50,7 +50,6 @@
     "@cdk8s/projen-common": "^0.0.613",
     "@stylistic/eslint-plugin": "^2",
     "@types/jest": "^27",
-    "@types/minimatch": "^3.0.5",
     "@types/node": "16.18.78",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -66,7 +65,7 @@
     "jsii": "~5.6.0",
     "jsii-diff": "^1.113.0",
     "jsii-docgen": "^3.8.31",
-    "jsii-pacmak": "^1.112.0",
+    "jsii-pacmak": "^1.113.0",
     "jsii-rosetta": "~5.6.0",
     "projen": "^0.95.0",
     "snake-case": "^3.0.4",
@@ -79,12 +78,13 @@
     "constructs": "^10.3.0"
   },
   "dependencies": {
-    "minimatch": "^3.1.2"
+    "minimatch": "^9.0.5"
   },
   "bundledDependencies": [
     "minimatch"
   ],
   "resolutions": {
+    "@types/glob": "^8",
     "**/downlevel-dts/**/typescript": "~5.2.2"
   },
   "keywords": [
