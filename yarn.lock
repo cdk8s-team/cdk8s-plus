@@ -1479,10 +1479,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.200.146:
-  version "2.200.147"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.147.tgz#f5a595013cd80c58bd8922ee6c99d32d870a31ed"
-  integrity sha512-+x1pJ+3LuaaBoLqEuG9w6fhUPpaHCVTXlivLE3kT4CCtbmLZnibcrd7P8rfoC+HyH1oFWVJPVYlbSH9tSMLBZg==
+cdk8s-cli@^2.200.148:
+  version "2.200.148"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.200.148.tgz#b9d6c8c9cbd7014788c529759c22dcdb1736b38f"
+  integrity sha512-PEi8Li+vBvges7+0xHhxnSvZ+TKj4NwQIBybsnFoHSoFM0jWzFE6fhhIruZyzaAvPV64iDlzNqdMjNArsSbIUQ==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
@@ -1499,7 +1499,7 @@ cdk8s-cli@^2.200.146:
     semver "^7.7.2"
     sscaff "^1.2.274"
     table "^6.9.0"
-    yaml "2.8.0"
+    yaml "2.8.1"
     yargs "^15"
 
 cdk8s-plus-28@^2.5.6:
@@ -1509,14 +1509,14 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.4, cdk8s@^2.70.4:
-  version "2.70.4"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.4.tgz#80bb5d54898c1e1e66d8b528d33abde6c586c680"
-  integrity sha512-BqktXBIiaPr70ndzxCSaqQt6cpkSFv8nFiLmxUE6ZT3q+RpHKUqiN4QJjh04qaCuIYPhV+qmZ35OA51iwHMzAQ==
+cdk8s@2.70.6, cdk8s@^2.70.4:
+  version "2.70.6"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.6.tgz#d58f8c514808214125e62129d6e5e8a9d8b0d818"
+  integrity sha512-wly0cgRCAvn41uvhtb6o9l5LdyAxyrvsyOZyw5GgyTlyARkCQoVjWQZl7eK9kV3ECVYknEf0eyZdUEdrp2tmHg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.11"
-    yaml "2.8.0"
+    yaml "2.8.1"
 
 chalk@^2.4.2:
   version "2.4.2"
@@ -2136,9 +2136,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.173:
-  version "1.5.195"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.195.tgz#2fe0d9b644726292189f227be73740868617b6d5"
-  integrity sha512-URclP0iIaDUzqcAyV1v2PgduJ9N0IdXmWsnPzPfelvBmjmZzEy6xJcjb1cXj+TbYqXgtLrjHEoaSIdTYhw4ezg==
+  version "1.5.197"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.197.tgz#117f9d1afd82ae84bbfedd168ddcf52e4afb6216"
+  integrity sha512-m1xWB3g7vJ6asIFz+2pBUbq3uGmfmln1M9SSvBe4QIFWYrRHylP73zL/3nMjDmwz8V+1xAXQDfBd6+HPW0WvDQ==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -6243,12 +6243,7 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml@2.8.0, yaml@^2.6.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.8.0.tgz#15f8c9866211bdc2d3781a0890e44d4fa1a5fff6"
-  integrity sha512-4lLa/EcQCB0cJkyts+FpIRx5G/llPxfP6VQU5KByHEhLxY3IJCH0f0Hy1MHI8sClTvsIb8qwRJ6R/ZdlDJ/leQ==
-
-yaml@^2.2.2:
+yaml@2.8.1, yaml@^2.2.2, yaml@^2.6.0:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.8.1.tgz#1870aa02b631f7e8328b93f8bc574fac5d6c4d79"
   integrity sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==
