@@ -1556,6 +1556,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -3021,6 +3022,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -4547,6 +4549,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
