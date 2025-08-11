@@ -162,7 +162,7 @@ export enum ServiceType {
    *
    * > Note: You need either kube-dns version 1.7 or CoreDNS version 0.0.8 or higher to use the ExternalName type.
    */
-  EXTERNAL_NAME = 'ExternalName'
+  EXTERNAL_NAME = 'ExternalName',
 }
 
 /**

@@ -1605,3 +1605,14 @@ test('Containers should not specify "restartPolicy" field', () => {
   expect(() => Testing.synth(chart)).toThrowError();
 });
 
+test('enableServiceLinks can be disabled', () => {
+  const chart = Testing.chart();
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    enableServiceLinks: false,
+  });
+
+  const spec = Testing.synth(chart)[0].spec;
+  expect(spec.enableServiceLinks).toBeFalsy();
+});
+

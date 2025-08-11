@@ -19,8 +19,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
   public readonly dns: PodDns;
   public readonly dockerRegistryAuth?: secret.ISecret;
   public readonly automountServiceAccountToken: boolean;
+  public readonly shareProcessNamespace: boolean;
   public readonly hostNetwork?: boolean;
   public readonly terminationGracePeriod?: Duration;
+  public readonly enableServiceLinks?: boolean;
 
   protected readonly isolate: boolean;
 
@@ -40,9 +42,11 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this.dns = new PodDns(props.dns);
     this.dockerRegistryAuth = props.dockerRegistryAuth;
     this.automountServiceAccountToken = props.automountServiceAccountToken ?? false;
+    this.shareProcessNamespace = props.shareProcessNamespace ?? false;
     this.isolate = props.isolate ?? false;
     this.hostNetwork = props.hostNetwork ?? false;
     this.terminationGracePeriod = props.terminationGracePeriod ?? Duration.seconds(30);
+    this.enableServiceLinks = props.enableServiceLinks;
 
     if (props.containers) {
       props.containers.forEach(c => this.addContainer(c));
@@ -249,8 +253,10 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
       setHostnameAsFqdn: dns.hostnameAsFQDN,
       imagePullSecrets: this.dockerRegistryAuth ? [{ name: this.dockerRegistryAuth.name }] : undefined,
       automountServiceAccountToken: this.automountServiceAccountToken,
+      shareProcessNamespace: this.shareProcessNamespace,
       hostNetwork: this.hostNetwork,
       terminationGracePeriodSeconds: this.terminationGracePeriod?.toSeconds(),
+      enableServiceLinks: this.enableServiceLinks,
     };
 
   }
@@ -438,6 +444,14 @@ export interface AbstractPodProps extends base.ResourceProps {
   readonly automountServiceAccountToken?: boolean;
 
   /**
+   * When process namespace sharing is enabled, processes in a container are visible to all other containers in the same pod.
+   *
+   * @default false
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/
+   */
+  readonly shareProcessNamespace?: boolean;
+
+  /**
    * Isolates the pod. This will prevent any ingress or egress connections to / from this pod.
    * You can however allow explicit connections post instantiation by using the `.connections` property.
    *
@@ -458,6 +472,15 @@ export interface AbstractPodProps extends base.ResourceProps {
    * @default Duration.seconds(30)
    */
   readonly terminationGracePeriod?: Duration;
+
+  /**
+   * Indicates whether information about services should be injected into pod's
+   * environment variables, matching the syntax of Docker links.
+   *
+   * @default true
+   * @see https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#accessing-the-service
+   */
+  readonly enableServiceLinks?: boolean;
 }
 
 /**
@@ -755,7 +778,8 @@ export class PodDns {
     subdomain?: string;
     hostnameAsFQDN: boolean;
     policy: string;
-    config: k8s.PodDnsConfig; } {
+    config: k8s.PodDnsConfig;
+  } {
 
     if (this.policy === DnsPolicy.NONE && this.nameservers.length === 0) {
       throw new Error('When dns policy is set to NONE, at least one nameserver is required');
@@ -847,7 +871,7 @@ export enum RestartPolicy {
   /**
    * Never restart the pod.
    */
-  NEVER = 'Never'
+  NEVER = 'Never',
 }
 
 export enum FsGroupChangePolicy {
@@ -862,7 +886,7 @@ export enum FsGroupChangePolicy {
   /**
    * Always change permission and ownership of the volume when volume is mounted.
    */
-  ALWAYS = 'Always'
+  ALWAYS = 'Always',
 }
 
 /**

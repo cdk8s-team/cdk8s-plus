@@ -37,7 +37,6 @@ const project = new Cdk8sTeamJsiiProject({
   ],
   devDeps: [
     'constructs',
-    '@types/minimatch',
     'cdk8s',
     'cdk8s-cli',
     'constructs',
@@ -49,6 +48,11 @@ const project = new Cdk8sTeamJsiiProject({
   releaseTagPrefix: `cdk8s-plus-${SPEC_VERSION}/`,
   releaseWorkflowName: `release-k8s.${SPEC_VERSION}`,
   defaultReleaseBranch: `k8s-${SPEC_VERSION}/main`,
+  githubOptions: {
+    // use mergify because merge queues don't support branch patterns
+    mergify: true,
+    mergeQueue: false,
+  },
 
   golangBranch: `k8s.${SPEC_VERSION}`,
   depsUpgradeOptions: {
@@ -83,6 +87,8 @@ const importTask = project.addTask('import', {
 project.compileTask.prependSpawn(importTask);
 
 project.addDevDeps('jsii-docgen@^3.8.31');
+// because jsii-docgen is so outdated, it accidentally introduces a transitive dependency on the broken @types/glob@9
+project.package.addPackageResolutions('@types/glob@^8');
 const docgenTask = project.tasks.tryFind('docgen')!;
 docgenTask.reset();
 for (const lang of ['typescript', 'python', 'java']) {
@@ -94,6 +100,11 @@ for (const lang of ['typescript', 'python', 'java']) {
   // the backport PR's.
   project.gitignore.exclude(output);
 }
+
+// Allow skipping tests in build based on an env variable
+// This is only used by the package integrity check running outside the repo
+// While this check needs to replicate the release, it does not need to run tests
+project.testTask.addCondition("node -e \"if (process.env.SKIP_TESTS==='1') process.exit(1)\"");
 
 // Projen task to update references to old versions of cdk8s-plus
 const versionTaskObject = project.addTask('rotate');

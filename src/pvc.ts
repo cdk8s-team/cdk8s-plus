@@ -1,4 +1,4 @@
-import { Size, ApiObject, Lazy } from 'cdk8s';
+import { Size, SizeRoundingBehavior, ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import * as base from './base';
 import * as k8s from './imports/k8s';
@@ -197,7 +197,9 @@ export class PersistentVolumeClaim extends base.Resource implements IPersistentV
    * @internal
    */
   public _toKube(): k8s.PersistentVolumeClaimSpec {
-    const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes() + 'Gi') : undefined;
+    const storage = this.storage ? k8s.Quantity.fromString(this.storage.toGibibytes({
+      rounding: SizeRoundingBehavior.NONE,
+    }) + 'Gi') : undefined;
     return {
       volumeName: this.volume ? this.volume.name : undefined,
       accessModes: this.accessModes?.map(a => a.toString()),
@@ -237,7 +239,7 @@ export enum PersistentVolumeAccessMode {
    * only one pod across whole cluster can read that PVC or write to it.
    * This is only supported for CSI volumes and Kubernetes version 1.22+.
    */
-  READ_WRITE_ONCE_POD = 'ReadWriteOncePod'
+  READ_WRITE_ONCE_POD = 'ReadWriteOncePod',
 
 }
 
@@ -261,5 +263,5 @@ export enum PersistentVolumeMode {
    * and the volume. On the other hand, the application running in
    * the Pod must know how to handle a raw block device
    */
-  BLOCK = 'Block'
+  BLOCK = 'Block',
 }
