@@ -50,7 +50,7 @@ export interface DeploymentProps extends workload.WorkloadProps {
    */
   readonly progressDeadline?: Duration;
   /**
-   * Number of desired replicasets history.
+   * Specify how many old ReplicaSets for this Deployment you want to retain. The rest will be garbage-collected in the background. By default, it is 10.
    *
    * @default 10
    */
