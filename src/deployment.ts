@@ -147,7 +147,7 @@ export class Deployment extends workload.Workload implements IScalable {
    * @default 10
    */
 
-  readonly revisionHistoryLimit?: number;
+  readonly revisionHistoryLimit: number;
   /**
    * @see base.Resource.apiObject
    */
@@ -174,7 +174,7 @@ export class Deployment extends workload.Workload implements IScalable {
 
     this.replicas = props.replicas;
     this.strategy = props.strategy ?? DeploymentStrategy.rollingUpdate();
-    this.revisionHistoryLimit = props.revisionHistoryLimit;
+    this.revisionHistoryLimit = props.revisionHistoryLimit ?? 10;
 
     if (this.isolate) {
       this.connections.isolate();
@@ -252,6 +252,7 @@ export class Deployment extends workload.Workload implements IScalable {
       },
       selector: this._toLabelSelector(),
       strategy: this.strategy._toKube(),
+      revisionHistoryLimit: this.revisionHistoryLimit,
     };
   }
 

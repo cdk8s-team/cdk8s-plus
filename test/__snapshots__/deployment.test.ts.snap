@@ -12,6 +12,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -143,6 +144,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 5,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -232,6 +234,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -340,6 +343,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -443,6 +447,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -515,6 +520,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -606,6 +612,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -696,6 +703,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -762,6 +770,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -850,6 +859,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -916,6 +926,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1001,6 +1012,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1094,6 +1106,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1184,6 +1197,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -1250,6 +1264,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1338,6 +1353,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Redis-c8b1633b",
@@ -1404,6 +1420,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1489,6 +1506,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1582,6 +1600,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Web-c8b65d84",
@@ -1672,6 +1691,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1760,6 +1780,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
@@ -1927,6 +1948,7 @@ Array [
       "minReadySeconds": 0,
       "progressDeadlineSeconds": 600,
       "replicas": 2,
+      "revisionHistoryLimit": 10,
       "selector": Object {
         "matchLabels": Object {
           "cdk8s.io/metadata.addr": "test-Deployment-c83f5e59",
