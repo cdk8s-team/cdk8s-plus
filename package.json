@@ -47,14 +47,14 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.0.615",
+    "@cdk8s/projen-common": "^0.0.616",
     "@stylistic/eslint-plugin": "^2",
     "@types/jest": "^27",
     "@types/node": "16.18.78",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "cdk8s": "2.70.7",
-    "cdk8s-cli": "^2.200.151",
+    "cdk8s-cli": "^2.200.156",
     "commit-and-tag-version": "^12",
     "constructs": "10.3.0",
     "eslint": "^9",
