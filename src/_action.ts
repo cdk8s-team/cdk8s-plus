@@ -33,4 +33,11 @@ export class Action {
       host: options.host,
     };
   }
+
+  public static fromGrpc(container: Container, options: { port?: number; service?: string } = {}): k8s.GrpcAction {
+    return {
+      port: options.port ?? container.portNumber ?? 80,
+      service: options.service,
+    };
+  }
 }
