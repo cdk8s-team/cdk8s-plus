@@ -304,6 +304,20 @@ test('default progressDeadlineSeconds', () => {
 
 });
 
+test('default revisionHistoryLimit', () => {
+
+  const chart = Testing.chart();
+  const deployment = new kplus.Deployment(chart, 'Deployment', {
+    containers: [{ image: 'image' }],
+  });
+
+  const spec: k8s.DeploymentSpec = Testing.synth(chart)[0].spec;
+
+  expect(deployment.revisionHistoryLimit).toEqual(10);
+  expect(spec.revisionHistoryLimit).toEqual(10);
+
+});
+
 test('can configure minReadySeconds', () => {
 
   const chart = Testing.chart();
