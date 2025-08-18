@@ -1693,60 +1693,6 @@ export class KubeTokenReview extends ApiObject {
 }
 
 /**
- * SelfSubjectReview contains the user information that the kube-apiserver has about the user making this request. When using impersonation, users will receive the user info of the user being impersonated.  If impersonation or request header authentication is used, any extra keys will have their case ignored and returned as lowercase.
- *
- * @schema io.k8s.api.authentication.v1beta1.SelfSubjectReview
- */
-export class KubeSelfSubjectReviewV1Beta1 extends ApiObject {
-  /**
-   * Returns the apiVersion and kind for "io.k8s.api.authentication.v1beta1.SelfSubjectReview"
-   */
-  public static readonly GVK: GroupVersionKind = {
-    apiVersion: 'authentication.k8s.io/v1beta1',
-    kind: 'SelfSubjectReview',
-  };
-
-  /**
-   * Renders a Kubernetes manifest for "io.k8s.api.authentication.v1beta1.SelfSubjectReview".
-   *
-   * This can be used to inline resource manifests inside other objects (e.g. as templates).
-   *
-   * @param props initialization props
-   */
-  public static manifest(props: KubeSelfSubjectReviewV1Beta1Props = {}): any {
-    return {
-      ...KubeSelfSubjectReviewV1Beta1.GVK,
-      ...toJson_KubeSelfSubjectReviewV1Beta1Props(props),
-    };
-  }
-
-  /**
-   * Defines a "io.k8s.api.authentication.v1beta1.SelfSubjectReview" API object
-   * @param scope the scope in which to define this object
-   * @param id a scope-local name for the object
-   * @param props initialization props
-   */
-  public constructor(scope: Construct, id: string, props: KubeSelfSubjectReviewV1Beta1Props = {}) {
-    super(scope, id, {
-      ...KubeSelfSubjectReviewV1Beta1.GVK,
-      ...props,
-    });
-  }
-
-  /**
-   * Renders the object to Kubernetes JSON.
-   */
-  public toJson(): any {
-    const resolved = super.toJson();
-
-    return {
-      ...KubeSelfSubjectReviewV1Beta1.GVK,
-      ...toJson_KubeSelfSubjectReviewV1Beta1Props(resolved),
-    };
-  }
-}
-
-/**
  * LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.
  *
  * @schema io.k8s.api.authorization.v1.LocalSubjectAccessReview
@@ -2675,6 +2621,118 @@ export class KubeClusterTrustBundleListV1Alpha1 extends ApiObject {
 }
 
 /**
+ * ClusterTrustBundle is a cluster-scoped container for X.509 trust anchors (root certificates).
+
+ClusterTrustBundle objects are considered to be readable by any authenticated user in the cluster, because they can be mounted by pods using the `clusterTrustBundle` projection.  All service accounts have read access to ClusterTrustBundles by default.  Users who only have namespace-level access to a cluster can read ClusterTrustBundles by impersonating a serviceaccount that they have access to.
+
+It can be optionally associated with a particular assigner, in which case it contains one valid set of trust anchors for that signer. Signers may have multiple associated ClusterTrustBundles; each is an independent set of trust anchors for that signer. Admission control is used to enforce that only users with permissions on the signer can create or modify the corresponding bundle.
+ *
+ * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundle
+ */
+export class KubeClusterTrustBundleV1Beta1 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.certificates.v1beta1.ClusterTrustBundle"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'certificates.k8s.io/v1beta1',
+    kind: 'ClusterTrustBundle',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.certificates.v1beta1.ClusterTrustBundle".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeClusterTrustBundleV1Beta1Props): any {
+    return {
+      ...KubeClusterTrustBundleV1Beta1.GVK,
+      ...toJson_KubeClusterTrustBundleV1Beta1Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.certificates.v1beta1.ClusterTrustBundle" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeClusterTrustBundleV1Beta1Props) {
+    super(scope, id, {
+      ...KubeClusterTrustBundleV1Beta1.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeClusterTrustBundleV1Beta1.GVK,
+      ...toJson_KubeClusterTrustBundleV1Beta1Props(resolved),
+    };
+  }
+}
+
+/**
+ * ClusterTrustBundleList is a collection of ClusterTrustBundle objects
+ *
+ * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleList
+ */
+export class KubeClusterTrustBundleListV1Beta1 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.certificates.v1beta1.ClusterTrustBundleList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'certificates.k8s.io/v1beta1',
+    kind: 'ClusterTrustBundleList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.certificates.v1beta1.ClusterTrustBundleList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeClusterTrustBundleListV1Beta1Props): any {
+    return {
+      ...KubeClusterTrustBundleListV1Beta1.GVK,
+      ...toJson_KubeClusterTrustBundleListV1Beta1Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.certificates.v1beta1.ClusterTrustBundleList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeClusterTrustBundleListV1Beta1Props) {
+    super(scope, id, {
+      ...KubeClusterTrustBundleListV1Beta1.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeClusterTrustBundleListV1Beta1.GVK,
+      ...toJson_KubeClusterTrustBundleListV1Beta1Props(resolved),
+    };
+  }
+}
+
+/**
  * Lease defines a lease concept.
  *
  * @schema io.k8s.api.coordination.v1.Lease
@@ -2886,6 +2944,114 @@ export class KubeLeaseCandidateListV1Alpha2 extends ApiObject {
     return {
       ...KubeLeaseCandidateListV1Alpha2.GVK,
       ...toJson_KubeLeaseCandidateListV1Alpha2Props(resolved),
+    };
+  }
+}
+
+/**
+ * LeaseCandidate defines a candidate for a Lease object. Candidates are created such that coordinated leader election will pick the best leader from the list of candidates.
+ *
+ * @schema io.k8s.api.coordination.v1beta1.LeaseCandidate
+ */
+export class KubeLeaseCandidateV1Beta1 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.coordination.v1beta1.LeaseCandidate"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'coordination.k8s.io/v1beta1',
+    kind: 'LeaseCandidate',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.coordination.v1beta1.LeaseCandidate".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeLeaseCandidateV1Beta1Props = {}): any {
+    return {
+      ...KubeLeaseCandidateV1Beta1.GVK,
+      ...toJson_KubeLeaseCandidateV1Beta1Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.coordination.v1beta1.LeaseCandidate" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeLeaseCandidateV1Beta1Props = {}) {
+    super(scope, id, {
+      ...KubeLeaseCandidateV1Beta1.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeLeaseCandidateV1Beta1.GVK,
+      ...toJson_KubeLeaseCandidateV1Beta1Props(resolved),
+    };
+  }
+}
+
+/**
+ * LeaseCandidateList is a list of Lease objects.
+ *
+ * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateList
+ */
+export class KubeLeaseCandidateListV1Beta1 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.coordination.v1beta1.LeaseCandidateList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'coordination.k8s.io/v1beta1',
+    kind: 'LeaseCandidateList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.coordination.v1beta1.LeaseCandidateList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeLeaseCandidateListV1Beta1Props): any {
+    return {
+      ...KubeLeaseCandidateListV1Beta1.GVK,
+      ...toJson_KubeLeaseCandidateListV1Beta1Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.coordination.v1beta1.LeaseCandidateList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeLeaseCandidateListV1Beta1Props) {
+    super(scope, id, {
+      ...KubeLeaseCandidateListV1Beta1.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeLeaseCandidateListV1Beta1.GVK,
+      ...toJson_KubeLeaseCandidateListV1Beta1Props(resolved),
     };
   }
 }
@@ -3174,6 +3340,10 @@ export class KubeConfigMapList extends ApiObject {
 	     Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
 	   },
 	]
+
+Endpoints is a legacy API and does not contain information about all Service features. Use discoveryv1.EndpointSlice for complete information about Service endpoints.
+
+Deprecated: This API is deprecated in v1.33+. Use discoveryv1.EndpointSlice.
  *
  * @schema io.k8s.api.core.v1.Endpoints
  */
@@ -3227,7 +3397,7 @@ export class KubeEndpoints extends ApiObject {
 }
 
 /**
- * EndpointsList is a list of endpoints.
+ * EndpointsList is a list of endpoints. Deprecated: This API is deprecated in v1.33+.
  *
  * @schema io.k8s.api.core.v1.EndpointsList
  */
@@ -4685,7 +4855,7 @@ export class KubeServiceList extends ApiObject {
 }
 
 /**
- * EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.
+ * EndpointSlice represents a set of service endpoints. Most EndpointSlices are created by the EndpointSlice controller to represent the Pods selected by Service objects. For a given service there may be multiple EndpointSlice objects which must be joined to produce the full set of endpoints; you can find all of the slices for a given service by listing EndpointSlices in the service's namespace whose `kubernetes.io/service-name` label contains the service's name.
  *
  * @schema io.k8s.api.discovery.v1.EndpointSlice
  */
@@ -5004,6 +5174,114 @@ export class KubePriorityLevelConfigurationList extends ApiObject {
     return {
       ...KubePriorityLevelConfigurationList.GVK,
       ...toJson_KubePriorityLevelConfigurationListProps(resolved),
+    };
+  }
+}
+
+/**
+ * IPAddress represents a single IP of a single IP Family. The object is designed to be used by APIs that operate on IP addresses. The object is used by the Service core API for allocation of IP addresses. An IP address can be represented in different formats, to guarantee the uniqueness of the IP, the name of the object is the IP address in canonical format, four decimal digits separated by dots suppressing leading zeros for IPv4 and the representation defined by RFC 5952 for IPv6. Valid: 192.168.1.5 or 2001:db8::1 or 2001:db8:aaaa:bbbb:cccc:dddd:eeee:1 Invalid: 10.01.2.3 or 2001:db8:0:0:0::1
+ *
+ * @schema io.k8s.api.networking.v1.IPAddress
+ */
+export class KubeIpAddress extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.networking.v1.IPAddress"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'networking.k8s.io/v1',
+    kind: 'IPAddress',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.IPAddress".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeIpAddressProps = {}): any {
+    return {
+      ...KubeIpAddress.GVK,
+      ...toJson_KubeIpAddressProps(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.networking.v1.IPAddress" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeIpAddressProps = {}) {
+    super(scope, id, {
+      ...KubeIpAddress.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeIpAddress.GVK,
+      ...toJson_KubeIpAddressProps(resolved),
+    };
+  }
+}
+
+/**
+ * IPAddressList contains a list of IPAddress.
+ *
+ * @schema io.k8s.api.networking.v1.IPAddressList
+ */
+export class KubeIpAddressList extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.networking.v1.IPAddressList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'networking.k8s.io/v1',
+    kind: 'IPAddressList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.IPAddressList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeIpAddressListProps): any {
+    return {
+      ...KubeIpAddressList.GVK,
+      ...toJson_KubeIpAddressListProps(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.networking.v1.IPAddressList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeIpAddressListProps) {
+    super(scope, id, {
+      ...KubeIpAddressList.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeIpAddressList.GVK,
+      ...toJson_KubeIpAddressListProps(resolved),
     };
   }
 }
@@ -5328,6 +5606,114 @@ export class KubeNetworkPolicyList extends ApiObject {
     return {
       ...KubeNetworkPolicyList.GVK,
       ...toJson_KubeNetworkPolicyListProps(resolved),
+    };
+  }
+}
+
+/**
+ * ServiceCIDR defines a range of IP addresses using CIDR format (e.g. 192.168.0.0/24 or 2001:db2::/64). This range is used to allocate ClusterIPs to Service objects.
+ *
+ * @schema io.k8s.api.networking.v1.ServiceCIDR
+ */
+export class KubeServiceCidr extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.networking.v1.ServiceCIDR"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'networking.k8s.io/v1',
+    kind: 'ServiceCIDR',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.ServiceCIDR".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeServiceCidrProps = {}): any {
+    return {
+      ...KubeServiceCidr.GVK,
+      ...toJson_KubeServiceCidrProps(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.networking.v1.ServiceCIDR" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeServiceCidrProps = {}) {
+    super(scope, id, {
+      ...KubeServiceCidr.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeServiceCidr.GVK,
+      ...toJson_KubeServiceCidrProps(resolved),
+    };
+  }
+}
+
+/**
+ * ServiceCIDRList contains a list of ServiceCIDR objects.
+ *
+ * @schema io.k8s.api.networking.v1.ServiceCIDRList
+ */
+export class KubeServiceCidrList extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.networking.v1.ServiceCIDRList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'networking.k8s.io/v1',
+    kind: 'ServiceCIDRList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.networking.v1.ServiceCIDRList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeServiceCidrListProps): any {
+    return {
+      ...KubeServiceCidrList.GVK,
+      ...toJson_KubeServiceCidrListProps(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.networking.v1.ServiceCIDRList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeServiceCidrListProps) {
+    super(scope, id, {
+      ...KubeServiceCidrList.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeServiceCidrList.GVK,
+      ...toJson_KubeServiceCidrListProps(resolved),
     };
   }
 }
@@ -6361,6 +6747,114 @@ export class KubeDeviceClassListV1Alpha3 extends ApiObject {
 }
 
 /**
+ * DeviceTaintRule adds one taint to all devices which match the selector. This has the same effect as if the taint was specified directly in the ResourceSlice by the DRA driver.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRule
+ */
+export class KubeDeviceTaintRuleV1Alpha3 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1alpha3.DeviceTaintRule"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1alpha3',
+    kind: 'DeviceTaintRule',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1alpha3.DeviceTaintRule".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeDeviceTaintRuleV1Alpha3Props): any {
+    return {
+      ...KubeDeviceTaintRuleV1Alpha3.GVK,
+      ...toJson_KubeDeviceTaintRuleV1Alpha3Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1alpha3.DeviceTaintRule" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeDeviceTaintRuleV1Alpha3Props) {
+    super(scope, id, {
+      ...KubeDeviceTaintRuleV1Alpha3.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeDeviceTaintRuleV1Alpha3.GVK,
+      ...toJson_KubeDeviceTaintRuleV1Alpha3Props(resolved),
+    };
+  }
+}
+
+/**
+ * DeviceTaintRuleList is a collection of DeviceTaintRules.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleList
+ */
+export class KubeDeviceTaintRuleListV1Alpha3 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1alpha3.DeviceTaintRuleList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1alpha3',
+    kind: 'DeviceTaintRuleList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1alpha3.DeviceTaintRuleList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeDeviceTaintRuleListV1Alpha3Props): any {
+    return {
+      ...KubeDeviceTaintRuleListV1Alpha3.GVK,
+      ...toJson_KubeDeviceTaintRuleListV1Alpha3Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1alpha3.DeviceTaintRuleList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeDeviceTaintRuleListV1Alpha3Props) {
+    super(scope, id, {
+      ...KubeDeviceTaintRuleListV1Alpha3.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeDeviceTaintRuleListV1Alpha3.GVK,
+      ...toJson_KubeDeviceTaintRuleListV1Alpha3Props(resolved),
+    };
+  }
+}
+
+/**
  * ResourceClaim describes a request for access to resources in the cluster, for use by workloads. For example, if a workload needs an accelerator device with specific properties, this is how that request is expressed. The status stanza tracks whether this claim has been satisfied and what specific resources have been allocated.
 
 This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
@@ -7142,6 +7636,454 @@ export class KubeResourceSliceListV1Beta1 extends ApiObject {
     return {
       ...KubeResourceSliceListV1Beta1.GVK,
       ...toJson_KubeResourceSliceListV1Beta1Props(resolved),
+    };
+  }
+}
+
+/**
+ * DeviceClass is a vendor- or admin-provided resource that contains device configuration and selectors. It can be referenced in the device requests of a claim to apply these presets. Cluster scoped.
+
+This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClass
+ */
+export class KubeDeviceClassV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.DeviceClass"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'DeviceClass',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.DeviceClass".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeDeviceClassV1Beta2Props): any {
+    return {
+      ...KubeDeviceClassV1Beta2.GVK,
+      ...toJson_KubeDeviceClassV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.DeviceClass" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeDeviceClassV1Beta2Props) {
+    super(scope, id, {
+      ...KubeDeviceClassV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeDeviceClassV1Beta2.GVK,
+      ...toJson_KubeDeviceClassV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * DeviceClassList is a collection of classes.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClassList
+ */
+export class KubeDeviceClassListV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.DeviceClassList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'DeviceClassList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.DeviceClassList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeDeviceClassListV1Beta2Props): any {
+    return {
+      ...KubeDeviceClassListV1Beta2.GVK,
+      ...toJson_KubeDeviceClassListV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.DeviceClassList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeDeviceClassListV1Beta2Props) {
+    super(scope, id, {
+      ...KubeDeviceClassListV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeDeviceClassListV1Beta2.GVK,
+      ...toJson_KubeDeviceClassListV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * ResourceClaim describes a request for access to resources in the cluster, for use by workloads. For example, if a workload needs an accelerator device with specific properties, this is how that request is expressed. The status stanza tracks whether this claim has been satisfied and what specific resources have been allocated.
+
+This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaim
+ */
+export class KubeResourceClaimV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.ResourceClaim"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'ResourceClaim',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.ResourceClaim".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeResourceClaimV1Beta2Props): any {
+    return {
+      ...KubeResourceClaimV1Beta2.GVK,
+      ...toJson_KubeResourceClaimV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.ResourceClaim" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeResourceClaimV1Beta2Props) {
+    super(scope, id, {
+      ...KubeResourceClaimV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeResourceClaimV1Beta2.GVK,
+      ...toJson_KubeResourceClaimV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * ResourceClaimList is a collection of claims.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimList
+ */
+export class KubeResourceClaimListV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.ResourceClaimList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'ResourceClaimList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.ResourceClaimList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeResourceClaimListV1Beta2Props): any {
+    return {
+      ...KubeResourceClaimListV1Beta2.GVK,
+      ...toJson_KubeResourceClaimListV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.ResourceClaimList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeResourceClaimListV1Beta2Props) {
+    super(scope, id, {
+      ...KubeResourceClaimListV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeResourceClaimListV1Beta2.GVK,
+      ...toJson_KubeResourceClaimListV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * ResourceClaimTemplate is used to produce ResourceClaim objects.
+
+This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplate
+ */
+export class KubeResourceClaimTemplateV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.ResourceClaimTemplate"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'ResourceClaimTemplate',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.ResourceClaimTemplate".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeResourceClaimTemplateV1Beta2Props): any {
+    return {
+      ...KubeResourceClaimTemplateV1Beta2.GVK,
+      ...toJson_KubeResourceClaimTemplateV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.ResourceClaimTemplate" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeResourceClaimTemplateV1Beta2Props) {
+    super(scope, id, {
+      ...KubeResourceClaimTemplateV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeResourceClaimTemplateV1Beta2.GVK,
+      ...toJson_KubeResourceClaimTemplateV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * ResourceClaimTemplateList is a collection of claim templates.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateList
+ */
+export class KubeResourceClaimTemplateListV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.ResourceClaimTemplateList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'ResourceClaimTemplateList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.ResourceClaimTemplateList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeResourceClaimTemplateListV1Beta2Props): any {
+    return {
+      ...KubeResourceClaimTemplateListV1Beta2.GVK,
+      ...toJson_KubeResourceClaimTemplateListV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.ResourceClaimTemplateList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeResourceClaimTemplateListV1Beta2Props) {
+    super(scope, id, {
+      ...KubeResourceClaimTemplateListV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeResourceClaimTemplateListV1Beta2.GVK,
+      ...toJson_KubeResourceClaimTemplateListV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * ResourceSlice represents one or more resources in a pool of similar resources, managed by a common driver. A pool may span more than one ResourceSlice, and exactly how many ResourceSlices comprise a pool is determined by the driver.
+
+At the moment, the only supported resources are devices with attributes and capacities. Each device in a given pool, regardless of how many ResourceSlices, must have a unique name. The ResourceSlice in which a device gets published may change over time. The unique identifier for a device is the tuple <driver name>, <pool name>, <device name>.
+
+Whenever a driver needs to update a pool, it increments the pool.Spec.Pool.Generation number and updates all ResourceSlices with that new number and new resource definitions. A consumer must only use ResourceSlices with the highest generation number and ignore all others.
+
+When allocating all resources in a pool matching certain criteria or when looking for the best solution among several different alternatives, a consumer should check the number of ResourceSlices in a pool (included in each ResourceSlice) to determine whether its view of a pool is complete and if not, should wait until the driver has completed updating the pool.
+
+For resources that are not local to a node, the node name is not set. Instead, the driver may use a node selector to specify where the devices are available.
+
+This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceSlice
+ */
+export class KubeResourceSliceV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.ResourceSlice"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'ResourceSlice',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.ResourceSlice".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeResourceSliceV1Beta2Props): any {
+    return {
+      ...KubeResourceSliceV1Beta2.GVK,
+      ...toJson_KubeResourceSliceV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.ResourceSlice" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeResourceSliceV1Beta2Props) {
+    super(scope, id, {
+      ...KubeResourceSliceV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeResourceSliceV1Beta2.GVK,
+      ...toJson_KubeResourceSliceV1Beta2Props(resolved),
+    };
+  }
+}
+
+/**
+ * ResourceSliceList is a collection of ResourceSlices.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceSliceList
+ */
+export class KubeResourceSliceListV1Beta2 extends ApiObject {
+  /**
+   * Returns the apiVersion and kind for "io.k8s.api.resource.v1beta2.ResourceSliceList"
+   */
+  public static readonly GVK: GroupVersionKind = {
+    apiVersion: 'resource.k8s.io/v1beta2',
+    kind: 'ResourceSliceList',
+  };
+
+  /**
+   * Renders a Kubernetes manifest for "io.k8s.api.resource.v1beta2.ResourceSliceList".
+   *
+   * This can be used to inline resource manifests inside other objects (e.g. as templates).
+   *
+   * @param props initialization props
+   */
+  public static manifest(props: KubeResourceSliceListV1Beta2Props): any {
+    return {
+      ...KubeResourceSliceListV1Beta2.GVK,
+      ...toJson_KubeResourceSliceListV1Beta2Props(props),
+    };
+  }
+
+  /**
+   * Defines a "io.k8s.api.resource.v1beta2.ResourceSliceList" API object
+   * @param scope the scope in which to define this object
+   * @param id a scope-local name for the object
+   * @param props initialization props
+   */
+  public constructor(scope: Construct, id: string, props: KubeResourceSliceListV1Beta2Props) {
+    super(scope, id, {
+      ...KubeResourceSliceListV1Beta2.GVK,
+      ...props,
+    });
+  }
+
+  /**
+   * Renders the object to Kubernetes JSON.
+   */
+  public toJson(): any {
+    const resolved = super.toJson();
+
+    return {
+      ...KubeResourceSliceListV1Beta2.GVK,
+      ...toJson_KubeResourceSliceListV1Beta2Props(resolved),
     };
   }
 }
@@ -9359,7 +10301,7 @@ export interface KubeReplicaSetListProps {
   readonly metadata?: ListMeta;
 
   /**
-   * List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
+   * List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
    *
    * @schema io.k8s.api.apps.v1.ReplicaSetList#items
    */
@@ -9557,35 +10499,6 @@ export function toJson_KubeTokenReviewProps(obj: KubeTokenReviewProps | undefine
   const result = {
     'metadata': toJson_ObjectMeta(obj.metadata),
     'spec': toJson_TokenReviewSpec(obj.spec),
-  };
-  // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
-}
-/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
-
-/**
- * SelfSubjectReview contains the user information that the kube-apiserver has about the user making this request. When using impersonation, users will receive the user info of the user being impersonated.  If impersonation or request header authentication is used, any extra keys will have their case ignored and returned as lowercase.
- *
- * @schema io.k8s.api.authentication.v1beta1.SelfSubjectReview
- */
-export interface KubeSelfSubjectReviewV1Beta1Props {
-  /**
-   * Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-   *
-   * @schema io.k8s.api.authentication.v1beta1.SelfSubjectReview#metadata
-   */
-  readonly metadata?: ObjectMeta;
-
-}
-
-/**
- * Converts an object of type 'KubeSelfSubjectReviewV1Beta1Props' to JSON representation.
- */
-/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
-export function toJson_KubeSelfSubjectReviewV1Beta1Props(obj: KubeSelfSubjectReviewV1Beta1Props | undefined): Record<string, any> | undefined {
-  if (obj === undefined) { return undefined; }
-  const result = {
-    'metadata': toJson_ObjectMeta(obj.metadata),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -10228,6 +11141,84 @@ export function toJson_KubeClusterTrustBundleListV1Alpha1Props(obj: KubeClusterT
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * ClusterTrustBundle is a cluster-scoped container for X.509 trust anchors (root certificates).
+ *
+ * ClusterTrustBundle objects are considered to be readable by any authenticated user in the cluster, because they can be mounted by pods using the `clusterTrustBundle` projection.  All service accounts have read access to ClusterTrustBundles by default.  Users who only have namespace-level access to a cluster can read ClusterTrustBundles by impersonating a serviceaccount that they have access to.
+ *
+ * It can be optionally associated with a particular assigner, in which case it contains one valid set of trust anchors for that signer. Signers may have multiple associated ClusterTrustBundles; each is an independent set of trust anchors for that signer. Admission control is used to enforce that only users with permissions on the signer can create or modify the corresponding bundle.
+ *
+ * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundle
+ */
+export interface KubeClusterTrustBundleV1Beta1Props {
+  /**
+   * metadata contains the object metadata.
+   *
+   * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundle#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * spec contains the signer (if any) and trust anchors.
+   *
+   * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundle#spec
+   */
+  readonly spec: ClusterTrustBundleSpecV1Beta1;
+
+}
+
+/**
+ * Converts an object of type 'KubeClusterTrustBundleV1Beta1Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeClusterTrustBundleV1Beta1Props(obj: KubeClusterTrustBundleV1Beta1Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_ClusterTrustBundleSpecV1Beta1(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ClusterTrustBundleList is a collection of ClusterTrustBundle objects
+ *
+ * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleList
+ */
+export interface KubeClusterTrustBundleListV1Beta1Props {
+  /**
+   * metadata contains the list metadata.
+   *
+   * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * items is a collection of ClusterTrustBundle objects
+   *
+   * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleList#items
+   */
+  readonly items: KubeClusterTrustBundleV1Beta1Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeClusterTrustBundleListV1Beta1Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeClusterTrustBundleListV1Beta1Props(obj: KubeClusterTrustBundleListV1Beta1Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeClusterTrustBundleV1Beta1Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * Lease defines a lease concept.
  *
  * @schema io.k8s.api.coordination.v1.Lease
@@ -10369,6 +11360,80 @@ export function toJson_KubeLeaseCandidateListV1Alpha2Props(obj: KubeLeaseCandida
   const result = {
     'metadata': toJson_ListMeta(obj.metadata),
     'items': obj.items?.map(y => toJson_KubeLeaseCandidateV1Alpha2Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * LeaseCandidate defines a candidate for a Lease object. Candidates are created such that coordinated leader election will pick the best leader from the list of candidates.
+ *
+ * @schema io.k8s.api.coordination.v1beta1.LeaseCandidate
+ */
+export interface KubeLeaseCandidateV1Beta1Props {
+  /**
+   * More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidate#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidate#spec
+   */
+  readonly spec?: LeaseCandidateSpecV1Beta1;
+
+}
+
+/**
+ * Converts an object of type 'KubeLeaseCandidateV1Beta1Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeLeaseCandidateV1Beta1Props(obj: KubeLeaseCandidateV1Beta1Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_LeaseCandidateSpecV1Beta1(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * LeaseCandidateList is a list of Lease objects.
+ *
+ * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateList
+ */
+export interface KubeLeaseCandidateListV1Beta1Props {
+  /**
+   * Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * items is a list of schema objects.
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateList#items
+   */
+  readonly items: KubeLeaseCandidateV1Beta1Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeLeaseCandidateListV1Beta1Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeLeaseCandidateListV1Beta1Props(obj: KubeLeaseCandidateListV1Beta1Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeLeaseCandidateV1Beta1Props(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -10591,6 +11656,10 @@ export function toJson_KubeConfigMapListProps(obj: KubeConfigMapListProps | unde
  * },
  * ]
  *
+ * Endpoints is a legacy API and does not contain information about all Service features. Use discoveryv1.EndpointSlice for complete information about Service endpoints.
+ *
+ * Deprecated: This API is deprecated in v1.33+. Use discoveryv1.EndpointSlice.
+ *
  * @schema io.k8s.api.core.v1.Endpoints
  */
 export interface KubeEndpointsProps {
@@ -10626,7 +11695,7 @@ export function toJson_KubeEndpointsProps(obj: KubeEndpointsProps | undefined): 
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * EndpointsList is a list of endpoints.
+ * EndpointsList is a list of endpoints. Deprecated: This API is deprecated in v1.33+.
  *
  * @schema io.k8s.api.core.v1.EndpointsList
  */
@@ -11769,7 +12838,7 @@ export function toJson_KubeServiceListProps(obj: KubeServiceListProps | undefine
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.
+ * EndpointSlice represents a set of service endpoints. Most EndpointSlices are created by the EndpointSlice controller to represent the Pods selected by Service objects. For a given service there may be multiple EndpointSlice objects which must be joined to produce the full set of endpoints; you can find all of the slices for a given service by listing EndpointSlices in the service's namespace whose `kubernetes.io/service-name` label contains the service's name.
  *
  * @schema io.k8s.api.discovery.v1.EndpointSlice
  */
@@ -11782,7 +12851,7 @@ export interface KubeEndpointSliceProps {
   readonly metadata?: ObjectMeta;
 
   /**
-   * addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.
+   * addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name. (Deprecated) The EndpointSlice controller only generates, and kube-proxy only processes, slices of addressType "IPv4" and "IPv6". No semantics are defined for the "FQDN" type.
    *
    * @schema io.k8s.api.discovery.v1.EndpointSlice#addressType
    */
@@ -11796,7 +12865,7 @@ export interface KubeEndpointSliceProps {
   readonly endpoints: Endpoint[];
 
   /**
-   * ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
+   * ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. Each slice may include a maximum of 100 ports. Services always have at least 1 port, so EndpointSlices generated by the EndpointSlice controller will likewise always have at least 1 port. EndpointSlices used for other purposes may have an empty ports list.
    *
    * @schema io.k8s.api.discovery.v1.EndpointSlice#ports
    */
@@ -12000,6 +13069,80 @@ export function toJson_KubePriorityLevelConfigurationListProps(obj: KubePriority
   const result = {
     'metadata': toJson_ListMeta(obj.metadata),
     'items': obj.items?.map(y => toJson_KubePriorityLevelConfigurationProps(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * IPAddress represents a single IP of a single IP Family. The object is designed to be used by APIs that operate on IP addresses. The object is used by the Service core API for allocation of IP addresses. An IP address can be represented in different formats, to guarantee the uniqueness of the IP, the name of the object is the IP address in canonical format, four decimal digits separated by dots suppressing leading zeros for IPv4 and the representation defined by RFC 5952 for IPv6. Valid: 192.168.1.5 or 2001:db8::1 or 2001:db8:aaaa:bbbb:cccc:dddd:eeee:1 Invalid: 10.01.2.3 or 2001:db8:0:0:0::1
+ *
+ * @schema io.k8s.api.networking.v1.IPAddress
+ */
+export interface KubeIpAddressProps {
+  /**
+   * Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+   *
+   * @schema io.k8s.api.networking.v1.IPAddress#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+   *
+   * @schema io.k8s.api.networking.v1.IPAddress#spec
+   */
+  readonly spec?: IpAddressSpec;
+
+}
+
+/**
+ * Converts an object of type 'KubeIpAddressProps' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeIpAddressProps(obj: KubeIpAddressProps | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_IpAddressSpec(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * IPAddressList contains a list of IPAddress.
+ *
+ * @schema io.k8s.api.networking.v1.IPAddressList
+ */
+export interface KubeIpAddressListProps {
+  /**
+   * Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+   *
+   * @schema io.k8s.api.networking.v1.IPAddressList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * items is the list of IPAddresses.
+   *
+   * @schema io.k8s.api.networking.v1.IPAddressList#items
+   */
+  readonly items: KubeIpAddressProps[];
+
+}
+
+/**
+ * Converts an object of type 'KubeIpAddressListProps' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeIpAddressListProps(obj: KubeIpAddressListProps | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeIpAddressProps(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -12222,6 +13365,80 @@ export function toJson_KubeNetworkPolicyListProps(obj: KubeNetworkPolicyListProp
   const result = {
     'metadata': toJson_ListMeta(obj.metadata),
     'items': obj.items?.map(y => toJson_KubeNetworkPolicyProps(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ServiceCIDR defines a range of IP addresses using CIDR format (e.g. 192.168.0.0/24 or 2001:db2::/64). This range is used to allocate ClusterIPs to Service objects.
+ *
+ * @schema io.k8s.api.networking.v1.ServiceCIDR
+ */
+export interface KubeServiceCidrProps {
+  /**
+   * Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+   *
+   * @schema io.k8s.api.networking.v1.ServiceCIDR#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * spec is the desired state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+   *
+   * @schema io.k8s.api.networking.v1.ServiceCIDR#spec
+   */
+  readonly spec?: ServiceCidrSpec;
+
+}
+
+/**
+ * Converts an object of type 'KubeServiceCidrProps' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeServiceCidrProps(obj: KubeServiceCidrProps | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_ServiceCidrSpec(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ServiceCIDRList contains a list of ServiceCIDR objects.
+ *
+ * @schema io.k8s.api.networking.v1.ServiceCIDRList
+ */
+export interface KubeServiceCidrListProps {
+  /**
+   * Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+   *
+   * @schema io.k8s.api.networking.v1.ServiceCIDRList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * items is the list of ServiceCIDRs.
+   *
+   * @schema io.k8s.api.networking.v1.ServiceCIDRList#items
+   */
+  readonly items: KubeServiceCidrProps[];
+
+}
+
+/**
+ * Converts an object of type 'KubeServiceCidrListProps' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeServiceCidrListProps(obj: KubeServiceCidrListProps | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeServiceCidrProps(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -12979,6 +14196,82 @@ export function toJson_KubeDeviceClassListV1Alpha3Props(obj: KubeDeviceClassList
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * DeviceTaintRule adds one taint to all devices which match the selector. This has the same effect as if the taint was specified directly in the ResourceSlice by the DRA driver.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRule
+ */
+export interface KubeDeviceTaintRuleV1Alpha3Props {
+  /**
+   * Standard object metadata
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRule#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * Spec specifies the selector and one taint.
+   *
+   * Changing the spec automatically increments the metadata.generation number.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRule#spec
+   */
+  readonly spec: DeviceTaintRuleSpecV1Alpha3;
+
+}
+
+/**
+ * Converts an object of type 'KubeDeviceTaintRuleV1Alpha3Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeDeviceTaintRuleV1Alpha3Props(obj: KubeDeviceTaintRuleV1Alpha3Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_DeviceTaintRuleSpecV1Alpha3(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceTaintRuleList is a collection of DeviceTaintRules.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleList
+ */
+export interface KubeDeviceTaintRuleListV1Alpha3Props {
+  /**
+   * Standard list metadata
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * Items is the list of DeviceTaintRules.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleList#items
+   */
+  readonly items: KubeDeviceTaintRuleV1Alpha3Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeDeviceTaintRuleListV1Alpha3Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeDeviceTaintRuleListV1Alpha3Props(obj: KubeDeviceTaintRuleListV1Alpha3Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeDeviceTaintRuleV1Alpha3Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * ResourceClaim describes a request for access to resources in the cluster, for use by workloads. For example, if a workload needs an accelerator device with specific properties, this is how that request is expressed. The status stanza tracks whether this claim has been satisfied and what specific resources have been allocated.
  *
  * This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
@@ -13532,6 +14825,326 @@ export function toJson_KubeResourceSliceListV1Beta1Props(obj: KubeResourceSliceL
   const result = {
     'metadata': toJson_ListMeta(obj.metadata),
     'items': obj.items?.map(y => toJson_KubeResourceSliceV1Beta1Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceClass is a vendor- or admin-provided resource that contains device configuration and selectors. It can be referenced in the device requests of a claim to apply these presets. Cluster scoped.
+ *
+ * This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClass
+ */
+export interface KubeDeviceClassV1Beta2Props {
+  /**
+   * Standard object metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClass#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * Spec defines what can be allocated and how to configure it.
+   *
+   * This is mutable. Consumers have to be prepared for classes changing at any time, either because they get updated or replaced. Claim allocations are done once based on whatever was set in classes at the time of allocation.
+   *
+   * Changing the spec automatically increments the metadata.generation number.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClass#spec
+   */
+  readonly spec: DeviceClassSpecV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'KubeDeviceClassV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeDeviceClassV1Beta2Props(obj: KubeDeviceClassV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_DeviceClassSpecV1Beta2(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceClassList is a collection of classes.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClassList
+ */
+export interface KubeDeviceClassListV1Beta2Props {
+  /**
+   * Standard list metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClassList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * Items is the list of resource classes.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClassList#items
+   */
+  readonly items: KubeDeviceClassV1Beta2Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeDeviceClassListV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeDeviceClassListV1Beta2Props(obj: KubeDeviceClassListV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeDeviceClassV1Beta2Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceClaim describes a request for access to resources in the cluster, for use by workloads. For example, if a workload needs an accelerator device with specific properties, this is how that request is expressed. The status stanza tracks whether this claim has been satisfied and what specific resources have been allocated.
+ *
+ * This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaim
+ */
+export interface KubeResourceClaimV1Beta2Props {
+  /**
+   * Standard object metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaim#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * Spec describes what is being requested and how to configure it. The spec is immutable.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaim#spec
+   */
+  readonly spec: ResourceClaimSpecV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'KubeResourceClaimV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeResourceClaimV1Beta2Props(obj: KubeResourceClaimV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_ResourceClaimSpecV1Beta2(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceClaimList is a collection of claims.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimList
+ */
+export interface KubeResourceClaimListV1Beta2Props {
+  /**
+   * Standard list metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * Items is the list of resource claims.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimList#items
+   */
+  readonly items: KubeResourceClaimV1Beta2Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeResourceClaimListV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeResourceClaimListV1Beta2Props(obj: KubeResourceClaimListV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeResourceClaimV1Beta2Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceClaimTemplate is used to produce ResourceClaim objects.
+ *
+ * This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplate
+ */
+export interface KubeResourceClaimTemplateV1Beta2Props {
+  /**
+   * Standard object metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplate#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * Describes the ResourceClaim that is to be generated.
+   *
+   * This field is immutable. A ResourceClaim will get created by the control plane for a Pod when needed and then not get updated anymore.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplate#spec
+   */
+  readonly spec: ResourceClaimTemplateSpecV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'KubeResourceClaimTemplateV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeResourceClaimTemplateV1Beta2Props(obj: KubeResourceClaimTemplateV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_ResourceClaimTemplateSpecV1Beta2(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceClaimTemplateList is a collection of claim templates.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateList
+ */
+export interface KubeResourceClaimTemplateListV1Beta2Props {
+  /**
+   * Standard list metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * Items is the list of resource claim templates.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateList#items
+   */
+  readonly items: KubeResourceClaimTemplateV1Beta2Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeResourceClaimTemplateListV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeResourceClaimTemplateListV1Beta2Props(obj: KubeResourceClaimTemplateListV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeResourceClaimTemplateV1Beta2Props(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceSlice represents one or more resources in a pool of similar resources, managed by a common driver. A pool may span more than one ResourceSlice, and exactly how many ResourceSlices comprise a pool is determined by the driver.
+ *
+ * At the moment, the only supported resources are devices with attributes and capacities. Each device in a given pool, regardless of how many ResourceSlices, must have a unique name. The ResourceSlice in which a device gets published may change over time. The unique identifier for a device is the tuple <driver name>, <pool name>, <device name>.
+ *
+ * Whenever a driver needs to update a pool, it increments the pool.Spec.Pool.Generation number and updates all ResourceSlices with that new number and new resource definitions. A consumer must only use ResourceSlices with the highest generation number and ignore all others.
+ *
+ * When allocating all resources in a pool matching certain criteria or when looking for the best solution among several different alternatives, a consumer should check the number of ResourceSlices in a pool (included in each ResourceSlice) to determine whether its view of a pool is complete and if not, should wait until the driver has completed updating the pool.
+ *
+ * For resources that are not local to a node, the node name is not set. Instead, the driver may use a node selector to specify where the devices are available.
+ *
+ * This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceSlice
+ */
+export interface KubeResourceSliceV1Beta2Props {
+  /**
+   * Standard object metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSlice#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * Contains the information published by the driver.
+   *
+   * Changing the spec automatically increments the metadata.generation number.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSlice#spec
+   */
+  readonly spec: ResourceSliceSpecV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'KubeResourceSliceV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeResourceSliceV1Beta2Props(obj: KubeResourceSliceV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_ResourceSliceSpecV1Beta2(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceSliceList is a collection of ResourceSlices.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceSliceList
+ */
+export interface KubeResourceSliceListV1Beta2Props {
+  /**
+   * Standard list metadata
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceList#metadata
+   */
+  readonly metadata?: ListMeta;
+
+  /**
+   * Items is the list of resource ResourceSlices.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceList#items
+   */
+  readonly items: KubeResourceSliceV1Beta2Props[];
+
+}
+
+/**
+ * Converts an object of type 'KubeResourceSliceListV1Beta2Props' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_KubeResourceSliceListV1Beta2Props(obj: KubeResourceSliceListV1Beta2Props | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ListMeta(obj.metadata),
+    'items': obj.items?.map(y => toJson_KubeResourceSliceV1Beta2Props(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -15735,9 +17348,9 @@ export interface ReplicaSetSpec {
   readonly minReadySeconds?: number;
 
   /**
-   * Replicas is the number of desired replicas. This is a pointer to distinguish between explicit zero and unspecified. Defaults to 1. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
+   * Replicas is the number of desired pods. This is a pointer to distinguish between explicit zero and unspecified. Defaults to 1. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
    *
-   * @default 1. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
+   * @default 1. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
    * @schema io.k8s.api.apps.v1.ReplicaSetSpec#replicas
    */
   readonly replicas?: number;
@@ -15750,7 +17363,7 @@ export interface ReplicaSetSpec {
   readonly selector: LabelSelector;
 
   /**
-   * Template is the object that describes the pod that will be created if insufficient replicas are detected. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
+   * Template is the object that describes the pod that will be created if insufficient replicas are detected. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#pod-template
    *
    * @schema io.k8s.api.apps.v1.ReplicaSetSpec#template
    */
@@ -15836,7 +17449,7 @@ export interface StatefulSetSpec {
    *
    * @schema io.k8s.api.apps.v1.StatefulSetSpec#serviceName
    */
-  readonly serviceName: string;
+  readonly serviceName?: string;
 
   /**
    * template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet. Each pod will be named with the format <statefulsetname>-<podindex>. For example, a pod in a StatefulSet named "web" with index number "3" would be named "web-3". The only allowed template.spec.restartPolicy value is "Always".
@@ -16357,7 +17970,7 @@ export interface JobSpec {
   readonly backoffLimit?: number;
 
   /**
-   * Specifies the limit for the number of retries within an index before marking this index as failed. When enabled the number of failures per index is kept in the pod's batch.kubernetes.io/job-index-failure-count annotation. It can only be set when Job's completionMode=Indexed, and the Pod's restart policy is Never. The field is immutable. This field is beta-level. It can be used when the `JobBackoffLimitPerIndex` feature gate is enabled (enabled by default).
+   * Specifies the limit for the number of retries within an index before marking this index as failed. When enabled the number of failures per index is kept in the pod's batch.kubernetes.io/job-index-failure-count annotation. It can only be set when Job's completionMode=Indexed, and the Pod's restart policy is Never. The field is immutable.
    *
    * @schema io.k8s.api.batch.v1.JobSpec#backoffLimitPerIndex
    */
@@ -16400,7 +18013,7 @@ export interface JobSpec {
   readonly manualSelector?: boolean;
 
   /**
-   * Specifies the maximal number of failed indexes before marking the Job as failed, when backoffLimitPerIndex is set. Once the number of failed indexes exceeds this number the entire Job is marked as Failed and its execution is terminated. When left as null the job continues execution of all of its indexes and is marked with the `Complete` Job condition. It can only be specified when backoffLimitPerIndex is set. It can be null or up to completions. It is required and must be less than or equal to 10^4 when is completions greater than 10^5. This field is beta-level. It can be used when the `JobBackoffLimitPerIndex` feature gate is enabled (enabled by default).
+   * Specifies the maximal number of failed indexes before marking the Job as failed, when backoffLimitPerIndex is set. Once the number of failed indexes exceeds this number the entire Job is marked as Failed and its execution is terminated. When left as null the job continues execution of all of its indexes and is marked with the `Complete` Job condition. It can only be specified when backoffLimitPerIndex is set. It can be null or up to completions. It is required and must be less than or equal to 10^4 when is completions greater than 10^5.
    *
    * @schema io.k8s.api.batch.v1.JobSpec#maxFailedIndexes
    */
@@ -16441,8 +18054,6 @@ export interface JobSpec {
 
   /**
    * successPolicy specifies the policy when the Job can be declared as succeeded. If empty, the default behavior applies - the Job is declared as succeeded only when the number of succeeded pods equals to the completions. When the field is specified, it must be immutable and works only for the Indexed Jobs. Once the Job meets the SuccessPolicy, the lingering pods are terminated.
-   *
-   * This field is beta-level. To use this field, you must enable the `JobSuccessPolicy` feature gate (enabled by default).
    *
    * @schema io.k8s.api.batch.v1.JobSpec#successPolicy
    */
@@ -16680,6 +18291,55 @@ export function toJson_ClusterTrustBundleSpecV1Alpha1(obj: ClusterTrustBundleSpe
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * ClusterTrustBundleSpec contains the signer and trust anchors.
+ *
+ * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleSpec
+ */
+export interface ClusterTrustBundleSpecV1Beta1 {
+  /**
+   * signerName indicates the associated signer, if any.
+   *
+   * In order to create or update a ClusterTrustBundle that sets signerName, you must have the following cluster-scoped permission: group=certificates.k8s.io resource=signers resourceName=<the signer name> verb=attest.
+   *
+   * If signerName is not empty, then the ClusterTrustBundle object must be named with the signer name as a prefix (translating slashes to colons). For example, for the signer name `example.com/foo`, valid ClusterTrustBundle object names include `example.com:foo:abc` and `example.com:foo:v1`.
+   *
+   * If signerName is empty, then the ClusterTrustBundle object's name must not have such a prefix.
+   *
+   * List/watch requests for ClusterTrustBundles can filter on this field using a `spec.signerName=NAME` field selector.
+   *
+   * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleSpec#signerName
+   */
+  readonly signerName?: string;
+
+  /**
+   * trustBundle contains the individual X.509 trust anchors for this bundle, as PEM bundle of PEM-wrapped, DER-formatted X.509 certificates.
+   *
+   * The data must consist only of PEM certificate blocks that parse as valid X.509 certificates.  Each certificate must include a basic constraints extension with the CA bit set.  The API server will reject objects that contain duplicate certificates, or that use PEM block headers.
+   *
+   * Users of ClusterTrustBundles, including Kubelet, are free to reorder and deduplicate certificate blocks in this file according to their own logic, as well as to drop PEM block headers and inter-block data.
+   *
+   * @schema io.k8s.api.certificates.v1beta1.ClusterTrustBundleSpec#trustBundle
+   */
+  readonly trustBundle: string;
+
+}
+
+/**
+ * Converts an object of type 'ClusterTrustBundleSpecV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ClusterTrustBundleSpecV1Beta1(obj: ClusterTrustBundleSpecV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'signerName': obj.signerName,
+    'trustBundle': obj.trustBundle,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * LeaseSpec is a specification of a Lease.
  *
  * @schema io.k8s.api.coordination.v1.LeaseSpec
@@ -16798,7 +18458,7 @@ export interface LeaseCandidateSpecV1Alpha2 {
   readonly renewTime?: Date;
 
   /**
-   * Strategy is the strategy that coordinated leader election will use for picking the leader. If multiple candidates for the same Lease return different strategies, the strategy provided by the candidate with the latest BinaryVersion will be used. If there is still conflict, this is a user error and coordinated leader election will not operate the Lease until resolved. (Alpha) Using this field requires the CoordinatedLeaderElection feature gate to be enabled.
+   * Strategy is the strategy that coordinated leader election will use for picking the leader. If multiple candidates for the same Lease return different strategies, the strategy provided by the candidate with the latest BinaryVersion will be used. If there is still conflict, this is a user error and coordinated leader election will not operate the Lease until resolved.
    *
    * @schema io.k8s.api.coordination.v1alpha2.LeaseCandidateSpec#strategy
    */
@@ -16811,6 +18471,75 @@ export interface LeaseCandidateSpecV1Alpha2 {
  */
 /* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_LeaseCandidateSpecV1Alpha2(obj: LeaseCandidateSpecV1Alpha2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'binaryVersion': obj.binaryVersion,
+    'emulationVersion': obj.emulationVersion,
+    'leaseName': obj.leaseName,
+    'pingTime': obj.pingTime?.toISOString(),
+    'renewTime': obj.renewTime?.toISOString(),
+    'strategy': obj.strategy,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * LeaseCandidateSpec is a specification of a Lease.
+ *
+ * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec
+ */
+export interface LeaseCandidateSpecV1Beta1 {
+  /**
+   * BinaryVersion is the binary version. It must be in a semver format without leading `v`. This field is required.
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec#binaryVersion
+   */
+  readonly binaryVersion: string;
+
+  /**
+   * EmulationVersion is the emulation version. It must be in a semver format without leading `v`. EmulationVersion must be less than or equal to BinaryVersion. This field is required when strategy is "OldestEmulationVersion"
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec#emulationVersion
+   */
+  readonly emulationVersion?: string;
+
+  /**
+   * LeaseName is the name of the lease for which this candidate is contending. The limits on this field are the same as on Lease.name. Multiple lease candidates may reference the same Lease.name. This field is immutable.
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec#leaseName
+   */
+  readonly leaseName: string;
+
+  /**
+   * PingTime is the last time that the server has requested the LeaseCandidate to renew. It is only done during leader election to check if any LeaseCandidates have become ineligible. When PingTime is updated, the LeaseCandidate will respond by updating RenewTime.
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec#pingTime
+   */
+  readonly pingTime?: Date;
+
+  /**
+   * RenewTime is the time that the LeaseCandidate was last updated. Any time a Lease needs to do leader election, the PingTime field is updated to signal to the LeaseCandidate that they should update the RenewTime. Old LeaseCandidate objects are also garbage collected if it has been hours since the last renew. The PingTime field is updated regularly to prevent garbage collection for still active LeaseCandidates.
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec#renewTime
+   */
+  readonly renewTime?: Date;
+
+  /**
+   * Strategy is the strategy that coordinated leader election will use for picking the leader. If multiple candidates for the same Lease return different strategies, the strategy provided by the candidate with the latest BinaryVersion will be used. If there is still conflict, this is a user error and coordinated leader election will not operate the Lease until resolved.
+   *
+   * @schema io.k8s.api.coordination.v1beta1.LeaseCandidateSpec#strategy
+   */
+  readonly strategy: string;
+
+}
+
+/**
+ * Converts an object of type 'LeaseCandidateSpecV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_LeaseCandidateSpecV1Beta1(obj: LeaseCandidateSpecV1Beta1 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'binaryVersion': obj.binaryVersion,
@@ -16967,6 +18696,8 @@ export function toJson_ComponentCondition(obj: ComponentCondition | undefined): 
  *
  * a: [ 10.10.1.1:8675, 10.10.2.2:8675 ],
  * b: [ 10.10.1.1:309, 10.10.2.2:309 ]
+ *
+ * Deprecated: This API is deprecated in v1.33+.
  *
  * @schema io.k8s.api.core.v1.EndpointSubset
  */
@@ -17706,7 +19437,7 @@ export interface PodSpec {
   readonly imagePullSecrets?: LocalObjectReference[];
 
   /**
-   * List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+   * List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
    *
    * @schema io.k8s.api.core.v1.PodSpec#initContainers
    */
@@ -18231,7 +19962,7 @@ export interface ServiceSpec {
   readonly sessionAffinityConfig?: SessionAffinityConfig;
 
   /**
-   * TrafficDistribution offers a way to express preferences for how traffic is distributed to Service endpoints. Implementations can use this field as a hint, but are not required to guarantee strict adherence. If the field is not set, the implementation will apply its default routing strategy. If set to "PreferClose", implementations should prioritize endpoints that are topologically close (e.g., same zone). This is a beta field and requires enabling ServiceTrafficDistribution feature.
+   * TrafficDistribution offers a way to express preferences for how traffic is distributed to Service endpoints. Implementations can use this field as a hint, but are not required to guarantee strict adherence. If the field is not set, the implementation will apply its default routing strategy. If set to "PreferClose", implementations should prioritize endpoints that are in the same zone.
    *
    * @schema io.k8s.api.core.v1.ServiceSpec#trafficDistribution
    */
@@ -18316,7 +20047,7 @@ export function toJson_LocalObjectReference(obj: LocalObjectReference | undefine
  */
 export interface Endpoint {
   /**
-   * addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100. These are all assumed to be fungible and clients may choose to only use the first element. Refer to: https://issue.k8s.io/106267
+   * addresses of this endpoint. For EndpointSlices of addressType "IPv4" or "IPv6", the values are IP addresses in canonical form. The syntax and semantics of other addressType values are not defined. This must contain at least one address but no more than 100. EndpointSlices generated by the EndpointSlice controller will always have exactly 1 address. No semantics are defined for additional addresses beyond the first, and kube-proxy does not look at them.
    *
    * @schema io.k8s.api.discovery.v1.Endpoint#addresses
    */
@@ -18395,7 +20126,7 @@ export function toJson_Endpoint(obj: Endpoint | undefined): Record<string, any> 
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * EndpointPort is a tuple that describes a single port.
+ * EndpointPort is a tuple that describes a single port. Deprecated: This API is deprecated in v1.33+.
  *
  * @schema io.k8s.api.core.v1.EndpointPort
  */
@@ -18556,6 +20287,35 @@ export function toJson_PriorityLevelConfigurationSpec(obj: PriorityLevelConfigur
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * IPAddressSpec describe the attributes in an IP Address.
+ *
+ * @schema io.k8s.api.networking.v1.IPAddressSpec
+ */
+export interface IpAddressSpec {
+  /**
+   * ParentRef references the resource that an IPAddress is attached to. An IPAddress must reference a parent object.
+   *
+   * @schema io.k8s.api.networking.v1.IPAddressSpec#parentRef
+   */
+  readonly parentRef: ParentReference;
+
+}
+
+/**
+ * Converts an object of type 'IpAddressSpec' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_IpAddressSpec(obj: IpAddressSpec | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'parentRef': toJson_ParentReference(obj.parentRef),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * IngressSpec describes the Ingress the user wishes to exist.
  *
  * @schema io.k8s.api.networking.v1.IngressSpec
@@ -18692,6 +20452,35 @@ export function toJson_NetworkPolicySpec(obj: NetworkPolicySpec | undefined): Re
     'ingress': obj.ingress?.map(y => toJson_NetworkPolicyIngressRule(y)),
     'podSelector': toJson_LabelSelector(obj.podSelector),
     'policyTypes': obj.policyTypes?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ServiceCIDRSpec define the CIDRs the user wants to use for allocating ClusterIPs for Services.
+ *
+ * @schema io.k8s.api.networking.v1.ServiceCIDRSpec
+ */
+export interface ServiceCidrSpec {
+  /**
+   * CIDRs defines the IP blocks in CIDR notation (e.g. "192.168.0.0/24" or "2001:db8::/64") from which to assign service cluster IPs. Max of two CIDRs is allowed, one of each IP family. This field is immutable.
+   *
+   * @schema io.k8s.api.networking.v1.ServiceCIDRSpec#cidrs
+   */
+  readonly cidrs?: string[];
+
+}
+
+/**
+ * Converts an object of type 'ServiceCidrSpec' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ServiceCidrSpec(obj: ServiceCidrSpec | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'cidrs': obj.cidrs?.map(y => y),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -18946,8 +20735,6 @@ export interface PodDisruptionBudgetSpec {
    *
    * Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.
    *
-   * This field is beta-level. The eviction API uses this field when the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default).
-   *
    * @schema io.k8s.api.policy.v1.PodDisruptionBudgetSpec#unhealthyPodEvictionPolicy
    */
   readonly unhealthyPodEvictionPolicy?: string;
@@ -19200,6 +20987,43 @@ export function toJson_DeviceClassSpecV1Alpha3(obj: DeviceClassSpecV1Alpha3 | un
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * DeviceTaintRuleSpec specifies the selector and one taint.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleSpec
+ */
+export interface DeviceTaintRuleSpecV1Alpha3 {
+  /**
+   * DeviceSelector defines which device(s) the taint is applied to. All selector criteria must be satified for a device to match. The empty selector matches all devices. Without a selector, no devices are matches.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleSpec#deviceSelector
+   */
+  readonly deviceSelector?: DeviceTaintSelectorV1Alpha3;
+
+  /**
+   * The taint that gets applied to matching devices.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintRuleSpec#taint
+   */
+  readonly taint: DeviceTaintV1Alpha3;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTaintRuleSpecV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTaintRuleSpecV1Alpha3(obj: DeviceTaintRuleSpecV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'deviceSelector': toJson_DeviceTaintSelectorV1Alpha3(obj.deviceSelector),
+    'taint': toJson_DeviceTaintV1Alpha3(obj.taint),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * ResourceClaimSpec defines what is being requested in a ResourceClaim and how to configure it.
  *
  * @schema io.k8s.api.resource.v1alpha3.ResourceClaimSpec
@@ -19274,7 +21098,7 @@ export interface ResourceSliceSpecV1Alpha3 {
   /**
    * AllNodes indicates that all nodes have access to the resources in the pool.
    *
-   * Exactly one of NodeName, NodeSelector and AllNodes must be set.
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
    *
    * @schema io.k8s.api.resource.v1alpha3.ResourceSliceSpec#allNodes
    */
@@ -19303,7 +21127,7 @@ export interface ResourceSliceSpecV1Alpha3 {
    *
    * This field can be used to limit access from nodes to ResourceSlices with the same node name. It also indicates to autoscalers that adding new nodes of the same type as some old node might also make new resources available.
    *
-   * Exactly one of NodeName, NodeSelector and AllNodes must be set. This field is immutable.
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set. This field is immutable.
    *
    * @schema io.k8s.api.resource.v1alpha3.ResourceSliceSpec#nodeName
    */
@@ -19314,11 +21138,20 @@ export interface ResourceSliceSpecV1Alpha3 {
    *
    * Must use exactly one term.
    *
-   * Exactly one of NodeName, NodeSelector and AllNodes must be set.
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
    *
    * @schema io.k8s.api.resource.v1alpha3.ResourceSliceSpec#nodeSelector
    */
   readonly nodeSelector?: NodeSelector;
+
+  /**
+   * PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.
+   *
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.ResourceSliceSpec#perDeviceNodeSelection
+   */
+  readonly perDeviceNodeSelection?: boolean;
 
   /**
    * Pool describes the pool that this ResourceSlice belongs to.
@@ -19326,6 +21159,17 @@ export interface ResourceSliceSpecV1Alpha3 {
    * @schema io.k8s.api.resource.v1alpha3.ResourceSliceSpec#pool
    */
   readonly pool: ResourcePoolV1Alpha3;
+
+  /**
+   * SharedCounters defines a list of counter sets, each of which has a name and a list of counters available.
+   *
+   * The names of the SharedCounters must be unique in the ResourceSlice.
+   *
+   * The maximum number of SharedCounters is 32.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.ResourceSliceSpec#sharedCounters
+   */
+  readonly sharedCounters?: CounterSetV1Alpha3[];
 
 }
 
@@ -19341,7 +21185,9 @@ export function toJson_ResourceSliceSpecV1Alpha3(obj: ResourceSliceSpecV1Alpha3 
     'driver': obj.driver,
     'nodeName': obj.nodeName,
     'nodeSelector': toJson_NodeSelector(obj.nodeSelector),
+    'perDeviceNodeSelection': obj.perDeviceNodeSelection,
     'pool': toJson_ResourcePoolV1Alpha3(obj.pool),
+    'sharedCounters': obj.sharedCounters?.map(y => toJson_CounterSetV1Alpha3(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -19462,7 +21308,7 @@ export interface ResourceSliceSpecV1Beta1 {
   /**
    * AllNodes indicates that all nodes have access to the resources in the pool.
    *
-   * Exactly one of NodeName, NodeSelector and AllNodes must be set.
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
    *
    * @schema io.k8s.api.resource.v1beta1.ResourceSliceSpec#allNodes
    */
@@ -19491,7 +21337,7 @@ export interface ResourceSliceSpecV1Beta1 {
    *
    * This field can be used to limit access from nodes to ResourceSlices with the same node name. It also indicates to autoscalers that adding new nodes of the same type as some old node might also make new resources available.
    *
-   * Exactly one of NodeName, NodeSelector and AllNodes must be set. This field is immutable.
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set. This field is immutable.
    *
    * @schema io.k8s.api.resource.v1beta1.ResourceSliceSpec#nodeName
    */
@@ -19502,11 +21348,20 @@ export interface ResourceSliceSpecV1Beta1 {
    *
    * Must use exactly one term.
    *
-   * Exactly one of NodeName, NodeSelector and AllNodes must be set.
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
    *
    * @schema io.k8s.api.resource.v1beta1.ResourceSliceSpec#nodeSelector
    */
   readonly nodeSelector?: NodeSelector;
+
+  /**
+   * PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.
+   *
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+   *
+   * @schema io.k8s.api.resource.v1beta1.ResourceSliceSpec#perDeviceNodeSelection
+   */
+  readonly perDeviceNodeSelection?: boolean;
 
   /**
    * Pool describes the pool that this ResourceSlice belongs to.
@@ -19514,6 +21369,17 @@ export interface ResourceSliceSpecV1Beta1 {
    * @schema io.k8s.api.resource.v1beta1.ResourceSliceSpec#pool
    */
   readonly pool: ResourcePoolV1Beta1;
+
+  /**
+   * SharedCounters defines a list of counter sets, each of which has a name and a list of counters available.
+   *
+   * The names of the SharedCounters must be unique in the ResourceSlice.
+   *
+   * The maximum number of SharedCounters is 32.
+   *
+   * @schema io.k8s.api.resource.v1beta1.ResourceSliceSpec#sharedCounters
+   */
+  readonly sharedCounters?: CounterSetV1Beta1[];
 
 }
 
@@ -19529,7 +21395,219 @@ export function toJson_ResourceSliceSpecV1Beta1(obj: ResourceSliceSpecV1Beta1 | 
     'driver': obj.driver,
     'nodeName': obj.nodeName,
     'nodeSelector': toJson_NodeSelector(obj.nodeSelector),
+    'perDeviceNodeSelection': obj.perDeviceNodeSelection,
     'pool': toJson_ResourcePoolV1Beta1(obj.pool),
+    'sharedCounters': obj.sharedCounters?.map(y => toJson_CounterSetV1Beta1(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceClassSpec is used in a [DeviceClass] to define what can be allocated and how to configure it.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClassSpec
+ */
+export interface DeviceClassSpecV1Beta2 {
+  /**
+   * Config defines configuration parameters that apply to each device that is claimed via this class. Some classses may potentially be satisfied by multiple drivers, so each instance of a vendor configuration applies to exactly one driver.
+   *
+   * They are passed to the driver, but are not considered while allocating the claim.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClassSpec#config
+   */
+  readonly config?: DeviceClassConfigurationV1Beta2[];
+
+  /**
+   * Each selector must be satisfied by a device which is claimed via this class.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClassSpec#selectors
+   */
+  readonly selectors?: DeviceSelectorV1Beta2[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceClassSpecV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceClassSpecV1Beta2(obj: DeviceClassSpecV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'config': obj.config?.map(y => toJson_DeviceClassConfigurationV1Beta2(y)),
+    'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Beta2(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceClaimSpec defines what is being requested in a ResourceClaim and how to configure it.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimSpec
+ */
+export interface ResourceClaimSpecV1Beta2 {
+  /**
+   * Devices defines how to request devices.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimSpec#devices
+   */
+  readonly devices?: DeviceClaimV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'ResourceClaimSpecV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ResourceClaimSpecV1Beta2(obj: ResourceClaimSpecV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'devices': toJson_DeviceClaimV1Beta2(obj.devices),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceClaimTemplateSpec contains the metadata and fields for a ResourceClaim.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateSpec
+ */
+export interface ResourceClaimTemplateSpecV1Beta2 {
+  /**
+   * ObjectMeta may contain labels and annotations that will be copied into the ResourceClaim when creating it. No other fields are allowed and will be rejected during validation.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateSpec#metadata
+   */
+  readonly metadata?: ObjectMeta;
+
+  /**
+   * Spec for the ResourceClaim. The entire content is copied unchanged into the ResourceClaim that gets created from this template. The same fields as in a ResourceClaim are also valid here.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceClaimTemplateSpec#spec
+   */
+  readonly spec: ResourceClaimSpecV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'ResourceClaimTemplateSpecV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ResourceClaimTemplateSpecV1Beta2(obj: ResourceClaimTemplateSpecV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'metadata': toJson_ObjectMeta(obj.metadata),
+    'spec': toJson_ResourceClaimSpecV1Beta2(obj.spec),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourceSliceSpec contains the information published by the driver in one ResourceSlice.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec
+ */
+export interface ResourceSliceSpecV1Beta2 {
+  /**
+   * AllNodes indicates that all nodes have access to the resources in the pool.
+   *
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#allNodes
+   */
+  readonly allNodes?: boolean;
+
+  /**
+   * Devices lists some or all of the devices in this pool.
+   *
+   * Must not have more than 128 entries.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#devices
+   */
+  readonly devices?: DeviceV1Beta2[];
+
+  /**
+   * Driver identifies the DRA driver providing the capacity information. A field selector can be used to list only ResourceSlice objects with a certain driver name.
+   *
+   * Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver. This field is immutable.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#driver
+   */
+  readonly driver: string;
+
+  /**
+   * NodeName identifies the node which provides the resources in this pool. A field selector can be used to list only ResourceSlice objects belonging to a certain node.
+   *
+   * This field can be used to limit access from nodes to ResourceSlices with the same node name. It also indicates to autoscalers that adding new nodes of the same type as some old node might also make new resources available.
+   *
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set. This field is immutable.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#nodeName
+   */
+  readonly nodeName?: string;
+
+  /**
+   * NodeSelector defines which nodes have access to the resources in the pool, when that pool is not limited to a single node.
+   *
+   * Must use exactly one term.
+   *
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#nodeSelector
+   */
+  readonly nodeSelector?: NodeSelector;
+
+  /**
+   * PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.
+   *
+   * Exactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#perDeviceNodeSelection
+   */
+  readonly perDeviceNodeSelection?: boolean;
+
+  /**
+   * Pool describes the pool that this ResourceSlice belongs to.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#pool
+   */
+  readonly pool: ResourcePoolV1Beta2;
+
+  /**
+   * SharedCounters defines a list of counter sets, each of which has a name and a list of counters available.
+   *
+   * The names of the SharedCounters must be unique in the ResourceSlice.
+   *
+   * The maximum number of counters in all sets is 32.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourceSliceSpec#sharedCounters
+   */
+  readonly sharedCounters?: CounterSetV1Beta2[];
+
+}
+
+/**
+ * Converts an object of type 'ResourceSliceSpecV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ResourceSliceSpecV1Beta2(obj: ResourceSliceSpecV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'allNodes': obj.allNodes,
+    'devices': obj.devices?.map(y => toJson_DeviceV1Beta2(y)),
+    'driver': obj.driver,
+    'nodeName': obj.nodeName,
+    'nodeSelector': toJson_NodeSelector(obj.nodeSelector),
+    'perDeviceNodeSelection': obj.perDeviceNodeSelection,
+    'pool': toJson_ResourcePoolV1Beta2(obj.pool),
+    'sharedCounters': obj.sharedCounters?.map(y => toJson_CounterSetV1Beta2(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -19562,6 +21640,17 @@ export interface CsiDriverSpec {
    * @schema io.k8s.api.storage.v1.CSIDriverSpec#fsGroupPolicy
    */
   readonly fsGroupPolicy?: string;
+
+  /**
+   * nodeAllocatableUpdatePeriodSeconds specifies the interval between periodic updates of the CSINode allocatable capacity for this driver. When set, both periodic updates and updates triggered by capacity-related failures are enabled. If not set, no updates occur (neither periodic nor upon detecting capacity-related failures), and the allocatable.count remains static. The minimum allowed value for this field is 10 seconds.
+   *
+   * This is an alpha feature and requires the MutableCSINodeAllocatableCount feature gate to be enabled.
+   *
+   * This field is mutable.
+   *
+   * @schema io.k8s.api.storage.v1.CSIDriverSpec#nodeAllocatableUpdatePeriodSeconds
+   */
+  readonly nodeAllocatableUpdatePeriodSeconds?: number;
 
   /**
    * podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations, if set to true. If set to false, pod information will not be passed on mount. Default is false.
@@ -19655,6 +21744,7 @@ export function toJson_CsiDriverSpec(obj: CsiDriverSpec | undefined): Record<str
   const result = {
     'attachRequired': obj.attachRequired,
     'fsGroupPolicy': obj.fsGroupPolicy,
+    'nodeAllocatableUpdatePeriodSeconds': obj.nodeAllocatableUpdatePeriodSeconds,
     'podInfoOnMount': obj.podInfoOnMount,
     'requiresRepublish': obj.requiresRepublish,
     'seLinuxMount': obj.seLinuxMount,
@@ -20814,7 +22904,7 @@ export function toJson_MatchConditionV1Alpha1(obj: MatchConditionV1Alpha1 | unde
  */
 export interface MatchResourcesV1Alpha1 {
   /**
-   * ExcludeResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
+   * ExcludeResourceRules describes what operations on what resources/subresources the policy should not care about. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)
    *
    * @schema io.k8s.api.admissionregistration.v1alpha1.MatchResources#excludeResourceRules
    */
@@ -20823,9 +22913,9 @@ export interface MatchResourcesV1Alpha1 {
   /**
    * matchPolicy defines how the "MatchResources" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
    *
-   * - Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the ValidatingAdmissionPolicy.
+   * - Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, the admission policy does not consider requests to apps/v1beta1 or extensions/v1beta1 API groups.
    *
-   * - Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the ValidatingAdmissionPolicy.
+   * - Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, the admission policy **does** consider requests made to apps/v1beta1 or extensions/v1beta1 API groups. The API server translates the request to a matched resource API if necessary.
    *
    * Defaults to "Equivalent"
    *
@@ -20873,7 +22963,7 @@ export interface MatchResourcesV1Alpha1 {
   readonly namespaceSelector?: LabelSelector;
 
   /**
-   * ObjectSelector decides whether to run the validation based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the cel validation, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
+   * ObjectSelector decides whether to run the policy based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the policy's expression (CEL), and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
    *
    * @default the empty LabelSelector, which matches everything.
    * @schema io.k8s.api.admissionregistration.v1alpha1.MatchResources#objectSelector
@@ -20881,7 +22971,7 @@ export interface MatchResourcesV1Alpha1 {
   readonly objectSelector?: LabelSelector;
 
   /**
-   * ResourceRules describes what operations on what resources/subresources the ValidatingAdmissionPolicy matches. The policy cares about an operation if it matches _any_ Rule.
+   * ResourceRules describes what operations on what resources/subresources the admission policy matches. The policy cares about an operation if it matches _any_ Rule.
    *
    * @schema io.k8s.api.admissionregistration.v1alpha1.MatchResources#resourceRules
    */
@@ -22176,7 +24266,7 @@ export function toJson_SuccessPolicy(obj: SuccessPolicy | undefined): Record<str
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * EndpointAddress is a tuple that describes single IP address.
+ * EndpointAddress is a tuple that describes single IP address. Deprecated: This API is deprecated in v1.33+.
  *
  * @schema io.k8s.api.core.v1.EndpointAddress
  */
@@ -24921,7 +27011,7 @@ export interface TopologySpreadConstraint {
   /**
    * NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector when calculating pod topology spread skew. Options are: - Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations. - Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.
    *
-   * If this value is nil, the behavior is equivalent to the Honor policy. This is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+   * If this value is nil, the behavior is equivalent to the Honor policy.
    *
    * @schema io.k8s.api.core.v1.TopologySpreadConstraint#nodeAffinityPolicy
    */
@@ -24930,7 +27020,7 @@ export interface TopologySpreadConstraint {
   /**
    * NodeTaintsPolicy indicates how we will treat node taints when calculating pod topology spread skew. Options are: - Honor: nodes without taints, along with tainted nodes for which the incoming pod has a toleration, are included. - Ignore: node taints are ignored. All nodes are included.
    *
-   * If this value is nil, the behavior is equivalent to the Ignore policy. This is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+   * If this value is nil, the behavior is equivalent to the Ignore policy.
    *
    * @schema io.k8s.api.core.v1.TopologySpreadConstraint#nodeTaintsPolicy
    */
@@ -25119,7 +27209,7 @@ export interface Volume {
    *
    * - Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails. - Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present. - IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.
    *
-   * The volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation. A failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message. The types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field. The OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images. The volume will be mounted read-only (ro) and non-executable files (noexec). Sub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath). The field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.
+   * The volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation. A failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message. The types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field. The OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images. The volume will be mounted read-only (ro) and non-executable files (noexec). Sub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath) before 1.33. The field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.
    *
    * @schema io.k8s.api.core.v1.Volume#image
    */
@@ -25406,21 +27496,21 @@ export function toJson_SessionAffinityConfig(obj: SessionAffinityConfig | undefi
  */
 export interface EndpointConditions {
   /**
-   * ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready. For compatibility reasons, ready should never be "true" for terminating endpoints, except when the normal readiness behavior is being explicitly overridden, for example when the associated Service has set the publishNotReadyAddresses flag.
+   * ready indicates that this endpoint is ready to receive traffic, according to whatever system is managing the endpoint. A nil value should be interpreted as "true". In general, an endpoint should be marked ready if it is serving and not terminating, though this can be overridden in some cases, such as when the associated Service has set the publishNotReadyAddresses flag.
    *
    * @schema io.k8s.api.discovery.v1.EndpointConditions#ready
    */
   readonly ready?: boolean;
 
   /**
-   * serving is identical to ready except that it is set regardless of the terminating state of endpoints. This condition should be set to true for a ready endpoint that is terminating. If nil, consumers should defer to the ready condition.
+   * serving indicates that this endpoint is able to receive traffic, according to whatever system is managing the endpoint. For endpoints backed by pods, the EndpointSlice controller will mark the endpoint as serving if the pod's Ready condition is True. A nil value should be interpreted as "true".
    *
    * @schema io.k8s.api.discovery.v1.EndpointConditions#serving
    */
   readonly serving?: boolean;
 
   /**
-   * terminating indicates that this endpoint is terminating. A nil value indicates an unknown state. Consumers should interpret this unknown state to mean that the endpoint is not terminating.
+   * terminating indicates that this endpoint is terminating. A nil value should be interpreted as "false".
    *
    * @schema io.k8s.api.discovery.v1.EndpointConditions#terminating
    */
@@ -25451,7 +27541,14 @@ export function toJson_EndpointConditions(obj: EndpointConditions | undefined): 
  */
 export interface EndpointHints {
   /**
-   * forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
+   * forNodes indicates the node(s) this endpoint should be consumed by when using topology aware routing. May contain a maximum of 8 entries. This is an Alpha feature and is only used when the PreferSameTrafficDistribution feature gate is enabled.
+   *
+   * @schema io.k8s.api.discovery.v1.EndpointHints#forNodes
+   */
+  readonly forNodes?: ForNode[];
+
+  /**
+   * forZones indicates the zone(s) this endpoint should be consumed by when using topology aware routing. May contain a maximum of 8 entries.
    *
    * @schema io.k8s.api.discovery.v1.EndpointHints#forZones
    */
@@ -25466,6 +27563,7 @@ export interface EndpointHints {
 export function toJson_EndpointHints(obj: EndpointHints | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'forNodes': obj.forNodes?.map(y => toJson_ForNode(y)),
     'forZones': obj.forZones?.map(y => toJson_ForZone(y)),
   };
   // filter undefined values
@@ -25682,6 +27780,59 @@ export function toJson_LimitedPriorityLevelConfiguration(obj: LimitedPriorityLev
     'lendablePercent': obj.lendablePercent,
     'limitResponse': toJson_LimitResponse(obj.limitResponse),
     'nominalConcurrencyShares': obj.nominalConcurrencyShares,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ParentReference describes a reference to a parent object.
+ *
+ * @schema io.k8s.api.networking.v1.ParentReference
+ */
+export interface ParentReference {
+  /**
+   * Group is the group of the object being referenced.
+   *
+   * @schema io.k8s.api.networking.v1.ParentReference#group
+   */
+  readonly group?: string;
+
+  /**
+   * Name is the name of the object being referenced.
+   *
+   * @schema io.k8s.api.networking.v1.ParentReference#name
+   */
+  readonly name: string;
+
+  /**
+   * Namespace is the namespace of the object being referenced.
+   *
+   * @schema io.k8s.api.networking.v1.ParentReference#namespace
+   */
+  readonly namespace?: string;
+
+  /**
+   * Resource is the resource of the object being referenced.
+   *
+   * @schema io.k8s.api.networking.v1.ParentReference#resource
+   */
+  readonly resource: string;
+
+}
+
+/**
+ * Converts an object of type 'ParentReference' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ParentReference(obj: ParentReference | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'group': obj.group,
+    'name': obj.name,
+    'namespace': obj.namespace,
+    'resource': obj.resource,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -26113,6 +28264,124 @@ export function toJson_DeviceSelectorV1Alpha3(obj: DeviceSelectorV1Alpha3 | unde
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * DeviceTaintSelector defines which device(s) a DeviceTaintRule applies to. The empty selector matches all devices. Without a selector, no devices are matched.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaintSelector
+ */
+export interface DeviceTaintSelectorV1Alpha3 {
+  /**
+   * If device is set, only devices with that name are selected. This field corresponds to slice.spec.devices[].name.
+   *
+   * Setting also driver and pool may be required to avoid ambiguity, but is not required.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintSelector#device
+   */
+  readonly device?: string;
+
+  /**
+   * If DeviceClassName is set, the selectors defined there must be satisfied by a device to be selected. This field corresponds to class.metadata.name.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintSelector#deviceClassName
+   */
+  readonly deviceClassName?: string;
+
+  /**
+   * If driver is set, only devices from that driver are selected. This fields corresponds to slice.spec.driver.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintSelector#driver
+   */
+  readonly driver?: string;
+
+  /**
+   * If pool is set, only devices in that pool are selected.
+   *
+   * Also setting the driver name may be useful to avoid ambiguity when different drivers use the same pool name, but this is not required because selecting pools from different drivers may also be useful, for example when drivers with node-local devices use the node name as their pool name.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintSelector#pool
+   */
+  readonly pool?: string;
+
+  /**
+   * Selectors contains the same selection criteria as a ResourceClaim. Currently, CEL expressions are supported. All of these selectors must be satisfied.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaintSelector#selectors
+   */
+  readonly selectors?: DeviceSelectorV1Alpha3[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceTaintSelectorV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTaintSelectorV1Alpha3(obj: DeviceTaintSelectorV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'device': obj.device,
+    'deviceClassName': obj.deviceClassName,
+    'driver': obj.driver,
+    'pool': obj.pool,
+    'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Alpha3(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The device this taint is attached to has the "effect" on any claim which does not tolerate the taint and, through the claim, to pods using the claim.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceTaint
+ */
+export interface DeviceTaintV1Alpha3 {
+  /**
+   * The effect of the taint on claims that do not tolerate the taint and through such claims on the pods using them. Valid effects are NoSchedule and NoExecute. PreferNoSchedule as used for nodes is not valid here.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaint#effect
+   */
+  readonly effect: string;
+
+  /**
+   * The taint key to be applied to a device. Must be a label name.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaint#key
+   */
+  readonly key: string;
+
+  /**
+   * TimeAdded represents the time at which the taint was added. Added automatically during create or update if not set.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaint#timeAdded
+   */
+  readonly timeAdded?: Date;
+
+  /**
+   * The taint value corresponding to the taint key. Must be a label value.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceTaint#value
+   */
+  readonly value?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTaintV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTaintV1Alpha3(obj: DeviceTaintV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'effect': obj.effect,
+    'key': obj.key,
+    'timeAdded': obj.timeAdded?.toISOString(),
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * DeviceClaim defines how to request devices with a ResourceClaim.
  *
  * @schema io.k8s.api.resource.v1alpha3.DeviceClaim
@@ -26268,6 +28537,49 @@ export function toJson_ResourcePoolV1Alpha3(obj: ResourcePoolV1Alpha3 | undefine
     'generation': obj.generation,
     'name': obj.name,
     'resourceSliceCount': obj.resourceSliceCount,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * CounterSet defines a named set of counters that are available to be used by devices defined in the ResourceSlice.
+ *
+ * The counters are not allocatable by themselves, but can be referenced by devices. When a device is allocated, the portion of counters it uses will no longer be available for use by other devices.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.CounterSet
+ */
+export interface CounterSetV1Alpha3 {
+  /**
+   * Counters defines the counters that will be consumed by the device. The name of each counter must be unique in that set and must be a DNS label.
+   *
+   * To ensure this uniqueness, capacities defined by the vendor must be listed without the driver name as domain prefix in their name. All others must be listed with their domain prefix.
+   *
+   * The maximum number of counters is 32.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.CounterSet#counters
+   */
+  readonly counters: { [key: string]: CounterV1Alpha3 };
+
+  /**
+   * CounterSet is the name of the set from which the counters defined will be consumed.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.CounterSet#name
+   */
+  readonly name: string;
+
+}
+
+/**
+ * Converts an object of type 'CounterSetV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CounterSetV1Alpha3(obj: CounterSetV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'counters': ((obj.counters) === undefined) ? undefined : (Object.entries(obj.counters).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_CounterV1Alpha3(i[1]) }), {})),
+    'name': obj.name,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -26459,6 +28771,347 @@ export function toJson_ResourcePoolV1Beta1(obj: ResourcePoolV1Beta1 | undefined)
     'generation': obj.generation,
     'name': obj.name,
     'resourceSliceCount': obj.resourceSliceCount,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * CounterSet defines a named set of counters that are available to be used by devices defined in the ResourceSlice.
+ *
+ * The counters are not allocatable by themselves, but can be referenced by devices. When a device is allocated, the portion of counters it uses will no longer be available for use by other devices.
+ *
+ * @schema io.k8s.api.resource.v1beta1.CounterSet
+ */
+export interface CounterSetV1Beta1 {
+  /**
+   * Counters defines the set of counters for this CounterSet The name of each counter must be unique in that set and must be a DNS label.
+   *
+   * The maximum number of counters is 32.
+   *
+   * @schema io.k8s.api.resource.v1beta1.CounterSet#counters
+   */
+  readonly counters: { [key: string]: CounterV1Beta1 };
+
+  /**
+   * Name defines the name of the counter set. It must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1beta1.CounterSet#name
+   */
+  readonly name: string;
+
+}
+
+/**
+ * Converts an object of type 'CounterSetV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CounterSetV1Beta1(obj: CounterSetV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'counters': ((obj.counters) === undefined) ? undefined : (Object.entries(obj.counters).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_CounterV1Beta1(i[1]) }), {})),
+    'name': obj.name,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceClassConfiguration is used in DeviceClass.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClassConfiguration
+ */
+export interface DeviceClassConfigurationV1Beta2 {
+  /**
+   * Opaque provides driver-specific configuration parameters.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClassConfiguration#opaque
+   */
+  readonly opaque?: OpaqueDeviceConfigurationV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'DeviceClassConfigurationV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceClassConfigurationV1Beta2(obj: DeviceClassConfigurationV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'opaque': toJson_OpaqueDeviceConfigurationV1Beta2(obj.opaque),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceSelector must have exactly one field set.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceSelector
+ */
+export interface DeviceSelectorV1Beta2 {
+  /**
+   * CEL contains a CEL expression for selecting a device.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSelector#cel
+   */
+  readonly cel?: CelDeviceSelectorV1Beta2;
+
+}
+
+/**
+ * Converts an object of type 'DeviceSelectorV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceSelectorV1Beta2(obj: DeviceSelectorV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'cel': toJson_CelDeviceSelectorV1Beta2(obj.cel),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceClaim defines how to request devices with a ResourceClaim.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClaim
+ */
+export interface DeviceClaimV1Beta2 {
+  /**
+   * This field holds configuration for multiple potential drivers which could satisfy requests in this claim. It is ignored while allocating the claim.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClaim#config
+   */
+  readonly config?: DeviceClaimConfigurationV1Beta2[];
+
+  /**
+   * These constraints must be satisfied by the set of devices that get allocated for the claim.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClaim#constraints
+   */
+  readonly constraints?: DeviceConstraintV1Beta2[];
+
+  /**
+   * Requests represent individual requests for distinct devices which must all be satisfied. If empty, nothing needs to be allocated.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClaim#requests
+   */
+  readonly requests?: DeviceRequestV1Beta2[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceClaimV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceClaimV1Beta2(obj: DeviceClaimV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'config': obj.config?.map(y => toJson_DeviceClaimConfigurationV1Beta2(y)),
+    'constraints': obj.constraints?.map(y => toJson_DeviceConstraintV1Beta2(y)),
+    'requests': obj.requests?.map(y => toJson_DeviceRequestV1Beta2(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Device represents one individual hardware instance that can be selected based on its attributes. Besides the name, exactly one field must be set.
+ *
+ * @schema io.k8s.api.resource.v1beta2.Device
+ */
+export interface DeviceV1Beta2 {
+  /**
+   * AllNodes indicates that all nodes have access to the device.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#allNodes
+   */
+  readonly allNodes?: boolean;
+
+  /**
+   * Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.
+   *
+   * The maximum number of attributes and capacities combined is 32.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#attributes
+   */
+  readonly attributes?: { [key: string]: DeviceAttributeV1Beta2 };
+
+  /**
+   * Capacity defines the set of capacities for this device. The name of each capacity must be unique in that set.
+   *
+   * The maximum number of attributes and capacities combined is 32.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#capacity
+   */
+  readonly capacity?: { [key: string]: DeviceCapacityV1Beta2 };
+
+  /**
+   * ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.
+   *
+   * There can only be a single entry per counterSet.
+   *
+   * The total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each).
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#consumesCounters
+   */
+  readonly consumesCounters?: DeviceCounterConsumptionV1Beta2[];
+
+  /**
+   * Name is unique identifier among all devices managed by the driver in the pool. It must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#name
+   */
+  readonly name: string;
+
+  /**
+   * NodeName identifies the node where the device is available.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#nodeName
+   */
+  readonly nodeName?: string;
+
+  /**
+   * NodeSelector defines the nodes where the device is available.
+   *
+   * Must use exactly one term.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#nodeSelector
+   */
+  readonly nodeSelector?: NodeSelector;
+
+  /**
+   * If specified, these are the driver-defined taints.
+   *
+   * The maximum number of taints is 4.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Device#taints
+   */
+  readonly taints?: DeviceTaintV1Beta2[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceV1Beta2(obj: DeviceV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'allNodes': obj.allNodes,
+    'attributes': ((obj.attributes) === undefined) ? undefined : (Object.entries(obj.attributes).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_DeviceAttributeV1Beta2(i[1]) }), {})),
+    'capacity': ((obj.capacity) === undefined) ? undefined : (Object.entries(obj.capacity).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_DeviceCapacityV1Beta2(i[1]) }), {})),
+    'consumesCounters': obj.consumesCounters?.map(y => toJson_DeviceCounterConsumptionV1Beta2(y)),
+    'name': obj.name,
+    'nodeName': obj.nodeName,
+    'nodeSelector': toJson_NodeSelector(obj.nodeSelector),
+    'taints': obj.taints?.map(y => toJson_DeviceTaintV1Beta2(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ResourcePool describes the pool that ResourceSlices belong to.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ResourcePool
+ */
+export interface ResourcePoolV1Beta2 {
+  /**
+   * Generation tracks the change in a pool over time. Whenever a driver changes something about one or more of the resources in a pool, it must change the generation in all ResourceSlices which are part of that pool. Consumers of ResourceSlices should only consider resources from the pool with the highest generation number. The generation may be reset by drivers, which should be fine for consumers, assuming that all ResourceSlices in a pool are updated to match or deleted.
+   *
+   * Combined with ResourceSliceCount, this mechanism enables consumers to detect pools which are comprised of multiple ResourceSlices and are in an incomplete state.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourcePool#generation
+   */
+  readonly generation: number;
+
+  /**
+   * Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required.
+   *
+   * It must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourcePool#name
+   */
+  readonly name: string;
+
+  /**
+   * ResourceSliceCount is the total number of ResourceSlices in the pool at this generation number. Must be greater than zero.
+   *
+   * Consumers can use this to check whether they have seen all ResourceSlices belonging to the same pool.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ResourcePool#resourceSliceCount
+   */
+  readonly resourceSliceCount: number;
+
+}
+
+/**
+ * Converts an object of type 'ResourcePoolV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ResourcePoolV1Beta2(obj: ResourcePoolV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'generation': obj.generation,
+    'name': obj.name,
+    'resourceSliceCount': obj.resourceSliceCount,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * CounterSet defines a named set of counters that are available to be used by devices defined in the ResourceSlice.
+ *
+ * The counters are not allocatable by themselves, but can be referenced by devices. When a device is allocated, the portion of counters it uses will no longer be available for use by other devices.
+ *
+ * @schema io.k8s.api.resource.v1beta2.CounterSet
+ */
+export interface CounterSetV1Beta2 {
+  /**
+   * Counters defines the set of counters for this CounterSet The name of each counter must be unique in that set and must be a DNS label.
+   *
+   * The maximum number of counters in all sets is 32.
+   *
+   * @schema io.k8s.api.resource.v1beta2.CounterSet#counters
+   */
+  readonly counters: { [key: string]: CounterV1Beta2 };
+
+  /**
+   * Name defines the name of the counter set. It must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1beta2.CounterSet#name
+   */
+  readonly name: string;
+
+}
+
+/**
+ * Converts an object of type 'CounterSetV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CounterSetV1Beta2(obj: CounterSetV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'counters': ((obj.counters) === undefined) ? undefined : (Object.entries(obj.counters).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_CounterV1Beta2(i[1]) }), {})),
+    'name': obj.name,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -27580,13 +30233,17 @@ export function toJson_LabelSelectorAttributes(obj: LabelSelectorAttributes | un
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
+ * HPAScalingRules configures the scaling behavior for one direction via scaling Policy Rules and a configurable metric tolerance.
+ *
+ * Scaling Policy Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
+ *
+ * The tolerance is applied to the metric values and prevents scaling too eagerly for small metric variations. (Note that setting a tolerance requires enabling the alpha HPAConfigurableTolerance feature gate.)
  *
  * @schema io.k8s.api.autoscaling.v2.HPAScalingRules
  */
 export interface HpaScalingRulesV2 {
   /**
-   * policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+   * policies is a list of potential scaling polices which can be used during scaling. If not set, use the default values: - For scale up: allow doubling the number of pods, or an absolute change of 4 pods in a 15s window. - For scale down: allow all pods to be removed in a 15s window.
    *
    * @schema io.k8s.api.autoscaling.v2.HPAScalingRules#policies
    */
@@ -27606,6 +30263,17 @@ export interface HpaScalingRulesV2 {
    */
   readonly stabilizationWindowSeconds?: number;
 
+  /**
+   * tolerance is the tolerance on the ratio between the current and desired metric value under which no updates are made to the desired number of replicas (e.g. 0.01 for 1%). Must be greater than or equal to zero. If not set, the default cluster-wide tolerance is applied (by default 10%).
+   *
+   * For example, if autoscaling is configured with a memory consumption target of 100Mi, and scale-down and scale-up tolerances of 5% and 1% respectively, scaling will be triggered when the actual consumption falls below 95Mi or exceeds 101Mi.
+   *
+   * This is an alpha field and requires enabling the HPAConfigurableTolerance feature gate.
+   *
+   * @schema io.k8s.api.autoscaling.v2.HPAScalingRules#tolerance
+   */
+  readonly tolerance?: Quantity;
+
 }
 
 /**
@@ -27618,6 +30286,7 @@ export function toJson_HpaScalingRulesV2(obj: HpaScalingRulesV2 | undefined): Re
     'policies': obj.policies?.map(y => toJson_HpaScalingPolicyV2(y)),
     'selectPolicy': obj.selectPolicy,
     'stabilizationWindowSeconds': obj.stabilizationWindowSeconds,
+    'tolerance': obj.tolerance?.value,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -27838,8 +30507,6 @@ export interface PodFailurePolicyRule {
    * running pods are terminated.
    * - FailIndex: indicates that the pod's index is marked as Failed and will
    * not be restarted.
-   * This value is beta-level. It can be used when the
-   * `JobBackoffLimitPerIndex` feature gate is enabled (enabled by default).
    * - Ignore: indicates that the counter towards the .backoffLimit is not
    * incremented and a replacement pod is created.
    * - Count: indicates that the pod is handled in the default way - the
@@ -28175,7 +30842,7 @@ export function toJson_EnvVar(obj: EnvVar | undefined): Record<string, any> | un
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * EnvFromSource represents the source of a set of ConfigMaps
+ * EnvFromSource represents the source of a set of ConfigMaps or Secrets
  *
  * @schema io.k8s.api.core.v1.EnvFromSource
  */
@@ -28188,7 +30855,7 @@ export interface EnvFromSource {
   readonly configMapRef?: ConfigMapEnvSource;
 
   /**
-   * An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+   * Optional text to prepend to the name of each environment variable. Must be a C_IDENTIFIER.
    *
    * @schema io.k8s.api.core.v1.EnvFromSource#prefix
    */
@@ -28239,6 +30906,13 @@ export interface Lifecycle {
    */
   readonly preStop?: LifecycleHandler;
 
+  /**
+   * StopSignal defines which signal will be sent to a container when it is being stopped. If not specified, the default is defined by the container runtime in use. StopSignal can only be set for Pods with a non-empty .spec.os.name
+   *
+   * @schema io.k8s.api.core.v1.Lifecycle#stopSignal
+   */
+  readonly stopSignal?: string;
+
 }
 
 /**
@@ -28250,6 +30924,7 @@ export function toJson_Lifecycle(obj: Lifecycle | undefined): Record<string, any
   const result = {
     'postStart': toJson_LifecycleHandler(obj.postStart),
     'preStop': toJson_LifecycleHandler(obj.preStop),
+    'stopSignal': obj.stopSignal,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -30162,6 +32837,35 @@ export function toJson_ClientIpConfig(obj: ClientIpConfig | undefined): Record<s
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * ForNode provides information about which nodes should consume this endpoint.
+ *
+ * @schema io.k8s.api.discovery.v1.ForNode
+ */
+export interface ForNode {
+  /**
+   * name represents the name of the node.
+   *
+   * @schema io.k8s.api.discovery.v1.ForNode#name
+   */
+  readonly name: string;
+
+}
+
+/**
+ * Converts an object of type 'ForNode' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ForNode(obj: ForNode | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'name': obj.name,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * ForZone provides information about which zones should consume this endpoint.
  *
  * @schema io.k8s.api.discovery.v1.ForZone
@@ -30607,6 +33311,8 @@ export interface DeviceClaimConfigurationV1Alpha3 {
   /**
    * Requests lists the names of requests where the configuration applies. If empty, it applies to all requests.
    *
+   * References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests.
+   *
    * @schema io.k8s.api.resource.v1alpha3.DeviceClaimConfiguration#requests
    */
   readonly requests?: string[];
@@ -30648,6 +33354,8 @@ export interface DeviceConstraintV1Alpha3 {
   /**
    * Requests is a list of the one or more requests in this claim which must co-satisfy this constraint. If a request is fulfilled by multiple devices, then all of the devices must satisfy the constraint. If this is not specified, this constraint applies to all requests in this claim.
    *
+   * References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the constraint applies to all subrequests.
+   *
    * @schema io.k8s.api.resource.v1alpha3.DeviceConstraint#requests
    */
   readonly requests?: string[];
@@ -30672,13 +33380,13 @@ export function toJson_DeviceConstraintV1Alpha3(obj: DeviceConstraintV1Alpha3 | 
 /**
  * DeviceRequest is a request for devices required for a claim. This is typically a request for a single resource like a device, but can also ask for several identical devices.
  *
- * A DeviceClassName is currently required. Clients must check that it is indeed set. It's absence indicates that something changed in a way that is not supported by the client yet, in which case it must refuse to handle the request.
- *
  * @schema io.k8s.api.resource.v1alpha3.DeviceRequest
  */
 export interface DeviceRequestV1Alpha3 {
   /**
    * AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.
+   *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
    *
    * This is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.
    *
@@ -30694,10 +33402,13 @@ export interface DeviceRequestV1Alpha3 {
    * count field.
    *
    * - All: This request is for all of the matching devices in a pool.
+   * At least one device must exist on the node for the allocation to succeed.
    * Allocation will fail if some devices are already allocated,
    * unless adminAccess is requested.
    *
-   * If AlloctionMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+   * If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+   *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
    *
    * More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
    *
@@ -30708,6 +33419,8 @@ export interface DeviceRequestV1Alpha3 {
   /**
    * Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
    *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
+   *
    * @schema io.k8s.api.resource.v1alpha3.DeviceRequest#count
    */
   readonly count?: number;
@@ -30715,13 +33428,24 @@ export interface DeviceRequestV1Alpha3 {
   /**
    * DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.
    *
-   * A class is required. Which classes are available depends on the cluster.
+   * A class is required if no subrequests are specified in the firstAvailable list and no class can be set if subrequests are specified in the firstAvailable list. Which classes are available depends on the cluster.
    *
    * Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
    *
    * @schema io.k8s.api.resource.v1alpha3.DeviceRequest#deviceClassName
    */
-  readonly deviceClassName: string;
+  readonly deviceClassName?: string;
+
+  /**
+   * FirstAvailable contains subrequests, of which exactly one will be satisfied by the scheduler to satisfy this request. It tries to satisfy them in the order in which they are listed here. So if there are two entries in the list, the scheduler will only check the second one if it determines that the first one cannot be used.
+   *
+   * This field may only be set in the entries of DeviceClaim.Requests.
+   *
+   * DRA does not yet implement scoring, so the scheduler will select the first set of devices that satisfies all the requests in the claim. And if the requirements can be satisfied on more than one node, other scheduling features will determine which node is chosen. This means that the set of devices allocated to a claim might not be the optimal set available to the cluster. Scoring will be implemented later.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceRequest#firstAvailable
+   */
+  readonly firstAvailable?: DeviceSubRequestV1Alpha3[];
 
   /**
    * Name can be used to reference this request in a pod.spec.containers[].resources.claims entry and in a constraint of the claim.
@@ -30735,9 +33459,28 @@ export interface DeviceRequestV1Alpha3 {
   /**
    * Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.
    *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
+   *
    * @schema io.k8s.api.resource.v1alpha3.DeviceRequest#selectors
    */
   readonly selectors?: DeviceSelectorV1Alpha3[];
+
+  /**
+   * If specified, the request's tolerations.
+   *
+   * Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+   *
+   * In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+   *
+   * The maximum number of tolerations is 16.
+   *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceRequest#tolerations
+   */
+  readonly tolerations?: DeviceTolerationV1Alpha3[];
 
 }
 
@@ -30752,8 +33495,10 @@ export function toJson_DeviceRequestV1Alpha3(obj: DeviceRequestV1Alpha3 | undefi
     'allocationMode': obj.allocationMode,
     'count': obj.count,
     'deviceClassName': obj.deviceClassName,
+    'firstAvailable': obj.firstAvailable?.map(y => toJson_DeviceSubRequestV1Alpha3(y)),
     'name': obj.name,
     'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Alpha3(y)),
+    'tolerations': obj.tolerations?.map(y => toJson_DeviceTolerationV1Alpha3(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -30766,6 +33511,15 @@ export function toJson_DeviceRequestV1Alpha3(obj: DeviceRequestV1Alpha3 | undefi
  * @schema io.k8s.api.resource.v1alpha3.BasicDevice
  */
 export interface BasicDeviceV1Alpha3 {
+  /**
+   * AllNodes indicates that all nodes have access to the device.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.BasicDevice#allNodes
+   */
+  readonly allNodes?: boolean;
+
   /**
    * Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.
    *
@@ -30784,6 +33538,46 @@ export interface BasicDeviceV1Alpha3 {
    */
   readonly capacity?: { [key: string]: Quantity };
 
+  /**
+   * ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.
+   *
+   * There can only be a single entry per counterSet.
+   *
+   * The total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each).
+   *
+   * @schema io.k8s.api.resource.v1alpha3.BasicDevice#consumesCounters
+   */
+  readonly consumesCounters?: DeviceCounterConsumptionV1Alpha3[];
+
+  /**
+   * NodeName identifies the node where the device is available.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.BasicDevice#nodeName
+   */
+  readonly nodeName?: string;
+
+  /**
+   * NodeSelector defines the nodes where the device is available.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.BasicDevice#nodeSelector
+   */
+  readonly nodeSelector?: NodeSelector;
+
+  /**
+   * If specified, these are the driver-defined taints.
+   *
+   * The maximum number of taints is 4.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.BasicDevice#taints
+   */
+  readonly taints?: DeviceTaintV1Alpha3[];
+
 }
 
 /**
@@ -30793,8 +33587,13 @@ export interface BasicDeviceV1Alpha3 {
 export function toJson_BasicDeviceV1Alpha3(obj: BasicDeviceV1Alpha3 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'allNodes': obj.allNodes,
     'attributes': ((obj.attributes) === undefined) ? undefined : (Object.entries(obj.attributes).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_DeviceAttributeV1Alpha3(i[1]) }), {})),
     'capacity': ((obj.capacity) === undefined) ? undefined : (Object.entries(obj.capacity).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.value }), {})),
+    'consumesCounters': obj.consumesCounters?.map(y => toJson_DeviceCounterConsumptionV1Alpha3(y)),
+    'nodeName': obj.nodeName,
+    'nodeSelector': toJson_NodeSelector(obj.nodeSelector),
+    'taints': obj.taints?.map(y => toJson_DeviceTaintV1Alpha3(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -30832,6 +33631,35 @@ export function toJson_NodeSelectorTerm(obj: NodeSelectorTerm | undefined): Reco
   const result = {
     'matchExpressions': obj.matchExpressions?.map(y => toJson_NodeSelectorRequirement(y)),
     'matchFields': obj.matchFields?.map(y => toJson_NodeSelectorRequirement(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Counter describes a quantity associated with a device.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.Counter
+ */
+export interface CounterV1Alpha3 {
+  /**
+   * Value defines how much of a certain device counter is available.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.Counter#value
+   */
+  readonly value: Quantity;
+
+}
+
+/**
+ * Converts an object of type 'CounterV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CounterV1Alpha3(obj: CounterV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value?.value,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -30954,6 +33782,8 @@ export interface DeviceClaimConfigurationV1Beta1 {
   /**
    * Requests lists the names of requests where the configuration applies. If empty, it applies to all requests.
    *
+   * References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests.
+   *
    * @schema io.k8s.api.resource.v1beta1.DeviceClaimConfiguration#requests
    */
   readonly requests?: string[];
@@ -30995,6 +33825,8 @@ export interface DeviceConstraintV1Beta1 {
   /**
    * Requests is a list of the one or more requests in this claim which must co-satisfy this constraint. If a request is fulfilled by multiple devices, then all of the devices must satisfy the constraint. If this is not specified, this constraint applies to all requests in this claim.
    *
+   * References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the constraint applies to all subrequests.
+   *
    * @schema io.k8s.api.resource.v1beta1.DeviceConstraint#requests
    */
   readonly requests?: string[];
@@ -31019,13 +33851,13 @@ export function toJson_DeviceConstraintV1Beta1(obj: DeviceConstraintV1Beta1 | un
 /**
  * DeviceRequest is a request for devices required for a claim. This is typically a request for a single resource like a device, but can also ask for several identical devices.
  *
- * A DeviceClassName is currently required. Clients must check that it is indeed set. It's absence indicates that something changed in a way that is not supported by the client yet, in which case it must refuse to handle the request.
- *
  * @schema io.k8s.api.resource.v1beta1.DeviceRequest
  */
 export interface DeviceRequestV1Beta1 {
   /**
    * AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.
+   *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
    *
    * This is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.
    *
@@ -31041,10 +33873,13 @@ export interface DeviceRequestV1Beta1 {
    * count field.
    *
    * - All: This request is for all of the matching devices in a pool.
+   * At least one device must exist on the node for the allocation to succeed.
    * Allocation will fail if some devices are already allocated,
    * unless adminAccess is requested.
    *
-   * If AlloctionMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+   * If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+   *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
    *
    * More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
    *
@@ -31055,6 +33890,8 @@ export interface DeviceRequestV1Beta1 {
   /**
    * Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
    *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
+   *
    * @schema io.k8s.api.resource.v1beta1.DeviceRequest#count
    */
   readonly count?: number;
@@ -31062,18 +33899,29 @@ export interface DeviceRequestV1Beta1 {
   /**
    * DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.
    *
-   * A class is required. Which classes are available depends on the cluster.
+   * A class is required if no subrequests are specified in the firstAvailable list and no class can be set if subrequests are specified in the firstAvailable list. Which classes are available depends on the cluster.
    *
    * Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
    *
    * @schema io.k8s.api.resource.v1beta1.DeviceRequest#deviceClassName
    */
-  readonly deviceClassName: string;
+  readonly deviceClassName?: string;
+
+  /**
+   * FirstAvailable contains subrequests, of which exactly one will be satisfied by the scheduler to satisfy this request. It tries to satisfy them in the order in which they are listed here. So if there are two entries in the list, the scheduler will only check the second one if it determines that the first one cannot be used.
+   *
+   * This field may only be set in the entries of DeviceClaim.Requests.
+   *
+   * DRA does not yet implement scoring, so the scheduler will select the first set of devices that satisfies all the requests in the claim. And if the requirements can be satisfied on more than one node, other scheduling features will determine which node is chosen. This means that the set of devices allocated to a claim might not be the optimal set available to the cluster. Scoring will be implemented later.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceRequest#firstAvailable
+   */
+  readonly firstAvailable?: DeviceSubRequestV1Beta1[];
 
   /**
    * Name can be used to reference this request in a pod.spec.containers[].resources.claims entry and in a constraint of the claim.
    *
-   * Must be a DNS label.
+   * Must be a DNS label and unique among all DeviceRequests in a ResourceClaim.
    *
    * @schema io.k8s.api.resource.v1beta1.DeviceRequest#name
    */
@@ -31082,9 +33930,28 @@ export interface DeviceRequestV1Beta1 {
   /**
    * Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.
    *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
+   *
    * @schema io.k8s.api.resource.v1beta1.DeviceRequest#selectors
    */
   readonly selectors?: DeviceSelectorV1Beta1[];
+
+  /**
+   * If specified, the request's tolerations.
+   *
+   * Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+   *
+   * In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+   *
+   * The maximum number of tolerations is 16.
+   *
+   * This field can only be set when deviceClassName is set and no subrequests are specified in the firstAvailable list.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceRequest#tolerations
+   */
+  readonly tolerations?: DeviceTolerationV1Beta1[];
 
 }
 
@@ -31099,8 +33966,10 @@ export function toJson_DeviceRequestV1Beta1(obj: DeviceRequestV1Beta1 | undefine
     'allocationMode': obj.allocationMode,
     'count': obj.count,
     'deviceClassName': obj.deviceClassName,
+    'firstAvailable': obj.firstAvailable?.map(y => toJson_DeviceSubRequestV1Beta1(y)),
     'name': obj.name,
     'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Beta1(y)),
+    'tolerations': obj.tolerations?.map(y => toJson_DeviceTolerationV1Beta1(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -31113,6 +33982,15 @@ export function toJson_DeviceRequestV1Beta1(obj: DeviceRequestV1Beta1 | undefine
  * @schema io.k8s.api.resource.v1beta1.BasicDevice
  */
 export interface BasicDeviceV1Beta1 {
+  /**
+   * AllNodes indicates that all nodes have access to the device.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1beta1.BasicDevice#allNodes
+   */
+  readonly allNodes?: boolean;
+
   /**
    * Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.
    *
@@ -31131,6 +34009,48 @@ export interface BasicDeviceV1Beta1 {
    */
   readonly capacity?: { [key: string]: DeviceCapacityV1Beta1 };
 
+  /**
+   * ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.
+   *
+   * There can only be a single entry per counterSet.
+   *
+   * The total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each).
+   *
+   * @schema io.k8s.api.resource.v1beta1.BasicDevice#consumesCounters
+   */
+  readonly consumesCounters?: DeviceCounterConsumptionV1Beta1[];
+
+  /**
+   * NodeName identifies the node where the device is available.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1beta1.BasicDevice#nodeName
+   */
+  readonly nodeName?: string;
+
+  /**
+   * NodeSelector defines the nodes where the device is available.
+   *
+   * Must use exactly one term.
+   *
+   * Must only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.
+   *
+   * @schema io.k8s.api.resource.v1beta1.BasicDevice#nodeSelector
+   */
+  readonly nodeSelector?: NodeSelector;
+
+  /**
+   * If specified, these are the driver-defined taints.
+   *
+   * The maximum number of taints is 4.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1beta1.BasicDevice#taints
+   */
+  readonly taints?: DeviceTaintV1Beta1[];
+
 }
 
 /**
@@ -31140,8 +34060,480 @@ export interface BasicDeviceV1Beta1 {
 export function toJson_BasicDeviceV1Beta1(obj: BasicDeviceV1Beta1 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'allNodes': obj.allNodes,
     'attributes': ((obj.attributes) === undefined) ? undefined : (Object.entries(obj.attributes).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_DeviceAttributeV1Beta1(i[1]) }), {})),
     'capacity': ((obj.capacity) === undefined) ? undefined : (Object.entries(obj.capacity).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_DeviceCapacityV1Beta1(i[1]) }), {})),
+    'consumesCounters': obj.consumesCounters?.map(y => toJson_DeviceCounterConsumptionV1Beta1(y)),
+    'nodeName': obj.nodeName,
+    'nodeSelector': toJson_NodeSelector(obj.nodeSelector),
+    'taints': obj.taints?.map(y => toJson_DeviceTaintV1Beta1(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Counter describes a quantity associated with a device.
+ *
+ * @schema io.k8s.api.resource.v1beta1.Counter
+ */
+export interface CounterV1Beta1 {
+  /**
+   * Value defines how much of a certain device counter is available.
+   *
+   * @schema io.k8s.api.resource.v1beta1.Counter#value
+   */
+  readonly value: Quantity;
+
+}
+
+/**
+ * Converts an object of type 'CounterV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CounterV1Beta1(obj: CounterV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor.
+ *
+ * @schema io.k8s.api.resource.v1beta2.OpaqueDeviceConfiguration
+ */
+export interface OpaqueDeviceConfigurationV1Beta2 {
+  /**
+   * Driver is used to determine which kubelet plugin needs to be passed these configuration parameters.
+   *
+   * An admission policy provided by the driver developer could use this to decide whether it needs to validate them.
+   *
+   * Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.
+   *
+   * @schema io.k8s.api.resource.v1beta2.OpaqueDeviceConfiguration#driver
+   */
+  readonly driver: string;
+
+  /**
+   * Parameters can contain arbitrary data. It is the responsibility of the driver developer to handle validation and versioning. Typically this includes self-identification and a version ("kind" + "apiVersion" for Kubernetes types), with conversion between different versions.
+   *
+   * The length of the raw data must be smaller or equal to 10 Ki.
+   *
+   * @schema io.k8s.api.resource.v1beta2.OpaqueDeviceConfiguration#parameters
+   */
+  readonly parameters: any;
+
+}
+
+/**
+ * Converts an object of type 'OpaqueDeviceConfigurationV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_OpaqueDeviceConfigurationV1Beta2(obj: OpaqueDeviceConfigurationV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'driver': obj.driver,
+    'parameters': obj.parameters,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * CELDeviceSelector contains a CEL expression for selecting a device.
+ *
+ * @schema io.k8s.api.resource.v1beta2.CELDeviceSelector
+ */
+export interface CelDeviceSelectorV1Beta2 {
+  /**
+   * Expression is a CEL expression which evaluates a single device. It must evaluate to true when the device under consideration satisfies the desired criteria, and false when it does not. Any other result is an error and causes allocation of devices to abort.
+   *
+   * The expression's input is an object named "device", which carries the following properties:
+   * - driver (string): the name of the driver which defines this device.
+   * - attributes (map[string]object): the device's attributes, grouped by prefix
+   * (e.g. device.attributes["dra.example.com"] evaluates to an object with all
+   * of the attributes which were prefixed by "dra.example.com".
+   * - capacity (map[string]object): the device's capacities, grouped by prefix.
+   *
+   * Example: Consider a device with driver="dra.example.com", which exposes two attributes named "model" and "ext.example.com/family" and which exposes one capacity named "modules". This input to this expression would have the following fields:
+   *
+   * device.driver
+   * device.attributes["dra.example.com"].model
+   * device.attributes["ext.example.com"].family
+   * device.capacity["dra.example.com"].modules
+   *
+   * The device.driver field can be used to check for a specific driver, either as a high-level precondition (i.e. you only want to consider devices from this driver) or as part of a multi-clause expression that is meant to consider devices from different drivers.
+   *
+   * The value type of each attribute is defined by the device definition, and users who write these expressions must consult the documentation for their specific drivers. The value type of each capacity is Quantity.
+   *
+   * If an unknown prefix is used as a lookup in either device.attributes or device.capacity, an empty map will be returned. Any reference to an unknown field will cause an evaluation error and allocation to abort.
+   *
+   * A robust expression should check for the existence of attributes before referencing them.
+   *
+   * For ease of use, the cel.bind() function is enabled, and can be used to simplify expressions that access multiple attributes with the same domain. For example:
+   *
+   * cel.bind(dra, device.attributes["dra.example.com"], dra.someBool && dra.anotherBool)
+   *
+   * The length of the expression must be smaller or equal to 10 Ki. The cost of evaluating it is also limited based on the estimated number of logical steps.
+   *
+   * @schema io.k8s.api.resource.v1beta2.CELDeviceSelector#expression
+   */
+  readonly expression: string;
+
+}
+
+/**
+ * Converts an object of type 'CelDeviceSelectorV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CelDeviceSelectorV1Beta2(obj: CelDeviceSelectorV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'expression': obj.expression,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceClaimConfiguration is used for configuration parameters in DeviceClaim.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceClaimConfiguration
+ */
+export interface DeviceClaimConfigurationV1Beta2 {
+  /**
+   * Opaque provides driver-specific configuration parameters.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClaimConfiguration#opaque
+   */
+  readonly opaque?: OpaqueDeviceConfigurationV1Beta2;
+
+  /**
+   * Requests lists the names of requests where the configuration applies. If empty, it applies to all requests.
+   *
+   * References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the configuration applies to all subrequests.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceClaimConfiguration#requests
+   */
+  readonly requests?: string[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceClaimConfigurationV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceClaimConfigurationV1Beta2(obj: DeviceClaimConfigurationV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'opaque': toJson_OpaqueDeviceConfigurationV1Beta2(obj.opaque),
+    'requests': obj.requests?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceConstraint must have exactly one field set besides Requests.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceConstraint
+ */
+export interface DeviceConstraintV1Beta2 {
+  /**
+   * MatchAttribute requires that all devices in question have this attribute and that its type and value are the same across those devices.
+   *
+   * For example, if you specified "dra.example.com/numa" (a hypothetical example!), then only devices in the same NUMA node will be chosen. A device which does not have that attribute will not be chosen. All devices should use a value of the same type for this attribute because that is part of its specification, but if one device doesn't, then it also will not be chosen.
+   *
+   * Must include the domain qualifier.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceConstraint#matchAttribute
+   */
+  readonly matchAttribute?: string;
+
+  /**
+   * Requests is a list of the one or more requests in this claim which must co-satisfy this constraint. If a request is fulfilled by multiple devices, then all of the devices must satisfy the constraint. If this is not specified, this constraint applies to all requests in this claim.
+   *
+   * References to subrequests must include the name of the main request and may include the subrequest using the format <main request>[/<subrequest>]. If just the main request is given, the constraint applies to all subrequests.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceConstraint#requests
+   */
+  readonly requests?: string[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceConstraintV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceConstraintV1Beta2(obj: DeviceConstraintV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'matchAttribute': obj.matchAttribute,
+    'requests': obj.requests?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceRequest is a request for devices required for a claim. This is typically a request for a single resource like a device, but can also ask for several identical devices. With FirstAvailable it is also possible to provide a prioritized list of requests.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceRequest
+ */
+export interface DeviceRequestV1Beta2 {
+  /**
+   * Exactly specifies the details for a single request that must be met exactly for the request to be satisfied.
+   *
+   * One of Exactly or FirstAvailable must be set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceRequest#exactly
+   */
+  readonly exactly?: ExactDeviceRequestV1Beta2;
+
+  /**
+   * FirstAvailable contains subrequests, of which exactly one will be selected by the scheduler. It tries to satisfy them in the order in which they are listed here. So if there are two entries in the list, the scheduler will only check the second one if it determines that the first one can not be used.
+   *
+   * DRA does not yet implement scoring, so the scheduler will select the first set of devices that satisfies all the requests in the claim. And if the requirements can be satisfied on more than one node, other scheduling features will determine which node is chosen. This means that the set of devices allocated to a claim might not be the optimal set available to the cluster. Scoring will be implemented later.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceRequest#firstAvailable
+   */
+  readonly firstAvailable?: DeviceSubRequestV1Beta2[];
+
+  /**
+   * Name can be used to reference this request in a pod.spec.containers[].resources.claims entry and in a constraint of the claim.
+   *
+   * References using the name in the DeviceRequest will uniquely identify a request when the Exactly field is set. When the FirstAvailable field is set, a reference to the name of the DeviceRequest will match whatever subrequest is chosen by the scheduler.
+   *
+   * Must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceRequest#name
+   */
+  readonly name: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceRequestV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceRequestV1Beta2(obj: DeviceRequestV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'exactly': toJson_ExactDeviceRequestV1Beta2(obj.exactly),
+    'firstAvailable': obj.firstAvailable?.map(y => toJson_DeviceSubRequestV1Beta2(y)),
+    'name': obj.name,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceAttribute must have exactly one field set.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceAttribute
+ */
+export interface DeviceAttributeV1Beta2 {
+  /**
+   * BoolValue is a true/false value.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceAttribute#bool
+   */
+  readonly bool?: boolean;
+
+  /**
+   * IntValue is a number.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceAttribute#int
+   */
+  readonly int?: number;
+
+  /**
+   * StringValue is a string. Must not be longer than 64 characters.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceAttribute#string
+   */
+  readonly string?: string;
+
+  /**
+   * VersionValue is a semantic version according to semver.org spec 2.0.0. Must not be longer than 64 characters.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceAttribute#version
+   */
+  readonly version?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceAttributeV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceAttributeV1Beta2(obj: DeviceAttributeV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bool': obj.bool,
+    'int': obj.int,
+    'string': obj.string,
+    'version': obj.version,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceCapacity describes a quantity associated with a device.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceCapacity
+ */
+export interface DeviceCapacityV1Beta2 {
+  /**
+   * Value defines how much of a certain device capacity is available.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceCapacity#value
+   */
+  readonly value: Quantity;
+
+}
+
+/**
+ * Converts an object of type 'DeviceCapacityV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceCapacityV1Beta2(obj: DeviceCapacityV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceCounterConsumption defines a set of counters that a device will consume from a CounterSet.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceCounterConsumption
+ */
+export interface DeviceCounterConsumptionV1Beta2 {
+  /**
+   * CounterSet is the name of the set from which the counters defined will be consumed.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceCounterConsumption#counterSet
+   */
+  readonly counterSet: string;
+
+  /**
+   * Counters defines the counters that will be consumed by the device.
+   *
+   * The maximum number counters in a device is 32. In addition, the maximum number of all counters in all devices is 1024 (for example, 64 devices with 16 counters each).
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceCounterConsumption#counters
+   */
+  readonly counters: { [key: string]: CounterV1Beta2 };
+
+}
+
+/**
+ * Converts an object of type 'DeviceCounterConsumptionV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceCounterConsumptionV1Beta2(obj: DeviceCounterConsumptionV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'counterSet': obj.counterSet,
+    'counters': ((obj.counters) === undefined) ? undefined : (Object.entries(obj.counters).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_CounterV1Beta2(i[1]) }), {})),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The device this taint is attached to has the "effect" on any claim which does not tolerate the taint and, through the claim, to pods using the claim.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceTaint
+ */
+export interface DeviceTaintV1Beta2 {
+  /**
+   * The effect of the taint on claims that do not tolerate the taint and through such claims on the pods using them. Valid effects are NoSchedule and NoExecute. PreferNoSchedule as used for nodes is not valid here.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceTaint#effect
+   */
+  readonly effect: string;
+
+  /**
+   * The taint key to be applied to a device. Must be a label name.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceTaint#key
+   */
+  readonly key: string;
+
+  /**
+   * TimeAdded represents the time at which the taint was added. Added automatically during create or update if not set.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceTaint#timeAdded
+   */
+  readonly timeAdded?: Date;
+
+  /**
+   * The taint value corresponding to the taint key. Must be a label value.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceTaint#value
+   */
+  readonly value?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTaintV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTaintV1Beta2(obj: DeviceTaintV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'effect': obj.effect,
+    'key': obj.key,
+    'timeAdded': obj.timeAdded?.toISOString(),
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Counter describes a quantity associated with a device.
+ *
+ * @schema io.k8s.api.resource.v1beta2.Counter
+ */
+export interface CounterV1Beta2 {
+  /**
+   * Value defines how much of a certain device counter is available.
+   *
+   * @schema io.k8s.api.resource.v1beta2.Counter#value
+   */
+  readonly value: Quantity;
+
+}
+
+/**
+ * Converts an object of type 'CounterV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_CounterV1Beta2(obj: CounterV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value?.value,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -31737,14 +35129,14 @@ export interface PodAffinityTerm {
   readonly labelSelector?: LabelSelector;
 
   /**
-   * MatchLabelKeys is a set of pod label keys to select which pods will be taken into consideration. The keys are used to lookup values from the incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)` to select the group of existing pods which pods will be taken into consideration for the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming pod labels will be ignored. The default value is empty. The same key is forbidden to exist in both matchLabelKeys and labelSelector. Also, matchLabelKeys cannot be set when labelSelector isn't set. This is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).
+   * MatchLabelKeys is a set of pod label keys to select which pods will be taken into consideration. The keys are used to lookup values from the incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)` to select the group of existing pods which pods will be taken into consideration for the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming pod labels will be ignored. The default value is empty. The same key is forbidden to exist in both matchLabelKeys and labelSelector. Also, matchLabelKeys cannot be set when labelSelector isn't set.
    *
    * @schema io.k8s.api.core.v1.PodAffinityTerm#matchLabelKeys
    */
   readonly matchLabelKeys?: string[];
 
   /**
-   * MismatchLabelKeys is a set of pod label keys to select which pods will be taken into consideration. The keys are used to lookup values from the incoming pod labels, those key-value labels are merged with `labelSelector` as `key notin (value)` to select the group of existing pods which pods will be taken into consideration for the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming pod labels will be ignored. The default value is empty. The same key is forbidden to exist in both mismatchLabelKeys and labelSelector. Also, mismatchLabelKeys cannot be set when labelSelector isn't set. This is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).
+   * MismatchLabelKeys is a set of pod label keys to select which pods will be taken into consideration. The keys are used to lookup values from the incoming pod labels, those key-value labels are merged with `labelSelector` as `key notin (value)` to select the group of existing pods which pods will be taken into consideration for the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming pod labels will be ignored. The default value is empty. The same key is forbidden to exist in both mismatchLabelKeys and labelSelector. Also, mismatchLabelKeys cannot be set when labelSelector isn't set.
    *
    * @schema io.k8s.api.core.v1.PodAffinityTerm#mismatchLabelKeys
    */
@@ -32557,6 +35949,165 @@ export function toJson_IpBlock(obj: IpBlock | undefined): Record<string, any> | 
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * DeviceSubRequest describes a request for device provided in the claim.spec.devices.requests[].firstAvailable array. Each is typically a request for a single resource like a device, but can also ask for several identical devices.
+ *
+ * DeviceSubRequest is similar to Request, but doesn't expose the AdminAccess or FirstAvailable fields, as those can only be set on the top-level request. AdminAccess is not supported for requests with a prioritized list, and recursive FirstAvailable fields are not supported.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest
+ */
+export interface DeviceSubRequestV1Alpha3 {
+  /**
+   * AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:
+   *
+   * - ExactCount: This request is for a specific number of devices.
+   * This is the default. The exact number is provided in the
+   * count field.
+   *
+   * - All: This request is for all of the matching devices in a pool.
+   * Allocation will fail if some devices are already allocated,
+   * unless adminAccess is requested.
+   *
+   * If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+   *
+   * More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest#allocationMode
+   */
+  readonly allocationMode?: string;
+
+  /**
+   * Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest#count
+   */
+  readonly count?: number;
+
+  /**
+   * DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.
+   *
+   * A class is required. Which classes are available depends on the cluster.
+   *
+   * Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest#deviceClassName
+   */
+  readonly deviceClassName: string;
+
+  /**
+   * Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format <main request>/<subrequest>.
+   *
+   * Must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest#name
+   */
+  readonly name: string;
+
+  /**
+   * Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest#selectors
+   */
+  readonly selectors?: DeviceSelectorV1Alpha3[];
+
+  /**
+   * If specified, the request's tolerations.
+   *
+   * Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+   *
+   * In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+   *
+   * The maximum number of tolerations is 16.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceSubRequest#tolerations
+   */
+  readonly tolerations?: DeviceTolerationV1Alpha3[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceSubRequestV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceSubRequestV1Alpha3(obj: DeviceSubRequestV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'allocationMode': obj.allocationMode,
+    'count': obj.count,
+    'deviceClassName': obj.deviceClassName,
+    'name': obj.name,
+    'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Alpha3(y)),
+    'tolerations': obj.tolerations?.map(y => toJson_DeviceTolerationV1Alpha3(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The ResourceClaim this DeviceToleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceToleration
+ */
+export interface DeviceTolerationV1Alpha3 {
+  /**
+   * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceToleration#effect
+   */
+  readonly effect?: string;
+
+  /**
+   * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceToleration#key
+   */
+  readonly key?: string;
+
+  /**
+   * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+   *
+   * @default Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+   * @schema io.k8s.api.resource.v1alpha3.DeviceToleration#operator
+   */
+  readonly operator?: string;
+
+  /**
+   * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceToleration#tolerationSeconds
+   */
+  readonly tolerationSeconds?: number;
+
+  /**
+   * Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceToleration#value
+   */
+  readonly value?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTolerationV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTolerationV1Alpha3(obj: DeviceTolerationV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'effect': obj.effect,
+    'key': obj.key,
+    'operator': obj.operator,
+    'tolerationSeconds': obj.tolerationSeconds,
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * DeviceAttribute must have exactly one field set.
  *
  * @schema io.k8s.api.resource.v1alpha3.DeviceAttribute
@@ -32610,6 +36161,45 @@ export function toJson_DeviceAttributeV1Alpha3(obj: DeviceAttributeV1Alpha3 | un
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * DeviceCounterConsumption defines a set of counters that a device will consume from a CounterSet.
+ *
+ * @schema io.k8s.api.resource.v1alpha3.DeviceCounterConsumption
+ */
+export interface DeviceCounterConsumptionV1Alpha3 {
+  /**
+   * CounterSet defines the set from which the counters defined will be consumed.
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceCounterConsumption#counterSet
+   */
+  readonly counterSet: string;
+
+  /**
+   * Counters defines the Counter that will be consumed by the device.
+   *
+   * The maximum number counters in a device is 32. In addition, the maximum number of all counters in all devices is 1024 (for example, 64 devices with 16 counters each).
+   *
+   * @schema io.k8s.api.resource.v1alpha3.DeviceCounterConsumption#counters
+   */
+  readonly counters: { [key: string]: CounterV1Alpha3 };
+
+}
+
+/**
+ * Converts an object of type 'DeviceCounterConsumptionV1Alpha3' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceCounterConsumptionV1Alpha3(obj: DeviceCounterConsumptionV1Alpha3 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'counterSet': obj.counterSet,
+    'counters': ((obj.counters) === undefined) ? undefined : (Object.entries(obj.counters).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_CounterV1Alpha3(i[1]) }), {})),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
  *
  * @schema io.k8s.api.core.v1.NodeSelectorRequirement
@@ -32648,6 +36238,165 @@ export function toJson_NodeSelectorRequirement(obj: NodeSelectorRequirement | un
     'key': obj.key,
     'operator': obj.operator,
     'values': obj.values?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceSubRequest describes a request for device provided in the claim.spec.devices.requests[].firstAvailable array. Each is typically a request for a single resource like a device, but can also ask for several identical devices.
+ *
+ * DeviceSubRequest is similar to Request, but doesn't expose the AdminAccess or FirstAvailable fields, as those can only be set on the top-level request. AdminAccess is not supported for requests with a prioritized list, and recursive FirstAvailable fields are not supported.
+ *
+ * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest
+ */
+export interface DeviceSubRequestV1Beta1 {
+  /**
+   * AllocationMode and its related fields define how devices are allocated to satisfy this subrequest. Supported values are:
+   *
+   * - ExactCount: This request is for a specific number of devices.
+   * This is the default. The exact number is provided in the
+   * count field.
+   *
+   * - All: This subrequest is for all of the matching devices in a pool.
+   * Allocation will fail if some devices are already allocated,
+   * unless adminAccess is requested.
+   *
+   * If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other subrequests must specify this field.
+   *
+   * More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest#allocationMode
+   */
+  readonly allocationMode?: string;
+
+  /**
+   * Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest#count
+   */
+  readonly count?: number;
+
+  /**
+   * DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.
+   *
+   * A class is required. Which classes are available depends on the cluster.
+   *
+   * Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest#deviceClassName
+   */
+  readonly deviceClassName: string;
+
+  /**
+   * Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format <main request>/<subrequest>.
+   *
+   * Must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest#name
+   */
+  readonly name: string;
+
+  /**
+   * Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this subrequest. All selectors must be satisfied for a device to be considered.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest#selectors
+   */
+  readonly selectors?: DeviceSelectorV1Beta1[];
+
+  /**
+   * If specified, the request's tolerations.
+   *
+   * Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+   *
+   * In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+   *
+   * The maximum number of tolerations is 16.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceSubRequest#tolerations
+   */
+  readonly tolerations?: DeviceTolerationV1Beta1[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceSubRequestV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceSubRequestV1Beta1(obj: DeviceSubRequestV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'allocationMode': obj.allocationMode,
+    'count': obj.count,
+    'deviceClassName': obj.deviceClassName,
+    'name': obj.name,
+    'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Beta1(y)),
+    'tolerations': obj.tolerations?.map(y => toJson_DeviceTolerationV1Beta1(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The ResourceClaim this DeviceToleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+ *
+ * @schema io.k8s.api.resource.v1beta1.DeviceToleration
+ */
+export interface DeviceTolerationV1Beta1 {
+  /**
+   * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceToleration#effect
+   */
+  readonly effect?: string;
+
+  /**
+   * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceToleration#key
+   */
+  readonly key?: string;
+
+  /**
+   * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+   *
+   * @default Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+   * @schema io.k8s.api.resource.v1beta1.DeviceToleration#operator
+   */
+  readonly operator?: string;
+
+  /**
+   * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceToleration#tolerationSeconds
+   */
+  readonly tolerationSeconds?: number;
+
+  /**
+   * Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceToleration#value
+   */
+  readonly value?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTolerationV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTolerationV1Beta1(obj: DeviceTolerationV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'effect': obj.effect,
+    'key': obj.key,
+    'operator': obj.operator,
+    'tolerationSeconds': obj.tolerationSeconds,
+    'value': obj.value,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -32730,6 +36479,291 @@ export function toJson_DeviceCapacityV1Beta1(obj: DeviceCapacityV1Beta1 | undefi
   if (obj === undefined) { return undefined; }
   const result = {
     'value': obj.value?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceCounterConsumption defines a set of counters that a device will consume from a CounterSet.
+ *
+ * @schema io.k8s.api.resource.v1beta1.DeviceCounterConsumption
+ */
+export interface DeviceCounterConsumptionV1Beta1 {
+  /**
+   * CounterSet is the name of the set from which the counters defined will be consumed.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceCounterConsumption#counterSet
+   */
+  readonly counterSet: string;
+
+  /**
+   * Counters defines the counters that will be consumed by the device.
+   *
+   * The maximum number counters in a device is 32. In addition, the maximum number of all counters in all devices is 1024 (for example, 64 devices with 16 counters each).
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceCounterConsumption#counters
+   */
+  readonly counters: { [key: string]: CounterV1Beta1 };
+
+}
+
+/**
+ * Converts an object of type 'DeviceCounterConsumptionV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceCounterConsumptionV1Beta1(obj: DeviceCounterConsumptionV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'counterSet': obj.counterSet,
+    'counters': ((obj.counters) === undefined) ? undefined : (Object.entries(obj.counters).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_CounterV1Beta1(i[1]) }), {})),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The device this taint is attached to has the "effect" on any claim which does not tolerate the taint and, through the claim, to pods using the claim.
+ *
+ * @schema io.k8s.api.resource.v1beta1.DeviceTaint
+ */
+export interface DeviceTaintV1Beta1 {
+  /**
+   * The effect of the taint on claims that do not tolerate the taint and through such claims on the pods using them. Valid effects are NoSchedule and NoExecute. PreferNoSchedule as used for nodes is not valid here.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceTaint#effect
+   */
+  readonly effect: string;
+
+  /**
+   * The taint key to be applied to a device. Must be a label name.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceTaint#key
+   */
+  readonly key: string;
+
+  /**
+   * TimeAdded represents the time at which the taint was added. Added automatically during create or update if not set.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceTaint#timeAdded
+   */
+  readonly timeAdded?: Date;
+
+  /**
+   * The taint value corresponding to the taint key. Must be a label value.
+   *
+   * @schema io.k8s.api.resource.v1beta1.DeviceTaint#value
+   */
+  readonly value?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTaintV1Beta1' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTaintV1Beta1(obj: DeviceTaintV1Beta1 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'effect': obj.effect,
+    'key': obj.key,
+    'timeAdded': obj.timeAdded?.toISOString(),
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * ExactDeviceRequest is a request for one or more identical devices.
+ *
+ * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest
+ */
+export interface ExactDeviceRequestV1Beta2 {
+  /**
+   * AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.
+   *
+   * This is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest#adminAccess
+   */
+  readonly adminAccess?: boolean;
+
+  /**
+   * AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:
+   *
+   * - ExactCount: This request is for a specific number of devices.
+   * This is the default. The exact number is provided in the
+   * count field.
+   *
+   * - All: This request is for all of the matching devices in a pool.
+   * At least one device must exist on the node for the allocation to succeed.
+   * Allocation will fail if some devices are already allocated,
+   * unless adminAccess is requested.
+   *
+   * If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+   *
+   * More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest#allocationMode
+   */
+  readonly allocationMode?: string;
+
+  /**
+   * Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest#count
+   */
+  readonly count?: number;
+
+  /**
+   * DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.
+   *
+   * A DeviceClassName is required.
+   *
+   * Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest#deviceClassName
+   */
+  readonly deviceClassName: string;
+
+  /**
+   * Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest#selectors
+   */
+  readonly selectors?: DeviceSelectorV1Beta2[];
+
+  /**
+   * If specified, the request's tolerations.
+   *
+   * Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+   *
+   * In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+   *
+   * The maximum number of tolerations is 16.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1beta2.ExactDeviceRequest#tolerations
+   */
+  readonly tolerations?: DeviceTolerationV1Beta2[];
+
+}
+
+/**
+ * Converts an object of type 'ExactDeviceRequestV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_ExactDeviceRequestV1Beta2(obj: ExactDeviceRequestV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'adminAccess': obj.adminAccess,
+    'allocationMode': obj.allocationMode,
+    'count': obj.count,
+    'deviceClassName': obj.deviceClassName,
+    'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Beta2(y)),
+    'tolerations': obj.tolerations?.map(y => toJson_DeviceTolerationV1Beta2(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * DeviceSubRequest describes a request for device provided in the claim.spec.devices.requests[].firstAvailable array. Each is typically a request for a single resource like a device, but can also ask for several identical devices.
+ *
+ * DeviceSubRequest is similar to ExactDeviceRequest, but doesn't expose the AdminAccess field as that one is only supported when requesting a specific device.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest
+ */
+export interface DeviceSubRequestV1Beta2 {
+  /**
+   * AllocationMode and its related fields define how devices are allocated to satisfy this subrequest. Supported values are:
+   *
+   * - ExactCount: This request is for a specific number of devices.
+   * This is the default. The exact number is provided in the
+   * count field.
+   *
+   * - All: This subrequest is for all of the matching devices in a pool.
+   * Allocation will fail if some devices are already allocated,
+   * unless adminAccess is requested.
+   *
+   * If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other subrequests must specify this field.
+   *
+   * More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest#allocationMode
+   */
+  readonly allocationMode?: string;
+
+  /**
+   * Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest#count
+   */
+  readonly count?: number;
+
+  /**
+   * DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.
+   *
+   * A class is required. Which classes are available depends on the cluster.
+   *
+   * Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest#deviceClassName
+   */
+  readonly deviceClassName: string;
+
+  /**
+   * Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format <main request>/<subrequest>.
+   *
+   * Must be a DNS label.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest#name
+   */
+  readonly name: string;
+
+  /**
+   * Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this subrequest. All selectors must be satisfied for a device to be considered.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest#selectors
+   */
+  readonly selectors?: DeviceSelectorV1Beta2[];
+
+  /**
+   * If specified, the request's tolerations.
+   *
+   * Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+   *
+   * In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+   *
+   * The maximum number of tolerations is 16.
+   *
+   * This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceSubRequest#tolerations
+   */
+  readonly tolerations?: DeviceTolerationV1Beta2[];
+
+}
+
+/**
+ * Converts an object of type 'DeviceSubRequestV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceSubRequestV1Beta2(obj: DeviceSubRequestV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'allocationMode': obj.allocationMode,
+    'count': obj.count,
+    'deviceClassName': obj.deviceClassName,
+    'name': obj.name,
+    'selectors': obj.selectors?.map(y => toJson_DeviceSelectorV1Beta2(y)),
+    'tolerations': obj.tolerations?.map(y => toJson_DeviceTolerationV1Beta2(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -33582,6 +37616,68 @@ export function toJson_ServiceAccountTokenProjection(obj: ServiceAccountTokenPro
     'audience': obj.audience,
     'expirationSeconds': obj.expirationSeconds,
     'path': obj.path,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The ResourceClaim this DeviceToleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+ *
+ * @schema io.k8s.api.resource.v1beta2.DeviceToleration
+ */
+export interface DeviceTolerationV1Beta2 {
+  /**
+   * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule and NoExecute.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceToleration#effect
+   */
+  readonly effect?: string;
+
+  /**
+   * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys. Must be a label name.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceToleration#key
+   */
+  readonly key?: string;
+
+  /**
+   * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+   *
+   * @default Equal. Exists is equivalent to wildcard for value, so that a ResourceClaim can tolerate all taints of a particular category.
+   * @schema io.k8s.api.resource.v1beta2.DeviceToleration#operator
+   */
+  readonly operator?: string;
+
+  /**
+   * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system. If larger than zero, the time when the pod needs to be evicted is calculated as <time when taint was adedd> + <toleration seconds>.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceToleration#tolerationSeconds
+   */
+  readonly tolerationSeconds?: number;
+
+  /**
+   * Value is the taint value the toleration matches to. If the operator is Exists, the value must be empty, otherwise just a regular string. Must be a label value.
+   *
+   * @schema io.k8s.api.resource.v1beta2.DeviceToleration#value
+   */
+  readonly value?: string;
+
+}
+
+/**
+ * Converts an object of type 'DeviceTolerationV1Beta2' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_DeviceTolerationV1Beta2(obj: DeviceTolerationV1Beta2 | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'effect': obj.effect,
+    'key': obj.key,
+    'operator': obj.operator,
+    'tolerationSeconds': obj.tolerationSeconds,
+    'value': obj.value,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});

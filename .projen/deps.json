@@ -14,10 +14,6 @@
       "type": "build"
     },
     {
-      "name": "@types/minimatch",
-      "type": "build"
-    },
-    {
       "name": "@types/node",
       "version": "16.18.78",
       "type": "build"
@@ -118,6 +114,11 @@
     {
       "name": "minimatch",
       "type": "bundled"
+    },
+    {
+      "name": "@types/glob",
+      "version": "^8",
+      "type": "override"
     },
     {
       "name": "**/downlevel-dts/**/typescript",
