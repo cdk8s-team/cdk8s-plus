@@ -208,4 +208,55 @@ describe('fromTcpSocket()', () => {
     });
   });
 
+  describe('fromGrpc()', () => {
+
+    test('minimal usage', () => {
+      // GIVEN
+      const container = new Container({ image: 'foobar', port: 5555 });
+
+      // WHEN
+      const min = Probe.fromGrpc( { port: 5555 } );
+
+      // THEN
+      expect(min._toKube(container)).toEqual({
+        grpc: {
+          port: 5555,
+        },
+        failureThreshold: 3,
+        initialDelaySeconds: undefined,
+        periodSeconds: undefined,
+        successThreshold: undefined,
+        timeoutSeconds: undefined,
+      });
+    });
+
+    test('options', () => {
+      // GIVEN
+      const container = new Container({ image: 'foobar', port: 5555 });
+
+      // WHEN
+      const min = Probe.fromGrpc({
+        port: 5555,
+        failureThreshold: 11,
+        initialDelaySeconds: Duration.minutes(1),
+        periodSeconds: Duration.seconds(5),
+        successThreshold: 3,
+        timeoutSeconds: Duration.minutes(2),
+      });
+
+      // THEN
+      expect(min._toKube(container)).toEqual({
+        grpc: {
+          port: 5555,
+        },
+        failureThreshold: 11,
+        initialDelaySeconds: 60,
+        periodSeconds: 5,
+        successThreshold: 3,
+        timeoutSeconds: 120,
+      });
+    });
+
+  });
+
 });

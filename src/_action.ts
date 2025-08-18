@@ -35,4 +35,11 @@ export class Action {
       httpHeaders: options.httpHeaders,
     };
   }
+
+  public static fromGrpc(container: Container, options: { port?: number; service?: string } = {}): k8s.GrpcAction {
+    return {
+      port: options.port ?? container.portNumber ?? 80,
+      service: options.service,
+    };
+  }
 }
