@@ -58,6 +58,10 @@ describe('fromHttpGet()', () => {
       successThreshold: 3,
       timeoutSeconds: Duration.minutes(2),
       host: '1.1.1.1',
+      httpHeaders: [{
+        name: 'A-Custom-Header',
+        value: 'some-value',
+      }],
     });
 
     // THEN
@@ -67,6 +71,12 @@ describe('fromHttpGet()', () => {
         port: k8s.IntOrString.fromNumber(5555),
         scheme: 'HTTP',
         host: '1.1.1.1',
+        httpHeaders: [
+          {
+            name: 'A-Custom-Header',
+            value: 'some-value',
+          },
+        ],
       },
       failureThreshold: 11,
       initialDelaySeconds: 60,
