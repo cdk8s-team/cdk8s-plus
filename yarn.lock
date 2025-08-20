@@ -1509,10 +1509,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.8, cdk8s@^2.70.7:
-  version "2.70.8"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.8.tgz#6d0e52a4d83621241bc1173feed861ccc88397fc"
-  integrity sha512-eyWpGJfJeJTcENWvchDAPvBH6JnyQbNZZYvrin1YcjLZ1RAWdSRVwYGqEupYekUR0r7NhG9kasm18n5iSy2MKw==
+cdk8s@2.70.9, cdk8s@^2.70.7:
+  version "2.70.9"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.9.tgz#cce2187308733720d0fa8a99607018b39df9cae2"
+  integrity sha512-N9zv2P0RDsi2PlRiZ8baqNE/1IVeedf2baeTt0lqJfC3dMCjgn2rrtoA2DHFWMR8fGVkH18ewrRlxIcXR1dqKQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.11"
@@ -2136,9 +2136,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.204:
-  version "1.5.206"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.206.tgz#06533a16504ab8155c6df5509d045bfb60b43c14"
-  integrity sha512-/eucXSTaI8L78l42xPurxdBzPTjAkMVCQO7unZCWk9LnZiwKcSvQUhF4c99NWQLwMQXxjlfoQy0+8m9U2yEDQQ==
+  version "1.5.207"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.207.tgz#0fedde3eec615065ee95531c09a10578644c5552"
+  integrity sha512-mryFrrL/GXDTmAtIVMVf+eIXM09BBPlO5IQ7lUyKmK8d+A4VpRGG+M3ofoVef6qyF8s60rJei8ymlJxjUA8Faw==
 
 emittery@^0.8.1:
   version "0.8.1"
