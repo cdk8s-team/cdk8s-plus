@@ -80,11 +80,10 @@ project.gitignore.exclude('.vscode/');
 
 const importdir = path.join('src', 'imports');
 
-const importTask = project.addTask('import', {
+project.addTask('import', {
   exec: `cdk8s -l typescript -o ${importdir} import k8s@${K8S_VERSION}`,
   description: 'Updates imports based on latest version of cdk8s-cli.',
 });
-project.compileTask.prependSpawn(importTask);
 
 project.addDevDeps('jsii-docgen@^3.8.31');
 // because jsii-docgen is so outdated, it accidentally introduces a transitive dependency on the broken @types/glob@9
