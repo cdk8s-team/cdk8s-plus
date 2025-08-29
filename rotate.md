@@ -47,8 +47,9 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      2. ([`README.md`](./README.md)): In the table of supported versions, add a new row and remove the oldest one.
      3. `yarn projen`
      4. `yarn rotate` # updates all version references in documenation
-     5. `yarn build`
-     6. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
+     5. `yarn run import` # codegen the k8s imports file based on the new schema.
+     6. `yarn build`
+     7. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
 
 8. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
 
