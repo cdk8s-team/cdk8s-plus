@@ -89,9 +89,6 @@
       "description": "Only compile",
       "steps": [
         {
-          "spawn": "import"
-        },
-        {
           "exec": "jsii --silence-warnings=reserved-word"
         }
       ]
