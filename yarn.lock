@@ -1488,21 +1488,21 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.201.25:
-  version "2.201.25"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.201.25.tgz#c9b51f21a9be27a639e7ab338dbfa4bafc981629"
-  integrity sha512-AC2DZV/vn77yEwEOfJrPeKjHGC891MRKiBkCGMUubjezJdcsMLrU7u6WVrBCfB9kQVFIBOZEeGvOyQ48l00Fuw==
+cdk8s-cli@^2.201.26:
+  version "2.201.26"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.201.26.tgz#3ae8d18dca61ab1cba4f393fa8e867f7da321c06"
+  integrity sha512-yZYcHGjicVEjS/XozyDKFR80hQxas/CN/d763W4rN01uarv5whQvYklspdVgbSZ6O22IGNfQwta+5jray2/N7g==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.70.13"
+    cdk8s "^2.70.14"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.114.1"
     colors "1.4.0"
     constructs "^10.4.2"
     fs-extra "^8"
     jsii-pacmak "^1.114.1"
-    jsii-rosetta "^5.9.4"
+    jsii-rosetta "^5.9.5"
     jsii-srcmak "0.1.1236"
     json2jsii "0.5.3"
     semver "^7.7.2"
@@ -1518,10 +1518,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.13, cdk8s@^2.70.13:
-  version "2.70.13"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.13.tgz#b947ad0acbf773d55c45abe336e785d5dac5d64a"
-  integrity sha512-28cfwkc4P5HUkiXM6zlYPUN82DJ/zvvw+E70MqA+D62Zsy38/42ZJPcilp7wFrq45R3rseipp4UHgepnvgA7xw==
+cdk8s@2.70.14, cdk8s@^2.70.14:
+  version "2.70.14"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.14.tgz#262b512427c96e7241f3067aaa9d869cdf6644d1"
+  integrity sha512-Mi/8h9S6jp8FInDx3Si+3UI7Moekw3KoeVBxcwcYME+26Sax7c+zn7CFBbEyGti1kU8QcuZEWlE4ZY5HZ8coXg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.11"
@@ -3972,10 +3972,10 @@ jsii-rosetta@^1.44.0:
     workerpool "^6.5.1"
     yargs "^16.2.0"
 
-jsii-rosetta@^5.5.4, jsii-rosetta@^5.9.4:
-  version "5.9.4"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.4.tgz#82ce40c5ed2817b65eb75f2b98deb7b036592db2"
-  integrity sha512-UHwCmY2uM1dWlOBsGtq6615bOdmrMzEW2VWc5EwiWCTTFZMpuodc4mlbgZWHkXnZvpEKr5sHpmXP8eJyeUtp/Q==
+jsii-rosetta@^5.5.4, jsii-rosetta@^5.9.5:
+  version "5.9.5"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.5.tgz#48e5f559b43f146069ea234c7fa496833dfe29a0"
+  integrity sha512-CpkaRtf/7sX8zbPUjGuqzCK3jjp3Ph5mvWReTZ/N/lUcn9OPE+/5/Uxy9c6N9Ht9lr8/CMgCWhI+VCp9WVprnA==
   dependencies:
     "@jsii/check-node" "1.113.0"
     "@jsii/spec" "^1.113.0"
