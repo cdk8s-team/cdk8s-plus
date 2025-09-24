@@ -4061,12 +4061,12 @@ jsii@~5.5.3:
     yargs "^17.7.2"
 
 jsii@~5.8.0:
-  version "5.8.18"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.18.tgz#55a6f6a70aaf758b3ebdbf5bf274fa8c8c6a0f2e"
-  integrity sha512-MG0VdBNAfIPl481J0hhDIwg/AVnUhLI0Y7IcsFqFaMQAEGm1op16EfMZJkNLqENqfW1sACtn1MG++hueYEg2Fw==
+  version "5.8.19"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.19.tgz#3bda9dda796905619405902779340703051593d4"
+  integrity sha512-oiRfmxXFzWY3kJSvO4pC3iery1z8It3IyZw6PAR4eT1Gs4ImcfvtVQ9zDvGDy4seRmXuqve0PbsMV4+KpmodIQ==
   dependencies:
-    "@jsii/check-node" "1.113.0"
-    "@jsii/spec" "^1.113.0"
+    "@jsii/check-node" "1.114.1"
+    "@jsii/spec" "^1.114.1"
     case "^1.6.3"
     chalk "^4"
     fast-deep-equal "^3.1.3"
