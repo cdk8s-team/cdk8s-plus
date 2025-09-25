@@ -4079,12 +4079,12 @@ jsii@~5.8.0:
     yargs "^17.7.2"
 
 jsii@~5.9.1:
-  version "5.9.5"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.5.tgz#1cad571fbdae00b6b9bcdfb0c2e14e33d256366a"
-  integrity sha512-GikXro2KssK7O96d1zc2Fz0Xhj3QmLC3m/OGDW2NGaJ+0Qa8uqvZI/BSXStpArhB8Z3alK5PemmBZYU+VpeCjQ==
+  version "5.9.6"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.6.tgz#8d908101262bc61e50d5353cb7ad13ba843a2448"
+  integrity sha512-OKy0/zkolKUXDZDv747g0f8AXiEmgRRWJ2lrWLDy7AAzDyQ9ZjRE/Fb4aeWbbstJXd5+F3yTf9ewhAcsQ1e8vw==
   dependencies:
     "@jsii/check-node" "1.114.1"
-    "@jsii/spec" "^1.114.1"
+    "@jsii/spec" "1.114.1"
     case "^1.6.3"
     chalk "^4"
     fast-deep-equal "^3.1.3"
