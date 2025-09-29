@@ -659,14 +659,6 @@
     chalk "^4.1.2"
     semver "^7.7.1"
 
-"@jsii/check-node@1.113.0":
-  version "1.113.0"
-  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.113.0.tgz#13075880ea626ba8738ee3a220fa6d83fe710091"
-  integrity sha512-6iPLiQiSVn8/D89ycIpj78cMfmxOIU/F9RUTVYwLqKPw4cxpR+BCC4N83WKyGkZxhOxULLa9f5q+rkWq/vAMpA==
-  dependencies:
-    chalk "^4.1.2"
-    semver "^7.7.2"
-
 "@jsii/check-node@1.114.1":
   version "1.114.1"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.114.1.tgz#9ff05988721cdee3d295b80a131e10e449e0571d"
@@ -682,7 +674,7 @@
   dependencies:
     ajv "^8.17.1"
 
-"@jsii/spec@1.114.1", "@jsii/spec@^1.105.0", "@jsii/spec@^1.112.0", "@jsii/spec@^1.113.0", "@jsii/spec@^1.114.1", "@jsii/spec@^1.44.0":
+"@jsii/spec@1.114.1", "@jsii/spec@^1.105.0", "@jsii/spec@^1.112.0", "@jsii/spec@^1.114.1", "@jsii/spec@^1.44.0":
   version "1.114.1"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.114.1.tgz#9c064d57f062d913bcfda25b5496bdf4c9c95c46"
   integrity sha512-SdjVQaNqLkTUK+2R0/t/MnM/NBvv1vzqxO5sn1nnoFD5Wlih8TFOIjl+Q8npzYmOtN+et3D+BMVYrxmVfq4X0w==
@@ -3992,12 +3984,12 @@ jsii-rosetta@^5.5.4, jsii-rosetta@^5.9.7:
     yargs "^17.7.2"
 
 jsii-rosetta@~5.8.0:
-  version "5.8.16"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.16.tgz#2451fe4c04feb4c7fdbeabf8ca4306af0cd26b43"
-  integrity sha512-7QXw45nL12l/A/cD/mP1//1D7J1FeyT4LCgcSqJWqSjPyorQcOs9f04kooLqlXRYVHDBT0X1KGYXfTqpNtEEDw==
+  version "5.8.17"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.17.tgz#936e7b9726117b38467e74e55f4c445000fb206a"
+  integrity sha512-uZHlbJD09DBvkI0FZG4rJZRCyiokaJ+bmE70JGXRsly3JA+wNdCrS4xSiWcICMdtt6LMrQ6eY6DSSFoPR0aSSQ==
   dependencies:
-    "@jsii/check-node" "1.113.0"
-    "@jsii/spec" "^1.113.0"
+    "@jsii/check-node" "1.114.1"
+    "@jsii/spec" "^1.114.1"
     "@xmldom/xmldom" "^0.9.8"
     chalk "^4"
     commonmark "^0.31.2"
@@ -4061,9 +4053,9 @@ jsii@~5.5.3:
     yargs "^17.7.2"
 
 jsii@~5.8.0:
-  version "5.8.19"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.19.tgz#3bda9dda796905619405902779340703051593d4"
-  integrity sha512-oiRfmxXFzWY3kJSvO4pC3iery1z8It3IyZw6PAR4eT1Gs4ImcfvtVQ9zDvGDy4seRmXuqve0PbsMV4+KpmodIQ==
+  version "5.8.20"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.8.20.tgz#6723d9a29434a412509c2e9494f84cd6ad94b2f3"
+  integrity sha512-WMvCAeqG+uXvbMq/0l2xzLN+XEsb+snFhMZ4OQAf6xhT9yY1RwH8jR83T+oJQLYKYxgtTCVkjMSyDR/pUAtJ8w==
   dependencies:
     "@jsii/check-node" "1.114.1"
     "@jsii/spec" "^1.114.1"
