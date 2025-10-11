@@ -78,3 +78,4 @@ docs/typescript.md
 docs/python.md
 docs/java.md
 !/.projenrc.ts
+.idea

@@ -3,6 +3,8 @@ import { Construct } from 'constructs';
 import * as container from './container';
 import { IScalable, ScalingTarget } from './horizontal-pod-autoscaler';
 import * as k8s from './imports/k8s';
+import { KubePersistentVolumeClaimProps, PodSpec, Quantity, VolumeResourceRequirements } from './imports/k8s';
+import { PersistentVolumeClaimProps } from './pvc';
 import * as service from './service';
 import * as workload from './workload';
 
@@ -34,17 +36,17 @@ export interface StatefulSetProps extends workload.WorkloadProps {
   readonly service?: service.Service;
 
   /**
-    * Number of desired pods.
-    *
-    * @default 1
-    */
+   * Number of desired pods.
+   *
+   * @default 1
+   */
   readonly replicas?: number;
 
   /**
-    * Pod management policy to use for this statefulset.
-    *
-    * @default PodManagementPolicy.ORDERED_READY
-    */
+   * Pod management policy to use for this statefulset.
+   *
+   * @default PodManagementPolicy.ORDERED_READY
+   */
   readonly podManagementPolicy?: PodManagementPolicy;
 
   /**
@@ -65,6 +67,16 @@ export interface StatefulSetProps extends workload.WorkloadProps {
    */
   readonly minReady?: Duration;
 
+  /**
+   * A list of PersistentVolumeClaim templates that will be created for each pod in the StatefulSet.
+   * The StatefulSet controller creates a PVC and a PV for each template based on the pod's ordinal index,
+   * ensuring stable storage across pod restarts and rescheduling.
+   *
+   * Each claim in this list must have at least one matching (by name) volumeMount in one of the containers.
+   *
+   * @default - No volume claim templates will be created.
+   */
+  readonly volumeClaimTemplates?: PersistentVolumeClaimTemplateProps[];
 }
 
 /**
@@ -95,13 +107,13 @@ export interface StatefulSetProps extends workload.WorkloadProps {
  */
 export class StatefulSet extends workload.Workload implements IScalable {
   /**
-    * Number of desired pods.
-    */
+   * Number of desired pods.
+   */
   public readonly replicas?: number;
 
   /**
-    * Management policy to use for the set.
-    */
+   * Management policy to use for the set.
+   */
   public readonly podManagementPolicy: PodManagementPolicy;
 
   /**
@@ -116,8 +128,8 @@ export class StatefulSet extends workload.Workload implements IScalable {
   public readonly minReady: Duration;
 
   /**
-    * @see base.Resource.apiObject
-    */
+   * @see base.Resource.apiObject
+   */
   protected readonly apiObject: ApiObject;
 
   public readonly resourceType = 'statefulsets';
@@ -125,6 +137,8 @@ export class StatefulSet extends workload.Workload implements IScalable {
   public hasAutoscaler = false;
 
   public readonly service: service.Service;
+
+  public volumeClaimTemplates?: PersistentVolumeClaimTemplateProps[];
 
   constructor(scope: Construct, id: string, props: StatefulSetProps) {
     super(scope, id, props);
@@ -138,10 +152,10 @@ export class StatefulSet extends workload.Workload implements IScalable {
     this.apiObject.addDependency(this.service);
 
     this.replicas = props.replicas;
-    this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate(),
+    this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate();
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
-
+    this.volumeClaimTemplates = props.volumeClaimTemplates;
     this.service.select(this);
 
     if (this.isolate) {
@@ -150,11 +164,25 @@ export class StatefulSet extends workload.Workload implements IScalable {
 
   }
 
-  private _createHeadlessService() {
+  public addVolumeClaimTemplate(template: PersistentVolumeClaimTemplateProps): StatefulSet {
+    if (this.volumeClaimTemplates?.some(t => t.name === template.name)) {
+      throw new Error(`A volume claim template with name "${template.name}" already exists`);
+    }
+    this.volumeClaimTemplates = this.volumeClaimTemplates
+      ? [...this.volumeClaimTemplates, template]
+      : [template];
+    return this;
+  }
 
+  private _createHeadlessService() {
     const myPorts = container.extractContainerPorts(this);
     const myPortNumbers = myPorts.map(p => p.number);
-    const ports: service.ServicePort[] = myPorts.map(p => ({ port: p.number, targetPort: p.number, protocol: p.protocol, name: p.name }));
+    const ports: service.ServicePort[] = myPorts.map(p => ({
+      port: p.number,
+      targetPort: p.number,
+      protocol: p.protocol,
+      name: p.name,
+    }));
     if (ports.length === 0) {
       throw new Error(`Unable to create a service for the stateful set ${this.name}: StatefulSet ports cannot be determined.`);
     }
@@ -179,8 +207,8 @@ export class StatefulSet extends workload.Workload implements IScalable {
   }
 
   /**
-    * @internal
-    */
+   * @internal
+   */
   public _toKube(): k8s.StatefulSetSpec {
     return {
       replicas: this.hasAutoscaler ? undefined : (this.replicas ?? 1),
@@ -192,8 +220,39 @@ export class StatefulSet extends workload.Workload implements IScalable {
       },
       selector: this._toLabelSelector(),
       podManagementPolicy: this.podManagementPolicy,
+      volumeClaimTemplates: this._toPersistentVolumeClaims(),
       updateStrategy: this.strategy._toKube(),
     };
+  }
+
+  /**
+   * @internal
+   */
+  public _toPodSpec(): k8s.PodSpec {
+    const podSpec = super._toPodSpec();
+    return {
+      ...podSpec,
+      volumes: this._filterPodSpecVolumes(podSpec),
+    };
+  }
+
+  /**
+   * @internal
+   */
+  private _filterPodSpecVolumes(podSpec: PodSpec) {
+    // When using volumeClaimTemplates, the volumes with matching names should not be included in the pod spec
+    if (this.volumeClaimTemplates && podSpec.volumes) {
+      const volumeClaimNames = this.volumeClaimTemplates.map(vct => vct.name);
+      const volumesWithNoTemplates = podSpec.volumes.filter(vol => !volumeClaimNames.includes(vol.name));
+
+      // If there are no volumes after filtering, don't include volumes property
+      if (volumesWithNoTemplates.length === 0) {
+        return undefined;
+      } else {
+        return volumesWithNoTemplates;
+      }
+    }
+    return undefined;
   }
 
   /**
@@ -214,6 +273,24 @@ export class StatefulSet extends workload.Workload implements IScalable {
       containers: this.containers,
       replicas: this.replicas,
     };
+  }
+
+  public _toPersistentVolumeClaims(): KubePersistentVolumeClaimProps[] | undefined {
+    return this.volumeClaimTemplates?.map(template => {
+      const resources: VolumeResourceRequirements = template.storage
+        ? { requests: { storage: Quantity.fromString(template.storage.asString()) } }
+        : {};
+      return {
+        metadata: {
+          name: template.name,
+        },
+        spec: {
+          accessModes: template.accessModes,
+          storageClassName: template.storageClassName,
+          resources,
+        },
+      };
+    });
   }
 }
 
@@ -269,7 +346,8 @@ export class StatefulSetUpdateStrategy {
     });
   }
 
-  private constructor(private readonly strategy: k8s.StatefulSetUpdateStrategy) {}
+  private constructor(private readonly strategy: k8s.StatefulSetUpdateStrategy) {
+  }
 
   /**
    * @internal
@@ -278,4 +356,17 @@ export class StatefulSetUpdateStrategy {
     return this.strategy;
   }
 
+}
+
+/**
+ * A PersistentVolumeClaim template for StatefulSets
+ */
+export interface PersistentVolumeClaimTemplateProps extends PersistentVolumeClaimProps {
+  /**
+   * The name of the claim that the StatefulSet controller will create for each pod.
+   * This will be used to name the created PVC in the format <claim-name>-<pod-name>
+   *
+   * This name should match the name of a volume mount in one of the containers.
+   */
+  readonly name: string;
 }
