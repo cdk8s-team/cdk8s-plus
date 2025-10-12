@@ -166,10 +166,6 @@ export abstract class AbstractPod extends base.Resource implements IPodSelector,
     this._volumes.set(vol.name, vol);
   }
 
-  protected removeVolume(volName: string): void {
-    this._volumes.delete(volName);
-  }
-
   /**
    * @see ISubect.toSubjectConfiguration()
    */
