@@ -155,23 +155,21 @@ export class StatefulSet extends workload.Workload implements IScalable {
     this.strategy = props.strategy ?? StatefulSetUpdateStrategy.rollingUpdate();
     this.podManagementPolicy = props.podManagementPolicy ?? PodManagementPolicy.ORDERED_READY;
     this.minReady = props.minReady ?? Duration.seconds(0);
-    this.volumeClaimTemplates = props.volumeClaimTemplates;
+    props?.volumeClaimTemplates?.forEach(template => this.addVolumeClaimTemplate(template));
     this.service.select(this);
 
     if (this.isolate) {
       this.connections.isolate();
     }
-
   }
 
-  public addVolumeClaimTemplate(template: PersistentVolumeClaimTemplateProps): StatefulSet {
+  public addVolumeClaimTemplate(template: PersistentVolumeClaimTemplateProps) {
     if (this.volumeClaimTemplates?.some(t => t.name === template.name)) {
       throw new Error(`A volume claim template with name "${template.name}" already exists`);
     }
     this.volumeClaimTemplates = this.volumeClaimTemplates
       ? [...this.volumeClaimTemplates, template]
       : [template];
-    return this;
   }
 
   private _createHeadlessService() {
@@ -276,6 +274,12 @@ export class StatefulSet extends workload.Workload implements IScalable {
   }
 
   public _toPersistentVolumeClaims(): KubePersistentVolumeClaimProps[] | undefined {
+    const volumeNames = this.containers.flatMap(it => it.mounts).map(mount => mount.volume.name);
+    this.volumeClaimTemplates?.forEach(t => {
+      if (!volumeNames.includes(t.name)) {
+        throw new Error(`Volume claim template with name "${t.name}" is not used by any container mount`);
+      }
+    });
     return this.volumeClaimTemplates?.map(template => {
       const resources: VolumeResourceRequirements = template.storage
         ? { requests: { storage: Quantity.fromString(template.storage.asString()) } }

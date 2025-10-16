@@ -269,3 +269,25 @@ test('volumeClaimTemplates', () => {
 
   expect(Testing.synth(chart)).toMatchSnapshot();
 });
+
+test('missing volumeMount for volumeClaimTemplate', () => {
+  const chart = Testing.chart();
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'foobar',
+        portNumber: 80,
+      },
+    ],
+    volumeClaimTemplates: [{
+      name: 'data',
+      storage: Size.gibibytes(20),
+      accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD],
+      storageClassName: 'standard',
+    }],
+  });
+
+  expect(() => {
+    Testing.synth(chart);
+  }).toThrow('Volume claim template with name "data" is not used by any container mount');
+});
