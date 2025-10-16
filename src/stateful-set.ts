@@ -273,7 +273,10 @@ export class StatefulSet extends workload.Workload implements IScalable {
     };
   }
 
-  public _toPersistentVolumeClaims(): KubePersistentVolumeClaimProps[] | undefined {
+  /**
+   * @internal
+   */
+  private _toPersistentVolumeClaims(): KubePersistentVolumeClaimProps[] | undefined {
     const volumeNames = this.containers.flatMap(it => it.mounts).map(mount => mount.volume.name);
     this.volumeClaimTemplates?.forEach(t => {
       if (!volumeNames.includes(t.name)) {
