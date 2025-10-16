@@ -213,8 +213,6 @@ Array [
 ]
 `;
 
-exports[`missing volumeMount for volumeClaimTemplate 1`] = `"Failed serializing construct at path 'test/StatefulSet/Resource' with name 'test-statefulset-c8a6ec86': Error: Volume claim template with name \\"data\\" is not used by any container mount"`;
-
 exports[`volumeClaimTemplates 1`] = `
 Array [
   Object {
