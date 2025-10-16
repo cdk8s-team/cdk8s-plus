@@ -45,20 +45,28 @@ When working with StatefulSets, you can use PersistentVolumeClaim templates to c
 import * as kplus from 'cdk8s-plus-32';
 import { Size } from 'cdk8s';
 
-const volume = Volume.fromName(chart, "pvc-template", "data-volume");
+const dataVolume = Volume.fromName(chart, "pvc-template-data", "data-volume")
 
 // Create a StatefulSet with a PVC template
 const statefulSet = new kplus.StatefulSet(this, 'StatefulSet', {
   containers: [{
     image: 'nginx',
     volumeMounts: [{
-      volume,
+      volume: dataVolume,
+      path: '/data',
+    }, {
+      volume: Volume.fromName(chart, "pvc-template-temp", "temp-volume"),
       path: '/data',
     }],
   }],
   // Define PVC templates during initialization
   volumeClaimTemplates: [{
-    name: 'data-volume',  // Must match a volume mount name in a container
+    name: dataVolume.name,
+    storage: Size.gibibytes(10),
+    accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE],
+    storageClassName: 'standard',  // Optional: Specify the storage class
+  }, {
+    name: 'temp-volume',  // Must match a volume mount name in a container
     storage: Size.gibibytes(10),
     accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE],
     storageClassName: 'standard',  // Optional: Specify the storage class
