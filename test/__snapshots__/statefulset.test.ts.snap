@@ -212,3 +212,172 @@ Array [
   },
 ]
 `;
+
+exports[`volumeClaimTemplates 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "immutable": false,
+    "kind": "Secret",
+    "metadata": Object {
+      "name": "test-awssecret-c8d3e80d",
+    },
+    "stringData": Object {},
+  },
+  Object {
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": Object {
+      "name": "test-statefulset-service-c8d576f5",
+    },
+    "spec": Object {
+      "clusterIP": "None",
+      "externalIPs": Array [],
+      "ports": Array [
+        Object {
+          "port": 80,
+          "targetPort": 80,
+        },
+      ],
+      "selector": Object {
+        "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+      },
+      "type": "ClusterIP",
+    },
+  },
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "StatefulSet",
+    "metadata": Object {
+      "name": "test-statefulset-c8a6ec86",
+    },
+    "spec": Object {
+      "minReadySeconds": 0,
+      "podManagementPolicy": "OrderedReady",
+      "replicas": 1,
+      "selector": Object {
+        "matchLabels": Object {
+          "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+        },
+      },
+      "serviceName": "test-statefulset-service-c8d576f5",
+      "template": Object {
+        "metadata": Object {
+          "labels": Object {
+            "cdk8s.io/metadata.addr": "test-StatefulSet-c809b559",
+          },
+        },
+        "spec": Object {
+          "automountServiceAccountToken": false,
+          "containers": Array [
+            Object {
+              "image": "foobar",
+              "imagePullPolicy": "Always",
+              "name": "main",
+              "ports": Array [
+                Object {
+                  "containerPort": 80,
+                },
+              ],
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "1500m",
+                  "memory": "2048Mi",
+                },
+                "requests": Object {
+                  "cpu": "1000m",
+                  "memory": "512Mi",
+                },
+              },
+              "securityContext": Object {
+                "allowPrivilegeEscalation": false,
+                "privileged": false,
+                "readOnlyRootFilesystem": true,
+                "runAsNonRoot": true,
+              },
+              "startupProbe": Object {
+                "failureThreshold": 3,
+                "tcpSocket": Object {
+                  "port": 80,
+                },
+              },
+              "volumeMounts": Array [
+                Object {
+                  "mountPath": "/mnt/data",
+                  "name": "data",
+                },
+                Object {
+                  "mountPath": "/mnt/temp",
+                  "name": "temp",
+                },
+                Object {
+                  "mountPath": "/mnt/secret",
+                  "name": "secret-test-awssecret-c8d3e80d",
+                },
+              ],
+            },
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "hostNetwork": false,
+          "restartPolicy": "Always",
+          "securityContext": Object {
+            "fsGroupChangePolicy": "Always",
+            "runAsNonRoot": true,
+          },
+          "setHostnameAsFQDN": false,
+          "shareProcessNamespace": false,
+          "terminationGracePeriodSeconds": 30,
+          "volumes": Array [
+            Object {
+              "name": "secret-test-awssecret-c8d3e80d",
+              "secret": Object {
+                "secretName": "test-awssecret-c8d3e80d",
+              },
+            },
+          ],
+        },
+      },
+      "updateStrategy": Object {
+        "rollingUpdate": Object {
+          "partition": 0,
+        },
+        "type": "RollingUpdate",
+      },
+      "volumeClaimTemplates": Array [
+        Object {
+          "metadata": Object {
+            "name": "data",
+          },
+          "spec": Object {
+            "accessModes": Array [
+              "ReadWriteOncePod",
+            ],
+            "resources": Object {
+              "requests": Object {
+                "storage": "20Gi",
+              },
+            },
+            "storageClassName": "standard",
+          },
+        },
+        Object {
+          "metadata": Object {
+            "name": "temp",
+          },
+          "spec": Object {
+            "accessModes": Array [
+              "ReadWriteOncePod",
+            ],
+            "resources": Object {
+              "requests": Object {
+                "storage": "20Gi",
+              },
+            },
+            "storageClassName": "standard",
+          },
+        },
+      ],
+    },
+  },
+]
+`;

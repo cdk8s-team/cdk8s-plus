@@ -1,7 +1,7 @@
-import { Testing, ApiObject, Duration } from 'cdk8s';
+import { Testing, ApiObject, Duration, Size } from 'cdk8s';
 import { Node } from 'constructs';
 import * as kplus from '../src';
-import { StatefulSetUpdateStrategy, k8s } from '../src';
+import { StatefulSetUpdateStrategy, k8s, Volume } from '../src';
 
 test('defaultChild', () => {
 
@@ -205,4 +205,89 @@ test('Can be isolated', () => {
   const networkPolicy = manifest[2].spec;
   expect(networkPolicy.podSelector.matchLabels).toBeDefined;
   expect(networkPolicy.policyTypes).toEqual(['Egress', 'Ingress']);
+});
+
+test('volumeClaimTemplates', () => {
+  const chart = Testing.chart();
+  const secret = new kplus.Secret(chart, 'AwsSecret');
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'foobar',
+        portNumber: 80,
+        volumeMounts: [
+          {
+            volume: Volume.fromName(chart, 'data', 'data'),
+            path: '/mnt/data',
+          }, {
+            volume: Volume.fromName(chart, 'temp', 'temp'),
+            path: '/mnt/temp',
+          }, {
+            volume: Volume.fromSecret(chart, 'secret', secret),
+            path: '/mnt/secret',
+          },
+        ],
+      },
+    ],
+    volumeClaimTemplates: [{
+      name: 'data',
+      storage: Size.gibibytes(20),
+      accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD],
+      storageClassName: 'standard',
+    }],
+  }).addVolumeClaimTemplate({
+    name: 'temp',
+    storage: Size.gibibytes(20),
+    accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD],
+    storageClassName: 'standard',
+  });
+
+  const synthesized = Testing.synth(chart);
+  const spec: k8s.StatefulSetSpec = synthesized[2].spec;
+  expect(spec.template.spec?.volumes).toEqual([{
+    name: 'secret-test-awssecret-c8d3e80d',
+    secret: { secretName: 'test-awssecret-c8d3e80d' },
+  }]);
+  expect(spec.volumeClaimTemplates).toEqual([
+    {
+      metadata: { name: 'data' },
+      spec: {
+        accessModes: ['ReadWriteOncePod'],
+        resources: { requests: { storage: '20Gi' } },
+        storageClassName: 'standard',
+      },
+    },
+    {
+      metadata: { name: 'temp' },
+      spec: {
+        accessModes: ['ReadWriteOncePod'],
+        resources: { requests: { storage: '20Gi' } },
+        storageClassName: 'standard',
+      },
+    },
+  ]);
+
+  expect(Testing.synth(chart)).toMatchSnapshot();
+});
+
+test('missing volumeMount for volumeClaimTemplate', () => {
+  const chart = Testing.chart();
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'foobar',
+        portNumber: 80,
+      },
+    ],
+    volumeClaimTemplates: [{
+      name: 'data',
+      storage: Size.gibibytes(20),
+      accessModes: [kplus.PersistentVolumeAccessMode.READ_WRITE_ONCE_POD],
+      storageClassName: 'standard',
+    }],
+  });
+
+  expect(() => {
+    Testing.synth(chart);
+  }).toThrow('Volume claim template with name "data" is not used by any container mount');
 });
