@@ -486,7 +486,8 @@ export interface AbstractPodProps extends base.ResourceProps {
 /**
  * Properties for `Pod`.
  */
-export interface PodProps extends AbstractPodProps {}
+export interface PodProps extends AbstractPodProps {
+}
 
 /**
  * Options for `LabelSelector.of`.
@@ -515,7 +516,8 @@ export class LabelSelector {
 
   private constructor(
     private readonly expressions: LabelExpression[],
-    private readonly labels: { [key: string]: string }) {}
+    private readonly labels: { [key: string]: string }) {
+  }
 
   public isEmpty() {
     return this.expressions.length === 0 && Object.keys(this.labels).length === 0;
@@ -529,7 +531,11 @@ export class LabelSelector {
       return {};
     }
     return {
-      matchExpressions: undefinedIfEmpty(this.expressions.map(q => ({ key: q.key, operator: q.operator, values: q.values }))),
+      matchExpressions: undefinedIfEmpty(this.expressions.map(q => ({
+        key: q.key,
+        operator: q.operator,
+        values: q.values,
+      }))),
       matchLabels: undefinedIfEmpty(this.labels),
     };
   }
@@ -1199,10 +1205,10 @@ export interface PodsSelectOptions {
   readonly labels?: { [key: string]: string };
 
   /**
-    * Expressions the pods must satisify.
-    *
-    * @default - no expressions requirements.
-    */
+   * Expressions the pods must satisify.
+   *
+   * @default - no expressions requirements.
+   */
   readonly expressions?: LabelExpression[];
 
   /**
@@ -1234,7 +1240,8 @@ export class Pods extends Construct implements IPodSelector {
     return Pods.select(scope, id, { namespaces: options.namespaces });
   }
 
-  constructor(scope: Construct, id: string,
+  constructor(
+    scope: Construct, id: string,
     private readonly expressions?: LabelExpression[],
     private readonly labels?: { [key: string]: string },
     private readonly namespaces?: namespace.INamespaceSelector) {
@@ -1271,21 +1278,24 @@ export class Pods extends Construct implements IPodSelector {
  * A node that is matched by label selectors.
  */
 export class LabeledNode {
-  public constructor(public readonly labelSelector: NodeLabelQuery[]) {};
+  public constructor(public readonly labelSelector: NodeLabelQuery[]) {
+  };
 }
 
 /**
  * A node that is matched by taint selectors.
  */
 export class TaintedNode {
-  public constructor(public readonly taintSelector: NodeTaintQuery[]) {};
+  public constructor(public readonly taintSelector: NodeTaintQuery[]) {
+  };
 }
 
 /**
  * A node that is matched by its name.
  */
 export class NamedNode {
-  public constructor(public readonly name: string) {};
+  public constructor(public readonly name: string) {
+  };
 }
 
 /**
@@ -1361,7 +1371,8 @@ export class Topology {
     return new Topology(key);
   }
 
-  private constructor(public readonly key: string) {};
+  private constructor(public readonly key: string) {
+  };
 }
 
 /**
@@ -1428,7 +1439,8 @@ export class PodScheduling {
   private _tolerations: k8s.Toleration[] = [];
   private _nodeName?: string;
 
-  constructor(protected readonly instance: AbstractPod) {}
+  constructor(protected readonly instance: AbstractPod) {
+  }
 
   /**
    * Assign this pod a specific node by name.
@@ -1690,7 +1702,8 @@ export interface PodConnectionsAllowFromOptions {
  */
 export class PodConnections {
 
-  constructor(protected readonly instance: AbstractPod) {}
+  constructor(protected readonly instance: AbstractPod) {
+  }
 
   /**
    * Allow network traffic from this pod to the peer.
