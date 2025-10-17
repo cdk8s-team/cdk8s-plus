@@ -76,7 +76,7 @@ const project = new Cdk8sTeamJsiiProject({
 // identical to npm defaults.
 project.package.addField('publishConfig', { access: 'public' });
 
-project.gitignore.exclude('.vscode/');
+project.gitignore.exclude('.vscode/', '.idea/');
 
 const importdir = path.join('src', 'imports');
 
