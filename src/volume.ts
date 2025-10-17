@@ -1,5 +1,5 @@
 import { Names, Size } from 'cdk8s';
-import { IConstruct, Construct } from 'constructs';
+import { Construct, IConstruct } from 'constructs';
 import * as configmap from './config-map';
 import * as k8s from './imports/k8s';
 import * as pvc from './pvc';
@@ -127,7 +127,7 @@ export class Volume extends Construct implements IStorage {
    * @param configMap The config map to use to populate the volume.
    * @param options Options
    */
-  public static fromConfigMap(scope: Construct, id: string, configMap: configmap.IConfigMap, options: ConfigMapVolumeOptions = { }): Volume {
+  public static fromConfigMap(scope: Construct, id: string, configMap: configmap.IConfigMap, options: ConfigMapVolumeOptions = {}): Volume {
     return new Volume(scope, id, options.name ?? `configmap-${configMap.name}`, {
       configMap: {
         name: configMap.name,
@@ -150,7 +150,7 @@ export class Volume extends Construct implements IStorage {
    *
    * @param options - Additional options.
    */
-  public static fromEmptyDir(scope: Construct, id: string, name: string, options: EmptyDirVolumeOptions = { }): Volume {
+  public static fromEmptyDir(scope: Construct, id: string, name: string, options: EmptyDirVolumeOptions = {}): Volume {
     return new Volume(scope, id, name, {
       emptyDir: {
         medium: options.medium,
@@ -176,7 +176,7 @@ export class Volume extends Construct implements IStorage {
    * @param secr The secret to use to populate the volume.
    * @param options Options
    */
-  public static fromSecret(scope: Construct, id: string, secr: secret.ISecret, options: SecretVolumeOptions = { }): Volume {
+  public static fromSecret(scope: Construct, id: string, secr: secret.ISecret, options: SecretVolumeOptions = {}): Volume {
     return new Volume(scope, id, options.name ?? `secret-${secr.name}`, {
       secret: {
         secretName: secr.name,
@@ -194,7 +194,8 @@ export class Volume extends Construct implements IStorage {
    *
    * @see https://kubernetes.io/docs/concepts/storage/persistent-volumes/
    */
-  public static fromPersistentVolumeClaim(scope: Construct, id: string,
+  public static fromPersistentVolumeClaim(
+    scope: Construct, id: string,
     claim: pvc.IPersistentVolumeClaim,
     options: PersistentVolumeClaimVolumeOptions = {}): Volume {
     return new Volume(scope, id, options.name ?? `pvc-${claim.name}`, {
@@ -246,7 +247,7 @@ export class Volume extends Construct implements IStorage {
    * @param driver The name of the CSI driver to use to populate the volume.
    * @param options Options for the CSI volume, including driver-specific ones.
    */
-  public static fromCsi(scope: Construct, id: string, driver: string, options: CsiVolumeOptions = { }): Volume {
+  public static fromCsi(scope: Construct, id: string, driver: string, options: CsiVolumeOptions = {}): Volume {
     return new Volume(scope, id, options.name ?? Names.toDnsLabel(scope, { extra: [id] }), {
       csi: {
         driver: driver,
@@ -258,10 +259,19 @@ export class Volume extends Construct implements IStorage {
   }
 
   /**
-    * @internal
+   * Create a volume with an arbitrary name and no configuration.
+   */
+  public static fromName(scope: Construct, id: string, name: string): Volume {
+    return new Volume(scope, id, name, {});
+  }
+
+  /**
+   * @internal
    */
   private static renderItems = (items?: { [key: string]: PathMapping }): undefined | Array<k8s.KeyToPath> => {
-    if (!items) { return undefined; }
+    if (!items) {
+      return undefined;
+    }
     const result = new Array<k8s.KeyToPath>();
     for (const key of Object.keys(items).sort()) {
       result.push({
@@ -274,7 +284,8 @@ export class Volume extends Construct implements IStorage {
   };
 
 
-  private constructor(scope: Construct, id: string,
+  private constructor(
+    scope: Construct, id: string,
     public readonly name: string,
     private readonly config: Omit<k8s.Volume, 'name'>) {
     super(scope, id);
