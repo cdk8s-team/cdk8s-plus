@@ -74,7 +74,7 @@
     },
     {
       "name": "jsii-docgen",
-      "version": "^3.8.31",
+      "version": "^10.5.0",
       "type": "build"
     },
     {
@@ -114,11 +114,6 @@
     {
       "name": "minimatch",
       "type": "bundled"
-    },
-    {
-      "name": "@types/glob",
-      "version": "^8",
-      "type": "override"
     },
     {
       "name": "**/downlevel-dts/**/typescript",
