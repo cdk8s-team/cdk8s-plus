@@ -85,9 +85,6 @@ project.addTask('import', {
   description: 'Updates imports based on latest version of cdk8s-cli.',
 });
 
-project.addDevDeps('jsii-docgen@^3.8.31');
-// because jsii-docgen is so outdated, it accidentally introduces a transitive dependency on the broken @types/glob@9
-project.package.addPackageResolutions('@types/glob@^8');
 const docgenTask = project.tasks.tryFind('docgen')!;
 docgenTask.reset();
 for (const lang of ['typescript', 'python', 'java']) {
