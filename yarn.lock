@@ -645,14 +645,6 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@jsii/check-node@1.114.1":
-  version "1.114.1"
-  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.114.1.tgz#9ff05988721cdee3d295b80a131e10e449e0571d"
-  integrity sha512-SE9H1xBo4D+y259zRWqbrUnWVzCzxZh8ek2G1u5P+wP1n86GcgU+vz8uhJfGagdWFwW1EMW6t4PkPvbYoQG0yw==
-  dependencies:
-    chalk "^4.1.2"
-    semver "^7.7.2"
-
 "@jsii/check-node@1.117.0":
   version "1.117.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.117.0.tgz#44110172f6b4df86c3f0172599c64d2f08ce362c"
@@ -669,7 +661,7 @@
     chalk "^4.1.2"
     semver "^7.7.2"
 
-"@jsii/spec@1.118.0", "@jsii/spec@^1.114.1", "@jsii/spec@^1.117.0", "@jsii/spec@^1.118.0":
+"@jsii/spec@1.118.0", "@jsii/spec@^1.117.0", "@jsii/spec@^1.118.0":
   version "1.118.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.118.0.tgz#66d6da3089e002ee3ee89dcc6e9d284a039acf94"
   integrity sha512-aVe535/sN1EW88DYiEO3r0gqkKJ7ob0yfWC8+c1GVEayAecuvBjmwzzc7oDIIOthZ7PT3OBJ2xPqGqtbCyR3Uw==
@@ -3931,18 +3923,18 @@ jsii-rosetta@^5.9.13, jsii-rosetta@^5.9.3:
     yargs "^17.7.2"
 
 jsii-rosetta@~5.8.0:
-  version "5.8.17"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.17.tgz#936e7b9726117b38467e74e55f4c445000fb206a"
-  integrity sha512-uZHlbJD09DBvkI0FZG4rJZRCyiokaJ+bmE70JGXRsly3JA+wNdCrS4xSiWcICMdtt6LMrQ6eY6DSSFoPR0aSSQ==
+  version "5.8.18"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.18.tgz#774bd9d0af0931f4ed42310ed56304a192c83620"
+  integrity sha512-DWR6DzOIuM+J2awuHNmelZwQSkRu0prD5xboHfuO04HtjuoKwd/crwd74/dD0L3P5yZOHEYcroQObGwziEQ0+g==
   dependencies:
-    "@jsii/check-node" "1.114.1"
-    "@jsii/spec" "^1.114.1"
+    "@jsii/check-node" "^1.118.0"
+    "@jsii/spec" "^1.118.0"
     "@xmldom/xmldom" "^0.9.8"
     chalk "^4"
     commonmark "^0.31.2"
     fast-glob "^3.3.3"
     jsii "~5.8.0"
-    semver "^7.7.2"
+    semver "^7.7.3"
     semver-intersect "^1.5.0"
     stream-json "^1.9.1"
     typescript "~5.8"
