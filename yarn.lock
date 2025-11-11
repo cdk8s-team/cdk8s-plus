@@ -1573,9 +1573,9 @@ co@^4.6.0:
   integrity sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==
 
 codemaker@^1.118.0:
-  version "1.118.0"
-  resolved "https://registry.yarnpkg.com/codemaker/-/codemaker-1.118.0.tgz#2587611d167bdece0beff9f2748b2baae04c655b"
-  integrity sha512-d6ddG2oKNwkYBRJtsdEaKbJLBaxZJO0ImSG89wi6j5y549olTB3ERsqGGRZ47HlRuaVpkbOXnG/kb8I6ELxtMA==
+  version "1.119.0"
+  resolved "https://registry.yarnpkg.com/codemaker/-/codemaker-1.119.0.tgz#4af2f06b4e60494455aaec25888be0b1458df7e5"
+  integrity sha512-2l3t8Dc2y/jDVk0munVT3K5bPeanEpKsgCEwO0KsBY87MCxnTTzJCQxVyd7+AeVIy7LRMNkXfNAziVP53r6e9g==
   dependencies:
     camelcase "^6.3.0"
     decamelize "^5.0.1"
@@ -4825,10 +4825,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.98.9:
-  version "0.98.9"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.98.9.tgz#8e2687cbba8abfe1392f5d430c7272e66224e2b2"
-  integrity sha512-zi7tMb66he3K0jfaY7P1EojPyfu1xgM4YbWqEWVopM9ywCHXjmnQ11QxxaFMs8lDSPcZ6Rb6W3NLhIciLzDRUw==
+projen@^0.98.10:
+  version "0.98.10"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.98.10.tgz#d1bcd326a9c5fd36534224b9519920dfa46375f4"
+  integrity sha512-ovf0Iv0qw51xYL91JKii+t0UpKCL0Kf0Xy7LYOJ1RIt0kY581JX9QGqK7LfLXgK37gPncaXCOrpU6FgPtHL1Gg==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
