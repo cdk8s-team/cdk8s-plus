@@ -653,7 +653,7 @@
     chalk "^4.1.2"
     semver "^7.7.2"
 
-"@jsii/check-node@1.119.0", "@jsii/check-node@^1.118.0":
+"@jsii/check-node@1.119.0", "@jsii/check-node@^1.118.0", "@jsii/check-node@^1.119.0":
   version "1.119.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.119.0.tgz#d4acb0ada485114c8c2b4ad34d8c4bbc418f66b8"
   integrity sha512-dJ6hz+kpDWC/gAR7X5gmZVWjHX24Nlh2YEYKfY4r/NXrAp+2tdQ1Xhzt1fgOyh0nea+yLdiBLjkOzE1sRIPQFA==
@@ -3931,12 +3931,12 @@ jsii-rosetta@^5.9.13, jsii-rosetta@^5.9.3:
     yargs "^17.7.2"
 
 jsii-rosetta@~5.8.0:
-  version "5.8.18"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.18.tgz#774bd9d0af0931f4ed42310ed56304a192c83620"
-  integrity sha512-DWR6DzOIuM+J2awuHNmelZwQSkRu0prD5xboHfuO04HtjuoKwd/crwd74/dD0L3P5yZOHEYcroQObGwziEQ0+g==
+  version "5.8.19"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.19.tgz#f9e738421c05517df8b96043876d5489ba801c9c"
+  integrity sha512-Wnb7HYjt5bFPNDY1smcsoUyIwaMVBExYV9kpIQ+Dyjj9cvAK7QUpV3jdpQ0gAzl/yta4u13Vbmd2pOvCelRfvA==
   dependencies:
-    "@jsii/check-node" "^1.118.0"
-    "@jsii/spec" "^1.118.0"
+    "@jsii/check-node" "^1.119.0"
+    "@jsii/spec" "^1.119.0"
     "@xmldom/xmldom" "^0.9.8"
     chalk "^4"
     commonmark "^0.31.2"
