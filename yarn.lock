@@ -1645,7 +1645,12 @@ constructs@10.3.0:
   resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.3.0.tgz#4c246fce9cf8e77711ad45944e9fbd41f1501965"
   integrity sha512-vbK8i3rIb/xwZxSpTjz3SagHn1qq9BChLEfy5Hf6fB3/2eFbrwt2n9kHwQcS0CPTRBesreeAcsJfMq2229FnbQ==
 
-constructs@^10.0.0, constructs@^10.4.3:
+constructs@^10.0.0:
+  version "10.4.4"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.4.4.tgz#e128541bca10d00f284728e8869138fc7d1d76bf"
+  integrity sha512-lP0qC1oViYf1cutHo9/KQ8QL637f/W29tDmv/6sy35F5zs+MD9f66nbAAIjicwc7fwyuF3rkg6PhZh4sfvWIpA==
+
+constructs@^10.4.3:
   version "10.4.3"
   resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.4.3.tgz#605f418f8cf8b4d18e06de05c9be7fb79e82d802"
   integrity sha512-3+ZB67qWGM1vEstNpj6pGaLNN1qz4gxC1CBhEUhZDZk0PqzQWY65IzC1Doq17MGPa9xa2wJ1G/DJ3swU8kWAHQ==
