@@ -1440,10 +1440,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.36, cdk8s@^2.70.36:
-  version "2.70.36"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.36.tgz#c24064370242fe2c045f655cfeb95f84fc223f57"
-  integrity sha512-pYG4r/9LcqzkCx36qDOpVxa5gelKPhln2RnygVKtmDQjSvkuKIp8h885MyhvBR0lQpq9jEYHOc1TnbC4bWmAEw==
+cdk8s@2.70.37, cdk8s@^2.70.36:
+  version "2.70.37"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.37.tgz#480fa4dd27c02d1ce805d34c9855cf13605b75f6"
+  integrity sha512-MxkJcFD/dpPGGxxRC8HuSTRl6Nl3L4QqwaWJmC+3+wxpUSupbawKIJOh5ulnr7p+20uZsST90jiqqOpQgDakmA==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.11"
