@@ -3746,9 +3746,9 @@ jsii-diff@^1.123.0:
     yargs "^17.7.2"
 
 jsii-docgen@^10.5.0:
-  version "10.11.9"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.11.9.tgz#67e8fe73cdbed37947111d3931a487b375865096"
-  integrity sha512-x+oneYOQVV04E1F6vBGxgZmhiyXQ3WkYsX9XHQy1GvJaA3vfOhfVjM7uVzwpoBvrv6Dhv+hNHrzwxMlfie981w==
+  version "10.11.10"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.11.10.tgz#3dad6a88e71c85833cfe0db54cdb26ea8adddbdf"
+  integrity sha512-bc4RS1W3DArdKbHy4ij/is4yRwlP9Aj6dkBhqYycuFOIXGKWHg4QsoNMq+1g3UfBp4CrDG6Xo3REeiBN8erGiw==
   dependencies:
     "@jsii/spec" "^1.122.0"
     case "^1.6.3"
@@ -3759,7 +3759,7 @@ jsii-docgen@^10.5.0:
     semver "^7.7.3"
     yargs "^16.2.0"
 
-jsii-pacmak@^1.113.0:
+jsii-pacmak@^1.113.0, jsii-pacmak@^1.123.0:
   version "1.123.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.123.0.tgz#7d94beb8734a6c395c635ac69ba0e61f686373e3"
   integrity sha512-h5rjopFnzvu2F6R0HezS5xTv9Qai98Kh/uUCP7WO3zP6KgmL0BxBiF4RRaOYDsXmBs3RX+aVa82uwMRwSCglkw==
