@@ -3,7 +3,7 @@
 * text=auto eol=lf
 *.snap linguist-generated
 /.backportrc.json linguist-generated
-/.eslintrc.json linguist-generated
+/.eslintrc.json linguist-generated linguist-language=JSON-with-Comments
 /.gitattributes linguist-generated
 /.github/ISSUE_TEMPLATE/config.yml linguist-generated
 /.github/pull_request_template.md linguist-generated
@@ -43,5 +43,5 @@
 /LICENSE linguist-generated
 /package.json linguist-generated
 /SECURITY.md linguist-generated
-/tsconfig.dev.json linguist-generated
+/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
 /yarn.lock linguist-generated
