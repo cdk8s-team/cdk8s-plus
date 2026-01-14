@@ -5138,9 +5138,9 @@ spdx-license-ids@^3.0.0:
   integrity sha512-4PRT4nh1EImPbt2jASOKHX7PB7I+e4IWNLvkKFDxNhJlfjbYlleYQh285Z/3mPTHSAK/AvdMmw5BNNuYH8ShgQ==
 
 spdx-license-list@^6.10.0:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/spdx-license-list/-/spdx-license-list-6.10.0.tgz#738249443db42f5fd6780c7c40daecefed7a3adf"
-  integrity sha512-wF3RhDFoqdu14d1Prv6c8aNU0FSRuSFJpNjWeygIZcNZEwPxp7I5/Hwo8j6lSkBKWAIkSQrKefrC5N0lvOP0Gw==
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/spdx-license-list/-/spdx-license-list-6.11.0.tgz#d040b19967de5ddbdef1b14ec96a218e6c7b80d1"
+  integrity sha512-p5ICd51dSnh7zIMtPgbB9ShBg3HMT77OeI6WVhrFFvxa5KIFYNcqxD4joAE+n1zZ7wlJdEkrOMwC75JUMMmsJA==
 
 split2@^3.2.2:
   version "3.2.2"
