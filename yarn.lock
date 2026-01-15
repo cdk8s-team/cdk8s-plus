@@ -1410,14 +1410,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.203.16:
-  version "2.203.16"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.203.16.tgz#5c8a08ac050b61cb2904631d7ca21f67ce56944a"
-  integrity sha512-mhoZXUaj5QT6l6BZMoWyGdhSP/oUKQibVo5B6NKlcKkBMHwEaNxhW+mCY4lWYr0a4gWWdK98f5wW98y7onibHw==
+cdk8s-cli@^2.203.17:
+  version "2.203.17"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.203.17.tgz#1c5235c9e5fcec95c24a57c74d35397d21024350"
+  integrity sha512-DbYR8R9CGptYzmEdG9ZnIDA3oIvQw/meABdJwCo2QYMIUo14Pp73GPTxwbKD89JhyhyhFO/xx5tDMGcGmaZptQ==
   dependencies:
     "@types/node" "^16"
     ajv "^8.17.1"
-    cdk8s "^2.70.42"
+    cdk8s "^2.70.43"
     cdk8s-plus-28 "^2.5.6"
     codemaker "^1.125.0"
     colors "1.4.0"
@@ -1440,10 +1440,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.42, cdk8s@^2.70.42:
-  version "2.70.42"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.42.tgz#bc3ecf3d3491b99266c4dc0a85a035bd0e2bc113"
-  integrity sha512-HjmOhnsDIhNB6i1ZH31nCuJjUdWkpn74AR9s0gDCXUh0pPWN29Z+TMHl0IH8OSHF+NASzyhqbuLptQRMYWONrw==
+cdk8s@2.70.43, cdk8s@^2.70.43:
+  version "2.70.43"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.43.tgz#01a2f840489480981c73dcb568629822371549c3"
+  integrity sha512-b7O73weflIYWa716lDUoLUu9/b1yZ02ZxwOh5kqzufuBZfTljbPRHGXzV24cPfwUd++9f5hhdb2QBt/THgeDaQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.11"
@@ -5791,9 +5791,9 @@ which-module@^2.0.0:
   integrity sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==
 
 which-typed-array@^1.1.16, which-typed-array@^1.1.19:
-  version "1.1.19"
-  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.19.tgz#df03842e870b6b88e117524a4b364b6fc689f956"
-  integrity sha512-rEvr90Bck4WZt9HHFC4DJMsjvu7x+r6bImz0/BrbWb7A2djJ8hnZMrWnHo9F8ssv0OMErasDhftrfROTyqSDrw==
+  version "1.1.20"
+  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.20.tgz#3fdb7adfafe0ea69157b1509f3a1cd892bd1d122"
+  integrity sha512-LYfpUkmqwl0h9A2HL09Mms427Q1RZWuOHsukfVcKRq9q95iQxdw0ix1JQrqbcDR9PH1QDwf5Qo8OZb5lksZ8Xg==
   dependencies:
     available-typed-arrays "^1.0.7"
     call-bind "^1.0.8"
