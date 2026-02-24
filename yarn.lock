@@ -3776,10 +3776,29 @@ jsii-reflect@^1.126.0:
     oo-ascii-tree "^1.126.0"
     yargs "^17.7.2"
 
-jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.30, jsii-rosetta@~5.9.0:
+jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.30:
   version "5.9.31"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.31.tgz#65d1a203a1545249b8329c86951b23f6a88df7ae"
   integrity sha512-g0WR8oeFKe0xGtuPy6QU8BFArv5h2OlioKlemnHNAHUvnl+uahVy+I+qOw+HKtzr74LWi6Tv5nOZKhxnwSVuAQ==
+  dependencies:
+    "@jsii/check-node" "^1.126.0"
+    "@jsii/spec" "^1.126.0"
+    "@xmldom/xmldom" "^0.9.8"
+    chalk "^4"
+    commonmark "^0.31.2"
+    fast-glob "^3.3.3"
+    jsii "~5.9.1"
+    semver "^7.7.4"
+    semver-intersect "^1.5.0"
+    stream-json "^1.9.1"
+    typescript "~5.9"
+    workerpool "^6.5.1"
+    yargs "^17.7.2"
+
+jsii-rosetta@~5.9.0:
+  version "5.9.32"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.32.tgz#3f087c2c29c88b1df4760fb9aabbda5ae557a234"
+  integrity sha512-M4Ku/BDwcUp1dq/b5YcuCx2576FKKwvLW+wUZ0zogOWWdiCwJrWcu8KE0dPEEC4wgZsjO1IPzqjRmN2QRGJ9dA==
   dependencies:
     "@jsii/check-node" "^1.126.0"
     "@jsii/spec" "^1.126.0"
@@ -3807,7 +3826,25 @@ jsii-srcmak@0.1.1319:
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@~5.9.0, jsii@~5.9.1, jsii@~5.9.3:
+jsii@~5.9.0, jsii@~5.9.1:
+  version "5.9.28"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.28.tgz#185f82e9c968dd942b1672f368d012b39a9ca12c"
+  integrity sha512-VyOTTeKhP4VaIlW0wsIPhpPdGezHHZ3JNigl192WOq7FlbOsOamzlz2uhiKwZgNvXGErDmu3MxToW8HZbQk6Qw==
+  dependencies:
+    "@jsii/check-node" "1.126.0"
+    "@jsii/spec" "1.126.0"
+    case "^1.6.3"
+    chalk "^4"
+    fast-deep-equal "^3.1.3"
+    log4js "^6.9.1"
+    semver "^7.7.4"
+    semver-intersect "^1.5.0"
+    sort-json "^2.0.1"
+    spdx-license-list "^6.11.0"
+    typescript "~5.9"
+    yargs "^17.7.2"
+
+jsii@~5.9.3:
   version "5.9.27"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.27.tgz#feab7f3dbdf450f6fca6904baa80973db8e058bb"
   integrity sha512-83xDAAgri2QzXyLzh73yOE1+JkeLCoup7paU5talAC7tmZfoVXXsTlhoUjA6zPsODwcEP9SQIWKefsNE/hP0/Q==
