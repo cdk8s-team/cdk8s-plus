@@ -827,9 +827,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "25.3.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.3.1.tgz#82f3f6e30ac3b48560a092d9224a975b5c24e38d"
-  integrity sha512-hj9YIJimBCipHVfHKRMnvmHg+wfhKc0o4mTtXh9pKBjC8TLJzz0nzGmLi5UJsYAUgSvXFHgb0V2oY10DUFtImw==
+  version "25.3.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.3.2.tgz#cbc4b963e1b3503eb2bcf7c55bf48c95204918d1"
+  integrity sha512-RpV6r/ij22zRRdyBPcxDeKAzH43phWVKEjL2iksqo1Vz3CuBUrgmPpPhALKiRfU7OMCmeeO9vECBMsV0hMTG8Q==
   dependencies:
     undici-types "~7.18.0"
 
@@ -1450,10 +1450,10 @@ cdk8s-plus-28@^2.5.6:
   dependencies:
     minimatch "^3.1.2"
 
-cdk8s@2.70.48, cdk8s@^2.70.47:
-  version "2.70.48"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.48.tgz#1a74bb6c2dfa47c0259881a409e6b74fb4d09459"
-  integrity sha512-foytyGfgMy68YcLYoNrJWr9SuAWxobfGfNnE258J2rSo3MA4bbp/3slqdhRh53Jjruie4IEeHlXcXxZZrWWrDA==
+cdk8s@2.70.49, cdk8s@^2.70.47:
+  version "2.70.49"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.49.tgz#7d2fae1f8374db600bee9cf9c7a4e39c5636c0f6"
+  integrity sha512-EwXZmO9Su0Q1qIKwvSB40WWZZg88FXuEj/2CS/PwYiuu4mPelg8SPhmgsvvDooWDrh1+i01/yJOk6e1YIY+1lw==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.15.11"
@@ -3772,7 +3772,7 @@ jsii-docgen@^10.5.0:
     semver "^7.7.4"
     yargs "^16.2.0"
 
-jsii-pacmak@^1.113.0, jsii-pacmak@^1.127.0:
+jsii-pacmak@^1.113.0, jsii-pacmak@^1.126.0, jsii-pacmak@^1.127.0:
   version "1.127.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.127.0.tgz#605060364acd07605099ff39234d6d70d376e006"
   integrity sha512-AexTwVNVsYMcVk+jmudJ/uArnoTIkUuM/kJuISTlhcrbodSglWGiR15GV0CATMdh1T9qqW3Xc9iIoYAW7r1iyA==
@@ -3787,24 +3787,6 @@ jsii-pacmak@^1.113.0, jsii-pacmak@^1.127.0:
     jsii-reflect "^1.127.0"
     semver "^7.7.4"
     spdx-license-list "^6.11.0"
-    xmlbuilder "^15.1.1"
-    yargs "^17.7.2"
-
-jsii-pacmak@^1.126.0:
-  version "1.126.0"
-  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.126.0.tgz#262a62cb0f442b0b3de8d9139b4fada0d689499f"
-  integrity sha512-2ugQuDr47S0xy44GMlDLoqL0jNVks9FQ2po3C51ghOeJpXzvv+mLpr18NKO8O8WLePIGhZ5uiYvsBSkUXa8ZmA==
-  dependencies:
-    "@jsii/check-node" "1.126.0"
-    "@jsii/spec" "1.126.0"
-    clone "^2.1.2"
-    codemaker "^1.126.0"
-    commonmark "^0.31.2"
-    escape-string-regexp "^4.0.0"
-    fs-extra "^10.1.0"
-    jsii-reflect "^1.126.0"
-    semver "^7.7.2"
-    spdx-license-list "^6.10.0"
     xmlbuilder "^15.1.1"
     yargs "^17.7.2"
 
@@ -5146,7 +5128,7 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.23.tgz#b069e687b1291a32f126893ed76a27a745ee2133"
   integrity sha512-CWLcCCH7VLu13TgOH+r8p1O/Znwhqv/dbb6lqWy67G+pT1kHmeD/+V36AVb/vq8QMIQwVShJ6Ssl5FPh0fuSdw==
 
-spdx-license-list@^6.10.0, spdx-license-list@^6.11.0:
+spdx-license-list@^6.11.0:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/spdx-license-list/-/spdx-license-list-6.11.0.tgz#d040b19967de5ddbdef1b14ec96a218e6c7b80d1"
   integrity sha512-p5ICd51dSnh7zIMtPgbB9ShBg3HMT77OeI6WVhrFFvxa5KIFYNcqxD4joAE+n1zZ7wlJdEkrOMwC75JUMMmsJA==
