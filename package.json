@@ -78,7 +78,7 @@
     "constructs": "^10.3.0"
   },
   "dependencies": {
-    "minimatch": "^9.0.8"
+    "minimatch": "^9.0.9"
   },
   "bundledDependencies": [
     "minimatch"
