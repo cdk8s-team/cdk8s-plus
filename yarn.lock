@@ -2542,9 +2542,9 @@ flat-cache@^4.0.0:
     keyv "^4.5.4"
 
 flatted@^3.2.7, flatted@^3.2.9:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.3.3.tgz#67c8fad95454a7c7abebf74bb78ee74a44023358"
-  integrity sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.3.4.tgz#0986e681008f0f13f58e18656c47967682db5ff6"
+  integrity sha512-3+mMldrTAPdta5kjX2G2J7iX4zxtnwpdA8Tr2ZSjkyPSanvbZAcy6flmtnXbEybHrDcU9641lxrMfFuUxVz9vA==
 
 follow-redirects@^1.15.11:
   version "1.15.11"
@@ -3833,13 +3833,31 @@ jsii-srcmak@0.1.1319:
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@~5.9.0, jsii@~5.9.1, jsii@~5.9.3:
+jsii@~5.9.0:
   version "5.9.29"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.29.tgz#e8cacdee5fd91922de26a7766251d37bf9dd22e5"
   integrity sha512-bFqvY3J4f+//PkX/4666Iz1FoS4x0bXa2XGDWAjk9VIHKJx3iPoWzASbeQHU1zBIGiIJOWmlBVm/XAk+IBYetw==
   dependencies:
     "@jsii/check-node" "1.126.0"
     "@jsii/spec" "1.126.0"
+    case "^1.6.3"
+    chalk "^4"
+    fast-deep-equal "^3.1.3"
+    log4js "^6.9.1"
+    semver "^7.7.4"
+    semver-intersect "^1.5.0"
+    sort-json "^2.0.1"
+    spdx-license-list "^6.11.0"
+    typescript "~5.9"
+    yargs "^17.7.2"
+
+jsii@~5.9.1, jsii@~5.9.3:
+  version "5.9.30"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.30.tgz#9767773a021626a66b8d6c364603d4bc7c493061"
+  integrity sha512-shC3xM1MiwhXjtm3n2tZIEi3ZqN5XnI2kOoksNnn41LsmUdIEkpJq7TfgCXekYCNkn2SFv9EREpr3JEPYDfzIg==
+  dependencies:
+    "@jsii/check-node" "1.127.0"
+    "@jsii/spec" "1.127.0"
     case "^1.6.3"
     chalk "^4"
     fast-deep-equal "^3.1.3"
