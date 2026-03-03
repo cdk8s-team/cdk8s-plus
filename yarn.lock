@@ -606,7 +606,7 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@jsii/check-node@1.127.0", "@jsii/check-node@^1.126.0":
+"@jsii/check-node@1.127.0", "@jsii/check-node@^1.126.0", "@jsii/check-node@^1.127.0":
   version "1.127.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.127.0.tgz#6dca828289717e509f57f0e027c1b704a0207b34"
   integrity sha512-IYkLRond94RmaeP40LiFLM4JTxnVING3qWVndOpjhK5nPydDPBp865GW6gUQT724a6zhZww/2E1uw3c3b/i12A==
@@ -614,7 +614,7 @@
     chalk "^4.1.2"
     semver "^7.7.4"
 
-"@jsii/spec@1.127.0", "@jsii/spec@^1.126.0":
+"@jsii/spec@1.127.0", "@jsii/spec@^1.126.0", "@jsii/spec@^1.127.0":
   version "1.127.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.127.0.tgz#5e5c1d38b0d5444b55158d03186c4a35b875af4c"
   integrity sha512-LJiQLjlyQuMx1KyoKDdU9SlxNe/3xnllPSTlb6alPL84aYAcrGQX82XX7v554AudesIZHp5p5u0bupTK+v3QWA==
@@ -1396,9 +1396,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001759:
-  version "1.0.30001775"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001775.tgz#9572266e3f7f77efee5deac1efeb4795879d1b7f"
-  integrity sha512-s3Qv7Lht9zbVKE9XoTyRG6wVDCKdtOFIjBGg3+Yhn6JaytuNKPIjBMTMIY1AnOH3seL5mvF+x33oGAyK3hVt3A==
+  version "1.0.30001776"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001776.tgz#3c64d006348a2e92037aa4302345129806a42d24"
+  integrity sha512-sg01JDPzZ9jGshqKSckOQthXnYwOEP50jeVFhaSFbZcOy05TiuuaffDOfcwtCisJ9kNQuLBFibYywv2Bgm9osw==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2441,9 +2441,9 @@ fast-xml-builder@^1.0.0:
   integrity sha512-fpZuDogrAgnyt9oDDz+5DBz0zgPdPZz6D4IR7iESxRXElrlGTRkHJ9eEt+SACRJwT0FNFrt71DFQIUFBJfX/uQ==
 
 fast-xml-parser@^5.2.5:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-5.4.1.tgz#0c81b8ecfb3021e5ad83aa3df904af19a05bc601"
-  integrity sha512-BQ30U1mKkvXQXXkAGcuyUA/GA26oEB7NzOtsxCDtyu62sjGw5QraKFhx2Em3WQNjPw9PG6MQ9yuIIgkSDfGu5A==
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-5.4.2.tgz#7fc66463b59260b0c5fd57edf46148a418bde68b"
+  integrity sha512-pw/6pIl4k0CSpElPEJhDppLzaixDEuWui2CUQQBH/ECDf7+y6YwA4Gf7Tyb0Rfe4DIMuZipYj4AEL0nACKglvQ==
   dependencies:
     fast-xml-builder "^1.0.0"
     strnum "^2.1.2"
@@ -3787,7 +3787,26 @@ jsii-reflect@^1.126.0, jsii-reflect@^1.127.0:
     oo-ascii-tree "^1.127.0"
     yargs "^17.7.2"
 
-jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.30, jsii-rosetta@~5.9.0:
+jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.30:
+  version "5.9.33"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.33.tgz#953448feae5f06ebc41f9a03a511fdc19622abaf"
+  integrity sha512-xcPWelGKttHvTLKsOLWZ/FBomdgb+BNOTAcmaEiW3XJ98bJk/ID5SO9Zhn/WmcbBXHd242acbhYAI3O+XdPi2w==
+  dependencies:
+    "@jsii/check-node" "^1.127.0"
+    "@jsii/spec" "^1.127.0"
+    "@xmldom/xmldom" "^0.9.8"
+    chalk "^4"
+    commonmark "^0.31.2"
+    fast-glob "^3.3.3"
+    jsii "~5.9.1"
+    semver "^7.7.4"
+    semver-intersect "^1.5.0"
+    stream-json "^1.9.1"
+    typescript "~5.9"
+    workerpool "^6.5.1"
+    yargs "^17.7.2"
+
+jsii-rosetta@~5.9.0:
   version "5.9.32"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.32.tgz#3f087c2c29c88b1df4760fb9aabbda5ae557a234"
   integrity sha512-M4Ku/BDwcUp1dq/b5YcuCx2576FKKwvLW+wUZ0zogOWWdiCwJrWcu8KE0dPEEC4wgZsjO1IPzqjRmN2QRGJ9dA==
