@@ -250,7 +250,7 @@ export class StatefulSet extends workload.Workload implements IScalable {
         return volumesWithNoTemplates;
       }
     }
-    return undefined;
+    return podSpec.volumes;
   }
 
   /**

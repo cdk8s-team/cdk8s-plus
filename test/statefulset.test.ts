@@ -270,6 +270,32 @@ test('volumeClaimTemplates', () => {
   expect(Testing.synth(chart)).toMatchSnapshot();
 });
 
+test('volumes are preserved when no volumeClaimTemplates are configured', () => {
+  const chart = Testing.chart();
+  const secret = new kplus.Secret(chart, 'AwsSecret');
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'foobar',
+        portNumber: 80,
+        volumeMounts: [
+          {
+            volume: Volume.fromSecret(chart, 'secret', secret),
+            path: '/mnt/secret',
+          },
+        ],
+      },
+    ],
+  });
+
+  const synthesized = Testing.synth(chart);
+  const spec: k8s.StatefulSetSpec = synthesized[2].spec;
+  expect(spec.template.spec?.volumes).toEqual([{
+    name: 'secret-test-awssecret-c8d3e80d',
+    secret: { secretName: 'test-awssecret-c8d3e80d' },
+  }]);
+});
+
 test('missing volumeMount for volumeClaimTemplate', () => {
   const chart = Testing.chart();
   new kplus.StatefulSet(chart, 'StatefulSet', {
