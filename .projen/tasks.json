@@ -32,7 +32,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-34/",
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-33/",
         "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep \"^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+\" --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
       },
@@ -172,7 +172,7 @@
       "description": "Updates imports based on latest version of cdk8s-cli.",
       "steps": [
         {
-          "exec": "cdk8s -l typescript -o src/imports import k8s@1.34.0"
+          "exec": "cdk8s -l typescript -o src/imports import k8s@1.33.0"
         }
       ]
     },
@@ -291,13 +291,13 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
-    "release:k8s-34/main": {
-      "name": "release:k8s-34/main",
-      "description": "Prepare a release from \"k8s-34/main\" branch",
+    "release:k8s-33/main": {
+      "name": "release:k8s-33/main",
+      "description": "Prepare a release from \"k8s-33/main\" branch",
       "env": {
         "RELEASE": "true",
         "MAJOR": "2",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-34/"
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-33/"
       },
       "steps": [
         {
@@ -321,7 +321,7 @@
       "name": "rotate",
       "steps": [
         {
-          "exec": "ts-node projenrc/rotate.ts 34"
+          "exec": "ts-node projenrc/rotate.ts 33"
         }
       ]
     },
@@ -356,7 +356,7 @@
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
-        "RELEASE_TAG_PREFIX": "cdk8s-plus-34/",
+        "RELEASE_TAG_PREFIX": "cdk8s-plus-33/",
         "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep \"^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+\" --grep 'chore\\(deps\\): upgrade runtime dependencies' --grep 'chore\\(deps\\): upgrade compiler dependencies'"
       },
