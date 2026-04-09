@@ -6,14 +6,14 @@
 
 | k8s version | npm (JS/TS)                                         | PyPI (Python)                                   | Maven (Java)                                                      | Go                                                              |
 | ----------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| 1.31.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-31) | [Link](https://pypi.org/project/cdk8s-plus-31/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-31) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.31) |
 | 1.32.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-32) | [Link](https://pypi.org/project/cdk8s-plus-32/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-32) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.32) |
 | 1.33.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-33) | [Link](https://pypi.org/project/cdk8s-plus-33/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-33) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.33) |
+| 1.34.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-34) | [Link](https://pypi.org/project/cdk8s-plus-34/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-34) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.34) |
 
 **cdk8s+** is a software development framework that provides high level
 abstractions for authoring Kubernetes applications. Built on top of the auto
 generated building blocks provided by [cdk8s](../cdk8s), this library includes a
-hand crafted *construct* for each native kubernetes object, exposing richer
+hand crafted _construct_ for each native kubernetes object, exposing richer
 API's with reduced complexity.
 
 ## :books: Documentation
@@ -30,3 +30,4 @@ If you'd like to add a new feature or fix a bug, please visit
 This project is distributed under the [Apache License, Version 2.0](./LICENSE).
 
 This module is part of the [cdk8s project](https://github.com/cdk8s-team).
+
