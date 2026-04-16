@@ -1453,13 +1453,13 @@ cdk8s-plus-33@^2.5.0:
   dependencies:
     minimatch "^9.0.9"
 
-cdk8s@2.70.54, cdk8s@^2.70.54:
-  version "2.70.54"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.54.tgz#c750db72b31af7137691c29dd2a2aad790a61796"
-  integrity sha512-HxPVHj1OyLFJIE0ruSESQl2wfTDpZCBy7hpnDnOaX4EudQmZ4diBR0CdREWRRQTMUsfSPdZjR+ECzWGwmumTNg==
+cdk8s@2.70.56, cdk8s@^2.70.54:
+  version "2.70.56"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.56.tgz#2feed85bdbffebbd6405196ae513799232911125"
+  integrity sha512-FZvtiApecAPBWL0x9xL/ejkdyWYFUcvwoqzJsFzr9opBfD8+kx7XpQeATTx3LrXVKbfNEEyKyLONa4Yg+jBIMg==
   dependencies:
     fast-json-patch "^3.1.1"
-    follow-redirects "^1.15.11"
+    follow-redirects "^1.16.0"
     yaml "2.8.3"
 
 chalk@^2.4.2:
@@ -2054,9 +2054,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.328:
-  version "1.5.336"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.336.tgz#d7c25c0827b8c5e2885b2c91ac6cdcf3e5a1386e"
-  integrity sha512-AbH9q9J455r/nLmdNZes0G0ZKcRX73FicwowalLs6ijwOmCJSRRrLX63lcAlzy9ux3dWK1w1+1nsBJEWN11hcQ==
+  version "1.5.339"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.339.tgz#d797bf5f222a7f6241a42b43a97bf52ff43947f1"
+  integrity sha512-Is+0BBHJ4NrdpAYiperrmp53pLywG/yV/6lIMTAnhxvzj/Cmn5Q/ogSHC6AKe7X+8kPLxxFk0cs5oc/3j/fxIg==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -2553,7 +2553,7 @@ flatted@^3.2.7, flatted@^3.2.9:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.4.2.tgz#f5c23c107f0f37de8dbdf24f13722b3b98d52726"
   integrity sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==
 
-follow-redirects@^1.15.11:
+follow-redirects@^1.16.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.16.0.tgz#28474a159d3b9d11ef62050a14ed60e4df6d61bc"
   integrity sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==
