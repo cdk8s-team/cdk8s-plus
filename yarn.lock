@@ -1303,9 +1303,9 @@ balanced-match@^4.0.2:
   integrity sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==
 
 baseline-browser-mapping@^2.10.12:
-  version "2.10.19"
-  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.10.19.tgz#7697721c22f94f66195d0c34299b1a91e3299493"
-  integrity sha512-qCkNLi2sfBOn8XhZQ0FXsT1Ki/Yo5P90hrkRamVFRS7/KV9hpfA4HkoWNU152+8w0zPjnxo5psx5NL3PSGgv5g==
+  version "2.10.20"
+  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.10.20.tgz#7c99b86d43ae9be3810cac515f4675802e1f6b87"
+  integrity sha512-1AaXxEPfXT+GvTBJFuy4yXVHWJBXa4OdbIebGN/wX5DlsIkU0+wzGnd2lOzokSk51d5LUmqjgBLRLlypLUqInQ==
 
 brace-expansion@^1.1.7:
   version "1.1.14"
@@ -1455,16 +1455,16 @@ cdk8s-cli@^2.206.3:
     yargs "^15"
 
 cdk8s-plus-33@^2.5.0:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-33/-/cdk8s-plus-33-2.5.4.tgz#9aa748cd8f18e7f01ca9b0e81b981731e9714967"
-  integrity sha512-rUjvKP2lCj7AMbEgvWTuS9/RnKoNqJu7svuIlrDkOnlS5mCjXLZQHyGxoB9eHHjAsvq5MABsureddFhL7YLhSg==
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-33/-/cdk8s-plus-33-2.5.5.tgz#e817700f28fd4e7a8d56d3c55a0321890e4556e8"
+  integrity sha512-sS5TCFQItohQJ2T/5vOXcSwVZs+9fZPDMHBjfYW4oYObYz6eIKZQfKuf/NtedeQ+zE7FHa3HYGgMnARgzZ7ZtA==
   dependencies:
     minimatch "^9.0.9"
 
-cdk8s@2.70.56, cdk8s@^2.70.54:
-  version "2.70.56"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.56.tgz#2feed85bdbffebbd6405196ae513799232911125"
-  integrity sha512-FZvtiApecAPBWL0x9xL/ejkdyWYFUcvwoqzJsFzr9opBfD8+kx7XpQeATTx3LrXVKbfNEEyKyLONa4Yg+jBIMg==
+cdk8s@2.70.57, cdk8s@^2.70.54:
+  version "2.70.57"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.57.tgz#481d338cf9bcbbef2f202c8013311ad298ded284"
+  integrity sha512-IYFuw6G9BdTretJjZPeeLVEWGsV/YordjewyC5LsuyIOmoqB7bCz6BOzGi7ibV3YEJpFAg+8MK9SNqwFZY+Upg==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.16.0"
