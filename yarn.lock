@@ -622,14 +622,6 @@
     chalk "^4.1.2"
     semver "^7.7.4"
 
-"@jsii/check-node@1.128.0":
-  version "1.128.0"
-  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.128.0.tgz#b62184a0a7946051ba5c90baf406dbd3df717777"
-  integrity sha512-1XirN1v+gbSHFIGSMmB/jPzTdsKEY8P8JOJOS2Vz5j9+T6ZaPJ2ZcJ4foYsIBblKcDWPzVNVJmGC2+ViEzUIsA==
-  dependencies:
-    chalk "^4.1.2"
-    semver "^7.7.4"
-
 "@jsii/check-node@1.129.0", "@jsii/check-node@^1.128.0":
   version "1.129.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.129.0.tgz#ffdcab54edeb6afc2442edf2b82e4bd618b479ef"
@@ -642,11 +634,6 @@
   version "1.127.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.127.0.tgz#5e5c1d38b0d5444b55158d03186c4a35b875af4c"
   integrity sha512-LJiQLjlyQuMx1KyoKDdU9SlxNe/3xnllPSTlb6alPL84aYAcrGQX82XX7v554AudesIZHp5p5u0bupTK+v3QWA==
-
-"@jsii/spec@1.128.0":
-  version "1.128.0"
-  resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.128.0.tgz#c7a536a070d455c8e2639517169c9d0ea6d51b25"
-  integrity sha512-sv4JP3Ap7Vagh+yoCZ7mkfoKNY3ivV43QQPLzOYaNLgrTW86S+rqfiwTG/ouLn9qSaIC300vDpnT5V9uBGserA==
 
 "@jsii/spec@1.129.0", "@jsii/spec@^1.128.0":
   version "1.129.0"
@@ -3813,24 +3800,6 @@ jsii-pacmak@^1.113.0, jsii-pacmak@^1.129.0:
     escape-string-regexp "^4.0.0"
     fs-extra "^10.1.0"
     jsii-reflect "^1.129.0"
-    semver "^7.7.4"
-    spdx-license-list "^6.11.0"
-    xmlbuilder "^15.1.1"
-    yargs "^17.7.2"
-
-jsii-pacmak@^1.128.0:
-  version "1.128.0"
-  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.128.0.tgz#d936c78951bb8d836a1c384b93100a6083530258"
-  integrity sha512-XUmN7VnsUoYTtCOTUi87A1eyfHtgvq/bQJLnKTVZkGPKyKi+PIRayVpu6DlnjvpaKAY8emnvgx9qVYU1F9yoAw==
-  dependencies:
-    "@jsii/check-node" "1.128.0"
-    "@jsii/spec" "1.128.0"
-    clone "^2.1.2"
-    codemaker "^1.128.0"
-    commonmark "^0.31.2"
-    escape-string-regexp "^4.0.0"
-    fs-extra "^10.1.0"
-    jsii-reflect "^1.128.0"
     semver "^7.7.4"
     spdx-license-list "^6.11.0"
     xmlbuilder "^15.1.1"
