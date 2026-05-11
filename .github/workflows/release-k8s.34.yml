@@ -83,7 +83,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -110,7 +110,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -157,7 +157,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -203,7 +203,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -247,10 +247,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 6.x
+          cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -291,10 +292,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
+          cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
