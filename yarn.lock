@@ -3789,7 +3789,7 @@ jsii-docgen@^10.5.0:
     semver "^7.8.0"
     yargs "^16.2.0"
 
-jsii-pacmak@^1.113.0:
+jsii-pacmak@^1.113.0, jsii-pacmak@^1.130.0:
   version "1.130.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.130.0.tgz#30f0925ef28cac482f32d82be6dfa053e6e97909"
   integrity sha512-YGKns0/KCbIJcTFUTW3hriZsUGyh/XGDjMwZUpt2QwvvsmaxcVwcrSkB5yTr1Ey3jULMTK3RmZUxEkeC45bIMQ==
