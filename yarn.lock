@@ -838,9 +838,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "25.9.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.9.0.tgz#4823e66e0f486bfd8d9019fb445fbbb9e6f77348"
-  integrity sha512-AOQwYUNolgy3VosiRqXrACUXTN8nJUtPl7FJXMqZVyxiiCLhQuG3jXKvCS1ALr+Y2OmZhzzLVlYPEqJaiqkaJQ==
+  version "25.9.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.9.1.tgz#3bda556db500ae4319c08e7fc9ab94f19013ba0b"
+  integrity sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg==
   dependencies:
     undici-types ">=7.24.0 <7.24.7"
 
@@ -1431,20 +1431,20 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.207.4:
-  version "2.207.4"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.4.tgz#8cc0023b376be4f399f6f7edc1c84f142a80da8a"
-  integrity sha512-XPKbD37j8pzK9PhBEmVRD9pB4FCOa7HkW5u1GPOnyBMz4BASH6RzdPG++m8i+BOa0/ghwzyhV9uUQhVTwWiJdA==
+cdk8s-cli@^2.207.5:
+  version "2.207.5"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.5.tgz#f39122a73d43fa3eb19d781ccba42387005be491"
+  integrity sha512-7K2aPkQHNkadlndOSJivv9MOIRBxvgXuq5oD2enER9hXnb8mh3VRvTAicJuufYCeXNUzBx4ZVIPzrYXlI+9vZw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.20.0"
-    cdk8s "^2.70.64"
-    cdk8s-plus-33 "^2.5.15"
-    codemaker "^1.130.0"
+    cdk8s "^2.70.65"
+    cdk8s-plus-33 "^2.5.16"
+    codemaker "^1.131.0"
     colors "1.4.0"
     constructs "^10.6.0"
     fs-extra "^8"
-    jsii-pacmak "^1.130.0"
+    jsii-pacmak "^1.131.0"
     jsii-rosetta "^5.9.46"
     jsii-srcmak "0.1.1319"
     json2jsii "0.5.19"
@@ -1454,17 +1454,17 @@ cdk8s-cli@^2.207.4:
     yaml "2.9.0"
     yargs "^15"
 
-cdk8s-plus-33@^2.5.15:
-  version "2.5.15"
-  resolved "https://registry.yarnpkg.com/cdk8s-plus-33/-/cdk8s-plus-33-2.5.15.tgz#b7ad6d06ba5721eb3b1220e4b1fbf2ff40a769bf"
-  integrity sha512-toVjSMfQ81y5287LmxWwgOvU4nreDq/HCds+cmx8z9dP3tTzaXiO0Qx8Zcc1+WkKgtNo/POOcNAvOs0GIEpUng==
+cdk8s-plus-33@^2.5.16:
+  version "2.5.16"
+  resolved "https://registry.yarnpkg.com/cdk8s-plus-33/-/cdk8s-plus-33-2.5.16.tgz#01a0c2464432460d6b44ae74f3c31965a27b5fc9"
+  integrity sha512-9IR3NrLjzSKC0cWFtuhntj5buIxWH1cP0zWGQUW08yTX3V3LmyHXVJ2CQbIifKzJ/AMpL+QfGWEuinlUsjNUZQ==
   dependencies:
     minimatch "^9.0.9"
 
-cdk8s@2.70.64, cdk8s@^2.70.64:
-  version "2.70.64"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.64.tgz#e6f8c9b69e765aab8982a270f53c763d4098921b"
-  integrity sha512-oSHBj1KQjj0cmZguTQu575goPNDE3vESDPbhoukqZhfkjbGla4OrnjlWA/AisKnWlm/yE34GU3YihDKmGOOsVg==
+cdk8s@2.70.65, cdk8s@^2.70.65:
+  version "2.70.65"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.65.tgz#e2f0cee3ba5e77b509983fba85e2bcc4218c9626"
+  integrity sha512-DRqiHUDBHU7RStIY6DYVbljzclo14YdnqP1GA60EghEuw1+FPTm14txA7vqGXe3qkCHVEFt44pxmOhZZZak+QQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.16.0"
@@ -2062,9 +2062,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.328:
-  version "1.5.359"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.359.tgz#51d3f2dd176a357b3390759b552c74cd4b6abe8e"
-  integrity sha512-8lPELWuYZIWk7NDvCNthtmMw/7Q5Wu25NpM4djFMHBmk8DubPAtL4YTOp7ou0e7HyJtwkVlWv8XMLURnrtgJQw==
+  version "1.5.360"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.360.tgz#7faf4231324c7f8d49c5c0938e8712f623d8b8d7"
+  integrity sha512-GkcBt6YYAw9SxFWn+xVar4cLVGlXVuswwtRLBozi2zp0GjXs4ZnOrqV4zbXzg35n7w81hCkyJNYicgXlVHAmBA==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3802,24 +3802,6 @@ jsii-pacmak@^1.113.0, jsii-pacmak@^1.131.0:
     escape-string-regexp "^4.0.0"
     fs-extra "^10.1.0"
     jsii-reflect "^1.131.0"
-    semver "^7.7.4"
-    spdx-license-list "^6.11.0"
-    xmlbuilder "^15.1.1"
-    yargs "^17.7.2"
-
-jsii-pacmak@^1.130.0:
-  version "1.130.0"
-  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.130.0.tgz#30f0925ef28cac482f32d82be6dfa053e6e97909"
-  integrity sha512-YGKns0/KCbIJcTFUTW3hriZsUGyh/XGDjMwZUpt2QwvvsmaxcVwcrSkB5yTr1Ey3jULMTK3RmZUxEkeC45bIMQ==
-  dependencies:
-    "@jsii/check-node" "1.130.0"
-    "@jsii/spec" "1.130.0"
-    clone "^2.1.2"
-    codemaker "^1.130.0"
-    commonmark "^0.31.2"
-    escape-string-regexp "^4.0.0"
-    fs-extra "^10.1.0"
-    jsii-reflect "^1.130.0"
     semver "^7.7.4"
     spdx-license-list "^6.11.0"
     xmlbuilder "^15.1.1"
