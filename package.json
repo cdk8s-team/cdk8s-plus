@@ -65,7 +65,7 @@
     "jsii": "~5.9.0",
     "jsii-diff": "^1.132.0",
     "jsii-docgen": "^10.5.0",
-    "jsii-pacmak": "^1.132.0",
+    "jsii-pacmak": "^1.133.0",
     "jsii-rosetta": "~5.9.0",
     "projen": "^0.99.70",
     "snake-case": "^3.0.4",
