@@ -44,13 +44,13 @@ junit.xml
 !/.github/workflows/upgrade-runtime-dependencies-k8s-31-main.yml
 !/.github/pull_request_template.md
 !/test/
+!/tsconfig.json
 !/tsconfig.dev.json
 !/src/
 /lib
 /dist/
 !/.eslintrc.json
 .jsii
-tsconfig.json
 !/API.md
 !/CODE_OF_CONDUCT.md
 !/DCO
