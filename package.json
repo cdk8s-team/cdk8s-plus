@@ -67,7 +67,7 @@
     "jsii-docgen": "^10.5.0",
     "jsii-pacmak": "^1.136.0",
     "jsii-rosetta": "~5.9.0",
-    "projen": "^0.100.2",
+    "projen": "^0.100.4",
     "snake-case": "^3.0.4",
     "ts-jest": "^27",
     "ts-node": "^10",
@@ -144,7 +144,7 @@
     "preset": "ts-jest",
     "globals": {
       "ts-jest": {
-        "tsconfig": "tsconfig.dev.json"
+        "tsconfig": "test/tsconfig.json"
       }
     }
   },
