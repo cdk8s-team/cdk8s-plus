@@ -622,14 +622,6 @@
     chalk "^4.1.2"
     semver "^7.8.0"
 
-"@jsii/check-node@1.136.0":
-  version "1.136.0"
-  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.136.0.tgz#7654ef06d4365eb4d5b069c4ae026dccf3cb7687"
-  integrity sha512-e41fDeII9JTh0JbJw0KKfmza/VCDLVLbd4o4MoTbzpb8qJ1Oy+QvaFcJjP533IlLCD3+K2AiBvASG4zsCb5Iuw==
-  dependencies:
-    chalk "^4.1.2"
-    semver "^7.8.4"
-
 "@jsii/check-node@1.137.0", "@jsii/check-node@^1.132.0":
   version "1.137.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.137.0.tgz#60abe5fe3dc443a24cdb84bd48ff787af3df5663"
@@ -643,12 +635,7 @@
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.132.0.tgz#b6465fcd6a4ffeab2706fa2daed1fa937baf60e7"
   integrity sha512-70rcZ8tx2ISWf5HqFHNQe56VOKcAtTn0XFlLgZByWKHGZYpitf5T/Qe+ayvmTK8++luufb0h455l1JDpQDp0nQ==
 
-"@jsii/spec@1.136.0", "@jsii/spec@^1.135.0":
-  version "1.136.0"
-  resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.136.0.tgz#778554b512fd21a60b45a8b7b9b4ff4994f13645"
-  integrity sha512-N9GF7KWX8RGdCYQU1mTUYvxRh/+G3gn0AYd0o33xD/us+fc5OXQhnEwLIhmQEZpVT9+UGmjVZIsRLqpsT8dGHQ==
-
-"@jsii/spec@1.137.0", "@jsii/spec@^1.132.0":
+"@jsii/spec@1.137.0", "@jsii/spec@^1.132.0", "@jsii/spec@^1.136.0":
   version "1.137.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.137.0.tgz#8c36539ec8f53dc2dde9594804766db56a3b2fad"
   integrity sha512-2rBIEsXG/sG56Wo6LmVRCByJOy0jL2fH1bQ/nMlNtUdL3lkAkld8YTTRzSMoEwtF/N6cNmK5WtMBqobos3u0ug==
@@ -3781,18 +3768,18 @@ jsii-diff@^1.137.0:
     yargs "^17.7.2"
 
 jsii-docgen@^10.5.0:
-  version "10.12.1"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.12.1.tgz#074cbdbde7dcb4b42f4e478ebecd0129e94f0fa2"
-  integrity sha512-2gnE3k+7T8IXVMdWHWUQc4YYxQEsUn3a+JlE7ObkHShs5yRbqn57okhTJATwcEX547j7vkx6kaWK+4qgaN/GsQ==
+  version "10.12.2"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.12.2.tgz#141408874e28b892f95c891a1c29417ad067f112"
+  integrity sha512-8HSBhYhufFSSX/dS61HCXLYSzfP4AsgjdcUyzlxDobt4gVAJ+C0dnWtCxnkvzT+QVI92rrns/KsBifU/hs03QA==
   dependencies:
-    "@jsii/spec" "^1.135.0"
+    "@jsii/spec" "^1.136.0"
     case "^1.6.3"
     fast-glob "^3.3.3"
     fs-extra "^10.1.0"
-    jsii-reflect "^1.135.0"
+    jsii-reflect "^1.136.0"
     json-stream-stringify "^3.1.6"
-    semver "^7.8.4"
-    yargs "^16.2.0"
+    semver "^7.8.5"
+    yargs "^16.2.2"
 
 jsii-pacmak@^1.113.0, jsii-pacmak@^1.137.0:
   version "1.137.0"
@@ -3810,36 +3797,6 @@ jsii-pacmak@^1.113.0, jsii-pacmak@^1.137.0:
     semver "^7.8.4"
     spdx-license-list "^6.11.0"
     xmlbuilder "^15.1.1"
-    yargs "^17.7.2"
-
-jsii-pacmak@^1.136.0:
-  version "1.136.0"
-  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.136.0.tgz#218e8d8df8cbc34e581f36ea5febb13a76ae9eb6"
-  integrity sha512-3CpTE3XJGoyIqNJNL29ktHLB9fQOLDoqazH+8yH3dFpf9Ne6bl7pR7FV8J/OI5Yjww9msPeu3PCglJ4Y6UgWeQ==
-  dependencies:
-    "@jsii/check-node" "1.136.0"
-    "@jsii/spec" "1.136.0"
-    clone "^2.1.2"
-    codemaker "^1.136.0"
-    commonmark "^0.31.2"
-    escape-string-regexp "^4.0.0"
-    fs-extra "^10.1.0"
-    jsii-reflect "^1.136.0"
-    semver "^7.8.4"
-    spdx-license-list "^6.11.0"
-    xmlbuilder "^15.1.1"
-    yargs "^17.7.2"
-
-jsii-reflect@^1.135.0:
-  version "1.136.0"
-  resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.136.0.tgz#bc0a73e6cd3ec8191d761ea2f3d260f0b1cea1ae"
-  integrity sha512-jA9sCk0JIGKz+PLgSS5195FpA55e9it+HkBNxvRz3JJ8StAqWoaOsLo3nkbCiPFrwTSqcNJQbtE+riBjKbzJ7w==
-  dependencies:
-    "@jsii/check-node" "1.136.0"
-    "@jsii/spec" "1.136.0"
-    chalk "^4"
-    fs-extra "^10.1.0"
-    oo-ascii-tree "^1.136.0"
     yargs "^17.7.2"
 
 jsii-reflect@^1.136.0, jsii-reflect@^1.137.0:
@@ -4438,7 +4395,7 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-oo-ascii-tree@^1.136.0, oo-ascii-tree@^1.137.0:
+oo-ascii-tree@^1.137.0:
   version "1.137.0"
   resolved "https://registry.yarnpkg.com/oo-ascii-tree/-/oo-ascii-tree-1.137.0.tgz#e7ce76e72acef173a94be3d3dc034490ebd5db5e"
   integrity sha512-1lvygC5BGtaCWQwQ9/fQvk6JAu6pShUr+L5rYSxmSkEJsIRM+KqqYIXHxXFTsCkolm9M+9CPSgem/vC5uoiEtQ==
@@ -5975,7 +5932,7 @@ yargs@^15:
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
 
-yargs@^16.2.0:
+yargs@^16.2.0, yargs@^16.2.2:
   version "16.2.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.2.tgz#c56731dca0d2788ae0866dd3c83907d6bab85f7d"
   integrity sha512-Nt9ZJjXTv5R8MHbqby/wXQ6Gi0Bb3TcYZkR1bzuL4yB2OxWPkXknz513gEF0GoA6tn00UpbPvERW8rzCuWCA6w==
