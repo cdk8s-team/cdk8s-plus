@@ -635,7 +635,7 @@
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.132.0.tgz#b6465fcd6a4ffeab2706fa2daed1fa937baf60e7"
   integrity sha512-70rcZ8tx2ISWf5HqFHNQe56VOKcAtTn0XFlLgZByWKHGZYpitf5T/Qe+ayvmTK8++luufb0h455l1JDpQDp0nQ==
 
-"@jsii/spec@1.137.0", "@jsii/spec@^1.136.0", "@jsii/spec@^1.137.0":
+"@jsii/spec@1.137.0", "@jsii/spec@^1.137.0":
   version "1.137.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.137.0.tgz#8c36539ec8f53dc2dde9594804766db56a3b2fad"
   integrity sha512-2rBIEsXG/sG56Wo6LmVRCByJOy0jL2fH1bQ/nMlNtUdL3lkAkld8YTTRzSMoEwtF/N6cNmK5WtMBqobos3u0ug==
@@ -3771,16 +3771,16 @@ jsii-diff@^1.137.0:
     yargs "^17.7.2"
 
 jsii-docgen@^10.5.0:
-  version "10.12.2"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.12.2.tgz#141408874e28b892f95c891a1c29417ad067f112"
-  integrity sha512-8HSBhYhufFSSX/dS61HCXLYSzfP4AsgjdcUyzlxDobt4gVAJ+C0dnWtCxnkvzT+QVI92rrns/KsBifU/hs03QA==
+  version "10.12.3"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.12.3.tgz#3e910cfb2cec6018c8d6c8884bde75c5f6b46c7b"
+  integrity sha512-isPOrp66Qyrl60wnqScj2tgl/Xjad6EKV0czO8/ditnP7JMUzIAl6T4bFYa5eQLOVwi/OLH4om7yUsMLwAihDw==
   dependencies:
-    "@jsii/spec" "^1.136.0"
+    "@jsii/spec" "^1.137.0"
     case "^1.6.3"
     fast-glob "^3.3.3"
     fs-extra "^10.1.0"
-    jsii-reflect "^1.136.0"
-    json-stream-stringify "^3.1.6"
+    jsii-reflect "^1.137.0"
+    json-stream-stringify "^3.1.7"
     semver "^7.8.5"
     yargs "^16.2.2"
 
@@ -3802,7 +3802,7 @@ jsii-pacmak@^1.113.0, jsii-pacmak@^1.137.0:
     xmlbuilder "^15.1.1"
     yargs "^17.7.2"
 
-jsii-reflect@^1.136.0, jsii-reflect@^1.137.0:
+jsii-reflect@^1.137.0:
   version "1.137.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.137.0.tgz#d6957a614bc8e10989711f4c3b91238577f10f14"
   integrity sha512-wR2x4PD7OfEzzqDwQG8Db8GEMy9rjTdYrTeannP7TXOStppjYiCta30k+xO9OOLb04Uia5PJ+aiUGfxI6mnRpg==
@@ -3903,7 +3903,7 @@ json-stable-stringify-without-jsonify@^1.0.1:
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
 
-json-stream-stringify@^3.1.6:
+json-stream-stringify@^3.1.7:
   version "3.1.7"
   resolved "https://registry.yarnpkg.com/json-stream-stringify/-/json-stream-stringify-3.1.7.tgz#80a29711b43b1d9e4d9eccd4f6873df3f68da22a"
   integrity sha512-F4MWetLtY42YMaAKw5cV4e47zMD5aOT+tjjQWjX18ACtdkQ5Y/vrcfbcQ107Rh+MXjOCIx4KhW0wPmOvG8iQ5w==
