@@ -212,7 +212,7 @@ export interface SeccompProfile {
   readonly type: SeccompProfileType;
 }
 
-export interface ContainerSecutiryContextCapabilities {
+export interface ContainerSecurityContextCapabilities {
   /**
    * Added capabilities
    */
@@ -282,7 +282,7 @@ export interface ContainerSecurityContextProps {
    *
    * @default none
    */
-  readonly capabilities?: ContainerSecutiryContextCapabilities;
+  readonly capabilities?: ContainerSecurityContextCapabilities;
 
   /**
   * Container's seccomp profile settings. Only one profile source may be set
@@ -368,7 +368,7 @@ export class ContainerSecurityContext {
   public readonly user?: number;
   public readonly group?: number;
   public readonly allowPrivilegeEscalation?: boolean;
-  public readonly capabilities?: ContainerSecutiryContextCapabilities;
+  public readonly capabilities?: ContainerSecurityContextCapabilities;
   public readonly seccompProfile?: SeccompProfile;
 
   constructor(props: ContainerSecurityContextProps = {}) {
