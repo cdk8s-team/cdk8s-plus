@@ -394,7 +394,7 @@ export interface ServiceBindOptions {
    *
    * @default - The value of `port` will be used.
    */
-  readonly targetPort?: number;
+  readonly targetPort?: number | string;
 }
 
 /**
