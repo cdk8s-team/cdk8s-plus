@@ -23,6 +23,7 @@ jobs:
           echo "matched=$matched" >> $GITHUB_OUTPUT
         shell: bash
       - name: Backport Action
+        id: backport_action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v11.0.0
         with:
