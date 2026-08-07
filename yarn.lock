@@ -4608,10 +4608,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.101.27:
-  version "0.101.27"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.101.27.tgz#9827199f9e5c5200bbe431d49b14d1ac2695f45a"
-  integrity sha512-PyKvfqmof4O+B3jAuyiRCeAKlv5qVD0tkCHYxmU0NrS79+wuPbVPF+7GETw3hIeRnywqz+S6A8TNpxPTvtgXHw==
+projen@^0.101.28:
+  version "0.101.28"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.101.28.tgz#0b9077a9f1a1b510579d86a9f93f7c597b2f7104"
+  integrity sha512-ht+QXMiLSWh0XFFu7Eusmis0CLhdEzUahPEHxuWWLOjyPIrfpAuHgBBX+0/9mJ5JwRNY+vkDxoGFN80b9AhVmw==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
