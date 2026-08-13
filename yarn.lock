@@ -967,9 +967,9 @@
     eslint-visitor-keys "^5.0.0"
 
 "@xmldom/xmldom@^0.9.10":
-  version "0.9.10"
-  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.9.10.tgz#a0ad5a26fe8aa996310870726e1704977f769dee"
-  integrity sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==
+  version "0.9.11"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.9.11.tgz#2ed75a186886383624cf16400930ed6b9adaa656"
+  integrity sha512-tW8bcK3hsG0/uqSnNz6TK4BkcuZSezoU7DlnYssILmZDktPnSHHuDJJFM0AJv+13gz2r0iGdrj6qqKeUnxXEDg==
 
 JSONStream@^1.3.5:
   version "1.3.5"
@@ -1425,10 +1425,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.207.49:
-  version "2.207.49"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.49.tgz#bccfbca240b43d827e9560667eb236bad0c356c3"
-  integrity sha512-f93TllQasEzIB5nzs/ipdjmad9L5Ugo8iXfcMsTO7jKaNr4b4G7w7Af+VoTeVQLX+cJc4bWS8FiNpeaEtEX4yw==
+cdk8s-cli@^2.207.50:
+  version "2.207.50"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.50.tgz#5bca82249d1df1461bafc688634e3597c8285c04"
+  integrity sha512-KtPwPat9QZiEX/sbQzJrHtx6iIZuVTEm4RwHpG8vJJDEa66Ova8B0BYf0iMIvtmJCBccaIj9bk94jRd2f0++rw==
   dependencies:
     "@types/node" "^16"
     ajv "^8.20.0"
