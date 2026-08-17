@@ -966,7 +966,7 @@
     "@typescript-eslint/types" "8.67.0"
     eslint-visitor-keys "^5.0.0"
 
-"@xmldom/xmldom@^0.9.10", "@xmldom/xmldom@^0.9.11":
+"@xmldom/xmldom@^0.9.11":
   version "0.9.11"
   resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.9.11.tgz#2ed75a186886383624cf16400930ed6b9adaa656"
   integrity sha512-tW8bcK3hsG0/uqSnNz6TK4BkcuZSezoU7DlnYssILmZDktPnSHHuDJJFM0AJv+13gz2r0iGdrj6qqKeUnxXEDg==
@@ -3801,7 +3801,7 @@ jsii-reflect@^1.139.0:
     oo-ascii-tree "^1.139.0"
     yargs "^17.7.3"
 
-jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.62:
+jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.62, jsii-rosetta@~5.9.0:
   version "5.9.62"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.62.tgz#e985a69dc386e5b6a7c467e9cf23f7455f2f2293"
   integrity sha512-Zvg/aZnPna8vfn00WX/V1PhmSvehonNxwb6WxwSNK2cyzehw8XmiIRiAszyKRc5NhBTk5XWvnZroBZ0EXDeEZw==
@@ -3809,25 +3809,6 @@ jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.62:
     "@jsii/check-node" "^1.139.0"
     "@jsii/spec" "^1.139.0"
     "@xmldom/xmldom" "^0.9.11"
-    chalk "^4"
-    commonmark "^0.31.2"
-    fast-glob "^3.3.3"
-    jsii "~5.9.1"
-    semver "^7.8.5"
-    semver-intersect "^1.5.0"
-    stream-json "^1.9.1"
-    typescript "~5.9"
-    workerpool "^6.5.1"
-    yargs "^17.7.3"
-
-jsii-rosetta@~5.9.0:
-  version "5.9.61"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.61.tgz#93c34497617910055116d673eee1a16dd104027d"
-  integrity sha512-B9VS+zTEhYH3cS3kRrWajGaqfiT9wGIGlNM2ivSZoss2ggJGnI03S924jsalvtHeTf8t9n5+daHgr1PYkdUH4w==
-  dependencies:
-    "@jsii/check-node" "^1.139.0"
-    "@jsii/spec" "^1.139.0"
-    "@xmldom/xmldom" "^0.9.10"
     chalk "^4"
     commonmark "^0.31.2"
     fast-glob "^3.3.3"
