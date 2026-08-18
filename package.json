@@ -48,7 +48,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdk8s/projen-common": "^0.1.18",
+    "@cdk8s/projen-common": "^0.1.19",
     "@stylistic/eslint-plugin": "^2",
     "@types/jest": "^27",
     "@types/node": "^18",
@@ -68,7 +68,7 @@
     "jsii-docgen": "^10.5.0",
     "jsii-pacmak": "^1.139.0",
     "jsii-rosetta": "~5.9.0",
-    "projen": "^0.101.31",
+    "projen": "^0.101.32",
     "snake-case": "^3.0.4",
     "ts-jest": "^27",
     "ts-node": "^10",
