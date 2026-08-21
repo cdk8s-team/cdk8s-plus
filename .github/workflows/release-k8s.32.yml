@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -39,7 +39,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
         id: setup_node_js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -91,7 +91,7 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -121,7 +121,7 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -137,7 +137,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -177,7 +177,7 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -193,7 +193,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -232,11 +232,11 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.x
       - name: Download build artifacts
@@ -251,7 +251,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -285,11 +285,11 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 6.x
           cache: false
@@ -305,7 +305,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -339,11 +339,11 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: ^1.18.0
           cache: false
@@ -359,7 +359,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
