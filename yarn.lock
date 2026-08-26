@@ -4621,10 +4621,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.103.2:
-  version "0.103.2"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.103.2.tgz#0e7f7c37af1da81a75c09f5a76bdb1a07f18b38d"
-  integrity sha512-wdGelzLgNcLEZTq9TR5Do1tvgj6KLLMg0SsiFLET10QCwFbDuuaV7iKDIVfOOV2kiln0rJyrPgcA4u9YmzglpQ==
+projen@^0.103.5:
+  version "0.103.5"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.103.5.tgz#f9f63256cca57a4612a5481f8fa4672be29f272b"
+  integrity sha512-UkJnvWaW1pxtfPu1CPGZbx6hgUeur2un59y6mbID9eemqp9R9sP/LlN32+z35kv6HOjPJGldyccHmBU6uJluVQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
@@ -4637,6 +4637,7 @@ projen@^0.103.2:
     fast-json-patch "^3.1.1"
     ini "^2.0.0"
     parse-conflict-json "^4.0.0"
+    properties-file "^5.0.6"
     semver "^7.8.5"
     xmlbuilder2 "^4.0.3"
     yaml "^2.2.2"
@@ -4649,6 +4650,11 @@ prompts@^2.0.1:
   dependencies:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
+
+properties-file@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/properties-file/-/properties-file-5.0.6.tgz#a3dfcf181fe7b24cfdccd59d7d64d23ee8c4dcd6"
+  integrity sha512-vFWlFjA9mL18QZy2IafIL6P63XnR+/EfYDcPNz9qVkAehV1pGLaa+hOkv4EyXCvuMaQZgbKbziJBmFe39VCHdg==
 
 psl@^1.1.33:
   version "1.15.0"
