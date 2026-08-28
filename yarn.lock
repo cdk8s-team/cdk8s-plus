@@ -263,10 +263,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdk8s/projen-common@^0.1.23":
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.1.23.tgz#0538342dba4af3ea977778e857309136b2b75bb9"
-  integrity sha512-qEm+IoM+FIbUjFzx0V+RVGVXYKoEFpPgKC+Bl0dp2eGrclKSF5hXEAIGgWFA66pcc7e/n5s4IEg5ZBsjVFp9+g==
+"@cdk8s/projen-common@^0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.1.24.tgz#e5c17d06c23e4c2a92bb8384dbbc6708f748e6ef"
+  integrity sha512-P9wXNkBkgzGfl14S3g2jpE8wFLeiS+1CfBmCw722JzNumgyBGslvNOdFceWcnfy+Pmh8tEbjW0GhmZJk6vbc1Q==
   dependencies:
     codemaker "^1.140.0"
     deepmerge "^4.3.1"
@@ -4621,10 +4621,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.103.5:
-  version "0.103.5"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.103.5.tgz#f9f63256cca57a4612a5481f8fa4672be29f272b"
-  integrity sha512-UkJnvWaW1pxtfPu1CPGZbx6hgUeur2un59y6mbID9eemqp9R9sP/LlN32+z35kv6HOjPJGldyccHmBU6uJluVQ==
+projen@^0.103.8:
+  version "0.103.8"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.103.8.tgz#bd79108f67985687338ed1a267451d21c0b3e126"
+  integrity sha512-LsbPUYNjwroE25wRiMbQJ6jWpKjzGlOjqPEfCszoaqNz1VjiqosYRadsufae0nwqIlWlAm1y5p5QskM5PFj4iA==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
