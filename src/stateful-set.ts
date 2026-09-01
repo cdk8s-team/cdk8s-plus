@@ -238,19 +238,14 @@ export class StatefulSet extends workload.Workload implements IScalable {
    * @internal
    */
   private _filterPodSpecVolumes(podSpec: PodSpec) {
-    // When using volumeClaimTemplates, the volumes with matching names should not be included in the pod spec
-    if (this.volumeClaimTemplates && podSpec.volumes) {
-      const volumeClaimNames = this.volumeClaimTemplates.map(vct => vct.name);
-      const volumesWithNoTemplates = podSpec.volumes.filter(vol => !volumeClaimNames.includes(vol.name));
-
-      // If there are no volumes after filtering, don't include volumes property
-      if (volumesWithNoTemplates.length === 0) {
-        return undefined;
-      } else {
-        return volumesWithNoTemplates;
-      }
+    if (!this.volumeClaimTemplates || !podSpec.volumes) {
+      return podSpec.volumes;
     }
-    return undefined;
+
+    const volumeClaimNames = this.volumeClaimTemplates.map(vct => vct.name);
+    const filteredVolumes = podSpec.volumes.filter(vol => !volumeClaimNames.includes(vol.name));
+
+    return filteredVolumes.length > 0 ? filteredVolumes : undefined;
   }
 
   /**
