@@ -4652,9 +4652,9 @@ prompts@^2.0.1:
     sisteransi "^1.0.5"
 
 properties-file@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/properties-file/-/properties-file-5.0.6.tgz#a3dfcf181fe7b24cfdccd59d7d64d23ee8c4dcd6"
-  integrity sha512-vFWlFjA9mL18QZy2IafIL6P63XnR+/EfYDcPNz9qVkAehV1pGLaa+hOkv4EyXCvuMaQZgbKbziJBmFe39VCHdg==
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/properties-file/-/properties-file-5.0.7.tgz#9e3ea91e9acc013120a477de76e92f9a948f7f28"
+  integrity sha512-Hoae9SnNTJebHujv5gdOtb7stArj27GcKzWxerrQgjuHasE+VT7G10Q6rR2wRWTjaACkT4zRigAtqnkMOz9BIA==
 
 psl@^1.1.33:
   version "1.15.0"
