@@ -4203,10 +4203,10 @@ pretty-format@^27.0.0, pretty-format@^27.5.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-projen@^0.103.24:
-  version "0.103.24"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.103.24.tgz#43e35a2dbc3af33f989a55d24275b87df929d762"
-  integrity sha512-8CIxbl9G9fOviFrZvZSG8RLmaUodjmDy/xokBFqLj22vsQ4jQ0REQH1EOVsS7UwtrnEKHUPiywnItL3Oxijbgw==
+projen@^0.103.25:
+  version "0.103.25"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.103.25.tgz#97e61f25d0375f287c049ea4178216de80ae3aaf"
+  integrity sha512-JYSitllYzFnRcZgMoSL6rTtCry7iZKV+Wqztn1aSf24aqi+rYz0lh/ExiJ1mYXI54DQJe2JkzY8OXSkDxpIG3Q==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
