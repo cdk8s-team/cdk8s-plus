@@ -1429,10 +1429,10 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.207.60:
-  version "2.207.60"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.60.tgz#60de5f7ed3850aec108c35de46f60f897d4453b6"
-  integrity sha512-SFOveaPEu/zMTXWrffgIs4S8EulYTH+kQOLCT6TCb0qV57IKrxWQ3R46RVssyUW77ft51j7/2I5NzfLi8mI09A==
+cdk8s-cli@^2.207.61:
+  version "2.207.61"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.61.tgz#c6d0a796b32eb84edf25aff9907eebac774da0bb"
+  integrity sha512-rXJIcuIYsuDfyjNhzayCSgP3/IrqAWN3amT0B2hvN+VRaqiO2w+VFmjnnERiaAv4UQjjHjRJ9r41qGqL4Gl4vA==
   dependencies:
     "@types/node" "^16"
     ajv "^8.20.0"
@@ -1477,9 +1477,9 @@ chalk@^4, chalk@^4.0.0, chalk@^4.1.2:
     supports-color "^7.1.0"
 
 chalk@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-6.0.0.tgz#a3bae843bc8454f41ef66ef3fd584dcf34dd805d"
-  integrity sha512-2uNTXIuTTxk7ciZgAU1BQcgnchcG0xXnrs6jzkQfj9SsRa9M2s5zE8WT96hS6KmG4MzWHSrvH43DF1m4XRkrFg==
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-6.0.1.tgz#077d4667ad6e608c9687782caed3d534d7f9abc3"
+  integrity sha512-/Ce6KNm3vIbWdMlNna6RVIZ/ICQxnJxCicet5LBKK9ZffBkqzDw0xh9EiKSljdRtiIQ1S1z4YgcscUUGzNCWrA==
 
 char-regex@^1.0.2:
   version "1.0.2"
@@ -4619,9 +4619,9 @@ stop-iteration-iterator@^1.1.0:
     internal-slot "^1.1.0"
 
 stream-chain@^4.2.5:
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/stream-chain/-/stream-chain-4.2.5.tgz#9061d29573ab79c49258b2cbe2f72bed7629c79f"
-  integrity sha512-Wtyq3bNE3ggLR0v2vftqvuhltym3WbZAkZpfIrkr5F/6vpeUmWmwTgXa16zD87gpahwJ/Qulq3zVfUlgIc0J2A==
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/stream-chain/-/stream-chain-4.2.6.tgz#0ff67bbf3e3fc05b46dd37fe39373229e1504776"
+  integrity sha512-1zeJ8CrtJfmiba26ui8jXkq/xLRFvhzkdH02D5QLO9Cnovgeb28IJxg88DdraWnjnkbOol/++uIAybJbJhk7ig==
 
 stream-json@^3.6.0:
   version "3.7.0"
