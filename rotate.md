@@ -5,20 +5,9 @@ on the latest kubernetes version. These steps should be executed in order.
 
 ## :one: Prerequisite
 
-### Add new k8s spec to cdk8s repo
-
-1. ([cdk8s repo](https://github.com/cdk8s-team/cdk8s)): Generate [`kubernetes-schema/vX.XX.X/_definitions.json`](https://github.com/cdk8s-team/cdk8s/tree/master/kubernetes-schemas)
-
-    ```sh
-    tools/import-spec.sh x.xx.x
-    # provide the new version number e.g. 1.25.0
-    ```
-
-2. Create PR, review then merge the updated spec into cdk8s/master branch ([e.g. v25 PR](https://github.com/cdk8s-team/cdk8s/pull/1007)).
-
 ### Publish new branch to cdk8s-plus-go repo
 
-3. ([cdk8s-plus-go repo](https://github.com/cdk8s-team/cdk8s-plus-go)): Create and publish a new branch for the new k8s version
+1. ([cdk8s-plus-go repo](https://github.com/cdk8s-team/cdk8s-plus-go)): Create and publish a new branch for the new k8s version
 
     ```sh
     git checkout -b k8s.xx
@@ -28,9 +17,9 @@ on the latest kubernetes version. These steps should be executed in order.
 
 ### Create a new backport label in cdk8s-plus' GitHub
 
-4. Open the [cdk8s-plus GitHub label list](https://github.com/cdk8s-team/cdk8s-plus/issues/labels)
+2. Open the [cdk8s-plus GitHub label list](https://github.com/cdk8s-team/cdk8s-plus/issues/labels)
 
-5. Add a new label for the **current** Kubernetes version.
+3. Add a new label for the **current** Kubernetes version.
    - Label name: `backport-to-k8s-XX/main`
    - Label color: `#F53E94`
 
@@ -38,10 +27,10 @@ on the latest kubernetes version. These steps should be executed in order.
 
 ## :two: Create the new cdk8s-plus branch
 
-6. Create a new branch in the [cdk8s-plus](https://github.com/cdk8s-team/cdk8s-plus) off the current default branch. 
+4. Create a new branch in the [cdk8s-plus](https://github.com/cdk8s-team/cdk8s-plus) off the current default branch. 
 The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0).
 
-7. **On a new branch**, based off `k8s-XX/main`, do the following:
+5. **On a new branch**, based off `k8s-XX/main`, do the following:
 
      1. Bump the minor version in [latest-k8s-version.txt](./projenrc/latest-k8s-version.txt)
      2. ([`README.md`](./README.md)): In the table of supported versions, add a new row and remove the oldest one.
@@ -51,15 +40,15 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      6. `yarn build`
      7. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
 
-8. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
+6. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
 
-9. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings).
+7. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings).
 
-10. Update any existing PRs to use k8s-XX/main as the base.
+8. Update any existing PRs to use k8s-XX/main as the base.
 
-11. Rotate the backport labels on existing PRs. (for exmaple when rotating from k8s.29 to k8s.30, remove the `backport-to-k8s-27/main` label and add the `backport-to-k8s-29/main` label.
+9. Rotate the backport labels on existing PRs. (for exmaple when rotating from k8s.29 to k8s.30, remove the `backport-to-k8s-27/main` label and add the `backport-to-k8s-29/main` label.
 
-12. Delete the `backport-to-k8s-(XX - 3)/main` label. (for exmaple when rotating from k8s.29 to k8s.30, delete the `backport-to-k8s-27/main` label
+10. Delete the `backport-to-k8s-(XX - 3)/main` label. (for exmaple when rotating from k8s.29 to k8s.30, delete the `backport-to-k8s-27/main` label
 
 ## :three: Update Website
 
