@@ -421,6 +421,29 @@ describe('Container', () => {
 
   test('can add environment variables from a secret', () => {});
 
+  test('a single EnvFrom source with both a config map and a secret is split into separate envFrom entries', () => {
+
+    const chart = Testing.chart();
+
+    const cm = new kplus.ConfigMap(chart, 'ConfigMap');
+    const secret = new kplus.Secret(chart, 'Secret');
+
+    const envFrom = new kplus.EnvFrom(cm, 'pref', secret);
+
+    const container = new kplus.Container({
+      image: 'image',
+      envFrom: [envFrom],
+    });
+
+    const spec: k8s.Container = container._toKube();
+
+    expect(spec.envFrom).toEqual([
+      { configMapRef: { name: cm.name }, prefix: 'pref' },
+      { secretRef: { name: secret.name }, prefix: 'pref' },
+    ]);
+
+  });
+
   test('Can mount container to volume', () => {
 
     const container = new kplus.Container({

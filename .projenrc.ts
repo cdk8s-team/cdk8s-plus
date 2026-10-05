@@ -27,7 +27,7 @@ const project = new Cdk8sTeamJsiiProject({
 
   peerDeps: [
     'cdk8s',
-    'constructs',
+    'constructs@^10.8.1',
   ],
   deps: [
     'minimatch',
@@ -36,10 +36,10 @@ const project = new Cdk8sTeamJsiiProject({
     'minimatch',
   ],
   devDeps: [
-    'constructs',
+    'constructs@^10.8.1',
     'cdk8s',
     'cdk8s-cli',
-    'constructs',
+    'constructs@^10.8.1',
     'snake-case',
     '@cdk8s/projen-common',
   ],

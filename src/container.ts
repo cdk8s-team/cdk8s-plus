@@ -1376,16 +1376,27 @@ export class EnvFrom {
   /**
    * @internal
    */
-  public _toKube(): k8s.EnvFromSource {
-    return {
-      configMapRef: this.configMap ? {
-        name: this.configMap.name,
-      } : undefined,
-      secretRef: this.sec ? {
-        name: this.sec.name,
-      } : undefined,
-      prefix: this.prefix,
-    };
+  public _toKube(): k8s.EnvFromSource[] {
+    // a single `k8s.EnvFromSource` may only specify one of `configMapRef` / `secretRef`.
+    // if both a config map and a secret are configured on this instance, they must be
+    // rendered as separate entries, otherwise the resulting manifest is invalid.
+    const sources = new Array<k8s.EnvFromSource>();
+
+    if (this.configMap) {
+      sources.push({
+        configMapRef: { name: this.configMap.name },
+        prefix: this.prefix,
+      });
+    }
+
+    if (this.sec) {
+      sources.push({
+        secretRef: { name: this.sec.name },
+        prefix: this.prefix,
+      });
+    }
+
+    return sources;
   }
 
 }
@@ -1484,7 +1495,7 @@ export class Env {
    */
   public _toKube(): { variables?: k8s.EnvVar[]; from?: k8s.EnvFromSource[] } {
     return {
-      from: undefinedIfEmpty(this._sources.map(s => s._toKube())),
+      from: undefinedIfEmpty(this._sources.flatMap(s => s._toKube())),
       variables: undefinedIfEmpty(this.renderEnv(this._variables)),
     };
   }
