@@ -291,3 +291,29 @@ test('missing volumeMount for volumeClaimTemplate', () => {
     Testing.synth(chart);
   }).toThrow('Volume claim template with name "data" is not used by any container mount');
 });
+
+test('volumeMounts without volumeClaimTemplates', () => {
+  const chart = Testing.chart();
+  const secret = new kplus.Secret(chart, 'AwsSecret');
+  new kplus.StatefulSet(chart, 'StatefulSet', {
+    containers: [
+      {
+        image: 'foobar',
+        portNumber: 80,
+        volumeMounts: [
+          {
+            volume: Volume.fromSecret(chart, 'secret', secret),
+            path: '/mnt/secret',
+          },
+        ],
+      },
+    ],
+  });
+
+  const synthesized = Testing.synth(chart);
+  const spec: k8s.StatefulSetSpec = synthesized[2].spec;
+  expect(spec.template.spec?.volumes).toEqual([{
+    name: 'secret-test-awssecret-c8d3e80d',
+    secret: { secretName: 'test-awssecret-c8d3e80d' },
+  }]);
+});
