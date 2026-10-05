@@ -40,7 +40,12 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      6. `yarn build`
      7. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
 
-6. Wait for the PR above to be merged and verify that automation builds/tags/releases the new version successfully.
+6. Before sending the PR for approval, manully publish a dummy version of the new package so that we can configure trusted publishing on future versions (npm doesn't allow configuring trusted publishing on non existing packages).
+
+    1. npm login
+    2. npx setup-npm-trusted-publish@1.0.3 cdk8s-plus-XX
+    3. Copy the trusted publisher configuration from the previous package to the new one. (e.g https://www.npmjs.com/package/cdk8s-plus-34/access)
+    4. Send the PR for approval, wait for merge, and verify automation builds/tags/releases the new version successfully.
 
 7. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings).
 
