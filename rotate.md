@@ -40,40 +40,43 @@ The new branch should be named `k8s-XX/main` (e.g. `k8s-25/main` for K8s v1.25.0
      6. `yarn build`
      7. Create a PR to the `k8s-XX/main` branch. (See [example](https://github.com/cdk8s-team/cdk8s-plus/pull/4260)).
 
-6. Before sending the PR for approval, manully publish a dummy version of the new package so that we can configure trusted publishing on future versions (npm doesn't allow configuring trusted publishing on non existing packages).
+6. Before sending the PR for approval, enable trusted publishing for the package:
 
-    1. npm login
-    2. npx setup-npm-trusted-publish@1.0.3 cdk8s-plus-XX
-    3. Copy the trusted publisher configuration from the previous package to the new one. (e.g https://www.npmjs.com/package/cdk8s-plus-34/access)
-    4. Send the PR for approval, wait for merge, and verify automation builds/tags/releases the new version successfully.
+    1. `npm login`
+    2. `npx setup-npm-trusted-publish@1.0.3 cdk8s-plus-XX` # required because npm doesn't allow configuring trusted publishing for non existing packages.
+    3. login to npmjs.com.
+    4. Create a new trusted publishing configuration (repurpose the configuration from the previous package)
+    5. login to pypi.org.
+    6. Create a new trusted publishing configuration (repurpose the configuration from the previous package)
+    7. login to nuget.org.
+    8. Create a new trusted publishing configuration (repurpose the configuration from the previous package)
+    9. Send the PR for approval, wait for merge, and verify automation builds/tags/releases the new version successfully.
 
 7. Update cdk8s-plus default branch to the new branch in the [GitHub repo settings](https://github.com/cdk8s-team/cdk8s-plus/settings).
 
 8. Update any existing PRs to use k8s-XX/main as the base.
 
-9. Rotate the backport labels on existing PRs. (for exmaple when rotating from k8s.29 to k8s.30, remove the `backport-to-k8s-27/main` label and add the `backport-to-k8s-29/main` label.
-
-10. Delete the `backport-to-k8s-(XX - 3)/main` label. (for exmaple when rotating from k8s.29 to k8s.30, delete the `backport-to-k8s-27/main` label
+9. Delete the `backport-to-k8s-(XX - 3)/main` label. (for exmaple when rotating from k8s.29 to k8s.30, delete the `backport-to-k8s-27/main` label
 
 ## :three: Update Website
 
 In the ([cdk8s repo](https://github.com/cdk8s-team/cdk8s)):
 
-11. Create a new branch off of cdk8s/master and:
+10. Create a new branch off of cdk8s/master and:
 
     1. Bump the minor version in [latest-k8s-version.txt](https://github.com/cdk8s-team/cdk8s/blob/master/src/latest-k8s-version.txt)
     2. `yarn projen`
     3. `yarn rotate-cdk8s-plus`
 
-12.  Create a PR for the new branch, review then merge into cdk8s/master branch. (See [example](https://github.com/cdk8s-team/cdk8s/pull/1988))
+11.  Create a PR for the new branch, review then merge into cdk8s/master branch. (See [example](https://github.com/cdk8s-team/cdk8s/pull/1988))
 
 ## :four: Update Ops
 
 In the ([cdk-ops](https://github.com/cdklabs/cdk-ops)):
 
-13. Create a new branch and:
+12. Create a new branch and:
 
     1. Bump the minor version in [latest-cdk8s-plus-version.txt](https://github.com/cdklabs/cdk-ops/blob/master/latest-cdk8s-plus-version.txt)
     2. `yarn projen`
 
-14. Create a PR and send for approval. (See [example](https://github.com/cdklabs/cdk-ops/pull/3323))
+13. Create a PR and send for approval. (See [example](https://github.com/cdklabs/cdk-ops/pull/3323))
