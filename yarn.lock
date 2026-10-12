@@ -3566,29 +3566,10 @@ jsii-reflect@^1.141.0:
     oo-ascii-tree "^1.141.0"
     yargs "^17.7.3"
 
-jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.70:
+jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.70, jsii-rosetta@~5.9.0:
   version "5.9.70"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.70.tgz#e3367815889a2965a6021274b0a0dc4ae7b64d18"
   integrity sha512-nMEBWdw9KZur6ia0CcM04UVdBVjgXwojTkCRIzxJtGvdWcExB3u73LAUxCaAKLkG20jemvXl+nmeFjbTlp2sbw==
-  dependencies:
-    "@jsii/check-node" "^1.141.0"
-    "@jsii/spec" "^1.141.0"
-    "@xmldom/xmldom" "^0.9.12"
-    chalk "^4"
-    commonmark "^0.31.2"
-    fast-glob "^3.3.3"
-    jsii "~5.9.1"
-    semver "^7.8.5"
-    semver-intersect "^1.5.0"
-    stream-json "^3.7.0"
-    typescript "~5.9"
-    workerpool "^6.5.1"
-    yargs "^17.7.3"
-
-jsii-rosetta@~5.9.0:
-  version "5.9.69"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.69.tgz#c9b55ecdbc740aac1959073a5f077d60b0be9b1a"
-  integrity sha512-hPktP+VHQTD/t7e14wT1r6XpUcIrSO9db8KUoiWlRvs4/hesaR2waSsWAGu731S/AI2eu0NfszoA+nH3NLMudw==
   dependencies:
     "@jsii/check-node" "^1.141.0"
     "@jsii/spec" "^1.141.0"
@@ -3616,25 +3597,7 @@ jsii-srcmak@0.1.1319:
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@~5.9.0:
-  version "5.9.55"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.55.tgz#1477fddbb0fefe3d24820049beff7926a5ccbd4b"
-  integrity sha512-UiJXCIHD8g+k4la7G2ttidC/YxB/uHFkSgaNWv8kmdRipVb3A3SSwgNr6sYuPWyE6yPY8Y67Ks+Z6r/8PeAqbg==
-  dependencies:
-    "@jsii/check-node" "1.141.0"
-    "@jsii/spec" "1.141.0"
-    case "^1.6.3"
-    chalk "^4"
-    fast-deep-equal "^3.1.3"
-    log4js "^6.9.1"
-    semver "^7.8.5"
-    semver-intersect "^1.5.0"
-    sort-json "^2.0.1"
-    spdx-license-list "^6.12.0"
-    typescript "~5.9"
-    yargs "^17.7.3"
-
-jsii@~5.9.1, jsii@~5.9.3:
+jsii@~5.9.0, jsii@~5.9.1, jsii@~5.9.3:
   version "5.9.56"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.56.tgz#4d099940ad1dd935704d6b429643bb7a0e975f5c"
   integrity sha512-RxV9cmp1qsI03GzTvDbsevWiQakW4/APWO/8uh9kEIZsZ/vaO/HMJ4HcMB/ZbzuSjQdQ6H0vtfWW7Xoe73MtEA==
