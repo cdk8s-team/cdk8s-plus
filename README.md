@@ -6,9 +6,9 @@
 
 | k8s version | npm (JS/TS)                                         | PyPI (Python)                                   | Maven (Java)                                                      | Go                                                              |
 | ----------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| 1.33.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-33) | [Link](https://pypi.org/project/cdk8s-plus-33/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-33) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.33) |
 | 1.34.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-34) | [Link](https://pypi.org/project/cdk8s-plus-34/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-34) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.34) |
 | 1.35.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-35) | [Link](https://pypi.org/project/cdk8s-plus-35/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-35) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.35) |
+| 1.36.0      | [Link](https://www.npmjs.com/package/cdk8s-plus-36) | [Link](https://pypi.org/project/cdk8s-plus-36/) | [Link](https://search.maven.org/artifact/org.cdk8s/cdk8s-plus-36) | [Link](https://github.com/cdk8s-team/cdk8s-plus-go/tree/k8s.36) |
 
 **cdk8s+** is a software development framework that provides high level
 abstractions for authoring Kubernetes applications. Built on top of the auto
