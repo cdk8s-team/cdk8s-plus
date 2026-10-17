@@ -394,7 +394,7 @@ export interface ServiceBindOptions {
    *
    * @default - The value of `port` will be used.
    */
-  readonly targetPort?: number | string;
+  readonly targetPort?: k8s.IntOrString;
 }
 
 /**
