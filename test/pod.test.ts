@@ -377,6 +377,8 @@ test('default security context', () => {
   expect(pod.securityContext.fsGroupChangePolicy).toEqual(FsGroupChangePolicy.ALWAYS);
   expect(pod.securityContext.user).toBeUndefined();
   expect(pod.securityContext.group).toBeUndefined();
+  expect(pod.securityContext.supplementalGroups).toEqual([]);
+  expect(pod.securityContext.supplementalGroupsPolicy).toBeUndefined();
 
   expect(spec.securityContext).toEqual(pod.securityContext._toKube());
   expect(spec.securityContext).toStrictEqual({
@@ -409,6 +411,45 @@ test('custom security context', () => {
   expect(pod.securityContext.fsGroupChangePolicy).toEqual(FsGroupChangePolicy.ON_ROOT_MISMATCH);
   expect(pod.securityContext.user).toEqual(1000);
   expect(pod.securityContext.group).toEqual(2000);
+
+});
+
+test('custom security context with supplemental groups', () => {
+
+  const chart = Testing.chart();
+
+  const pod = new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    securityContext: {
+      supplementalGroups: [3000, 4000],
+      supplementalGroupsPolicy: kplus.SupplementalGroupsPolicy.STRICT,
+    },
+  });
+
+  expect(pod.securityContext.supplementalGroups).toEqual([3000, 4000]);
+  expect(pod.securityContext.supplementalGroupsPolicy).toEqual(kplus.SupplementalGroupsPolicy.STRICT);
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.securityContext.supplementalGroups).toEqual([3000, 4000]);
+  expect(spec.securityContext.supplementalGroupsPolicy).toEqual('Strict');
+
+});
+
+test('supplemental groups can include the root group', () => {
+
+  const chart = Testing.chart();
+
+  new kplus.Pod(chart, 'Pod', {
+    containers: [{ image: 'image' }],
+    securityContext: {
+      supplementalGroups: [0],
+    },
+  });
+
+  const spec = Testing.synth(chart)[0].spec;
+
+  expect(spec.securityContext.supplementalGroups).toEqual([0]);
 
 });
 
