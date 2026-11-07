@@ -24,6 +24,26 @@ test('Must be configured with at least one port', () => {
 
 });
 
+test('Headless service can be configured without ports', () => {
+  // GIVEN
+  const chart = Testing.chart();
+
+  // WHEN
+  const service = new kplus.Service(chart, 'service', {
+    clusterIP: 'None',
+  });
+  service.selectLabel('key', 'value');
+
+  // THEN
+  const spec = Testing.synth(chart)[0].spec;
+  expect(spec).toEqual({
+    clusterIP: 'None',
+    externalIPs: [],
+    selector: { key: 'value' },
+    type: 'ClusterIP',
+  });
+});
+
 test('Can provide cluster IP', () => {
   // GIVEN
   const chart = Testing.chart();
