@@ -329,6 +329,22 @@ export interface PodSecurityContextProps {
    * @default - No sysctls
    */
   readonly sysctls?: Sysctl[];
+
+  /**
+   * A list of groups applied to the first process run in each container,
+   * in addition to the container's primary GID and fsGroup (if specified).
+   *
+   * @default - No additional groups are added.
+   */
+  readonly supplementalGroups?: number[];
+
+  /**
+   * Defines how supplemental groups of the first container processes are calculated.
+   *
+   * @see https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-fine-grained-supplementalgroups-control-for-a-pod
+   * @default - Unset, Kubernetes uses SupplementalGroupsPolicy.MERGE.
+   */
+  readonly supplementalGroupsPolicy?: SupplementalGroupsPolicy;
 }
 
 /**
@@ -824,8 +840,10 @@ export class PodSecurityContext {
   public readonly group?: number;
   public readonly fsGroup?: number;
   public readonly fsGroupChangePolicy: FsGroupChangePolicy;
+  public readonly supplementalGroupsPolicy?: SupplementalGroupsPolicy;
 
   private readonly _sysctls: Sysctl[] = [];
+  private readonly _supplementalGroups: number[] = [];
 
   constructor(props: PodSecurityContextProps = {}) {
     this.ensureNonRoot = props.ensureNonRoot ?? true;
@@ -833,15 +851,24 @@ export class PodSecurityContext {
     this.user = props.user;
     this.group = props.group;
     this.fsGroup = props.fsGroup;
+    this.supplementalGroupsPolicy = props.supplementalGroupsPolicy;
 
     for (const sysctl of props.sysctls ?? []) {
       this._sysctls.push(sysctl);
+    }
+
+    for (const supplementalGroup of props.supplementalGroups ?? []) {
+      this._supplementalGroups.push(supplementalGroup);
     }
 
   }
 
   public get sysctls(): Sysctl[] {
     return [...this._sysctls];
+  }
+
+  public get supplementalGroups(): number[] {
+    return [...this._supplementalGroups];
   }
 
   /**
@@ -855,6 +882,9 @@ export class PodSecurityContext {
       runAsNonRoot: this.ensureNonRoot,
       fsGroupChangePolicy: this.fsGroupChangePolicy,
       sysctls: undefinedIfEmpty(this._sysctls),
+      // not using `undefinedIfEmpty` since it would also drop `[0]`, which is a valid GID list.
+      supplementalGroups: this._supplementalGroups.length > 0 ? this._supplementalGroups : undefined,
+      supplementalGroupsPolicy: this.supplementalGroupsPolicy,
     };
   }
 
@@ -893,6 +923,25 @@ export enum FsGroupChangePolicy {
    * Always change permission and ownership of the volume when volume is mounted.
    */
   ALWAYS = 'Always',
+}
+
+/**
+ * Defines how supplemental groups of the first container processes are calculated.
+ */
+export enum SupplementalGroupsPolicy {
+
+  /**
+   * The group memberships defined in `/etc/group` of the container image for
+   * the container's primary user are merged with `fsGroup` and `supplementalGroups`.
+   */
+  MERGE = 'Merge',
+
+  /**
+   * Only the group IDs specified in `fsGroup`, `supplementalGroups` and `group`
+   * are attached as supplementary groups, ignoring any group memberships defined
+   * in the container image.
+   */
+  STRICT = 'Strict',
 }
 
 /**
