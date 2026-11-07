@@ -4193,10 +4193,10 @@ pretty-format@^27.0.0, pretty-format@^27.5.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-projen@^0.104.26:
-  version "0.104.26"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.104.26.tgz#cb67f2bf6767f6fb7cc12575f725988018dd755b"
-  integrity sha512-1RzkxB+IhsOWuA6rH81x4L482237ztoERLS5gXq2jDbfdqdBdatx5ZAVsmIWDxVMUPYYxiCyfBEcPvxCMG5r0A==
+projen@^0.104.27:
+  version "0.104.27"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.104.27.tgz#70b1d0b1421258e73af77df8ce765d8f23cdb415"
+  integrity sha512-L02IpJLrgNUTs06ssI256E+E0uaFQ5QZG3VaPntMqXVlvnuDaCVJHPx6JGt6pM/fxgvy0ZAKaLYxY3sSGXEOgg==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
