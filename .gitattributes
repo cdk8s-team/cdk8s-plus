@@ -13,6 +13,7 @@
 /.github/workflows/pull-request-lint.yml linguist-generated
 /.github/workflows/release-k8s.37.yml linguist-generated
 /.github/workflows/security.yml linguist-generated
+/.github/workflows/self-mutation.yml linguist-generated
 /.github/workflows/stale.yml linguist-generated
 /.github/workflows/triage.yml linguist-generated
 /.github/workflows/upgrade-compiler-dependencies-k8s-35-main.yml linguist-generated
