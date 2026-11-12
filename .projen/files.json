@@ -11,6 +11,7 @@
     ".github/workflows/pull-request-lint.yml",
     ".github/workflows/release-k8s.35.yml",
     ".github/workflows/security.yml",
+    ".github/workflows/self-mutation.yml",
     ".github/workflows/stale.yml",
     ".github/workflows/triage.yml",
     ".github/workflows/upgrade-compiler-dependencies-k8s-33-main.yml",
