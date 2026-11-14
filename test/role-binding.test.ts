@@ -1,4 +1,4 @@
-import { Testing } from 'cdk8s';
+import { Chart, Testing } from 'cdk8s';
 import * as kplus from '../src';
 
 test('can create a RoleBinding from a Role', () => {
@@ -182,6 +182,56 @@ Object {
   ],
 }
 `);
+});
+
+test('RoleBinding defaults to the namespace of its Role', () => {
+  // GIVEN
+  const chart = new Chart(Testing.app(), 'Chart', { namespace: 'chart-namespace' });
+
+  const role = new kplus.Role(chart, 'pod-reader', { metadata: { namespace: 'role-namespace' } });
+  role.allowRead(kplus.ApiResource.PODS);
+
+  // WHEN
+  const binding = new kplus.RoleBinding(chart, 'binding', { role });
+
+  // THEN
+  expect(binding.metadata.namespace).toEqual('role-namespace');
+
+  const manifest = Testing.synth(chart);
+  expect(manifest[1].kind).toEqual('RoleBinding');
+  expect(manifest[1].metadata.namespace).toEqual('role-namespace');
+});
+
+test('RoleBinding namespace can be overridden when binding a Role', () => {
+  // GIVEN
+  const chart = new Chart(Testing.app(), 'Chart', { namespace: 'chart-namespace' });
+
+  const role = new kplus.Role(chart, 'pod-reader', { metadata: { namespace: 'role-namespace' } });
+  role.allowRead(kplus.ApiResource.PODS);
+
+  // WHEN
+  const binding = new kplus.RoleBinding(chart, 'binding', {
+    role,
+    metadata: { namespace: 'binding-namespace', labels: { foo: 'bar' } },
+  });
+
+  // THEN
+  expect(binding.metadata.namespace).toEqual('binding-namespace');
+  expect(binding.metadata.getLabel('foo')).toEqual('bar');
+});
+
+test('RoleBinding defaults to the chart namespace when binding a ClusterRole', () => {
+  // GIVEN
+  const chart = new Chart(Testing.app(), 'Chart', { namespace: 'chart-namespace' });
+
+  const role = new kplus.ClusterRole(chart, 'pod-reader');
+  role.allowRead(kplus.ApiResource.PODS);
+
+  // WHEN
+  const binding = new kplus.RoleBinding(chart, 'binding', { role });
+
+  // THEN
+  expect(binding.metadata.namespace).toEqual('chart-namespace');
 });
 
 test('can bind a ServiceAccount to a role', () => {
