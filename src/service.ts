@@ -321,7 +321,9 @@ export class Service extends base.Resource {
    * @internal
    */
   public _toKube(): k8s.ServiceSpec {
-    if (this._ports.length === 0 && this.type !== ServiceType.EXTERNAL_NAME) {
+    // headless services are not proxied, so they don't require any ports.
+    // see https://kubernetes.io/docs/concepts/services-networking/service/#headless-services
+    if (this._ports.length === 0 && this.type !== ServiceType.EXTERNAL_NAME && this.clusterIP !== 'None') {
       throw new Error('A service must be configured with a port');
     }
 
@@ -347,7 +349,7 @@ export class Service extends base.Resource {
       externalName: this.externalName,
       type: this.type,
       selector: this._selector,
-      ports: ports,
+      ports: ports.length > 0 ? ports : undefined,
       loadBalancerSourceRanges: this._loadBalancerSourceRanges,
       publishNotReadyAddresses: this._publishNotReadyAddresses,
     } : {
