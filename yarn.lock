@@ -1461,14 +1461,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk8s-cli@^2.207.86:
-  version "2.207.86"
-  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.86.tgz#8133a74a5f489be7a140f0d57f8370ddca558294"
-  integrity sha512-OHTdHpBTYQzl0qLYeHNMqr1/W24CwawLDLtYCFnS1OA9w8fH0HJdwuGQKIUHeaTrNVZd6fHxn3aMTQc80tEXGw==
+cdk8s-cli@^2.207.87:
+  version "2.207.87"
+  resolved "https://registry.yarnpkg.com/cdk8s-cli/-/cdk8s-cli-2.207.87.tgz#40e88afc343afb74ecada62007f8803b9cc705f8"
+  integrity sha512-IOKm7I8Hsx4G+wNSGFPvne66aLrBTOihe4aSwKOmRQFhtU3oxMV+eqKONQri3yqWJJqHo3ulxnG1xa3s1byLaQ==
   dependencies:
     "@types/node" "^16"
     ajv "^8.20.0"
-    cdk8s "^2.70.125"
+    cdk8s "^2.70.126"
     cdk8s-plus-33 "^2.5.63"
     codemaker "^1.143.0"
     colors "1.4.0"
@@ -1491,10 +1491,10 @@ cdk8s-plus-33@^2.5.63:
   dependencies:
     minimatch "^9.0.9"
 
-cdk8s@2.70.125, cdk8s@^2.70.125:
-  version "2.70.125"
-  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.125.tgz#bc9fc999c1667653119c0e95176889164748fd74"
-  integrity sha512-zcFUt1LKkLcINTby8jmjHY0a++mhmN5E+AShpTBW5roS9WyGPTxfmgPAS60NaE8atRkH3bqQljLkeb/2sRE/hA==
+cdk8s@2.70.126, cdk8s@^2.70.126:
+  version "2.70.126"
+  resolved "https://registry.yarnpkg.com/cdk8s/-/cdk8s-2.70.126.tgz#3ca45a7af65954e0986184089f03a5fc8c699c9d"
+  integrity sha512-F5shTK4eyB/ICilcW4eWWw8aXi7F2hZ02O4P3mxLjeaNyPNv+IdD3P7jJ6B4QbjU5koh0yJvpfN3YZkQPe4mZQ==
   dependencies:
     fast-json-patch "^3.1.1"
     follow-redirects "^1.16.3"
@@ -1959,9 +1959,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.486:
-  version "1.5.487"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.487.tgz#9a1e2861c50b08b0d2a4f3b6e3a37f9d72b00700"
-  integrity sha512-qWotOhQYeYEj+DK4+Y+cfPj44qiC6ETIiWtJLfmDJydED2BJJ7loPA4SfBbbrMI6X/X3tryJgxnY9nxsO545Zw==
+  version "1.5.489"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.489.tgz#4d7be5051f3ea8f29ec0c32fc1ef16b944f3dc8a"
+  integrity sha512-1cF87WItryk9lj5wg5SLsNegUihdkcHuOfrANPpO02y/d2krm1Oc3GjA9KBwlT5o145FTa1bbjdLc7pZnvtnYQ==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3963,9 +3963,9 @@ node-int64@^0.4.0:
   integrity sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==
 
 node-releases@^2.0.64:
-  version "2.0.64"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.64.tgz#f98f49ee9592be46c78780a5246e3b2c8b8d6f4d"
-  integrity sha512-zAPCKqMcnqs2nGy6nlkm7JduFseiBJy3EXHGLh+8pFR+TxGCBxxiEN21+UROU5CKwX/f4TlUcYjiM+vs/tsyxw==
+  version "2.0.65"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.65.tgz#8937f0f215e572b35c1dc83f8c6ec61cafccb9f8"
+  integrity sha512-PfvofsGQ+MiOQIPkX9fU8ELUWmy5zL74CdQaph/ismKszfFkfwXaw0cGiwbwym2hT9k5+mdyl8O5WQ1MD8EHmA==
 
 normalize-path@^3.0.0:
   version "3.0.0"
