@@ -1154,19 +1154,19 @@ export class Container {
       limits.cpu = k8s.Quantity.fromString(cpuLimit);
     }
     if (memoryLimit) {
-      limits.memory = k8s.Quantity.fromString(memoryLimit.toMebibytes().toString() + 'Mi');
+      limits.memory = k8s.Quantity.fromString(memoryLimit.asString());
     }
     if (ephemeralStorageLimit) {
-      limits['ephemeral-storage'] = k8s.Quantity.fromString(ephemeralStorageLimit.toGibibytes().toString() + 'Gi');
+      limits['ephemeral-storage'] = k8s.Quantity.fromString(ephemeralStorageLimit.asString());
     }
     if (cpuRequest) {
       requests.cpu = k8s.Quantity.fromString(cpuRequest);
     }
     if (memoryRequest) {
-      requests.memory = k8s.Quantity.fromString(memoryRequest.toMebibytes().toString() + 'Mi');
+      requests.memory = k8s.Quantity.fromString(memoryRequest.asString());
     }
     if (ephemeralStorageRequest) {
-      requests['ephemeral-storage'] = k8s.Quantity.fromString(ephemeralStorageRequest.toGibibytes().toString() + 'Gi');
+      requests['ephemeral-storage'] = k8s.Quantity.fromString(ephemeralStorageRequest.asString());
     }
 
     let resourceRequirements: k8s.ResourceRequirements | undefined = undefined;
