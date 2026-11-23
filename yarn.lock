@@ -661,7 +661,7 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@jsii/check-node@1.143.0", "@jsii/check-node@^1.142.0":
+"@jsii/check-node@1.143.0", "@jsii/check-node@^1.142.0", "@jsii/check-node@^1.143.0":
   version "1.143.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.143.0.tgz#f12963b3de96883f207915d36fad38d347a9289b"
   integrity sha512-4BawLEyDtjSteM7PRamldWBpLv6yJ1hW6JTBSFMN1Z2fcE2UbN19r+UQ6IvpIRlYapiI1ILYUGhIK39YvqE04Q==
@@ -1444,9 +1444,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001826:
-  version "1.0.30001826"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001826.tgz#6c2cc43e4858e54d6f7200fa87b4de93cb39aa77"
-  integrity sha512-wTB+9tIbLro/BCXwLuNV1meHE4L9dS6dArMDwgYfNBPMYScqClHyGunhkCSDtHhe/69Xl0sHlKgBVZ+fNsYtWA==
+  version "1.0.30001827"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001827.tgz#42db7cf8d15cbd4d66e2f4fde885009565f8bdeb"
+  integrity sha512-YWEDr46gSO81M8w6uPbaIy4++IXsirx2asUqvllNiD4BPf75ibxclUjWEqp8ObCenRv+UM2n5Y8xuRPT8V8FrQ==
 
 case@^1.6.3:
   version "1.6.3"
@@ -3592,7 +3592,26 @@ jsii-reflect@^1.143.0:
     oo-ascii-tree "^1.143.0"
     yargs "^17.7.3"
 
-jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.75, jsii-rosetta@~5.9.0:
+jsii-rosetta@^5.9.3, jsii-rosetta@^5.9.75:
+  version "5.9.76"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.76.tgz#8918876cf0db50de27d173494a1bd89ecaaf81a6"
+  integrity sha512-Hr6TeLz0ep4LHEjhOp9d8NNqKhtfRuIWtUkbJmqaWpGG3y3cIFnN64cK84Xh77UY4TNIkY8MHelXJtzSvLpDYg==
+  dependencies:
+    "@jsii/check-node" "^1.143.0"
+    "@jsii/spec" "^1.143.0"
+    "@xmldom/xmldom" "^0.9.12"
+    chalk "^4"
+    commonmark "^0.31.2"
+    fast-glob "^3.3.3"
+    jsii "~5.9.1"
+    semver "^7.8.6"
+    semver-intersect "^1.5.0"
+    stream-json "^3.9.0"
+    typescript "~5.9"
+    workerpool "^6.5.1"
+    yargs "^17.7.3"
+
+jsii-rosetta@~5.9.0:
   version "5.9.75"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.75.tgz#095a06cdad0300c4298b0ebd405665ee3f32d8b4"
   integrity sha512-A2mn5HaZXNKlwi6d3IQrPeZOJPyX9ubINGagfwcAiSiC5SJzWCq5dh/2L5+Y4488Sht2cytLbnDNqmaE9o7yKw==
@@ -3623,10 +3642,28 @@ jsii-srcmak@0.1.1319:
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@~5.9.0, jsii@~5.9.1, jsii@~5.9.3:
+jsii@~5.9.0:
   version "5.9.61"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.61.tgz#35684fb7d803c27ad093cb9a65e078e87b1d7cdb"
   integrity sha512-61Lhl0PvMo1lkZ3VIJIXlfiG7l8bfMQLozaRf5qxiN4JfAtwB/unaniSgcBAv7X2yNFADmiMZ+flTPNTF4eYJA==
+  dependencies:
+    "@jsii/check-node" "1.143.0"
+    "@jsii/spec" "1.143.0"
+    case "^1.6.3"
+    chalk "^4"
+    fast-deep-equal "^3.1.3"
+    log4js "^6.9.1"
+    semver "^7.8.6"
+    semver-intersect "^1.5.0"
+    sort-json "^2.0.1"
+    spdx-license-list "^6.12.0"
+    typescript "~5.9"
+    yargs "^17.7.3"
+
+jsii@~5.9.1, jsii@~5.9.3:
+  version "5.9.62"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.9.62.tgz#5961d6df7799f7aae7ff0594c5debb9eec3c4bbb"
+  integrity sha512-mpOv9kry2xKtVzc/29giVN2W1uTNo82XJ74sSmsJKHveUD4n3CbEEwZIP32ugznjr7B8Zdlz9yf5wFqhaJOB5g==
   dependencies:
     "@jsii/check-node" "1.143.0"
     "@jsii/spec" "1.143.0"
