@@ -263,10 +263,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdk8s/projen-common@^0.1.54":
-  version "0.1.54"
-  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.1.54.tgz#49bf4cdba8895f27d1a963b2b4d9fd46fb981eba"
-  integrity sha512-Y/IGUA/gS+Q1cjh1X1JH+XwagO/0y4otcjmA578p6f/iuXcQ7+Zont5aduJU4/jC7dIvzPgAbBC0LOuHQSGDGw==
+"@cdk8s/projen-common@^0.1.55":
+  version "0.1.55"
+  resolved "https://registry.yarnpkg.com/@cdk8s/projen-common/-/projen-common-0.1.55.tgz#d529253f9647940e1c1c4e5c52e7e2492374a67a"
+  integrity sha512-Urmu0gYDrjfbSSwUo4vvkbfEGHPtX1I45Krc/M4Im2NIeBqxhIDi0o1jeQCZutauMWuT+EW21UlKJX6GoJxSQg==
   dependencies:
     codemaker "^1.143.0"
     deepmerge "^4.3.1"
@@ -2319,7 +2319,7 @@ fast-glob@^3.3.3:
     merge2 "^1.3.0"
     micromatch "^4.0.8"
 
-fast-json-patch@^3.1.1:
+fast-json-patch@^3.1.1, fast-json-patch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-3.1.2.tgz#e6f745258f970186cc016f0212319d6794e8fa72"
   integrity sha512-Dhr5mVii8hIvjkp0Xdrun9B3GlXe3j+L4Ymv8J0h3Di996xoBi8qSDQ/sqSNKZd1NEqx55ZfcseG1MphW7MkHg==
@@ -4245,10 +4245,10 @@ pretty-format@^27.0.0, pretty-format@^27.5.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-projen@^0.105.8:
-  version "0.105.8"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.105.8.tgz#94f790c6c8a3ec665f789baa8dbb8e11647c1204"
-  integrity sha512-V/dtK7WRiDk7Nzi3zWf6vmNEb5EZ7Gc1ECVPUfZXDcc4lyIUxVvMoh0dCEh6dSSLIJCh02mh8nup5RBR8MAXRA==
+projen@^0.105.10:
+  version "0.105.10"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.105.10.tgz#96d8d276fc6086442c479717a8e748cdb8f77592"
+  integrity sha512-72bnEcqM5zj6XklN7ldqn/7PwZ3vjYgnAhlvbGwRvIbM0BIl50kIkP62MjF26Rycr3gfn5e5Pa2FbYSCsRN6QQ==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
@@ -4258,7 +4258,7 @@ projen@^0.105.8:
     conventional-changelog-config-spec "^2.1.0"
     dax "^0.50.2"
     fast-glob "^3.3.3"
-    fast-json-patch "^3.1.1"
+    fast-json-patch "^3.1.2"
     ini "^2.0.0"
     parse-conflict-json "^4.0.0"
     properties-file "^5.0.7"
