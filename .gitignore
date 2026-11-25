@@ -62,7 +62,6 @@ junit.xml
 !/.github/ISSUE_TEMPLATE/config.yml
 !/SECURITY.md
 !/.github/workflows/security.yml
-!/.github/workflows/triage.yml
 !/.github/workflows/stale.yml
 !/.github/workflows/upgrade-configuration-k8s-37-main.yml
 !/.github/workflows/upgrade-configuration-k8s-36-main.yml
