@@ -13,7 +13,6 @@
     ".github/workflows/security.yml",
     ".github/workflows/self-mutation.yml",
     ".github/workflows/stale.yml",
-    ".github/workflows/triage.yml",
     ".github/workflows/upgrade-compiler-dependencies-k8s-34-main.yml",
     ".github/workflows/upgrade-compiler-dependencies-k8s-35-main.yml",
     ".github/workflows/upgrade-compiler-dependencies-k8s-36-main.yml",
