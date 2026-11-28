@@ -58,6 +58,10 @@ export interface ISubject extends IConstruct {
 export interface RoleBindingProps extends ResourceProps {
   /**
    * The role to bind to. A RoleBinding can reference a Role or a ClusterRole.
+   *
+   * Since a RoleBinding can only reference a Role in its own namespace, the
+   * namespace of a referenced `Role` is used for the RoleBinding unless
+   * `metadata.namespace` is explicitly specified.
    */
   readonly role: role.IRole;
 }
@@ -86,7 +90,11 @@ export class RoleBinding extends Resource {
     this._subjects = new Array<ISubject>();
 
     this.apiObject = new k8s.KubeRoleBinding(this, 'Resource', {
-      metadata: props.metadata,
+      metadata: {
+        ...props.metadata,
+        // a role binding can only reference a role in its own namespace.
+        namespace: props.metadata?.namespace ?? (props.role instanceof role.Role ? props.role.metadata.namespace : undefined),
+      },
       subjects: Lazy.any({ produce: () => this.synthesizeSubjects() }),
       roleRef: Lazy.any({ produce: () => this.synthesizeRoleRef() }),
     });
