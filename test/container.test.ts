@@ -180,6 +180,23 @@ describe('EnvValue', () => {
 
 describe('Container', () => {
 
+  test('Can use sub-GiB ephemeral storage', () => {
+    const container = new kplus.Container({
+      resources: {
+        ephemeralStorage: {
+          limit: Size.mebibytes(400),
+        },
+      },
+      image: 'image',
+    });
+
+    expect(container._toKube().resources).toEqual({
+      limits: {
+        'ephemeral-storage': k8s.Quantity.fromString('400Mi'),
+      },
+    });
+  });
+
   test('cannot configure identical ports and protocols at instantiation', () => {
 
     expect(() => new kplus.Container({
@@ -646,12 +663,12 @@ describe('Container', () => {
       limits: {
         'cpu': k8s.Quantity.fromString('0.5'),
         'memory': k8s.Quantity.fromString('384Mi'),
-        'ephemeral-storage': k8s.Quantity.fromString('2Gi'),
+        'ephemeral-storage': k8s.Quantity.fromString('2048Mi'),
       },
       requests: {
         'cpu': k8s.Quantity.fromString('300m'),
         'memory': k8s.Quantity.fromString('256Mi'),
-        'ephemeral-storage': k8s.Quantity.fromString('1Gi'),
+        'ephemeral-storage': k8s.Quantity.fromString('1024Mi'),
       },
     });
 
