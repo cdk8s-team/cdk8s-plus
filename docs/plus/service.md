@@ -39,3 +39,26 @@ const frontends = new kplus.Service(chart, 'FrontEnds');
 // make the service bind to port 9000 and redirect to port 80 on the associated containers.
 frontends.bind({port: 9000, targetPort: 80})
 ```
+
+## Headless Services
+
+Services that don't need load-balancing or a single service IP can be made
+headless by setting `clusterIP` to `None`. Since headless services are not
+proxied, they can be configured without any ports, for example when they are
+only used for DNS-based discovery of the selected pods:
+
+```typescript
+import * as k from 'cdk8s';
+import * as kplus from 'cdk8s-plus-37';
+
+const app = new k.App();
+const chart = new k.Chart(app, 'Chart');
+const backend = new kplus.Deployment(chart, 'Backend', {
+  containers: [{ image: 'backend' }],
+});
+
+new kplus.Service(chart, 'Headless', {
+  clusterIP: 'None',
+  selector: backend,
+});
+```
